@@ -1,0 +1,31 @@
+---
+Language                                      : Cpp
+BasedOnStyle                                  : Google
+AlignConsecutiveDeclarations                  : true
+AlignConsecutiveAssignments                   : true
+AlignEscapedNewlines                          : Left
+AlignOperands                                 : true
+AlignTrailingComments                         : true
+AlignEscapedNewlinesLeft                      : true
+AccessModifierOffset                          : -4
+ConstructorInitializerAllOnOneLineOrOnePerLine: true
+BinPackArguments                              : false
+BinPackParameters                             : false
+ExperimentalAutoDetectBinPacking              : false
+AllowAllParametersOfDeclarationOnNextLine: false
+ColumnLimit                                   : 90
+CompactNamespaces                             : true
+Cpp11BracedListStyle                          : true
+DerivePointerAlignment                        : true
+IndentWidth                                   : 4
+SpacesBeforeTrailingComments                  : 1
+SpaceBeforeParens                             : ControlStatements
+SpacesInAngles                                : true
+TabWidth                                      : 4
+UseTab                                        : Never
+PointerAlignment: Left
+
+SpaceAfterCStyleCast: true
+CommentPragmas: '^ NO-FORMAT:'
+NamespaceIndentation: Inner
+...
