@@ -1,0 +1,83 @@
+#pragma once
+#include "config.hh"
+#include <list>
+#include <string>
+#include <iostream>
+
+namespace enc {
+__declspec(selectany) extern const uint32_t na = 0;
+__declspec(selectany) extern const uint32_t be = 1; // big endian
+} // namespace enc
+
+struct proto_node {
+    void set_length(int length);
+    void set_generated(bool generated = true);
+
+    proto_item* add_item(packet_info*      pinfo,
+                         tvbuff*           buf,
+                         int               offset,
+                         int               length,
+                         const field_meta* field,
+                         uint32_t          encoding);
+
+    proto_item* add_uint(packet_info*      pinfo,
+                         tvbuff*           buf,
+                         int               offset,
+                         int               length,
+                         const field_meta* field,
+                         uint32_t          val,
+                         const char*       format,
+                         ...);
+
+    proto_item* add_int(packet_info*      pinfo,
+                        tvbuff*           buf,
+                        int               offset,
+                        int               length,
+                        const field_meta* field,
+                        uint32_t          val,
+                        const char*       format,
+                        ...);
+
+    proto_item* add_bitmask_list(packet_info*      pinfo,
+                                 tvbuff*           buf,
+                                 int               offset,
+                                 int               length,
+                                 const field_meta* fields[],
+                                 uint32_t          enc);
+
+    proto_item* add_expert(packet_info* pinfo,
+                           tvbuff*      buf,
+                           int          offset,
+                           int          length,
+                           const char*  format,
+                           ...);
+
+    proto_tree* add_subtree(packet_info* pinfo,
+                            tvbuff*      buf,
+                            int          offset,
+                            int          length,
+                            const char*  format,
+                            ...);
+
+    std::list< proto_node* > children;
+    std::string              name;
+    std::string              text;
+    uint32_t                 uval   = 0;
+    proto_node*              parent = nullptr;
+    uint32_t                 enc    = enc::na; // enc::na
+    const field_meta*        meta   = nullptr;
+    const uint8_t*           data   = nullptr;
+    int                      length = 0;
+
+    virtual ~proto_node();
+    proto_node(){};
+};
+
+inline void print_node(std::ostream& out, proto_node* node, int indent = 0) {
+    auto prefix = std::string(size_t(indent*2), char('\t'));
+    out << prefix << node->name << " : " << node->text << std::endl;
+
+    for (auto node : node->children){
+        print_node(out, node, indent + 1);
+    }
+}

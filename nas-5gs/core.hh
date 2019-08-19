@@ -1,93 +1,21 @@
 #pragma once
+#include <cstdarg>
+#include <string>
 #include "config.hh"
-
-struct tvbuff;
-struct packet_info;
-struct proto_node;
-struct context;
-
-struct protocol_meta;
-struct field_meta;
-struct tree_meta;
-struct expert_meta;
-
-struct val_string;
-struct tf_string;
-struct range_string;
-
-typedef proto_node proto_tree;
-typedef proto_node proto_item;
-
-typedef int (*dissect_fnc_t)(packet_info*, tvbuff*, int offset, int len, context*);
-typedef dissect_fnc_t  dissect_msg_fnc_t;
-typedef dissect_fnc_t  dissect_elem_fnc_t;
+#include "packet_info.hh"
+#include "proto.hh"
+#include "tvbuff.hh"
 
 extern void nas_5gs_module_init();
 extern void nas_5gs_module_cleanup();
 extern void bug(const char* format, ...);
 extern void assert_not_reached();
 
-struct tvbuff {
-
-};
-
-struct packet_info{
-
-};
 
 struct context {
     const char*  msg_name;
     const char*  elem_name;
     const char*  field_name;
-};
-
-namespace enc{
-    __declspec(selectany) extern const uint32_t na = 0;
-    __declspec(selectany) extern const uint32_t be = 1; // big endian
-}
-
-struct proto_node {
-    void set_length(int length);
-    void set_generated(bool generated = true);
-
-    proto_item* add_item(packet_info*,
-                         tvbuff*,
-                         int,
-                         int,
-                         const field_meta*,
-                         uint32_t encoding);
-    proto_item* add_uint(packet_info*,
-                         tvbuff*,
-                         int,
-                         int,
-                         const field_meta*,
-                         uint32_t    val,
-                         const char* format,
-                         ...);
-    proto_item* add_int(packet_info*,
-                        tvbuff*,
-                        int,
-                        int,
-                        const field_meta*,
-                        uint32_t    val,
-                        const char* format,
-                        ...);
-    proto_item* add_bitmask_list(packet_info*,
-                        tvbuff*,
-                        int,
-                        int,
-                        const field_meta*[],
-                        uint32_t    enc);
-
-
-    proto_item* add_expert(packet_info*,
-                           tvbuff*,
-                           int         offset,
-                           int         len,
-                           const char* format,
-                           ...);
-
-    proto_tree* add_subtree(packet_info*, tvbuff*, int, int, const char* format, ...);
 };
 
 namespace ft{
@@ -110,7 +38,8 @@ __declspec(selectany) extern const uint32_t ft_string     = 15;
 __declspec(selectany) extern const uint32_t ft_stringz    = 16;
 __declspec(selectany) extern const uint32_t ft_hex_string = 17;
 __declspec(selectany) extern const uint32_t ft_bin_string = 18;
-} // field_type
+__declspec(selectany) extern const uint32_t ft_bytes      = 19;
+} // namespace ft
 
 namespace fd {
 __declspec(selectany) extern const uint32_t base_none       = 0; /* none */
@@ -151,14 +80,14 @@ inline bool     is_base_dual(uint32_t d) {
 } // namespace fd
 
 struct field_meta {
-    const char*   name;       /* full name of this field */
-    const char*   abbrev;     /* abbreviated name of this field */
-    uint32_t      field_type; /* field_type::*/
-    uint32_t      display;    /* one of base_                             */
-    val_string*   val_strings;
-    tf_string*    tf_strings;
-    range_string* range_strings;
-    uint64_t      bitmask; /* bitmask of interesting bits */
+    const char*         name;       /* full name of this field */
+    const char*         abbrev;     /* abbreviated name of this field */
+    uint32_t            field_type; /* field_type::*/
+    uint32_t            display;    /* one of base_                             */
+    const val_string*   val_strings;
+    const tf_string*    tf_strings;
+    const range_string* range_strings;
+    uint64_t            bitmask; /* bitmask of interesting bits */
 };
 
 namespace em_severity {
@@ -180,7 +109,7 @@ struct tree_meta {
     const char* name;
 };
 
-namespace tm { // tree_metas
+namespace tree_metas { // tree_metas
 __declspec(selectany) extern const tree_meta ett_none     = {};
 __declspec(selectany) extern const tree_meta ett_protocol = {};
 __declspec(selectany) extern const tree_meta ett_message  = {};
@@ -214,16 +143,20 @@ struct protocol_meta {
     dissect_fnc_t    dissector;
 };
 
-extern int dissect_nas_5gs(packet_info*, tvbuff*, int, int, context*);
+extern int dissect_nas_5gs(packet_info*, proto_node*, tvbuff*, int, int, context*);
 
 __declspec(selectany) extern const protocol_meta nas_5gs_module = {
     "NAS-5GS",
     "Non-Access-Stratum 5GS (NAS)PDU",
     dissect_nas_5gs,
 };
+namespace TGPP_PD{
+__declspec(selectany) extern const uint8_t MM5G = 0x7e; //TGPP_PD_5GMM
+__declspec(selectany) extern const uint8_t SM5G = 0x2e; //TGPP_PD_5GSM
+}
 
 struct message_meta {
-    uint8_t           _type;
+    uint8_t           type; // iei
     const char*       name;
     dissect_msg_fnc_t fnc;
 };
@@ -231,3 +164,6 @@ struct message_meta {
 typedef message_meta element_meta;
 
 inline const char* safe_str(const char* v) { return (v && v[0] != '\n') ? v : ""; }
+
+std::string vformats(const char* format, ...);
+std::string vformat(const char* format, va_list);

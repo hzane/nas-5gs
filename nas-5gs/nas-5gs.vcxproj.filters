@@ -18,5 +18,61 @@
     <ClCompile Include="nas-5gs.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="dissect_nas_5gs_i.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="dissect_nas_5gs.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="proto.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="config.hh">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="core.hh">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="expert_meta.hh">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="field_meta.hh">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="nas-5gs.hh">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="proto.hh">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="range_string.hh">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tree_meta.hh">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ts24007.hh">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="val_string.hh">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tvbuff.hh">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="packet_info.hh">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="dissect_sm_msg.hh">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="dissect_nas_5gs.hh">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="dissect_mm_msg.hh">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
