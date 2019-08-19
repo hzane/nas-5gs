@@ -9,6 +9,10 @@ static const uint8_t packet_sample [] = {0x7e, 0x00, 0x43};
 
 int main()
 {
+    auto x = formats("this is a test %d", 12);
+    bug(x.c_str());
+    cout << x << endl;
+
     packet_info pinfo{};
     tvbuff      tvb{packet_sample, sizeof(packet_sample)};
     proto_node  root{};

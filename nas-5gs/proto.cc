@@ -37,11 +37,11 @@ proto_item* proto_node::add_item(packet_info*      pinfo,
     return item;
 }
 
-proto_item* proto_node::set_uint(uint32_t v, const char* format, ...) {
+proto_item* proto_node::set_uint(uint64_t v, const char* format, ...) {
     using namespace std;
-    val.ui32 = v;
+    val.ui64 = v;
     // TODO:
-    text = vformats("%08x", v);
+    text = formats("%08x", v);
 
     va_list args;
     va_start(args, format);
@@ -50,16 +50,16 @@ proto_item* proto_node::set_uint(uint32_t v, const char* format, ...) {
     return this;
 }
 
-proto_item* proto_node::set_int(int v, const char* format, ...) {
+proto_item* proto_node::set_int(int64_t v, const char* format, ...) {
     using namespace std;
-    val.i32 = v;
+    val.i64 = v;
 
     va_list args;
     va_start(args, format);
     if (format) name = vformat(format, args);
     va_end(args);
 
-    text = vformats("%d", (int) v);
+    text = formats("%d", (int) v);
 
     return this;
 }
@@ -153,7 +153,7 @@ std::string vformat(const char* format, va_list args) {
     vsnprintf(zc.data(), zc.size(), format, args);
     return string(zc.data(), zc.size());
 }
-std::string vformats(const char* format, ...) {
+std::string formats(const char* format, ...) {
     va_list args;
     va_start(args, format);
     auto ret = vformat(format, args);

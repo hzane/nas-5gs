@@ -11,8 +11,8 @@ __declspec(selectany) extern const uint32_t be = 1; // big endian
 } // namespace enc
 
 union value_t {
-    uint32_t               ui32;
     uint64_t               ui64;
+    uint32_t               ui32;
     int32_t                i32;
     int64_t                i64;
 };
@@ -27,9 +27,9 @@ struct proto_node {
                          const field_meta* field,
                          uint32_t          encoding);
 
-    proto_item* set_uint(uint32_t val, const char* format, ...);
+    proto_item* set_uint(uint64_t val, const char* format, ...);
 
-    proto_item* set_int(int val, const char* format, ...);
+    proto_item* set_int(int64_t val, const char* format, ...);
 
     proto_item* set_bitmask_list(const field_meta* fields[], uint64_t value);
 
@@ -47,10 +47,10 @@ struct proto_node {
                             const char*  format,
                             ...);
 
-    std::list< proto_node* > children;
-    std::string              name;
-    std::string              text;
-    value_t                  val   ;
+    std::list< proto_node* > children = {};
+    std::string              name     = {};
+    std::string              text     = {};
+    value_t                  val      = {0};
     proto_node*              parent = nullptr;
     uint32_t                 enc    = enc::na; // enc::na
     const field_meta*        meta   = nullptr;
@@ -62,7 +62,7 @@ struct proto_node {
 };
 
 inline void print_node(std::ostream& out, proto_node* node, int indent = 0) {
-    auto prefix = std::string(size_t(indent*2), char('\t'));
+    auto prefix = std::string(size_t(indent*4), char(' '));
     out << prefix << node->name << " : " << node->text << std::endl;
 
     for (auto node : node->children){

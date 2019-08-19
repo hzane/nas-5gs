@@ -27,6 +27,9 @@
     <ClCompile Include="proto.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="core.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="config.hh">

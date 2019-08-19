@@ -151,6 +151,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="core.cc" />
     <ClCompile Include="dissect_nas_5gs.cc" />
     <ClCompile Include="dissect_nas_5gs_i.cc" />
     <ClCompile Include="nas-5gs.cc" />
