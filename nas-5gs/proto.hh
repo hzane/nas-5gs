@@ -2,6 +2,7 @@
 #include "config.hh"
 #include <list>
 #include <string>
+#include <vector>
 #include <iostream>
 
 namespace enc {
@@ -9,6 +10,12 @@ __declspec(selectany) extern const uint32_t na = 0;
 __declspec(selectany) extern const uint32_t be = 1; // big endian
 } // namespace enc
 
+union value_t {
+    uint32_t               ui32;
+    uint64_t               ui64;
+    int32_t                i32;
+    int64_t                i64;
+};
 struct proto_node {
     void set_length(int length);
     void set_generated(bool generated = true);
@@ -20,30 +27,11 @@ struct proto_node {
                          const field_meta* field,
                          uint32_t          encoding);
 
-    proto_item* add_uint(packet_info*      pinfo,
-                         tvbuff*           buf,
-                         int               offset,
-                         int               length,
-                         const field_meta* field,
-                         uint32_t          val,
-                         const char*       format,
-                         ...);
+    proto_item* set_uint(uint32_t val, const char* format, ...);
 
-    proto_item* add_int(packet_info*      pinfo,
-                        tvbuff*           buf,
-                        int               offset,
-                        int               length,
-                        const field_meta* field,
-                        uint32_t          val,
-                        const char*       format,
-                        ...);
+    proto_item* set_int(int val, const char* format, ...);
 
-    proto_item* add_bitmask_list(packet_info*      pinfo,
-                                 tvbuff*           buf,
-                                 int               offset,
-                                 int               length,
-                                 const field_meta* fields[],
-                                 uint32_t          enc);
+    proto_item* set_bitmask_list(const field_meta* fields[], uint64_t value);
 
     proto_item* add_expert(packet_info* pinfo,
                            tvbuff*      buf,
@@ -62,7 +50,7 @@ struct proto_node {
     std::list< proto_node* > children;
     std::string              name;
     std::string              text;
-    uint32_t                 uval   = 0;
+    value_t                  val   ;
     proto_node*              parent = nullptr;
     uint32_t                 enc    = enc::na; // enc::na
     const field_meta*        meta   = nullptr;
