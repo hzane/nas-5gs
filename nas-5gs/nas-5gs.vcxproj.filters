@@ -30,6 +30,15 @@
     <ClCompile Include="core.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="dissect_mm_msg.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="dissect_sm_msg.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="dissect_mm_msg_i.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="config.hh">

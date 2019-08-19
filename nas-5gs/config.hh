@@ -18,7 +18,7 @@ struct tree_meta;
 struct expert_meta;
 
 struct val_string;
-struct tf_string;
+struct true_false_string;
 struct range_string;
 
 typedef proto_node proto_tree;

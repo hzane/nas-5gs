@@ -6,8 +6,10 @@
 #include <iostream>
 
 namespace enc {
-__declspec(selectany) extern const uint32_t na = 0;
-__declspec(selectany) extern const uint32_t be = 1; // big endian
+__declspec(selectany) extern const uint32_t na   = 0;
+__declspec(selectany) extern const uint32_t be   = 1; // big endian
+__declspec(selectany) extern const uint32_t le   = 2; // little endian
+__declspec(selectany) extern const uint32_t none = 4; // host order
 } // namespace enc
 
 union value_t {
@@ -27,9 +29,9 @@ struct proto_node {
                          const field_meta* field,
                          uint32_t          encoding);
 
-    proto_item* set_uint(uint64_t val, const char* format, ...);
+    proto_item* set_uint(uint64_t val, uint32_t enc, const char* format, ...);
 
-    proto_item* set_int(int64_t val, const char* format, ...);
+    proto_item* set_int(int64_t val, uint32_t enc, const char* format, ...);
 
     proto_item* set_bitmask_list(const field_meta* fields[], uint64_t value);
 

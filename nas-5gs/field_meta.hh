@@ -74,12 +74,12 @@ inline bool     is_base_dual(uint32_t d) {
 } // namespace fd
 
 struct field_meta {
-    const char*         name;       /* full name of this field */
-    const char*         abbrev;     /* abbreviated name of this field */
-    uint32_t            field_type; /* field_type::*/
-    uint32_t            display;    /* one of base_                             */
-    const val_string*   val_strings;
-    const tf_string*    tf_strings;
-    const range_string* range_strings;
-    uint64_t            bitmask; /* bitmask of interesting bits */
+    const char*              name;       /* full name of this field */
+    const char*              abbrev;     /* abbreviated name of this field */
+    uint32_t                 field_type; /* field_type::*/
+    uint32_t                 display;    /* one of base_                             */
+    const val_string*        val_strings;
+    const true_false_string* tf_strings;
+    const range_string*      range_strings;
+    uint64_t                 bitmask; /* bitmask of interesting bits */
 };

@@ -37,7 +37,8 @@ proto_item* proto_node::add_item(packet_info*      pinfo,
     return item;
 }
 
-proto_item* proto_node::set_uint(uint64_t v, const char* format, ...) {
+proto_item* proto_node::set_uint(uint64_t v, uint32_t enc, const char* format, ...) {
+    if (enc != enc::none) this->enc = enc;
     using namespace std;
     val.ui64 = v;
     // TODO:
@@ -50,7 +51,8 @@ proto_item* proto_node::set_uint(uint64_t v, const char* format, ...) {
     return this;
 }
 
-proto_item* proto_node::set_int(int64_t v, const char* format, ...) {
+proto_item* proto_node::set_int(int64_t v, uint32_t enc, const char* format, ...) {
+    if (enc != enc::none) this->enc = enc;
     using namespace std;
     val.i64 = v;
 
@@ -108,7 +110,7 @@ proto_tree* proto_node::add_subtree(packet_info* pinfo,
 
     va_list args;
     va_start(args, format);
-    item->name = vformat(format, args);
+    if (format) item->name = vformat(format, args);
     va_end(args);
 
     children.push_back(item);
