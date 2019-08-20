@@ -225,3 +225,19 @@ inline int dissect_elem_tlv_e(const field_meta*   type_meta,
     return dissect_elem_mandary(
         type_meta, val_meta, tree, pinfo, buf, offset, len, dissect_opt_elem_tlv_e);
 };
+
+
+int add_generic_msg_elem_body(packet_info* pinfo,
+                              proto_node*  tree,
+                              tvbuff*      buf,
+                              int          offset,
+                              int          length,
+                              context*     ctx);
+
+int add_unknown(packet_info* pinfo,
+                proto_node*  tree,
+                tvbuff*      buf,
+                int          offset,
+                int          len,
+                uint8_t      iet, // message type ie
+                context*     ctx);

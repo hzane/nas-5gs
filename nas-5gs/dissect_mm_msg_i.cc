@@ -1,6 +1,5 @@
 #include "dissect_mm_msg.hh"
 
-
 extern const true_false_string nas_5gs_for_tfs = {
     "Follow-on request pending",
     "No follow-on request pending",
@@ -21,7 +20,6 @@ extern const field_meta* hf_nas_5gs_mm_for = &hfm_nas_5gs_mm_for;
 
 /* * 9.11.3.9A    5GS update type*/
 
-
 static true_false_string tfs_nas5gs_sms_requested = {
     "SMS over NAS supported",
     "SMS over NAS not supported",
@@ -36,7 +34,6 @@ static field_meta hfm_nas_5gs_mm_sms_requested = {
     nullptr,
     0x01,
 };
-
 
 /* 9.11.3.7    5GS registration type */
 
@@ -87,7 +84,6 @@ static field_meta hfm_nas_5gs_mm_nas_key_set_id = {
     0x07,
 };
 
-
 static field_meta hfm_nas_5gs_mm_tsc_h1 = {
     "Type of security context flag (TSC)",
     "nas_5gs.mm.tsc.h1",
@@ -100,7 +96,6 @@ static field_meta hfm_nas_5gs_mm_tsc_h1 = {
 };
 extern const field_meta* hf_nas_5gs_mm_tsc_h1 = &hfm_nas_5gs_mm_tsc_h1;
 
-
 static field_meta hfm_nas_5gs_mm_nas_key_set_id_h1 = {
     "NAS key set identifier",
     "nas_5gs.mm.nas_key_set_id.h1",
@@ -111,7 +106,8 @@ static field_meta hfm_nas_5gs_mm_nas_key_set_id_h1 = {
     nullptr,
     0x70,
 };
-extern const field_meta *hf_nas_5gs_mm_nas_key_set_id_h1 = &hfm_nas_5gs_mm_nas_key_set_id_h1;
+extern const field_meta* hf_nas_5gs_mm_nas_key_set_id_h1 =
+    &hfm_nas_5gs_mm_nas_key_set_id_h1;
 
 /* * 9.11.3.2 5GMM cause */
 
@@ -165,9 +161,7 @@ static field_meta hfm_nas_5gs_mm_5gmm_cause = {
     0x0,
 };
 
-
 /* *   9.11.3.40    Payload container type */
-
 
 static const val_string nas_5gs_mm_pld_cont_type_vals[] = {
     {0x01, "N1 SM information"},
@@ -234,16 +228,11 @@ static field_meta hfm_nas_5gs_mm_mapped_conf_ssd = {
     0x0,
 };
 
-
 /* *   9.11.3.19    Daylight saving time */
-
 
 /* See subclause 10.5.3.12 in 3GPP TS 24.008 */
 
-
-
 /* *   9.11.3.20    De-registration type */
-
 
 static const true_false_string nas_5gs_mm_switch_off_tfs = {
     "Switch off",
@@ -293,7 +282,6 @@ static field_meta hfm_nas_5gs_mm_acc_type = {
 };
 
 /* *   9.11.3.31    MICO indication */
-
 
 static const true_false_string tfs_nas_5gs_raai = {
     "all PLMN registration area allocated",
@@ -361,8 +349,6 @@ static field_meta hfm_nas_5gs_mm_nas_sec_algo_enc = {
 
 /* *   9.11.3.34    NAS security algorithms */
 
-
-
 static const val_string nas_5gs_mm_type_of_ip_algo_vals[] = {
     {0x0, "5G-IA0 (null integrity protection algorithm)"},
     {0x1, "128-5G-IA1"},
@@ -384,7 +370,6 @@ static field_meta hfm_nas_5gs_mm_nas_sec_algo_ip = {
     nullptr,
     0x0f,
 };
-
 
 static field_meta hfm_nas_5gs_mm_s1_mode_b0 = {
     "S1 mode",
@@ -412,7 +397,6 @@ static field_meta hfm_nas_5gs_mm_ho_attach_b1 = {
     0x02,
 };
 
-
 static field_meta hfm_nas_5gs_mm_lpp_cap_b2 = {
     "LTE Positioning Protocol (LPP) capability",
     "nas_5gs.mm.lpp_cap_b2",
@@ -425,7 +409,6 @@ static field_meta hfm_nas_5gs_mm_lpp_cap_b2 = {
 };
 
 /* * 9.11.3.4    5GS mobile identity */
-
 
 static const val_string nas_5gs_mm_type_id_vals[] = {
     {0x0, "No identity"},
@@ -447,7 +430,7 @@ static field_meta hfm_nas_5gs_mm_type_id = {
     0x07,
 };
 
-static true_false_string nas_5gs_odd_even_tfs    = {
+static true_false_string nas_5gs_odd_even_tfs = {
     "Odd number of identity digits",
     "Even number of identity digits",
 };
@@ -496,7 +479,6 @@ static field_meta hfm_nas_5gs_mm_pld_cont = {
 
 /* *     9.11.3.47    Request type */
 
-
 static const val_string nas_5gs_mm_req_type_vals[] = {
     {0x01, "Initial request"},
     {0x02, "Existing PDU session"},
@@ -518,8 +500,6 @@ static field_meta hfm_nas_5gs_mm_req_type = {
 };
 
 /* *     9.11.3.50    Service type */
-
-
 
 /* Used inline as H1 (Upper nibble)*/
 static const val_string nas_5gs_mm_serv_type_vals[] = {
@@ -897,8 +877,6 @@ static field_meta hfm_nas_5gs_mm_eia7 = {
 
 /* *    9.11.3.56    UE status */
 
-
-
 static true_false_string tfs_nas_5gs_mm_n1_mod = {
     "UE is in 5GMM-REGISTERED state",
     "UE is not in 5GMM-REGISTERED state",
@@ -931,21 +909,15 @@ static field_meta hfm_nas_5gs_mm_s1_mode_reg_b0 = {
 
 };
 
-
 /* *    9.11.3.48    S1 UE network capability */
-
 
 /* See subclause 9.9.3.34 in 3GPP TS 24.301 */
 
 /* *   9.11.3.48A    S1 UE security capability */
 
-
 /*See subclause 9.9.3.36 in 3GPP TS 24.301 */
 
-
-
 /* *     9.11.3.49    Service area list */
-
 
 static true_false_string tfs_nas_5gs_sal_al_t = {
     "TAIs in the list are in the non-allowed area",
@@ -993,9 +965,7 @@ static field_meta hfm_nas_5gs_mm_sal_num_e = {
 
 };
 
-
 /* * 8.2.6 Registration request */
-
 
 extern const field_meta* nas_5gs_registration_req_flags[] = {
     hf_nas_5gs_mm_tsc_h1,
@@ -1004,3 +974,782 @@ extern const field_meta* nas_5gs_registration_req_flags[] = {
     hf_nas_5gs_mm_5gs_reg_type,
     nullptr,
 };
+
+/* 9.11.3.4     5GS mobile identity*/
+int de_nas_5gs_mm_5gs_mobile_id(packet_info* info,
+                                proto_node*  tree,
+                                tvbuff*      buf,
+                                int          offset,
+                                int          len,
+                                context*     ctx = nullptr);
+
+/* 9.11.3.1     5GMM capability*/
+int de_nas_5gs_mm_5gmm_cap(packet_info* info,
+                           proto_node*  tree,
+                           tvbuff*      buf,
+                           int          offset,
+                           int          len,
+                           context*     ctx = nullptr);
+
+/* 9.11.3.2     5GMM cause*/
+int de_nas_5gs_mm_5gmm_cause(packet_info* info,
+                             proto_node*  tree,
+                             tvbuff*      buf,
+                             int          offset,
+                             int          len,
+                             context*     ctx = nullptr);
+
+/* 9.11.3.2A    5GS DRX parameters*/
+int de_nas_5gs_mm_5gs_drx_param(packet_info* info,
+                                proto_node*  tree,
+                                tvbuff*      buf,
+                                int          offset,
+                                int          len,
+                                context*     ctx = nullptr);
+
+/* 9.11.3.3     5GS identity type*/
+int de_nas_5gs_mm_5gs_identity_type(packet_info* info,
+                                    proto_node*  tree,
+                                    tvbuff*      buf,
+                                    int          offset,
+                                    int          len,
+                                    context*     ctx = nullptr);
+
+/* 9.11.3.5     5GS network feature support*/
+int de_nas_5gs_mm_5gs_nw_feat_sup(packet_info* info,
+                                  proto_node*  tree,
+                                  tvbuff*      buf,
+                                  int          offset,
+                                  int          len,
+                                  context*     ctx = nullptr);
+/* 9.11.3.6     5GS registration result*/
+int de_nas_5gs_mm_5gs_reg_res(packet_info* info,
+                              proto_node*  tree,
+                              tvbuff*      buf,
+                              int          offset,
+                              int          len,
+                              context*     ctx = nullptr);
+/* 9.11.3.7     5GS registration type*/
+int de_nas_5gs_mm_5gs_reg_type(packet_info* info,
+                               proto_node*  tree,
+                               tvbuff*      buf,
+                               int          offset,
+                               int          len,
+                               context*     ctx = nullptr);
+/* 9.11.3.8     5GS tracking area identity */
+int de_nas_5gs_mm_5gs_ta_id(packet_info* info,
+                            proto_node*  tree,
+                            tvbuff*      buf,
+                            int          offset,
+                            int          len,
+                            context*     ctx = nullptr);
+
+/* 9.11.3.9     5GS tracking area identity list */
+int de_nas_5gs_mm_5gs_ta_id_list(packet_info* info,
+                                 proto_node*  tree,
+                                 tvbuff*      buf,
+                                 int          offset,
+                                 int          len,
+                                 context*     ctx = nullptr);
+
+/* 9.11.3.9A    5GS update type */
+int de_nas_5gs_mm_update_type(packet_info* info,
+                              proto_node*  tree,
+                              tvbuff*      buf,
+                              int          offset,
+                              int          len,
+                              context*     ctx = nullptr);
+
+/* 9.11.3.10    ABBA */
+int de_nas_5gs_mm_abba(packet_info* info,
+                       proto_node*  tree,
+                       tvbuff*      buf,
+                       int          offset,
+                       int          len,
+                       context*     ctx = nullptr);
+
+/* 9.11.3.11    Access type */
+int de_nas_5gs_mm_access_type(packet_info* info,
+                              proto_node*  tree,
+                              tvbuff*      buf,
+                              int          offset,
+                              int          len,
+                              context*     ctx = nullptr);
+
+/* 9.11.3.12    Additional 5G security            information */
+int de_nas_5gs_mm_add_5g_sec_inf(packet_info* info,
+                                 proto_node*  tree,
+                                 tvbuff*      buf,
+                                 int          offset,
+                                 int          len,
+                                 context*     ctx = nullptr);
+
+/* 9.11.3.13    Allowed PDU session status*/
+int de_nas_5gs_mm_allow_pdu_ses_sts(packet_info* info,
+                                    proto_node*  tree,
+                                    tvbuff*      buf,
+                                    int          offset,
+                                    int          len,
+                                    context*     ctx = nullptr);
+
+/* 9.11.3.14    Authentication failure parameter */
+/* 9.11.3.15    Authentication parameter AUTN*/
+/* 9.11.3.16    Authentication parameter RAND*/
+/* 9.11.3.17    Authentication response parameter */
+
+/* 9.11.3.18    Configuration update indication*/
+int de_nas_5gs_mm_conf_upd_ind(packet_info* info,
+                               proto_node*  tree,
+                               tvbuff*      buf,
+                               int          offset,
+                               int          len,
+                               context*     ctx = nullptr);
+
+/* 9.11.3.19    Daylight saving time*/
+
+/* 9.11.3.20    De-registration type*/
+int de_nas_5gs_mm_de_reg_type(packet_info* info,
+                              proto_node*  tree,
+                              tvbuff*      buf,
+                              int          offset,
+                              int          len,
+                              context*     ctx = nullptr);
+
+/* 9.11.3.21    Void */
+/* 9.11.3.22    Void*/
+/* 9.11.3.23    Emergency number list*/
+
+/* 9.11.3.24    EPS NAS message container*/
+int de_nas_5gs_mm_eps_nas_msg_cont(packet_info* info,
+                                   proto_node*  tree,
+                                   tvbuff*      buf,
+                                   int          offset,
+                                   int          len,
+                                   context*     ctx = nullptr);
+
+/* 9.11.3.25    EPS NAS security algorithms*/
+/* 9.11.3.26    Extended emergency number list*/
+/* 9.11.3.27    Void*/
+/* 9.11.3.28    IMEISV request*/
+
+/* 9.11.3.29    LADN indication*/
+int de_nas_5gs_mm_ladn_indic(packet_info* info,
+                             proto_node*  tree,
+                             tvbuff*      buf,
+                             int          offset,
+                             int          len,
+                             context*     ctx = nullptr);
+
+/* 9.11.3.30    LADN information*/
+int de_nas_5gs_mm_ladn_inf(packet_info* info,
+                           proto_node*  tree,
+                           tvbuff*      buf,
+                           int          offset,
+                           int          len,
+                           context*     ctx = nullptr);
+
+/* 9.11.3.31    MICO indication*/
+int de_nas_5gs_mm_mico_ind(packet_info* info,
+                           proto_node*  tree,
+                           tvbuff*      buf,
+                           int          offset,
+                           int          len,
+                           context*     ctx = nullptr);
+
+/* 9.11.3.32    NAS key set identifier*/
+int de_nas_5gs_mm_nas_key_set_id(packet_info* info,
+                                 proto_node*  tree,
+                                 tvbuff*      buf,
+                                 int          offset,
+                                 int          len,
+                                 context*     ctx = nullptr);
+
+/* 9.11.3.33    NAS message container*/
+int de_nas_5gs_mm_nas_msg_cont(packet_info* info,
+                               proto_node*  tree,
+                               tvbuff*      buf,
+                               int          offset,
+                               int          len,
+                               context*     ctx = nullptr);
+
+/* 9.11.3.34    NAS security algorithms*/
+int de_nas_5gs_mm_nas_sec_algo(packet_info* info,
+                               proto_node*  tree,
+                               tvbuff*      buf,
+                               int          offset,
+                               int          len,
+                               context*     ctx = nullptr);
+
+/* 9.11.3.35    Network name*/
+
+/* 9.11.3.36    Network slicing indication */
+int de_nas_5gs_mm_nw_slicing_ind(packet_info* info,
+                                 proto_node*  tree,
+                                 tvbuff*      buf,
+                                 int          offset,
+                                 int          len,
+                                 context*     ctx = nullptr);
+
+/* 9.11.3.37    NSSAI*/
+int de_nas_5gs_mm_nssai(packet_info* info,
+                        proto_node*  tree,
+                        tvbuff*      buf,
+                        int          offset,
+                        int          len,
+                        context*     ctx = nullptr);
+
+/* 9.11.3.37A   NSSAI inclusion mode */
+int de_nas_5gs_mm_nssai_inc_mode(packet_info* info,
+                                 proto_node*  tree,
+                                 tvbuff*      buf,
+                                 int          offset,
+                                 int          len,
+                                 context*     ctx = nullptr);
+
+/* 9.11.3.38    Operator-defined access  category  definitions */
+int de_nas_5gs_mm_op_def_acc_cat_def(packet_info* info,
+                                     proto_node*  tree,
+                                     tvbuff*      buf,
+                                     int          offset,
+                                     int          len,
+                                     context*     ctx = nullptr);
+
+/* 9.11.3.39    Payload container*/
+int de_nas_5gs_mm_pld_cont(packet_info* info,
+                           proto_node*  tree,
+                           tvbuff*      buf,
+                           int          offset,
+                           int          len,
+                           context*     ctx = nullptr);
+
+/* 9.11.3.40    Payload container type*/
+int de_nas_5gs_mm_pld_cont_type(packet_info* info,
+                                proto_node*  tree,
+                                tvbuff*      buf,
+                                int          offset,
+                                int          len,
+                                context*     ctx = nullptr);
+
+/* 9.11.3.41    PDU session identity 2*/
+int de_nas_5gs_mm_pdu_ses_id_2(packet_info* info,
+                               proto_node*  tree,
+                               tvbuff*      buf,
+                               int          offset,
+                               int          len,
+                               context*     ctx = nullptr);
+
+/* 9.11.3.42    PDU session reactivation  result*/
+int de_nas_5gs_mm_pdu_ses_react_res(packet_info* info,
+                                    proto_node*  tree,
+                                    tvbuff*      buf,
+                                    int          offset,
+                                    int          len,
+                                    context*     ctx = nullptr);
+
+/* 9.11.3.43    PDU session reactivation result error cause */
+int de_nas_5gs_mm_pdu_ses_react_res_err_c(packet_info* info,
+                                          proto_node*  tree,
+                                          tvbuff*      buf,
+                                          int          offset,
+                                          int          len,
+                                          context*     ctx = nullptr);
+
+/* 9.11.3.44    PDU session status*/
+int de_nas_5gs_mm_pdu_ses_status(packet_info* info,
+                                 proto_node*  tree,
+                                 tvbuff*      buf,
+                                 int          offset,
+                                 int          len,
+                                 context*     ctx = nullptr);
+
+/* 9.11.3.45    PLMN list*/
+
+/* 9.11.3.46    Rejected NSSAI*/
+int de_nas_5gs_mm_rej_nssai(packet_info* info,
+                            proto_node*  tree,
+                            tvbuff*      buf,
+                            int          offset,
+                            int          len,
+                            context*     ctx = nullptr);
+
+/* 9.11.3.47    Request type*/
+int de_nas_5gs_mm_req_type(packet_info* info,
+                           proto_node*  tree,
+                           tvbuff*      buf,
+                           int          offset,
+                           int          len,
+                           context*     ctx = nullptr);
+
+/* 9.11.3.48    S1 UE network capability*/
+/* 9.11.3.48A   S1 UE security capability*/
+
+/* 9.11.3.49    Service area list*/
+int de_nas_5gs_mm_sal(packet_info* info,
+                      proto_node*  tree,
+                      tvbuff*      buf,
+                      int          offset,
+                      int          len,
+                      context*     ctx = nullptr);
+
+/* 9.11.3.50    Service type*/   /* Used Inline Half octet IE */
+
+/* 9.11.3.50A   SMS indication */
+int de_nas_5gs_mm_sms_ind(packet_info* info,
+                          proto_node*  tree,
+                          tvbuff*      buf,
+                          int          offset,
+                          int          len,
+                          context*     ctx = nullptr);
+
+/* 9.11.3.51    SOR transparent container */
+int de_nas_5gs_mm_sor_trasp_cont(packet_info* info,
+                                 proto_node*  tree,
+                                 tvbuff*      buf,
+                                 int          offset,
+                                 int          len,
+                                 context*     ctx = nullptr);
+
+/* 9.11.3.52    Time zone*/
+/* 9.11.3.53    Time zone and time*/
+
+/* 9.11.3.53A   UE parameters update  transparent container */
+int de_nas_5gs_mm_ue_par_upd_trasnsp_cont(packet_info* info,
+                                          proto_node*  tree,
+                                          tvbuff*      buf,
+                                          int          offset,
+                                          int          len,
+                                          context*     ctx = nullptr);
+
+/* 9.11.3.54    UE security capability*/
+int de_nas_5gs_mm_ue_sec_cap(packet_info* info,
+                             proto_node*  tree,
+                             tvbuff*      buf,
+                             int          offset,
+                             int          len,
+                             context*     ctx = nullptr);
+
+/* 9.11.3.55    UE's usage setting*/
+int de_nas_5gs_mm_ue_usage_set(packet_info* info,
+                               proto_node*  tree,
+                               tvbuff*      buf,
+                               int          offset,
+                               int          len,
+                               context*     ctx = nullptr);
+
+/* 9.11.3.56    UE status*/
+int de_nas_5gs_mm_ue_status(packet_info* info,
+                            proto_node*  tree,
+                            tvbuff*      buf,
+                            int          offset,
+                            int          len,
+                            context*     ctx = nullptr);
+
+/* 9.11.3.57    Uplink data status*/
+int de_nas_5gs_mm_ul_data_status(packet_info* info,
+                                 proto_node*  tree,
+                                 tvbuff*      buf,
+                                 int          offset,
+                                 int          len,
+                                 context*     ctx = nullptr);
+
+extern const element_meta em_de_nas_5gs_mm_5gs_mobile_id = {
+    0,
+    "5GS mobile identity",
+    de_nas_5gs_mm_5gs_mobile_id,
+};
+
+int de_nas_5gs_mm_5gs_mobile_id(packet_info* info,
+                                proto_node*  tree,
+                                tvbuff*      buf,
+                                int          offset,
+                                int          len,
+                                context*     ctx) {
+    return 0;
+}
+
+int de_nas_5gs_mm_5gmm_cap(packet_info* info,
+                           proto_node*  tree,
+                           tvbuff*      buf,
+                           int          offset,
+                           int          len,
+                           context*     ctx) {
+    return 0;
+}
+
+int de_nas_5gs_mm_5gmm_cause(packet_info* info,
+                             proto_node*  tree,
+                             tvbuff*      buf,
+                             int          offset,
+                             int          len,
+                             context*     ctx) {
+    return 0;
+}
+
+int de_nas_5gs_mm_5gs_drx_param(packet_info* info,
+                                proto_node*  tree,
+                                tvbuff*      buf,
+                                int          offset,
+                                int          len,
+                                context*     ctx) {
+    return 0;
+}
+
+int de_nas_5gs_mm_5gs_identity_type(packet_info* info,
+                                    proto_node*  tree,
+                                    tvbuff*      buf,
+                                    int          offset,
+                                    int          len,
+                                    context*     ctx) {
+    return 0;
+}
+
+int de_nas_5gs_mm_5gs_nw_feat_sup(packet_info* info,
+                                  proto_node*  tree,
+                                  tvbuff*      buf,
+                                  int          offset,
+                                  int          len,
+                                  context*     ctx) {
+    return 0;
+}
+
+int de_nas_5gs_mm_5gs_reg_res(packet_info* info,
+                              proto_node*  tree,
+                              tvbuff*      buf,
+                              int          offset,
+                              int          len,
+                              context*     ctx) {
+    return 0;
+}
+
+int de_nas_5gs_mm_5gs_reg_type(packet_info* info,
+                               proto_node*  tree,
+                               tvbuff*      buf,
+                               int          offset,
+                               int          len,
+                               context*     ctx) {
+    return 0;
+}
+
+int de_nas_5gs_mm_5gs_ta_id(packet_info* info,
+                            proto_node*  tree,
+                            tvbuff*      buf,
+                            int          offset,
+                            int          len,
+                            context*     ctx) {
+    return 0;
+}
+
+int de_nas_5gs_mm_5gs_ta_id_list(packet_info* info,
+                                 proto_node*  tree,
+                                 tvbuff*      buf,
+                                 int          offset,
+                                 int          len,
+                                 context*     ctx) {
+    return 0;
+}
+
+int de_nas_5gs_mm_update_type(packet_info* info,
+                              proto_node*  tree,
+                              tvbuff*      buf,
+                              int          offset,
+                              int          len,
+                              context*     ctx) {
+    return 0;
+}
+
+int de_nas_5gs_mm_abba(packet_info* info,
+                       proto_node*  tree,
+                       tvbuff*      buf,
+                       int          offset,
+                       int          len,
+                       context*     ctx) {
+    return 0;
+}
+
+int de_nas_5gs_mm_access_type(packet_info* info,
+                              proto_node*  tree,
+                              tvbuff*      buf,
+                              int          offset,
+                              int          len,
+                              context*     ctx) {
+    return 0;
+}
+
+int de_nas_5gs_mm_add_5g_sec_inf(packet_info* info,
+                                 proto_node*  tree,
+                                 tvbuff*      buf,
+                                 int          offset,
+                                 int          len,
+                                 context*     ctx) {
+    return 0;
+}
+
+int de_nas_5gs_mm_allow_pdu_ses_sts(packet_info* info,
+                                    proto_node*  tree,
+                                    tvbuff*      buf,
+                                    int          offset,
+                                    int          len,
+                                    context*     ctx) {
+    return 0;
+}
+
+int de_nas_5gs_mm_conf_upd_ind(packet_info* info,
+                               proto_node*  tree,
+                               tvbuff*      buf,
+                               int          offset,
+                               int          len,
+                               context*     ctx) {
+    return 0;
+}
+
+int de_nas_5gs_mm_de_reg_type(packet_info* info,
+                              proto_node*  tree,
+                              tvbuff*      buf,
+                              int          offset,
+                              int          len,
+                              context*     ctx) {
+    return 0;
+}
+
+int de_nas_5gs_mm_eps_nas_msg_cont(packet_info* info,
+                                   proto_node*  tree,
+                                   tvbuff*      buf,
+                                   int          offset,
+                                   int          len,
+                                   context*     ctx) {
+    return 0;
+}
+
+int de_nas_5gs_mm_ladn_indic(packet_info* info,
+                             proto_node*  tree,
+                             tvbuff*      buf,
+                             int          offset,
+                             int          len,
+                             context*     ctx) {
+    return 0;
+}
+
+int de_nas_5gs_mm_ladn_inf(packet_info* info,
+                           proto_node*  tree,
+                           tvbuff*      buf,
+                           int          offset,
+                           int          len,
+                           context*     ctx) {
+    return 0;
+}
+
+int de_nas_5gs_mm_mico_ind(packet_info* info,
+                           proto_node*  tree,
+                           tvbuff*      buf,
+                           int          offset,
+                           int          len,
+                           context*     ctx) {
+    return 0;
+}
+
+int de_nas_5gs_mm_nas_key_set_id(packet_info* info,
+                                 proto_node*  tree,
+                                 tvbuff*      buf,
+                                 int          offset,
+                                 int          len,
+                                 context*     ctx) {
+    return 0;
+}
+
+int de_nas_5gs_mm_nas_msg_cont(packet_info* info,
+                               proto_node*  tree,
+                               tvbuff*      buf,
+                               int          offset,
+                               int          len,
+                               context*     ctx) {
+    return 0;
+}
+
+int de_nas_5gs_mm_nas_sec_algo(packet_info* info,
+                               proto_node*  tree,
+                               tvbuff*      buf,
+                               int          offset,
+                               int          len,
+                               context*     ctx) {
+    return 0;
+}
+
+int de_nas_5gs_mm_nw_slicing_ind(packet_info* info,
+                                 proto_node*  tree,
+                                 tvbuff*      buf,
+                                 int          offset,
+                                 int          len,
+                                 context*     ctx) {
+    return 0;
+}
+
+int de_nas_5gs_mm_nssai(packet_info* info,
+                        proto_node*  tree,
+                        tvbuff*      buf,
+                        int          offset,
+                        int          len,
+                        context*     ctx) {
+    return 0;
+}
+
+int de_nas_5gs_mm_nssai_inc_mode(packet_info* info,
+                                 proto_node*  tree,
+                                 tvbuff*      buf,
+                                 int          offset,
+                                 int          len,
+                                 context*     ctx) {
+    return 0;
+}
+
+int de_nas_5gs_mm_op_def_acc_cat_def(packet_info* info,
+                                     proto_node*  tree,
+                                     tvbuff*      buf,
+                                     int          offset,
+                                     int          len,
+                                     context*     ctx) {
+    return 0;
+}
+
+int de_nas_5gs_mm_pld_cont(packet_info* info,
+                           proto_node*  tree,
+                           tvbuff*      buf,
+                           int          offset,
+                           int          len,
+                           context*     ctx) {
+    return 0;
+}
+
+int de_nas_5gs_mm_pld_cont_type(packet_info* info,
+                                proto_node*  tree,
+                                tvbuff*      buf,
+                                int          offset,
+                                int          len,
+                                context*     ctx) {
+    return 0;
+}
+
+int de_nas_5gs_mm_pdu_ses_id_2(packet_info* info,
+                               proto_node*  tree,
+                               tvbuff*      buf,
+                               int          offset,
+                               int          len,
+                               context*     ctx) {
+    return 0;
+}
+
+int de_nas_5gs_mm_pdu_ses_react_res(packet_info* info,
+                                    proto_node*  tree,
+                                    tvbuff*      buf,
+                                    int          offset,
+                                    int          len,
+                                    context*     ctx) {
+    return 0;
+}
+
+int de_nas_5gs_mm_pdu_ses_react_res_err_c(packet_info* info,
+                                          proto_node*  tree,
+                                          tvbuff*      buf,
+                                          int          offset,
+                                          int          len,
+                                          context*     ctx) {
+    return 0;
+}
+
+int de_nas_5gs_mm_pdu_ses_status(packet_info* info,
+                                 proto_node*  tree,
+                                 tvbuff*      buf,
+                                 int          offset,
+                                 int          len,
+                                 context*     ctx) {
+    return 0;
+}
+
+int de_nas_5gs_mm_rej_nssai(packet_info* info,
+                            proto_node*  tree,
+                            tvbuff*      buf,
+                            int          offset,
+                            int          len,
+                            context*     ctx) {
+    return 0;
+}
+
+int de_nas_5gs_mm_req_type(packet_info* info,
+                           proto_node*  tree,
+                           tvbuff*      buf,
+                           int          offset,
+                           int          len,
+                           context*     ctx) {
+    return 0;
+}
+
+int de_nas_5gs_mm_sal(packet_info* info,
+                      proto_node*  tree,
+                      tvbuff*      buf,
+                      int          offset,
+                      int          len,
+                      context*     ctx) {
+    return 0;
+}
+
+int de_nas_5gs_mm_sms_ind(packet_info* info,
+                          proto_node*  tree,
+                          tvbuff*      buf,
+                          int          offset,
+                          int          len,
+                          context*     ctx) {
+    return 0;
+}
+
+int de_nas_5gs_mm_sor_trasp_cont(packet_info* info,
+                                 proto_node*  tree,
+                                 tvbuff*      buf,
+                                 int          offset,
+                                 int          len,
+                                 context*     ctx) {
+    return 0;
+}
+
+int de_nas_5gs_mm_ue_par_upd_trasnsp_cont(packet_info* info,
+                                          proto_node*  tree,
+                                          tvbuff*      buf,
+                                          int          offset,
+                                          int          len,
+                                          context*     ctx) {
+    return 0;
+}
+
+int de_nas_5gs_mm_ue_sec_cap(packet_info* info,
+                             proto_node*  tree,
+                             tvbuff*      buf,
+                             int          offset,
+                             int          len,
+                             context*     ctx) {
+    return 0;
+}
+
+int de_nas_5gs_mm_ue_usage_set(packet_info* info,
+                               proto_node*  tree,
+                               tvbuff*      buf,
+                               int          offset,
+                               int          len,
+                               context*     ctx) {
+    return 0;
+}
+
+int de_nas_5gs_mm_ue_status(packet_info* info,
+                            proto_node*  tree,
+                            tvbuff*      buf,
+                            int          offset,
+                            int          len,
+                            context*     ctx) {
+    return 0;
+}
+
+int de_nas_5gs_mm_ul_data_status(packet_info* info,
+                                 proto_node*  tree,
+                                 tvbuff*      buf,
+                                 int          offset,
+                                 int          len,
+                                 context*     ctx) {
+    return 0;
+}

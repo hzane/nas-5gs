@@ -1,9 +1,11 @@
 #include "dissect_mm_msg.hh"
+#include "ts24007.hh"
 
 /*
  * 8.2.6 Registration request
  */
 extern const field_meta* nas_5gs_registration_req_flags[];
+extern const element_meta  em_de_nas_5gs_mm_5gs_mobile_id;
 
 int mm::nas_5gs_mm_registration_req(packet_info* pinfo,
                                     proto_node*  tree,
@@ -19,6 +21,15 @@ int mm::nas_5gs_mm_registration_req(packet_info* pinfo,
     // tree->add_item(pinfo, buf, offset, 1, nas_5gs_registration_req_flags, enc::none);
     tree->add_subtree(pinfo, buf, offset, 1, nullptr);
     tree->set_bitmask_list(nas_5gs_registration_req_flags, enc::be);
+    offset++;
+    len--;
+
+    /*    Mobile identity    5GS mobile identity 9.11.3.4    M    LV-E    6-n*/
+    auto consumed = dissect_elem_lv_e(
+        nullptr, &em_de_nas_5gs_mm_5gs_mobile_id, tree, pinfo, buf, offset, len);
+    offset -= consumed;
+    len -= consumed;
+
     return 0;
 }
 

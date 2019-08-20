@@ -41,12 +41,14 @@ proto_item* proto_node::set_uint(uint64_t v, uint32_t enc, const char* format, .
     if (enc != enc::none) this->enc = enc;
     using namespace std;
     val.ui64 = v;
-    // TODO:
-    text = formats("%08x", v);
 
+
+    // TODO:
     va_list args;
     va_start(args, format);
-    if (format) name = vformat(format, args);
+    if (format) text = vformat(format, args);
+    else
+        text = formats("%08x", v);
     va_end(args);
     return this;
 }
@@ -58,10 +60,11 @@ proto_item* proto_node::set_int(int64_t v, uint32_t enc, const char* format, ...
 
     va_list args;
     va_start(args, format);
-    if (format) name = vformat(format, args);
+    if (format) text = vformat(format, args);
+    else
+        text = formats("%d", (int) v);
     va_end(args);
 
-    text = formats("%d", (int) v);
 
     return this;
 }

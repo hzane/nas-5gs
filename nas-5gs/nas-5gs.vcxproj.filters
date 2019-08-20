@@ -39,6 +39,9 @@
     <ClCompile Include="dissect_mm_msg_i.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ts24007.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="config.hh">

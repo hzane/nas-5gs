@@ -159,6 +159,7 @@
     <ClCompile Include="dissect_sm_msg.cc" />
     <ClCompile Include="nas-5gs.cc" />
     <ClCompile Include="proto.cc" />
+    <ClCompile Include="ts24007.cc" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="config.hh" />

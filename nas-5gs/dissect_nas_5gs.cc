@@ -2,6 +2,7 @@
 #include "dissect_nas_5gs.hh"
 #include "dissect_sm_msg.hh"
 #include "dissect_mm_msg.hh"
+#include "ts24007.hh"
 
 extern const field_meta* hf_nas_5gs_epd;
 extern const field_meta* hf_nas_5gs_spare_half_octet;

@@ -34,8 +34,46 @@ struct tvbuff {
     tvbuff(const uint8_t *data, int len)
         : data(data), length(len), reported_length(len) {}
 
+    inline uint16_t get_ntohs(int offset) {
+        uint16_t a = data[offset];
+        uint16_t b = data[offset + 1];
+        return a << 8 | b;
+    };
+    uint32_t get_ntoh24(int offset) {
+        uint32_t a = data[offset];
+        uint32_t b = data[offset + 1];
+        uint32_t c = data[offset + 2];
+        return a << 16 | b << 8 | c;
+    }
+    uint32_t get_ntoh32(int offset) {
+        uint32_t a = data[offset];
+        uint32_t b = data[offset + 1];
+        uint32_t c = data[offset + 2];
+        uint32_t d = data[offset + 3];
+        return a << 24 | b << 16 | c << 8 | d;
+    }
+    uint64_t get_ntoh48(int offset) {
+        uint64_t a = data[offset];
+        uint64_t b = data[offset + 1];
+        uint64_t c = data[offset + 2];
+        uint64_t d = data[offset + 3];
+        uint64_t e = data[offset + 4];
+        uint64_t f = data[offset + 5];
+        return a << 40 | b << 32 | c << 24 | d << 16 | e << 8 | f;
+    }
+    uint64_t get_ntoh64(int offset) {
+        uint64_t a = data[offset];
+        uint64_t b = data[offset + 1];
+        uint64_t c = data[offset + 2];
+        uint64_t d = data[offset + 3];
+        uint64_t e = data[offset + 4];
+        uint64_t f = data[offset + 5];
+        uint64_t g = data[offset + 4];
+        uint64_t h = data[offset + 5];
+        return a << 56 | b << 48 | c << 40 | d << 32 | e << 24 | f << 16 | g << 8 | h;
+    }
     uint8_t get_uint8(int offset) const { return data[offset]; }
-    int     remain(int offset) const { return length - offset; }
+    int      remain(int offset) const { return length - offset; }
 };
 
 /** @defgroup tvbuff Testy, Virtual(-izable) Buffers
