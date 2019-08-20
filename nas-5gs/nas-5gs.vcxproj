@@ -157,6 +157,7 @@
     <ClCompile Include="dissect_nas_5gs.cc" />
     <ClCompile Include="dissect_nas_5gs_i.cc" />
     <ClCompile Include="dissect_sm_msg.cc" />
+    <ClCompile Include="field_meta.cc" />
     <ClCompile Include="nas-5gs.cc" />
     <ClCompile Include="proto.cc" />
     <ClCompile Include="ts24007.cc" />

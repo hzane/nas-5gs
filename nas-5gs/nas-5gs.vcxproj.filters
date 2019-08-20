@@ -42,6 +42,9 @@
     <ClCompile Include="ts24007.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="field_meta.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="config.hh">
