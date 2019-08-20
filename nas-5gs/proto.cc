@@ -16,6 +16,8 @@ std::string print_text(const field_meta* meta,
                        int               len,
                        uint32_t          enc);
 
+std::string print_text(const field_meta* meta, uint64_t v);
+
 proto_item* proto_node::add_item(packet_info*      pinfo,
                                  tvbuff*           buf,
                                  int               offset,
@@ -27,42 +29,47 @@ proto_item* proto_node::add_item(packet_info*      pinfo,
     item->data = buf->data+offset;
     item->length = length;
     item->enc    = encoding;
+    children.push_back(item);
 
-//TODO:
+    //TODO:
     if (field){
         item->name = field->name;
+    }
+    if (encoding != enc::none){
         item->text = print_text(field, buf->data + offset, length, encoding);
     }
-    children.push_back(item);
     return item;
 }
 
 proto_item* proto_node::set_uint(uint64_t v, uint32_t enc, const char* format, ...) {
-    if (enc != enc::none) this->enc = enc;
     using namespace std;
-    val.ui64 = v;
 
+    if (enc != enc::none) this->enc = enc;
+    val.ui64 = v;
 
     // TODO:
     va_list args;
     va_start(args, format);
-    if (format) text = vformat(format, args);
+    if (format)
+        text = vformat(format, args);
     else
-        text = formats("%08x", v);
+        text = print_text(meta, v);
     va_end(args);
     return this;
 }
 
 proto_item* proto_node::set_int(int64_t v, uint32_t enc, const char* format, ...) {
-    if (enc != enc::none) this->enc = enc;
     using namespace std;
+
+    if (enc != enc::none) this->enc = enc;
     val.i64 = v;
 
     va_list args;
     va_start(args, format);
-    if (format) text = vformat(format, args);
+    if (format)
+        text = vformat(format, args);
     else
-        text = formats("%d", (int) v);
+        text = print_text(meta, v);
     va_end(args);
 
 
@@ -127,41 +134,21 @@ proto_node::~proto_node() {
     children.clear();
 }
 
-std::string print_text(const field_meta* meta, const uint8_t* data, int len, uint32_t enc){
-    using namespace std;
-    stringstream ss;
-    ss << hex << setfill('0');
-
-    auto l = len > 16 ? 16 : len;
-
-    for(auto i = 0; i<l; i++){
-        ss << uint32_t(data + i) << " ";
-        if (i % 8 == 7) {
-            ss << endl;
-        }
+std::string print_text(const field_meta* meta,
+                       const uint8_t*    data,
+                       int               len,
+                       uint32_t          enc) {
+    if (meta == nullptr){
+        return field_meta{}.print_bytes(data, len, enc);
     }
-    if (l>16){
-        ss << "...";
-    }
-    return ss.str();
+    return meta->print_data(data, len, enc);
 }
 
-std::string vformat(const char* format, va_list args) {
-    using namespace std;
 
-    va_list va2;
-    va_copy(va2, args);
-    auto len = vsnprintf(nullptr, 0, format, va2);
-    va_end(va2);
+std::string print_text(const field_meta* meta, uint64_t v) {
+    if (meta == nullptr) {
+        return formats("%ud", v);
+    }
 
-    vector< char > zc(len + 1);
-    vsnprintf(zc.data(), zc.size(), format, args);
-    return string(zc.data(), zc.size());
-}
-std::string formats(const char* format, ...) {
-    va_list args;
-    va_start(args, format);
-    auto ret = vformat(format, args);
-    va_end(args);
-    return ret;
+    return meta->print(v);
 }

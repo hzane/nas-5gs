@@ -65,7 +65,11 @@ struct proto_node {
 
 inline void print_node(std::ostream& out, proto_node* node, int indent = 0) {
     auto prefix = std::string(size_t(indent*4), char(' '));
-    out << prefix << node->name << " : " << node->text << std::endl;
+    out << prefix << node->name;
+    if (!node->text.empty()){
+        out << " : " << node->text;
+    }
+    out << std::endl;
 
     for (auto node : node->children){
         print_node(out, node, indent + 1);

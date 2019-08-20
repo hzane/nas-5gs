@@ -2,7 +2,28 @@
 // defined in core.hh
 
 #include "config.hh"
+#include <string>
 
+struct val_string {
+    uint32_t    id;
+    const char* text;
+};
+
+struct true_false_string {
+    const char* true_string;
+    const char* false_string;
+};
+
+// [val_min, val_max)
+struct range_string {
+    uint32_t    val_min;
+    uint32_t    val_max;
+    const char* text;
+};
+
+const char* rval_to_str_const(uint32_t id,
+                              const range_string[],
+                              const char* missing = "Unknown");
 
 namespace ft {
 __declspec(selectany) extern const uint32_t none          = 0;
@@ -25,6 +46,7 @@ __declspec(selectany) extern const uint32_t ft_stringz    = 16;
 __declspec(selectany) extern const uint32_t ft_hex_string = 17;
 __declspec(selectany) extern const uint32_t ft_bin_string = 18;
 __declspec(selectany) extern const uint32_t ft_bytes      = 19;
+__declspec(selectany) extern const uint32_t ft_char       = 20;
 } // namespace ft
 
 namespace fd {
@@ -82,4 +104,12 @@ struct field_meta {
     const true_false_string* tf_strings;
     const range_string*      range_strings;
     uint64_t                 bitmask; /* bitmask of interesting bits */
+
+    std::string print(uint64_t v) const;
+    std::string print_dec(uint64_t v) const;
+    std::string print_hex(uint64_t v) const;
+    std::string print_bytes(const uint8_t* data, int len, uint32_t enc) const;
+    std::string print_data(const uint8_t* data, int len, uint32_t enc) const;
 };
+std::string formats(const char* format, ...);
+std::string vformat(const char* format, va_list);

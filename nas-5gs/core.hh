@@ -45,25 +45,6 @@ __declspec(selectany) extern const tree_meta ett_expert   = {};
 __declspec(selectany) extern const tree_meta ett_any      = {};
 } // namespace tm
 
-struct val_string {
-    uint32_t    id;
-    const char* text;
-};
-
-struct true_false_string {
-    const char* true_string;
-    const char* false_string;
-};
-
-// [val_min, val_max)
-struct range_string {
-    uint32_t    val_min;
-    uint32_t    val_max;
-    const char* text;
-};
-
-const char* rval_to_str_const(uint32_t id, const range_string[], const char* missing = "Unknown");
-
 struct protocol_meta {
     const char*      name;
     const char*      full_name;
@@ -92,5 +73,3 @@ typedef message_meta element_meta;
 
 inline const char* safe_str(const char* v) { return (v && v[0] != '\n') ? v : ""; }
 
-std::string formats(const char* format, ...);
-std::string vformat(const char* format, va_list);
