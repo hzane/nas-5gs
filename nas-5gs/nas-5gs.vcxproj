@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -152,12 +152,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="core.cc" />
+    <ClCompile Include="dissect_de_mm.cc" />
     <ClCompile Include="dissect_mm_msg.cc" />
     <ClCompile Include="dissect_mm_msg_i.cc" />
     <ClCompile Include="dissect_nas_5gs.cc" />
     <ClCompile Include="dissect_nas_5gs_i.cc" />
     <ClCompile Include="dissect_sm_msg.cc" />
     <ClCompile Include="field_meta.cc" />
+    <ClCompile Include="mm_resistration_req.cc" />
     <ClCompile Include="nas-5gs.cc" />
     <ClCompile Include="proto.cc" />
     <ClCompile Include="ts24007.cc" />
@@ -170,6 +172,7 @@
     <ClInclude Include="dissect_sm_msg.hh" />
     <ClInclude Include="expert_meta.hh" />
     <ClInclude Include="field_meta.hh" />
+    <ClInclude Include="mm_registration_req.hh" />
     <ClInclude Include="nas-5gs.hh" />
     <ClInclude Include="packet_info.hh" />
     <ClInclude Include="proto.hh" />

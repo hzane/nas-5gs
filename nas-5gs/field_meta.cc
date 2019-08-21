@@ -44,45 +44,53 @@ std::string field_meta::print_dec(uint64_t v) const {
     return formats(fmt, v);
 }
 
-const char* find_val_string(const val_string* vstr, uint32_t id) {
+const char* find_val_string(const val_string* vstr, uint32_t id, const char*missing) {
     for (auto v = vstr; v->text; v++) {
         if (v->id == id) return v->text;
     }
-    return nullptr;
+    return missing;
 }
-const char* find_r_string(const range_string* rstr, uint32_t id) {
+const char* find_r_string(const range_string* rstr, uint32_t id, const char*missing) {
     for (auto v = rstr; v->text; v++) {
         if (v->val_min <= id && v->val_max >= id) {
             return v->text;
         }
     }
-    return nullptr;
+    return missing;
+}
+
+std::vector< std::string > find_bitset_string(const val_string* vstrs, uint32_t bits) {
+    std::vector< std::string > ret;
+    for(auto vstr = vstrs;vstr->id;vstr++){
+        if((vstr->id&bits)==vstr->id){
+            ret.push_back(std::string(vstr->text));
+        }
+    }
+    return ret;
 }
 
 std::string field_meta::print(uint64_t v) const {
-    if (bitmask) v = v >> ws_ctz(bitmask);
+    // if (bitmask) v = v >> ws_ctz(bitmask);
+    if (bitmask) v = v & bitmask;
 
+    if (val_strings && field_type==ft::ft_bitset){
+        auto flags = find_bitset_string(val_strings, (uint32_t) v);
+        return join(flags, " | ");
+    }
     if (val_strings) {
         auto s = find_val_string(val_strings, uint32_t(v));
-        if (s) {
-            return formats("%s (%x)", s, v);
-        } else {
-            return formats("unknown (%x)", v);
-        }
+        return formats("%s (%#x)", s, v);
     }
     if (tf_strings && v) return tf_strings->true_string;
     if (tf_strings) return tf_strings->false_string;
     if (range_strings) {
         auto s = find_r_string(range_strings, uint32_t(v));
-        if (s) {
-            return formats("%s (%x)", s, v);            
-        } else
-            return formats("unknown(%x)", v);
+        return formats("%s (%#x)", s, v);            
     }
 
     if (field_type == ft::ft_boolean)
         return formats((v & 0xff) ? "true (%d)" : "false (%d)", v);
-    if (field_type == ft::ft_char) return formats("%c (%02x)", (char) v, v);
+    if (field_type == ft::ft_char) return formats("%c (%#02x)", (char) v, v);
     
     if ((display & 0x07) == fd::base_dec) return print_dec(v);
     if ((display & 0x07) == fd::base_hex) return print_hex(v);
@@ -134,9 +142,9 @@ std::string field_meta::print_data(const uint8_t* data, int len, uint32_t enc) c
     auto tvb = tvbuff(data, len);
     if (len==1) {
         v = tvb.get_uint8(0);        
-    }else if (len==2){
+    }else if (len==2) {
         v = tvb.get_ntohs(0);
-    }else if(len==3){
+    }else if(len==3) {
         v = tvb.get_ntoh24(0);
     } else if (len == 4) {
         v = tvb.get_ntoh32(0);
@@ -164,4 +172,17 @@ std::string formats(const char* format, ...) {
     auto ret = vformat(format, args);
     va_end(args);
     return ret;
+}
+
+using namespace std;
+string join(const vector< string >& strs, const char* sep) {
+    stringstream ss;
+
+    auto i = strs.begin();
+    auto e = strs.end();
+    if (i != e) ss << *i++;
+    while(i!=e){
+        ss << sep << *i++;
+    }
+    return ss.str();
 }

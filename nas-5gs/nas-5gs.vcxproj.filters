@@ -45,6 +45,9 @@
     <ClCompile Include="field_meta.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="dissect_de_mm.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="config.hh">

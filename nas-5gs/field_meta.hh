@@ -21,9 +21,6 @@ struct range_string {
     const char* text;
 };
 
-const char* rval_to_str_const(uint32_t id,
-                              const range_string[],
-                              const char* missing = "Unknown");
 
 namespace ft {
 __declspec(selectany) extern const uint32_t none          = 0;
@@ -47,6 +44,7 @@ __declspec(selectany) extern const uint32_t ft_hex_string = 17;
 __declspec(selectany) extern const uint32_t ft_bin_string = 18;
 __declspec(selectany) extern const uint32_t ft_bytes      = 19;
 __declspec(selectany) extern const uint32_t ft_char       = 20;
+__declspec(selectany) extern const uint32_t ft_bitset     = 21;
 } // namespace ft
 
 namespace fd {
@@ -113,3 +111,9 @@ struct field_meta {
 };
 std::string formats(const char* format, ...);
 std::string vformat(const char* format, va_list);
+
+const char* find_val_string(const val_string* vstr, uint32_t id, const char*missing="Unknown");
+const char* find_r_string(const range_string* rstr, uint32_t id, const char*missing="Unknown");
+std::vector< std::string > find_bitset_string(const val_string* vstr, uint32_t bits);
+
+std::string join(const std::vector< std::string >& strs, const char* sep = " ");

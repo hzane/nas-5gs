@@ -13,6 +13,7 @@ extern const field_meta* hf_nas_5gs_pdu_session_id;
 extern const field_meta* hf_nas_5gs_proc_trans_id;
 extern const field_meta* hf_nas_5gs_msg_elems;
 extern const field_meta* hf_nas_5gs_sm_msg_type;
+extern const field_meta* hf_nas_5gs_mm_msg_type;
 
 int dissect_nas_5gs(packet_info* pinfo,
                     proto_node*  tree,
@@ -172,7 +173,7 @@ static int dissect_mm_msg(packet_info* pinfo,
     }
 
     // Add NAS message name
-    tree->add_item(pinfo, tvb, offset, 1, hf_nas_5gs_sm_msg_type, enc::be);
+    tree->add_item(pinfo, tvb, offset, 1, hf_nas_5gs_mm_msg_type, enc::be);
     offset++;
 
     if (meta->fnc) {

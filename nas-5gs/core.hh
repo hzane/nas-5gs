@@ -73,3 +73,18 @@ typedef message_meta element_meta;
 
 inline const char* safe_str(const char* v) { return (v && v[0] != '\n') ? v : ""; }
 
+inline void extraneous_data_check(packet_info* pinfo,
+                           proto_node*  tree,
+                           tvbuff*      tvb,
+                           int          offset,
+                           int          len,
+                           int          maxlen) {
+    if (len >maxlen){
+        tree->add_expert(pinfo,
+                         tvb,
+                         offset,
+                         len - maxlen,
+                         "extraneous data (%d) bytes",
+                         (len - maxlen));
+    }
+}

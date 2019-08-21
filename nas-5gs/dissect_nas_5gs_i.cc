@@ -195,3 +195,67 @@ static field_meta hfm_nas_5gs_proc_trans_id = {
     0x0,
 };
 extern const field_meta* hf_nas_5gs_proc_trans_id = &hfm_nas_5gs_proc_trans_id;
+
+/* 9.7  Message type */
+
+/* 5GS mobility management messages */
+static const val_string nas_5gs_mm_message_type_vals[] = {
+    {0x41, "Registration request"},
+    {0x42, "Registration accept"},
+    {0x43, "Registration complete"},
+    {0x44, "Registration reject"},
+    {0x45, "Deregistration request (UE originating)"},
+    {0x46, "Deregistration accept (UE originating)"},
+    {0x47, "Deregistration request (UE terminated)"},
+    {0x48, "Deregistration accept (UE terminated)"},
+
+    {0x49, "Not used in current version"},
+    {0x4a, "Not used in current version"},
+    {0x4b, "Not used in current version"},
+
+    {0x4c, "Service request"},
+    {0x4d, "Service reject"},
+    {0x4e, "Service accept"},
+
+    {0x4f, "Not used in current version"},
+    {0x50, "Not used in current version"},
+    {0x51, "Not used in current version"},
+    {0x52, "Not used in current version"},
+    {0x53, "Not used in current version"},
+
+    {0x54, "Configuration update command"},
+    {0x55, "Configuration update complete"},
+    {0x56, "Authentication request"},
+    {0x57, "Authentication response"},
+    {0x58, "Authentication reject"},
+    {0x59, "Authentication failure"},
+
+    {0x5a, "Authentication result"},
+    {0x5b, "Identity request"},
+    {0x5c, "Identity response"},
+    {0x5d, "Security mode command"},
+    {0x5e, "Security mode complete"},
+    {0x5f, "Security mode reject"},
+
+    {0x60, "Not used in current version"},
+    {0x61, "Not used in current version"},
+    {0x62, "Not used in current version"},
+    {0x63, "Not used in current version"},
+    {0x64, "5GMM status"},
+    {0x65, "Notification"},
+    {0x66, "Notification response"},
+    {0x67, "UL NAS transport"},
+    {0x68, "DL NAS transport"},
+    {0, NULL},
+};
+static field_meta hfm_nas_5gs_mm_msg_type = {
+    "Message type",
+    "nas_5gs.sm.message_type",
+    ft::ft_uint8,
+    fd::base_hex | fd::base_ext_string,
+    nas_5gs_mm_message_type_vals,
+    nullptr,
+    nullptr,
+    0x0,
+};
+extern const field_meta* hf_nas_5gs_mm_msg_type = &hfm_nas_5gs_mm_msg_type;

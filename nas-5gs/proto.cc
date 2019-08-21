@@ -76,7 +76,7 @@ proto_item* proto_node::set_int(int64_t v, uint32_t enc, const char* format, ...
     return this;
 }
 
-proto_item* proto_node::set_bitmask_list(const field_meta* fields[], uint64_t value) {
+proto_item* proto_node::set_bitmask_list(const field_meta* fields, uint64_t value) {
     using namespace std;
     val.ui64 = value;
 
