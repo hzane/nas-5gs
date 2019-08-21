@@ -2,6 +2,12 @@
 #include "config.hh"
 #include "tvbuff.hh"
 
+struct tvbuff;
+struct packet_info;
+struct proto_node;
+struct context;
+
+
 namespace pi_dir {
 __declspec(selectany) extern const int unknown = 0;
 __declspec(selectany) extern const int ul = 1;

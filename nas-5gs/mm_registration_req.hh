@@ -61,7 +61,7 @@ static field_meta hfm_mm_registration_req_elem = {
 extern const field_meta* hf_mm_registration_req_elem =
     &hfm_mm_registration_req_elem;
 
-namespace em_de_nas_5gs_mm {
+namespace em_de_mm {
 extern const element_meta mobile_id;
 extern const element_meta nksi_key_set_id;
 extern const element_meta mm_cap;
@@ -102,8 +102,8 @@ extern const element_meta ladn_inf;
 extern const element_meta mico_ind;
 extern const element_meta nw_slicing_ind;
 extern const element_meta sal;
-extern const element_meta t2512_gprs_timer_3;
-extern const element_meta de_reg_timer_grps_timer2;
+extern const element_meta t3512_gprs_timer_3;
+extern const element_meta de_reg_timer_gprs_timer2;
 extern const element_meta gprs_timer_2;
 extern const element_meta emerg_num_list;
 extern const element_meta emerg_num_list_7a;

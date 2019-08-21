@@ -102,6 +102,7 @@ struct field_meta {
     const true_false_string* tf_strings;
     const range_string*      range_strings;
     uint64_t                 bitmask; /* bitmask of interesting bits */
+    uint64_t                 bitshift;
 
     std::string print(uint64_t v) const;
     std::string print_dec(uint64_t v) const;

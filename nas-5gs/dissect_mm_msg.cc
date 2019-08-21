@@ -3,7 +3,6 @@
 
 #include "mm_registration_req.hh"
 
-using namespace em_de_nas_5gs_mm;
 
 /*
  * 8.2.6 Registration request
@@ -14,6 +13,7 @@ int mm::nas_5gs_mm_registration_req(packet_info* pinfo,
                                     int          offset,
                                     int          len,
                                     context*     ctx) {
+    using namespace em_de_mm;
     pinfo->dir = pi_dir::ul;
     // get private data
 

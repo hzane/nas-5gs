@@ -53,11 +53,11 @@ struct proto_node {
     std::string              name     = {};
     std::string              text     = {};
     value_t                  val      = {0};
-    proto_node*              parent = nullptr;
     uint32_t                 enc    = enc::na; // enc::na
     const field_meta*        meta   = nullptr;
     const uint8_t*           data   = nullptr;
     int                      length = 0;
+    int                      offset   = 0;
 
     virtual ~proto_node();
     proto_node(){};
