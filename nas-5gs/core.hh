@@ -12,9 +12,7 @@ extern void nas_5gs_module_cleanup();
 extern void bug(const char* format, ...);
 
 struct context {
-    const char*  msg_name;
-    const char*  elem_name;
-    const char*  field_name;
+
 };
 
 namespace em_severity {
@@ -51,7 +49,7 @@ struct protocol_meta {
     dissect_fnc_t    dissector;
 };
 
-extern int dissect_nas_5gs(packet_info*, proto_node*, tvbuff*, int, int, context*);
+extern int dissect_nas_5gs(dissector, context*);
 
 __declspec(selectany) extern const protocol_meta nas_5gs_module = {
     "NAS-5GS",
@@ -62,6 +60,8 @@ namespace TGPP_PD{
 __declspec(selectany) extern const uint8_t MM5G = 0x7e; //TGPP_PD_5GMM
 __declspec(selectany) extern const uint8_t SM5G = 0x2e; //TGPP_PD_5GSM
 }
+
+typedef dissect_fnc_t dissect_msg_fnc_t;
 
 struct message_meta {
     uint8_t           type; // iei
@@ -88,3 +88,5 @@ inline void extraneous_data_check(packet_info* pinfo,
                          (len - maxlen));
     }
 }
+
+extern const field_meta* hf_spare_half_octet;

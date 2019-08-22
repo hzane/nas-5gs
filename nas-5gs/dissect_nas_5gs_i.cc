@@ -1,5 +1,17 @@
 #include "dissect_nas_5gs.hh"
 
+extern const field_meta hfm_spare_half_octet = {
+    "Spare Half Octet",
+    "nas_5gs.spare_half_octet",
+    ft::ft_uint8,
+    fd::base_dec,
+    nullptr,
+    nullptr,
+    nullptr,
+    0xf0,
+};
+extern const field_meta* hf_spare_half_octet  = &hfm_spare_half_octet;
+
 static field_meta hfm_nas_5gs_msg_elems = {
     "Message Elements",
     "nas_5gs.message_elements",
@@ -143,14 +155,13 @@ static field_meta hfm_nas_5gs_sm_msg_type = {
     "Message type",
     "nas_5gs.sm.message_type",
     ft::ft_uint8,
-    fd::base_hex | fd::base_ext_string,
+    fd::base_hex,
     nas_5gs_sm_message_type_vals,
     nullptr,
     nullptr,
     0x0,
 };
-extern const field_meta* hf_nas_5gs_sm_msg_type     = &hfm_nas_5gs_sm_msg_type;
-
+extern const field_meta* hf_nas_5gs_sm_msg_type = &hfm_nas_5gs_sm_msg_type;
 
 extern const val_string nas_5gs_pdu_session_id_vals[] = {
     {0x00, "No PDU session identity assigned"},
@@ -252,7 +263,7 @@ static field_meta hfm_nas_5gs_mm_msg_type = {
     "Message type",
     "nas_5gs.sm.message_type",
     ft::ft_uint8,
-    fd::base_hex | fd::base_ext_string,
+    fd::base_hex ,
     nas_5gs_mm_message_type_vals,
     nullptr,
     nullptr,

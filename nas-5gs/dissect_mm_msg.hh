@@ -7,372 +7,125 @@
 namespace mm {
 __declspec(selectany) extern const dissect_fnc_t no_dissect = nullptr;
 
-int nas_5gs_mm_registration_req(packet_info* pinfo,
-                                proto_node*  tree,
-                                tvbuff*      buf,
-                                int          offset,
-                                int          len,
-                                context*     ctx);
-int nas_5gs_mm_registration_accept(packet_info* pinfo,
-                                   proto_node*  tree,
-                                   tvbuff*      buf,
-                                   int          offset,
-                                   int          len,
-                                   context*     ctx);
-int nas_5gs_mm_registration_complete(packet_info* pinfo,
-                                     proto_node*  tree,
-                                     tvbuff*      buf,
-                                     int          offset,
-                                     int          len,
-                                     context*     ctx);
-int nas_5gs_mm_registration_rej(packet_info* pinfo,
-                                proto_node*  tree,
-                                tvbuff*      buf,
-                                int          offset,
-                                int          len,
-                                context*     ctx);
-int nas_5gs_mm_de_reg_req_ue_orig(packet_info* pinfo,
-                                  proto_node*  tree,
-                                  tvbuff*      buf,
-                                  int          offset,
-                                  int          len,
-                                  context*     ctx);
-int nas_5gs_mm_de_registration_req_ue_term(packet_info* pinfo,
-                                           proto_node*  tree,
-                                           tvbuff*      buf,
-                                           int          offset,
-                                           int          len,
-                                           context*     ctx);
-int nas_5gs_mm_service_req(packet_info* pinfo,
-                           proto_node*  tree,
-                           tvbuff*      buf,
-                           int          offset,
-                           int          len,
-                           context*     ctx);
-int nas_5gs_mm_service_rej(packet_info* pinfo,
-                           proto_node*  tree,
-                           tvbuff*      buf,
-                           int          offset,
-                           int          len,
-                           context*     ctx);
-int nas_5gs_mm_service_acc(packet_info* pinfo,
-                           proto_node*  tree,
-                           tvbuff*      buf,
-                           int          offset,
-                           int          len,
-                           context*     ctx);
+int registration_req(dissector d, context* ctx);
+int registration_accept(dissector d, context* ctx);
+int registration_complete(dissector d, context* ctx);
+int registration_rej(dissector d, context* ctx);
+int de_reg_req_ue_orig(dissector d, context* ctx);
+int de_registration_req_ue_term(dissector d, context* ctx);
+int service_req(dissector d, context* ctx);
+int service_rej(dissector d, context* ctx);
+int service_acc(dissector d, context* ctx);
 
-int nas_5gs_mm_conf_upd_cmd(packet_info* pinfo,
-                            proto_node*  tree,
-                            tvbuff*      buf,
-                            int          offset,
-                            int          len,
-                            context*     ctx);
-int nas_5gs_mm_conf_update_comp(packet_info* pinfo,
-                                proto_node*  tree,
-                                tvbuff*      buf,
-                                int          offset,
-                                int          len,
-                                context*     ctx);
-int nas_5gs_mm_authentication_req(packet_info* pinfo,
-                                  proto_node*  tree,
-                                  tvbuff*      buf,
-                                  int          offset,
-                                  int          len,
-                                  context*     ctx);
-int nas_5gs_mm_authentication_resp(packet_info* pinfo,
-                                   proto_node*  tree,
-                                   tvbuff*      buf,
-                                   int          offset,
-                                   int          len,
-                                   context*     ctx);
-int nas_5gs_mm_authentication_rej(packet_info* pinfo,
-                                  proto_node*  tree,
-                                  tvbuff*      buf,
-                                  int          offset,
-                                  int          len,
-                                  context*     ctx);
-int nas_5gs_mm_authentication_failure(packet_info* pinfo,
-                                      proto_node*  tree,
-                                      tvbuff*      buf,
-                                      int          offset,
-                                      int          len,
-                                      context*     ctx);
-int nas_5gs_mm_authentication_result(packet_info* pinfo,
-                                     proto_node*  tree,
-                                     tvbuff*      buf,
-                                     int          offset,
-                                     int          len,
-                                     context*     ctx);
-int nas_5gs_mm_id_req(packet_info* pinfo,
-                      proto_node*  tree,
-                      tvbuff*      buf,
-                      int          offset,
-                      int          len,
-                      context*     ctx);
-int nas_5gs_mm_id_resp(packet_info* pinfo,
-                       proto_node*  tree,
-                       tvbuff*      buf,
-                       int          offset,
-                       int          len,
-                       context*     ctx);
-int nas_5gs_mm_sec_mode_cmd(packet_info* pinfo,
-                            proto_node*  tree,
-                            tvbuff*      buf,
-                            int          offset,
-                            int          len,
-                            context*     ctx);
-int nas_5gs_mm_sec_mode_comp(packet_info* pinfo,
-                             proto_node*  tree,
-                             tvbuff*      buf,
-                             int          offset,
-                             int          len,
-                             context*     ctx);
-int nas_5gs_mm_sec_mode_rej(packet_info* pinfo,
-                            proto_node*  tree,
-                            tvbuff*      buf,
-                            int          offset,
-                            int          len,
-                            context*     ctx);
+int conf_upd_cmd(dissector d, context* ctx);
+int conf_update_comp(dissector d, context* ctx);
+int authentication_req(dissector d, context* ctx);
+int authentication_resp(dissector d, context* ctx);
+int authentication_rej(dissector d, context* ctx);
+int authentication_failure(dissector d, context* ctx);
+int authentication_result(dissector d, context* ctx);
+int id_req(dissector d, context* ctx);
+int id_resp(dissector d, context* ctx);
+int sec_mode_cmd(dissector d, context* ctx);
+int sec_mode_comp(dissector d, context* ctx);
+int sec_mode_rej(dissector d, context* ctx);
 
-int nas_5gs_mm_5gmm_status(packet_info* pinfo,
-                           proto_node*  tree,
-                           tvbuff*      buf,
-                           int          offset,
-                           int          len,
-                           context*     ctx);
-int nas_5gs_mm_notification(packet_info* pinfo,
-                            proto_node*  tree,
-                            tvbuff*      buf,
-                            int          offset,
-                            int          len,
-                            context*     ctx);
-int nas_5gs_mm_notification_resp(packet_info* pinfo,
-                                 proto_node*  tree,
-                                 tvbuff*      buf,
-                                 int          offset,
-                                 int          len,
-                                 context*     ctx);
-int nas_5gs_mm_ul_nas_transp(packet_info* pinfo,
-                             proto_node*  tree,
-                             tvbuff*      buf,
-                             int          offset,
-                             int          len,
-                             context*     ctx);
-int nas_5gs_mm_dl_nas_transp(packet_info* pinfo,
-                             proto_node*  tree,
-                             tvbuff*      buf,
-                             int          offset,
-                             int          len,
-                             context*     ctx);
+int mm_status(dissector d, context* ctx);
+int notification(dissector d, context* ctx);
+int notification_resp(dissector d, context* ctx);
+int ul_nas_transp(dissector d, context* ctx);
+int dl_nas_transp(dissector d, context* ctx);
 
 __declspec(selectany) extern const message_meta msgs[] = {
-    {
-        0x41,
-        "Registration request",
-        nas_5gs_mm_registration_req,
-    },
-    {
-        0x42,
-        "Registration accept",
-        nas_5gs_mm_registration_accept,
-    },
-    {
-        0x43,
-        "Registration complete",
-        nas_5gs_mm_registration_complete,
-    },
-    {
-        0x44,
-        "Registration reject",
-        nas_5gs_mm_registration_rej,
-    },
-    {
-        0x45,
-        "Deregistration request (UE originating)",
-        nas_5gs_mm_de_reg_req_ue_orig,
-    },
-    {
-        0x46,
-        "Deregistration accept (UE originating)",
-        nullptr,
-    },
-    {
-        0x47,
-        "Deregistration request (UE terminated)",
-        nas_5gs_mm_de_registration_req_ue_term,
-    },
-    {
-        0x48,
-        "Deregistration accept (UE terminated)",
-        nullptr,
-    },
+    {0x41, "Registration request", registration_req},
+    {0x42, "Registration accept", registration_accept},
+    {0x43, "Registration complete", registration_complete},
+    {0x44, "Registration reject", registration_rej},
+    {0x45, "Deregistration request (UE originating)", de_reg_req_ue_orig},
+    {0x46, "Deregistration accept (UE originating)", nullptr},
+    {0x47, "Deregistration request (UE terminated)", de_registration_req_ue_term},
+    {0x48, "Deregistration accept (UE terminated)", nullptr},
 
-    {
-        0x49,
-        "Not used in current version",
-        no_dissect,
-    },
-    {
-        0x4a,
-        "Not used in current version",
-        no_dissect,
-    },
-    {
-        0x4b,
-        "Not used in current version",
-        no_dissect,
-    },
+    {0x49, "Not used in current version", no_dissect},
+    {0x4a, "Not used in current version", no_dissect},
+    {0x4b, "Not used in current version", no_dissect},
 
-    {
-        0x4c,
-        "Service request",
-        nas_5gs_mm_service_req,
-    },
-    {
-        0x4d,
-        "Service reject",
-        nas_5gs_mm_service_rej,
-    },
-    {
-        0x4e,
-        "Service accept",
-        nas_5gs_mm_service_acc,
-    },
+    {0x4c, "Service request", service_req},
+    {0x4d, "Service reject", service_rej},
+    {0x4e, "Service accept", service_acc},
 
-    {
-        0x4f,
-        "Not used in current version",
-        no_dissect,
-    },
-    {
-        0x50,
-        "Not used in current version",
-        no_dissect,
-    },
-    {
-        0x51,
-        "Not used in current version",
-        no_dissect,
-    },
-    {
-        0x52,
-        "Not used in current version",
-        no_dissect,
-    },
-    {
-        0x53,
-        "Not used in current version",
-        no_dissect,
-    },
+    {0x4f, "Not used in current version", no_dissect},
+    {0x50, "Not used in current version", no_dissect},
+    {0x51, "Not used in current version", no_dissect},
+    {0x52, "Not used in current version", no_dissect},
+    {0x53, "Not used in current version", no_dissect},
 
-    {
-        0x54,
-        "Configuration update command",
-        nas_5gs_mm_conf_upd_cmd,
-    },
-    {
-        0x55,
-        "Configuration update complete",
-        nas_5gs_mm_conf_update_comp,
-    },
-    {
-        0x56,
-        "Authentication request",
-        nas_5gs_mm_authentication_req,
-    },
-    {
-        0x57,
-        "Authentication response",
-        nas_5gs_mm_authentication_resp,
-    },
-    {
-        0x58,
-        "Authentication reject",
-        nas_5gs_mm_authentication_rej,
-    },
-    {
-        0x59,
-        "Authentication failure",
-        nas_5gs_mm_authentication_failure,
-    },
+    {0x54, "Configuration update command", conf_upd_cmd},
+    {0x55, "Configuration update complete", conf_update_comp},
+    {0x56, "Authentication request", authentication_req},
+    {0x57, "Authentication response", authentication_resp},
+    {0x58, "Authentication reject", authentication_rej},
+    {0x59, "Authentication failure", authentication_failure},
 
-    {
-        0x5a,
-        "Authentication result",
-        nas_5gs_mm_authentication_result,
-    },
-    {
-        0x5b,
-        "Identity request",
-        nas_5gs_mm_id_req,
-    },
-    {
-        0x5c,
-        "Identity response",
-        nas_5gs_mm_id_resp,
-    },
-    {
-        0x5d,
-        "Security mode command",
-        nas_5gs_mm_sec_mode_cmd,
-    },
-    {
-        0x5e,
-        "Security mode complete",
-        nas_5gs_mm_sec_mode_comp,
-    },
-    {
-        0x5f,
-        "Security mode reject",
-        nas_5gs_mm_sec_mode_rej,
-    },
+    {0x5a, "Authentication result", authentication_result},
+    {0x5b, "Identity request", id_req},
+    {0x5c, "Identity response", id_resp},
+    {0x5d, "Security mode command", sec_mode_cmd},
+    {0x5e, "Security mode complete", sec_mode_comp},
+    {0x5f, "Security mode reject", sec_mode_rej},
 
-    {
-        0x60,
-        "Not used in current version",
-        no_dissect,
-    },
-    {
-        0x61,
-        "Not used in current version",
-        no_dissect,
-    },
-    {
-        0x62,
-        "Not used in current version",
-        no_dissect,
-    },
-    {
-        0x63,
-        "Not used in current version",
-        no_dissect,
-    },
-    {
-        0x64,
-        "5GMM status",
-        nas_5gs_mm_5gmm_status,
-    },
-    {
-        0x65,
-        "Notification",
-        nas_5gs_mm_notification,
-    },
-    {
-        0x66,
-        "Notification response",
-        nas_5gs_mm_notification_resp,
-    },
-    {
-        0x67,
-        "UL NAS transport",
-        nas_5gs_mm_ul_nas_transp,
-    },
-    {
-        0x68,
-        "DL NAS transport",
-        nas_5gs_mm_dl_nas_transp,
-    },
+    {0x60, "Not used in current version", no_dissect},
+    {0x61, "Not used in current version", no_dissect},
+    {0x62, "Not used in current version", no_dissect},
+    {0x63, "Not used in current version", no_dissect},
+    {0x64, "5GMM status", mm_status},
+    {0x65, "Notification", notification},
+    {0x66, "Notification response", notification_resp},
+    {0x67, "UL NAS transport", ul_nas_transp},
+    {0x68, "DL NAS transport", dl_nas_transp},
     {0, nullptr, nullptr},
 };
 }
+
+int                       dissect_mm_cause(dissector d, context* ctx);
+__declspec(selectany) extern const element_meta mm_cause = {
+    -1,
+    "5GMM cause",
+    dissect_mm_cause,
+};
+
+int dissect_eap_msg(dissector d, context* ctx);
+
+__declspec(selectany) extern const element_meta eap_msg = {
+    0x78,
+    "EAP message",
+    dissect_eap_msg,
+};
+
+int                       dissect_nksi(dissector d, context* ctx);
+__declspec(selectany) extern const element_meta nksi = {
+    -1,
+    "NAS key set identifier",
+    dissect_nksi,
+};
+
+int                       dissect_mobile_id(dissector d, context* ctx);
+__declspec(selectany) extern const element_meta mobile_id = {
+    -1,
+    "Mobile identity",
+    dissect_mobile_id,
+};
+
+int                dissect_pdu_ses_status(dissector d, context* ctx = nullptr);
+__declspec(selectany) extern const element_meta pdu_ses_status = {
+    0x50,
+    "PDU session status",
+    dissect_pdu_ses_status,
+};
+
+int                dissect_nas_msg_cont(dissector d, context* ctx = nullptr);
+__declspec(selectany) extern const element_meta nas_msg_cont = {
+    0x71,
+    "NAS message container",
+    dissect_nas_msg_cont,
+};

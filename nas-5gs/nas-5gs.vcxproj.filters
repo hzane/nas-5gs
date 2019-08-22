@@ -48,6 +48,21 @@
     <ClCompile Include="dissect_de_mm.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="mm\registration_req.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\registration_accept.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="formats.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\registration_complete.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\registration_rej.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="config.hh">
@@ -93,6 +108,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="dissect_mm_msg.hh">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="mm\registration_req_i.cc">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

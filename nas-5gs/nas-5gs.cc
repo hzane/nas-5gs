@@ -12,8 +12,9 @@ int main()
     packet_info pinfo{};
     tvbuff      tvb{packet_sample, sizeof(packet_sample)};
     proto_node  root{};
+    dissector   param{&pinfo, &root, &tvb, 0, sizeof(packet_sample), nullptr};
 
     cout << nas_5gs_module.full_name << " - " << nas_5gs_module.name << endl;
-    nas_5gs_module.dissector(&pinfo, &root, &tvb, 0, sizeof(packet_sample), nullptr);
+    nas_5gs_module.dissector(param, nullptr);
     print_node(std::cout, &root, 0);
 }

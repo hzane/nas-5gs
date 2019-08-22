@@ -5,13 +5,6 @@
 #include <vector>
 #include <iostream>
 
-namespace enc {
-__declspec(selectany) extern const uint32_t na   = 0;
-__declspec(selectany) extern const uint32_t be   = 1; // big endian
-__declspec(selectany) extern const uint32_t le   = 2; // little endian
-__declspec(selectany) extern const uint32_t none = 4; // host order
-} // namespace enc
-
 union value_t {
     uint64_t               ui64;
     uint32_t               ui32;
