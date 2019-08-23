@@ -1,10 +1,10 @@
 #include "../dissect_mm_msg.hh"
 #include "../ts24007.hh"
 
-namespace mm_de_reg_req{
+namespace mm_de_reg_req {
 extern const element_meta de_reg_type;
 extern const element_meta t3346_gprs_timer2;
-}
+} // namespace mm_de_reg_req
 /*
  * 8.2.14 De-registration request (UE terminated de-registration)
  */
@@ -38,19 +38,20 @@ int mm::de_registration_req_ue_term(dissector d, context* ctx) {
     return d.tvb->reported_length;
 }
 
-
-namespace mm_de_reg_req{
-int dissect_de_reg_type(dissector d, context*);
+namespace mm_de_reg_req {
+int                       dissect_de_reg_type(dissector d, context*);
 extern const element_meta de_reg_type = {
     0xff,
     "De-registration type",
     dissect_de_reg_type,
 };
 
-int dissect_t3346_gprs_timer2(dissector d, context*);
+int                       dissect_t3346_gprs_timer2(dissector d, context*);
 extern const element_meta t3346_gprs_timer2 = {
     0x5f,
     "T3346 value GPRS timer 2",
     dissect_t3346_gprs_timer2,
 };
-}
+int dissect_de_reg_type(dissector d, context*) { return 0; }
+int dissect_t3346_gprs_timer2(dissector d, context*) { return 0; }
+} // namespace mm_de_reg_req

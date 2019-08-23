@@ -1,7 +1,7 @@
 #include "../dissect_mm_msg.hh"
 #include "../ts24007.hh"
 
-namespace mm_authentication_resp{
+namespace mm_authentication_resp {
 extern const element_meta auth_resp_par;
 }
 /*
@@ -35,5 +35,7 @@ extern const element_meta auth_resp_par = {
     "Authentication response parameter",
     dissect_auth_resp_par,
 };
+
+int dissect_auth_resp_par(dissector d, context* ctx) { return 0; }
 
 } // namespace mm_authentication_resp

@@ -7,7 +7,7 @@ extern const element_meta always_on_pdu_ses_req;
 extern const element_meta int_prot_max_data_rate;
 extern const element_meta requested_qos_rules;
 extern const element_meta authorized_qos_flow_des;
-}
+} // namespace sm_pdu_ses_mod
 
 /*
  *8.3.7 PDU session modification request
@@ -92,7 +92,6 @@ namespace sm_pdu_ses_mod {
 int dissect_always_on_pdu_ses_req(dissector d, context* ctx);
 int dissect_int_prot_max_data_rate(dissector d, context* ctx);
 int dissect_requested_qos_rules(dissector d, context* ctx);
-int dissect_authorized_qos_flow_des(dissector d, context* ctx);
 
 extern const element_meta always_on_pdu_ses_req = {
     0xB0,
@@ -109,9 +108,5 @@ extern const element_meta requested_qos_rules = {
     "Requested QoS rules",
     dissect_requested_qos_rules,
 };
-extern const element_meta authorized_qos_flow_des = {
-    0x79,
-    "Requested QoS flow descriptions - Authorized",
-    dissect_authorized_qos_flow_des,
-};
-}
+
+} // namespace sm_pdu_ses_mod

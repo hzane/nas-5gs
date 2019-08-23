@@ -1,7 +1,6 @@
 #include "../dissect_mm_msg.hh"
 #include "../ts24007.hh"
 
-
 /*
  * 8.2.8 Registration complete
  */

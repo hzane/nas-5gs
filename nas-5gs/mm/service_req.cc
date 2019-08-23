@@ -1,13 +1,13 @@
 #include "../dissect_mm_msg.hh"
 #include "../ts24007.hh"
 
-namespace mm_service_req{
-extern const field_meta* hf_service_type;
+namespace mm_service_req {
+extern const field_meta*  hf_service_type;
 extern const element_meta key_set_id;
 extern const element_meta s_tmsi;
 extern const element_meta uplink_data_status;
 extern const element_meta allowed_pdu_ses_status;
-}
+} // namespace mm_service_req
 
 /*
  * 8.2.16 Service request
@@ -73,13 +73,15 @@ namespace mm_service_req {
  */
 
 /* Used inline as H1 (Upper nibble)*/
-const val_string nas_5gs_mm_serv_type_vals[] = {{0x00, "Signalling"},
-                                                {0x01, "Data"},
-                                                {0x02, "Mobile terminated services"},
-                                                {0x03, "Emergency services"},
-                                                {0x04, "Emergency services fallback"},
-                                                {0x05, "High priority access"},
-                                                {0, nullptr},};
+const val_string nas_5gs_mm_serv_type_vals[] = {
+    {0x00, "Signalling"},
+    {0x01, "Data"},
+    {0x02, "Mobile terminated services"},
+    {0x03, "Emergency services"},
+    {0x04, "Emergency services fallback"},
+    {0x05, "High priority access"},
+    {0, nullptr},
+};
 
 extern const field_meta hfm_service_type = {
     "Service type",
@@ -93,32 +95,40 @@ extern const field_meta hfm_service_type = {
 };
 __declspec(selectany) extern const field_meta* hf_service_type = &hfm_service_type;
 
-int dissect_key_set_id(dissector d, context* ctx);
+int                dissect_key_set_id(dissector d, context* ctx);
 const element_meta key_set_id = {
     0xff,
     "NAS key set identifier - ngKSI",
     dissect_key_set_id,
 };
 
-int dissect_s_tmsi(dissector d, context* ctx);
+int                dissect_s_tmsi(dissector d, context* ctx);
 const element_meta s_tmsi = {
     0xff,
     "5G-S-TMSI",
     dissect_s_tmsi,
 };
 
-int dissect_uplink_data_status(dissector d, context* ctx);
+int                dissect_uplink_data_status(dissector d, context* ctx);
 const element_meta uplink_data_status = {
     0x40,
     "Uplink data status",
     dissect_uplink_data_status,
 };
 
-int dissect_allowed_pdu_ses_status(dissector d, context* ctx);
+int                dissect_allowed_pdu_ses_status(dissector d, context* ctx);
 const element_meta allowed_pdu_ses_status = {
     0x25,
     "Allowed PDU session status",
     dissect_allowed_pdu_ses_status,
 };
+
+int dissect_key_set_id(dissector d, context* ctx) { return 0; }
+
+int dissect_s_tmsi(dissector d, context* ctx) { return 0; }
+
+int dissect_uplink_data_status(dissector d, context* ctx) { return 0; }
+
+int dissect_allowed_pdu_ses_status(dissector d, context* ctx) { return 0; }
 
 } // namespace mm_service_req

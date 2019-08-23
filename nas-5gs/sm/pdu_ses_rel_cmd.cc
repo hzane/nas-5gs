@@ -2,7 +2,6 @@
 #include "../dissect_sm_msg.hh"
 #include "../ts24007.hh"
 
-
 /* * 8.3.14 PDU session release command */
 int sm::pdu_ses_rel_cmd(dissector d, context* ctx) {
     use_context uc(ctx, "pdu-session-release-command");
@@ -39,4 +38,3 @@ int sm::pdu_ses_rel_cmd(dissector d, context* ctx) {
 
     return d.tvb->reported_length;
 }
-

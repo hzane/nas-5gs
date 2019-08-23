@@ -2,7 +2,6 @@
 #include "../dissect_sm_msg.hh"
 #include "../ts24007.hh"
 
-
 /*
  * 8.3.5 PDU session authentication complete
  */

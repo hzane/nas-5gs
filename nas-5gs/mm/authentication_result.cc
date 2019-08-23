@@ -1,7 +1,7 @@
 #include "../dissect_mm_msg.hh"
 #include "../ts24007.hh"
 
-namespace mm_authentication_result{
+namespace mm_authentication_result {
 }
 /*
  * 8.2.3 Authentication result
@@ -13,10 +13,12 @@ int mm::authentication_result(dissector d, context* ctx) {
 
     /* ngKSI    NAS key set identifier 9.11.3.27    M    V    1/2
        Spare half octet    Spare half octet 9.5    M    V    1/2  H1 */
-    // proto_tree_add_item(        tree, hf_nas_5gs_spare_half_octet, tvb, curr_offset, 1, ENC_BIG_ENDIAN);
+    // proto_tree_add_item(        tree, hf_nas_5gs_spare_half_octet, tvb, curr_offset, 1,
+    // ENC_BIG_ENDIAN);
     d.tree->add_item(d.pinfo, d.tvb, d.offset, 1, hf_spare_half_octet, enc::be);
 
-    // ELEM_MAND_V(DE_NAS_5GS_MM_NAS_KEY_SET_ID, " - ngKSI",ei_nas_5gs_missing_mandatory_elemen);
+    // ELEM_MAND_V(DE_NAS_5GS_MM_NAS_KEY_SET_ID, " -
+    // ngKSI",ei_nas_5gs_missing_mandatory_elemen);
     auto consumed = dissect_elem_v(nullptr, &nksi, d, ctx);
     d.offset += consumed;
     d.length -= consumed;

@@ -1,7 +1,7 @@
 #include "../dissect_mm_msg.hh"
 #include "../ts24007.hh"
 
-namespace mm{
+namespace mm {
 
 }
 
@@ -33,12 +33,12 @@ int mm::de_reg_req_ue_orig(dissector d, context* ctx) {
     d.offset += consumed;
     d.length -= consumed;
 
-    //EXTRANEOUS_DATA_CHECK(curr_len, 0, pinfo, &ei_nas_5gs_extraneous_data);
+    // EXTRANEOUS_DATA_CHECK(curr_len, 0, pinfo, &ei_nas_5gs_extraneous_data);
     extraneous_data_check(d.pinfo, d.tree, d.tvb, d.offset, d.length, 0);
     return d.tvb->reported_length;
 }
 
-namespace mm_de_reg_req_ue_orig{
+namespace mm_de_reg_req_ue_orig {
 int                dissect_de_reg_type(dissector d, context* ctx);
 const element_meta de_reg_type = {
     0xff,
@@ -52,4 +52,6 @@ const element_meta key_set_id = {
     "5GS mobile identity",
     dissect_key_set_id,
 };
-}
+int dissect_de_reg_type(dissector d, context* ctx) { return 0; }
+int dissect_key_set_id(dissector d, context* ctx) { return 0; }
+} // namespace mm_de_reg_req_ue_orig

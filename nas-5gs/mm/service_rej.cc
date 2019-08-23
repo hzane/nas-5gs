@@ -1,7 +1,7 @@
 #include "../dissect_mm_msg.hh"
 #include "../ts24007.hh"
 
-namespace mm_service_rej{
+namespace mm_service_rej {
 extern const element_meta t3346_gprs_timer2;
 }
 
@@ -13,7 +13,7 @@ int mm::service_rej(dissector d, context* ctx) {
 
     using namespace mm_service_rej;
     /* 5GMM cause   5GMM cause     9.11.3.2  M   V   1 */
-   /*    ELEM_MAND_V(,DE_NAS_5GS_MM_5GMM_CAUSE, );*/
+    /*    ELEM_MAND_V(,DE_NAS_5GS_MM_5GMM_CAUSE, );*/
     auto consumed = dissect_elem_v(nullptr, &mm_cause, d, ctx);
     d.offset += consumed;
     d.length -= consumed;
@@ -40,12 +40,14 @@ int mm::service_rej(dissector d, context* ctx) {
     return d.tvb->reported_length;
 }
 
-namespace mm_service_rej{
-int dissect_t3346_gprs_timer2(dissector d, context* ctx);
+namespace mm_service_rej {
+int                       dissect_t3346_gprs_timer2(dissector d, context* ctx);
 extern const element_meta t3346_gprs_timer2 = {
     0x5F,
     "T3346 value GPRS timer 2",
     dissect_t3346_gprs_timer2,
 };
 
-}
+int dissect_t3346_gprs_timer2(dissector d, context* ctx) { return 0; }
+
+} // namespace mm_service_rej

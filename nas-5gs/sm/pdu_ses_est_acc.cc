@@ -2,14 +2,14 @@
 #include "../dissect_sm_msg.hh"
 #include "../ts24007.hh"
 
-namespace sm_pdu_ses_est{
+namespace sm_pdu_ses_est {
 extern const field_meta* hf_sel_sc_mode;
 
 extern const element_meta pdu_ses_type;
 extern const element_meta pdu_address;
 extern const element_meta s_nssai;
 extern const element_meta dnn;
-}
+} // namespace sm_pdu_ses_est
 /*
  * 8.3.2 PDU session establishment accept
  */
@@ -33,7 +33,8 @@ int sm::pdu_ses_est_acc(dissector d, context* ctx) {
 
     /*Authorized QoS rules    QoS rules 9.11.4.6    M    LV-E    2-65537
      * DE_NAS_5GS_SM_QOS_RULES*/
-    // ELEM_MAND_LV_E(NAS_5GS_PDU_TYPE_SM,DE_NAS_5GS_SM_QOS_RULES, " - Authorized QoS rules",);
+    // ELEM_MAND_LV_E(NAS_5GS_PDU_TYPE_SM,DE_NAS_5GS_SM_QOS_RULES, " - Authorized QoS
+    // rules",);
     consumed = dissect_elem_lv_e(nullptr, &authorized_qos_rules, d, ctx);
     d.offset += consumed;
     d.length -= consumed;
@@ -160,4 +161,10 @@ extern const element_meta dnn = {
     "DNN",
     dissect_dnn,
 };
-} // namespace sm_pdu_ses_est_acc
+int dissect_int_prot_max_date_rate(dissector d, context* ctx) { return 0; }
+int dissect_pdu_ses_type(dissector d, context* ctx) { return 0; }
+int dissect_ssc_mode(dissector d, context* ctx) { return 0; }
+int dissect_pdu_address(dissector d, context* ctx) { return 0; }
+int dissect_s_nssai(dissector d, context* ctx) { return 0; }
+int dissect_dnn(dissector d, context* ctx) { return 0; }
+} // namespace sm_pdu_ses_est

@@ -1,7 +1,7 @@
 #include "../dissect_mm_msg.hh"
 #include "../ts24007.hh"
 
-namespace mm_id_req{
+namespace mm_id_req {
 extern const element_meta id_type;
 }
 /*
@@ -26,10 +26,11 @@ int mm::id_req(dissector d, context* ctx) {
 }
 
 namespace mm_id_req {
-int dissect_id_type(dissector d, context* ctx);
+int                       dissect_id_type(dissector d, context* ctx);
 extern const element_meta id_type = {
     0xff,
     "Identity type",
     dissect_id_type,
 };
-}
+int dissect_id_type(dissector d, context* ctx) { return 0; }
+} // namespace mm_id_req

@@ -1,7 +1,7 @@
 #include "../dissect_mm_msg.hh"
 #include "../ts24007.hh"
 
-namespace mm_sec_mode_cmd{
+namespace mm_sec_mode_cmd {
 extern const element_meta sec_algo;
 extern const element_meta replayed_ue_sec_cap;
 extern const element_meta imeisv_req;
@@ -9,7 +9,7 @@ extern const element_meta selected_eps_sec_algo;
 extern const element_meta a_sec_info;
 extern const element_meta abba;
 extern const element_meta reported_s1_ue_sec_cap;
-}
+} // namespace mm_sec_mode_cmd
 /*
  * 8.2.25 Security mode command
  */
@@ -50,7 +50,8 @@ int mm::sec_mode_cmd(dissector d, context* ctx) {
 
     /*57    Selected EPS NAS security algorithms    EPS NAS security algorithms 9.11.3.25
      * O    TV    2 */
-    // ELEM_OPT_TV(0x57, , DE_EMM_NAS_SEC_ALGS, " - Selected EPS NAS security algorithms");
+    // ELEM_OPT_TV(0x57, , DE_EMM_NAS_SEC_ALGS, " - Selected EPS NAS security
+    // algorithms");
     consumed = dissect_opt_elem_tv(nullptr, &selected_eps_sec_algo, d, ctx);
     d.offset += consumed;
     d.length -= consumed;
@@ -114,12 +115,12 @@ extern const element_meta selected_eps_sec_algo = {
     "Selected EPS NAS security algorithms",
     dissect_selected_eps_sec_algo,
 };
-extern const element_meta a_sec_info            = {
+extern const element_meta a_sec_info = {
     0x36,
     "Additional 5G security information",
     dissect_a_sec_info,
 };
-extern const element_meta abba                  = {
+extern const element_meta abba = {
     0x38,
     "ABBA",
     dissect_abba,
@@ -129,4 +130,11 @@ extern const element_meta reported_s1_ue_sec_cap = {
     "Replayed S1 UE security capabilities",
     dissect_reported_s1_ue_sec_cap,
 };
-}
+int dissect_sec_algo(dissector d, context* ctx) { return 0; }
+int dissect_replayed_ue_sec_cap(dissector d, context* ctx) { return 0; }
+int dissect_imeisv_req(dissector d, context* ctx) { return 0; }
+int dissect_selected_eps_sec_algo(dissector d, context* ctx) { return 0; }
+int dissect_a_sec_info(dissector d, context* ctx) { return 0; }
+int dissect_abba(dissector d, context* ctx) { return 0; }
+int dissect_reported_s1_ue_sec_cap(dissector d, context* ctx) { return 0; }
+} // namespace mm_sec_mode_cmd

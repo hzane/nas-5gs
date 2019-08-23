@@ -2,7 +2,7 @@
 #include "../dissect_sm_msg.hh"
 #include "../ts24007.hh"
 
-namespace sm_pdu_ses_mod{
+namespace sm_pdu_ses_mod {
 extern const element_meta authorized_qos_flow_des;
 }
 
@@ -80,4 +80,8 @@ extern const element_meta authorized_qos_flow_des = {
     "Authorized QoS flow descriptions",
     dissect_authorized_qos_flow_des,
 };
-}
+int dissect_always_on_pdu_ses_req(dissector d, context* ctx) { return 0; }
+int dissect_int_prot_max_data_rate(dissector d, context* ctx) { return 0; }
+int dissect_requested_qos_rules(dissector d, context* ctx) { return 0; }
+int dissect_authorized_qos_flow_des(dissector d, context* ctx) { return 0; }
+} // namespace sm_pdu_ses_mod

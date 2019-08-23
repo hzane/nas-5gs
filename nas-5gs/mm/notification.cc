@@ -1,7 +1,7 @@
 #include "../dissect_mm_msg.hh"
 #include "../ts24007.hh"
 
-namespace mm_notification{
+namespace mm_notification {
 extern const element_meta access_type;
 }
 /*
@@ -24,6 +24,11 @@ int mm::notification(dissector d, context* ctx) {
     return d.tvb->reported_length;
 }
 namespace mm_notification {
-int dissect_access_type(dissector d, context*);
-extern const element_meta access_type = {0xff, "Access type", dissect_access_type, };
-}
+int                       dissect_access_type(dissector d, context*);
+extern const element_meta access_type = {
+    0xff,
+    "Access type",
+    dissect_access_type,
+};
+int dissect_access_type(dissector d, context*) { return 0; }
+} // namespace mm_notification

@@ -1,12 +1,12 @@
 #include "../dissect_mm_msg.hh"
 #include "../ts24007.hh"
 
-namespace mm_reg_rej{
+namespace mm_reg_rej {
 
 extern const element_meta t3346_gprs_timer2;
 extern const element_meta t3502_gprs_timer_2;
 
-}
+} // namespace mm_reg_rej
 
 /*
  * 8.2.9 Registration reject
@@ -49,18 +49,22 @@ int mm::registration_rej(dissector d, context* ctx) {
 
 namespace mm_reg_rej {
 
-int dissect_t3346_gprs_timer2(dissector d, context* ctx);
+int                       dissect_t3346_gprs_timer2(dissector d, context* ctx);
 extern const element_meta t3346_gprs_timer2 = {
     0x5f,
     "T3346 value GPRS timer 2",
     dissect_t3346_gprs_timer2,
 };
 
-int dissect_t3502_gprs_timer_2(dissector d, context* ctx);
+int                       dissect_t3502_gprs_timer_2(dissector d, context* ctx);
 extern const element_meta t3502_gprs_timer_2 = {
     0x16,
     "T3502 value    GPRS timer 2",
     dissect_t3502_gprs_timer_2,
 };
+
+int dissect_t3346_gprs_timer2(dissector d, context* ctx) { return 0; }
+
+int dissect_t3502_gprs_timer_2(dissector d, context* ctx) { return 0; }
 
 } // namespace mm_reg_rej

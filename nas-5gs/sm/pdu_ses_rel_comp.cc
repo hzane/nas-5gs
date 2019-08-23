@@ -28,4 +28,3 @@ int sm::pdu_ses_rel_comp(dissector d, context* ctx) {
 
     return d.tvb->reported_length;
 }
-

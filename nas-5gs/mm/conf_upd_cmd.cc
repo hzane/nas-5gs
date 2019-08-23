@@ -1,7 +1,7 @@
 #include "../dissect_mm_msg.hh"
 #include "../ts24007.hh"
 
-namespace mm_conf_upd_cmd{
+namespace mm_conf_upd_cmd {
 extern const element_meta conf_upd_ind;
 extern const element_meta guti;
 extern const element_meta ta_id_list;
@@ -18,7 +18,7 @@ extern const element_meta u_time_zone_time;
 extern const element_meta configured_nssai;
 extern const element_meta op_def_acc_cat_def;
 extern const element_meta sms_ind;
-}
+} // namespace mm_conf_upd_cmd
 /*
  * 8.2.19 Configuration update command
  */
@@ -60,7 +60,8 @@ int mm::conf_upd_cmd(dissector d, context* ctx) {
     d.length -= consumed;
 
     /*43    Full name for network    Network name     9.11.3.26    O    TLV    3-n*/
-    // ELEM_OPT_TLV(0x43, GSM_A_PDU_TYPE_DTAP, DE_NETWORK_NAME, " - Full name for network");
+    // ELEM_OPT_TLV(0x43, GSM_A_PDU_TYPE_DTAP, DE_NETWORK_NAME, " - Full name for
+    // network");
     consumed = dissect_opt_elem_tlv(nullptr, &full_name_network, d, ctx);
     d.offset += consumed;
     d.length -= consumed;
@@ -79,7 +80,8 @@ int mm::conf_upd_cmd(dissector d, context* ctx) {
 
     /*47    Universal time and local time zone    Time zone and time     9.11.3.47    O
      * TV    8*/
-    /*ELEM_OPT_TV(0x47,GSM_A_PDU_TYPE_DTAP,DE_TIME_ZONE_TIME," - Universal Time and Local Time Zone");*/
+    /*ELEM_OPT_TV(0x47,GSM_A_PDU_TYPE_DTAP,DE_TIME_ZONE_TIME," - Universal Time and Local
+     * Time Zone");*/
 
     consumed = dissect_opt_elem_tv(nullptr, &u_time_zone_time, d, ctx);
     d.offset += consumed;
@@ -105,7 +107,8 @@ int mm::conf_upd_cmd(dissector d, context* ctx) {
     d.length -= consumed;
 
     /*31    Configured NSSAI    NSSAI     9.11.3.28    O    TLV    4-74*/
-    // ELEM_OPT_TLV(0x31, NAS_5GS_PDU_TYPE_MM, DE_NAS_5GS_MM_NSSAI, " - Configured NSSAI");
+    // ELEM_OPT_TLV(0x31, NAS_5GS_PDU_TYPE_MM, DE_NAS_5GS_MM_NSSAI, " - Configured
+    // NSSAI");
     consumed = dissect_opt_elem_tlv(nullptr, &configured_nssai, d, ctx);
     d.offset += consumed;
     d.length -= consumed;
@@ -134,7 +137,7 @@ int mm::conf_upd_cmd(dissector d, context* ctx) {
 }
 
 namespace mm_conf_upd_cmd {
-int dissect_conf_upd_ind(dissector d, context*ctx);
+int dissect_conf_upd_ind(dissector d, context* ctx);
 int dissect_guti(dissector d, context* ctx);
 int dissect_ta_id_list(dissector d, context* ctx);
 int dissect_allowed_nssai(dissector d, context* ctx);
@@ -246,5 +249,37 @@ extern const element_meta sms_ind = {
     "SMS indication",
     dissect_sms_ind,
 };
+
+int dissect_conf_upd_ind(dissector d, context* ctx) { return 0; }
+
+int dissect_guti(dissector d, context* ctx) { return 0; }
+
+int dissect_ta_id_list(dissector d, context* ctx) { return 0; }
+
+int dissect_allowed_nssai(dissector d, context* ctx) { return 0; }
+
+int dissect_sal(dissector d, context* ctx) { return 0; }
+
+int dissect_time_zone_time(dissector d, context* ctx) { return 0; }
+
+int dissect_day_saving_time(dissector d, context* ctx) { return 0; }
+
+int dissect_ladn_inf(dissector d, context* ctx) { return 0; }
+
+int dissect_mico_ind(dissector d, context* ctx) { return 0; }
+
+int dissect_rej_nssai(dissector d, context* ctx) { return 0; }
+
+int dissect_full_name_network(dissector d, context* ctx) { return 0; }
+
+int dissect_short_name_network(dissector d, context* ctx) { return 0; }
+
+int dissect_local_time_zone(dissector d, context* ctx) { return 0; }
+
+int dissect_configured_nssai(dissector d, context* ctx) { return 0; }
+
+int dissect_op_def_acc_cat_def(dissector d, context* ctx) { return 0; }
+
+int dissect_sms_ind(dissector d, context* ctx) { return 0; }
 
 } // namespace mm_conf_upd_cmd

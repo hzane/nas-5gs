@@ -26,7 +26,7 @@ extern const element_meta ta_id_list;
 extern const element_meta guti_5gs_mobile_id;
 extern const element_meta reg_res;
 extern const element_meta sor_trans_cont;
-}
+} // namespace mm_reg_accept
 
 /*
  * 8.2.7    Registration accept
@@ -256,7 +256,6 @@ const element_meta nw_feat_sup = {
     dissect_nw_feat_sup,
 };
 
-
 int                dissect_pdu_ses_react_res(dissector d, context* ctx = nullptr);
 const element_meta pdu_ses_react_res = {
     0x26,
@@ -279,14 +278,14 @@ const element_meta ladn_inf = {
 };
 
 int                dissect_mico_ind(dissector d, context* ctx = nullptr);
-const element_meta mico_ind = {
+extern const element_meta mico_ind = {
     0xb0,
     "MICO indication",
     dissect_mico_ind,
 };
 
 int                dissect_nw_slicing_ind(dissector d, context* ctx = nullptr);
-const element_meta nw_slicing_ind = {
+extern const element_meta nw_slicing_ind = {
     0x90,
     "Network slicing indication",
     dissect_nw_slicing_ind,

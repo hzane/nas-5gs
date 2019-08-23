@@ -1,11 +1,11 @@
 #include "../dissect_mm_msg.hh"
 #include "../ts24007.hh"
 
-namespace mm_service_acc{
+namespace mm_service_acc {
 extern const element_meta pdu_ses_react_res;
 extern const element_meta pdu_ses_react_res_error_c;
 
-}
+} // namespace mm_service_acc
 /*
  * 8.2.17 Service accept
  */
@@ -46,17 +46,21 @@ int mm::service_acc(dissector d, context* ctx) {
 }
 
 namespace mm_service_acc {
-int dissect_pdu_ses_react_res(dissector d, context*);
+int                       dissect_pdu_ses_react_res(dissector d, context*);
 extern const element_meta pdu_ses_react_res = {
     0x26,
     "PDU session reactivation result",
     dissect_pdu_ses_react_res,
 };
-int dissect_pdu_ses_react_res_err_c(dissector d, context*);
+int                       dissect_pdu_ses_react_res_err_c(dissector d, context*);
 extern const element_meta pdu_ses_react_res_error_c = {
     0x72,
     "PDU session reactivation result error cause",
     dissect_pdu_ses_react_res_err_c,
 };
 
-}
+int dissect_pdu_ses_react_res(dissector d, context*) { return 0; }
+
+int dissect_pdu_ses_react_res_err_c(dissector d, context*) { return 0; }
+
+} // namespace mm_service_acc

@@ -2,11 +2,11 @@
 #include "../dissect_sm_msg.hh"
 #include "../ts24007.hh"
 
-namespace sm_pdu_ses_est{
+namespace sm_pdu_ses_est {
 extern const element_meta int_prot_max_date_rate;
 extern const element_meta pdu_ses_type;
 extern const element_meta ssc_mode;
-} // namespace
+} // namespace sm_pdu_ses_est
 
 /*
  * 8.3.1 PDU session establishment request
@@ -67,7 +67,6 @@ int sm::pdu_ses_est_req(dissector d, context* ctx) {
 }
 namespace sm_pdu_ses_est {
 int dissect_int_prot_max_date_rate(dissector d, context* ctx);
-int dissect_pdu_ses_type(dissector d, context* ctx);
 int dissect_ssc_mode(dissector d, context* ctx);
 
 extern const element_meta int_prot_max_date_rate = {
@@ -75,14 +74,10 @@ extern const element_meta int_prot_max_date_rate = {
     "Integrity protection maximum data rate",
     dissect_int_prot_max_date_rate,
 };
-extern const element_meta pdu_ses_type = {
-    0x90,
-    "PDU session type",
-    dissect_pdu_ses_type,
-};
+
 extern const element_meta ssc_mode = {
     0xa0,
     "SSC mode",
     dissect_ssc_mode,
 };
-} // namespace sm_pdu_ses_est_req
+} // namespace sm_pdu_ses_est

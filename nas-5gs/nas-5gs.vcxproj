@@ -213,7 +213,7 @@
     <ClInclude Include="dissect_sm_msg.hh" />
     <ClInclude Include="expert_meta.hh" />
     <ClInclude Include="field_meta.hh" />
-    <ClInclude Include="mm\registration_req_i.cc" />
+    <ClCompile Include="mm\registration_req_i.cc" />
     <ClInclude Include="nas-5gs.hh" />
     <ClInclude Include="packet_info.hh" />
     <ClInclude Include="proto.hh" />

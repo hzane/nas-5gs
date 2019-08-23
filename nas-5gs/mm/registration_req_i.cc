@@ -54,180 +54,19 @@ static const val_string nas_5gs_mm_registration_req_elem[] = {
 /* 9.11.3.4     5GS mobile identity*/
 
 
-int                dissect_nksi_key_set_id(dissector d, context* ctx = nullptr);
-const element_meta nksi_key_set_id = {
-    0xc0,
-    "Non-current native NAS KSI",
-    dissect_nksi_key_set_id,
-};
-
-int                dissect_mm_cap(dissector d, context* ctx = nullptr);
-const element_meta mm_cap = {
-    0x10,
-    "5GMM capability",
-    dissect_mm_cap,
-};
-
-
-int                dissect_use_sec_cap(dissector d, context* ctx = nullptr);
-const element_meta ue_sec_cap = {
-    0x2e,
-    "UE security capability",
-    dissect_use_sec_cap,
-};
-
-int                dissect_last_v_tai(dissector d, context* ctx = nullptr);
-const element_meta last_v_tai = {
-    0x52,
-    "Last visited registered TAI",
-    dissect_last_v_tai,
-};
-
-int                dissect_s1_ue_net_cap(dissector d, context* ctx = nullptr);
-const element_meta s1_ue_net_cap = {
-    0x17,
-    "S1 UE network capability",
-    dissect_s1_ue_net_cap,
-};
-
-int                dissect_ul_data_status(dissector d, context* ctx = nullptr);
-const element_meta ul_data_status = {
-    0x40,
-    "Uplink data status",
-    dissect_ul_data_status,
-};
-
-
-int                dissect_mico_ind(dissector d, context* ctx = nullptr);
-const element_meta mico_ind = {
-    0xb0,
-    "MICO indication",
-    dissect_mico_ind,
-};
-
-int                dissect_ue_status(dissector d, context* ctx = nullptr);
-const element_meta ue_status = {
-    0x2b,
-    "UE status",
-    dissect_ue_status,
-};
-
-int                dissect_aguti_mobile_id(dissector d, context* ctx = nullptr);
-const element_meta aguti_mobile_id = {
-    0x77,
-    "Additional GUTI",
-    dissect_aguti_mobile_id,
-};
-
-int                dissect_pdu_ses_sts(dissector d, context* ctx = nullptr);
-const element_meta allow_pdu_ses_sts = {
-    0x25,
-    "Allowed PDU session status",
-    dissect_pdu_ses_sts,
-};
-
-int                dissect_usage_set(dissector d, context* ctx = nullptr);
-const element_meta ue_usage_set = {
-    0x18,
-    "UE's usage setting",
-    dissect_usage_set,
-};
-
-int                dissect_requested_drx_param(dissector d, context* ctx = nullptr);
-const element_meta requested_drx_param = {
-    0x51,
-    "Requested DRX parameters",
-    dissect_requested_drx_param,
-};
-
-int                dissect_eps_nas_msg_cont(dissector d, context* ctx = nullptr);
-const element_meta eps_nas_msg_cont = {
-    0x70,
-    "EPS NAS message container",
-    dissect_eps_nas_msg_cont,
-};
-
-int                dissect_ladn_inf(dissector d, context* ctx = nullptr);
-const element_meta ladn_inf = {
-    0x74,
-    "LADN indication",
-    dissect_ladn_inf,
-};
-
-int                dissect_pld_cont_type(dissector d, context* ctx = nullptr);
-const element_meta pld_cont_type = {
-    0x80,
-    "Payload container type",
-    dissect_pld_cont_type,
-};
-
-int                dissect_pld_cont(dissector d, context* ctx = nullptr);
-const element_meta pld_cont = {
-    0x7B,
-    "Payload container",
-    dissect_pld_cont,
-};
-
-int                dissect_nw_slicing_ind(dissector d, context* ctx = nullptr);
-const element_meta nw_slicing_ind = {
-    0x90,
-    "Network slicing indication",
-    dissect_nw_slicing_ind,
-};
-
-int                dissect_update_type(dissector d, context* ctx = nullptr);
-const element_meta update_type = {
-    0x53,
-    "5GS update type",
-    dissect_update_type,
-};
-
-
-
 
 
 } // namespace mm_reg_req
 
 
+int dissect_mm_cause(dissector d, context* ctx) { return 0; }
 
-int mm_reg_req::dissect_nksi_key_set_id(dissector d, context* ctx) { return 0; }
+int dissect_eap_msg(dissector d, context* ctx) { return 0; }
 
-int mm_reg_req::dissect_mm_cap(dissector d, context* ctx) { return 0; }
+int dissect_nksi(dissector d, context* ctx) { return 0; }
 
-int mm_reg_req::dissect_use_sec_cap(dissector d, context* ctx) { return 0; }
+int dissect_mobile_id(dissector d, context* ctx) { return 0; }
 
-
-
-int mm_reg_req::dissect_last_v_tai(dissector d, context* ctx) { return 0; }
-
-int mm_reg_req::dissect_s1_ue_net_cap(dissector d, context* ctx) { return 0; }
-
-int mm_reg_req::dissect_ul_data_status(dissector d, context* ctx) { return 0; }
-
-
-
-int mm_reg_req::dissect_mico_ind(dissector d, context* ctx) { return 0; }
-
-int mm_reg_req::dissect_ue_status(dissector d, context* ctx) { return 0; }
-
-int mm_reg_req::dissect_aguti_mobile_id(dissector d, context* ctx) { return 0; }
-
-int mm_reg_req::dissect_pdu_ses_sts(dissector d, context* ctx) { return 0; }
-
-int mm_reg_req::dissect_usage_set(dissector d, context* ctx) { return 0; }
-
-int mm_reg_req::dissect_requested_drx_param(dissector d, context* ctx) { return 0; }
-
-int mm_reg_req::dissect_eps_nas_msg_cont(dissector d, context* ctx) { return 0; }
-
-int mm_reg_req::dissect_ladn_inf(dissector d, context* ctx) { return 0; }
-
-int mm_reg_req::dissect_pld_cont_type(dissector d, context* ctx) { return 0; }
-
-int mm_reg_req::dissect_pld_cont(dissector d, context* ctx) { return 0; }
-
-int mm_reg_req::dissect_nw_slicing_ind(dissector d, context* ctx) { return 0; }
-
-int mm_reg_req::dissect_update_type(dissector d, context* ctx) { return 0; }
+int dissect_pdu_ses_status(dissector d, context* ctx) { return 0; }
 
 int dissect_nas_msg_cont(dissector d, context* ctx) { return 0; }

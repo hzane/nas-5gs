@@ -2,37 +2,6 @@
 #include "ts24007.hh"
 
 /* 8.3 5GS session management messages */
-namespace sm {
-extern const field_meta* hf_sel_sc_mode;
-
-extern const element_meta sm_cause;
-extern const element_meta ext_pco;
-extern const element_meta eap_msg;
-extern const element_meta authorized_qos_rules; // 3
-extern const element_meta mapped_eps_b_cont;    // 3
-extern const element_meta backoff_gprs_timer3;  // 3
-
-extern const element_meta sm_cap; // 2
-extern const element_meta max_num_sup_kpt_flt; // 2
-extern const element_meta ses_ambr; // 2
-extern const element_meta rq_gprs_timer;          // 2
-extern const element_meta always_on_pdu_ses_ind; // 2
-extern const element_meta dnn;                 // 1
-extern const element_meta allowed_ssc_mode;    // 1
-extern const element_meta always_on_pdu_ses_req; // 1
-extern const element_meta int_prot_max_data_rate; // 1
-extern const element_meta requested_qos_rules; // 1
-extern const element_meta authorized_qos_flow_des; // 1
-extern const element_meta int_prot_max_date_rate;  // 1
-extern const element_meta pdu_ses_type;            // 1
-extern const element_meta ssc_mode;                // 1
-extern const element_meta pdu_address;             // 1
-extern const element_meta s_nssai;                 // 1
-} // namespace sm
-
-
-
-
 
 #if 0
 /*
@@ -63,3 +32,25 @@ int sm::pdu_ses_auth_res(dissector d, context* ctx) {
     EXTRANEOUS_DATA_CHECK(curr_len, 0, pinfo, &ei_nas_5gs_extraneous_data);
 }
 #endif
+
+int sm::dissect_sm_cause(dissector d, context* ctx) { return 0; }
+
+int sm::dissect_ext_pco(dissector d, context* ctx) { return 0; }
+
+int sm::dissect_eap_msg(dissector d, context* ctx) { return 0; }
+
+int sm::dissect_authorized_qos_rules(dissector d, context* ctx) { return 0; }
+
+int sm::dissect_mapped_eps_b_cont(dissector d, context* ctx) { return 0; }
+
+int sm::dissect_backoff_gprs_timer3(dissector d, context* ctx) { return 0; }
+
+int sm::dissect_sm_cap(dissector d, context* ctx) { return 0; }
+
+int sm::dissect_max_num_sup_kpt_flt(dissector d, context* ctx) { return 0; }
+
+int sm::dissect_ses_ambr(dissector d, context* ctx) { return 0; }
+
+int sm::dissect_rq_gprs_timer(dissector d, context* ctx) { return 0; }
+
+int sm::dissect_always_on_pdu_ses_ind(dissector d, context* ctx) { return 0; }

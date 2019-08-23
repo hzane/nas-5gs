@@ -1,8 +1,7 @@
 #include "../dissect_mm_msg.hh"
 #include "../ts24007.hh"
 
-
-namespace mm_authentication_failure{
+namespace mm_authentication_failure {
 extern const element_meta auth_fail_param;
 }
 
@@ -38,4 +37,5 @@ extern const element_meta auth_fail_param = {
     "Authentication failure parameter",
     dissect_auth_fail_param,
 };
+int dissect_auth_fail_param(dissector d, context* ctx) { return 0; }
 } // namespace mm_authentication_failure

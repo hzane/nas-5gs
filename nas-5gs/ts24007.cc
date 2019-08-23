@@ -1,5 +1,6 @@
 #include "ts24007.hh"
 #include "field_meta.hh"
+
 /*
  * Type (T) element dissector
  */
@@ -19,8 +20,8 @@ int dissect_opt_elem_t(const field_meta *,
     return 1;
 }
 
-extern const field_meta *hf_gsm_a_length;
 
+extern const field_meta *hf_gsm_a_length;
 
 /* * Length Value (LV) element dissector */
 int dissect_opt_elem_lv(const field_meta *,
@@ -70,6 +71,7 @@ int dissect_opt_elem_lv_e(const field_meta *,
 
     return consumed + 2;
 }
+
 
 /* * Value (V) element dissector
 
@@ -124,6 +126,7 @@ int dissect_opt_elem_tv_short(const field_meta *,
     return consumed;
 }
 
+
 /*
  * Type Value (TV) element dissector
  *
@@ -133,7 +136,7 @@ int dissect_opt_elem_tv_short(const field_meta *,
 int dissect_opt_elem_tv(const field_meta *,
                         const element_meta *val_meta,
                         dissector           d,
-                        context *           ctx) {
+                        context *           ctx) {    
     if (d.length <= 0) return 0;
 
     auto iei = d.tvb->get_uint8(d.offset);

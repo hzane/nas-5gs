@@ -2,7 +2,6 @@
 #include "../dissect_sm_msg.hh"
 #include "../ts24007.hh"
 
-
 /*
  * 8.3.8    PDU session modification reject
  */
@@ -35,4 +34,3 @@ int sm::pdu_ses_mod_rej(dissector d, context* ctx) {
 
     return d.tvb->reported_length;
 }
-

@@ -2,7 +2,7 @@
 #include "../ts24007.hh"
 
 namespace mm_reg_req {
-extern const field_meta *hf_reg_req_flags;
+extern const field_meta* hf_reg_req_flags;
 
 extern const element_meta nw_slicing_ind;
 extern const element_meta eps_nas_msg_cont;
@@ -22,7 +22,7 @@ extern const element_meta pld_cont_type;
 extern const element_meta update_type;
 extern const element_meta requested_drx_param;
 extern const element_meta mico_ind;
-extern const element_meta mm_requested_nssai;
+extern const element_meta requested_nssai;
 
 } // namespace mm_reg_req
 
@@ -65,7 +65,7 @@ int mm::registration_req(dissector d, context* ctx) {
 
     /*2F    Requested NSSAI    NSSAI 9.11.3.37    O    TLV    4-74*/
     // ELEM_OPT_TLV(0x2f, , DE_NAS_5GS_MM_NSSAI, " - Requested NSSAI");
-    consumed = dissect_opt_elem_tlv(nullptr, &mm_requested_nssai, d, ctx);
+    consumed = dissect_opt_elem_tlv(nullptr, &requested_nssai, d, ctx);
     d.offset -= consumed;
     d.length -= consumed;
 
@@ -127,7 +127,8 @@ int mm::registration_req(dissector d, context* ctx) {
     d.length -= consumed;
 
     /*51    Requested DRX parameters    5GS DRX parameters 9.11.3.2A    O    TLV    3 */
-    /*    ELEM_OPT_TLV(0x51,DE_NAS_5GS_MM_5GS_DRX_PARAM, " - Requested DRX parameters");    */
+    /*    ELEM_OPT_TLV(0x51,DE_NAS_5GS_MM_5GS_DRX_PARAM, " - Requested DRX parameters");
+     */
     consumed = dissect_opt_elem_tlv(nullptr, &requested_drx_param, d, ctx);
     d.offset -= consumed;
     d.length -= consumed;
@@ -181,3 +182,178 @@ int mm::registration_req(dissector d, context* ctx) {
 
     return d.tvb->reported_length;
 }
+
+namespace mm_reg_req{
+int                       dissect_mico_ind(dissector d, context* ctx = nullptr);
+extern const element_meta mico_ind = {
+    0xb0,
+    "MICO indication",
+    dissect_mico_ind,
+};
+/*2F    Requested NSSAI    NSSAI 9.11.3.37    O    TLV    4-74*/
+int                dissect_requested_nssai(dissector d, context* ctx = nullptr);
+const element_meta requested_nssai = {
+    0x2f,
+    "Requested NSSAI",
+    dissect_requested_nssai,
+};
+
+int                dissect_pld_cont(dissector d, context* ctx = nullptr);
+const element_meta pld_cont = {
+    0x7B,
+    "Payload container",
+    dissect_pld_cont,
+};
+
+int                dissect_nw_slicing_ind(dissector d, context* ctx = nullptr);
+const element_meta nw_slicing_ind = {
+    0x90,
+    "Network slicing indication",
+    dissect_nw_slicing_ind,
+};
+
+int                dissect_update_type(dissector d, context* ctx = nullptr);
+const element_meta update_type = {
+    0x53,
+    "5GS update type",
+    dissect_update_type,
+};
+
+
+int                dissect_nksi_key_set_id(dissector d, context* ctx = nullptr);
+const element_meta nksi_key_set_id = {
+    0xc0,
+    "Non-current native NAS KSI",
+    dissect_nksi_key_set_id,
+};
+
+int                dissect_mm_cap(dissector d, context* ctx = nullptr);
+const element_meta mm_cap = {
+    0x10,
+    "5GMM capability",
+    dissect_mm_cap,
+};
+
+int                dissect_use_sec_cap(dissector d, context* ctx = nullptr);
+const element_meta ue_sec_cap = {
+    0x2e,
+    "UE security capability",
+    dissect_use_sec_cap,
+};
+
+int                dissect_last_v_tai(dissector d, context* ctx = nullptr);
+const element_meta last_v_tai = {
+    0x52,
+    "Last visited registered TAI",
+    dissect_last_v_tai,
+};
+
+int                dissect_s1_ue_net_cap(dissector d, context* ctx = nullptr);
+const element_meta s1_ue_net_cap = {
+    0x17,
+    "S1 UE network capability",
+    dissect_s1_ue_net_cap,
+};
+
+int                dissect_ul_data_status(dissector d, context* ctx = nullptr);
+const element_meta ul_data_status = {
+    0x40,
+    "Uplink data status",
+    dissect_ul_data_status,
+};
+
+int                dissect_ue_status(dissector d, context* ctx = nullptr);
+const element_meta ue_status = {
+    0x2b,
+    "UE status",
+    dissect_ue_status,
+};
+
+int                dissect_aguti_mobile_id(dissector d, context* ctx = nullptr);
+const element_meta aguti_mobile_id = {
+    0x77,
+    "Additional GUTI",
+    dissect_aguti_mobile_id,
+};
+
+int                dissect_pdu_ses_sts(dissector d, context* ctx = nullptr);
+const element_meta allow_pdu_ses_sts = {
+    0x25,
+    "Allowed PDU session status",
+    dissect_pdu_ses_sts,
+};
+
+int                dissect_usage_set(dissector d, context* ctx = nullptr);
+const element_meta ue_usage_set = {
+    0x18,
+    "UE's usage setting",
+    dissect_usage_set,
+};
+
+int                dissect_requested_drx_param(dissector d, context* ctx = nullptr);
+const element_meta requested_drx_param = {
+    0x51,
+    "Requested DRX parameters",
+    dissect_requested_drx_param,
+};
+
+int                dissect_eps_nas_msg_cont(dissector d, context* ctx = nullptr);
+const element_meta eps_nas_msg_cont = {
+    0x70,
+    "EPS NAS message container",
+    dissect_eps_nas_msg_cont,
+};
+
+int                dissect_ladn_inf(dissector d, context* ctx = nullptr);
+const element_meta ladn_inf = {
+    0x74,
+    "LADN indication",
+    dissect_ladn_inf,
+};
+
+int                dissect_pld_cont_type(dissector d, context* ctx = nullptr);
+const element_meta pld_cont_type = {
+    0x80,
+    "Payload container type",
+    dissect_pld_cont_type,
+};
+
+} // namespace mm_reg_req
+
+int mm_reg_req::dissect_nksi_key_set_id(dissector d, context* ctx) { return 0; }
+
+int mm_reg_req::dissect_mm_cap(dissector d, context* ctx) { return 0; }
+
+int mm_reg_req::dissect_use_sec_cap(dissector d, context* ctx) { return 0; }
+
+int mm_reg_req::dissect_last_v_tai(dissector d, context* ctx) { return 0; }
+
+int mm_reg_req::dissect_s1_ue_net_cap(dissector d, context* ctx) { return 0; }
+
+int mm_reg_req::dissect_ul_data_status(dissector d, context* ctx) { return 0; }
+
+int mm_reg_req::dissect_ue_status(dissector d, context* ctx) { return 0; }
+
+int mm_reg_req::dissect_aguti_mobile_id(dissector d, context* ctx) { return 0; }
+
+int mm_reg_req::dissect_pdu_ses_sts(dissector d, context* ctx) { return 0; }
+
+int mm_reg_req::dissect_usage_set(dissector d, context* ctx) { return 0; }
+
+int mm_reg_req::dissect_requested_drx_param(dissector d, context* ctx) { return 0; }
+
+int mm_reg_req::dissect_eps_nas_msg_cont(dissector d, context* ctx) { return 0; }
+
+int mm_reg_req::dissect_ladn_inf(dissector d, context* ctx) { return 0; }
+
+int mm_reg_req::dissect_pld_cont_type(dissector d, context* ctx) { return 0; }
+
+int mm_reg_req::dissect_pld_cont(dissector d, context* ctx) { return 0; }
+
+int mm_reg_req::dissect_nw_slicing_ind(dissector d, context* ctx) { return 0; }
+
+int mm_reg_req::dissect_update_type(dissector d, context* ctx) { return 0; }
+
+int mm_reg_req::dissect_mico_ind(dissector d, context* ctx) { return 0; }
+
+int mm_reg_req::dissect_requested_nssai(dissector d, context* ctx) { return 0; }

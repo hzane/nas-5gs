@@ -2,7 +2,7 @@
 #include "../dissect_sm_msg.hh"
 #include "../ts24007.hh"
 
-namespace sm_pdu_ses_est{
+namespace sm_pdu_ses_est {
 extern const element_meta allowed_ssc_mode;
 }
 
@@ -54,11 +54,12 @@ int sm::pdu_ses_est_rej(dissector d, context* ctx) {
     return d.tvb->reported_length;
 }
 namespace sm_pdu_ses_est {
-int dissect_allowed_ssc_mode(dissector d, context* ctx)    ;
+int dissect_allowed_ssc_mode(dissector d, context* ctx);
 
 extern const element_meta allowed_ssc_mode = {
     0xf0,
     "Allowed SSC mode",
     dissect_allowed_ssc_mode,
 };
-}
+int dissect_allowed_ssc_mode(dissector d, context* ctx) { return 0; }
+} // namespace sm_pdu_ses_est
