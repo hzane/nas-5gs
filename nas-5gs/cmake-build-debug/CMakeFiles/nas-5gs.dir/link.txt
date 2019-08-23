@@ -1,0 +1,3 @@
+C:\Users\hzane\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\192.5728.100\bin\cmake\win\bin\cmake.exe -E remove -f CMakeFiles\nas-5gs.dir/objects.a
+F:\mingw64\bin\ar.exe cr CMakeFiles\nas-5gs.dir/objects.a @CMakeFiles\nas-5gs.dir\objects1.rsp
+F:\mingw64\bin\g++.exe -g   -Wl,--whole-archive CMakeFiles\nas-5gs.dir/objects.a -Wl,--no-whole-archive  -o nas-5gs.exe -Wl,--out-implib,libnas-5gs.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\nas-5gs.dir\linklibs.rsp

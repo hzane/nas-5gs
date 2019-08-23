@@ -2,6 +2,7 @@
 //
 #include "core.hh"
 #include <iostream>
+#include "../def.hh"
 
 using namespace std;
 

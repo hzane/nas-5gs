@@ -139,9 +139,9 @@ std::string print_text(const field_meta* meta,
                        int               len,
                        uint32_t          enc) {
     if (meta == nullptr){
-        return field_meta{}.print_bytes(data, len, enc);
+        return field_meta{}.format(data_t{data, len}, enc);
     }
-    return meta->print_data(data, len, enc);
+    return meta->format(data_t{data, len}, enc);
 }
 
 
@@ -150,5 +150,5 @@ std::string print_text(const field_meta* meta, uint64_t v) {
         return formats("%ud", v);
     }
 
-    return meta->print(v);
+    return meta->format(data_t{v}, enc::be);
 }

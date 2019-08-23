@@ -51,7 +51,76 @@ __declspec(selectany) extern const message_meta msgs[] = {
 
     {0xd5, "Not used in current version", no_dissect},
 
-    {0xd6, "5GSM status", nas_5gs_sm_5gsm_status},
+    {0xd6, "5GSM status", sm_status},
     {0, nullptr, nullptr},
 };
+
+int dissect_sm_cause(dissector d, context* ctx);
+int dissect_ext_pco(dissector d, context* ctx);
+int dissect_eap_msg(dissector d, context* ctx);
+int dissect_authorized_qos_rules(dissector d, context* ctx);
+int dissect_mapped_eps_b_cont(dissector d, context* ctx);
+int dissect_backoff_gprs_timer3(dissector d, context* ctx);
+int dissect_sm_cap(dissector d, context* ctx);
+int dissect_max_num_sup_kpt_flt(dissector d, context* ctx);
+int dissect_ses_ambr(dissector d, context* ctx);
+int dissect_rq_gprs_timer(dissector d, context* ctx);
+int dissect_always_on_pdu_ses_ind(dissector d, context* ctx);
+
+__declspec(selectany) extern const element_meta sm_cause = {
+    0xff,
+    "5GSM cause",
+    dissect_sm_cause,
+};
+__declspec(selectany) extern const element_meta ext_pco = {
+    0x7B,
+    "Extended protocol configuration options",
+    dissect_ext_pco,
+};
+__declspec(selectany) extern const element_meta eap_msg = {
+    0x78,
+    "EAP message",
+    dissect_eap_msg,
+};
+__declspec(selectany) extern const element_meta authorized_qos_rules = {
+    0x7A,
+    "Authorized QoS rules",
+    dissect_authorized_qos_rules,
+};
+__declspec(selectany) extern const element_meta mapped_eps_b_cont = {
+    0x75,
+    "Mapped EPS bearer contexts",
+    dissect_mapped_eps_b_cont,
+};
+__declspec(selectany) extern const element_meta backoff_gprs_timer3 = {
+    0x37,
+    "GPRS timer - Back-off timer value",
+    dissect_backoff_gprs_timer3,
+};
+__declspec(selectany) extern const element_meta sm_cap = {
+    0x28,
+    "5GSM capability",
+    dissect_sm_cap,
+};
+__declspec(selectany) extern const element_meta max_num_sup_kpt_flt = {
+    0x55,
+    "Maximum number of suuported packet filter",
+    dissect_max_num_sup_kpt_flt,
+};
+__declspec(selectany) extern const element_meta ses_ambr = {
+    0x2A,
+    "Session AMBR",
+    dissect_ses_ambr,
+};
+__declspec(selectany) extern const element_meta rq_gprs_timer = {
+    0x56,
+    "GPRS timer- PDU session release time",
+    dissect_rq_gprs_timer,
+};
+__declspec(selectany) extern const element_meta always_on_pdu_ses_ind = {
+    0x80,
+    "Always-on PDU session indication",
+    dissect_always_on_pdu_ses_ind,
+};
+
 } // namespace sm

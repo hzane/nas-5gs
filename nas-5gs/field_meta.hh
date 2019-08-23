@@ -77,11 +77,13 @@ inline uint32_t get(uint32_t d) { return d & 0xff; }
 } // namespace fd
 
 struct data_t {
-    uint8_t* p;
-    union {
-        uint64_t val;
-        int      length;
-    };
+    const uint8_t* p      = nullptr;
+    int            length = 0;
+    uint64_t       val    = 0;
+
+    data_t(const uint8_t* p, int len) : p(p), length(len), val(0) {}
+    data_t(uint64_t v) : p(nullptr), val(v), length(0) {}
+
     uint8_t  get_uint7() const { return (p ? *p : (uint8_t) val) & 0x7f; };
     uint8_t  get_uint8() const { return p ? *p : (uint8_t) val; };
 
@@ -106,6 +108,7 @@ struct data_t {
         if (length == 4) return get_uint32();
         if (length == 6) return get_uint48();
         if (length == 8) return get_uint64();
+        return get_uint8();
     }
 };
 

@@ -10,8 +10,9 @@ struct context;
 
 namespace pi_dir {
 __declspec(selectany) extern const int unknown = 0;
-__declspec(selectany) extern const int ul = 1;
-__declspec(selectany) extern const int dl = 2;
+__declspec(selectany) extern const int ul      = 1;
+__declspec(selectany) extern const int dl      = 2;
+__declspec(selectany) extern const int both    = 3;
 } // namespace pi_dir
 
 struct packet_info {

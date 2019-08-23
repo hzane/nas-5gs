@@ -2,12 +2,14 @@
 #include "../ts24007.hh"
 
 namespace mm_authentication_rej{
-extern const element_meta eap_msg ;
+
 }
 /*
  * 8.2.5 Authentication reject
  */
 int mm::authentication_rej(dissector d, context* ctx) {
+    use_context uc(ctx, "authentication-reject");
+
     using namespace mm_authentication_rej;
 
     /* 78    EAP message    EAP message 9.11.2.2    O    TLV-E    7-1503 */
@@ -18,11 +20,4 @@ int mm::authentication_rej(dissector d, context* ctx) {
 }
 namespace mm_authentication_rej {
 
-int dissect_eap_msg(dissector d, context* ctx);
-
-extern const element_meta eap_msg = {
-    0x78,
-    "EAP message",
-    dissect_eap_msg,
-};
 }

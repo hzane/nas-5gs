@@ -51,25 +51,8 @@ static const val_string nas_5gs_mm_registration_req_elem[] = {
     {0, nullptr},
 };
 
-static field_meta hfm_reg_req_elem = {
-    "Type",
-    "elem.type",
-    ft::ft_uint8,
-    fd::base_dec,
-    nas_5gs_mm_registration_req_elem,
-    nullptr,
-    nullptr,
-    0x00,
-};
-extern const field_meta* hf_reg_req_elem = &hfm_reg_req_elem;
+/* 9.11.3.4     5GS mobile identity*/
 
-    /* 9.11.3.4     5GS mobile identity*/
-int                dissect_mobile_id(dissector d, context* ctx = nullptr);
-const element_meta mobile_id = {
-    -1,
-    "Mobile identity",
-    dissect_mobile_id,
-};
 
 int                dissect_nksi_key_set_id(dissector d, context* ctx = nullptr);
 const element_meta nksi_key_set_id = {
@@ -93,13 +76,6 @@ const element_meta ue_sec_cap = {
     dissect_use_sec_cap,
 };
 
-int                dissect_requested_nssai(dissector d, context* ctx = nullptr);
-const element_meta requested_nssai = {
-    0x2f,
-    "Requested NSSAI",
-    dissect_requested_nssai,
-};
-
 int                dissect_last_v_tai(dissector d, context* ctx = nullptr);
 const element_meta last_v_tai = {
     0x52,
@@ -121,12 +97,6 @@ const element_meta ul_data_status = {
     dissect_ul_data_status,
 };
 
-int                dissect_pdu_ses_status(dissector d, context* ctx = nullptr);
-const element_meta pdu_ses_status = {
-    0x50,
-    "PDU session status",
-    dissect_pdu_ses_status,
-};
 
 int                dissect_mico_ind(dissector d, context* ctx = nullptr);
 const element_meta mico_ind = {
@@ -214,39 +184,11 @@ const element_meta update_type = {
 
 
 
-namespace em_de_mm_reg_accept {
-    extern const element_meta reg_res;
-    extern const element_meta guti_5gs_mobile_id;
-    extern const element_meta plmn_list;
-    extern const element_meta ta_id_list;
-    extern const element_meta allowed_nssai;
-    extern const element_meta rejected_nssai;
-    extern const element_meta configured_nssai;
-    extern const element_meta nw_feat_sup;
-    extern const element_meta pdu_ses_status;
-    extern const element_meta pdu_ses_react_res;
-    extern const element_meta pdu_ses_react_res_err_c;
-    extern const element_meta ladn_inf;
-    extern const element_meta mico_ind;
-    extern const element_meta nw_slicing_ind;
-    extern const element_meta sal;
-    extern const element_meta t3512_gprs_timer_3;
-    extern const element_meta de_reg_timer_gprs_timer2;
-    extern const element_meta gprs_timer_2;
-    extern const element_meta emerg_num_list;
-    extern const element_meta emerg_num_list_7a;
-    extern const element_meta sor_trans_cont;
-    extern const element_meta eap_message;
-    extern const element_meta nssai_inclusion_mode;
-    extern const element_meta operator_defined_acd;
-    extern const element_meta nego_drx_param;
-} // namespace em_de_mm_reg_accept
-
 
 
 } // namespace mm_reg_req
 
-int mm_reg_req::dissect_mobile_id(dissector d, context* ctx) { return 0; }
+
 
 int mm_reg_req::dissect_nksi_key_set_id(dissector d, context* ctx) { return 0; }
 
@@ -254,7 +196,7 @@ int mm_reg_req::dissect_mm_cap(dissector d, context* ctx) { return 0; }
 
 int mm_reg_req::dissect_use_sec_cap(dissector d, context* ctx) { return 0; }
 
-int mm_reg_req::dissect_requested_nssai(dissector d, context* ctx) { return 0; }
+
 
 int mm_reg_req::dissect_last_v_tai(dissector d, context* ctx) { return 0; }
 
@@ -262,7 +204,7 @@ int mm_reg_req::dissect_s1_ue_net_cap(dissector d, context* ctx) { return 0; }
 
 int mm_reg_req::dissect_ul_data_status(dissector d, context* ctx) { return 0; }
 
-int mm_reg_req::dissect_pdu_ses_status(dissector d, context* ctx) { return 0; }
+
 
 int mm_reg_req::dissect_mico_ind(dissector d, context* ctx) { return 0; }
 

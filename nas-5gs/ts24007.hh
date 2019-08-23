@@ -3,15 +3,15 @@
 
 typedef int (*tlv_fnc_t)(const field_meta*   type_meta,
                          const element_meta* val_meta,
-                         dissector d);
+                         dissector d, context*ctx);
 
 inline int dissect_elem_mandary(const field_meta*   type_meta,
                            const element_meta* val_meta,
                            dissector d,
-                           tlv_fnc_t           fnc) {
+                           tlv_fnc_t           fnc, context*ctx) {
     auto consumed = 0;
     if (d.length > 0) {
-        consumed = fnc(type_meta, val_meta, d);
+        consumed = fnc(type_meta, val_meta, d, ctx);
     }
     if (consumed <= 0) {
         d.tree->add_expert(d.pinfo,
@@ -28,80 +28,94 @@ inline int dissect_elem_mandary(const field_meta*   type_meta,
 // * Type (T) element dissector
 int dissect_opt_elem_t(const field_meta*   type_meta,
                        const element_meta* val_meta,
-                       dissector           d);
+                       dissector           d,
+                       context*            ctx);
 
 inline int dissect_elem_t(const field_meta*   type_meta,
                           const element_meta* val_meta,
-                          dissector           d) {
-    return dissect_elem_mandary(type_meta, val_meta, d, dissect_opt_elem_t);
+                          dissector           d,
+                          context*            ctx) {
+    return dissect_elem_mandary(type_meta, val_meta, d, dissect_opt_elem_t, ctx);
 }
 
 // * Length Value (LV) element dissector
 int dissect_opt_elem_lv(const field_meta*   type_meta, // == nullptr
                         const element_meta* val_meta,
-                        dissector           d);
+                        dissector           d,
+                        context*            ctx);
 
 inline int dissect_elem_lv(const field_meta*   type_meta,
                            const element_meta* val_meta,
-                           dissector           d) {
-    return dissect_elem_mandary(type_meta, val_meta, d, dissect_opt_elem_lv);
+                           dissector           d,
+                           context*            ctx) {
+    return dissect_elem_mandary(type_meta, val_meta, d, dissect_opt_elem_lv, ctx);
 }
 
 // * Length Value Extended(LV-E) element dissector
 int dissect_opt_elem_lv_e(const field_meta*   type_meta,
                           const element_meta* val_meta,
-                          dissector           d);
+                          dissector           d,
+                          context*            ctx);
 
 inline int dissect_elem_lv_e(const field_meta*   type_meta,
                              const element_meta* val_meta,
-                             dissector           d) {
-    return dissect_elem_mandary(type_meta, val_meta, d, dissect_opt_elem_lv_e);
+                             dissector           d,
+                             context*            ctx) {
+    return dissect_elem_mandary(type_meta, val_meta, d, dissect_opt_elem_lv_e, ctx);
 };
 
 //  * Value (V) element dissector
 int dissect_opt_elem_v(const field_meta*   type_meta,
                        const element_meta* val_meta,
-                       dissector           d);
+                       dissector           d,
+                       context*            ctx);
 
 inline int dissect_elem_v(const field_meta*   type_meta,
                           const element_meta* val_meta,
-                          dissector           d) {
-    return dissect_elem_mandary(type_meta, val_meta, d, dissect_opt_elem_v);
+                          dissector           d,
+                          context*            ctx) {
+    return dissect_elem_mandary(type_meta, val_meta, d, dissect_opt_elem_v, ctx);
 };
 
 // Type Value (TV) element dissector
 // Where top half nibble is IEI and bottom half nibble is value.
 int dissect_opt_elem_tv_short(const field_meta*   type_meta,
                               const element_meta* val_meta,
-                              dissector d);
+                              dissector           d,
+                              context*            ctx);
 
 inline int dissect_elem_tv_short(const field_meta*   type_meta,
                                  const element_meta* val_meta,
-                                 dissector           d) {
+                                 dissector           d,
+                                 context*            ctx) {
     return dissect_elem_mandary(
-        type_meta, val_meta, d, dissect_opt_elem_tv_short);
+        type_meta, val_meta, d, dissect_opt_elem_tv_short, ctx);
 };
 
 // * Type Value (TV) element dissector
 int dissect_opt_elem_tv(const field_meta* type_meta,
                         const element_meta*,
-                        dissector d);
+                        dissector d,
+                        context*  ctx);
 
 inline int dissect_elem_tv(const field_meta*   type_meta,
                            const element_meta* val_meta,
-                           dissector           d) {
-    return dissect_elem_mandary(type_meta, val_meta, d, dissect_opt_elem_tv);
+                           dissector           d,
+                           context*            ctx) {
+    return dissect_elem_mandary(type_meta, val_meta, d, dissect_opt_elem_tv, ctx);
 };
 
 // * Type Length Value (TLV) element dissector
 int dissect_opt_elem_tlv(const field_meta*   type_meta,
                          const element_meta* val_meta,
-                         dissector           d);
+                         dissector           d,
+                         context*            ctx);
 
 inline int dissect_elem_tlv(const field_meta*   type_meta,
                             const element_meta* val_meta,
-                            dissector d) {
-    return dissect_elem_mandary(type_meta, val_meta, d, dissect_opt_elem_tlv);
+                            dissector           d,
+                            context*            ctx) {
+    return dissect_elem_mandary(type_meta, val_meta, d, dissect_opt_elem_tlv, ctx);
 };
 
 /*
@@ -114,12 +128,14 @@ inline int dissect_elem_tlv(const field_meta*   type_meta,
  */
 int dissect_opt_elem_telv(const field_meta*   type_meta,
                           const element_meta* val_meta,
-                          dissector           d);
+                          dissector           d,
+                          context*            ctx);
 
 inline int dissect_elem_telv(const field_meta*   type_meta,
                              const element_meta* val_meta,
-                             dissector           d) {
-    return dissect_elem_mandary(type_meta, val_meta, d, dissect_opt_elem_telv);
+                             dissector           d,
+                             context*            ctx) {
+    return dissect_elem_mandary(type_meta, val_meta, d, dissect_opt_elem_telv, ctx);
 };
 
 /*
@@ -130,12 +146,14 @@ inline int dissect_elem_telv(const field_meta*   type_meta,
  */
 int dissect_opt_elem_tlv_e(const field_meta*   type_meta,
                            const element_meta* val_meta,
-                           dissector           d);
+                           dissector           d,
+                           context*            ctx);
 
 inline int dissect_elem_tlv_e(const field_meta*   type_meta,
                               const element_meta* val_meta,
-                              dissector           d) {
-    return dissect_elem_mandary(type_meta, val_meta, d, dissect_opt_elem_tlv_e);
+                              dissector           d,
+                              context*            ctx) {
+    return dissect_elem_mandary(type_meta, val_meta, d, dissect_opt_elem_tlv_e, ctx);
 };
 
 

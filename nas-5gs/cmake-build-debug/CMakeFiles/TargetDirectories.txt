@@ -1,0 +1,3 @@
+F:/repos/nas-5gs/nas-5gs/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+F:/repos/nas-5gs/nas-5gs/cmake-build-debug/CMakeFiles/nas-5gs.dir
+F:/repos/nas-5gs/nas-5gs/cmake-build-debug/CMakeFiles/edit_cache.dir

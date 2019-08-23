@@ -6,10 +6,6 @@ extern const element_meta conf_upd_ind;
 extern const element_meta guti;
 extern const element_meta ta_id_list;
 extern const element_meta allowed_nssai;
-extern const element_meta sal;
-extern const element_meta network_name;
-extern const element_meta time_zone;
-extern const element_meta time_zone_time;
 extern const element_meta day_saving_time;
 extern const element_meta ladn_inf;
 extern const element_meta mico_ind;
@@ -27,110 +23,109 @@ extern const element_meta sms_ind;
  * 8.2.19 Configuration update command
  */
 int mm::conf_upd_cmd(dissector d, context* ctx) {
+    use_context uc(ctx, "configuration-update-command");
+
     using namespace mm_conf_upd_cmd;
 
     // TODO:
     /*D-    Configuration update indication    Configuration update indication 9.11.3.16
      * O    TV    1 */
     // ELEM_OPT_TV_SHORT(0xD0, NAS_5GS_PDU_TYPE_MM, DE_NAS_5GS_MM_CONF_UPD_IND, NULL);
-    auto consumed = dissect_opt_elem_tv_short(nullptr, &conf_upd_ind, d);
+    auto consumed = dissect_opt_elem_tv_short(nullptr, &conf_upd_ind, d, ctx);
     d.offset += consumed;
     d.length -= consumed;
 
     /*77    5G-GUTI    5GS mobile identity     9.11.3.4    O    TLV    TBD*/
     // ELEM_OPT_TLV_E(0x77, NAS_5GS_PDU_TYPE_MM, DE_NAS_5GS_MM_5GS_MOBILE_ID, NULL);
-    consumed = dissect_opt_elem_tlv_e(nullptr, &guti, d);
+    consumed = dissect_opt_elem_tlv_e(nullptr, &guti, d, ctx);
     d.offset += consumed;
     d.length -= consumed;
 
     /*54    TAI list    Tracking area identity list     9.11.3.45    O    TLV    8-98*/
     // ELEM_OPT_TLV(0x54, NAS_5GS_PDU_TYPE_MM, DE_NAS_5GS_MM_5GS_TA_ID_LIST, NULL);
-    consumed = dissect_opt_elem_tlv(nullptr, &ta_id_list, d);
+    consumed = dissect_opt_elem_tlv(nullptr, &ta_id_list, d, ctx);
     d.offset += consumed;
     d.length -= consumed;
 
     /*15    Allowed NSSAI    NSSAI     9.11.3.28    O    TLV    4-74*/
     // ELEM_OPT_TLV(0x15, NAS_5GS_PDU_TYPE_MM, DE_NAS_5GS_MM_NSSAI, " - Allowed NSSAI");
-    consumed = dissect_opt_elem_tlv(nullptr, &allowed_nssai, d);
+    consumed = dissect_opt_elem_tlv(nullptr, &allowed_nssai, d, ctx);
     d.offset += consumed;
     d.length -= consumed;
 
     /*27    Service area list    Service area list     9.11.3.39    O    TLV    6-194 */
     // ELEM_OPT_TLV(0x70, NAS_5GS_PDU_TYPE_MM, DE_NAS_5GS_MM_SAL, NULL);
-    consumed = dissect_opt_elem_tlv(nullptr, &service_area_list, d);
+    consumed = dissect_opt_elem_tlv(nullptr, &service_area_list, d, ctx);
     d.offset += consumed;
     d.length -= consumed;
 
     /*43    Full name for network    Network name     9.11.3.26    O    TLV    3-n*/
     // ELEM_OPT_TLV(0x43, GSM_A_PDU_TYPE_DTAP, DE_NETWORK_NAME, " - Full name for network");
-    consumed = dissect_opt_elem_tlv(nullptr, &full_name_network, d);
+    consumed = dissect_opt_elem_tlv(nullptr, &full_name_network, d, ctx);
     d.offset += consumed;
     d.length -= consumed;
 
     /*45    Short name for network    Network name     9.11.3.26    O    TLV    3-n*/
     // ELEM_OPT_TLV(0x45, GSM_A_PDU_TYPE_DTAP, DE_NETWORK_NAME, " - Short Name");
-    consumed = dissect_opt_elem_tlv(nullptr, &short_name_network, d);
+    consumed = dissect_opt_elem_tlv(nullptr, &short_name_network, d, ctx);
     d.offset += consumed;
     d.length -= consumed;
 
     /*46    Local time zone    Time zone     9.11.3.46    O    TV    2*/
     // ELEM_OPT_TV(0x46, GSM_A_PDU_TYPE_DTAP, DE_TIME_ZONE, " - Local");
-    consumed = dissect_opt_elem_tv(nullptr, &local_time_zone, d);
+    consumed = dissect_opt_elem_tv(nullptr, &local_time_zone, d, ctx);
     d.offset += consumed;
     d.length -= consumed;
 
     /*47    Universal time and local time zone    Time zone and time     9.11.3.47    O
      * TV    8*/
-    /*ELEM_OPT_TV(0x47,
-                GSM_A_PDU_TYPE_DTAP,
-                DE_TIME_ZONE_TIME,
-                " - Universal Time and Local Time Zone");
-*/
-    consumed = dissect_opt_elem_tv(nullptr, &u_time_zone_time, d);
+    /*ELEM_OPT_TV(0x47,GSM_A_PDU_TYPE_DTAP,DE_TIME_ZONE_TIME," - Universal Time and Local Time Zone");*/
+
+    consumed = dissect_opt_elem_tv(nullptr, &u_time_zone_time, d, ctx);
     d.offset += consumed;
     d.length -= consumed;
 
     /*49    Network daylight saving time    Daylight saving time     9.11.3.11    O    TLV
      * 3*/
     // ELEM_OPT_TLV(0x49, GSM_A_PDU_TYPE_DTAP, DE_DAY_SAVING_TIME, NULL);
-    consumed = dissect_opt_elem_tlv(nullptr, &day_saving_time, d);
+    consumed = dissect_opt_elem_tlv(nullptr, &day_saving_time, d, ctx);
     d.offset += consumed;
     d.length -= consumed;
 
     /*79    LADN information    LADN information     9.11.3.19    O    TLV-E    11-1579*/
     // ELEM_OPT_TLV_E(0x79, NAS_5GS_PDU_TYPE_MM, DE_NAS_5GS_MM_LADN_INF, NULL);
-    consumed = dissect_opt_elem_tlv_e(nullptr, &ladn_inf, d);
+    consumed = dissect_opt_elem_tlv_e(nullptr, &ladn_inf, d, ctx);
     d.offset += consumed;
     d.length -= consumed;
 
     /*B-    MICO indication    MICO indication     9.11.3.21    O    TV    1*/
     // ELEM_OPT_TV_SHORT(0xB0, NAS_5GS_PDU_TYPE_MM, DE_NAS_5GS_MM_MICO_IND, NULL);
-    consumed = dissect_opt_elem_tv_short(nullptr, &mico_ind, d);
+    consumed = dissect_opt_elem_tv_short(nullptr, &mico_ind, d, ctx);
     d.offset += consumed;
     d.length -= consumed;
 
     /*31    Configured NSSAI    NSSAI     9.11.3.28    O    TLV    4-74*/
     // ELEM_OPT_TLV(0x31, NAS_5GS_PDU_TYPE_MM, DE_NAS_5GS_MM_NSSAI, " - Configured NSSAI");
-    consumed = dissect_opt_elem_tlv(nullptr, &configured_nssai, d);
+    consumed = dissect_opt_elem_tlv(nullptr, &configured_nssai, d, ctx);
     d.offset += consumed;
     d.length -= consumed;
 
     /*11    Rejected NSSAI     Rejected NSSAI   9.11.3.42   O   TLV   4-42*/
     // ELEM_OPT_TLV(0x11, NAS_5GS_PDU_TYPE_MM, DE_NAS_5GS_MM_REJ_NSSAI, NULL);
-    consumed = dissect_opt_elem_tlv(nullptr, &rej_nssai, d);
+    consumed = dissect_opt_elem_tlv(nullptr, &rej_nssai, d, ctx);
     d.offset += consumed;
     d.length -= consumed;
 
     /* 76    Operator-defined access category definitions    Operator-defined access
      * category definitions 9.11.3.38    O    TLV-E    3-TBD */
     // ELEM_OPT_TLV_E(0x76, NAS_5GS_PDU_TYPE_MM, DE_NAS_5GS_MM_OP_DEF_ACC_CAT_DEF, NULL);
-    consumed = dissect_opt_elem_tlv_e(nullptr, &op_def_acc_cat_def, d);
+    consumed = dissect_opt_elem_tlv_e(nullptr, &op_def_acc_cat_def, d, ctx);
     d.offset += consumed;
     d.length -= consumed;
 
     /* F-    SMS indication    SMS indication 9.10.3.50A    O    TV    1 */
     // ELEM_OPT_TV_SHORT(0xF0, NAS_5GS_PDU_TYPE_MM, DE_NAS_5GS_MM_SMS_IND, NULL);
-    consumed = dissect_opt_elem_tv_short(nullptr, &sms_ind, d);
+    consumed = dissect_opt_elem_tv_short(nullptr, &sms_ind, d, ctx);
     d.offset += consumed;
     d.length -= consumed;
 
@@ -144,18 +139,14 @@ int dissect_guti(dissector d, context* ctx);
 int dissect_ta_id_list(dissector d, context* ctx);
 int dissect_allowed_nssai(dissector d, context* ctx);
 int dissect_sal(dissector d, context* ctx);
-int dissect_network_name(dissector d, context* ctx);
-int dissect_time_zone(dissector d, context* ctx);
 int dissect_time_zone_time(dissector d, context* ctx);
 int dissect_day_saving_time(dissector d, context* ctx);
 int dissect_ladn_inf(dissector d, context* ctx);
 int dissect_mico_ind(dissector d, context* ctx);
 int dissect_rej_nssai(dissector d, context* ctx);
-int dissect_service_area_list(dissector d, context* ctx);
 int dissect_full_name_network(dissector d, context* ctx);
 int dissect_short_name_network(dissector d, context* ctx);
 int dissect_local_time_zone(dissector d, context* ctx);
-int dissect_u_time_zone_time(dissector d, context* ctx);
 int dissect_configured_nssai(dissector d, context* ctx);
 int dissect_op_def_acc_cat_def(dissector d, context* ctx);
 int dissect_sms_ind(dissector d, context* ctx);
@@ -166,7 +157,7 @@ extern const element_meta conf_upd_ind = {
     dissect_conf_upd_ind,
 };
 
-extern const element_meta mobile_id = {
+extern const element_meta guti = {
     0x77,
     "5G-GUTI",
     dissect_guti,
@@ -193,7 +184,7 @@ extern const element_meta service_area_list = {
 extern const element_meta full_name_network = {
     0x43,
     "Full name for network",
-    dissect_full_network_name,
+    dissect_full_name_network,
 };
 
 extern const element_meta short_name_network = {

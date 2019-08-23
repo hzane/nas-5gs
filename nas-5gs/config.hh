@@ -1,6 +1,7 @@
 #pragma once
 #include <cstdint>
 #include <string>
+#include <vector>
 
 typedef unsigned int uint_t;
 typedef int int_t;
@@ -49,7 +50,10 @@ struct dissector {
     int          offset = 0;
     int          length = 0;
     void*        data   = nullptr;
+
+    dissector& step(int consumed){offset+=consumed;length-=consumed;return *this;}
 };
+
 
 typedef int (*dissect_fnc_t)(dissector, context* ctx);
 

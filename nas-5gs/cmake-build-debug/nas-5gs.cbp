@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="nas-5gs"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="F:/repos/nas-5gs/nas-5gs/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="F:/mingw64/bin/mingw32-make.exe -f &quot;F:/repos/nas-5gs/nas-5gs/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="F:/mingw64/bin/mingw32-make.exe -f &quot;F:/repos/nas-5gs/nas-5gs/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="F:/mingw64/bin/mingw32-make.exe -f &quot;F:/repos/nas-5gs/nas-5gs/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="F:/mingw64/bin/mingw32-make.exe -f &quot;F:/repos/nas-5gs/nas-5gs/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="F:/repos/nas-5gs/nas-5gs/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="F:/mingw64/bin/mingw32-make.exe -f &quot;F:/repos/nas-5gs/nas-5gs/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="F:/mingw64/bin/mingw32-make.exe -f &quot;F:/repos/nas-5gs/nas-5gs/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="F:/mingw64/bin/mingw32-make.exe -f &quot;F:/repos/nas-5gs/nas-5gs/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="F:/mingw64/bin/mingw32-make.exe -f &quot;F:/repos/nas-5gs/nas-5gs/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="nas-5gs">
+				<Option output="F:/repos/nas-5gs/nas-5gs/cmake-build-debug/nas-5gs.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="F:/repos/nas-5gs/nas-5gs/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="F:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++"/>
+					<Add directory="F:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/x86_64-w64-mingw32"/>
+					<Add directory="F:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/backward"/>
+					<Add directory="F:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include"/>
+					<Add directory="F:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include-fixed"/>
+					<Add directory="F:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/../../../../x86_64-w64-mingw32/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="F:/mingw64/bin/mingw32-make.exe -f &quot;F:/repos/nas-5gs/nas-5gs/cmake-build-debug/Makefile&quot;  VERBOSE=1 nas-5gs"/>
+					<CompileFile command="F:/mingw64/bin/mingw32-make.exe -f &quot;F:/repos/nas-5gs/nas-5gs/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="F:/mingw64/bin/mingw32-make.exe -f &quot;F:/repos/nas-5gs/nas-5gs/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="F:/mingw64/bin/mingw32-make.exe -f &quot;F:/repos/nas-5gs/nas-5gs/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="nas-5gs/fast">
+				<Option output="F:/repos/nas-5gs/nas-5gs/cmake-build-debug/nas-5gs.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="F:/repos/nas-5gs/nas-5gs/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="F:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++"/>
+					<Add directory="F:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/x86_64-w64-mingw32"/>
+					<Add directory="F:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/backward"/>
+					<Add directory="F:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include"/>
+					<Add directory="F:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include-fixed"/>
+					<Add directory="F:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/../../../../x86_64-w64-mingw32/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="F:/mingw64/bin/mingw32-make.exe -f &quot;F:/repos/nas-5gs/nas-5gs/cmake-build-debug/Makefile&quot;  VERBOSE=1 nas-5gs/fast"/>
+					<CompileFile command="F:/mingw64/bin/mingw32-make.exe -f &quot;F:/repos/nas-5gs/nas-5gs/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="F:/mingw64/bin/mingw32-make.exe -f &quot;F:/repos/nas-5gs/nas-5gs/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="F:/mingw64/bin/mingw32-make.exe -f &quot;F:/repos/nas-5gs/nas-5gs/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="F:/repos/nas-5gs/nas-5gs/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="F:/mingw64/bin/mingw32-make.exe -f &quot;F:/repos/nas-5gs/nas-5gs/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="F:/mingw64/bin/mingw32-make.exe -f &quot;F:/repos/nas-5gs/nas-5gs/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="F:/mingw64/bin/mingw32-make.exe -f &quot;F:/repos/nas-5gs/nas-5gs/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="F:/mingw64/bin/mingw32-make.exe -f &quot;F:/repos/nas-5gs/nas-5gs/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="F:/repos/nas-5gs/nas-5gs/core.cc">
+			<Option target="nas-5gs"/>
+		</Unit>
+		<Unit filename="F:/repos/nas-5gs/nas-5gs/core.hh">
+			<Option target="nas-5gs"/>
+		</Unit>
+		<Unit filename="F:/repos/nas-5gs/nas-5gs/dissect_mm_msg.cc">
+			<Option target="nas-5gs"/>
+		</Unit>
+		<Unit filename="F:/repos/nas-5gs/nas-5gs/dissect_mm_msg.hh">
+			<Option target="nas-5gs"/>
+		</Unit>
+		<Unit filename="F:/repos/nas-5gs/nas-5gs/dissect_mm_msg_i.cc">
+			<Option target="nas-5gs"/>
+		</Unit>
+		<Unit filename="F:/repos/nas-5gs/nas-5gs/dissect_nas_5gs.cc">
+			<Option target="nas-5gs"/>
+		</Unit>
+		<Unit filename="F:/repos/nas-5gs/nas-5gs/dissect_nas_5gs.hh">
+			<Option target="nas-5gs"/>
+		</Unit>
+		<Unit filename="F:/repos/nas-5gs/nas-5gs/dissect_nas_5gs_i.cc">
+			<Option target="nas-5gs"/>
+		</Unit>
+		<Unit filename="F:/repos/nas-5gs/nas-5gs/dissect_sm_msg.cc">
+			<Option target="nas-5gs"/>
+		</Unit>
+		<Unit filename="F:/repos/nas-5gs/nas-5gs/dissect_sm_msg.hh">
+			<Option target="nas-5gs"/>
+		</Unit>
+		<Unit filename="F:/repos/nas-5gs/nas-5gs/field_meta.cc">
+			<Option target="nas-5gs"/>
+		</Unit>
+		<Unit filename="F:/repos/nas-5gs/nas-5gs/field_meta.hh">
+			<Option target="nas-5gs"/>
+		</Unit>
+		<Unit filename="F:/repos/nas-5gs/nas-5gs/formats.cc">
+			<Option target="nas-5gs"/>
+		</Unit>
+		<Unit filename="F:/repos/nas-5gs/nas-5gs/mm/authentication_failure.cc">
+			<Option target="nas-5gs"/>
+		</Unit>
+		<Unit filename="F:/repos/nas-5gs/nas-5gs/mm/authentication_rej.cc">
+			<Option target="nas-5gs"/>
+		</Unit>
+		<Unit filename="F:/repos/nas-5gs/nas-5gs/mm/authentication_req.cc">
+			<Option target="nas-5gs"/>
+		</Unit>
+		<Unit filename="F:/repos/nas-5gs/nas-5gs/mm/authentication_resp.cc">
+			<Option target="nas-5gs"/>
+		</Unit>
+		<Unit filename="F:/repos/nas-5gs/nas-5gs/mm/authentication_result.cc">
+			<Option target="nas-5gs"/>
+		</Unit>
+		<Unit filename="F:/repos/nas-5gs/nas-5gs/mm/conf_upd_cmd.cc">
+			<Option target="nas-5gs"/>
+		</Unit>
+		<Unit filename="F:/repos/nas-5gs/nas-5gs/mm/conf_update_comp.cc">
+			<Option target="nas-5gs"/>
+		</Unit>
+		<Unit filename="F:/repos/nas-5gs/nas-5gs/mm/de_reg_req_ue_orig.cc">
+			<Option target="nas-5gs"/>
+		</Unit>
+		<Unit filename="F:/repos/nas-5gs/nas-5gs/mm/de_registration_req_ue_term.cc">
+			<Option target="nas-5gs"/>
+		</Unit>
+		<Unit filename="F:/repos/nas-5gs/nas-5gs/mm/dl_nas_transp.cc">
+			<Option target="nas-5gs"/>
+		</Unit>
+		<Unit filename="F:/repos/nas-5gs/nas-5gs/mm/id_req.cc">
+			<Option target="nas-5gs"/>
+		</Unit>
+		<Unit filename="F:/repos/nas-5gs/nas-5gs/mm/id_req_result.cc">
+			<Option target="nas-5gs"/>
+		</Unit>
+		<Unit filename="F:/repos/nas-5gs/nas-5gs/mm/id_resp.cc">
+			<Option target="nas-5gs"/>
+		</Unit>
+		<Unit filename="F:/repos/nas-5gs/nas-5gs/mm/mm_status.cc">
+			<Option target="nas-5gs"/>
+		</Unit>
+		<Unit filename="F:/repos/nas-5gs/nas-5gs/mm/notification.cc">
+			<Option target="nas-5gs"/>
+		</Unit>
+		<Unit filename="F:/repos/nas-5gs/nas-5gs/mm/notification_resp.cc">
+			<Option target="nas-5gs"/>
+		</Unit>
+		<Unit filename="F:/repos/nas-5gs/nas-5gs/mm/registration_accept.cc">
+			<Option target="nas-5gs"/>
+		</Unit>
+		<Unit filename="F:/repos/nas-5gs/nas-5gs/mm/registration_complete.cc">
+			<Option target="nas-5gs"/>
+		</Unit>
+		<Unit filename="F:/repos/nas-5gs/nas-5gs/mm/registration_rej.cc">
+			<Option target="nas-5gs"/>
+		</Unit>
+		<Unit filename="F:/repos/nas-5gs/nas-5gs/mm/registration_req.cc">
+			<Option target="nas-5gs"/>
+		</Unit>
+		<Unit filename="F:/repos/nas-5gs/nas-5gs/mm/registration_req_i.cc">
+			<Option target="nas-5gs"/>
+		</Unit>
+		<Unit filename="F:/repos/nas-5gs/nas-5gs/mm/sec_mode_cmd.cc">
+			<Option target="nas-5gs"/>
+		</Unit>
+		<Unit filename="F:/repos/nas-5gs/nas-5gs/mm/sec_mode_comp.cc">
+			<Option target="nas-5gs"/>
+		</Unit>
+		<Unit filename="F:/repos/nas-5gs/nas-5gs/mm/sec_mode_rej.cc">
+			<Option target="nas-5gs"/>
+		</Unit>
+		<Unit filename="F:/repos/nas-5gs/nas-5gs/mm/service_acc.cc">
+			<Option target="nas-5gs"/>
+		</Unit>
+		<Unit filename="F:/repos/nas-5gs/nas-5gs/mm/service_rej.cc">
+			<Option target="nas-5gs"/>
+		</Unit>
+		<Unit filename="F:/repos/nas-5gs/nas-5gs/mm/service_req.cc">
+			<Option target="nas-5gs"/>
+		</Unit>
+		<Unit filename="F:/repos/nas-5gs/nas-5gs/mm/ul_nas_transp.cc">
+			<Option target="nas-5gs"/>
+		</Unit>
+		<Unit filename="F:/repos/nas-5gs/nas-5gs/nas-5gs.cc">
+			<Option target="nas-5gs"/>
+		</Unit>
+		<Unit filename="F:/repos/nas-5gs/nas-5gs/nas-5gs.hh">
+			<Option target="nas-5gs"/>
+		</Unit>
+		<Unit filename="F:/repos/nas-5gs/nas-5gs/proto.cc">
+			<Option target="nas-5gs"/>
+		</Unit>
+		<Unit filename="F:/repos/nas-5gs/nas-5gs/proto.hh">
+			<Option target="nas-5gs"/>
+		</Unit>
+		<Unit filename="F:/repos/nas-5gs/nas-5gs/sm/pdu_ses_auth_cmd.cc">
+			<Option target="nas-5gs"/>
+		</Unit>
+		<Unit filename="F:/repos/nas-5gs/nas-5gs/sm/pdu_ses_auth_comp.cc">
+			<Option target="nas-5gs"/>
+		</Unit>
+		<Unit filename="F:/repos/nas-5gs/nas-5gs/sm/pdu_ses_est_acc.cc">
+			<Option target="nas-5gs"/>
+		</Unit>
+		<Unit filename="F:/repos/nas-5gs/nas-5gs/sm/pdu_ses_est_rej.cc">
+			<Option target="nas-5gs"/>
+		</Unit>
+		<Unit filename="F:/repos/nas-5gs/nas-5gs/sm/pdu_ses_est_req.cc">
+			<Option target="nas-5gs"/>
+		</Unit>
+		<Unit filename="F:/repos/nas-5gs/nas-5gs/sm/pdu_ses_mod_cmd.cc">
+			<Option target="nas-5gs"/>
+		</Unit>
+		<Unit filename="F:/repos/nas-5gs/nas-5gs/sm/pdu_ses_mod_com_rej.cc">
+			<Option target="nas-5gs"/>
+		</Unit>
+		<Unit filename="F:/repos/nas-5gs/nas-5gs/sm/pdu_ses_mod_comp.cc">
+			<Option target="nas-5gs"/>
+		</Unit>
+		<Unit filename="F:/repos/nas-5gs/nas-5gs/sm/pdu_ses_mod_rej.cc">
+			<Option target="nas-5gs"/>
+		</Unit>
+		<Unit filename="F:/repos/nas-5gs/nas-5gs/sm/pdu_ses_mod_req.cc">
+			<Option target="nas-5gs"/>
+		</Unit>
+		<Unit filename="F:/repos/nas-5gs/nas-5gs/sm/pdu_ses_rel_cmd.cc">
+			<Option target="nas-5gs"/>
+		</Unit>
+		<Unit filename="F:/repos/nas-5gs/nas-5gs/sm/pdu_ses_rel_comp.cc">
+			<Option target="nas-5gs"/>
+		</Unit>
+		<Unit filename="F:/repos/nas-5gs/nas-5gs/sm/pdu_ses_rel_rej.cc">
+			<Option target="nas-5gs"/>
+		</Unit>
+		<Unit filename="F:/repos/nas-5gs/nas-5gs/sm/pdu_ses_rel_req.cc">
+			<Option target="nas-5gs"/>
+		</Unit>
+		<Unit filename="F:/repos/nas-5gs/nas-5gs/sm/sm_status.cc">
+			<Option target="nas-5gs"/>
+		</Unit>
+		<Unit filename="F:/repos/nas-5gs/nas-5gs/ts24007.cc">
+			<Option target="nas-5gs"/>
+		</Unit>
+		<Unit filename="F:/repos/nas-5gs/nas-5gs/ts24007.hh">
+			<Option target="nas-5gs"/>
+		</Unit>
+		<Unit filename="F:/repos/nas-5gs/nas-5gs/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

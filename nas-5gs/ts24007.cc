@@ -3,9 +3,10 @@
 /*
  * Type (T) element dissector
  */
-int dissect_opt_elem_t(const field_meta *  ,
+int dissect_opt_elem_t(const field_meta *,
                        const element_meta *val_meta,
-                       dissector           d) {
+                       dissector           d,
+                       context *           ctx) {
     if (d.length <= 0) return 0;
 
     auto iei = d.tvb->get_uint8(d.offset);
@@ -22,8 +23,10 @@ extern const field_meta *hf_gsm_a_length;
 
 
 /* * Length Value (LV) element dissector */
-int dissect_opt_elem_lv(const field_meta *  ,
-                        const element_meta *val_meta, dissector d) {
+int dissect_opt_elem_lv(const field_meta *,
+                        const element_meta *val_meta,
+                        dissector           d,
+                        context *           ctx) {
     if (d.length <= 0) return 0;
 
     auto parm_len = d.tvb->get_uint8(d.offset);
@@ -38,16 +41,17 @@ int dissect_opt_elem_lv(const field_meta *  ,
     d.offset      = d.offset + 1;
     d.length      = parm_len;
     d.tree        = subtree;
-    auto consumed = fnc(d, nullptr);
+    auto consumed = fnc(d, ctx);
     return consumed + 1;
 }
 
 const extern field_meta *hf_gsm_e_length;
 
 /* Length Value Extended(LV-E) element dissector */
-int dissect_opt_elem_lv_e(const field_meta *  ,
+int dissect_opt_elem_lv_e(const field_meta *,
                           const element_meta *val_meta,
-                          dissector d) {
+                          dissector           d,
+                          context *           ctx) {
     if (d.length <= 0) return 0;
 
     auto parm_len = d.tvb->get_ntohs(d.offset);
@@ -62,7 +66,7 @@ int dissect_opt_elem_lv_e(const field_meta *  ,
     d.length      = parm_len;
     d.tree        = subtree;
     auto fnc      = val_meta->fnc ? val_meta->fnc : add_generic_msg_elem_body;
-    auto consumed = fnc(d, nullptr);
+    auto consumed = fnc(d, ctx);
 
     return consumed + 2;
 }
@@ -72,16 +76,17 @@ int dissect_opt_elem_lv_e(const field_meta *  ,
  * Length cannot be used in these functions, big problem if a element dissector
  * is not defined for these.
  */
-int dissect_opt_elem_v(const field_meta *  ,
+int dissect_opt_elem_v(const field_meta *,
                        const element_meta *val_meta,
-                       dissector d) {
+                       dissector           d,
+                       context *           ctx) {
     if (d.length <= 0) return 0;
 
     auto subtree  = d.tree->add_subtree(d.pinfo, d.tvb, d.offset, -1, val_meta->name);
 
     d.tree        = subtree;
     d.length      = -1;
-    auto consumed = val_meta->fnc(d, nullptr);
+    auto consumed = val_meta->fnc(d, ctx);
     subtree->set_length(consumed);
 
     return consumed;
@@ -97,9 +102,10 @@ static const int left_nibble  = -2;
  * Length cannot be used in these functions, big problem if a element dissector
  * is not defined for these.
  */
-int dissect_opt_elem_tv_short(const field_meta *  ,
+int dissect_opt_elem_tv_short(const field_meta *,
                               const element_meta *val_meta,
-                              dissector           d) {
+                              dissector           d,
+                              context *           ctx) {
     if (d.length <= 0) return 0;
 
     auto iei = d.tvb->get_uint8(d.offset) & 0xF0;
@@ -112,7 +118,7 @@ int dissect_opt_elem_tv_short(const field_meta *  ,
 
     d.tree        = subtree;
     d.length      = right_nibble;
-    auto consumed = val_meta->fnc(d, nullptr);
+    auto consumed = val_meta->fnc(d, ctx);
     subtree->set_length(consumed);
 
     return consumed;
@@ -124,9 +130,10 @@ int dissect_opt_elem_tv_short(const field_meta *  ,
  * Length cannot be used in these functions, big problem if a element dissector
  * is not defined for these.
  */
-int dissect_opt_elem_tv(const field_meta *  ,
+int dissect_opt_elem_tv(const field_meta *,
                         const element_meta *val_meta,
-                        dissector           d) {
+                        dissector           d,
+                        context *           ctx) {
     if (d.length <= 0) return 0;
 
     auto iei = d.tvb->get_uint8(d.offset);
@@ -139,7 +146,7 @@ int dissect_opt_elem_tv(const field_meta *  ,
     d.offset      = d.offset + 1;
     d.length      = -1;
     d.tree        = subtree;
-    auto consumed = val_meta->fnc(d, nullptr);
+    auto consumed = val_meta->fnc(d, ctx);
     subtree->set_length(consumed + 1);
 
     return consumed + 1;
@@ -148,9 +155,10 @@ int dissect_opt_elem_tv(const field_meta *  ,
 /*
  * Type Length Value (TLV) element dissector
  */
-int dissect_opt_elem_tlv(const field_meta *  ,
+int dissect_opt_elem_tlv(const field_meta *,
                          const element_meta *val_meta,
-                         dissector d) {
+                         dissector           d,
+                         context *           ctx) {
     if (d.length <= 0) return 0;
 
     auto iei = d.tvb->get_uint8(d.offset);
@@ -173,7 +181,7 @@ int dissect_opt_elem_tlv(const field_meta *  ,
     d.length      = parm_len;
     d.tree        = subtree;
     auto fnc      = val_meta->fnc ? val_meta->fnc : add_generic_msg_elem_body;
-    auto consumed = fnc(d, nullptr);
+    auto consumed = fnc(d, ctx);
 
     return consumed + 2;
 }
@@ -186,9 +194,10 @@ int dissect_opt_elem_tlv(const field_meta *  ,
  * octet 2 0/1 ext  length
  * octet 2a length
  */
-int dissect_opt_elem_telv(const field_meta *  ,
+int dissect_opt_elem_telv(const field_meta *,
                           const element_meta *val_meta,
-                          dissector d) {
+                          dissector           d,
+                          context *           ctx) {
     if (d.length <= 0) return 0;
 
     auto iei = d.tvb->get_uint8(d.offset);
@@ -221,7 +230,7 @@ int dissect_opt_elem_telv(const field_meta *  ,
     d.length      = parm_len;
     d.tree        = subtree;
     auto fnc      = val_meta->fnc ? val_meta->fnc : add_generic_msg_elem_body;
-    auto consumed = fnc(d, nullptr);
+    auto consumed = fnc(d, ctx);
 
     return 1 + lengt_length + consumed;
 }
@@ -235,7 +244,8 @@ int dissect_opt_elem_telv(const field_meta *  ,
  */
 int dissect_opt_elem_tlv_e(const field_meta *,
                            const element_meta *val_meta,
-                           dissector d) {
+                           dissector           d,
+                           context *           ctx) {
     if (d.length<= 0) return 0;
 
     auto iei = d.tvb->get_uint8(d.offset);
@@ -259,7 +269,7 @@ int dissect_opt_elem_tlv_e(const field_meta *,
     d.offset      = d.offset + 1 + 2;
     d.length      = parm_len;
     auto fnc = val_meta->fnc ? val_meta->fnc : add_generic_msg_elem_body;
-    auto consumed = fnc(d, nullptr);
+    auto consumed = fnc(d, ctx);
 
     return 1 + 2 + consumed;
 }

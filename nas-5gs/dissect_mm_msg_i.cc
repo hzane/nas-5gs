@@ -1,5 +1,4 @@
 #include "dissect_mm_msg.hh"
-#include "mm_registration_req.hh"
 
 extern const true_false_string nas_5gs_for_tfs = {
     "Follow-on request pending",

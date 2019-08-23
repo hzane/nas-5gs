@@ -1,6 +1,7 @@
 #pragma once
 #include <cstdarg>
 #include <string>
+#include <vector>
 #include "config.hh"
 #include "packet_info.hh"
 #include "proto.hh"
@@ -12,7 +13,16 @@ extern void nas_5gs_module_cleanup();
 extern void bug(const char* format, ...);
 
 struct context {
-
+    std::vector<std::string> paths = {};
+};
+struct use_context{
+    context* ctx;
+    use_context(context*ctx, const char*path):ctx(ctx){if(ctx)ctx->paths.emplace_back(path);}
+    ~use_context(){if(ctx) {
+        auto p = ctx->paths.back();
+        ctx->paths.pop_back();
+        bug(p.c_str());
+    }}
 };
 
 namespace em_severity {
@@ -79,6 +89,9 @@ inline void extraneous_data_check(packet_info* pinfo,
                            int          offset,
                            int          len,
                            int          maxlen) {
+    if (len<0){
+        bug("overflow at %d\n", offset);
+    }
     if (len >maxlen){
         tree->add_expert(pinfo,
                          tvb,
