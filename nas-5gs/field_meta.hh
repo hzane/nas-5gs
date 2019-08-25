@@ -46,8 +46,6 @@ __declspec(selectany) extern const uint32_t ft_int64     = 14;
 __declspec(selectany) extern const uint32_t ft_float      = 24;
 __declspec(selectany) extern const uint32_t ft_double     = 25;
 __declspec(selectany) extern const uint32_t ft_string     = 17;
-__declspec(selectany) extern const uint32_t ft_hex_string = 18;
-__declspec(selectany) extern const uint32_t ft_bin_string = 19;
 __declspec(selectany) extern const uint32_t ft_bytes      = 20;
 __declspec(selectany) extern const uint32_t ft_char       = 22;
 __declspec(selectany) extern const uint32_t ft_bitset     = 23;
@@ -76,44 +74,7 @@ inline uint32_t get(uint32_t d) { return d & 0xff; }
 
 } // namespace fd
 
-struct data_t {
-    const uint8_t* p      = nullptr;
-    int            length = 0;
-    uint64_t       val    = 0;
-
-    data_t(const uint8_t* p, int len) : p(p), length(len), val(0) {}
-    data_t(uint64_t v) : p(nullptr), val(v), length(0) {}
-
-    uint8_t  get_uint7() const { return (p ? *p : (uint8_t) val) & 0x7f; };
-    uint8_t  get_uint8() const { return p ? *p : (uint8_t) val; };
-
-    uint16_t get_uint16(uint32_t e = enc::be) const {
-        // always use big-endian
-        return p ? n2uint16(p) : (uint16_t)val;
-    };
-    uint32_t get_uint24(uint32_t e = enc::be)const{
-        return p ? n2uint24(p) : uint32_t(val & 0xFFFFFF);
-    }
-    uint32_t get_uint32(uint32_t e = enc::be) const{
-        return p ? n2uint32(p) : (uint32_t) val;
-    };
-    uint64_t get_uint48(uint32_t e = enc::be) const { return p ? n2uint48(p) : val; };
-    uint64_t get_uint64(uint32_t e = enc::be) const { return p ? n2uint64(p) : val; };
-    uint64_t get_val(uint32_t e= enc::be)const{
-        if (!p) return val;
-        if (length<=0) return 0;
-        if (length==1) return get_uint8();
-        if (length ==2) return get_uint16();
-        if (length == 3) return get_uint24();
-        if (length == 4) return get_uint32();
-        if (length == 6) return get_uint48();
-        if (length == 8) return get_uint64();
-        return get_uint8();
-    }
-};
-
-using std::string;
-typedef std::string (*printer_t)(const field_meta*, data_t);
+using string = std::string;
 
 struct field_meta {
     const char*              name;       /* full name of this field */
@@ -125,7 +86,8 @@ struct field_meta {
     const range_string*      range_strings;
     uint64_t                 bitmask; /* bitmask of interesting bits */
 
-    string format(data_t d, uint32_t enc) const;
+    string format(uint64_t v) const;
+    string format(const uint8_t* d, int len, uint32_t enc) const;
 };
 std::string formats(const char* format, ...);
 std::string vformat(const char* format, va_list);
@@ -136,15 +98,3 @@ std::vector< std::string > find_bitset_string(const val_string* vstr, uint32_t b
 
 std::string join(const std::vector< std::string >& strs, const char* sep = " ");
 
-std::string print_dec(data_t v, bool with_comma = true);
-std::string print_hex(data_t v, bool with_prefix = true);
-std::string print_bits(data_t);
-std::string print_dec_hex(data_t v, bool with_prefix = false, bool with_comma = true);
-std::string print_hex_dec(data_t v, bool with_prefix = false, bool with_comma = false);
-std::string print_string(data_t v);
-
-std::string printer_dec(const field_meta*, data_t v);
-std::string printer_hex(const field_meta*, data_t v);
-std::string printer_bits(const field_meta*, data_t v);
-std::string printer_string(const field_meta*, data_t v);
-std::string printer_bytes(const field_meta*, data_t v);

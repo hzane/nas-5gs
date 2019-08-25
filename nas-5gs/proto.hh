@@ -68,3 +68,5 @@ inline void print_node(std::ostream& out, proto_node* node, int indent = 0) {
         print_node(out, node, indent + 1);
     }
 }
+
+
