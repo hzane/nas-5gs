@@ -7,59 +7,65 @@
 #include "field_meta.hh"
 #include "tvbuff.hh"
 
-string field_meta::format(data_t d, uint32_t enc) const {
-    if (d.p && d.length == 0) return string();
+string field_meta::format(const uint8_t*p , int length, uint32_t enc) const {
+    if (p && length == 0) return string();
     if (ftype == ft::none || ftype == ft::protocol) return string();
 
     if (ftype == ft::ft_boolean) {
-        auto v  = d.get_uint8();
+        auto v  = *p;
         if (bitmask) v = v & bitmask;
 
         auto tf = this->tf_strings ? tf_strings : &true_false;
         return v ? tf->true_string : tf->false_string;
     }
     if (ftype == ft::ft_char) {
-        return formats("%c", d.get_uint8());
+        return formats("%c", (char)*p);
+    }
+    switch (display){
+        case fd::base_string: return string((const char*)p, length);
+        case fd::base_bin: return format_bit(p, length, " ");
+        case fd::base_hex: return format_hex(p, length, " ");
+        case fd::sep_colon: return format_hex(p, length, ";");
+        case fd::sep_dash: return format_hex(p, length, "-");
+        case fd::sep_dot: return format_hex(p, length, ".");
+    }
+    if (display == fd::base_string ) {
+        return std::string((const char*) p, length);
     }
 
-    if (ftype == ft::ft_string) {
-        assert(d.p);
-        return std::string((const char*) d.p, d.length);
+    return string();
+}
+
+string field_meta::format(uint64_t v) const {
+    if (bitmask) v = v & bitmask;
+
+    if (ftype == ft::none || ftype == ft::protocol) return string();
+
+    if (ftype == ft::ft_boolean) {
+        auto tf = this->tf_strings ? tf_strings : &true_false;
+        return v ? tf->true_string : tf->false_string;
+    }
+    if (tf_strings){
+        return v ? tf_strings->true_string: tf_strings->false_string;
+    }
+    if (ftype == ft::ft_char) {
+        return formats("%c", (char)v);
     }
 
-    if (val_strings && ftype == ft::ft_bitset) {
-        auto flags = find_bitset_string(val_strings, (uint32_t)d.get_val());
+    if (val_strings && display == fd::base_bitset) {
+        auto flags = find_bitset_string(val_strings, (uint32_t)v);
         return join(flags, " | ");
     }
 
     if (val_strings) {
-        auto v = (uint32_t) d.get_val();
         auto s = find_val_string(val_strings, v);
-        return formats("%s (%#x)", s, v);
+        return formats("%s (%#x)", s, uint32_t(v));
     }
 
-    if (ftype == ft::ft_bytes && (display&fd::base_bin)==fd::base_bin){
-        assert(d.p);
-        return format_bit(d.p, d.length, " ");
+    if (range_strings){
+        auto s = find_r_string(range_strings, v);
+        return formats("%s (%#x)", s, uint32_t(v));
     }
 
-    if (ftype == ft::ft_bin_string){
-        assert(d.p);
-        return format_bit(d.p, d.length, " ");
-    }
-
-    if (ftype == ft::ft_bytes || ftype == ft::ft_hex_string) {
-        assert(d.p);
-        const char *sep = " ";
-        if ((display & 0xe0) == fd::sep_dot) sep = ".";
-        if ((display & 0xe0) == fd::sep_dash) sep = "-";
-        if ((display & 0xe0) == fd::sep_colon) sep = ";";
-        return format_hex(d.p, d.length, sep);
-    }
-
-    // ft_float, ft_double
-
-    auto v = d.get_val();
-    if (bitmask) v = v & bitmask;
     return format_int(v, ftype, display);
 }

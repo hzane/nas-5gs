@@ -1,8 +1,14 @@
 #include "core.hh"
 #include <cstdio>
 #include <vector>
+
+#if _WIN32
 #include <windows.h>
 #include <DbgHelp.h>
+#else
+void OutputDebugStringA(const char*){}
+#endif
+
 
 void bug(const char* format, ...) {
     
@@ -20,3 +26,4 @@ void bug(const char* format, ...) {
     va_end(cp);
     OutputDebugStringA(buf.data());
 }
+

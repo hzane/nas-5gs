@@ -21,7 +21,7 @@ int dissect_nas_5gs(dissector d, context* ctx) {
         return dissect_nas_5gs_plain(d, ctx);
     }
 
-    /* Security header type associated with a spare half octet;
+    /* Security header type associated with a spare half octet; */
     /* or PDU session identity           octet 2 */
     /* Determine if it's a plain 5GS NAS Message or not */
     auto sec_type = d.tvb->get_uint8(d.offset + 1);

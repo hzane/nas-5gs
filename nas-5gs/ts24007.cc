@@ -287,7 +287,7 @@ static field_meta const hfm_gsm_a_length = {
     nullptr,
     0x0,
 };
-extern const field_meta *hf_gsm_a_length = &hfm_gsm_a_length;
+const field_meta *hf_gsm_a_length = &hfm_gsm_a_length;
 
 static field_meta hfm_gsm_a_element_value = {
     "Element Value",
@@ -299,7 +299,7 @@ static field_meta hfm_gsm_a_element_value = {
     nullptr,
     0x0,
 };
-const extern field_meta *hf_gsm_a_element_value = &hfm_gsm_a_element_value;
+const field_meta *hf_gsm_a_element_value = &hfm_gsm_a_element_value;
 
 static field_meta const hfm_gsm_e_length = {
     "Length",
@@ -311,7 +311,7 @@ static field_meta const hfm_gsm_e_length = {
     nullptr,
     0x0,
 };
-const extern field_meta *hf_gsm_e_length = &hfm_gsm_e_length;
+const field_meta *hf_gsm_e_length = &hfm_gsm_e_length;
 
 static field_meta const hfm_gsm_a_common_elem_id_f0 = {
     "Element ID",
@@ -323,7 +323,7 @@ static field_meta const hfm_gsm_a_common_elem_id_f0 = {
     nullptr,
     0xf0,
 };
-const extern field_meta *hf_gsm_a_common_elem_id_f0 = &hfm_gsm_a_common_elem_id_f0;
+const field_meta *hf_gsm_a_common_elem_id_f0 = &hfm_gsm_a_common_elem_id_f0;
 
 extern const field_meta *hf_nas_5gs_msg_elems;
 

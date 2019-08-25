@@ -10,7 +10,7 @@ extern const field_meta hfm_spare_half_octet = {
     nullptr,
     0xf0,
 };
-extern const field_meta* hf_spare_half_octet  = &hfm_spare_half_octet;
+const field_meta* hf_spare_half_octet  = &hfm_spare_half_octet;
 
 static field_meta hfm_nas_5gs_msg_elems = {
     "Message Elements",
@@ -22,7 +22,7 @@ static field_meta hfm_nas_5gs_msg_elems = {
     nullptr,
     0x0,
 };
-extern const field_meta* hf_nas_5gs_msg_elems = &hfm_nas_5gs_msg_elems;
+const field_meta* hf_nas_5gs_msg_elems = &hfm_nas_5gs_msg_elems;
 
 __declspec(selectany) extern const val_string nas_5gs_epd_vals[] = {
     {0x00, "Group call control"},
@@ -56,7 +56,7 @@ static const field_meta hfm_nas_5gs_epd = {
     nullptr,
     0x0,
 };
-__declspec(selectany) extern const field_meta* hf_nas_5gs_epd = &hfm_nas_5gs_epd;
+const field_meta* hf_nas_5gs_epd = &hfm_nas_5gs_epd;
 
 static field_meta hfm_nas_5gs_spare_half_octet = {
     "Spare Half Octet",
@@ -68,9 +68,9 @@ static field_meta hfm_nas_5gs_spare_half_octet = {
     nullptr,
     0xf0,
 };
-extern const field_meta* hf_nas_5gs_spare_half_octet = &hfm_nas_5gs_spare_half_octet;
+const field_meta* hf_nas_5gs_spare_half_octet = &hfm_nas_5gs_spare_half_octet;
 
-__declspec(selectany) extern const val_string nas_5gs_security_header_type_vals[] = {
+const val_string nas_5gs_security_header_type_vals[] = {
     {0, "Plain NAS message, not security protected"},
     {1, "Integrity protected"},
     {2, "Integrity protected and ciphered"},
@@ -89,7 +89,7 @@ static field_meta hfm_nas_5gs_security_header_type = {
     nullptr,
     0x0f,
 };
-extern const field_meta* hf_nas_5gs_security_header_type =
+const field_meta* hf_nas_5gs_security_header_type =
     &hfm_nas_5gs_security_header_type;
 
 static field_meta hfm_nas_5gs_msg_auth_code = {
@@ -102,7 +102,7 @@ static field_meta hfm_nas_5gs_msg_auth_code = {
     nullptr,
     0x0,
 };
-extern const field_meta* hf_nas_5gs_msg_auth_code = &hfm_nas_5gs_msg_auth_code;
+const field_meta* hf_nas_5gs_msg_auth_code = &hfm_nas_5gs_msg_auth_code;
 
 static field_meta hfm_nas_5gs_seq_no = {
     "Sequence number",
@@ -114,10 +114,10 @@ static field_meta hfm_nas_5gs_seq_no = {
     nullptr,
     0x0,
 };
-extern const field_meta* hf_nas_5gs_seq_no = &hfm_nas_5gs_seq_no;
+const field_meta* hf_nas_5gs_seq_no = &hfm_nas_5gs_seq_no;
 
 /* 5GS session management messages */
-extern const val_string nas_5gs_sm_message_type_vals[] = {
+const val_string nas_5gs_sm_message_type_vals[] = {
 
     {0xc1, "PDU session establishment request"},
     {0xc2, "PDU session establishment accept"},
@@ -161,9 +161,9 @@ static field_meta hfm_nas_5gs_sm_msg_type = {
     nullptr,
     0x0,
 };
-extern const field_meta* hf_nas_5gs_sm_msg_type = &hfm_nas_5gs_sm_msg_type;
+const field_meta* hf_nas_5gs_sm_msg_type = &hfm_nas_5gs_sm_msg_type;
 
-extern const val_string nas_5gs_pdu_session_id_vals[] = {
+const val_string nas_5gs_pdu_session_id_vals[] = {
     {0x00, "No PDU session identity assigned"},
     {0x01, "Reserved"},
     {0x02, "Reserved"},
@@ -192,7 +192,7 @@ static field_meta hfm_nas_5gs_pdu_session_id = {
     nullptr,
     0x0,
 };
-extern const field_meta* hf_nas_5gs_pdu_session_id = &hfm_nas_5gs_pdu_session_id;
+const field_meta* hf_nas_5gs_pdu_session_id = &hfm_nas_5gs_pdu_session_id;
 
 
 static field_meta hfm_nas_5gs_proc_trans_id = {
@@ -205,7 +205,7 @@ static field_meta hfm_nas_5gs_proc_trans_id = {
     nullptr,
     0x0,
 };
-extern const field_meta* hf_nas_5gs_proc_trans_id = &hfm_nas_5gs_proc_trans_id;
+const field_meta* hf_nas_5gs_proc_trans_id = &hfm_nas_5gs_proc_trans_id;
 
 /* 9.7  Message type */
 
@@ -269,4 +269,4 @@ static field_meta hfm_nas_5gs_mm_msg_type = {
     nullptr,
     0x0,
 };
-extern const field_meta* hf_nas_5gs_mm_msg_type = &hfm_nas_5gs_mm_msg_type;
+const field_meta* hf_nas_5gs_mm_msg_type = &hfm_nas_5gs_mm_msg_type;

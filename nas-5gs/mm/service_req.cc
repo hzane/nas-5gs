@@ -93,7 +93,7 @@ extern const field_meta hfm_service_type = {
     nullptr,
     0x70,
 };
-__declspec(selectany) extern const field_meta* hf_service_type = &hfm_service_type;
+const field_meta* hf_service_type = &hfm_service_type;
 
 int                dissect_key_set_id(dissector d, context* ctx);
 const element_meta key_set_id = {
