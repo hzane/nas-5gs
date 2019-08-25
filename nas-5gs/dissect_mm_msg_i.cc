@@ -16,7 +16,7 @@ static field_meta hfm_nas_5gs_mm_for = {
     0x08,
 };
 
-extern const field_meta* hf_nas_5gs_mm_for = &hfm_nas_5gs_mm_for;
+const field_meta* hf_nas_5gs_mm_for = &hfm_nas_5gs_mm_for;
 
 /* * 9.11.3.9A    5GS update type*/
 
@@ -55,7 +55,7 @@ static field_meta hfm_nas_5gs_mm_5gs_reg_type = {
     nullptr,
     0x07,
 };
-extern const field_meta* hf_nas_5gs_mm_5gs_reg_type = &hfm_nas_5gs_mm_5gs_reg_type;
+const field_meta* hf_nas_5gs_mm_5gs_reg_type = &hfm_nas_5gs_mm_5gs_reg_type;
 
 static const true_false_string nas_5gs_mm_tsc_tfs = {
     "Mapped security context (for KSIASME)",
@@ -94,7 +94,7 @@ static field_meta hfm_nas_5gs_mm_tsc_h1 = {
     nullptr,
     0x80,
 };
-extern const field_meta* hf_nas_5gs_mm_tsc_h1 = &hfm_nas_5gs_mm_tsc_h1;
+const field_meta* hf_nas_5gs_mm_tsc_h1 = &hfm_nas_5gs_mm_tsc_h1;
 
 static field_meta hfm_nas_5gs_mm_nas_key_set_id_h1 = {
     "NAS key set identifier",
@@ -106,7 +106,7 @@ static field_meta hfm_nas_5gs_mm_nas_key_set_id_h1 = {
     nullptr,
     0x70,
 };
-extern const field_meta* hf_nas_5gs_mm_nas_key_set_id_h1 =
+const field_meta* hf_nas_5gs_mm_nas_key_set_id_h1 =
     &hfm_nas_5gs_mm_nas_key_set_id_h1;
 
 /* * 9.11.3.2 5GMM cause */

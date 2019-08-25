@@ -7,8 +7,6 @@ typedef unsigned int uint_t;
 typedef int int_t;
 
 struct tvbuff;
-typedef tvbuff tvbuff_t;
-typedef tvbuff buffer_t;
 
 struct packet_info;
 struct proto_node;
@@ -99,17 +97,20 @@ inline uint64_t n2uint64(const uint8_t* data) {
     uint64_t h = data[0 + 5];
     return a << 56 | b << 48 | c << 40 | d << 32 | e << 24 | f << 16 | g << 8 | h;
 };
-inline uint64_t n2uint(const uint8_t*data, int len){
+
+inline uint64_t n2uint(const uint8_t* data, int len){
     switch (len){
-        case 8: return n2uint64(data);
-        case 6: return n2uint48(data);
-        case 4: return n2uint32(data);
-        case 3: return n2uint24(data);
-        case 2: return n2uint16(data);
         case 1: return n2uint8(data);
+        case 2: return n2uint16(data);
+        case 3: return n2uint24(data);
+        case 4: return n2uint32(data);
+        case 6: return n2uint48(data);
+        case 8: return n2uint64(data);
         default: return 0;
     }
+    return 0;
 }
+
 string format_hex(const uint8_t* data, int len, const char* sep = " ");
 string format_bit(const uint8_t* data, int len, const char* sep = " ");
 string format_int(uint64_t v, uint32_t ftype, uint32_t display);

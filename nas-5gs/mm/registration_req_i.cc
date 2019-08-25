@@ -1,4 +1,3 @@
-#pragma once
 #include "../core.hh"
 #include "../dissect_mm_msg.hh"
 
@@ -24,7 +23,7 @@ static field_meta hfm_registration_req_flags = {
     0x0,
 };
 
-extern const field_meta* hf_reg_req_flags = &hfm_registration_req_flags;
+const field_meta* hf_reg_req_flags = &hfm_registration_req_flags;
 
 static const val_string nas_5gs_mm_registration_req_elem[] = {
     {0xc0, "Non-current native NAS KSI"},
