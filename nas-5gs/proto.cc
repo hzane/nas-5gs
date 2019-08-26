@@ -36,6 +36,9 @@ proto_item* proto_node::add_item(packet_info*      pinfo,
         item->name = field->name;
     }
     if (encoding != enc::none){
+        if (meta && ft::is_integer(meta->ftype)) {
+            this->val.ui64 = n2uint(buf->data + offset, length);
+        }
         item->text = print_text(field, buf->data + offset, length, encoding);
     }
     return item;

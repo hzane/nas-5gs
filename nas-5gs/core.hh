@@ -10,7 +10,6 @@
 
 extern void nas_5gs_module_init();
 extern void nas_5gs_module_cleanup();
-extern void bug(const char* format, ...);
 
 struct context {
     std::vector<std::string> paths = {};
@@ -82,24 +81,3 @@ struct message_meta {
 typedef message_meta element_meta;
 
 inline const char* safe_str(const char* v) { return (v && v[0] != '\n') ? v : ""; }
-
-inline void extraneous_data_check(packet_info* pinfo,
-                           proto_node*  tree,
-                           tvbuff*      tvb,
-                           int          offset,
-                           int          len,
-                           int          maxlen) {
-    if (len<0){
-        bug("overflow at %d\n", offset);
-    }
-    if (len >maxlen){
-        tree->add_expert(pinfo,
-                         tvb,
-                         offset,
-                         len - maxlen,
-                         "extraneous data (%d) bytes",
-                         (len - maxlen));
-    }
-}
-
-extern const field_meta* hf_spare_half_octet;

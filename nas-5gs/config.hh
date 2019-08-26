@@ -26,20 +26,14 @@ typedef proto_node proto_item;
 
 using string = std::string;
 
+extern void bug(const char* format, ...);
+
 namespace enc {
 __declspec(selectany) extern const uint32_t na   = 0;
 __declspec(selectany) extern const uint32_t be   = 1; // big endian
 __declspec(selectany) extern const uint32_t le   = 2; // little endian
 __declspec(selectany) extern const uint32_t none = 4; // host order
 } // namespace enc
-
-/*
-typedef int (
-    *dissect_fnc_t)(packet_info*, proto_node*, tvbuff*, int offset, int len, context*);
-
-typedef dissect_fnc_t dissect_msg_fnc_t;
-typedef dissect_fnc_t dissect_elem_fnc_t;
-*/
 
 struct dissector {
     packet_info* pinfo  = nullptr;
@@ -50,6 +44,9 @@ struct dissector {
     void*        data   = nullptr;
 
     dissector& step(int consumed){offset+=consumed;length-=consumed;return *this;}
+    proto_node* add_item(int len, const field_meta* fm, uint32_t e = enc::be);
+    void add_bits(const field_meta* metas[]);
+    void        extraneous_data_check(int maxlen);
 };
 
 

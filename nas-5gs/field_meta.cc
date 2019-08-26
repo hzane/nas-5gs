@@ -58,12 +58,12 @@ string field_meta::format(uint64_t v) const {
     }
 
     if (val_strings) {
-        auto s = find_val_string(val_strings, v);
+        auto s = find_val_string(val_strings, uint32_t(v));
         return formats("%s (%#x)", s, uint32_t(v));
     }
 
     if (range_strings){
-        auto s = find_r_string(range_strings, v);
+        auto s = find_r_string(range_strings, uint32_t(v));
         return formats("%s (%#x)", s, uint32_t(v));
     }
 

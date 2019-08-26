@@ -32,7 +32,7 @@ int mm::authentication_result(dissector d, context* ctx) {
     /* 38    ABBA    ABBA 9.11.3.10    O    TLV    4-n */
     // ELEM_OPT_TLV(0x38, NAS_5GS_PDU_TYPE_MM, DE_NAS_5GS_MM_ABBA, NULL);
 
-    extraneous_data_check(d.pinfo, d.tree, d.tvb, d.offset, d.length, 0);
+    d.extraneous_data_check(0);
     return d.tvb->reported_length;
 }
 

@@ -62,8 +62,7 @@ int mm::service_req(dissector d, context* ctx) {
     d.offset += consumed;
     d.length -= consumed;
 
-    // EXTRANEOUS_DATA_CHECK(curr_len, 0, pinfo, &ei_nas_5gs_extraneous_data);
-    extraneous_data_check(d.pinfo, d.tree, d.tvb, d.offset, d.length, 0);
+    d.extraneous_data_check(0);
 
     return d.tvb->reported_length;
 }

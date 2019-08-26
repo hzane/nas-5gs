@@ -14,10 +14,9 @@ int sm::sm_status(dissector d, context* ctx) {
     /* 5GSM cause    5GSM cause 9.11.4.1    M    V    1 */
     // ELEM_MAND_V(, DE_NAS_5GS_SM_5GSM_CAUSE,);
     auto consumed = dissect_elem_v(nullptr, &sm_cause, d, ctx);
-    d.offset += consumed;
-    d.length -= consumed;
+    d.step(consumed);
 
-    extraneous_data_check(d.pinfo, d.tree, d.tvb, d.offset, d.length, 0);
+    d.extraneous_data_check(0);
 
     return d.tvb->reported_length;
 }

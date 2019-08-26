@@ -9,9 +9,9 @@
 void OutputDebugStringA(const char*){}
 #endif
 
-
+// declared in config.hh
 void bug(const char* format, ...) {
-    
+
     va_list args;
     va_start(args, format);
 
@@ -27,3 +27,16 @@ void bug(const char* format, ...) {
     OutputDebugStringA(buf.data());
 }
 
+void extraneous_data_check(dissector d, int maxlen) {
+    if (d.length < 0) {
+        bug("overflow at %d\n", d.offset);
+    }
+    if (d.length > maxlen) {
+        d.tree->add_expert(d.pinfo,
+                           d.tvb,
+                           d.offset,
+                           d.length - maxlen,
+                           "extraneous data (%d) bytes",
+                           (d.length - maxlen));
+    }
+}

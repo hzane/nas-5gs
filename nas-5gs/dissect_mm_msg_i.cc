@@ -111,7 +111,7 @@ const field_meta* hf_nas_5gs_mm_nas_key_set_id_h1 =
 
 /* * 9.11.3.2 5GMM cause */
 
-static const val_string nas_5gs_mm_cause_vals[] = {
+extern const val_string nas_5gs_mm_cause_vals[] = {
     {0x03, "Illegal UE"},
     {0x05, "PEI not accepted"},
     {0x06, "Illegal ME"},
@@ -150,7 +150,9 @@ static const val_string nas_5gs_mm_cause_vals[] = {
     {0x6f, "Protocol error, unspecified"},
     {0, nullptr},
 };
-static field_meta hfm_nas_5gs_mm_5gmm_cause = {
+const val_string* nas_5gs_mm_cause_values = nas_5gs_mm_cause_vals;
+
+const field_meta hfm_nas_5gs_mm_5gmm_cause = {
     "5GMM cause",
     "nas_5gs.mm.5gmm_cause",
     ft::ft_uint8,
@@ -430,11 +432,11 @@ static field_meta hfm_nas_5gs_mm_type_id = {
     0x07,
 };
 
-static true_false_string nas_5gs_odd_even_tfs = {
+const true_false_string nas_5gs_odd_even_tfs = {
     "Odd number of identity digits",
     "Even number of identity digits",
 };
-static field_meta hfm_nas_5gs_mm_odd_even = {
+const field_meta hfm_nas_5gs_mm_odd_even = {
     "Odd/even indication",
     "nas_5gs.mm.odd_even",
     ft::ft_boolean,
@@ -445,7 +447,7 @@ static field_meta hfm_nas_5gs_mm_odd_even = {
     0x08,
 };
 
-static field_meta hfm_nas_5gs_mm_length = {
+const field_meta hfm_nas_5gs_mm_length = {
     "Length",
     "nas_5gs.mm.length",
     ft::ft_uint8,
@@ -456,7 +458,7 @@ static field_meta hfm_nas_5gs_mm_length = {
     0x0,
 };
 
-static field_meta hfm_nas_5gs_mm_abba = {
+const field_meta hfm_nas_5gs_mm_abba = {
     "ABBA Contents",
     "nas_5gs.mm.abba_contents",
     ft::ft_uint16,
@@ -466,7 +468,7 @@ static field_meta hfm_nas_5gs_mm_abba = {
     nullptr,
     0x00,
 };
-static field_meta hfm_nas_5gs_mm_pld_cont = {
+const field_meta hfm_nas_5gs_mm_pld_cont = {
     "Payload container",
     "nas_5gs.mm.pld_cont",
     ft::ft_bytes,
@@ -479,7 +481,7 @@ static field_meta hfm_nas_5gs_mm_pld_cont = {
 
 /* *     9.11.3.47    Request type */
 
-static const val_string nas_5gs_mm_req_type_vals[] = {
+const val_string nas_5gs_mm_req_type_vals[] = {
     {0x01, "Initial request"},
     {0x02, "Existing PDU session"},
     {0x03, "Initial emergency request"},
@@ -488,7 +490,7 @@ static const val_string nas_5gs_mm_req_type_vals[] = {
     {0x07, "Reserved"},
     {0, nullptr},
 };
-static field_meta hfm_nas_5gs_mm_req_type = {
+const field_meta hfm_nas_5gs_mm_req_type = {
     "Request type",
     "nas_5gs.mm.req_typ",
     ft::ft_uint8,
@@ -502,7 +504,7 @@ static field_meta hfm_nas_5gs_mm_req_type = {
 /* *     9.11.3.50    Service type */
 
 /* Used inline as H1 (Upper nibble)*/
-static const val_string nas_5gs_mm_serv_type_vals[] = {
+const val_string nas_5gs_mm_serv_type_vals[] = {
     {0x00, "Signalling"},
     {0x01, "Data"},
     {0x02, "Mobile terminated services"},
@@ -511,7 +513,7 @@ static const val_string nas_5gs_mm_serv_type_vals[] = {
     {0x05, "High priority access"},
     {0, nullptr},
 };
-static field_meta hfm_nas_5gs_mm_serv_type = {
+const field_meta hfm_nas_5gs_mm_serv_type = {
     "Service type",
     "nas_5gs.mm.serv_type",
     ft::ft_uint8,
@@ -522,7 +524,7 @@ static field_meta hfm_nas_5gs_mm_serv_type = {
     0x70,
 };
 
-static field_meta hfm_nas_5gs_mm_5g_ea0 = {
+const field_meta hfm_nas_5gs_mm_5g_ea0 = {
     "5G-EA0",
     "nas_5gs.mm.5g_ea0",
     ft::ft_boolean,
@@ -533,7 +535,7 @@ static field_meta hfm_nas_5gs_mm_5g_ea0 = {
     0x80,
 };
 
-static field_meta hfm_nas_5gs_mm_128_5g_ea1 = {
+const field_meta hfm_nas_5gs_mm_128_5g_ea1 = {
     "128-5G-EA1",
     "nas_5gs.mm.128_5g_ea1",
     ft::ft_boolean,
@@ -544,7 +546,7 @@ static field_meta hfm_nas_5gs_mm_128_5g_ea1 = {
     0x40,
 };
 
-static field_meta hfm_nas_5gs_mm_128_5g_ea2 = {
+const field_meta hfm_nas_5gs_mm_128_5g_ea2 = {
     "128-5G-EA2",
     "nas_5gs.mm.128_5g_ea2",
     ft::ft_boolean,
@@ -555,7 +557,7 @@ static field_meta hfm_nas_5gs_mm_128_5g_ea2 = {
     0x20,
 };
 
-static field_meta hfm_nas_5gs_mm_128_5g_ea3 = {
+const field_meta hfm_nas_5gs_mm_128_5g_ea3 = {
     "128-5G-EA3",
     "nas_5gs.mm.128_5g_ea3",
     ft::ft_boolean,
@@ -566,7 +568,7 @@ static field_meta hfm_nas_5gs_mm_128_5g_ea3 = {
     0x10,
 };
 
-static field_meta hfm_nas_5gs_mm_5g_ea4 = {
+const field_meta hfm_nas_5gs_mm_5g_ea4 = {
     "5G-EA4",
     "nas_5gs.mm.5g_ea4",
     ft::ft_boolean,
@@ -577,7 +579,7 @@ static field_meta hfm_nas_5gs_mm_5g_ea4 = {
     0x08,
 };
 
-static field_meta hfm_nas_5gs_mm_5g_ea5 = {
+const field_meta hfm_nas_5gs_mm_5g_ea5 = {
     "5G-EA5",
     "nas_5gs.mm.5g_ea5",
     ft::ft_boolean,
@@ -588,7 +590,7 @@ static field_meta hfm_nas_5gs_mm_5g_ea5 = {
     0x04,
 };
 
-static field_meta hfm_nas_5gs_mm_5g_ea6 = {
+const field_meta hfm_nas_5gs_mm_5g_ea6 = {
     "5G-EA6",
     "nas_5gs.mm.5g_ea6",
     ft::ft_boolean,
@@ -599,7 +601,7 @@ static field_meta hfm_nas_5gs_mm_5g_ea6 = {
     0x02,
 };
 
-static field_meta hfm_nas_5gs_mm_5g_ea7 = {
+const field_meta hfm_nas_5gs_mm_5g_ea7 = {
     "5G-EA7",
     "nas_5gs.mm.5g_ea7",
     ft::ft_boolean,
@@ -610,7 +612,7 @@ static field_meta hfm_nas_5gs_mm_5g_ea7 = {
     0x01,
 };
 
-static field_meta hfm_nas_5gs_mm_5g_ia0 = {
+const field_meta hfm_nas_5gs_mm_5g_ia0 = {
     "5G-IA0",
     "nas_5gs.mm.ia0",
     ft::ft_boolean,
@@ -621,7 +623,7 @@ static field_meta hfm_nas_5gs_mm_5g_ia0 = {
     0x80,
 };
 
-static field_meta hfm_nas_5gs_mm_5g_128_ia1 = {
+const field_meta hfm_nas_5gs_mm_5g_128_ia1 = {
     "128-5G-IA1",
     "nas_5gs.mm.5g_128_ia1",
     ft::ft_boolean,
@@ -632,7 +634,7 @@ static field_meta hfm_nas_5gs_mm_5g_128_ia1 = {
     0x40,
 };
 
-static field_meta hfm_nas_5gs_mm_5g_128_ia2 = {
+const field_meta hfm_nas_5gs_mm_5g_128_ia2 = {
     "128-5G-IA2",
     "nas_5gs.mm.5g_128_ia2",
     ft::ft_boolean,
@@ -643,7 +645,7 @@ static field_meta hfm_nas_5gs_mm_5g_128_ia2 = {
     0x20,
 };
 
-static field_meta hfm_nas_5gs_mm_5g_128_ia3 = {
+const field_meta hfm_nas_5gs_mm_5g_128_ia3 = {
     "128-5G-IA3",
     "nas_5gs.mm.5g_128_ia4",
     ft::ft_boolean,
@@ -654,7 +656,7 @@ static field_meta hfm_nas_5gs_mm_5g_128_ia3 = {
     0x10,
 };
 
-static field_meta hfm_nas_5gs_mm_5g_ia4 = {
+const field_meta hfm_nas_5gs_mm_5g_ia4 = {
     "5G-IA4",
     "nas_5gs.mm.5g_128_ia4",
     ft::ft_boolean,
@@ -665,7 +667,7 @@ static field_meta hfm_nas_5gs_mm_5g_ia4 = {
     0x08,
 };
 
-static field_meta hfm_nas_5gs_mm_5g_ia5 = {
+const field_meta hfm_nas_5gs_mm_5g_ia5 = {
     "5G-IA5",
     "nas_5gs.mm.5g_ia5",
     ft::ft_boolean,
@@ -676,7 +678,7 @@ static field_meta hfm_nas_5gs_mm_5g_ia5 = {
     0x04,
 };
 
-static field_meta hfm_nas_5gs_mm_5g_ia6 = {
+const field_meta hfm_nas_5gs_mm_5g_ia6 = {
     "5G-IA6",
     "nas_5gs.mm.5g_ia6",
     ft::ft_boolean,
@@ -687,7 +689,7 @@ static field_meta hfm_nas_5gs_mm_5g_ia6 = {
     0x02,
 };
 
-static field_meta hfm_nas_5gs_mm_5g_ia7 = {
+const field_meta hfm_nas_5gs_mm_5g_ia7 = {
     "5G-IA7",
     "nas_5gs.mm.5g_ia7",
     ft::ft_boolean,
@@ -698,7 +700,7 @@ static field_meta hfm_nas_5gs_mm_5g_ia7 = {
     0x01,
 };
 
-static field_meta hfm_nas_5gs_mm_eea0 = {
+const field_meta hfm_nas_5gs_mm_eea0 = {
     "EEA0",
     "nas_5gs.mm.eea0",
     ft::ft_boolean,
@@ -709,7 +711,7 @@ static field_meta hfm_nas_5gs_mm_eea0 = {
     0x80,
 };
 
-static field_meta hfm_nas_5gs_mm_128eea1 = {
+const field_meta hfm_nas_5gs_mm_128eea1 = {
     "128-EEA1",
     "nas_5gs.mm.128eea1",
     ft::ft_boolean,
@@ -721,7 +723,7 @@ static field_meta hfm_nas_5gs_mm_128eea1 = {
 
 };
 
-static field_meta hfm_nas_5gs_mm_128eea2 = {
+const field_meta hfm_nas_5gs_mm_128eea2 = {
     "128-EEA2",
     "nas_5gs.mm.128eea2",
     ft::ft_boolean,
@@ -732,7 +734,7 @@ static field_meta hfm_nas_5gs_mm_128eea2 = {
     0x20,
 };
 
-static field_meta hfm_nas_5gs_mm_eea3 = {
+const field_meta hfm_nas_5gs_mm_eea3 = {
     "128-EEA3",
     "nas_5gs.mm.eea3",
     ft::ft_boolean,
@@ -744,7 +746,7 @@ static field_meta hfm_nas_5gs_mm_eea3 = {
 
 };
 
-static field_meta hfm_nas_5gs_mm_eea4 = {
+const field_meta hfm_nas_5gs_mm_eea4 = {
     "EEA4",
     "nas_5gs.mm.eea4",
     ft::ft_boolean,
@@ -755,7 +757,7 @@ static field_meta hfm_nas_5gs_mm_eea4 = {
     0x08,
 };
 
-static field_meta hfm_nas_5gs_mm_eea5 = {
+const field_meta hfm_nas_5gs_mm_eea5 = {
     "EEA5",
     "nas_5gs.mm.eea5",
     ft::ft_boolean,
@@ -766,7 +768,7 @@ static field_meta hfm_nas_5gs_mm_eea5 = {
     0x04,
 
 };
-static field_meta hfm_nas_5gs_mm_eea6 = {
+const field_meta hfm_nas_5gs_mm_eea6 = {
     "EEA6",
     "nas_5gs.mm.eea6",
     ft::ft_boolean,
@@ -777,7 +779,7 @@ static field_meta hfm_nas_5gs_mm_eea6 = {
     0x02,
 
 };
-static field_meta hfm_nas_5gs_mm_eea7 = {
+const field_meta hfm_nas_5gs_mm_eea7 = {
     "EEA7",
     "nas_5gs.mm.eea7",
     ft::ft_boolean,
@@ -788,7 +790,7 @@ static field_meta hfm_nas_5gs_mm_eea7 = {
     0x01,
 
 };
-static field_meta hfm_nas_5gs_mm_eia0 = {
+const field_meta hfm_nas_5gs_mm_eia0 = {
     "EIA0",
     "nas_5gs.mm.eia0",
     ft::ft_boolean,
@@ -799,7 +801,7 @@ static field_meta hfm_nas_5gs_mm_eia0 = {
     0x80,
 
 };
-static field_meta hfm_nas_5gs_mm_128eia1 = {
+const field_meta hfm_nas_5gs_mm_128eia1 = {
     "128-EIA1",
     "nas_5gs.mm.128eia1",
     ft::ft_boolean,
@@ -810,7 +812,7 @@ static field_meta hfm_nas_5gs_mm_128eia1 = {
     0x40,
 
 };
-static field_meta hfm_nas_5gs_mm_128eia2 = {
+const field_meta hfm_nas_5gs_mm_128eia2 = {
     "128-EIA2",
     "nas_5gs.mm.128eia2",
     ft::ft_boolean,
@@ -820,7 +822,7 @@ static field_meta hfm_nas_5gs_mm_128eia2 = {
     nullptr,
     0x20,
 };
-static field_meta hfm_nas_5gs_mm_eia3 = {
+const field_meta hfm_nas_5gs_mm_eia3 = {
     "128-EIA3",
     "nas_5gs.mm.eia3",
     ft::ft_boolean,
@@ -831,7 +833,7 @@ static field_meta hfm_nas_5gs_mm_eia3 = {
     0x10,
 
 };
-static field_meta hfm_nas_5gs_mm_eia4 = {
+const field_meta hfm_nas_5gs_mm_eia4 = {
     "EIA4",
     "nas_5gs.mm.eia4",
     ft::ft_boolean,
@@ -842,7 +844,7 @@ static field_meta hfm_nas_5gs_mm_eia4 = {
     0x08,
 
 };
-static field_meta hfm_nas_5gs_mm_eia5 = {
+const field_meta hfm_nas_5gs_mm_eia5 = {
     "EIA5",
     "nas_5gs.mm.eia5",
     ft::ft_boolean,
@@ -853,7 +855,7 @@ static field_meta hfm_nas_5gs_mm_eia5 = {
     0x04,
 
 };
-static field_meta hfm_nas_5gs_mm_eia6 = {
+const field_meta hfm_nas_5gs_mm_eia6 = {
     "EIA6",
     "nas_5gs.mm.eia6",
     ft::ft_boolean,
@@ -864,7 +866,7 @@ static field_meta hfm_nas_5gs_mm_eia6 = {
     0x02,
 
 };
-static field_meta hfm_nas_5gs_mm_eia7 = {
+const field_meta hfm_nas_5gs_mm_eia7 = {
     "EIA7",
     "nas_5gs.mm.eia7",
     ft::ft_boolean,
@@ -877,11 +879,11 @@ static field_meta hfm_nas_5gs_mm_eia7 = {
 
 /* *    9.11.3.56    UE status */
 
-static true_false_string tfs_nas_5gs_mm_n1_mod = {
+const true_false_string tfs_nas_5gs_mm_n1_mod = {
     "UE is in 5GMM-REGISTERED state",
     "UE is not in 5GMM-REGISTERED state",
 };
-static field_meta hfm_nas_5gs_mm_n1_mode_reg_b1 = {
+const field_meta hfm_nas_5gs_mm_n1_mode_reg_b1 = {
     "N1 mode reg",
     "nas_5gs.mm.n1_mode_reg_b1",
     ft::ft_boolean,
@@ -893,11 +895,11 @@ static field_meta hfm_nas_5gs_mm_n1_mode_reg_b1 = {
 
 };
 
-static true_false_string tfs_nas_5gs_mm_s1_mod = {
+const true_false_string tfs_nas_5gs_mm_s1_mod = {
     "UE is in EMM-REGISTERED state",
     "UE is not in EMM-REGISTERED state",
 };
-static field_meta hfm_nas_5gs_mm_s1_mode_reg_b0 = {
+const field_meta hfm_nas_5gs_mm_s1_mode_reg_b0 = {
     "S1 mode reg",
     "nas_5gs.mm.s1_mode_reg_b0",
     ft::ft_boolean,
@@ -919,11 +921,11 @@ static field_meta hfm_nas_5gs_mm_s1_mode_reg_b0 = {
 
 /* *     9.11.3.49    Service area list */
 
-static true_false_string tfs_nas_5gs_sal_al_t = {
+const true_false_string tfs_nas_5gs_sal_al_t = {
     "TAIs in the list are in the non-allowed area",
     "TAIs in the list are in the allowed area",
 };
-static field_meta hfm_nas_5gs_mm_sal_al_t = {
+const field_meta hfm_nas_5gs_mm_sal_al_t = {
     "Allowed type",
     "nas_5gs.mm.sal_al_t",
     ft::ft_boolean,
@@ -935,14 +937,14 @@ static field_meta hfm_nas_5gs_mm_sal_al_t = {
 
 };
 
-static const val_string nas_5gs_mm_sal_t_li_values[] = {
+const val_string nas_5gs_mm_sal_t_li_values[] = {
     {0x00, "list of TACs belonging to one PLMN, with non-consecutive TAC values"},
     {0x01, "list of TACs belonging to one PLMN, with consecutive TAC values"},
     {0x02, "list of TAIs belonging to different PLMNs"},
     {0x03, "All TAIs belonging to the PLMN are in the allowed area"},
     {0, nullptr},
 };
-static field_meta hfm_nas_5gs_mm_sal_t_li = {
+const field_meta hfm_nas_5gs_mm_sal_t_li = {
     "Type of list",
     "nas_5gs.mm.sal_t_li",
     ft::ft_uint8,
@@ -952,7 +954,7 @@ static field_meta hfm_nas_5gs_mm_sal_t_li = {
     nullptr,
     0x60,
 };
-static field_meta hfm_nas_5gs_mm_sal_num_e = {
+const field_meta hfm_nas_5gs_mm_sal_num_e = {
     "Number of elements",
     "nas_5gs.mm.sal_num_e",
     ft::ft_uint8,

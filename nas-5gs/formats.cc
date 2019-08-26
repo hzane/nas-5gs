@@ -105,13 +105,21 @@ std::string format_int(uint64_t v, uint32_t ftype, uint32_t display) {
     return formats("%d", v);
 }
 
+string format_bcd(const uint8_t*data, int len){
+    stringstream ss;
+    ss<<hex<<setfill('0');
+    for(auto i = 0; i < len; i++){
+        ss << setw(2) << uint32_t(data[i]);
+    }
+    return ss.str();
+}
 // FFFFFFFF FFFFFFFF   FFFFFFFF FFFFFFFF  ....
 string format_hex(const uint8_t* data, int len, const char* sep) {
     stringstream ss;
     ss << hex << setfill('0');
 
     for (auto i = 0; i < len; i++) {
-        ss << setw(2) << uint32_t(data + i) << sep;
+        ss << setw(2) << uint32_t(data[i]) << sep;
         if (i % 8 == 7) {
             ss << sep;
         }

@@ -13,6 +13,7 @@ struct true_false_string {
     const char* true_string;
     const char* false_string;
 };
+using value_string = val_string;
 
 // [val_min, val_max]
 struct range_string {
@@ -47,10 +48,7 @@ __declspec(selectany) extern const uint32_t ft_int64      = 14u | ft_integer | f
 
 __declspec(selectany) extern const uint32_t ft_float      = 24;
 __declspec(selectany) extern const uint32_t ft_double     = 25;
-<<<<<<< HEAD
 __declspec(selectany) extern const uint32_t ft_string     = 17;
-=======
->>>>>>> af4b6cd421734f4f835baca91d3fdf0c8c4e5951
 __declspec(selectany) extern const uint32_t ft_bytes      = 20;
 __declspec(selectany) extern const uint32_t ft_char       = 22;
 

@@ -152,6 +152,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="core.cc" />
+    <ClCompile Include="dissector.cc" />
     <ClCompile Include="dissect_mm_msg.cc" />
     <ClCompile Include="dissect_mm_msg_i.cc" />
     <ClCompile Include="dissect_nas_5gs.cc" />

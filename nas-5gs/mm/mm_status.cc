@@ -14,6 +14,6 @@ int mm::mm_status(dissector d, context* ctx) {
     auto consumed = dissect_elem_v(nullptr, &mm_cause, d, ctx);
     d.step(consumed);
 
-    extraneous_data_check(d.pinfo, d.tree, d.tvb, d.offset, d.length, 0);
+    d.extraneous_data_check(0);
     return d.tvb->reported_length;
 }

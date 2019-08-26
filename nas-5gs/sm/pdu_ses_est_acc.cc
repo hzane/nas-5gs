@@ -26,8 +26,7 @@ int sm::pdu_ses_est_acc(dissector d, context* ctx) {
     /*Selected PDU session type    PDU session type 9.11.4.5    M    V    1/2 H0*/
     // ELEM_MAND_V( DE_NAS_5GS_SM_PDU_SESSION_TYPE,);
     auto consumed = dissect_elem_v(nullptr, &pdu_ses_type, d, ctx);
-    d.offset += consumed;
-    d.length -= consumed;
+    d.step(consumed);
 
     /*Selected SSC mode    SSC mode 9.11.4.9    M    V    1/2 H1*/
 
@@ -36,80 +35,69 @@ int sm::pdu_ses_est_acc(dissector d, context* ctx) {
     // ELEM_MAND_LV_E(NAS_5GS_PDU_TYPE_SM,DE_NAS_5GS_SM_QOS_RULES, " - Authorized QoS
     // rules",);
     consumed = dissect_elem_lv_e(nullptr, &authorized_qos_rules, d, ctx);
-    d.offset += consumed;
-    d.length -= consumed;
+    d.step(consumed);
 
     /*Session AMBR    Session-AMBR 9.11.4.14    M    LV    7 */
     // ELEM_MAND_LV(NAS_5GS_PDU_TYPE_SM, DE_NAS_5GS_SM_SESSION_AMBR);
     consumed = dissect_elem_lv(nullptr, &ses_ambr, d, ctx);
-    d.offset += consumed;
-    d.length -= consumed;
+    d.step(consumed);
 
     /*59    5GSM cause    5GSM cause 9.11.4.2    O    TV    2*/
     // ELEM_OPT_TV(0x59, NAS_5GS_PDU_TYPE_SM, DE_NAS_5GS_SM_5GSM_CAUSE, NULL);
     consumed = dissect_opt_elem_tv(nullptr, &sm_cause, d, ctx);
-    d.offset += consumed;
-    d.length -= consumed;
+    d.step(consumed);
 
     /*29    PDU address    PDU address 9.11.4.4    O    TLV    7 */
     // ELEM_OPT_TLV(0x29, NAS_5GS_PDU_TYPE_SM, DE_NAS_5GS_SM_PDU_ADDRESS, NULL);
     consumed = dissect_opt_elem_tlv(nullptr, &pdu_address, d, ctx);
-    d.offset += consumed;
-    d.length -= consumed;
+    d.step(consumed);
 
     /*56    RQ timer value    GPRS timer 9.10.2.3    O    TV    2*/
     // ELEM_OPT_TV(0x56, GSM_A_PDU_TYPE_GM, DE_GPRS_TIMER, " - RQ timer value");
     consumed = dissect_opt_elem_tv(nullptr, &rq_gprs_timer, d, ctx);
-    d.offset += consumed;
-    d.length -= consumed;
+    d.step(consumed);
 
     /*22    S-NSSAI    S-NSSAI 9.11.3.37    O    TLV    3-6*/
     // ELEM_OPT_TLV(0x22, NAS_5GS_PDU_TYPE_COMMON, DE_NAS_5GS_CMN_S_NSSAI, NULL);
     consumed = dissect_opt_elem_tlv(nullptr, &s_nssai, d, ctx);
-    d.offset += consumed;
-    d.length -= consumed;
+    d.step(consumed);
 
     /* 8-    Always-on PDU session indication    Always-on PDU session indication 9.11.4.3
      * O    TV    1 */
     // ELEM_OPT_TV_SHORT(w 0x80, , DE_NAS_5GS_SM_ALWAYS_ON_PDU_SES_IND, NULL);
     consumed = dissect_opt_elem_tv_short(nullptr, &always_on_pdu_ses_ind, d, ctx);
-    d.offset += consumed;
-    d.length -= consumed;
+    d.step(consumed);
 
     /* 75    Mapped EPS bearer contexts    Mapped EPS bearer contexts 9.11.4.9    O
      * TLV-E    7-65538 */
     // ELEM_OPT_TLV_E(0x75, NAS_5GS_PDU_TYPE_SM, DE_NAS_5GS_SM_MAPPED_EPS_B_CONT, NULL);
     consumed = dissect_opt_elem_tlv_e(nullptr, &mapped_eps_b_cont, d, ctx);
-    d.offset += consumed;
-    d.length -= consumed;
+    d.step(consumed);
 
     /*78    EAP message    EAP message 9.11.3.14    O    TLV-E    7-1503*/
     // ELEM_OPT_TLV_E(0x78, NAS_5GS_PDU_TYPE_COMMON, DE_NAS_5GS_CMN_EAP_MESSAGE, NULL);
     consumed = dissect_opt_elem_tlv_e(nullptr, &eap_msg, d, ctx);
-    d.offset += consumed;
-    d.length -= consumed;
+    d.step(consumed);
 
     /*79    Authorized QoS flow descriptions    QoS flow descriptions 9.11.4.12    O
      * TLV-E    6-65538 */
     // ELEM_OPT_TLV_E( 0x79, , DE_NAS_5GS_SM_QOS_FLOW_DES, " - Authorized");
     consumed = dissect_opt_elem_tlv_e(nullptr, &authorized_qos_rules, d, ctx);
-    d.offset += consumed;
-    d.length -= consumed;
+    d.step(consumed);
 
     /*7B    Extended protocol configuration options    Extended protocol configuration
      * options 9.11.4.2    O    TLV-E    4-65538*/
     // ELEM_OPT_TLV_E(0x7B, NAS_PDU_TYPE_ESM, DE_ESM_EXT_PCO, NULL);
     consumed = dissect_opt_elem_tlv_e(nullptr, &ext_pco, d, ctx);
-    d.offset += consumed;
-    d.length -= consumed;
+    d.step(consumed);
 
     /* 25    DNN    DNN 9.11.2.1A    O    TLV    3-102 */
     // ELEM_OPT_TLV(0x25, NAS_5GS_PDU_TYPE_COMMON, DE_NAS_5GS_CMN_DNN, NULL);
     consumed = dissect_opt_elem_tlv(nullptr, &dnn, d, ctx);
-    d.offset += consumed;
-    d.length -= consumed;
+    d.step(consumed);
 
-    extraneous_data_check(d.pinfo, d.tree, d.tvb, d.offset, d.length, 0);
+    // extraneous_data_check(d.pinfo, d.tree, d.tvb, d.offset, d.length, 0);
+    d.extraneous_data_check(0);
 
     return d.tvb->reported_length;
 }

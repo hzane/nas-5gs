@@ -177,6 +177,9 @@
     <ClCompile Include="mm\registration_req_i.cc">
       <Filter>Header Files</Filter>
     </ClCompile>
+    <ClCompile Include="dissector.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="config.hh">

@@ -24,7 +24,7 @@ SpacesInAngles                                : true
 TabWidth                                      : 4
 UseTab                                        : Never
 PointerAlignment: Left
-
+IndentCaseLabels: false
 SpaceAfterCStyleCast: true
 CommentPragmas: '^ NO-FORMAT:'
 NamespaceIndentation: Inner

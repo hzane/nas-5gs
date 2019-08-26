@@ -20,6 +20,6 @@ int mm::sec_mode_comp(dissector d, context* ctx) {
     d.offset += consumed;
     d.length -= consumed;
 
-    extraneous_data_check(d.pinfo, d.tree, d.tvb, d.offset, d.length, 0);
+    d.extraneous_data_check(0);
     return d.tvb->reported_length;
 }
