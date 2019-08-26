@@ -7,11 +7,10 @@ extern const element_meta replayed_ue_sec_cap;
 extern const element_meta imeisv_req;
 extern const element_meta selected_eps_sec_algo;
 extern const element_meta a_sec_info;
-extern const element_meta abba;
 extern const element_meta reported_s1_ue_sec_cap;
 } // namespace mm_sec_mode_cmd
 
-using namespace nas_meta;
+using namespace nas;
 
 
 /*
@@ -35,12 +34,11 @@ int mm::sec_mode_cmd(dissector d, context* ctx) {
     d.tree->add_item(d.pinfo, d.tvb, d.offset, 1, hf_spare_half_octet, enc::be);
 
     // ELEM_MAND_V(DE_NAS_5GS_MM_NAS_KEY_SET_ID, " - ngKSI", );
-    consumed = dissect_elem_v(nullptr, &nksi, d, ctx);
+    consumed = dissect_elem_v(nullptr, &nas_ksi, d, ctx);
     d.offset += consumed;
     d.length -= consumed;
 
-    /*Replayed UE security capabilities    UE security capability     9.11.3.54    M    LV
-     * 3-5*/
+    /*Replayed UE security capabilities    UE security capability   9.11.3.54  M  LV   3-5*/
     // ELEM_MAND_LV(,DE_NAS_5GS_MM_UE_SEC_CAP," - Replayed UE security capabilities",);
     consumed = dissect_elem_v(nullptr, &replayed_ue_sec_cap, d, ctx);
     d.offset += consumed;
@@ -96,7 +94,6 @@ int dissect_replayed_ue_sec_cap(dissector d, context* ctx);
 int dissect_imeisv_req(dissector d, context* ctx);
 int dissect_selected_eps_sec_algo(dissector d, context* ctx);
 int dissect_a_sec_info(dissector d, context* ctx);
-int dissect_abba(dissector d, context* ctx);
 int dissect_reported_s1_ue_sec_cap(dissector d, context* ctx);
 
 extern const element_meta sec_algo = {
@@ -124,11 +121,7 @@ extern const element_meta a_sec_info = {
     "Additional 5G security information",
     dissect_a_sec_info,
 };
-extern const element_meta abba = {
-    0x38,
-    "ABBA",
-    dissect_abba,
-};
+
 extern const element_meta reported_s1_ue_sec_cap = {
     0x19,
     "Replayed S1 UE security capabilities",
@@ -139,6 +132,6 @@ int dissect_replayed_ue_sec_cap(dissector d, context* ctx) { return 0; }
 int dissect_imeisv_req(dissector d, context* ctx) { return 0; }
 int dissect_selected_eps_sec_algo(dissector d, context* ctx) { return 0; }
 int dissect_a_sec_info(dissector d, context* ctx) { return 0; }
-int dissect_abba(dissector d, context* ctx) { return 0; }
+
 int dissect_reported_s1_ue_sec_cap(dissector d, context* ctx) { return 0; }
 } // namespace mm_sec_mode_cmd

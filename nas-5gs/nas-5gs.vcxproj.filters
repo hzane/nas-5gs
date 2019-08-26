@@ -78,12 +78,6 @@
     <ClCompile Include="mm\authentication_result.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="mm\conf_upd_cmd.cc">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="mm\conf_update_comp.cc">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="mm\de_reg_req_ue_orig.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -178,6 +172,12 @@
       <Filter>Header Files</Filter>
     </ClCompile>
     <ClCompile Include="dissector.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\configuration_upd_cmd.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\configuration_update_comp.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

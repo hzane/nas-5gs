@@ -4,7 +4,7 @@
 #include "dissect_mm_msg.hh"
 #include "ts24007.hh"
 
-using namespace nas_meta;
+using namespace nas;
 
 extern const field_meta* hf_nas_5gs_msg_auth_code;
 extern const field_meta* hf_nas_5gs_seq_no;
@@ -167,4 +167,11 @@ static int dissect_mm_msg(dissector d, context* ctx) {
         add_generic_msg_elem_body(d, ctx);
     }
     return len;
+}
+
+/* 9.10.2.2    EAP message*/
+int nas::dissect_eap_msg(dissector d, context* ctx) {
+    /* EAP message as specified in IETF RFC 3748 */
+    add_generic_msg_elem_body(d, ctx);
+    return d.length;
 }

@@ -10,7 +10,7 @@ static const field_meta hfm_spare_half_octet = {
     nullptr,
     0xf0,
 };
-const field_meta* nas_meta::hf_spare_half_octet = &hfm_spare_half_octet;
+const field_meta* nas::hf_spare_half_octet = &hfm_spare_half_octet;
 
 static field_meta hfm_nas_5gs_msg_elems = {
     "Message Elements",
@@ -22,7 +22,7 @@ static field_meta hfm_nas_5gs_msg_elems = {
     nullptr,
     0x0,
 };
-const field_meta* nas_meta::hf_msg_elem = &hfm_nas_5gs_msg_elems;
+const field_meta* nas::hf_msg_elem = &hfm_nas_5gs_msg_elems;
 
 __declspec(selectany) extern const val_string nas_5gs_epd_vals[] = {
     {0x00, "Group call control"},
@@ -56,7 +56,7 @@ static const field_meta hfm_nas_5gs_epd = {
     nullptr,
     0x0,
 };
-const field_meta* nas_meta::hf_epd = &hfm_nas_5gs_epd;
+const field_meta* nas::hf_epd = &hfm_nas_5gs_epd;
 
 const val_string nas_5gs_security_header_type_vals[] = {
     {0, "Plain NAS message, not security protected"},
@@ -77,7 +77,7 @@ static field_meta hfm_nas_5gs_security_header_type = {
     nullptr,
     0x0f,
 };
-const field_meta* nas_meta::hf_sec_header_type = &hfm_nas_5gs_security_header_type;
+const field_meta* nas::hf_sec_header_type = &hfm_nas_5gs_security_header_type;
 
 static field_meta hfm_nas_5gs_msg_auth_code = {
     "Message authentication code",
@@ -148,7 +148,7 @@ static field_meta hfm_nas_5gs_sm_msg_type = {
     nullptr,
     0x0,
 };
-const field_meta* nas_meta::hf_sm_msg_type = &hfm_nas_5gs_sm_msg_type;
+const field_meta* nas::hf_sm_msg_type = &hfm_nas_5gs_sm_msg_type;
 
 const val_string nas_5gs_pdu_session_id_vals[] = {
     {0x00, "No PDU session identity assigned"},
@@ -179,7 +179,7 @@ static field_meta hfm_nas_5gs_pdu_session_id = {
     nullptr,
     0x0,
 };
-const field_meta* nas_meta::hf_pdu_session_id = &hfm_nas_5gs_pdu_session_id;
+const field_meta* nas::hf_pdu_session_id = &hfm_nas_5gs_pdu_session_id;
 
 static field_meta hfm_nas_5gs_proc_trans_id = {
     "Procedure transaction identity",
@@ -255,4 +255,4 @@ static field_meta hfm_nas_5gs_mm_msg_type = {
     nullptr,
     0x0,
 };
-const field_meta* nas_meta::hf_mm_msg_type = &hfm_nas_5gs_mm_msg_type;
+const field_meta* nas::hf_mm_msg_type = &hfm_nas_5gs_mm_msg_type;

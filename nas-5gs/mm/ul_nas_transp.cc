@@ -12,7 +12,7 @@ extern const element_meta s_nssai;
 extern const element_meta dnn;
 } // namespace mm_ul_nas_transp
 
-using namespace nas_meta;
+using namespace nas;
 
 
 /*

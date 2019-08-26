@@ -85,47 +85,89 @@ __declspec(selectany) extern const message_meta msgs[] = {
     {0x68, "DL NAS transport", dl_nas_transp},
     {0, nullptr, nullptr},
 };
+
+__declspec(selectany) extern const field_meta hf_nas_5gs_spare_b7 = {
+    "Spare",
+    "nas_5gs.spare_b7",
+    ft::ft_uint8,
+    fd::base_dec,
+    nullptr,
+    nullptr,
+    nullptr,
+    0x80,
+};
+__declspec(selectany) extern const field_meta hf_nas_5gs_spare_b3 = {
+    "Spare",
+    "nas_5gs.spare_b3",
+    ft::ft_uint8,
+    fd::base_dec,
+    nullptr,
+    nullptr,
+    nullptr,
+    0x04,
+};
+__declspec(selectany) extern const field_meta hf_nas_5gs_spare_b2 = {
+    "Spare",
+    "nas_5gs.spare_b2",
+    ft::ft_uint8,
+    fd::base_dec,
+    nullptr,
+    nullptr,
+    nullptr,
+    0x02,
+};
+
+__declspec(selectany) extern const true_false_string tfs_requested_not_requested = {
+    "Requested",
+    "Not Requested",
+};
 }
 
-int                       dissect_mm_cause(dissector d, context* ctx);
+int dissect_mm_cause(dissector d, context* ctx);
+
 __declspec(selectany) extern const element_meta mm_cause = {
     -1,
     "5GMM cause",
     dissect_mm_cause,
 };
 
-int dissect_eap_msg(dissector d, context* ctx);
 
-__declspec(selectany) extern const element_meta eap_msg = {
-    0x78,
-    "EAP message",
-    dissect_eap_msg,
-};
 
-int                       dissect_nksi(dissector d, context* ctx);
-__declspec(selectany) extern const element_meta nksi = {
+int                       dissect_nas_ksi(dissector d, context* ctx);
+__declspec(selectany) extern const element_meta nas_ksi = {
     -1,
     "NAS key set identifier",
-    dissect_nksi,
+    dissect_nas_ksi,
 };
 
-int                       dissect_mobile_id(dissector d, context* ctx);
+int dissect_mobile_id(dissector d, context* ctx);
+
 __declspec(selectany) extern const element_meta mobile_id = {
     -1,
     "Mobile identity",
     dissect_mobile_id,
 };
 
-int                dissect_pdu_ses_status(dissector d, context* ctx = nullptr);
+int dissect_pdu_ses_status(dissector d, context* ctx = nullptr);
+
 __declspec(selectany) extern const element_meta pdu_ses_status = {
     0x50,
     "PDU session status",
     dissect_pdu_ses_status,
 };
 
-int                dissect_nas_msg_cont(dissector d, context* ctx = nullptr);
+int dissect_nas_msg_cont(dissector d, context* ctx = nullptr);
+
 __declspec(selectany) extern const element_meta nas_msg_cont = {
     0x71,
     "NAS message container",
     dissect_nas_msg_cont,
+};
+
+int dissect_abba(dissector d, context* ctx);
+
+__declspec(selectany) extern const element_meta abba = {
+    0x38,
+    "ABBA",
+    dissect_abba,
 };

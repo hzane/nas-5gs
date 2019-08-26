@@ -5,6 +5,8 @@ namespace mm_service_rej {
 extern const element_meta t3346_gprs_timer2;
 }
 
+using namespace nas;
+
 /*
  * 8.2.18 Service reject
  */

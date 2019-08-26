@@ -5,7 +5,7 @@ namespace mm_notification {
 extern const element_meta access_type;
 }
 
-using namespace nas_meta;
+using namespace nas;
 
 /*
  * 8.2.23 Notification

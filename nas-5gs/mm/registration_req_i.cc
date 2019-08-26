@@ -81,12 +81,6 @@ int dissect_mm_cause(dissector d, context* ctx) {
     return 1;
 }
 
-/* 9.10.2.2    EAP message*/
-int dissect_eap_msg(dissector d, context* ctx) {
-    /* EAP message as specified in IETF RFC 3748 */
-    return add_generic_msg_elem_body(d, ctx);
-    // return d.length;
-}
 
 namespace mm{
 /*
@@ -139,7 +133,7 @@ const field_meta* hf_nas_eps_nas_ksi = &hfm_nas_eps_nas_ksi;
 } // namespace mm
 
 // nas key set id nas-key-set-id
-int dissect_nksi(dissector d, context* ctx) {
+int dissect_nas_ksi(dissector d, context* ctx) {
     auto v = d.tvb->get_uint8(d.offset);
 
     /* Type of security context flag (TSC) (octet 1)    V   1/2   */
@@ -148,8 +142,7 @@ int dissect_nksi(dissector d, context* ctx) {
     item->set_uint(tsc, enc::be, nullptr);
 
     auto nas_ksi = (v & 0xe0) >> 5;
-    item      = d.tree->add_item(
-        d.pinfo, d.tvb, d.offset, 1, hf_nas_eps_nas_ksi, enc::none);
+    item = d.add_item(1, hf_nas_eps_nas_ksi, enc::none);
     item->set_uint(nas_ksi, enc::be, nullptr);
 
     return 1;
@@ -192,26 +185,6 @@ const field_meta hf_nas_5gs_mm_type_id = {
     0x07,
 };
 
-const field_meta hf_nas_5gs_spare_b7 = {
-    "Spare",
-    "nas_5gs.spare_b7",
-    ft::ft_uint8,
-    fd::base_dec,
-    nullptr,
-    nullptr,
-    nullptr,
-    0x80,
-};
-const field_meta hf_nas_5gs_spare_b3 = {
-    "Spare",
-    "nas_5gs.spare_b3",
-    ft::ft_uint8,
-    fd::base_dec,
-    nullptr,
-    nullptr,
-    nullptr,
-    0x04,
-};
 static const val_string nas_5gs_mm_supi_fmt_vals[] = {
     {0x0, "IMSI"},
     {0x1, "Network Specific Identifier"},

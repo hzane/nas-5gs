@@ -19,7 +19,7 @@ inline const message_meta* find_dissector(uint8_t iei, const message_meta* meta)
 }
 
 
-namespace nas_meta{
+namespace nas{
 extern const field_meta* hf_msg_elem;
 extern const field_meta* hf_spare_half_octet;
 extern const field_meta* hf_epd;
@@ -27,4 +27,12 @@ extern const field_meta* hf_pdu_session_id;
 extern const field_meta* hf_mm_msg_type;
 extern const field_meta* hf_sm_msg_type;
 extern const field_meta* hf_sec_header_type;
+
+int dissect_eap_msg(dissector d, context* ctx);
+
+__declspec(selectany) extern const element_meta eap_msg = {
+    0x78,
+    "EAP message",
+    dissect_eap_msg,
+};
 } // namespace nas_meta

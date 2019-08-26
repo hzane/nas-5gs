@@ -1,5 +1,7 @@
 #include "dissect_mm_msg.hh"
 
+using namespace mm;
+
 extern const true_false_string nas_5gs_for_tfs = {
     "Follow-on request pending",
     "No follow-on request pending",
@@ -301,10 +303,7 @@ static field_meta hfm_nas_5gs_mm_raai_b0 = {
     0x01,
 };
 
-__declspec(selectany) extern const true_false_string tfs_requested_not_requested = {
-    "Requested",
-    "Not Requested",
-};
+
 static field_meta hfm_nas_5gs_mm_conf_upd_ind_ack_b0 = {
     "Acknowledgement",
     "nas_5gs.mm.conf_upd_ind.ack",

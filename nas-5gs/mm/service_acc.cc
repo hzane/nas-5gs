@@ -6,6 +6,9 @@ extern const element_meta pdu_ses_react_res;
 extern const element_meta pdu_ses_react_res_error_c;
 
 } // namespace mm_service_acc
+
+using namespace nas;
+
 /*
  * 8.2.17 Service accept
  */

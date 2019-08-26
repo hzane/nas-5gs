@@ -9,7 +9,7 @@ extern const element_meta add_inf;
 extern const element_meta backoff_gprs_timer3;
 } // namespace mm_dl_nas_transp
 
-using namespace nas_meta;
+using namespace nas;
 
 /*
  * 8.2.11 DL NAS transport

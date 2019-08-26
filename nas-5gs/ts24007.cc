@@ -327,7 +327,7 @@ static field_meta const hfm_gsm_a_common_elem_id_f0 = {
 const field_meta *hf_gsm_a_common_elem_id_f0 = &hfm_gsm_a_common_elem_id_f0;
 
 int add_generic_msg_elem_body(dissector d, context *ctx) {
-    d.tree->add_item(d.pinfo, d.tvb, d.offset, d.length, nas_meta::hf_msg_elem, enc::na);
+    d.tree->add_item(d.pinfo, d.tvb, d.offset, d.length, nas::hf_msg_elem, enc::na);
     return d.length;
 }
 

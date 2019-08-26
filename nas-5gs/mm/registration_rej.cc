@@ -8,6 +8,8 @@ extern const element_meta t3502_gprs_timer_2;
 
 } // namespace mm_reg_rej
 
+using namespace nas;
+
 /*
  * 8.2.9 Registration reject
  */
