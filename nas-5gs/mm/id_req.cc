@@ -4,6 +4,8 @@
 namespace mm_id_req {
 extern const element_meta id_type;
 }
+using namespace nas_meta;
+
 /*
  * 8.2.21 Identity request
  */

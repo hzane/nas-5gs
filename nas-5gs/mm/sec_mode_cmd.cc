@@ -10,6 +10,10 @@ extern const element_meta a_sec_info;
 extern const element_meta abba;
 extern const element_meta reported_s1_ue_sec_cap;
 } // namespace mm_sec_mode_cmd
+
+using namespace nas_meta;
+
+
 /*
  * 8.2.25 Security mode command
  */

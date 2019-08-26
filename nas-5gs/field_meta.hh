@@ -77,7 +77,7 @@ __declspec(selectany) extern const uint32_t base_dec_hex = 4; /* decimal (hexade
 __declspec(selectany) extern const uint32_t base_hex_dec = 5; /* hexadecimal (decimal) */
 __declspec(selectany) extern const uint32_t base_bin     = 6;
 __declspec(selectany) extern const uint32_t base_bitset  = 7;
-__declspec(selectany) extern const uint32_t base_string  = 0x10;
+__declspec(selectany) extern const uint32_t base_string  = 8;
 
 /* Byte separators  when ft == ft_bytes */
 /* hexadecimal bytes with a period (.) between each byte */
@@ -105,12 +105,4 @@ struct field_meta {
     string format(const uint8_t*d, int len, uint32_t enc) const;
     string format(uint64_t val)const;
 };
-std::string formats(const char* format, ...);
-std::string vformat(const char* format, va_list);
-
-const char* find_val_string(const val_string* vstr, uint32_t id, const char*missing="Unknown");
-const char* find_r_string(const range_string* rstr, uint32_t id, const char*missing="Unknown");
-std::vector< std::string > find_bitset_string(const val_string* vstr, uint32_t bits);
-
-std::string join(const std::vector< std::string >& strs, const char* sep = " ");
 

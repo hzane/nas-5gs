@@ -3,6 +3,8 @@
 
 namespace mm_authentication_result {
 }
+using namespace nas_meta;
+
 /*
  * 8.2.3 Authentication result
  */

@@ -105,6 +105,7 @@ std::string format_int(uint64_t v, uint32_t ftype, uint32_t display) {
     return formats("%d", v);
 }
 
+// without prefix and seperator
 string format_bcd(const uint8_t*data, int len){
     stringstream ss;
     ss<<hex<<setfill('0');
@@ -114,7 +115,7 @@ string format_bcd(const uint8_t*data, int len){
     return ss.str();
 }
 // FFFFFFFF FFFFFFFF   FFFFFFFF FFFFFFFF  ....
-string format_hex(const uint8_t* data, int len, const char* sep) {
+string format_hex(const uint8_t* data, int len, const char* sep, const char* lf) {
     stringstream ss;
     ss << hex << setfill('0');
 
@@ -124,7 +125,7 @@ string format_hex(const uint8_t* data, int len, const char* sep) {
             ss << sep;
         }
         if (i % 16 == 15) {
-            ss << endl;
+            if (lf) ss << lf;
         }
     }
 

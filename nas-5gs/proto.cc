@@ -37,7 +37,7 @@ proto_item* proto_node::add_item(packet_info*      pinfo,
     }
     if (encoding != enc::none){
         if (meta && ft::is_integer(meta->ftype)) {
-            this->val.ui64 = n2uint(buf->data + offset, length);
+            this->val = n2uint(buf->data + offset, length);
         }
         item->text = print_text(field, buf->data + offset, length, encoding);
     }
@@ -48,7 +48,7 @@ proto_item* proto_node::set_uint(uint64_t v, uint32_t enc, const char* format, .
     using namespace std;
 
     if (enc != enc::none) this->enc = enc;
-    val.ui64 = v;
+    val = v;
 
     // TODO:
     va_list args;
@@ -65,7 +65,7 @@ proto_item* proto_node::set_int(int64_t v, uint32_t enc, const char* format, ...
     using namespace std;
 
     if (enc != enc::none) this->enc = enc;
-    val.i64 = v;
+    val = v;
 
     va_list args;
     va_start(args, format);
@@ -81,7 +81,7 @@ proto_item* proto_node::set_int(int64_t v, uint32_t enc, const char* format, ...
 
 proto_item* proto_node::set_bitmask_list(const field_meta* fields, uint64_t value) {
     using namespace std;
-    val.ui64 = value;
+    val = value;
 
     // name = "what's the name";
     bitset< 64 > x(value);

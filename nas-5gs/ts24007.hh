@@ -3,23 +3,25 @@
 
 typedef int (*tlv_fnc_t)(const field_meta*   type_meta,
                          const element_meta* val_meta,
-                         dissector d, context*ctx);
+                         dissector           d,
+                         context*            ctx);
 
 inline int dissect_elem_mandary(const field_meta*   type_meta,
-                           const element_meta* val_meta,
-                           dissector d,
-                           tlv_fnc_t           fnc, context*ctx) {
+                                const element_meta* val_meta,
+                                dissector           d,
+                                tlv_fnc_t           fnc,
+                                context*            ctx) {
     auto consumed = 0;
     if (d.length > 0) {
         consumed = fnc(type_meta, val_meta, d, ctx);
     }
     if (consumed <= 0) {
         d.tree->add_expert(d.pinfo,
-                         d.tvb,
+                           d.tvb,
                            d.offset,
-                         0,
-                         "Missing Mandatory element %s, rest of dissection is suspect",
-                         safe_str(val_meta->name));
+                           0,
+                           "Missing Mandatory element %s, rest of dissection is suspect",
+                           safe_str(val_meta->name));
         consumed = 0;
     }
     return consumed;
@@ -88,8 +90,7 @@ inline int dissect_elem_tv_short(const field_meta*   type_meta,
                                  const element_meta* val_meta,
                                  dissector           d,
                                  context*            ctx) {
-    return dissect_elem_mandary(
-        type_meta, val_meta, d, dissect_opt_elem_tv_short, ctx);
+    return dissect_elem_mandary(type_meta, val_meta, d, dissect_opt_elem_tv_short, ctx);
 };
 
 // * Type Value (TV) element dissector
@@ -142,7 +143,8 @@ inline int dissect_elem_telv(const field_meta*   type_meta,
  * Type Length Value Extended(TLV-E) element dissector
  * TS 24.007
  * information elements of format LV-E or TLV-E with value part consisting of zero,
- * one or more octets and a maximum of 65535 octets (type 6). This category is used in EPS only.
+ * one or more octets and a maximum of 65535 octets (type 6). This category is used in EPS
+ * only.
  */
 int dissect_opt_elem_tlv_e(const field_meta*   type_meta,
                            const element_meta* val_meta,
@@ -156,9 +158,8 @@ inline int dissect_elem_tlv_e(const field_meta*   type_meta,
     return dissect_elem_mandary(type_meta, val_meta, d, dissect_opt_elem_tlv_e, ctx);
 };
 
-
 int add_generic_msg_elem_body(dissector d, context* ctx);
 
 int add_unknown(dissector d,
                 uint8_t   iet, // message type ie
-                context*     ctx);
+                context*  ctx);

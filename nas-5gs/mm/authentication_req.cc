@@ -7,6 +7,9 @@ extern const element_meta auth_parm_rand;
 extern const element_meta auth_parm_autn;
 
 } // namespace mm_authentication_req
+
+using namespace nas_meta;
+
 /*
  * 8.2.1    Authentication request
  */

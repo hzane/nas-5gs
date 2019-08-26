@@ -4,14 +4,11 @@
 #include "dissect_mm_msg.hh"
 #include "ts24007.hh"
 
-extern const field_meta* hf_nas_5gs_epd;
-extern const field_meta* hf_nas_5gs_spare_half_octet;
-extern const field_meta* hf_nas_5gs_security_header_type;
+using namespace nas_meta;
+
 extern const field_meta* hf_nas_5gs_msg_auth_code;
 extern const field_meta* hf_nas_5gs_seq_no;
-extern const field_meta* hf_nas_5gs_pdu_session_id;
 extern const field_meta* hf_nas_5gs_proc_trans_id;
-// extern const field_meta* hf_nas_5gs_msg_elems;
 
 int dissect_nas_5gs(dissector d, context* ctx) {
     auto item = d.tree->add_subtree(d.pinfo, d.tvb, d.offset, -1, nas_5gs_module.name);
@@ -34,13 +31,13 @@ int dissect_nas_5gs(dissector d, context* ctx) {
         item->add_subtree(d.pinfo, d.tvb, d.offset, 7, "Security protected NAS 5GS message");
 
     /* Extended protocol discriminator  octet 1 */
-    sub_tree->add_item(d.pinfo, d.tvb, d.offset, 1, hf_nas_5gs_epd, enc::be);
+    sub_tree->add_item(d.pinfo, d.tvb, d.offset, 1, hf_epd, enc::be);
     d.offset++;
 
     /* Security header type associated with a spare half octet    octet 2 */
-    sub_tree->add_item(d.pinfo, d.tvb, d.offset, 1, hf_nas_5gs_spare_half_octet, enc::be);
+    sub_tree->add_item(d.pinfo, d.tvb, d.offset, 1, hf_spare_half_octet, enc::be);
     sub_tree->add_item(
-        d.pinfo, d.tvb, d.offset, 1, hf_nas_5gs_security_header_type, enc::be);
+        d.pinfo, d.tvb, d.offset, 1, hf_sec_header_type, enc::be);
     d.offset++;
 
     /* Message authentication code octet 3 - 6 */
@@ -64,7 +61,7 @@ static int dissect_nas_5gs_plain(dissector d, context* ctx) {
 
     /* Extended protocol discriminator  octet 1 */
     auto epd = d.tvb->get_uint8(d.offset);
-    sub_tree->add_item(d.pinfo, d.tvb, d.offset, 1, hf_nas_5gs_epd, enc::be);
+    sub_tree->add_item(d.pinfo, d.tvb, d.offset, 1, hf_epd, enc::be);
     d.offset++;
 
     /* Security header type associated with a spare half octet; or
@@ -75,12 +72,11 @@ static int dissect_nas_5gs_plain(dissector d, context* ctx) {
          * Bits 5 to 8 of the second octet of every 5GMM message contains the spare
          * half octet which is filled with spare bits set to zero.
          */
-        sub_tree->add_item(d.pinfo, d.tvb, d.offset, 1, hf_nas_5gs_spare_half_octet, enc::be);
+        sub_tree->add_item(d.pinfo, d.tvb, d.offset, 1, hf_spare_half_octet, enc::be);
         sub_tree->add_item(d.pinfo,
                            d.tvb,
                            d.offset,
-                           1,
-                           hf_nas_5gs_security_header_type,
+                           1, hf_sec_header_type,
                            enc::be);
     }
     else if (epd == TGPP_PD::SM5G){
@@ -89,7 +85,7 @@ static int dissect_nas_5gs_plain(dissector d, context* ctx) {
          * session identity IE. The PDU session identity and its use to identify a
          * message flow are defined in 3GPP TS 24.007
          */
-        sub_tree->add_item(d.pinfo, d.tvb, d.offset, 1, hf_nas_5gs_pdu_session_id, enc::be);
+        sub_tree->add_item(d.pinfo, d.tvb, d.offset, 1, hf_pdu_session_id, enc::be);
         d.offset++;
 
         /* 9.6  Procedure transaction identity
@@ -118,7 +114,8 @@ static int dissect_nas_5gs_plain(dissector d, context* ctx) {
     return d.tvb->reported_length;
 }
 
-extern const field_meta* hf_nas_5gs_sm_msg_type;
+// extern const field_meta* hf_nas_5gs_sm_msg_type;
+
 // begin with offset == 2, message type
 static int dissect_sm_msg(dissector d, context* ctx) {
     auto len = d.tvb->reported_length;
@@ -133,7 +130,7 @@ static int dissect_sm_msg(dissector d, context* ctx) {
     }
 
     // Add NAS message name
-    d.tree->add_item(d.pinfo, d.tvb, d.offset, 1, hf_nas_5gs_sm_msg_type, enc::be);
+    d.tree->add_item(d.pinfo, d.tvb, d.offset, 1, hf_sm_msg_type, enc::be);
     d.offset++;
 
     d.length = d.length - d.offset;
@@ -145,7 +142,7 @@ static int dissect_sm_msg(dissector d, context* ctx) {
     return len;
 }
 
-extern const field_meta* hf_nas_5gs_mm_msg_type;
+// extern const field_meta* hf_nas_5gs_mm_msg_type;
 
 static int dissect_mm_msg(dissector d, context* ctx) {
     auto len = d.tvb->reported_length;
@@ -160,7 +157,7 @@ static int dissect_mm_msg(dissector d, context* ctx) {
     }
 
     // Add NAS message name
-    d.tree->add_item(d.pinfo, d.tvb, d.offset, 1, hf_nas_5gs_mm_msg_type, enc::be);
+    d.tree->add_item(d.pinfo, d.tvb, d.offset, 1, hf_mm_msg_type, enc::be);
     d.offset++;
     d.length = d.length - d.offset;
 

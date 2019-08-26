@@ -5,12 +5,6 @@
 #include <vector>
 #include <iostream>
 
-union value_t {
-    uint64_t               ui64;
-    uint32_t               ui32;
-    int32_t                i32;
-    int64_t                i64;
-};
 struct proto_node {
     void set_length(int length);
     void set_generated(bool generated = true);
@@ -45,7 +39,7 @@ struct proto_node {
     std::list< proto_node* > children = {};
     std::string              name     = {};
     std::string              text     = {};
-    value_t                  val      = {0};
+    uint64_t                 val      = 0;
     uint32_t                 enc    = enc::na; // enc::na
     const field_meta*        meta   = nullptr;
     const uint8_t*           data   = nullptr;

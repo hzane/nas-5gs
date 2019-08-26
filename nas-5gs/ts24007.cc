@@ -1,4 +1,5 @@
 #include "ts24007.hh"
+#include "dissect_nas_5gs.hh"
 #include "field_meta.hh"
 
 /*
@@ -325,10 +326,8 @@ static field_meta const hfm_gsm_a_common_elem_id_f0 = {
 };
 const field_meta *hf_gsm_a_common_elem_id_f0 = &hfm_gsm_a_common_elem_id_f0;
 
-extern const field_meta *hf_nas_5gs_msg_elems;
-
 int add_generic_msg_elem_body(dissector d, context *ctx) {
-    d.tree->add_item(d.pinfo, d.tvb, d.offset, d.length, hf_nas_5gs_msg_elems, enc::na);
+    d.tree->add_item(d.pinfo, d.tvb, d.offset, d.length, nas_meta::hf_msg_elem, enc::na);
     return d.length;
 }
 

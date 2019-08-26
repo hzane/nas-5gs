@@ -11,6 +11,10 @@ extern const element_meta req_type;
 extern const element_meta s_nssai;
 extern const element_meta dnn;
 } // namespace mm_ul_nas_transp
+
+using namespace nas_meta;
+
+
 /*
  * 8.2.10    UL NAS transport
  */
