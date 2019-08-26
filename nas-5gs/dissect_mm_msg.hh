@@ -121,6 +121,14 @@ __declspec(selectany) extern const true_false_string tfs_requested_not_requested
     "Requested",
     "Not Requested",
 };
+
+int dissect_allowed_nssai(dissector d, context* ctx);
+
+__declspec(selectany) extern const element_meta allowed_nssai = {
+    0x15,
+    "Allowed NSSAI",
+    dissect_allowed_nssai,
+};
 }
 
 int dissect_mm_cause(dissector d, context* ctx);

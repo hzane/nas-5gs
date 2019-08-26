@@ -126,7 +126,6 @@ namespace mm_conf_upd_cmd {
 int dissect_conf_upd_ind(dissector d, context* ctx);
 int dissect_guti(dissector d, context* ctx);
 int dissect_ta_id_list(dissector d, context* ctx);
-int dissect_allowed_nssai(dissector d, context* ctx);
 int dissect_sal(dissector d, context* ctx);
 int dissect_time_zone_time(dissector d, context* ctx);
 int dissect_day_saving_time(dissector d, context* ctx);
@@ -158,11 +157,6 @@ extern const element_meta ta_id_list = {
     dissect_ta_id_list,
 };
 
-extern const element_meta allowed_nssai = {
-    0x15,
-    "Allowed NSSAI",
-    dissect_allowed_nssai,
-};
 
 extern const element_meta service_area_list = {
     0x70,
@@ -276,7 +270,6 @@ int dissect_guti(dissector d, context* ctx) { return 0; }
 
 int dissect_ta_id_list(dissector d, context* ctx) { return 0; }
 
-int dissect_allowed_nssai(dissector d, context* ctx) { return 0; }
 
 int dissect_sal(dissector d, context* ctx) { return 0; }
 

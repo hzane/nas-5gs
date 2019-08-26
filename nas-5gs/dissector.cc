@@ -26,3 +26,9 @@ void dissector::extraneous_data_check(int maxlen) {
                          (length - maxlen));
     }
 }
+
+dissector dissector::slice(int len) const {
+    auto ret   = *this;
+    ret.length = len;
+    return ret;
+}

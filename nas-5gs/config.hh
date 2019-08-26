@@ -51,6 +51,7 @@ struct dissector {
     proto_node* add_item(int len, const field_meta* fm, uint32_t e = enc::be);
     void        add_bits(const field_meta* metas[]);
     void        extraneous_data_check(int maxlen);
+    dissector   slice(int len) const;
 };
 
 typedef int (*dissect_fnc_t)(dissector, context* ctx);

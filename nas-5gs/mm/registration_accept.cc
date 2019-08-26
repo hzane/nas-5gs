@@ -21,7 +21,7 @@ extern const element_meta pdu_ses_react_res_err_c;
 extern const element_meta pdu_ses_react_res;
 extern const element_meta emerg_num_list_7a;
 extern const element_meta operator_defined_acd;
-extern const element_meta allowed_nssai;
+
 extern const element_meta ta_id_list;
 extern const element_meta guti_5gs_mobile_id;
 extern const element_meta reg_res;
@@ -228,13 +228,6 @@ const element_meta ta_id_list = {
     dissect_ta_id_list,
 };
 
-int                dissect_allowed_nssai(dissector d, context* ctx = nullptr);
-const element_meta allowed_nssai = {
-    0x15,
-    "Allowed NSSAI",
-    dissect_allowed_nssai,
-};
-
 int                dissect_rejected_nssai(dissector d, context* ctx = nullptr);
 const element_meta rejected_nssai = {
     0x11,
@@ -434,6 +427,7 @@ const field_meta hf_tac = {
     nullptr,
     0x0,
 };
+// todo: implement
 int dissect_e212_mcc_mnc(dissector d, context* ctx) {
     
     return 3;
@@ -521,7 +515,6 @@ int dissect_ta_id_list(dissector d, context* ctx) {
     return len;
 }
 
-int dissect_allowed_nssai(dissector d, context* ctx) { return 0; }
 
 int dissect_rejected_nssai(dissector d, context* ctx) { return 0; }
 
