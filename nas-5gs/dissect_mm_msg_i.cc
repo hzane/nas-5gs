@@ -296,13 +296,13 @@ static field_meta hfm_nas_5gs_mm_raai_b0 = {
     "Registration Area Allocation Indication (RAAI)",
     "nas_5gs.mm.raai_b0",
     ft::ft_boolean,
-    8,
+    fd::base_dec,
     nullptr,
     &tfs_nas_5gs_raai,
     nullptr,
     0x01,
 };
-
+const field_meta* mm::hf_nas_5gs_mm_raai_b0 = &hfm_nas_5gs_mm_raai_b0;
 
 static field_meta hfm_nas_5gs_mm_conf_upd_ind_ack_b0 = {
     "Acknowledgement",

@@ -282,8 +282,8 @@ const element_meta eps_nas_msg_cont = {
     dissect_eps_nas_msg_cont,
 };
 
-int                dissect_ladn_inf(dissector d, context* ctx = nullptr);
-const element_meta ladn_inf = {
+int dissect_ladn_inf(dissector d, context* ctx = nullptr);
+__declspec(selectany) const element_meta ladn_inf = {
     0x74,
     "LADN indication",
     dissect_ladn_inf,

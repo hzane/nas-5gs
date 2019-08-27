@@ -71,7 +71,8 @@ const field_meta hf_mapped_conf_ssd = {
     0x0,
 };
 
-int dissect_nssai(dissector d, context* ctx) {
+/* 9.10.2.8    S-NSSAI */
+int mm::dissect_nssai(dissector d, context* ctx) {
     auto len = d.length;
     /* SST    octet 3
      * This field contains the 8 bit SST value. The coding of the SST value part is
@@ -99,16 +100,6 @@ int dissect_nssai(dissector d, context* ctx) {
     return len;
 }
 
-const field_meta hf_mm_length = {
-    "Length",
-    "nas_5gs.mm.length",
-    ft::ft_uint8,
-    fd::base_dec,
-    nullptr,
-    nullptr,
-    nullptr,
-    0x0,
-};
 
 /*
  *   9.11.3.37    NSSAI
@@ -274,5 +265,38 @@ int mm::dissect_ta_id_list(dissector d, context* ctx) {
         /*calculate the number of Partial tracking area list*/
         num_par_tal++;
     }
+    return len;
+}
+
+const field_meta hf_dnn = {
+    "DNN",
+    "nas_5gs.cmn.dnn",
+    ft::ft_bytes,
+    fd::base_none,
+    nullptr,
+    nullptr,
+    nullptr,
+    0x0,
+};
+/*
+ * 9.11.2.1A    DNN
+ */
+int mm::dissect_dnn(dissector d, context* ctx) {
+    auto len = d.length;
+    /* A DNN value field contains an APN as defined in 3GPP TS 23.003 */
+    string str(d.safe_ptr(), d.safe_ptr() + d.safe_length(-1));
+    size_t i = 0;
+    while (i < str.size()) {
+        auto next = str[i];
+        str[i]    = '.';
+        i         = i + next + 1;
+    }
+    /* Highlight bytes including the first length byte */
+    auto item = d.add_item(len, &hf_dnn, enc::none);
+    item->set_string(str);
+    // d.tree->add_subtree(d.pinfo, d.tvb, d.offset, d.length, str.c_str());
+    d.step(len);
+
+    d.extraneous_data_check(0);
     return len;
 }

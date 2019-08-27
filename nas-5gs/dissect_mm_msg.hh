@@ -143,12 +143,27 @@ int dissect_e212_mcc_mnc(dissector d, context* ctx);
 extern const field_meta hf_tac;
 extern const field_meta hf_tal_num_e;
 extern const field_meta hf_tal_t_li;
+
+__declspec(selectany) extern const field_meta hf_mm_length = {
+    "Length",
+    "nas_5gs.mm.length",
+    ft::ft_uint8,
+    fd::base_dec,
+    nullptr,
+    nullptr,
+    nullptr,
+    0x0,
+};
+int dissect_dnn(dissector d, context* ctx);
+int dissect_nssai(dissector d, context* ctx);
+
+extern const field_meta* hf_nas_5gs_mm_raai_b0;
 } // namespace mm
 
 int dissect_mm_cause(dissector d, context* ctx);
 
 __declspec(selectany) extern const element_meta mm_cause = {
-    -1,
+    0xff,
     "5GMM cause",
     dissect_mm_cause,
 };
@@ -157,7 +172,7 @@ __declspec(selectany) extern const element_meta mm_cause = {
 
 int                       dissect_nas_ksi(dissector d, context* ctx);
 __declspec(selectany) extern const element_meta nas_ksi = {
-    -1,
+    0xff,
     "NAS key set identifier",
     dissect_nas_ksi,
 };
@@ -165,7 +180,7 @@ __declspec(selectany) extern const element_meta nas_ksi = {
 int dissect_mobile_id(dissector d, context* ctx);
 
 __declspec(selectany) extern const element_meta mobile_id = {
-    -1,
+    0xff,
     "Mobile identity",
     dissect_mobile_id,
 };

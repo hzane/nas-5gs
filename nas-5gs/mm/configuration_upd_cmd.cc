@@ -1,5 +1,6 @@
 #include "../dissect_mm_msg.hh"
 #include "../ts24007.hh"
+#include <ctime>
 
 namespace mm_conf_upd_cmd {
 extern const element_meta conf_upd_ind;
@@ -75,7 +76,6 @@ int mm::conf_upd_cmd(dissector d, context* ctx) {
      * TV    8*/
     /*ELEM_OPT_TV(0x47,GSM_A_PDU_TYPE_DTAP,DE_TIME_ZONE_TIME," - Universal Time and Local
      * Time Zone");*/
-
     consumed = dissect_opt_elem_tv(nullptr, &u_time_zone_time, d, ctx);
     d.step(consumed);
 
@@ -159,13 +159,13 @@ extern const element_meta service_area_list = {
 
 extern const element_meta full_name_network = {
     0x43,
-    "Full name for network",
+    "Network name - Full Name",
     dissect_full_name_network,
 };
 
 extern const element_meta short_name_network = {
     0x45,
-    "Short name for network",
+    "Network Name - Short Name",
     dissect_short_name_network,
 };
 
@@ -385,15 +385,149 @@ int dissect_sal(dissector d, context* ctx) {
     return len;
 }
 
-int dissect_time_zone_time(dissector d, context* ctx) { return 0; }
+string abs_time_str(tm t) {
+    char buf[64] = {};
+    asctime_s(buf, _countof(buf), &t);
+    return string(buf);
+}
+/*
+ * [3] 10.5.3.9 Time Zone and Time
+ */
+int dissect_time_zone_time(dissector d, context* ctx) {
+    auto len = d.length;
+    tm   t   = {0, 0, 0, 0, 0, 0, 0, 0, -1};
 
-int dissect_day_saving_time(dissector d, context* ctx) { return 0; }
+    auto oct = (int)d.tvb->get_uint8(d.offset);
+    t.tm_year = (oct & 0x0f) * 10 + ((oct & 0xf0) >> 4) * 100;
 
-int dissect_ladn_inf(dissector d, context* ctx) { return 0; }
+    oct = d.tvb->get_uint8(d.offset + 1);
+    t.tm_mon = (oct & 0x0f) * 10 + ((oct & 0xf0) >> 4) - 1;
 
-int dissect_mico_ind(dissector d, context* ctx) { return 0; }
+    oct = d.tvb->get_uint8(d.offset + 2);
+    t.tm_mday = (oct & 0x0f) * 10 + ((oct & 0xf0) >> 4);
 
-int dissect_rej_nssai(dissector d, context* ctx) { return 0; }
+    oct = d.tvb->get_uint8(d.offset + 3);
+    t.tm_hour = (oct & 0x0f) * 10 + ((oct & 0xf0) >> 4);
+
+    oct       = d.tvb->get_uint8(d.offset + 4);
+    t.tm_min= (oct & 0x0f) * 10 + ((oct & 0xf0) >> 4);
+
+    oct       = d.tvb->get_uint8(d.offset + 5);
+    t.tm_sec = (oct & 0x0f) * 10 + ((oct & 0xf0) >> 4);
+
+    // auto tv = mktime(&t);
+    // d.add_item(6, &hf_time_zone_time, enc::none);
+    d.tree->add_subtree(d.pinfo, d.tvb, d.offset, 6, abs_time_str(t).c_str());
+    d.step(6);
+
+    oct = d.tvb->get_uint8(d.offset);
+    auto sign = (oct & 0x08) ? '-' : '+';
+    oct       = (oct >> 4) + (oct & 0x07) * 10;
+    d.tree->add_subtree(d.pinfo,
+                        d.tvb,
+                        d.offset,
+                        1,
+                        "GMT %c %d hours %d minutes",
+                        sign,
+                        oct / 4,
+                        oct % 4 * 15);
+    d.step(1);
+
+    /* no length check possible */
+    return 7;
+}
+
+/*
+ * [3] 10.5.3.12 Daylight Saving Time
+ */
+static const value_string gsm_a_dtap_dst_adjustment_vals[] = {
+    {0, "No adjustment for Daylight Saving Time"},
+    {1, "+1 hour adjustment for Daylight Saving Time"},
+    {2, "+2 hours adjustment for Daylight Saving Time"},
+    {3, "Reserved"},
+    {0, nullptr},
+};
+const field_meta hf_dst_adjustment = {
+    "DST Adjustment",
+    "gsm_a.dtap.dst_adjustment",
+    ft::ft_uint8,
+    fd::base_dec,
+    gsm_a_dtap_dst_adjustment_vals,
+    nullptr,
+    nullptr,
+    0x03,
+};
+
+int dissect_day_saving_time(dissector d, context* ctx) {
+    auto len = d.length;
+
+    d.add_item(1, &hf_dst_adjustment, enc::be);
+    d.step(1);
+
+    d.extraneous_data_check(0);
+    return 1;
+}
+
+/*
+ *   9.11.3.30    LADN information
+ */
+int dissect_ladn_inf(dissector d, context* ctx) {
+    auto len = d.length;
+    auto i   = 1;
+    while(d.length>0){
+        auto start   = d.offset;
+        auto subtree = d.tree->add_subtree(d.pinfo, d.tvb, d.offset, 2, "LADN %u", i);
+        d.tree       = subtree;
+        /* DNN value (octet 5 to octet m):
+         * LADN DNN value is coded as the length and value part of DNN information element
+         * as specified in subclause 9.11.2.1A starting with the second octet
+         */
+        auto length = (int)d.tvb->get_uint8(d.offset);
+        d.add_item(1, &hf_mm_length, enc::be);
+        d.step(1);
+
+        /* 5GS tracking area identity list (octet m+1 to octet a):
+        * 5GS tracking area identity list field is coded as the length and the value part
+        * of the 5GS Tracking area identity list information element as specified in
+        * subclause 9.11.3.9 starting with the second octet
+        */
+        auto consumed = dissect_dnn(d.slice(length), ctx);
+        d.step(consumed);
+
+        d.add_item(1, &hf_mm_length, enc::be);
+        d.step(consumed);
+
+        length   = d.tvb->get_uint8(d.offset);
+        consumed = dissect_ta_id_list(d.slice(length), ctx);
+        d.step(consumed);
+        subtree->set_length(d.offset - start);
+
+        ++i;
+    }
+    return len;
+}
+
+/*
+ *   9.11.3.31    MICO indication
+ */
+static const true_false_string tfs_nas_5gs_raai = {
+    "all PLMN registration area allocated",
+    "all PLMN registration area not allocated",
+};
+int dissect_mico_ind(dissector d, context* ctx) {
+    auto len = d.length;
+
+    d.add_item(1, hf_nas_5gs_mm_raai_b0, enc::be);
+    return 1;
+}
+
+/*
+ *   9.11.3.46    Rejected NSSAI
+ */
+int dissect_rej_nssai(dissector d, context* ctx) {
+    bug("ie %s not dissect yet\n", "rejected NSSAI");
+    return d.length;
+}
 
 
 /*
@@ -522,14 +656,125 @@ int dissect_full_name_network(dissector d, context* ctx) {
     return len;
 }
 
-int dissect_short_name_network(dissector d, context* ctx) { return 0; }
+int dissect_short_name_network(dissector d, context* ctx) {
+    return dissect_full_name_network(d, ctx);
+}
 
-int dissect_local_time_zone(dissector d, context* ctx) { return 0; }
 
-int dissect_configured_nssai(dissector d, context* ctx) { return 0; }
+/* 3GPP TS 23.040 version 6.6.0 Release 6
+ * [3] 10.5.3.8 Time Zone
+ */
+int dissect_local_time_zone(dissector d, context* ctx) {
+    auto len = d.length;
+    /* 3GPP TS 23.040 version 6.6.0 Release 6
+     * 9.2.3.11 TP-Service-Centre-Time-Stamp (TP-SCTS)
+     * :
+     * The Time Zone indicates the difference, expressed in quarters of an hour,
+     * between the local time and GMT. In the first of the two semi-octets,
+     * the first bit (bit 3 of the seventh octet of the TP-Service-Centre-Time-Stamp
+     * field) represents the algebraic sign of this difference (0: positive, 1: negative).
+     */
+    auto oct = d.tvb->get_uint8(d.offset);
+    auto sign = (oct & 0x08) ? '-' : '+';
 
-int dissect_op_def_acc_cat_def(dissector d, context* ctx) { return 0; }
+    oct = (oct >> 4) + (oct & 0x07) * 10;
 
-int dissect_sms_ind(dissector d, context* ctx) { return 0; }
+    d.tree->add_subtree(d.pinfo,
+                        d.tvb,
+                        d.offset,
+                        1,
+                        "GMT %c %d hours %d minutes",
+                        sign,
+                        oct / 4,
+                        oct % 4 * 15);
+    /* no length check possible */
+    return 1;
+}
+
+/*
+ *   9.11.3.37    NSSAI
+ */
+int dissect_configured_nssai(dissector d, context* ctx) {
+    auto len = d.length;
+    auto i   = 1;
+    while(d.length>0){
+        auto subtree = d.tree->add_subtree(d.pinfo, d.tvb, d.offset, 2, "S-NSSAI %u", i);
+        d.tree       = subtree;
+
+        int length = (int) d.tvb->get_uint8(d.offset);
+        d.add_item(1, &hf_mm_length, enc::be);
+        d.step(1);
+
+        auto consumed = dissect_nssai(d.slice(length), ctx);
+        d.step(consumed);
+
+        ++i;
+    }
+    return len;
+}
+
+const field_meta hf_precedence = {
+    "Precedence",
+    "nas_5gs.mm.precedence",
+    ft::ft_uint8,
+    fd::base_dec,
+    nullptr,
+    nullptr,
+    nullptr,
+    0x0,
+};
+/*
+ *   9.11.3.38    Operator-defined access category definitions
+ */
+int dissect_op_def_acc_cat_def(dissector d, context* ctx) {
+    auto len = d.length;
+    auto i   = 0;
+    while(d.length>0){
+        auto subtree =
+            d.tree->add_subtree(d.pinfo,
+                                d.tvb,
+                                d.offset,
+                                2,
+                                "Operator-defined access category definition  %u",
+                                i);
+        d.tree = subtree;
+        auto length = (int) d.tvb->get_uint8(d.offset);
+        d.add_item(1, &hf_mm_length, enc::be);
+        d.step(1);
+
+        /* Precedence value */
+        d.add_item(1, &hf_precedence, enc::be);
+        d.step(1);
+
+        /* PSAC    0 Spare    0 Spare    Operator-defined access category number */
+        /* Length of criteria */
+        /* Criteria */
+        /* 0 Spare    0 Spare    0 Spare    Standardized access category */
+        subtree->set_length(length + 2);
+        d.step(length);
+
+        ++i;
+    }
+    return len;
+}
+const true_false_string tfs_allowed_not_allowed = {"Allowed", "Not Allowed"};
+const field_meta hf_sms_indic_sai = {
+    "SMS over NAS",
+    "nas_5gs.mm.ms_indic.sai",
+    ft::ft_boolean,
+    fd::base_dec,
+    nullptr,
+    &tfs_allowed_not_allowed,
+    nullptr,
+    0x01,
+};
+
+/*
+ *   9.11.3.50A    SMS indication
+ */
+int dissect_sms_ind(dissector d, context* ctx) {
+    d.add_item(1, &hf_sms_indic_sai, enc::be);
+    return 1;
+}
 
 } // namespace mm_conf_upd_cmd

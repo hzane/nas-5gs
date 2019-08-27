@@ -14,7 +14,6 @@ extern const element_meta dnn;
 
 using namespace nas;
 
-
 /*
  * 8.2.10    UL NAS transport
  */
@@ -86,7 +85,6 @@ int dissect_add_inf(dissector d, context* ctx);
 int dissect_old_pdu_ses_id(dissector d, context* ctx);
 int dissect_req_type(dissector d, context* ctx);
 int dissect_s_nssai(dissector d, context* ctx);
-int dissect_dnn(dissector d, context* ctx);
 
 extern const element_meta pld_cont_type = {
     0xff,
@@ -127,7 +125,7 @@ extern const element_meta s_nssai = {
 extern const element_meta dnn = {
     0x25,
     "DNN",
-    dissect_dnn,
+    mm::dissect_dnn,
 };
 int dissect_pld_cont_type(dissector d, context* ctx) { return 0; }
 int dissect_pld_cont(dissector d, context* ctx) { return 0; }
@@ -136,5 +134,6 @@ int dissect_add_inf(dissector d, context* ctx) { return 0; }
 int dissect_old_pdu_ses_id(dissector d, context* ctx) { return 0; }
 int dissect_req_type(dissector d, context* ctx) { return 0; }
 int dissect_s_nssai(dissector d, context* ctx) { return 0; }
-int dissect_dnn(dissector d, context* ctx) { return 0; }
+
+
 } // namespace mm_ul_nas_transp
