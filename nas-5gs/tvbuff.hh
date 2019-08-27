@@ -40,6 +40,7 @@ struct tvbuff {
     }
     uint8_t get_uint8(int offset) const { return offset < length ? data[offset] : 0; }
     uint8_t get_uint7(int offset) const { return get_uint8(offset) & 0x7f; }
+
     int     remain(int offset) const { return length - offset; }
 };
 

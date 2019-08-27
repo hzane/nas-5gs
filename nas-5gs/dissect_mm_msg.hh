@@ -129,7 +129,21 @@ __declspec(selectany) extern const element_meta allowed_nssai = {
     "Allowed NSSAI",
     dissect_allowed_nssai,
 };
-}
+
+int dissect_ta_id_list(dissector d, context* ctx);
+
+__declspec(selectany) extern const element_meta ta_id_list = {
+    0x54,
+    "TAI list",
+    dissect_ta_id_list,
+};
+
+int dissect_e212_mcc_mnc(dissector d, context* ctx);
+
+extern const field_meta hf_tac;
+extern const field_meta hf_tal_num_e;
+extern const field_meta hf_tal_t_li;
+} // namespace mm
 
 int dissect_mm_cause(dissector d, context* ctx);
 
@@ -179,3 +193,4 @@ __declspec(selectany) extern const element_meta abba = {
     "ABBA",
     dissect_abba,
 };
+

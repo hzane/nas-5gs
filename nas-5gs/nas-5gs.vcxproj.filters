@@ -180,6 +180,9 @@
     <ClCompile Include="mm\configuration_update_comp.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="charsets.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="config.hh">

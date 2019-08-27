@@ -79,16 +79,13 @@ proto_item* proto_node::set_int(int64_t v, uint32_t enc, const char* format, ...
     return this;
 }
 
-proto_item* proto_node::set_bitmask_list(const field_meta* fields, uint64_t value) {
-    using namespace std;
-    val = value;
+proto_item* proto_node::set_string(const string &v) {
+    enc = enc::be;
 
-    // name = "what's the name";
-    bitset< 64 > x(value);
-    text = x.to_string();
-
+    text = v;
     return this;
 }
+
 
 proto_item* proto_node::add_expert(packet_info* pinfo,
                                    tvbuff*      buf,

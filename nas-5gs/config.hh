@@ -26,6 +26,8 @@ typedef proto_node proto_item;
 
 using string = std::string;
 
+using ustring = std::vector<uint8_t>;
+
 extern void bug(const char* format, ...);
 
 namespace enc {
@@ -33,6 +35,7 @@ __declspec(selectany) extern const uint32_t na   = 0;
 __declspec(selectany) extern const uint32_t be   = 1; // big endian
 __declspec(selectany) extern const uint32_t le   = 2; // little endian
 __declspec(selectany) extern const uint32_t none = 4; // host order
+__declspec(selectany) extern const uint32_t str  = 8; // 
 } // namespace enc
 
 struct dissector {
@@ -51,6 +54,8 @@ struct dissector {
     proto_node* add_item(int len, const field_meta* fm, uint32_t e = enc::be);
     void        add_bits(const field_meta* metas[]);
     void        extraneous_data_check(int maxlen);
+    const uint8_t* safe_ptr() const;
+    int            safe_length(int len) const;
     dissector   slice(int len) const;
 };
 
@@ -139,3 +144,7 @@ const char* find_r_string(const range_string* rstr,
 std::vector< std::string > find_bitset_string(const val_string* vstr, uint32_t bits);
 
 std::string join(const std::vector< std::string >& strs, const char* sep = " ");
+
+// std::string bits7_string(const uint8_t* data, int len);
+
+ustring ts_23_038_7bits_string(const uint8_t* ptr, int bit_offset, int no_of_chars);

@@ -151,6 +151,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="charsets.cc" />
     <ClCompile Include="core.cc" />
     <ClCompile Include="dissector.cc" />
     <ClCompile Include="dissect_mm_msg.cc" />

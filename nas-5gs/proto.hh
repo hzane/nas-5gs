@@ -20,7 +20,7 @@ struct proto_node {
 
     proto_item* set_int(int64_t val, uint32_t enc, const char* format, ...);
 
-    proto_item* set_bitmask_list(const field_meta* fields, uint64_t value);
+    proto_item* set_string(const string &v);
 
     proto_item* add_expert(packet_info* pinfo,
                            tvbuff*      buf,
