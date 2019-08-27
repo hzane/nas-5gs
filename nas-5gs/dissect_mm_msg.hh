@@ -11,8 +11,8 @@ int registration_req(dissector d, context* ctx);
 int registration_accept(dissector d, context* ctx);
 int registration_complete(dissector d, context* ctx);
 int registration_rej(dissector d, context* ctx);
-int de_reg_req_ue_orig(dissector d, context* ctx);
-int de_registration_req_ue_term(dissector d, context* ctx);
+int dissect_reg_req_ue_orig(dissector d, context* ctx);
+int dissect_registration_req_ue_term(dissector d, context* ctx);
 int service_req(dissector d, context* ctx);
 int service_rej(dissector d, context* ctx);
 int service_acc(dissector d, context* ctx);
@@ -37,24 +37,24 @@ int ul_nas_transp(dissector d, context* ctx);
 int dl_nas_transp(dissector d, context* ctx);
 
 __declspec(selectany) extern const message_meta msgs[] = {
-    {0x41, "Registration request", registration_req},
-    {0x42, "Registration accept", registration_accept},
-    {0x43, "Registration complete", registration_complete},
-    {0x44, "Registration reject", registration_rej},
-    {0x45, "Deregistration request (UE originating)", de_reg_req_ue_orig},
-    {0x46, "Deregistration accept (UE originating)", nullptr},
-    {0x47, "Deregistration request (UE terminated)", de_registration_req_ue_term},
-    {0x48, "Deregistration accept (UE terminated)", nullptr},
+    {0x41, "Registration request",                    registration_req},
+    {0x42, "Registration accept",                     registration_accept},
+    {0x43, "Registration complete",                   registration_complete},
+    {0x44, "Registration reject",                     registration_rej},
+    {0x45, "Deregistration request (UE originating)", dissect_reg_req_ue_orig},
+    {0x46, "Deregistration accept (UE originating)",  nullptr},
+    {0x47, "Deregistration request (UE terminated)",  dissect_registration_req_ue_term},
+    {0x48, "Deregistration accept (UE terminated)",   nullptr},
 
-    {0x49, "Not used in current version", no_dissect},
-    {0x4a, "Not used in current version", no_dissect},
-    {0x4b, "Not used in current version", no_dissect},
+    {0x49, "Not used in current version",             no_dissect},
+    {0x4a, "Not used in current version",             no_dissect},
+    {0x4b, "Not used in current version",             no_dissect},
 
-    {0x4c, "Service request", service_req},
-    {0x4d, "Service reject", service_rej},
-    {0x4e, "Service accept", service_acc},
+    {0x4c, "Service request",                         service_req},
+    {0x4d, "Service reject",                          service_rej},
+    {0x4e, "Service accept",                          service_acc},
 
-    {0x4f, "Not used in current version", no_dissect},
+    {0x4f, "Not used in current version",             no_dissect},
     {0x50, "Not used in current version", no_dissect},
     {0x51, "Not used in current version", no_dissect},
     {0x52, "Not used in current version", no_dissect},

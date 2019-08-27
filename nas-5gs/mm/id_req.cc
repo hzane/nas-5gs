@@ -1,7 +1,7 @@
 #include "../dissect_mm_msg.hh"
 #include "../ts24007.hh"
 
-namespace mm_id_req {
+namespace mm_id {
 extern const element_meta id_type;
 }
 using namespace nas;
@@ -12,7 +12,7 @@ using namespace nas;
 int mm::id_req(dissector d, context* ctx) {
     use_context uc(ctx, "identity-request");
 
-    using namespace mm_id_req;
+    using namespace mm_id;
 
     /*     Identity type    5GS identity type 9.11.3.3    M    V    1/2 */
     /* Spare half octet    Spare half octet 9.5    M    V    1/2 */
@@ -27,7 +27,7 @@ int mm::id_req(dissector d, context* ctx) {
     return d.tvb->reported_length;
 }
 
-namespace mm_id_req {
+namespace mm_id {
 int                       dissect_id_type(dissector d, context* ctx);
 extern const element_meta id_type = {
     0xff,

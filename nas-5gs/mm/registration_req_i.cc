@@ -58,18 +58,18 @@ static const val_string nas_5gs_mm_registration_req_elem[] = {
 
 } // namespace mm_reg_req
 
-extern const val_string nas_5gs_mm_cause_vals[];
+extern const val_string values_cause[];
 
 namespace mm {
 const field_meta hfm_mm_cause = {
-    "5GMM cause",
-    "nas_5gs.mm.5gmm_cause",
-    ft::ft_uint8,
-    fd::base_dec,
-    nas_5gs_mm_cause_vals,
-    nullptr,
-    nullptr,
-    0x0,
+        "5GMM cause",
+        "nas_5gs.mm.5gmm_cause",
+        ft::ft_uint8,
+        fd::base_dec,
+        values_cause,
+        nullptr,
+        nullptr,
+        0x0,
 };
 const field_meta* hf_mm_cause = &hfm_mm_cause;
 }

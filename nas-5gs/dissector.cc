@@ -2,6 +2,7 @@
 #include "proto.hh"
 #include "field_meta.hh"
 #include "tvbuff.hh"
+#include "packet_info.hh"
 
 // struct dissector defined in config.hh
 
@@ -42,4 +43,13 @@ int dissector::safe_length(int len) const {
     if (len < 0) len = length - offset;
     if (offset + len <= length) return len;
     return 0;
+}
+
+void dissector::set_private(const char* name, uint64_t v) {
+    pinfo->iprivates[string(name)] = v;
+}
+uint64_t dissector::get_private(const char* name, uint64_t v) {
+    auto i = pinfo->iprivates.find(string(name));
+    if (i != pinfo->iprivates.end()) return i->second;
+    return v;
 }

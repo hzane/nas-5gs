@@ -2,44 +2,43 @@
 
 using namespace mm;
 
-extern const true_false_string nas_5gs_for_tfs = {
+const true_false_string tfs_follow_on_req = {
     "Follow-on request pending",
     "No follow-on request pending",
 };
 
-static field_meta hfm_nas_5gs_mm_for = {
+const field_meta nas::hf_follow_on_req = {
     "Follow-On Request bit (FOR)",
     "nas_5gs.mm.for",
     ft::ft_boolean,
     fd::sep_dot,
     nullptr,
-    &nas_5gs_for_tfs,
+    &tfs_follow_on_req,
     nullptr,
     0x08,
 };
 
-const field_meta* hf_nas_5gs_mm_for = &hfm_nas_5gs_mm_for;
 
 /* * 9.11.3.9A    5GS update type*/
 
-static true_false_string tfs_nas5gs_sms_requested = {
+static true_false_string tfs_sms_requested = {
     "SMS over NAS supported",
     "SMS over NAS not supported",
 };
-static field_meta hfm_nas_5gs_mm_sms_requested = {
+const field_meta nas::hf_sms_requested = {
     "SMS requested",
     "nas_5gs.mm.sms_requested",
     ft::ft_boolean,
     8,
     nullptr,
-    &tfs_nas5gs_sms_requested,
+    &tfs_sms_requested,
     nullptr,
     0x01,
 };
 
 /* 9.11.3.7    5GS registration type */
 
-static const val_string nas_5gs_registration_type_values[] = {
+static const val_string values_registration_type[] = {
     {0x1, "initial registration"},
     {0x2, "mobility registration updating"},
     {0x3, "periodic registration updating"},
@@ -47,24 +46,23 @@ static const val_string nas_5gs_registration_type_values[] = {
     {0x7, "reserved"},
     {0, nullptr},
 };
-static field_meta hfm_nas_5gs_mm_5gs_reg_type = {
-    "5GS registration type",
-    "nas_5gs.mm.5gs_reg_type",
-    ft::ft_uint8,
-    fd::base_dec,
-    nas_5gs_registration_type_values,
-    nullptr,
-    nullptr,
-    0x07,
+const field_meta nas::hf_5gs_reg_type = {
+        "5GS registration type",
+        "nas_5gs.mm.5gs_reg_type",
+        ft::ft_uint8,
+        fd::base_dec,
+        values_registration_type,
+        nullptr,
+        nullptr,
+        0x07,
 };
-const field_meta* hf_nas_5gs_mm_5gs_reg_type = &hfm_nas_5gs_mm_5gs_reg_type;
 
 static const true_false_string nas_5gs_mm_tsc_tfs = {
     "Mapped security context (for KSIASME)",
     "Native security context (for KSIAMF)",
 };
 
-static field_meta hfm_nas_5gs_mm_tsc = {
+const field_meta nas::hf_tsc = {
     "Type of security context flag (TSC)",
     "nas_5gs.mm.tsc",
     ft::ft_boolean,
@@ -75,7 +73,7 @@ static field_meta hfm_nas_5gs_mm_tsc = {
     0x08,
 };
 
-static field_meta hfm_nas_5gs_mm_nas_key_set_id = {
+const field_meta nas::hf_nas_key_set_id = {
     "NAS key set identifier",
     "nas_5gs.mm.nas_key_set_id",
     ft::ft_uint8,
@@ -86,7 +84,7 @@ static field_meta hfm_nas_5gs_mm_nas_key_set_id = {
     0x07,
 };
 
-static field_meta hfm_nas_5gs_mm_tsc_h1 = {
+const field_meta nas::hf_tsc_h1 = {
     "Type of security context flag (TSC)",
     "nas_5gs.mm.tsc.h1",
     ft::ft_boolean,
@@ -96,9 +94,8 @@ static field_meta hfm_nas_5gs_mm_tsc_h1 = {
     nullptr,
     0x80,
 };
-const field_meta* hf_nas_5gs_mm_tsc_h1 = &hfm_nas_5gs_mm_tsc_h1;
 
-static field_meta hfm_nas_5gs_mm_nas_key_set_id_h1 = {
+const field_meta nas::hf_nas_key_set_id_h1 = {
     "NAS key set identifier",
     "nas_5gs.mm.nas_key_set_id.h1",
     ft::ft_uint8,
@@ -108,12 +105,10 @@ static field_meta hfm_nas_5gs_mm_nas_key_set_id_h1 = {
     nullptr,
     0x70,
 };
-const field_meta* hf_nas_5gs_mm_nas_key_set_id_h1 =
-    &hfm_nas_5gs_mm_nas_key_set_id_h1;
 
 /* * 9.11.3.2 5GMM cause */
 
-extern const val_string nas_5gs_mm_cause_vals[] = {
+extern const val_string values_cause[] = {
     {0x03, "Illegal UE"},
     {0x05, "PEI not accepted"},
     {0x06, "Illegal ME"},
@@ -152,14 +147,13 @@ extern const val_string nas_5gs_mm_cause_vals[] = {
     {0x6f, "Protocol error, unspecified"},
     {0, nullptr},
 };
-const val_string* nas_5gs_mm_cause_values = nas_5gs_mm_cause_vals;
 
-const field_meta hfm_nas_5gs_mm_5gmm_cause = {
+const field_meta nas::hf_5gmm_cause = {
     "5GMM cause",
     "nas_5gs.mm.5gmm_cause",
     ft::ft_uint8,
     fd::base_dec,
-    nas_5gs_mm_cause_vals,
+    values_cause,
     nullptr,
     nullptr,
     0x0,
@@ -167,7 +161,7 @@ const field_meta hfm_nas_5gs_mm_5gmm_cause = {
 
 /* *   9.11.3.40    Payload container type */
 
-static const val_string nas_5gs_mm_pld_cont_type_vals[] = {
+static const val_string values_pld_cont_type[]       = {
     {0x01, "N1 SM information"},
     {0x02, "SMS"},
     {0x03, "LTE Positioning Protocol (LPP) message container"},
@@ -177,18 +171,19 @@ static const val_string nas_5gs_mm_pld_cont_type_vals[] = {
     {0x0f, "Multiple payloads"},
     {0, nullptr},
 };
-static field_meta hfm_nas_5gs_mm_pld_cont_type = {
+
+const field_meta nas::hf_pld_cont_type = {
     "Payload container type",
     "nas_5gs.mm.pld_cont_type",
     ft::ft_uint8,
     fd::base_dec,
-    nas_5gs_mm_pld_cont_type_vals,
+    values_pld_cont_type,
     nullptr,
     nullptr,
     0x0f,
 };
 
-static field_meta hfm_nas_5gs_mm_sst = {
+const field_meta nas::hf_nas_5gs_mm_sst = {
     "Slice/service type (SST)",
     "nas_5gs.mm.sst",
     ft::ft_uint8,
@@ -199,7 +194,7 @@ static field_meta hfm_nas_5gs_mm_sst = {
     0x0,
 };
 
-static field_meta hfm_nas_5gs_mm_sd = {
+const field_meta hfm_nas_5gs_mm_sd = {
     "Slice differentiator (SD)",
     "nas_5gs.mm.mm_sd",
     ft::ft_uint24,
@@ -210,7 +205,7 @@ static field_meta hfm_nas_5gs_mm_sd = {
     0x0,
 };
 
-static field_meta hfm_nas_5gs_mm_mapped_conf_sst = {
+const field_meta hfm_nas_5gs_mm_mapped_conf_sst = {
     "Mapped configured SST",
     "nas_5gs.mm.mapped_conf_sst",
     ft::ft_uint8,
@@ -221,7 +216,7 @@ static field_meta hfm_nas_5gs_mm_mapped_conf_sst = {
     0x0,
 };
 
-static field_meta hfm_nas_5gs_mm_mapped_conf_ssd = {
+const field_meta hfm_nas_5gs_mm_mapped_conf_ssd = {
     "Mapped configured SD",
     "nas_5gs.mm.mapped_conf_ssd",
     ft::ft_uint24,
@@ -242,7 +237,7 @@ static const true_false_string nas_5gs_mm_switch_off_tfs = {
     "Switch off",
     "Normal de-registration",
 };
-static field_meta hfm_nas_5gs_mm_switch_off = {
+const field_meta hfm_nas_5gs_mm_switch_off = {
     "Switch off",
     "nas_5gs.mm.switch_off",
     ft::ft_boolean,
@@ -257,7 +252,7 @@ static const true_false_string nas_5gs_mm_re_reg_req_tfs = {
     "re-registration required",
     "re-registration not required",
 };
-static field_meta hfm_nas_5gs_mm_re_reg_req = {
+const field_meta hfm_nas_5gs_mm_re_reg_req = {
     "Re-registration required",
     "nas_5gs.mm.re_reg_req",
     ft::ft_boolean,
@@ -274,7 +269,7 @@ static const val_string nas_5gs_mm_acc_type_vals[] = {
     {0x3, "3GPP access and non-3GPP access"},
     {0, nullptr},
 };
-static field_meta hfm_nas_5gs_mm_acc_type = {
+const field_meta hfm_nas_5gs_mm_acc_type = {
     "Access type",
     "nas_5gs.mm.acc_type",
     ft::ft_uint8,
@@ -292,7 +287,7 @@ static const true_false_string tfs_nas_5gs_raai = {
     "all PLMN registration area not allocated",
 };
 
-static field_meta hfm_nas_5gs_mm_raai_b0 = {
+const field_meta hfm_nas_5gs_mm_raai_b0 = {
     "Registration Area Allocation Indication (RAAI)",
     "nas_5gs.mm.raai_b0",
     ft::ft_boolean,
@@ -304,7 +299,7 @@ static field_meta hfm_nas_5gs_mm_raai_b0 = {
 };
 const field_meta* mm::hf_nas_5gs_mm_raai_b0 = &hfm_nas_5gs_mm_raai_b0;
 
-static field_meta hfm_nas_5gs_mm_conf_upd_ind_ack_b0 = {
+const field_meta hfm_nas_5gs_mm_conf_upd_ind_ack_b0 = {
     "Acknowledgement",
     "nas_5gs.mm.conf_upd_ind.ack",
     ft::ft_boolean,
@@ -337,7 +332,7 @@ static const val_string nas_5gs_mm_type_of_enc_algo_vals[] = {
     {0x7, "5G-EA7"},
     {0, nullptr},
 };
-static field_meta hfm_nas_5gs_mm_nas_sec_algo_enc = {
+const field_meta hfm_nas_5gs_mm_nas_sec_algo_enc = {
     "Type of ciphering algorithm",
     "nas_5gs.mm.nas_sec_algo_enc",
     ft::ft_uint8,
@@ -361,7 +356,7 @@ static const val_string nas_5gs_mm_type_of_ip_algo_vals[] = {
     {0x7, "5G-IA7"},
     {0, nullptr},
 };
-static field_meta hfm_nas_5gs_mm_nas_sec_algo_ip = {
+const field_meta hfm_nas_5gs_mm_nas_sec_algo_ip = {
     "Type of integrity protection algorithm",
     "nas_5gs.mm.nas_sec_algo_ip",
     ft::ft_uint8,
@@ -372,7 +367,7 @@ static field_meta hfm_nas_5gs_mm_nas_sec_algo_ip = {
     0x0f,
 };
 
-static field_meta hfm_nas_5gs_mm_s1_mode_b0 = {
+const field_meta hfm_nas_5gs_mm_s1_mode_b0 = {
     "S1 mode",
     "nas_5gs.mm.s1_mode_b0",
     ft::ft_boolean,
@@ -387,7 +382,7 @@ __declspec(selectany) extern const true_false_string tfs_supported_not_supported
     "Supported",
     "Not supported",
 };
-static field_meta hfm_nas_5gs_mm_ho_attach_b1 = {
+const field_meta hfm_nas_5gs_mm_ho_attach_b1 = {
     "HO attach",
     "nas_5gs.mm.ho_attach_b1",
     ft::ft_boolean,
@@ -398,7 +393,7 @@ static field_meta hfm_nas_5gs_mm_ho_attach_b1 = {
     0x02,
 };
 
-static field_meta hfm_nas_5gs_mm_lpp_cap_b2 = {
+const field_meta hfm_nas_5gs_mm_lpp_cap_b2 = {
     "LTE Positioning Protocol (LPP) capability",
     "nas_5gs.mm.lpp_cap_b2",
     ft::ft_boolean,
@@ -411,7 +406,7 @@ static field_meta hfm_nas_5gs_mm_lpp_cap_b2 = {
 
 /* * 9.11.3.4    5GS mobile identity */
 
-static const val_string nas_5gs_mm_type_id_vals[] = {
+const val_string nas_5gs_mm_type_id_vals[] = {
     {0x0, "No identity"},
     {0x1, "SUCI"},
     {0x2, "5G-GUTI"},
@@ -420,7 +415,7 @@ static const val_string nas_5gs_mm_type_id_vals[] = {
     {0x5, "IMEISV"},
     {0, nullptr},
 };
-static field_meta hfm_nas_5gs_mm_type_id = {
+const field_meta hfm_nas_5gs_mm_type_id = {
     "Type of identity",
     "nas_5gs.mm.type_id",
     ft::ft_uint8,
@@ -882,7 +877,7 @@ const true_false_string tfs_nas_5gs_mm_n1_mod = {
     "UE is in 5GMM-REGISTERED state",
     "UE is not in 5GMM-REGISTERED state",
 };
-const field_meta hfm_nas_5gs_mm_n1_mode_reg_b1 = {
+const field_meta nas::hf_nas_5gs_mm_n1_mode_reg_b1 = {
     "N1 mode reg",
     "nas_5gs.mm.n1_mode_reg_b1",
     ft::ft_boolean,
@@ -898,7 +893,7 @@ const true_false_string tfs_nas_5gs_mm_s1_mod = {
     "UE is in EMM-REGISTERED state",
     "UE is not in EMM-REGISTERED state",
 };
-const field_meta hfm_nas_5gs_mm_s1_mode_reg_b0 = {
+const field_meta nas::hf_nas_5gs_mm_s1_mode_reg_b0 = {
     "S1 mode reg",
     "nas_5gs.mm.s1_mode_reg_b0",
     ft::ft_boolean,
@@ -924,7 +919,8 @@ const true_false_string tfs_nas_5gs_sal_al_t = {
     "TAIs in the list are in the non-allowed area",
     "TAIs in the list are in the allowed area",
 };
-const field_meta hfm_nas_5gs_mm_sal_al_t = {
+
+const field_meta nas::hf_nas_5gs_mm_sal_al_t = {
     "Allowed type",
     "nas_5gs.mm.sal_al_t",
     ft::ft_boolean,
@@ -943,7 +939,8 @@ const val_string nas_5gs_mm_sal_t_li_values[] = {
     {0x03, "All TAIs belonging to the PLMN are in the allowed area"},
     {0, nullptr},
 };
-const field_meta hfm_nas_5gs_mm_sal_t_li = {
+
+const field_meta nas::hf_mm_sal_t_li      = {
     "Type of list",
     "nas_5gs.mm.sal_t_li",
     ft::ft_uint8,
@@ -953,15 +950,5 @@ const field_meta hfm_nas_5gs_mm_sal_t_li = {
     nullptr,
     0x60,
 };
-const field_meta hfm_nas_5gs_mm_sal_num_e = {
-    "Number of elements",
-    "nas_5gs.mm.sal_num_e",
-    ft::ft_uint8,
-    fd::base_dec,
-    nullptr,
-    nullptr,
-    nullptr,
-    0x1f,
 
-};
 

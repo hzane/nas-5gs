@@ -81,9 +81,6 @@
     <ClCompile Include="mm\de_reg_req_ue_orig.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="mm\de_registration_req_ue_term.cc">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="mm\dl_nas_transp.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -181,6 +178,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="charsets.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\de_reg_req_ue_term.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

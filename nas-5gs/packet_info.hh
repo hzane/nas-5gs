@@ -1,6 +1,7 @@
 #pragma once
 #include "config.hh"
 #include "tvbuff.hh"
+#include <map>
 
 struct tvbuff;
 struct packet_info;
@@ -22,4 +23,5 @@ struct packet_info {
     int64_t     abs_ts;
     int64_t     rel_ts;
     int         dir; // pi_dir
+    std::map< std::string, uint64_t > iprivates;
 };

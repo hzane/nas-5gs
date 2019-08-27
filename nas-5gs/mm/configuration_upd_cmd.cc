@@ -22,7 +22,7 @@ extern const element_meta sms_ind;
 } // namespace mm_conf_upd_cmd
 
 using namespace mm;
-
+using namespace nas;
 /*
  * 8.2.19 Configuration update command
  */
@@ -298,23 +298,13 @@ const field_meta hf_sal_t_li = {
     nullptr,
     0x60,
 };
-const field_meta hf_sal_num_e = {
-    "Number of elements",
-    "nas_5gs.mm.sal_num_e",
-    ft::ft_uint8,
-    fd::base_dec,
-    nullptr,
-    nullptr,
-    nullptr,
-    0x1f,
-};
 
 int dissect_sal(dissector d, context* ctx) {
     auto len = d.length;
     static const field_meta* flags[] = {
         &hf_sal_al_t,
         &hf_sal_t_li,
-        &hf_sal_num_e,
+        &nas::hf_sal_num_e,
         nullptr,
     };
     auto num_par_sal = 1;

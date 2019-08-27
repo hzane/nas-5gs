@@ -6,9 +6,8 @@
 
 using namespace nas;
 
-extern const field_meta* hf_nas_5gs_msg_auth_code;
-extern const field_meta* hf_nas_5gs_seq_no;
-extern const field_meta* hf_nas_5gs_proc_trans_id;
+extern const field_meta* hf_seq_no;
+extern const field_meta* hf_proc_trans_id;
 
 int dissect_nas_5gs(dissector d, context* ctx) {
     auto item = d.tree->add_subtree(d.pinfo, d.tvb, d.offset, -1, nas_5gs_module.name);
@@ -41,11 +40,11 @@ int dissect_nas_5gs(dissector d, context* ctx) {
     d.offset++;
 
     /* Message authentication code octet 3 - 6 */
-    sub_tree->add_item(d.pinfo, d.tvb, d.offset, 4, hf_nas_5gs_msg_auth_code, enc::be);
+    sub_tree->add_item(d.pinfo, d.tvb, d.offset, 4, hf_msg_auth_code, enc::be);
     d.offset += 4;
 
     /* Sequence number    octet 7 */
-    sub_tree->add_item(d.pinfo, d.tvb, d.offset, 1, hf_nas_5gs_seq_no, enc::be);
+    sub_tree->add_item(d.pinfo, d.tvb, d.offset, 1, hf_seq_no, enc::be);
     d.offset++;
 
     // TODO: decrypt the body
@@ -54,7 +53,7 @@ int dissect_nas_5gs(dissector d, context* ctx) {
     return d.tvb->reported_length;
 }
 
-static int dissect_nas_5gs_plain(dissector d, context* ctx) {
+int dissect_nas_5gs_plain(dissector d, context* ctx) {
     /* Plain NAS 5GS Message */
     auto sub_tree =
         d.tree->add_subtree(d.pinfo, d.tvb, d.offset, -1, "Plain NAS 5GS Message");
@@ -94,7 +93,7 @@ static int dissect_nas_5gs_plain(dissector d, context* ctx) {
          * defined in 3GPP TS 24.007
          * XXX Only 5GSM ?
          */
-        sub_tree->add_item(d.pinfo, d.tvb, d.offset, 1, hf_nas_5gs_proc_trans_id, enc::be);
+        sub_tree->add_item(d.pinfo, d.tvb, d.offset, 1, hf_proc_trans_id, enc::be);
     }
     else{
         sub_tree->add_expert(d.pinfo, d.tvb, d.offset, -1, "Not a NAS 5GS PD %u", epd);
@@ -107,14 +106,12 @@ static int dissect_nas_5gs_plain(dissector d, context* ctx) {
 
     if (epd == TGPP_PD::MM5G) {
         dissect_mm_msg(d, ctx);
-    } else if (epd == TGPP_PD::SM5G) {
+    } else {
         dissect_sm_msg(d, ctx);
     }
 
     return d.tvb->reported_length;
 }
-
-// extern const field_meta* hf_nas_5gs_sm_msg_type;
 
 // begin with offset == 2, message type
 static int dissect_sm_msg(dissector d, context* ctx) {
@@ -141,8 +138,6 @@ static int dissect_sm_msg(dissector d, context* ctx) {
     }
     return len;
 }
-
-// extern const field_meta* hf_nas_5gs_mm_msg_type;
 
 static int dissect_mm_msg(dissector d, context* ctx) {
     auto len = d.tvb->reported_length;

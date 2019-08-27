@@ -35,7 +35,7 @@ __declspec(selectany) extern const uint32_t na   = 0;
 __declspec(selectany) extern const uint32_t be   = 1; // big endian
 __declspec(selectany) extern const uint32_t le   = 2; // little endian
 __declspec(selectany) extern const uint32_t none = 4; // host order
-__declspec(selectany) extern const uint32_t str  = 8; // 
+__declspec(selectany) extern const uint32_t str  = 8; //
 } // namespace enc
 
 struct dissector {
@@ -57,6 +57,8 @@ struct dissector {
     const uint8_t* safe_ptr() const;
     int            safe_length(int len) const;
     dissector   slice(int len) const;
+    void           set_private(const char* name, uint64_t val);
+    uint64_t       get_private(const char* name, uint64_t dft = 0);
 };
 
 typedef int (*dissect_fnc_t)(dissector, context* ctx);

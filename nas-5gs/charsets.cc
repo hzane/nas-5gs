@@ -1,28 +1,28 @@
 #include "config.hh"
 
-const uint32_t UNREPL = 0x00fffd;
+const uint32_t UNREP = 0x00fffd;
 
-size_t u32toutf8(uint32_t ch, uint8_t dest[6]) {
+size_t u32utf8(uint32_t ch, uint8_t *dest) {
     if (ch < 0x80) {
         dest[0] = (char) ch;
         return 1;
     }
     if (ch < 0x800) {
-        dest[0] = (ch >> 6) | 0xC0;
-        dest[1] = (ch & 0x3F) | 0x80;
+        dest[0] = (ch >> 6u) | 0xC0u;
+        dest[1] = (ch & 0x3Fu) | 0x80u;
         return 2;
     }
     if (ch < 0x10000) {
-        dest[0] = (ch >> 12) | 0xE0;
-        dest[1] = ((ch >> 6) & 0x3F) | 0x80;
-        dest[2] = (ch & 0x3F) | 0x80;
+        dest[0] = (ch >> 12u) | 0xE0u;
+        dest[1] = ((ch >> 6u) & 0x3Fu) | 0x80u;
+        dest[2] = (ch & 0x3Fu) | 0x80u;
         return 3;
     }
     if (ch < 0x110000) {
-        dest[0] = (ch >> 18) | 0xF0;
-        dest[1] = ((ch >> 12) & 0x3F) | 0x80;
-        dest[2] = ((ch >> 6) & 0x3F) | 0x80;
-        dest[3] = (ch & 0x3F) | 0x80;
+        dest[0] = (ch >> 18u) | 0xF0u;
+        dest[1] = ((ch >> 12u) & 0x3Fu) | 0x80u;
+        dest[2] = ((ch >> 6u) & 0x3Fu) | 0x80u;
+        dest[3] = (ch & 0x3Fu) | 0x80u;
         return 4;
     }
     return 0;
@@ -31,8 +31,8 @@ size_t u32toutf8(uint32_t ch, uint8_t dest[6]) {
 void ustring_add_utf8(ustring &strbuf, const uint32_t c) {
     uint8_t buf[6] = {};
     
-    size_t charlen = u32toutf8(c, buf);
-    strbuf.insert(strbuf.end(), buf, buf + charlen);
+    size_t nchar = u32utf8(c, buf);
+    strbuf.insert(strbuf.end(), buf, buf + nchar);
 }
 
 bool char_is_escape(unsigned char value) {
@@ -40,7 +40,7 @@ bool char_is_escape(unsigned char value) {
     return (value == GN_CHAR_ESCAPE);
 }
 
-uint32_t GSMext_to_UNICHAR(uint8_t c) {
+uint32_t GSMext2UNICHAR(uint8_t c) {
     switch (c) {
     case 0x0a:
         return 0x0c; /* form feed */
@@ -64,7 +64,7 @@ uint32_t GSMext_to_UNICHAR(uint8_t c) {
         return 0x20ac; /* euro */
     }
 
-    return UNREPL; /* invalid character */
+    return UNREP; /* invalid character */
 }
 
 /*
@@ -87,10 +87,10 @@ static const uint16_t gsm_default_alphabet[0x80] = {
     'l',   'm',   'n',   'o',  'p',   'q',  'r',   's',   't',   'u',   'v',   'w',
     'x',   'y',   'z',   0xe4, 0xf6,  0xf1, 0xfc,  0xe0};
 
-static uint32_t GSM_to_UNICHAR(uint8_t c) {
+static uint32_t GSM2UNICHAR(uint8_t c) {
     if (c < _countof(gsm_default_alphabet)) return gsm_default_alphabet[c];
 
-    return UNREPL;
+    return UNREP;
 }
 
 bool handle_ts_23_038_char(ustring &strbuf, uint8_t code_point, bool saw_escape) {
@@ -110,9 +110,9 @@ bool handle_ts_23_038_char(ustring &strbuf, uint8_t code_point, bool saw_escape)
          */
         if (saw_escape) {
             saw_escape = false;
-            uchar      = GSMext_to_UNICHAR(code_point);
+            uchar      = GSMext2UNICHAR(code_point);
         } else {
-            uchar = GSM_to_UNICHAR(code_point);
+            uchar = GSM2UNICHAR(code_point);
         }
         ustring_add_utf8(strbuf, uchar);
     }
@@ -127,10 +127,9 @@ ustring ts_23_038_7bits_string(const uint8_t *ptr, int bit_offset, int no_of_cha
     const uint8_t *start_ptr  = ptr;
     bool           saw_escape = false;
 
-    auto strbuf = ustring();
-    // strbuf = wmem_strbuf_sized_new(scope, no_of_chars + 1, 0);
+    ustring ret;
 
-    auto bits = bit_offset & 0x07;
+    auto bits = (uint32_t)bit_offset & 0x07u;
     if (!bits) {
         bits = 7;
     }
@@ -143,7 +142,7 @@ ustring ts_23_038_7bits_string(const uint8_t *ptr, int bit_offset, int no_of_cha
          * Combine the bits we've accumulated with bits from
          * that byte to make a 7-bit code point.
          */
-        out_byte = ((in_byte & ((1 << bits) - 1)) << (7 - bits)) | rest;
+        out_byte = ((in_byte & ((1u << bits) - 1u)) << (7u - bits)) | rest;
 
         /*
          * Leftover bits used in that code point.
@@ -156,7 +155,7 @@ ustring ts_23_038_7bits_string(const uint8_t *ptr, int bit_offset, int no_of_cha
          * _first_ part of the char.
          */
         if ((start_ptr != ptr) || (bits == 7)) {
-            saw_escape = handle_ts_23_038_char(strbuf, out_byte, saw_escape);
+            saw_escape = handle_ts_23_038_char(ret, out_byte, saw_escape);
             char_count++;
         }
 
@@ -165,7 +164,7 @@ ustring ts_23_038_7bits_string(const uint8_t *ptr, int bit_offset, int no_of_cha
          * but we have 7 bits as well. This is the next character.
          */
         if ((bits == 1) && (char_count < no_of_chars)) {
-            saw_escape = handle_ts_23_038_char(strbuf, rest, saw_escape);
+            saw_escape = handle_ts_23_038_char(ret, rest, saw_escape);
             char_count++;
             bits = 7;
             rest = 0x00;
@@ -181,8 +180,8 @@ ustring ts_23_038_7bits_string(const uint8_t *ptr, int bit_offset, int no_of_cha
          * XXX - for now, show the escape as a REPLACEMENT
          * CHARACTER.
          */
-        ustring_add_utf8(strbuf, UNREPL);
+        ustring_add_utf8(ret, UNREP);
     }
 
-    return strbuf;
+    return ret;
 }

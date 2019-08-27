@@ -202,8 +202,8 @@ int mm::dissect_ta_id_list(dissector d, context* ctx) {
         /*Head of Partial tracking area list*/
         /* Type of list    Number of elements    octet 1 */
         auto head  = d.tvb->get_uint8(d.offset);
-        auto li    = (head & 0x60) >> 5;
-        auto num_e = (head & 0x1f) + 1;
+        auto li    = (head & 0x60u) >> 5u;
+        auto num_e = (head & 0x1fu) + 1;
         d.add_bits(flags);
         d.step(1);
 

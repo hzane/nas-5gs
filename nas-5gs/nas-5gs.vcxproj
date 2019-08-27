@@ -168,7 +168,7 @@
     <ClCompile Include="mm\authentication_result.cc" />
     <ClCompile Include="mm\configuration_update_comp.cc" />
     <ClCompile Include="mm\configuration_upd_cmd.cc" />
-    <ClCompile Include="mm\de_registration_req_ue_term.cc" />
+    <ClCompile Include="mm\de_reg_req_ue_term.cc" />
     <ClCompile Include="mm\de_reg_req_ue_orig.cc" />
     <ClCompile Include="mm\dl_nas_transp.cc" />
     <ClCompile Include="mm\id_req.cc" />
