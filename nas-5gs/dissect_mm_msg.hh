@@ -316,6 +316,65 @@ __declspec(selectany) extern const field_meta hf_pld_cont_type = {
 };
 
 int dissect_updp(dissector d, context* ctx);
+
+//  9.11.3.36    Network slicing indication
+int dissect_nw_slicing_ind(dissector d, context* ctx);
+
+/*
+ * 9.9.3.21 NAS key set identifier
+ */
+/*
+ * Type of security context flag (TSC) (octet 1)
+ */
+__declspec(selectany) extern const true_false_string nas_eps_tsc_value = {
+    "Mapped security context (for KSIsgsn)",
+    "Native security context (for KSIasme)",
+};
+__declspec(selectany) extern const field_meta hfm_nas_eps_tsc = {
+    "Type of security context flag (TSC)",
+    "nas_eps.emm.tsc",
+    ft::ft_boolean,
+    fd::base_dec,
+    nullptr,
+    &nas_eps_tsc_value,
+    nullptr,
+    0x0,
+};
+__declspec(selectany) extern const field_meta* hf_nas_eps_tsc = &hfm_nas_eps_tsc;
+
+/* NAS key set identifier (octet 1) Bits 3  2   1 */
+
+__declspec(selectany) extern const val_string
+    nas_eps_emm_NAS_key_set_identifier_vals[] = {
+        {0, ""},
+        {1, ""},
+        {2, ""},
+        {3, ""},
+        {4, ""},
+        {5, ""},
+        {6, ""},
+        {7, "No key is available"},
+        {0, nullptr},
+};
+
+__declspec(selectany) extern const field_meta hfm_nas_eps_nas_ksi = {
+    "NAS key set identifier",
+    "nas_eps.emm.nas_key_set_id",
+    ft::ft_uint8,
+    fd::base_dec,
+    nas_eps_emm_NAS_key_set_identifier_vals,
+    nullptr,
+    nullptr,
+    0x00,
+};
+__declspec(selectany) const field_meta* hf_nas_eps_nas_ksi = &hfm_nas_eps_nas_ksi;
+
+int dissect_nas_ksi(dissector d, context* ctx);
+__declspec(selectany) extern const element_meta nas_ksi = {
+    0xff,
+    "NAS key set identifier",
+    dissect_nas_ksi,
+};
 } // namespace mm
 
 
@@ -323,15 +382,6 @@ __declspec(selectany) extern const element_meta mm_cause = {
     0xff,
     "5GMM cause",
     mm::dissect_mm_cause,
-};
-
-
-
-int                       dissect_nas_ksi(dissector d, context* ctx);
-__declspec(selectany) extern const element_meta nas_ksi = {
-    0xff,
-    "NAS key set identifier",
-    dissect_nas_ksi,
 };
 
 

@@ -65,70 +65,9 @@ using namespace mm;
 
 
 namespace mm{
-/*
- * 9.9.3.21 NAS key set identifier
- */
-/*
- * Type of security context flag (TSC) (octet 1)
- */
-static const true_false_string nas_eps_tsc_value = {
-    "Mapped security context (for KSIsgsn)",
-    "Native security context (for KSIasme)",
-};
-const field_meta hfm_nas_eps_tsc = {
-    "Type of security context flag (TSC)",
-    "nas_eps.emm.tsc",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &nas_eps_tsc_value,
-    nullptr,
-    0x0,
-};
-const field_meta* hf_nas_eps_tsc = &hfm_nas_eps_tsc;
 
-/* NAS key set identifier (octet 1) Bits 3  2   1 */
-
-static const val_string nas_eps_emm_NAS_key_set_identifier_vals[] = {
-    {0, ""},
-    {1, ""},
-    {2, ""},
-    {3, ""},
-    {4, ""},
-    {5, ""},
-    {6, ""},
-    {7, "No key is available"},
-    {0, nullptr},
-};
-const field_meta hfm_nas_eps_nas_ksi = {
-    "NAS key set identifier",
-    "nas_eps.emm.nas_key_set_id",
-    ft::ft_uint8,
-    fd::base_dec,
-    nas_eps_emm_NAS_key_set_identifier_vals,
-    nullptr,
-    nullptr,
-    0x00,
-};
-const field_meta* hf_nas_eps_nas_ksi = &hfm_nas_eps_nas_ksi;
 
 } // namespace mm
-
-// nas key set id nas-key-set-id
-int dissect_nas_ksi(dissector d, context* ctx) {
-    auto v = d.tvb->get_uint8(d.offset);
-
-    /* Type of security context flag (TSC) (octet 1)    V   1/2   */
-    auto tsc  = (v & 0x10) >> 4;
-    auto item = d.tree->add_item(d.pinfo, d.tvb, d.offset, 1, hf_nas_eps_tsc, enc::none);
-    item->set_uint(tsc, enc::be, nullptr);
-
-    auto nas_ksi = (v & 0xe0) >> 5;
-    item = d.add_item(1, hf_nas_eps_nas_ksi, enc::none);
-    item->set_uint(nas_ksi, enc::be, nullptr);
-
-    return 1;
-}
 
 const true_false_string nas_5gs_odd_even_tfs;
 
@@ -149,11 +88,9 @@ namespace mm {
  * as defined in subclause 7.2 of 3GPP TS 24.011 [10]
  */
 int dissect_nas_msg_cont(dissector d, context* ctx) {
-    // TODO: implement
-
     /* Octets 3 to 253 contain the SMS message (i.e. CP DATA, CP ACK or CP ERROR)
      * as defined in subclause 7.2 of 3GPP TS 24.011 [10]
      */
-    add_generic_msg_elem_body(d, ctx);
+    dissect_nas_5gs(d, ctx);
     return d.length;
 }

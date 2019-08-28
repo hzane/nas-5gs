@@ -26,13 +26,13 @@ int mm::registration_rej(dissector d, context* ctx) {
     d.length -= consumed;
 
     /* 5F  T3346 value GPRS timer 2     9.11.3.16   O   TLV 3 */
-    // ELEM_OPT_TLV(0x5F, GSM_A_PDU_TYPE_GM, DE_GPRS_TIMER_2, " - T3346 value");
+    // ELEM_OPT_TLV(0x5F, , DE_GPRS_TIMER_2, " - T3346 value");
     consumed = dissect_opt_elem_tlv(nullptr, &t3346_gprs_timer2, d, ctx);
     d.offset += consumed;
     d.length -= consumed;
 
     /* 16    T3502 value    GPRS timer 2 9.10.2.4    O    TLV    3 */
-    // ELEM_OPT_TLV(0x16, GSM_A_PDU_TYPE_GM, DE_GPRS_TIMER_2, " - T3502 value");
+    // ELEM_OPT_TLV(0x16, , DE_GPRS_TIMER_2, " - T3502 value");
     consumed = dissect_opt_elem_tlv(nullptr, &t3502_gprs_timer_2, d, ctx);
     d.offset += consumed;
     d.length -= consumed;

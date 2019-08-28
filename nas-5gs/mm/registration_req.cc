@@ -148,13 +148,13 @@ int mm::registration_req(dissector d, context* ctx) {
     d.step(consumed);
 
     /* 53    5GS update type    5GS update type 9.11.3.9A    O    TLV    3 */
-    // ELEM_OPT_TLV(0x53, NAS_5GS_PDU_TYPE_MM, DE_NAS_5GS_MM_UPDATE_TYPE, NULL);
+    // ELEM_OPT_TLV(0x53, , DE_NAS_5GS_MM_UPDATE_TYPE, NULL);
     consumed = dissect_opt_elem_tlv(nullptr, &update_type, d, ctx);
     d.step(consumed);
 
     /* 71    NAS message container    NAS message container 9.11.3.33    O    TLV-E    4-n
      */
-    // ELEM_OPT_TLV_E(0x71, NAS_5GS_PDU_TYPE_MM, DE_NAS_5GS_MM_NAS_MSG_CONT, NULL);
+    // ELEM_OPT_TLV_E(0x71, , DE_NAS_5GS_MM_NAS_MSG_CONT, NULL);
     consumed = dissect_opt_elem_tlv_e(nullptr, &nas_msg_cont, d, ctx);
     d.step(consumed);
 
@@ -187,7 +187,7 @@ const element_meta pld_cont = {
 };
 
 /* 9-  Network slicing indication  Network slicing indication 9.11.3.36  O  TV 1 */
-int                dissect_nw_slicing_ind(dissector d, context* ctx = nullptr);
+
 const element_meta nw_slicing_ind = {
     0x90,
     "Network slicing indication",
@@ -1705,16 +1705,45 @@ int mm_reg_req::dissect_pld_cont_type(dissector d, context* ctx) {
     auto oct = d.tvb->get_uint8(d.offset);
     d.set_private("payload-content-type", oct);
 
-    d.add_item(1, &hf_pld_cont_type, enc::be);
+    d.add_item(1, &mm::hf_pld_cont_type, enc::be);
     return 1;
 }
 
-int mm_reg_req::dissect_pld_cont(dissector d, context* ctx) { return 0; }
+int mm_reg_req::dissect_pld_cont(dissector d, context* ctx) {
+    return mm::dissect_pld_cont(d, ctx);
+}
 
-/* 9-  Network slicing indication  Network slicing indication 9.11.3.36  O  TV 1 */
-int mm_reg_req::dissect_nw_slicing_ind(dissector d, context* ctx) { return 0; }
+/*
+ * 9.11.3.9A    5GS update type
+ */
 
-int mm_reg_req::dissect_update_type(dissector d, context* ctx) { return 0; }
+const true_false_string tfs_nas5gs_sms_requested = {
+    "SMS over NAS supported",
+    "SMS over NAS not supported",
+};
+const true_false_string tfs_needed_not_needed = {"Needed", "Not Needed"};
+const field_meta hf_ng_ran_rcu = {
+    "NG-RAN Radio Capability Update (NG-RAN-RCU)",
+    "nas_5gs.mm.ng_ran_rcu",
+    ft::ft_boolean,
+    fd::base_dec,
+    nullptr,
+    &tfs_needed_not_needed,
+    nullptr,
+    0x02,
+};
+
+int mm_reg_req::dissect_update_type(dissector d, context* ctx) {
+    static const field_meta* flags[] = {
+        &hf_nas_5gs_spare_b3,
+        &hf_nas_5gs_spare_b2,
+        &hf_ng_ran_rcu,
+        &hf_sms_requested,
+        nullptr,
+    };
+    d.add_bits(flags);
+    return 1;
+}
 
 int mm_reg_req::dissect_mico_ind(dissector d, context* ctx) {
     return mm::dissect_mico_ind(d, ctx);

@@ -52,7 +52,7 @@ int mm::ul_nas_transp(dissector d, context* ctx) {
     d.step(consumed);
 
     /*8-    Request type    Request type    9.11.3.42    O    TV    1 */
-    //    ELEM_OPT_TV_SHORT(0x80, NAS_5GS_PDU_TYPE_MM, DE_NAS_5GS_MM_REQ_TYPE, NULL);
+    //    ELEM_OPT_TV_SHORT(0x80, , DE_NAS_5GS_MM_REQ_TYPE, NULL);
     consumed = dissect_opt_elem_tv_short(nullptr, &req_type, d, ctx);
     d.step(consumed);
 
@@ -128,18 +128,51 @@ extern const element_meta dnn = {
     mm::dissect_dnn,
 };
 int dissect_pld_cont_type(dissector d, context* ctx) {
-    auto oct = d.tvb->get_uint8(d.offset);
-    d.set_private("payload-content-type", oct);
-
-    d.add_item(1, &hf_pld_cont_type, enc::be);
+    return mm::dissect_pld_cont_type(d, ctx);
+}
+int dissect_pld_cont(dissector d, context* ctx) { return mm::dissect_pld_cont(d, ctx); }
+int dissect_pdu_ses_id(dissector d, context* ctx) {
+    d.add_item(1, hf_pdu_session_id, enc::be);
     return 1;
 }
-int dissect_pld_cont(dissector d, context* ctx) { return 0; }
-int dissect_pdu_ses_id(dissector d, context* ctx) { return 0; }
-int dissect_add_inf(dissector d, context* ctx) { return 0; }
-int dissect_old_pdu_ses_id(dissector d, context* ctx) { return 0; }
-int dissect_req_type(dissector d, context* ctx) { return 0; }
-int dissect_s_nssai(dissector d, context* ctx) { return 0; }
+int dissect_add_inf(dissector d, context* ctx) {
+    bug("no dissect for %s\n", "additional-information");
+    return d.length;
+}
 
+/*
+ *   9.11.3.41    PDU session identity 2
+ */
+int dissect_old_pdu_ses_id(dissector d, context* ctx) {
+    d.add_item(1, hf_pdu_session_id, enc::be);
+    return 1; }
+
+/*
+ *     9.11.3.47    Request type
+ */
+static const value_string nas_5gs_mm_req_type_vals[] = {
+    {0x01, "Initial request"},
+    {0x02, "Existing PDU session"},
+    {0x03, "Initial emergency request"},
+    {0x04, "Existing emergency PDU session"},
+    {0x05, "Modification request"},
+    {0x07, "Reserved"},
+    {0, nullptr},
+};
+const field_meta hf_req_type = {
+    "Request type",
+    "nas_5gs.mm.req_typ",
+    ft::ft_uint8,
+    fd::base_dec,
+    nas_5gs_mm_req_type_vals,
+    nullptr,
+    nullptr,
+    0x0f,
+};
+int dissect_req_type(dissector d, context* ctx) {
+    d.add_item(1, &hf_req_type, enc::be);
+    return 1;
+}
+int dissect_s_nssai(dissector d, context* ctx) { return mm::dissect_s_nssai(d, ctx); }
 
 } // namespace mm_ul_nas_transp

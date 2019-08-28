@@ -1130,3 +1130,57 @@ int mm::dissect_pld_cont_type(dissector d, context* ctx) {
     d.add_item(1, &hf_pld_cont_type, enc::be);
     return 1;
 }
+/* 9-  Network slicing indication  Network slicing indication 9.11.3.36  O  TV 1 */
+static const true_false_string nas_5gs_mm_dcni_tfs = {
+    "Requested NSSAI created from default configured NSSAI",
+    "Requested NSSAI not created from default configured NSSAI",
+};
+const field_meta hf_dcni = {
+    "Default configured NSSAI indication (DCNI)",
+    "nas_5gs.mm.dcni",
+    ft::ft_boolean,
+    fd::base_dec,
+    nullptr,
+    &nas_5gs_mm_dcni_tfs,
+    nullptr,
+    0x02,
+};
+const true_false_string tfs_changed_not_changed = {"Changed", "Not Changed"};
+const field_meta        hf_nssci                = {
+    "Network slicing subscription change indication (NSSCI)",
+    "nas_5gs.mm.nssci",
+    ft::ft_boolean,
+    fd::base_dec,
+    nullptr,
+    &tfs_changed_not_changed,
+    nullptr,
+    0x01,
+};
+
+//  9.11.3.36    Network slicing indication
+int mm::dissect_nw_slicing_ind(dissector d, context* ctx) {
+    static const field_meta* flags[] = {
+        &hf_nas_5gs_spare_b3,
+        &hf_nas_5gs_spare_b2,
+        &hf_dcni,
+        &hf_nssci,
+        nullptr,
+    };
+    return 1;
+}
+
+// nas key set id nas-key-set-id
+int mm::dissect_nas_ksi(dissector d, context* ctx) {
+    auto v = d.tvb->get_uint8(d.offset);
+
+    /* Type of security context flag (TSC) (octet 1)    V   1/2   */
+    auto tsc  = (v & 0x10) >> 4;
+    auto item = d.tree->add_item(d.pinfo, d.tvb, d.offset, 1, hf_nas_eps_tsc, enc::none);
+    item->set_uint(tsc, enc::be, nullptr);
+
+    auto nas_ksi = (v & 0xe0) >> 5;
+    item         = d.add_item(1, hf_nas_eps_nas_ksi, enc::none);
+    item->set_uint(nas_ksi, enc::be, nullptr);
+
+    return 1;
+}
