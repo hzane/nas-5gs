@@ -122,7 +122,9 @@ const element_meta allowed_pdu_ses_status = {
     dissect_allowed_pdu_ses_status,
 };
 
-int dissect_key_set_id(dissector d, context* ctx) { return 0; }
+int dissect_key_set_id(dissector d, context* ctx) {
+    return mm::dissect_mobile_id(d, ctx);
+}
 
 int dissect_s_tmsi(dissector d, context* ctx) { return 0; }
 

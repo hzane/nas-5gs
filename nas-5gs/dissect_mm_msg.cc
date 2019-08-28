@@ -702,7 +702,7 @@ const field_meta hf_nas_5gs_pdu_ses_rect_res_psi_8_b0  = {
 };
 
 
-int                     mm::dissect_pdu_ses_react_res(dissector d, context* ctx) {
+int mm::dissect_pdu_ses_react_res(dissector d, context* ctx) {
 
     static const field_meta* psi_0_7_flags[] = {
         &hf_nas_5gs_pdu_ses_rect_res_psi_7_b7,
