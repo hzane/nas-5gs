@@ -1,5 +1,6 @@
 #pragma once
 #include "core.hh"
+#include "field_meta.hh"
 
 // protocol dissect entry
 int dissect_nas_5gs(dissector d, context* ctx = nullptr);
@@ -29,6 +30,7 @@ extern const field_meta* hf_sec_header_type;
 
 int dissect_eap_msg(dissector d, context* ctx);
 
+// as specified in IETF RFC 3748
 __declspec(selectany) extern const element_meta eap_msg = {
     0x78,
     "EAP message",

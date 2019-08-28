@@ -170,7 +170,7 @@ const val_string  nas_5gs_pdu_session_id_values[] = {
     {0x0f, "PDU session identity value 15"},
     {0, nullptr},
 };
-static field_meta hfm_nas_5gs_pdu_session_id      = {
+const field_meta hfm_pdu_session_id = {
         "PDU session identity",
         "nas_5gs.pdu_session_id",
         ft::ft_uint8,
@@ -180,7 +180,7 @@ static field_meta hfm_nas_5gs_pdu_session_id      = {
         nullptr,
         0x0,
 };
-const field_meta* nas::hf_pdu_session_id = &hfm_nas_5gs_pdu_session_id;
+const field_meta* nas::hf_pdu_session_id = &hfm_pdu_session_id;
 
 static field_meta hfm_nas_5gs_proc_trans_id = {
     "Procedure transaction identity",

@@ -158,7 +158,8 @@ int dissect_auth_parm_autn(dissector d, context* ctx) {
     auto len     = d.length;
     auto subtree= d.add_item(d.length, &hf_dtap_autn, enc::na);
     if(d.length == 16){
-        d.tree = subtree;
+        // d.tree = subtree;
+        use_tree ut(d, subtree);
 
         d.add_item(6, &hf_dtap_autn_sqn, enc::be);
         d.step(6);

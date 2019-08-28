@@ -49,12 +49,7 @@ int mm::service_acc(dissector d, context* ctx) {
 }
 
 namespace mm_service_acc {
-int                       dissect_pdu_ses_react_res(dissector d, context*);
-extern const element_meta pdu_ses_react_res = {
-    0x26,
-    "PDU session reactivation result",
-    dissect_pdu_ses_react_res,
-};
+
 int                       dissect_pdu_ses_react_res_err_c(dissector d, context*);
 extern const element_meta pdu_ses_react_res_error_c = {
     0x72,
@@ -62,7 +57,6 @@ extern const element_meta pdu_ses_react_res_error_c = {
     dissect_pdu_ses_react_res_err_c,
 };
 
-int dissect_pdu_ses_react_res(dissector d, context*) { return 0; }
 
 int dissect_pdu_ses_react_res_err_c(dissector d, context*) { return 0; }
 

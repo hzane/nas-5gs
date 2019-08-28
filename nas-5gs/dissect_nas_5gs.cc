@@ -55,12 +55,12 @@ int dissect_nas_5gs(dissector d, context* ctx) {
 
 int dissect_nas_5gs_plain(dissector d, context* ctx) {
     /* Plain NAS 5GS Message */
-    auto sub_tree =
+    auto subtree =
         d.tree->add_subtree(d.pinfo, d.tvb, d.offset, -1, "Plain NAS 5GS Message");
 
     /* Extended protocol discriminator  octet 1 */
     auto epd = d.tvb->get_uint8(d.offset);
-    sub_tree->add_item(d.pinfo, d.tvb, d.offset, 1, hf_epd, enc::be);
+    subtree->add_item(d.pinfo, d.tvb, d.offset, 1, hf_epd, enc::be);
     d.offset++;
 
     /* Security header type associated with a spare half octet; or
@@ -71,8 +71,8 @@ int dissect_nas_5gs_plain(dissector d, context* ctx) {
          * Bits 5 to 8 of the second octet of every 5GMM message contains the spare
          * half octet which is filled with spare bits set to zero.
          */
-        sub_tree->add_item(d.pinfo, d.tvb, d.offset, 1, hf_spare_half_octet, enc::be);
-        sub_tree->add_item(d.pinfo,
+        subtree->add_item(d.pinfo, d.tvb, d.offset, 1, hf_spare_half_octet, enc::be);
+        subtree->add_item(d.pinfo,
                            d.tvb,
                            d.offset,
                            1, hf_sec_header_type,
@@ -84,7 +84,7 @@ int dissect_nas_5gs_plain(dissector d, context* ctx) {
          * session identity IE. The PDU session identity and its use to identify a
          * message flow are defined in 3GPP TS 24.007
          */
-        sub_tree->add_item(d.pinfo, d.tvb, d.offset, 1, hf_pdu_session_id, enc::be);
+        subtree->add_item(d.pinfo, d.tvb, d.offset, 1, hf_pdu_session_id, enc::be);
         d.offset++;
 
         /* 9.6  Procedure transaction identity
@@ -93,15 +93,15 @@ int dissect_nas_5gs_plain(dissector d, context* ctx) {
          * defined in 3GPP TS 24.007
          * XXX Only 5GSM ?
          */
-        sub_tree->add_item(d.pinfo, d.tvb, d.offset, 1, hf_proc_trans_id, enc::be);
+        subtree->add_item(d.pinfo, d.tvb, d.offset, 1, hf_proc_trans_id, enc::be);
     }
     else{
-        sub_tree->add_expert(d.pinfo, d.tvb, d.offset, -1, "Not a NAS 5GS PD %u", epd);
+        subtree->add_expert(d.pinfo, d.tvb, d.offset, -1, "Not a NAS 5GS PD %u", epd);
         return 0;
     }
 
     d.offset++; // skip the second oct
-    d.tree = sub_tree;
+    d.tree = subtree;
     d.length = d.tvb->remain(d.offset);
 
     if (epd == TGPP_PD::MM5G) {

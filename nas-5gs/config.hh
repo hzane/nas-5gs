@@ -61,6 +61,13 @@ struct dissector {
     uint64_t       get_private(const char* name, uint64_t dft = 0);
 };
 
+struct use_tree{
+    dissector& d;
+    proto_node* prev;
+    use_tree(dissector& d, proto_node* p) : d(d), prev(p) { d.tree = p; }
+    ~use_tree() { d.tree = prev; }
+};
+
 typedef int (*dissect_fnc_t)(dissector, context* ctx);
 
 inline uint8_t  n2uint7(const uint8_t* d) { return *d & 0x7F; };

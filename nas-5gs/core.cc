@@ -40,3 +40,5 @@ void extraneous_data_check(dissector d, int maxlen) {
                            (d.length - maxlen));
     }
 }
+
+string context::path() const { return join(paths, "/"); }

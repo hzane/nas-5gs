@@ -108,7 +108,7 @@ const field_meta nas::hf_nas_key_set_id_h1 = {
 
 /* * 9.11.3.2 5GMM cause */
 
-extern const val_string values_cause[] = {
+extern const val_string mm::values_cause[] = {
     {0x03, "Illegal UE"},
     {0x05, "PEI not accepted"},
     {0x06, "Illegal ME"},
@@ -915,12 +915,12 @@ const field_meta nas::hf_nas_5gs_mm_s1_mode_reg_b0 = {
 
 /* *     9.11.3.49    Service area list */
 
-const true_false_string tfs_nas_5gs_sal_al_t = {
+extern const true_false_string mm::tfs_nas_5gs_sal_al_t = {
     "TAIs in the list are in the non-allowed area",
     "TAIs in the list are in the allowed area",
 };
 
-const field_meta nas::hf_nas_5gs_mm_sal_al_t = {
+extern const field_meta nas::hf_nas_5gs_mm_sal_al_t = {
     "Allowed type",
     "nas_5gs.mm.sal_al_t",
     ft::ft_boolean,
@@ -932,7 +932,7 @@ const field_meta nas::hf_nas_5gs_mm_sal_al_t = {
 
 };
 
-const val_string nas_5gs_mm_sal_t_li_values[] = {
+extern const val_string mm::nas_5gs_mm_sal_t_li_values[] = {
     {0x00, "list of TACs belonging to one PLMN, with non-consecutive TAC values"},
     {0x01, "list of TACs belonging to one PLMN, with consecutive TAC values"},
     {0x02, "list of TAIs belonging to different PLMNs"},

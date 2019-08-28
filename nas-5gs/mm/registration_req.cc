@@ -183,6 +183,7 @@ const element_meta pld_cont = {
     dissect_pld_cont,
 };
 
+/* 9-  Network slicing indication  Network slicing indication 9.11.3.36  O  TV 1 */
 int                dissect_nw_slicing_ind(dissector d, context* ctx = nullptr);
 const element_meta nw_slicing_ind = {
     0x90,
@@ -322,16 +323,21 @@ int mm_reg_req::dissect_requested_drx_param(dissector d, context* ctx) { return 
 
 int mm_reg_req::dissect_eps_nas_msg_cont(dissector d, context* ctx) { return 0; }
 
-int mm_reg_req::dissect_ladn_inf(dissector d, context* ctx) { return 0; }
+int mm_reg_req::dissect_ladn_inf(dissector d, context* ctx) {
+    return mm::dissect_ladn_inf(d, ctx);
+}
 
 int mm_reg_req::dissect_pld_cont_type(dissector d, context* ctx) { return 0; }
 
 int mm_reg_req::dissect_pld_cont(dissector d, context* ctx) { return 0; }
 
+/* 9-  Network slicing indication  Network slicing indication 9.11.3.36  O  TV 1 */
 int mm_reg_req::dissect_nw_slicing_ind(dissector d, context* ctx) { return 0; }
 
 int mm_reg_req::dissect_update_type(dissector d, context* ctx) { return 0; }
 
-int mm_reg_req::dissect_mico_ind(dissector d, context* ctx) { return 0; }
+int mm_reg_req::dissect_mico_ind(dissector d, context* ctx) {
+    return mm::dissect_mico_ind(d, ctx);
+}
 
 int mm_reg_req::dissect_requested_nssai(dissector d, context* ctx) { return 0; }

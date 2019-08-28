@@ -5,18 +5,14 @@
 namespace mm_conf_upd_cmd {
 extern const element_meta conf_upd_ind;
 extern const element_meta guti;
-
-extern const element_meta allowed_nssai;
 extern const element_meta day_saving_time;
 extern const element_meta ladn_inf;
 extern const element_meta mico_ind;
-extern const element_meta rej_nssai;
 extern const element_meta service_area_list;
 extern const element_meta full_name_network;
 extern const element_meta short_name_network;
 extern const element_meta local_time_zone;
 extern const element_meta u_time_zone_time;
-extern const element_meta configured_nssai;
 extern const element_meta op_def_acc_cat_def;
 extern const element_meta sms_ind;
 } // namespace mm_conf_upd_cmd
@@ -133,7 +129,7 @@ int dissect_rej_nssai(dissector d, context* ctx);
 int dissect_full_name_network(dissector d, context* ctx);
 int dissect_short_name_network(dissector d, context* ctx);
 int dissect_local_time_zone(dissector d, context* ctx);
-int dissect_configured_nssai(dissector d, context* ctx);
+
 int dissect_op_def_acc_cat_def(dissector d, context* ctx);
 int dissect_sms_ind(dissector d, context* ctx);
 
@@ -205,12 +201,6 @@ extern const element_meta configured_nssai = {
     dissect_configured_nssai,
 };
 
-extern const element_meta rej_nssai = {
-    0x11,
-    "Rejected NSSAI",
-    dissect_rej_nssai,
-};
-
 extern const element_meta op_def_acc_cat_def = {
     0x76,
     "Operator-defined access category definitions",
@@ -266,11 +256,9 @@ int dissect_guti(dissector d, context* ctx) { return 0; }
 /*
  *     9.11.3.49    Service area list
  */
-static true_false_string tfs_nas_5gs_sal_al_t = {
-    "TAIs in the list are in the non-allowed area",
-    "TAIs in the list are in the allowed area"};
 
-static const value_string nas_5gs_mm_sal_t_li_values[] = {
+
+extern const value_string nas_5gs_mm_sal_t_li_values[] = {
     {0x00, "list of TACs belonging to one PLMN, with non-consecutive TAC values"},
     {0x01, "list of TACs belonging to one PLMN, with consecutive TAC values"},
     {0x02, "list of TAIs belonging to different PLMNs"},
@@ -299,6 +287,7 @@ const field_meta hf_sal_t_li = {
     0x60,
 };
 
+// 9.11.3.49    Service area list
 int dissect_sal(dissector d, context* ctx) {
     auto len = d.length;
     static const field_meta* flags[] = {
@@ -312,7 +301,9 @@ int dissect_sal(dissector d, context* ctx) {
     while(d.length>0){
         auto start = d.offset;
         auto subtree = d.tree->add_subtree(d.pinfo, d.tvb, d.offset, -1, "Partial service area list  %u", num_par_sal);
-        d.tree = subtree;
+        //d.tree = subtree;
+        use_tree ut(d, subtree);
+
         /*Head of Partial service area list*/
         /* Allowed type    Type of list    Number of elements    octet 1 */
         auto sal_head = d.tvb->get_uint8(d.offset);
@@ -681,27 +672,6 @@ int dissect_local_time_zone(dissector d, context* ctx) {
     return 1;
 }
 
-/*
- *   9.11.3.37    NSSAI
- */
-int dissect_configured_nssai(dissector d, context* ctx) {
-    auto len = d.length;
-    auto i   = 1;
-    while(d.length>0){
-        auto subtree = d.tree->add_subtree(d.pinfo, d.tvb, d.offset, 2, "S-NSSAI %u", i);
-        d.tree       = subtree;
-
-        int length = (int) d.tvb->get_uint8(d.offset);
-        d.add_item(1, &hf_mm_length, enc::be);
-        d.step(1);
-
-        auto consumed = dissect_nssai(d.slice(length), ctx);
-        d.step(consumed);
-
-        ++i;
-    }
-    return len;
-}
 
 const field_meta hf_precedence = {
     "Precedence",
@@ -727,7 +697,9 @@ int dissect_op_def_acc_cat_def(dissector d, context* ctx) {
                                 2,
                                 "Operator-defined access category definition  %u",
                                 i);
-        d.tree = subtree;
+        // d.tree = subtree;
+        use_tree ut(d, subtree);
+
         auto length = (int) d.tvb->get_uint8(d.offset);
         d.add_item(1, &hf_mm_length, enc::be);
         d.step(1);

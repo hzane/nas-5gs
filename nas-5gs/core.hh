@@ -13,6 +13,7 @@ extern void nas_5gs_module_cleanup();
 
 struct context {
     std::vector<std::string> paths = {};
+    std::string                path() const;
 };
 struct use_context{
     context* ctx;

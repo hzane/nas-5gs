@@ -158,14 +158,64 @@ int dissect_dnn(dissector d, context* ctx);
 int dissect_nssai(dissector d, context* ctx);
 
 extern const field_meta* hf_nas_5gs_mm_raai_b0;
+
+//  9.11.3.46    Rejected NSSAI
+int                       dissect_rej_nssai(dissector d, context* ctx);
+__declspec(selectany) extern const element_meta rej_nssai = {
+    0x11,
+    "Rejected NSSAI",
+    dissect_rej_nssai,
+};
+
+int dissect_configured_nssai(dissector d, context* ctx);
+__declspec(selectany) extern const element_meta configured_nssai = {
+    0x31,
+    "Configured NSSAI",
+    dissect_configured_nssai,
+};
+
+int                dissect_pdu_ses_react_res(dissector d, context* ctx = nullptr);
+__declspec(selectany) extern const element_meta pdu_ses_react_res = {
+    0x26,
+    "PDU session reactivation result",
+    dissect_pdu_ses_react_res,
+};
+
+/* 9.11.3.44    PDU session status */
+int dissect_pdu_ses_status(dissector d, context* ctx = nullptr);
+
+__declspec(selectany) extern const element_meta pdu_ses_status = {
+    0x50,
+    "PDU session status",
+    dissect_pdu_ses_status,
+};
+extern const val_string values_cause[];
+__declspec(selectany) extern const field_meta hfm_mm_cause = {
+    "5GMM cause",
+    "nas_5gs.mm.5gmm_cause",
+    ft::ft_uint8,
+    fd::base_dec,
+    values_cause,
+    nullptr,
+    nullptr,
+    0x0,
+};
+__declspec(selectany)  extern const field_meta* hf_mm_cause = &hfm_mm_cause;
+int dissect_mm_cause(dissector d, context* ctx);
+
+int dissect_ladn_inf(dissector d, context* ctx);
+int dissect_mico_ind(dissector d, context* ctx);
+int dissect_sal(dissector d, context* ctx);
+
+extern const true_false_string tfs_nas_5gs_sal_al_t;
+extern const val_string        nas_5gs_mm_sal_t_li_values[];
 } // namespace mm
 
-int dissect_mm_cause(dissector d, context* ctx);
 
 __declspec(selectany) extern const element_meta mm_cause = {
     0xff,
     "5GMM cause",
-    dissect_mm_cause,
+    mm::dissect_mm_cause,
 };
 
 
@@ -185,13 +235,6 @@ __declspec(selectany) extern const element_meta mobile_id = {
     dissect_mobile_id,
 };
 
-int dissect_pdu_ses_status(dissector d, context* ctx = nullptr);
-
-__declspec(selectany) extern const element_meta pdu_ses_status = {
-    0x50,
-    "PDU session status",
-    dissect_pdu_ses_status,
-};
 
 int dissect_nas_msg_cont(dissector d, context* ctx = nullptr);
 
