@@ -64,8 +64,14 @@ extern const element_meta t3502_gprs_timer_2 = {
     dissect_t3502_gprs_timer_2,
 };
 
-int dissect_t3346_gprs_timer2(dissector d, context* ctx) { return 0; }
+int dissect_t3346_gprs_timer2(dissector d, context* ctx) {
+    bug("no dissect\n", ctx->path().c_str());
+    return d.length;
+}
 
-int dissect_t3502_gprs_timer_2(dissector d, context* ctx) { return 0; }
+int dissect_t3502_gprs_timer_2(dissector d, context* ctx) {
+    bug("no dissect\n", ctx->path().c_str());
+    return d.length;
+}
 
 } // namespace mm_reg_rej

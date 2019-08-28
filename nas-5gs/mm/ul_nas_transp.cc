@@ -13,7 +13,7 @@ extern const element_meta dnn;
 } // namespace mm_ul_nas_transp
 
 using namespace nas;
-
+using namespace mm;
 /*
  * 8.2.10    UL NAS transport
  */
@@ -127,7 +127,13 @@ extern const element_meta dnn = {
     "DNN",
     mm::dissect_dnn,
 };
-int dissect_pld_cont_type(dissector d, context* ctx) { return 0; }
+int dissect_pld_cont_type(dissector d, context* ctx) {
+    auto oct = d.tvb->get_uint8(d.offset);
+    d.set_private("payload-content-type", oct);
+
+    d.add_item(1, &hf_pld_cont_type, enc::be);
+    return 1;
+}
 int dissect_pld_cont(dissector d, context* ctx) { return 0; }
 int dissect_pdu_ses_id(dissector d, context* ctx) { return 0; }
 int dissect_add_inf(dissector d, context* ctx) { return 0; }

@@ -159,29 +159,7 @@ const field_meta nas::hf_5gmm_cause = {
     0x0,
 };
 
-/* *   9.11.3.40    Payload container type */
 
-static const val_string values_pld_cont_type[]       = {
-    {0x01, "N1 SM information"},
-    {0x02, "SMS"},
-    {0x03, "LTE Positioning Protocol (LPP) message container"},
-    {0x04, "SOR transparent container"},
-    {0x05, "UE policy container"},
-    {0x06, "UE parameters update transparent container"},
-    {0x0f, "Multiple payloads"},
-    {0, nullptr},
-};
-
-const field_meta nas::hf_pld_cont_type = {
-    "Payload container type",
-    "nas_5gs.mm.pld_cont_type",
-    ft::ft_uint8,
-    fd::base_dec,
-    values_pld_cont_type,
-    nullptr,
-    nullptr,
-    0x0f,
-};
 
 const field_meta nas::hf_nas_5gs_mm_sst = {
     "Slice/service type (SST)",
@@ -405,16 +383,6 @@ const field_meta hfm_nas_5gs_mm_lpp_cap_b2 = {
 };
 
 /* * 9.11.3.4    5GS mobile identity */
-
-const val_string nas_5gs_mm_type_id_vals[] = {
-    {0x0, "No identity"},
-    {0x1, "SUCI"},
-    {0x2, "5G-GUTI"},
-    {0x3, "IMEI"},
-    {0x4, "5G-S-TMSI"},
-    {0x5, "IMEISV"},
-    {0, nullptr},
-};
 const field_meta hfm_nas_5gs_mm_type_id = {
     "Type of identity",
     "nas_5gs.mm.type_id",
@@ -426,7 +394,7 @@ const field_meta hfm_nas_5gs_mm_type_id = {
     0x07,
 };
 
-const true_false_string nas_5gs_odd_even_tfs = {
+const true_false_string mm::nas_5gs_odd_even_tfs = {
     "Odd number of identity digits",
     "Even number of identity digits",
 };
@@ -952,3 +920,44 @@ const field_meta nas::hf_mm_sal_t_li      = {
 };
 
 
+const field_meta hf_proc_trans_id = {
+    "Procedure transaction identity",
+    "nas_5gs.proc_trans_id",
+    ft::ft_uint8,
+    fd::base_dec,
+    nullptr,
+    nullptr,
+    nullptr,
+    0x0,
+};
+
+const field_meta hf_element = {
+    "Message Elements",
+    "nas_5gs.message_elements",
+    ft::ft_bytes,
+    fd::base_none,
+    nullptr,
+    nullptr,
+    nullptr,
+    0x0,
+};
+/* UPDP */
+/* D.6.1 UE policy delivery service message type */
+int mm::dissect_updp(dissector d, context* ctx) {
+    auto len = d.length;
+
+    /* 9.6  Procedure transaction identity
+     * Bits 1 to 8 of the third octet of every 5GSM message contain the procedure
+     * transaction identity. The procedure transaction identity and its use are defined in
+     * 3GPP TS 24.007
+     * XXX Only 5GSM ?
+     */
+    d.add_item(1, &hf_proc_trans_id, enc::be);
+    d.step(1);
+
+    /* Message type IE*/
+    // TODO: implement
+    auto oct = d.tvb->get_uint8(d.offset);
+    d.add_item(d.length, &hf_element, enc::be);
+    return len;
+}

@@ -206,9 +206,116 @@ int dissect_mm_cause(dissector d, context* ctx);
 int dissect_ladn_inf(dissector d, context* ctx);
 int dissect_mico_ind(dissector d, context* ctx);
 int dissect_sal(dissector d, context* ctx);
+int dissect_s_nssai(dissector d, context* ctx);
 
 extern const true_false_string tfs_nas_5gs_sal_al_t;
 extern const val_string        nas_5gs_mm_sal_t_li_values[];
+
+int dissect_mobile_id(dissector d, context* ctx);
+
+__declspec(selectany) extern const element_meta mobile_id = {
+    0xff,
+    "Mobile identity",
+    dissect_mobile_id,
+};
+/*
+ * 9.11.3.4    5GS mobile identity
+ */
+__declspec(selectany) extern const val_string nas_5gs_mm_type_id_vals[] = {
+    {0x0, "No identity"},
+    {0x1, "SUCI"},
+    {0x2, "5G-GUTI"},
+    {0x3, "IMEI"},
+    {0x4, "5G-S-TMSI"},
+    {0x5, "IMEISV"},
+    {0, nullptr},
+};
+__declspec(selectany) extern const field_meta hf_nas_5gs_mm_type_id = {
+    "Type of identity",
+    "nas_5gs.mm.type_id",
+    ft::ft_uint8,
+    fd::base_dec,
+    (nas_5gs_mm_type_id_vals),
+    nullptr,
+    nullptr,
+    0x07,
+};
+extern const true_false_string nas_5gs_odd_even_tfs;
+
+__declspec(selectany) extern const field_meta hf_nas_5gs_mm_odd_even = {
+    "Odd/even indication",
+    "nas_5gs.mm.odd_even",
+    ft::ft_boolean,
+    fd::base_dec,
+    nullptr,
+    &nas_5gs_odd_even_tfs,
+    nullptr,
+    0x08,
+};
+/*
+ *   9.11.3.40    Payload container type
+ */
+__declspec(selectany) extern const value_string nas_5gs_mm_pld_cont_type_vals[] = {
+    {0x01, "N1 SM information"},
+    {0x02, "SMS"},
+    {0x03, "LTE Positioning Protocol (LPP) message container"},
+    {0x04, "SOR transparent container"},
+    {0x05, "UE policy container"},
+    {0x06, "UE parameters update transparent container"},
+    {0x0f, "Multiple payloads"},
+    {0, nullptr},
+};
+/*
+ *   9.11.3.40    Payload container type
+ */
+__declspec(selectany) extern const field_meta hf_plt_cont_type = {
+    "Payload container type",
+    "nas_5gs.mm.pld_cont_type",
+    ft::ft_uint8,
+    fd::base_dec,
+    nas_5gs_mm_pld_cont_type_vals,
+    nullptr,
+    nullptr,
+    0x0f,
+};
+
+int dissect_pld_cont(dissector d, context* ctx);
+__declspec(selectany) extern const field_meta hf_pld_cont = {
+    "Payload container type",
+    "nas_5gs.mm.pld_cont_type",
+    ft::ft_uint8,
+    fd::base_dec,
+    nas_5gs_mm_pld_cont_type_vals,
+    nullptr,
+    nullptr,
+    0x0f,
+};
+int dissect_pld_cont_type(dissector d, context* ctx);
+
+/* *   9.11.3.40    Payload container type */
+__declspec(selectany) extern const val_string values_pld_cont_type[] = {
+    {0x01, "N1 SM information"},
+    {0x02, "SMS"},
+    {0x03, "LTE Positioning Protocol (LPP) message container"},
+    {0x04, "SOR transparent container"},
+    {0x05, "UE policy container"},
+    {0x06, "UE parameters update transparent container"},
+    {0x0f, "Multiple payloads"},
+    {0, nullptr},
+};
+
+__declspec(selectany) extern const field_meta hf_pld_cont_type = {
+    "Payload container type",
+    "nas_5gs.mm.pld_cont_type",
+    ft::ft_uint8,
+    fd::base_dec,
+    values_pld_cont_type,
+    nullptr,
+    nullptr,
+    0x0f,
+};
+
+int dissect_updp(dissector d, context* ctx);
 } // namespace mm
 
 
@@ -225,14 +332,6 @@ __declspec(selectany) extern const element_meta nas_ksi = {
     0xff,
     "NAS key set identifier",
     dissect_nas_ksi,
-};
-
-int dissect_mobile_id(dissector d, context* ctx);
-
-__declspec(selectany) extern const element_meta mobile_id = {
-    0xff,
-    "Mobile identity",
-    dissect_mobile_id,
 };
 
 

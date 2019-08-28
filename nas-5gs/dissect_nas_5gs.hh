@@ -56,7 +56,6 @@ extern const field_meta  hf_tsc;
 extern const field_meta  hf_tsc_h1;
 extern const field_meta  hf_nas_key_set_id_h1;
 extern const field_meta  hf_5gmm_cause;
-extern const field_meta  hf_pld_cont_type;
 extern const field_meta  hf_nas_5gs_mm_sst;
 extern const field_meta  hf_nas_key_set_id;
 extern const field_meta  hf_follow_on_req;

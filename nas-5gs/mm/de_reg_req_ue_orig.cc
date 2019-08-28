@@ -105,5 +105,5 @@ int dissect_de_reg_type(dissector d, context* ctx) {
 }
 
 /*5GS mobile identity     5GS mobile identity 9.11.3.4    M    LV-E    6-n */
-int dissect_key_set_id(dissector d, context* ctx) { return dissect_mobile_id(d, ctx); }
+int dissect_key_set_id(dissector d, context* ctx) { return mm::dissect_mobile_id(d, ctx); }
 } // namespace mm_de_reg_req_ue_orig

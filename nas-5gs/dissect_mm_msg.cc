@@ -546,7 +546,7 @@ const field_meta hf_nas_5gs_pdu_ses_rect_res_psi_7_b7 = {
     fd::base_dec,
     nullptr,
     (&tfs_nas_5gs_pdu_ses_rect_res_psi),
-    nullptr, 
+    nullptr,
     0x80,
 };
 const field_meta hf_nas_5gs_pdu_ses_rect_res_psi_6_b6 = {
@@ -556,7 +556,7 @@ const field_meta hf_nas_5gs_pdu_ses_rect_res_psi_6_b6 = {
     fd::base_dec,
     nullptr,
     (&tfs_nas_5gs_pdu_ses_rect_res_psi),
-    nullptr, 
+    nullptr,
     0x40,
 };
 const field_meta hf_nas_5gs_pdu_ses_rect_res_psi_5_b5 = {
@@ -566,7 +566,7 @@ const field_meta hf_nas_5gs_pdu_ses_rect_res_psi_5_b5 = {
     fd::base_dec,
     nullptr,
     (&tfs_nas_5gs_pdu_ses_rect_res_psi),
-    nullptr, 
+    nullptr,
     0x20,
 };
 const field_meta hf_nas_5gs_pdu_ses_rect_res_psi_4_b4 = {
@@ -576,7 +576,7 @@ const field_meta hf_nas_5gs_pdu_ses_rect_res_psi_4_b4 = {
     fd::base_dec,
     nullptr,
     (&tfs_nas_5gs_pdu_ses_rect_res_psi),
-    nullptr, 
+    nullptr,
     0x10,
 };
 const field_meta hf_nas_5gs_pdu_ses_rect_res_psi_3_b3 = {
@@ -586,7 +586,7 @@ const field_meta hf_nas_5gs_pdu_ses_rect_res_psi_3_b3 = {
     fd::base_dec,
     nullptr,
     (&tfs_nas_5gs_pdu_ses_rect_res_psi),
-    nullptr, 
+    nullptr,
     0x08,
 };
 const field_meta hf_nas_5gs_pdu_ses_rect_res_psi_2_b2 = {
@@ -596,7 +596,7 @@ const field_meta hf_nas_5gs_pdu_ses_rect_res_psi_2_b2 = {
     fd::base_dec,
     nullptr,
     (&tfs_nas_5gs_pdu_ses_rect_res_psi),
-    nullptr, 
+    nullptr,
     0x04,
 };
 const field_meta hf_nas_5gs_pdu_ses_rect_res_psi_1_b1 = {
@@ -606,7 +606,7 @@ const field_meta hf_nas_5gs_pdu_ses_rect_res_psi_1_b1 = {
     fd::base_dec,
     nullptr,
     (&tfs_nas_5gs_pdu_ses_rect_res_psi),
-    nullptr, 
+    nullptr,
     0x02,
 };
 const field_meta hf_nas_5gs_pdu_ses_rect_res_psi_0_b0 = {
@@ -616,7 +616,7 @@ const field_meta hf_nas_5gs_pdu_ses_rect_res_psi_0_b0 = {
     fd::base_dec,
     nullptr,
     (&tfs_nas_5gs_pdu_ses_rect_res_psi),
-    nullptr, 
+    nullptr,
     0x01,
 };
 
@@ -627,7 +627,7 @@ const field_meta hf_nas_5gs_pdu_ses_rect_res_psi_15_b7 = {
     fd::base_dec,
     nullptr,
     (&tfs_nas_5gs_pdu_ses_rect_res_psi),
-    nullptr, 
+    nullptr,
     0x80,
 };
 const field_meta hf_nas_5gs_pdu_ses_rect_res_psi_14_b6 = {
@@ -637,7 +637,7 @@ const field_meta hf_nas_5gs_pdu_ses_rect_res_psi_14_b6 = {
     fd::base_dec,
     nullptr,
     (&tfs_nas_5gs_pdu_ses_rect_res_psi),
-    nullptr, 
+    nullptr,
     0x40,
 };
 const field_meta hf_nas_5gs_pdu_ses_rect_res_psi_13_b5 = {
@@ -647,7 +647,7 @@ const field_meta hf_nas_5gs_pdu_ses_rect_res_psi_13_b5 = {
     fd::base_dec,
     nullptr,
     (&tfs_nas_5gs_pdu_ses_rect_res_psi),
-    nullptr, 
+    nullptr,
     0x20,
 };
 const field_meta hf_nas_5gs_pdu_ses_rect_res_psi_12_b4 = {
@@ -657,7 +657,7 @@ const field_meta hf_nas_5gs_pdu_ses_rect_res_psi_12_b4 = {
     fd::base_dec,
     nullptr,
     (&tfs_nas_5gs_pdu_ses_rect_res_psi),
-    nullptr, 
+    nullptr,
     0x10,
 };
 const field_meta hf_nas_5gs_pdu_ses_rect_res_psi_11_b3 = {
@@ -667,7 +667,7 @@ const field_meta hf_nas_5gs_pdu_ses_rect_res_psi_11_b3 = {
     fd::base_dec,
     nullptr,
     (&tfs_nas_5gs_pdu_ses_rect_res_psi),
-    nullptr, 
+    nullptr,
     0x08,
 };
 const field_meta hf_nas_5gs_pdu_ses_rect_res_psi_10_b2 = {
@@ -677,7 +677,7 @@ const field_meta hf_nas_5gs_pdu_ses_rect_res_psi_10_b2 = {
     fd::base_dec,
     nullptr,
     (&tfs_nas_5gs_pdu_ses_rect_res_psi),
-    nullptr, 
+    nullptr,
     0x04,
 };
 const field_meta hf_nas_5gs_pdu_ses_rect_res_psi_9_b1  = {
@@ -687,7 +687,7 @@ const field_meta hf_nas_5gs_pdu_ses_rect_res_psi_9_b1  = {
     fd::base_dec,
     nullptr,
     (&tfs_nas_5gs_pdu_ses_rect_res_psi),
-    nullptr, 
+    nullptr,
     0x02,
 };
 const field_meta hf_nas_5gs_pdu_ses_rect_res_psi_8_b0  = {
@@ -697,7 +697,7 @@ const field_meta hf_nas_5gs_pdu_ses_rect_res_psi_8_b0  = {
     fd::base_dec,
     nullptr,
     (&tfs_nas_5gs_pdu_ses_rect_res_psi),
-    nullptr, 
+    nullptr,
     0x01,
 };
 
@@ -895,4 +895,238 @@ int mm::dissect_sal(dissector d, context* ctx) {
         num_par_sal++;
     }
     return len;
+}
+
+/* 9.10.2.8    S-NSSAI */
+int mm::dissect_s_nssai(dissector d, context* ctx) {
+    /* SST    octet 3
+     * This field contains the 8 bit SST value. The coding of the SST value part is
+     * defined in 3GPP TS 23.003
+     */
+    d.add_item(1, &hf_sst, enc::be);
+    d.step(1);
+    if (d.length <= 0) {
+        return 1;
+    }
+
+    /* SD    octet 4 - octet 6* */
+    d.add_item(3, &hf_sd, enc::be);
+    d.step(3);
+    if (d.length <= 0) {
+        return 4;
+    }
+
+    /* Mapped configured SST    octet 7* */
+    d.add_item(1, &hf_mapped_conf_sst, enc::be);
+    d.step(1);
+    if (d.length <= 0) {
+        return 5;
+    }
+
+    /* Mapped configured SD    octet 8 - octet 10* */
+    d.add_item(3, &hf_mapped_conf_ssd, enc::be);
+    d.step(3);
+
+    d.extraneous_data_check(0);
+    return 8;
+}
+namespace mm{
+const val_string nas_5gs_mm_supi_fmt_vals[] = {
+    {0x0, "IMSI"},
+    {0x1, "Network Specific Identifier"},
+    {0, nullptr},
+};
+const field_meta hf_nas_5gs_mm_supi_fmt = {
+    "SUPI format",
+    "nas_5gs.mm.suci.supi_fmt",
+    ft::ft_uint8,
+    fd::base_dec,
+    (nas_5gs_mm_supi_fmt_vals),
+    nullptr,
+    nullptr,
+    0x70,
+};
+
+const field_meta hf_nas_5gs_mm_suci_nai = {
+    "NAI",
+    "nas_5gs.mm.suci.nai",
+    ft::ft_bytes,
+    fd::base_string,
+    nullptr,
+    nullptr,
+    nullptr,
+    0,
+};
+const field_meta hf_nas_5gs_mm_imei = {
+    "IMEI",
+    "nas_5gs.mm.imei",
+    ft::ft_bytes,
+    fd::base_hex,
+    nullptr,
+    nullptr,
+    nullptr,
+    0,
+};
+const field_meta hf_nas_5gs_mm_imeisv = {
+    "IMEISV",
+    "nas_5gs.mm.imeisv",
+    ft::ft_bytes,
+    fd::base_hex,
+    nullptr,
+    nullptr,
+    nullptr,
+    0,
+};
+const field_meta hf_nas_5gs_amf_set_id = {
+    "AMF Set ID",
+    "nas_5gs.amf_set_id",
+    ft::ft_uint16,
+    fd::base_dec,
+    nullptr,
+    nullptr,
+    nullptr,
+    0xffc0,
+};
+const field_meta hf_nas_5gs_amf_pointer = {
+    "AMF Pointer",
+    "nas_5gs.amf_pointer",
+    ft::ft_uint8,
+    fd::base_dec,
+    nullptr,
+    nullptr,
+    nullptr,
+    0x3f,
+};
+const field_meta hf_nas_5gs_tmsi = {
+    "5G-TMSI",
+    "nas_5gs.5g_tmsi",
+    ft::ft_uint32,
+    fd::base_hex,
+    nullptr,
+    nullptr,
+    nullptr,
+    0x0,
+};
+} // namespace mm
+
+int mm::dissect_mobile_id(dissector d, context* ctx) {
+    auto len     = d.length;
+    auto oct     = d.tvb->get_uint8(d.offset);
+    auto type_id = oct & 0x07;
+    switch (type_id) {
+    case 0: {
+        auto item = d.tree->add_item(
+            d.pinfo, d.tvb, d.offset, 1, &hf_nas_5gs_mm_odd_even, enc::be);
+        item = d.tree->add_item(
+            d.pinfo, d.tvb, d.offset, 1, &hf_nas_5gs_mm_type_id, enc::none);
+        item->set_uint(type_id, enc::be, nullptr);
+    } break;
+    case 1: { // SUCI
+        auto item =
+            d.tree->add_item(d.pinfo, d.tvb, d.offset, 1, &hf_nas_5gs_spare_b7, enc::be);
+        d.add_item(1, &hf_nas_5gs_mm_supi_fmt, enc::be);
+        d.add_item(1, &hf_nas_5gs_spare_b3, enc::be);
+        item = d.add_item(1, &hf_nas_5gs_mm_type_id, enc::be);
+        item->set_uint(type_id, enc::be, nullptr);
+        d.step(1);
+
+        auto supi_fmt = oct & 0x70;
+        if (supi_fmt == 0) { // IMSI // TODO: implement
+            /* MCC digit 2    MCC digit 1
+             * MNC digit 3    MCC digit 3
+             * MNC digit 2    MNC digit 1
+             */
+            add_generic_msg_elem_body(d, ctx);
+        } else if (supi_fmt == 1) { // nai
+            d.add_item(d.length, &hf_nas_5gs_mm_suci_nai, enc::be);
+        } else {
+            d.tree->add_expert(d.pinfo, d.tvb, d.offset, d.length, nullptr);
+        }
+    } break;
+    case 2: { // 5G-GUTI
+        auto item = d.tree->add_item(
+            d.pinfo, d.tvb, d.offset, 1, &hf_nas_5gs_mm_odd_even, enc::be);
+        item = d.tree->add_item(
+            d.pinfo, d.tvb, d.offset, 1, &hf_nas_5gs_mm_type_id, enc::none);
+        item->set_uint(type_id, enc::be, nullptr);
+
+        d.step(1);
+
+        // TODO: implement
+        /* MCC digit 2    MCC digit 1
+         * MNC digit 3    MCC digit 3
+         * MNC digit 2    MNC digit 1
+         */
+        /* AMF Region ID octet 7 */
+        /* AMF Set ID octet 8 */
+        /* AMF AMF Pointer AMF Set ID (continued) */
+        add_generic_msg_elem_body(d, ctx);
+    } break;
+    case 3: { // IMEI
+        auto item = d.add_item(1, &hf_nas_5gs_mm_odd_even, enc::be);
+        item      = d.add_item(1, &hf_nas_5gs_mm_type_id, enc::none);
+        item->set_uint(type_id, enc::be, nullptr);
+        d.step(1);
+        d.add_item(d.length, &hf_nas_5gs_mm_imei, enc::be);
+    } break;
+    case 4: { // 5G-S-TMSI
+        auto item = d.add_item(1, &hf_nas_5gs_mm_odd_even, enc::be);
+        item      = d.add_item(1, &hf_nas_5gs_mm_type_id, enc::none);
+        item->set_uint(type_id, enc::be, nullptr);
+        d.step(1);
+        /* AMF Set ID */
+        item = d.add_item(2, &hf_nas_5gs_amf_set_id, enc::be);
+        d.step(2); // todo: may be 1 byte
+        /* AMF Pointer AMF Set ID (continued) */
+        d.add_item(1, &hf_nas_5gs_amf_pointer, enc::be);
+        d.add_item(4, &hf_nas_5gs_tmsi, enc::be);
+    } break;
+    case 5: { // IMEISV
+        auto item = d.add_item(1, &hf_nas_5gs_mm_odd_even, enc::be);
+        item      = d.add_item(1, &hf_nas_5gs_mm_type_id, enc::none);
+        item->set_uint(type_id, enc::be, nullptr);
+        d.step(1);
+        d.add_item(d.length, &hf_nas_5gs_mm_imeisv, enc::be);
+    } break;
+    default: {
+        auto item = d.add_item(1, &hf_nas_5gs_mm_type_id, enc::none);
+        item->set_uint(type_id, enc::be, nullptr);
+        d.tree->add_expert(d.pinfo, d.tvb, d.offset, d.length, nullptr);
+    } break;
+    }
+    return len;
+}
+
+/*
+ *   9.11.3.39    Payload container
+ */
+int mm::dissect_pld_cont(dissector d, context* ctx) {
+    auto len = d.length;
+
+    auto typi = d.get_private("payload-content-type", 0);
+    switch (typi) {
+    case 1: { /* N1 SM information */
+        dissect_nas_5gs_plain(d, ctx);
+    } break;
+    case 2: { // SMS
+        d.add_item(d.length, &hf_pld_cont, enc::na);
+    } break;
+    case 3: { // LPP
+        d.add_item(d.length, &hf_pld_cont, enc::na);
+    } break;
+    case 5: { /* UE policy container */
+        dissect_updp(d, ctx);
+    } break;
+    default:
+        d.add_item(d.length, &hf_pld_cont, enc::na);
+    }
+
+    return len;
+}
+int mm::dissect_pld_cont_type(dissector d, context* ctx) {
+    auto oct = d.tvb->get_uint8(d.offset);
+    d.set_private("payload-content-type", oct);
+
+    d.add_item(1, &hf_pld_cont_type, enc::be);
+    return 1;
 }
