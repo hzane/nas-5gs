@@ -8,6 +8,7 @@ extern const element_meta pdu_ses_react_res_error_c;
 } // namespace mm_service_acc
 
 using namespace nas;
+using namespace mm;
 
 /*
  * 8.2.17 Service accept
@@ -57,7 +58,17 @@ extern const element_meta pdu_ses_react_res_error_c = {
     dissect_pdu_ses_react_res_err_c,
 };
 
-
-int dissect_pdu_ses_react_res_err_c(dissector d, context*) { return 0; }
+//  *   9.11.3.43    PDU session reactivation result error cause
+int dissect_pdu_ses_react_res_err_c(dissector d, context*) {
+    auto len = d.length;
+    /*Partial service area list*/
+    while (d.length>0) {
+        d.add_item(1, hf_pdu_session_id, enc::be);
+        d.step(1);
+        d.add_item(1, hf_mm_cause, enc::be);
+        d.step(1);
+    }
+    return len;
+}
 
 } // namespace mm_service_acc

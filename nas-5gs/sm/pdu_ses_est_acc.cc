@@ -32,7 +32,7 @@ int sm::pdu_ses_est_acc(dissector d, context* ctx) {
 
     /*Authorized QoS rules    QoS rules 9.11.4.6    M    LV-E    2-65537
      * DE_NAS_5GS_SM_QOS_RULES*/
-    // ELEM_MAND_LV_E(NAS_5GS_PDU_TYPE_SM,DE_NAS_5GS_SM_QOS_RULES, " - Authorized QoS
+    // ELEM_MAND_LV_E(,DE_NAS_5GS_SM_QOS_RULES, " - Authorized QoS
     // rules",);
     consumed = dissect_elem_lv_e(nullptr, &authorized_qos_rules, d, ctx);
     d.step(consumed);

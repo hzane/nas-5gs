@@ -78,6 +78,8 @@ __declspec(selectany) extern const uint32_t base_hex_dec = 5; /* hexadecimal (de
 __declspec(selectany) extern const uint32_t base_bin     = 6;
 __declspec(selectany) extern const uint32_t base_bitset  = 7;
 __declspec(selectany) extern const uint32_t base_string  = 8;
+__declspec(selectany) extern const uint32_t bits7        = 13u; // bits7 ascii string
+__declspec(selectany) extern const uint32_t ipv4         = 14u; // xxx.xxx.xxx.xxx
 
 /* Byte separators  when ft == ft_bytes */
 /* hexadecimal bytes with a period (.) between each byte */

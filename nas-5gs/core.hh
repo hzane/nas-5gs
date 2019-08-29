@@ -17,11 +17,12 @@ struct context {
 };
 struct use_context{
     context* ctx;
-    use_context(context*ctx, const char*path):ctx(ctx){if(ctx)ctx->paths.emplace_back(path);}
+    use_context(context* ctx, const char* path) : ctx(ctx) {
+        if (ctx) ctx->paths.emplace_back(path);
+        bug("%s\n", path);
+    }
     ~use_context(){if(ctx) {
-        auto p = ctx->paths.back();
         ctx->paths.pop_back();
-        bug(p.c_str());
     }}
 };
 

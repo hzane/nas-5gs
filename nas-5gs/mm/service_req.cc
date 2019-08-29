@@ -9,6 +9,9 @@ extern const element_meta uplink_data_status;
 extern const element_meta allowed_pdu_ses_status;
 } // namespace mm_service_req
 
+using namespace nas;
+using namespace mm;
+
 /*
  * 8.2.16 Service request
  */
@@ -36,21 +39,21 @@ int mm::service_req(dissector d, context* ctx) {
 
     /*40    Uplink data status    Uplink data status         9.11.3.53    O    TLV    4 -
      * 34*/
-    // ELEM_OPT_TLV(0x40, NAS_5GS_PDU_TYPE_MM, DE_NAS_5GS_MM_UL_DATA_STATUS, NULL);
+    // ELEM_OPT_TLV(0x40, , DE_NAS_5GS_MM_UL_DATA_STATUS, NULL);
     consumed = dissect_opt_elem_tlv(nullptr, &uplink_data_status, d, ctx);
     d.offset += consumed;
     d.length -= consumed;
 
     /*50    PDU session status    PDU session status         9.11.3.40    O    TLV    4 -
      * 34*/
-    // ELEM_OPT_TLV(0x50, NAS_5GS_PDU_TYPE_MM, DE_NAS_5GS_MM_PDU_SES_STATUS, NULL);
+    // ELEM_OPT_TLV(0x50, , DE_NAS_5GS_MM_PDU_SES_STATUS, NULL);
     consumed = dissect_opt_elem_tlv(nullptr, &pdu_ses_status, d, ctx);
     d.offset += consumed;
     d.length -= consumed;
 
     /*25    Allowed PDU session status    Allowed PDU session status         9.11.3.11
      * O    TLV    4 - 34*/
-    // ELEM_OPT_TLV(0x25, NAS_5GS_PDU_TYPE_MM, DE_NAS_5GS_MM_ALLOW_PDU_SES_STS, NULL);
+    // ELEM_OPT_TLV(0x25, , DE_NAS_5GS_MM_ALLOW_PDU_SES_STS, NULL);
     consumed = dissect_opt_elem_tlv(nullptr, &allowed_pdu_ses_status, d, ctx);
     d.offset += consumed;
     d.length -= consumed;
@@ -115,21 +118,386 @@ const element_meta uplink_data_status = {
     dissect_uplink_data_status,
 };
 
-int                dissect_allowed_pdu_ses_status(dissector d, context* ctx);
+int dissect_allowed_pdu_ses_status(dissector d, context* ctx);
+
 const element_meta allowed_pdu_ses_status = {
     0x25,
     "Allowed PDU session status",
     dissect_allowed_pdu_ses_status,
 };
 
+// *   9.11.3.32    NAS key set identifier
 int dissect_key_set_id(dissector d, context* ctx) {
-    return mm::dissect_mobile_id(d, ctx);
+    static const field_meta* flags[] = {
+        &hf_tsc,
+        &hf_nas_key_set_id,
+        nullptr,
+    };
+    /* NAS key set identifier IEI   TSC     NAS key set identifier */
+    d.add_bits(flags);
+    return 1;
 }
 
-int dissect_s_tmsi(dissector d, context* ctx) { return 0; }
+int dissect_s_tmsi(dissector d, context* ctx) { return dissect_mobile_id(d, ctx); }
 
-int dissect_uplink_data_status(dissector d, context* ctx) { return 0; }
+/*
+ * 9.11.3.57    Uplink data status
+ */
 
-int dissect_allowed_pdu_ses_status(dissector d, context* ctx) { return 0; }
+const true_false_string tfs_nas_5gs_ul_data_sts_psi = {
+    "uplink data are pending",
+    "no uplink data are pending",
+};
+const field_meta hf_ul_data_sts_psi_7_b7 = {
+    "PSI(7)",
+    "nas_5gs.ul_data_sts_psi_7_b7",
+    ft::ft_boolean,
+    fd::base_dec
+    ,nullptr,&tfs_nas_5gs_ul_data_sts_psi,nullptr,
+    0x80,
+};
+const field_meta hf_ul_data_sts_psi_6_b6 = {
+    "PSI(6)",
+    "nas_5gs.ul_data_sts_psi_6_b6",
+    ft::ft_boolean,
+    fd::base_dec
+    ,nullptr,&tfs_nas_5gs_ul_data_sts_psi,nullptr,
+    0x40,
+};
+const field_meta hf_ul_data_sts_psi_5_b5 = {
+    "PSI(5)",
+    "nas_5gs.ul_data_sts_psi_5_b5",
+    ft::ft_boolean,
+    fd::base_dec
+    ,nullptr,&tfs_nas_5gs_ul_data_sts_psi,nullptr,
+    0x20,
+};
+const field_meta hf_ul_data_sts_psi_4_b4 = {
+    "PSI(4)",
+    "nas_5gs.ul_data_sts_psi_4_b4",
+    ft::ft_boolean,
+    fd::base_dec
+    ,nullptr,&tfs_nas_5gs_ul_data_sts_psi,nullptr,
+    0x10,
+};
+const field_meta hf_ul_data_sts_psi_3_b3 = {
+    "PSI(3)",
+    "nas_5gs.ul_data_sts_psi_3_b3",
+    ft::ft_boolean,
+    fd::base_dec
+    ,nullptr,&tfs_nas_5gs_ul_data_sts_psi,nullptr,
+    0x08,
+};
+const field_meta hf_ul_data_sts_psi_2_b2 = {
+    "PSI(2)",
+    "nas_5gs.ul_data_sts_psi_2_b2",
+    ft::ft_boolean,
+    fd::base_dec
+    ,nullptr,&tfs_nas_5gs_ul_data_sts_psi,nullptr,
+    0x04,
+};
+const field_meta hf_ul_data_sts_psi_1_b1 = {
+    "PSI(1)",
+    "nas_5gs.ul_data_sts_psi_1_b1",
+    ft::ft_boolean,
+    fd::base_dec
+    ,nullptr,&tfs_nas_5gs_ul_data_sts_psi,nullptr,
+    0x02,
+};
+const field_meta hf_ul_data_sts_psi_0_b0 = {
+    "Spare",
+    "nas_5gs.ul_data_sts_psi_0_b0",
+    ft::ft_boolean,
+    fd::base_dec,
+    nullptr,
+    nullptr,
+    nullptr,
+    0x01,
+};
+
+const field_meta hf_ul_data_sts_psi_15_b7 = {
+    "PSI(15)",
+    "nas_5gs.ul_data_sts_psi_15_b7",
+    ft::ft_boolean,
+    fd::base_dec
+    ,nullptr,&tfs_nas_5gs_ul_data_sts_psi,nullptr,
+    0x80,
+};
+const field_meta hf_ul_data_sts_psi_14_b6 = {
+    "PSI(14)",
+    "nas_5gs.ul_data_sts_psi_14_b6",
+    ft::ft_boolean,
+    fd::base_dec
+    ,nullptr,&tfs_nas_5gs_ul_data_sts_psi,nullptr,
+    0x40,
+};
+const field_meta hf_ul_data_sts_psi_13_b5 = {
+    "PSI(13)",
+    "nas_5gs.ul_data_sts_psi_13_b5",
+    ft::ft_boolean,
+    fd::base_dec
+    ,nullptr,&tfs_nas_5gs_ul_data_sts_psi,nullptr,
+    0x20,
+};
+const field_meta hf_ul_data_sts_psi_12_b4 = {
+    "PSI(12)",
+    "nas_5gs.ul_data_sts_psi_12_b4",
+    ft::ft_boolean,
+    fd::base_dec
+    ,nullptr,&tfs_nas_5gs_ul_data_sts_psi,nullptr,
+    0x10,
+};
+const field_meta hf_ul_data_sts_psi_11_b3 = {
+    "PSI(11)",
+    "nas_5gs.ul_data_sts_psi_11_b3",
+    ft::ft_boolean,
+    fd::base_dec
+    ,nullptr,&tfs_nas_5gs_ul_data_sts_psi,nullptr,
+    0x08,
+};
+const field_meta hf_ul_data_sts_psi_10_b2 = {
+    "PSI(10)",
+    "nas_5gs.ul_data_sts_psi_10_b2",
+    ft::ft_boolean,
+    fd::base_dec
+    ,nullptr,&tfs_nas_5gs_ul_data_sts_psi,nullptr,
+    0x04,
+};
+const field_meta hf_ul_data_sts_psi_9_b1  = {
+    "PSI(9)",
+    "nas_5gs.ul_data_sts_psi_9_b1",
+    ft::ft_boolean,
+    fd::base_dec
+    ,nullptr,&tfs_nas_5gs_ul_data_sts_psi,nullptr,
+    0x02,
+};
+const field_meta hf_ul_data_sts_psi_8_b0  = {
+    "PSI(8)",
+    "nas_5gs.ul_data_sts_psi_8_b0",
+    ft::ft_boolean,
+    fd::base_dec
+    ,nullptr,&tfs_nas_5gs_ul_data_sts_psi,nullptr,
+    0x01,
+};
+
+//  * 9.11.3.57    Uplink data status
+int dissect_uplink_data_status(dissector d, context* ctx) {
+    auto offset = d.offset;
+
+    static const field_meta* psi_0_7_flags[] = {
+        &hf_ul_data_sts_psi_7_b7,
+        &hf_ul_data_sts_psi_6_b6,
+        &hf_ul_data_sts_psi_5_b5,
+        &hf_ul_data_sts_psi_4_b4,
+        &hf_ul_data_sts_psi_3_b3,
+        &hf_ul_data_sts_psi_2_b2,
+        &hf_ul_data_sts_psi_1_b1,
+        &hf_ul_data_sts_psi_0_b0,
+        nullptr,
+    };
+
+    static const field_meta* psi_8_15_flags[] = {
+        &hf_ul_data_sts_psi_15_b7,
+        &hf_ul_data_sts_psi_14_b6,
+        &hf_ul_data_sts_psi_13_b5,
+        &hf_ul_data_sts_psi_12_b4,
+        &hf_ul_data_sts_psi_11_b3,
+        &hf_ul_data_sts_psi_10_b2,
+        &hf_ul_data_sts_psi_9_b1,
+        &hf_ul_data_sts_psi_8_b0,
+        nullptr,
+    };
+
+    d.add_bits(psi_0_7_flags);
+    d.step(1);
+
+    d.add_bits(psi_8_15_flags);
+    d.step(1);
+
+    d.extraneous_data_check(0);
+
+    return 2;
+
+}
+/*
+ *  9.11.3.13    Allowed PDU session status
+ */
+static true_false_string tfs_nas_5gs_allow_pdu_ses_sts_psi = {
+    "user-plane resources of corresponding PDU session "
+    "can be re-established over 3GPP access",
+    "user-plane resources of corresponding PDU session "
+    "is not allowed to be re-established over 3GPP access",
+};
+const field_meta hf_allow_pdu_ses_sts_psi_0_b0 = {
+    "Spare",
+    "nas_5gs.allow_pdu_ses_sts_psi_0_b0",
+    ft::ft_boolean,
+    fd::base_dec,
+    nullptr,
+    nullptr,
+    nullptr,
+    0x01,
+};
+const field_meta hf_allow_pdu_ses_sts_psi_1_b1 = {
+    "PSI(1)",
+    "nas_5gs.allow_pdu_ses_sts_psi_1_b1",
+    ft::ft_boolean,
+    fd::base_dec,
+    nullptr,&tfs_nas_5gs_allow_pdu_ses_sts_psi,nullptr,
+    0x02,
+};
+const field_meta hf_allow_pdu_ses_sts_psi_2_b2 = {
+    "PSI(2)",
+    "nas_5gs.allow_pdu_ses_sts_psi_2_b2",
+    ft::ft_boolean,
+    fd::base_dec,
+    nullptr,&tfs_nas_5gs_allow_pdu_ses_sts_psi,nullptr,
+    0x04,
+};
+const field_meta hf_allow_pdu_ses_sts_psi_3_b3 = {
+    "PSI(3)",
+    "nas_5gs.allow_pdu_ses_sts_psi_3_b3",
+    ft::ft_boolean,
+    fd::base_dec,
+    nullptr,&tfs_nas_5gs_allow_pdu_ses_sts_psi,nullptr,
+    0x08,
+};
+const field_meta hf_allow_pdu_ses_sts_psi_4_b4 = {
+    "PSI(4)",
+    "nas_5gs.allow_pdu_ses_sts_psi_4_b4",
+    ft::ft_boolean,
+    fd::base_dec,
+    nullptr,&tfs_nas_5gs_allow_pdu_ses_sts_psi,nullptr,
+    0x10,
+};
+const field_meta hf_allow_pdu_ses_sts_psi_5_b5 = {
+    "PSI(5)",
+    "nas_5gs.allow_pdu_ses_sts_psi_5_b5",
+    ft::ft_boolean,
+    fd::base_dec,
+    nullptr,&tfs_nas_5gs_allow_pdu_ses_sts_psi,nullptr,
+    0x20,
+};
+const field_meta hf_allow_pdu_ses_sts_psi_6_b6 = {
+    "PSI(6)",
+    "nas_5gs.allow_pdu_ses_sts_psi_6_b6",
+    ft::ft_boolean,
+    fd::base_dec,
+    nullptr,&tfs_nas_5gs_allow_pdu_ses_sts_psi,nullptr,
+    0x40,
+};
+const field_meta hf_allow_pdu_ses_sts_psi_7_b7 = {
+    "PSI(7)",
+    "nas_5gs.allow_pdu_ses_sts_psi_7_b7",
+    ft::ft_boolean,
+    fd::base_dec,
+    nullptr,&tfs_nas_5gs_allow_pdu_ses_sts_psi,nullptr,
+    0x80,
+};
+const field_meta hf_allow_pdu_ses_sts_psi_8_b0 = {
+    "PSI(8)",
+    "nas_5gs.allow_pdu_ses_sts_psi_8_b0",
+    ft::ft_boolean,
+    fd::base_dec,
+    nullptr,&tfs_nas_5gs_allow_pdu_ses_sts_psi,nullptr,
+    0x01,
+};
+const field_meta hf_allow_pdu_ses_sts_psi_9_b1 = {
+    "PSI(9)",
+    "nas_5gs.allow_pdu_ses_sts_psi_9_b1",
+    ft::ft_boolean,
+    fd::base_dec,
+    nullptr,&tfs_nas_5gs_allow_pdu_ses_sts_psi,nullptr,
+    0x02,
+};
+const field_meta hf_allow_pdu_ses_sts_psi_10_b2 = {
+    "PSI(10)",
+    "nas_5gs.allow_pdu_ses_sts_psi_10_b2",
+    ft::ft_boolean,
+    fd::base_dec,
+    nullptr,&tfs_nas_5gs_allow_pdu_ses_sts_psi,nullptr,
+    0x04,
+};
+const field_meta hf_allow_pdu_ses_sts_psi_11_b3 = {
+    "PSI(11)",
+    "nas_5gs.allow_pdu_ses_sts_psi_11_b3",
+    ft::ft_boolean,
+    fd::base_dec,
+    nullptr,&tfs_nas_5gs_allow_pdu_ses_sts_psi,nullptr,
+    0x08,
+};
+const field_meta hf_allow_pdu_ses_sts_psi_12_b4 = {
+    "PSI(12)",
+    "nas_5gs.allow_pdu_ses_sts_psi_12_b4",
+    ft::ft_boolean,
+    fd::base_dec,
+    nullptr,&tfs_nas_5gs_allow_pdu_ses_sts_psi,nullptr,
+    0x10,
+};
+const field_meta hf_allow_pdu_ses_sts_psi_13_b5 = {
+    "PSI(13)",
+    "nas_5gs.allow_pdu_ses_sts_psi_13_b5",
+    ft::ft_boolean,
+    fd::base_dec,
+    nullptr,&tfs_nas_5gs_allow_pdu_ses_sts_psi,nullptr,
+    0x20,
+};
+const field_meta hf_allow_pdu_ses_sts_psi_14_b6 = {
+    "PSI(14)",
+    "nas_5gs.allow_pdu_ses_sts_psi_14_b6",
+    ft::ft_boolean,
+    fd::base_dec,
+    nullptr,&tfs_nas_5gs_allow_pdu_ses_sts_psi,nullptr,
+    0x40,
+};
+const field_meta hf_allow_pdu_ses_sts_psi_15_b7 = {
+    "PSI(15)",
+    "nas_5gs.allow_pdu_ses_sts_psi_15_b7",
+    ft::ft_boolean,
+    fd::base_dec,
+    nullptr,&tfs_nas_5gs_allow_pdu_ses_sts_psi,nullptr,
+    0x80,
+};
+
+/*
+ *  9.11.3.13    Allowed PDU session status
+ */
+
+
+int dissect_allowed_pdu_ses_status(dissector d, context* ctx) {
+
+    static const field_meta* psi_0_7_flags[] = {
+        &hf_allow_pdu_ses_sts_psi_7_b7,
+        &hf_allow_pdu_ses_sts_psi_6_b6,
+        &hf_allow_pdu_ses_sts_psi_5_b5,
+        &hf_allow_pdu_ses_sts_psi_4_b4,
+        &hf_allow_pdu_ses_sts_psi_3_b3,
+        &hf_allow_pdu_ses_sts_psi_2_b2,
+        &hf_allow_pdu_ses_sts_psi_1_b1,
+        &hf_allow_pdu_ses_sts_psi_0_b0,
+        nullptr,
+    };
+
+    static const field_meta* psi_8_15_flags[] = {
+        &hf_allow_pdu_ses_sts_psi_15_b7,
+        &hf_allow_pdu_ses_sts_psi_14_b6,
+        &hf_allow_pdu_ses_sts_psi_13_b5,
+        &hf_allow_pdu_ses_sts_psi_12_b4,
+        &hf_allow_pdu_ses_sts_psi_11_b3,
+        &hf_allow_pdu_ses_sts_psi_10_b2,
+        &hf_allow_pdu_ses_sts_psi_9_b1,
+        &hf_allow_pdu_ses_sts_psi_8_b0,
+        nullptr,
+    };
+
+    d.add_bits(psi_0_7_flags);
+    d.step(1);
+
+    d.add_bits(psi_8_15_flags);
+    d.step(1);
+
+    d.extraneous_data_check(0);
+    return 2;
+}
 
 } // namespace mm_service_req

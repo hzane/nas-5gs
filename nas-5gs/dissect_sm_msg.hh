@@ -14,7 +14,7 @@ int pdu_ses_mod_req(dissector d, context* ctx);
 int pdu_ses_mod_rej(dissector d, context* ctx);
 int pdu_ses_mod_cmd(dissector d, context* ctx);
 int pdu_ses_mod_comp(dissector d, context* ctx);
-
+int pdu_ses_auth_res(dissector d, context* ctx);
 int pdu_ses_mod_com_rej(dissector d, context* ctx);
 int pdu_ses_rel_req(dissector d, context* ctx);
 int pdu_ses_rel_rej(dissector d, context* ctx);

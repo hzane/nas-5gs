@@ -57,18 +57,18 @@ int mm::ul_nas_transp(dissector d, context* ctx) {
     d.step(consumed);
 
     /*22    S-NSSAI    S-NSSAI    9.11.3.37    O    TLV    3-10 */
-    //    ELEM_OPT_TLV(0x22, NAS_5GS_PDU_TYPE_COMMON, DE_NAS_5GS_CMN_S_NSSAI, NULL);
+    //    ELEM_OPT_TLV(0x22, , DE_NAS_5GS_CMN_S_NSSAI, NULL);
     consumed = dissect_opt_elem_tlv(nullptr, &s_nssai, d, ctx);
     d.step(consumed);
 
     /*25    DNN    DNN    9.11.2.1A    O    TLV    3-102 */
-    //    ELEM_OPT_TLV(0x25, NAS_5GS_PDU_TYPE_COMMON, DE_NAS_5GS_CMN_DNN, NULL);
+    //    ELEM_OPT_TLV(0x25, , DE_NAS_5GS_CMN_DNN, NULL);
     consumed = dissect_opt_elem_tlv(nullptr, &dnn, d, ctx);
     d.step(consumed);
 
     /*24    Additional information    Additional information    9.10.2.1    O    TLV 3-n
      */
-    //    ELEM_OPT_TLV(0x24, NAS_5GS_PDU_TYPE_COMMON, DE_NAS_5GS_CMN_ADD_INF, NULL);
+    //    ELEM_OPT_TLV(0x24, , DE_NAS_5GS_CMN_ADD_INF, NULL);
     consumed = dissect_opt_elem_tlv(nullptr, &add_inf, d, ctx);
     d.step(consumed);
 
@@ -145,7 +145,8 @@ int dissect_add_inf(dissector d, context* ctx) {
  */
 int dissect_old_pdu_ses_id(dissector d, context* ctx) {
     d.add_item(1, hf_pdu_session_id, enc::be);
-    return 1; }
+    return 1;
+}
 
 /*
  *     9.11.3.47    Request type
