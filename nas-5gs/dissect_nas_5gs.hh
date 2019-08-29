@@ -63,4 +63,52 @@ extern const field_meta  hf_mm_sal_t_li;
 extern const field_meta  hf_nas_5gs_mm_sal_al_t;
 extern const field_meta  hf_nas_5gs_mm_s1_mode_reg_b0;
 extern const field_meta  hf_nas_5gs_mm_n1_mode_reg_b1;
+extern const field_meta  hf_sst;
+
+__declspec(selectany) extern const field_meta hf_sd = {
+    "Slice differentiator (SD)",
+    "nas_5gs.mm.mm_sd",
+    ft::ft_uint24,
+    fd::base_dec,
+    nullptr,
+    nullptr,
+    nullptr,
+    0x0,
+};
+
+__declspec(selectany) extern const field_meta hf_mapped_conf_sst = {
+    "Mapped configured SST",
+    "nas_5gs.mm.mapped_conf_sst",
+    ft::ft_uint8,
+    fd::base_dec,
+    nullptr,
+    nullptr,
+    nullptr,
+    0x0,
+};
+
+__declspec(selectany) extern const field_meta hf_mapped_conf_ssd = {
+    "Mapped configured SD",
+    "nas_5gs.mm.mapped_conf_ssd",
+    ft::ft_uint24,
+    fd::base_dec,
+    nullptr,
+    nullptr,
+    nullptr,
+    0x0,
+};
+
+__declspec(selectany) extern const field_meta hf_dnn = {
+    "DNN",
+    "nas_5gs.cmn.dnn",
+    ft::ft_bytes,
+    fd::base_none,
+    nullptr,
+    nullptr,
+    nullptr,
+    0x0,
+};
+int dissect_dnn(dissector d, context* ctx);
+int dissect_s_nssai(dissector d, context* ctx);
+
 } // namespace nas

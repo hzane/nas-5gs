@@ -84,7 +84,6 @@ int dissect_pdu_ses_id(dissector d, context* ctx);
 int dissect_add_inf(dissector d, context* ctx);
 int dissect_old_pdu_ses_id(dissector d, context* ctx);
 int dissect_req_type(dissector d, context* ctx);
-int dissect_s_nssai(dissector d, context* ctx);
 
 extern const element_meta pld_cont_type = {
     0xff,
@@ -125,7 +124,7 @@ extern const element_meta s_nssai = {
 extern const element_meta dnn = {
     0x25,
     "DNN",
-    mm::dissect_dnn,
+    dissect_dnn,
 };
 int dissect_pld_cont_type(dissector d, context* ctx) {
     return mm::dissect_pld_cont_type(d, ctx);
@@ -174,6 +173,5 @@ int dissect_req_type(dissector d, context* ctx) {
     d.add_item(1, &hf_req_type, enc::be);
     return 1;
 }
-int dissect_s_nssai(dissector d, context* ctx) { return mm::dissect_s_nssai(d, ctx); }
 
 } // namespace mm_ul_nas_transp

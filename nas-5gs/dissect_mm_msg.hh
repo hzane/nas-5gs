@@ -154,7 +154,7 @@ __declspec(selectany) extern const field_meta hf_mm_length = {
     nullptr,
     0x0,
 };
-int dissect_dnn(dissector d, context* ctx);
+
 int dissect_nssai(dissector d, context* ctx);
 
 extern const field_meta* hf_nas_5gs_mm_raai_b0;
@@ -206,7 +206,6 @@ int dissect_mm_cause(dissector d, context* ctx);
 int dissect_ladn_inf(dissector d, context* ctx);
 int dissect_mico_ind(dissector d, context* ctx);
 int dissect_sal(dissector d, context* ctx);
-int dissect_s_nssai(dissector d, context* ctx);
 
 extern const true_false_string tfs_nas_5gs_sal_al_t;
 extern const val_string        nas_5gs_mm_sal_t_li_values[];

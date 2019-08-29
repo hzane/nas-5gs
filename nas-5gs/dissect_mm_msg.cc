@@ -1,6 +1,7 @@
 #include "dissect_mm_msg.hh"
 #include "ts24007.hh"
 
+using namespace nas;
 
 extern const field_meta hf_abba = {
     "ABBA Contents",
@@ -25,51 +26,6 @@ int dissect_abba(dissector d, context* ctx) {
     return d.length;
 }
 
-
-
-extern const field_meta hf_sst = {
-    "Slice/service type (SST)",
-    "nas_5gs.mm.sst",
-    ft::ft_uint8,
-    fd::base_dec,
-    nullptr,
-    nullptr,
-    nullptr,
-    0x0,
-};
-
-const field_meta hf_sd = {
-    "Slice differentiator (SD)",
-    "nas_5gs.mm.mm_sd",
-    ft::ft_uint24,
-    fd::base_dec,
-    nullptr,
-    nullptr,
-    nullptr,
-    0x0,
-};
-
-const field_meta hf_mapped_conf_sst = {
-    "Mapped configured SST",
-    "nas_5gs.mm.mapped_conf_sst",
-    ft::ft_uint8,
-    fd::base_dec,
-    nullptr,
-    nullptr,
-    nullptr,
-    0x0,
-};
-
-const field_meta hf_mapped_conf_ssd = {
-    "Mapped configured SD",
-    "nas_5gs.mm.mapped_conf_ssd",
-    ft::ft_uint24,
-    fd::base_dec,
-    nullptr,
-    nullptr,
-    nullptr,
-    0x0,
-};
 
 /* 9.10.2.8    S-NSSAI */
 int mm::dissect_nssai(dissector d, context* ctx) {
@@ -268,38 +224,6 @@ int mm::dissect_ta_id_list(dissector d, context* ctx) {
     return len;
 }
 
-const field_meta hf_dnn = {
-    "DNN",
-    "nas_5gs.cmn.dnn",
-    ft::ft_bytes,
-    fd::base_none,
-    nullptr,
-    nullptr,
-    nullptr,
-    0x0,
-};
-/*
- * 9.11.2.1A    DNN
- */
-int mm::dissect_dnn(dissector d, context* ctx) {
-    auto len = d.length;
-    /* A DNN value field contains an APN as defined in 3GPP TS 23.003 */
-    string str(d.safe_ptr(), d.safe_ptr() + d.safe_length(-1));
-    size_t i = 0;
-    while (i < str.size()) {
-        auto next = str[i];
-        str[i]    = '.';
-        i         = i + next + 1;
-    }
-    /* Highlight bytes including the first length byte */
-    auto item = d.add_item(len, &hf_dnn, enc::none);
-    item->set_string(str);
-    // d.tree->add_subtree(d.pinfo, d.tvb, d.offset, d.length, str.c_str());
-    d.step(len);
-
-    d.extraneous_data_check(0);
-    return len;
-}
 
 /*
  *   9.11.3.46    Rejected NSSAI
@@ -897,39 +821,6 @@ int mm::dissect_sal(dissector d, context* ctx) {
     return len;
 }
 
-/* 9.10.2.8    S-NSSAI */
-int mm::dissect_s_nssai(dissector d, context* ctx) {
-    /* SST    octet 3
-     * This field contains the 8 bit SST value. The coding of the SST value part is
-     * defined in 3GPP TS 23.003
-     */
-    d.add_item(1, &hf_sst, enc::be);
-    d.step(1);
-    if (d.length <= 0) {
-        return 1;
-    }
-
-    /* SD    octet 4 - octet 6* */
-    d.add_item(3, &hf_sd, enc::be);
-    d.step(3);
-    if (d.length <= 0) {
-        return 4;
-    }
-
-    /* Mapped configured SST    octet 7* */
-    d.add_item(1, &hf_mapped_conf_sst, enc::be);
-    d.step(1);
-    if (d.length <= 0) {
-        return 5;
-    }
-
-    /* Mapped configured SD    octet 8 - octet 10* */
-    d.add_item(3, &hf_mapped_conf_ssd, enc::be);
-    d.step(3);
-
-    d.extraneous_data_check(0);
-    return 8;
-}
 namespace mm{
 const val_string nas_5gs_mm_supi_fmt_vals[] = {
     {0x0, "IMSI"},

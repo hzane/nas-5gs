@@ -33,9 +33,62 @@ int sm::pdu_ses_auth_res(dissector d, context* ctx) {
 }
 
 /*
- * 9.9.4.26 Extended protocol configuration options
+ * 9.11.4.2    5GSM cause
  */
-int sm::dissect_sm_cause(dissector d, context* ctx) { return 0; }
+
+const value_string nas_5gs_sm_cause_vals[] = {
+    {0x1a, "Insufficient resources"},
+    {0x1b, "Missing or unknown DNN"},
+    {0x1c, "Unknown PDU session type"},
+    {0x1d, "User authentication or authorization failed"},
+    {0x1f, "Request rejected, unspecified"},
+    {0x22, "Service option temporarily out of order"},
+    {0x23, "PTI already in use"},
+    {0x24, "Regular deactivation"},
+    {0x27, "Reactivation requested"},
+    {0x2b, "Invalid PDU session identity"},
+    {0x2c, "Semantic errors in packet filter(s)"},
+    {0x2d, "Syntactical error in packet filter(s)"},
+    {0x2e, "Out of LADN service area"},
+    {0x2f, "PTI mismatch"},
+    {0x32, "PDU session type Ipv4 only allowed"},
+    {0x33, "PDU session type Ipv6 only allowed"},
+    {0x36, "PDU session does not exist"},
+    {0x43, "Insufficient resources for specific slice and DNN"},
+    {0x44, "Not supported SSC mode"},
+    {0x45, "Insufficient resources for specific slice"},
+    {0x46, "Missing or unknown DNN in a slice"},
+    {0x51, "Invalid PTI value"},
+    {0x52, "Maximum data rate per UE for user-plane integrity protection is too low"},
+    {0x53, "Semantic error in the QoS operation"},
+    {0x54, "Syntactical error in the QoS operation"},
+    {0x55, "Invalid mapped EPS bearer identity"},
+    {0x5f, "Semantically incorrect message"},
+    {0x60, "Invalid mandatory information"},
+    {0x61, "Message type non - existent or not implemented"},
+    {0x62, "Message type not compatible with the protocol state"},
+    {0x63, "Information element non - existent or not implemented"},
+    {0x64, "Conditional IE error"},
+    {0x65, "Message not compatible with the protocol state"},
+    {0x6f, "Protocol error, unspecified"},
+    {0, nullptr},
+};
+const field_meta hf_sm_cause = {
+    "5GSM cause",
+    "nas_5gs.sm.5gsm_cause",
+    ft::ft_uint8,
+    fd::base_dec,
+    (nas_5gs_sm_cause_vals),
+    nullptr,
+    nullptr,
+    0x0,
+};
+int sm::dissect_sm_cause(dissector d, context* ctx) {
+    uint32_t cause = (uint32_t)d.tvb->get_uint8(d.offset);
+    d.add_item(1, &hf_sm_cause, enc::be);
+
+    return 1;
+}
 
 int sm::dissect_ext_pco(dissector d, context* ctx) {
     bug("no dissect\n");
@@ -444,8 +497,132 @@ int sm::dissect_sm_cap(dissector d, context* ctx) { return 0; }
 
 int sm::dissect_max_num_sup_kpt_flt(dissector d, context* ctx) { return 0; }
 
-int sm::dissect_ses_ambr(dissector d, context* ctx) { return 0; }
+//  *      9.11.4.14    Session-AMBR
 
-int sm::dissect_rq_gprs_timer(dissector d, context* ctx) { return 0; }
+static const value_string nas_5gs_sm_unit_for_session_ambr_values[] = {
+    {0x00, "value is not used"},
+    {0x01, "value is incremented in multiples of 1 Kbps"},
+    {0x02, "value is incremented in multiples of 4 Kbps"},
+    {0x03, "value is incremented in multiples of 16 Kbps"},
+    {0x04, "value is incremented in multiples of 64 Kbps"},
+    {0x05, "value is incremented in multiples of 256 kbps"},
+    {0x06, "value is incremented in multiples of 1 Mbps"},
+    {0x07, "value is incremented in multiples of 4 Mbps"},
+    {0x08, "value is incremented in multiples of 16 Mbps"},
+    {0x09, "value is incremented in multiples of 64 Mbps"},
+    {0x0a, "value is incremented in multiples of 256 Mbps"},
+    {0x0b, "value is incremented in multiples of 1 Gbps"},
+    {0x0c, "value is incremented in multiples of 4 Gbps"},
+    {0x0d, "value is incremented in multiples of 16 Gbps"},
+    {0x0e, "value is incremented in multiples of 64 Gbps"},
+    {0x0f, "value is incremented in multiples of 256 Gbps"},
+    {0x10, "value is incremented in multiples of 1 Tbps"},
+    {0x11, "value is incremented in multiples of 4 Tbps"},
+    {0x12, "value is incremented in multiples of 16 Tbps"},
+    {0x13, "value is incremented in multiples of 64 Tbps"},
+    {0x14, "value is incremented in multiples of 256 Tbps"},
+    {0x15, "value is incremented in multiples of 1 Pbps"},
+    {0x16, "value is incremented in multiples of 4 Pbps"},
+    {0x17, "value is incremented in multiples of 16 Pbps"},
+    {0x18, "value is incremented in multiples of 64 Pbps"},
+    {0x19, "value is incremented in multiples of 256 Pbps"},
+    {0, nullptr},
+};
+
+uint32_t get_ext_ambr_unit(uint32_t unit, const char** unit_str) {
+    uint32_t mult = 1;
+
+    if (unit == 0) {
+        *unit_str = "Unit value 0, Illegal";
+        return mult;
+    }
+    unit = unit - 1;
+
+    if (unit <= 0x05) {
+        mult      = 1 << (2 * unit); // pow4(guint32, unit);
+        *unit_str = "Kbps";
+    } else if (unit <= 0x0a) {
+        mult = 1 << (2 * (unit - 0x05)); // pow4(guint32, unit - 0x05);
+        *unit_str = "Mbps";
+    } else if (unit <= 0x0e) {
+        mult      = 1 << (2 * (unit - 0x07)); // pow4(guint32, unit - 0x07);
+        *unit_str = "Gbps";
+    } else if (unit <= 0x14) {
+        mult = 1 << (2 * (unit - 0x0c)); // pow4(guint32, unit - 0x0c);
+        *unit_str = "Tbps";
+    } else if (unit <= 0x19) {
+        mult = 1 << (2 * (unit - 0x11)); // pow4(guint32, unit - 0x11);
+        *unit_str = "Pbps";
+    } else {
+        mult      = 256;
+        *unit_str = "Pbps";
+    }
+    return mult;
+}
+
+const field_meta hf_sm_ses_ambr_dl_unit = {
+    "Unit for Session-AMBR for downlink",
+    "nas_5gs.sm.unit_for_session_ambr_dl",
+    ft::ft_uint8,
+    fd::base_dec,
+    (nas_5gs_sm_unit_for_session_ambr_values),nullptr,nullptr,
+    0x0,
+};
+const field_meta hf_sm_ses_ambr_ul_unit = {
+    "Unit for Session-AMBR for uplink",
+    "nas_5gs.sm.unit_for_session_ambr_ul",
+    ft::ft_uint8,
+    fd::base_dec,
+    (nas_5gs_sm_unit_for_session_ambr_values),nullptr,nullptr,
+    0x0,
+};
+const field_meta hf_sm_ses_ambr_dl = {
+    "Session-AMBR for downlink",
+    "nas_5gs.sm.session_ambr_dl",
+    ft::ft_uint16,
+    fd::base_dec,
+    nullptr,nullptr,nullptr,
+    0x0,
+};
+const field_meta hf_sm_ses_ambr_ul = {
+    "Session-AMBR for uplink",
+    "nas_5gs.sm.session_ambr_ul",
+    ft::ft_uint16,
+    fd::base_dec,
+    nullptr,
+    nullptr,
+    nullptr,
+    0x0,
+};
+
+int sm::dissect_ses_ambr(dissector d, context* ctx) {
+    auto len = d.length;
+
+    /* Unit for Session-AMBR for downlink */
+    auto unit = (int)d.tvb->get_uint8(d.offset);
+    d.add_item(1, &hf_sm_ses_ambr_dl_unit, enc::be);
+    d.step(1);
+
+    const char* unit_str = "";
+    /* Session-AMBR for downlink (octets 4 and 5) */
+    auto mult = get_ext_ambr_unit(unit, &unit_str);
+    auto ambr_val = (uint32_t)d.tvb->get_ntohs(d.offset);
+    auto item = d.add_item(2, &hf_sm_ses_ambr_dl, enc::none);
+    item->set_string(formats("%u %s (%u)", ambr_val * mult, unit_str, ambr_val));
+    d.step(2);
+
+    unit = (int)d.tvb->get_uint8(d.offset);
+    d.add_item(1, &hf_sm_ses_ambr_ul_unit, enc::be);
+    d.step(1);
+
+    mult = get_ext_ambr_unit(unit, &unit_str);
+    ambr_val = (uint32_t)d.tvb->get_ntohs(d.offset);
+    item = d.add_item(2, &hf_sm_ses_ambr_ul, enc::none);
+    item->set_string(formats("%u %s (%u)", ambr_val * mult, unit_str, ambr_val));
+
+    return len;
+}
+
+int sm::dissect_rq_gprs_timer(dissector d, context* ctx) { return d.length; }
 
 int sm::dissect_always_on_pdu_ses_ind(dissector d, context* ctx) { return 0; }
