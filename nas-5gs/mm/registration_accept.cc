@@ -718,62 +718,7 @@ const true_false_string tfs_nas_5gs_sor_data_type = {
     "Carries steering of roaming information",
 };
 
-const field_meta hf_spare_b7 = {
-    "Spare",
-    "nas_5gs.spare_b7",
-    ft::ft_uint8,
-    fd::base_dec,
-    nullptr,nullptr,nullptr,
-    0x80,
-};
-const field_meta hf_spare_b6 = {
-    "Spare",
-    "nas_5gs.spare_b6",
-    ft::ft_uint8,
-    fd::base_dec,
-    nullptr,nullptr,nullptr,
-    0x40,
-};
-const field_meta hf_spare_b5 = {
-    "Spare",
-    "nas_5gs.spare_b5",
-    ft::ft_uint8,
-    fd::base_dec,
-    nullptr,nullptr,nullptr,
-    0x20,
-};
-const field_meta hf_spare_b4 = {
-    "Spare",
-    "nas_5gs.spare_b4",
-    ft::ft_uint8,
-    fd::base_dec,
-    nullptr,nullptr,nullptr,
-    0x10,
-};
-const field_meta hf_spare_b3 = {
-    "Spare",
-    "nas_5gs.spare_b3",
-    ft::ft_uint8,
-    fd::base_dec,
-    nullptr,nullptr,nullptr,
-    0x08,
-};
-const field_meta hf_spare_b2 = {
-    "Spare",
-    "nas_5gs.spare_b2",
-    ft::ft_uint8,
-    fd::base_dec,
-    nullptr,nullptr,nullptr,
-    0x04,
-};
-const field_meta hf_spare_b1 = {
-    "Spare",
-    "nas_5gs.spare_b1",
-    ft::ft_uint8,
-    fd::base_dec,
-    nullptr,nullptr,nullptr,
-    0x02,
-};
+
 const field_meta hf_sor_hdr0_ack = {
     "Acknowledgement (ACK)",
     "nas_5gs.sor_hdr0.ack",

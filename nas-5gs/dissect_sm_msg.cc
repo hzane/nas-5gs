@@ -400,8 +400,8 @@ int dissect_packet_filters(dissector d, int rop, context* ctx) {
 
     return d.offset - start;
 }
-int sm::dissect_authorized_qos_rules(dissector d, context* ctx) {
-    auto len = d.length;
+int sm::dissect_qos_rules(dissector d, context* ctx){
+    auto                     len             = d.length;
     static const field_meta* pkt_flt_flags[] = {
         &hf_sm_rop,
         &hf_sm_dqr,
@@ -409,9 +409,10 @@ int sm::dissect_authorized_qos_rules(dissector d, context* ctx) {
         nullptr,
     };
     auto i = 1;
-    while(d.offset>0){
+    while (d.offset > 0) {
         /* QoS Rule */
-        auto subtree = d.tree->add_subtree(d.pinfo, d.tvb, d.offset, -1, "QoS rule %u", i);
+        auto subtree =
+            d.tree->add_subtree(d.pinfo, d.tvb, d.offset, -1, "QoS rule %u", i);
         use_tree ut(d, subtree);
 
         /* QoS rule identifier Octet 4*/
@@ -437,14 +438,14 @@ int sm::dissect_authorized_qos_rules(dissector d, context* ctx) {
          * rule without modifying packet filters" operation, the number of packet filters
          * shall be coded as 0.
          */
-        if (rop ==0 || rop == 7){
+        if (rop == 0 || rop == 7) {
             // reserved
             ++i;
             d.step(length - 1);
             continue;
         }
-        if (rop == 2 || rop == 6){
-            if (n_filters !=0){
+        if (rop == 2 || rop == 6) {
+            if (n_filters != 0) {
                 d.step(length - 1);
                 ++i;
                 continue;
@@ -461,7 +462,7 @@ int sm::dissect_authorized_qos_rules(dissector d, context* ctx) {
                 /* 0    0    0    0    Packet filter identifier x*/
                 d.add_item(1, &hf_sm_pkt_flt_id, enc::be);
                 d.step(1);
-            }else{
+            } else {
                 auto consumed = dissect_packet_filters(d, rop, ctx);
                 d.step(consumed);
             }
@@ -488,18 +489,250 @@ int sm::dissect_authorized_qos_rules(dissector d, context* ctx) {
     } // while(d.offset)
     return len;
 }
+int sm::dissect_authorized_qos_rules(dissector d, context* ctx) {
+    return dissect_qos_rules(d, ctx);
+}
 
-int sm::dissect_mapped_eps_b_cont(dissector d, context* ctx) { return 0; }
+/*
+ *     9.11.4.8 Mapped EPS bearer contexts
+ */
+static const value_string nas_5gs_sm_mapd_eps_b_cont_opt_code_vals[] = {
+    {0x0, "Reserved"},
+    {0x01, "Create new EPS bearer"},
+    {0x02, "Delete existing EPS bearer"},
+    {0x03, "Modify existing EPS bearer"},
+    {0, nullptr},
+};
 
-int sm::dissect_backoff_gprs_timer3(dissector d, context* ctx) { return d.length; }
+static const value_string nas_5gs_sm_mapd_eps_b_cont_DEB_vals[] = {
+    {0x0, "the EPS bearer is not the default EPS bearer."},
+    {0x01, "the EPS bearer is the default EPS bearer"},
+    {0, nullptr},
+};
 
-int sm::dissect_sm_cap(dissector d, context* ctx) { return 0; }
+static const value_string nas_5gs_sm_mapd_eps_b_cont_E_vals[] = {
+    {0x0, "parameters list is not included"},
+    {0x01, "parameters list is included"},
+    {0, nullptr},};
 
-int sm::dissect_max_num_sup_kpt_flt(dissector d, context* ctx) { return 0; }
+static const value_string nas_5gs_sm_mapd_eps_b_cont_E_Modify_vals[] = {
+    {0x0, "previously provided parameters list extension"},
+    {0x01, "previously provided parameters list replacement"},
+    {0, nullptr},};
+
+static const value_string nas_5gs_sm_mapd_eps_b_cont_param_id_vals[] = {
+    {0x01, "Mapped EPS QoS parameters"},
+    {0x02, "Mapped extended EPS QoS parameters"},
+    {0x03, "Traffic flow template"},
+    {0x04, "APN-AMBR"},
+    {0x05, "extended APN-AMBR"},
+    {0, nullptr},
+};
+
+const field_meta hf_sm_mapd_eps_b_cont_opt_code = {
+    "Operation code",
+    "nas_5gs.sm.mapd_eps_b_cont_opt_code",
+    ft::ft_uint8,
+    fd::base_dec,
+    nas_5gs_sm_mapd_eps_b_cont_opt_code_vals,nullptr,nullptr,
+    0xc0,
+};
+const field_meta hf_sm_mapd_eps_b_cont_deb = {
+    "DEB bit",
+    "nas_5gs.sm.mapd_eps_b_cont_DEB",
+    ft::ft_uint8,
+    fd::base_dec,
+    nas_5gs_sm_mapd_eps_b_cont_DEB_vals,nullptr,nullptr,
+    0x20,
+};
+const field_meta hf_sm_mapd_eps_b_cont_e = {
+    "E bit",
+    "nas_5gs.sm.mapd_eps_b_cont_E",
+    ft::ft_uint8,
+    fd::base_dec,
+    nas_5gs_sm_mapd_eps_b_cont_E_vals,nullptr,nullptr,
+    0x10,
+};
+const field_meta hf_sm_mapd_eps_b_cont_num_eps_parms = {
+    "Number of EPS parameters",
+    "nas_5gs.sm.mapd_eps_b_cont_num_eps_parms",
+    ft::ft_uint8,
+    fd::base_dec,
+    nullptr,nullptr,nullptr,
+    0x0f,
+};
+const field_meta hf_sm_mapd_eps_b_cont_e_mod         = {
+    "E bit",
+    "nas_5gs.sm.mapd_eps_b_cont_E_mod",
+    ft::ft_uint8,
+    fd::base_dec,
+    nas_5gs_sm_mapd_eps_b_cont_E_Modify_vals,nullptr,nullptr,
+    0x10,
+};
+
+const field_meta hf_sm_mapd_eps_b_cont_id = {
+    "EPS bearer identity",
+    "nas_5gs.sm.mapd_eps_b_cont_id",
+    ft::ft_uint8,
+    fd::base_dec,
+    nullptr,nullptr,nullptr,
+    0xf0,
+};
+const field_meta hf_sm_mapd_eps_b_cont_num_eps_param_id = {
+    "EPS parameter identity",
+    "nas_5gs.sm.mapd_eps_b_cont_param_id",
+    ft::ft_uint8,
+    fd::base_dec,
+    nas_5gs_sm_mapd_eps_b_cont_param_id_vals,nullptr,nullptr,
+    0x0,
+};
+const field_meta hf_sm_mapd_eps_b_cont_eps_param_cont = {
+    "EPS parameter contents",
+    "nas_5gs.sm.mapd_eps_b_cont_eps_param_cont",
+    ft::ft_bytes,
+    fd::base_none,
+    nullptr,
+    nullptr,
+    nullptr,
+    0x0,
+};
+
+int dissect_eps_param(dissector d, int i, context* ctx){
+    auto start = d.offset;
+    auto subtree =
+        d.tree->add_subtree(d.pinfo, d.tvb, d.offset, -1, "EPS parameter %u", i);
+    use_tree ut(d, subtree);
+
+    /* EPS parameter identifier */
+    uint32_t param_id = (uint32_t)d.tvb->get_uint8(d.offset);
+    d.add_item(1, &hf_sm_mapd_eps_b_cont_num_eps_param_id, enc::be);
+    d.step(1);
+
+    /*length of the EPS parameter contents field */
+    int length = (int)d.tvb->get_uint8(d.offset);
+    d.add_item(1, &hf_sm_length, enc::be);
+    d.step(1);
+
+    subtree->set_length(length+3);
+    /*length of the EPS parameter contents field */
+    switch(param_id){
+    case 1: /* 01H (Mapped EPS QoS parameters) */
+    case 2: /* 02H (Mapped extended EPS QoS parameters) */
+    case 3: /* 03H (Traffic flow template)*/
+    case 4: /* 04H (APN-AMBR) */
+    case 5: /* 05H (extended APN-AMBR). */
+    default:
+        d.add_item(length, &hf_sm_mapd_eps_b_cont_eps_param_cont, enc::be);
+        d.step(length);
+    }
+    return d.offset - start;
+}
+int sm::dissect_mapped_eps_b_cont(dissector d, context* ctx) {
+    static const field_meta* mapd_eps_b_cont_flags[] = {
+        &hf_sm_mapd_eps_b_cont_opt_code,
+        &hf_sm_mapd_eps_b_cont_deb,
+        &hf_sm_mapd_eps_b_cont_e,
+        &hf_sm_mapd_eps_b_cont_num_eps_parms,
+        nullptr,
+    };
+
+    static const field_meta* mapd_eps_b_cont_flags_modify[] = {
+        &hf_sm_mapd_eps_b_cont_opt_code,
+        &hf_sm_mapd_eps_b_cont_deb,
+        &hf_sm_mapd_eps_b_cont_e_mod,
+        &hf_sm_mapd_eps_b_cont_num_eps_parms,
+        nullptr,
+    };
+    auto n = 1;
+    /* The IE contains a number of Mapped EPS bearer context */
+    while(d.length>0){
+        /* Figure 9.11.4.5.2: Mapped EPS bearer context */
+        auto subtree = d.tree->add_subtree(
+            d.pinfo, d.tvb, d.offset, -1, "Mapped EPS bearer context %u", n);
+        use_tree ut(d, subtree);
+
+        /* EPS bearer identity */
+        d.add_item(1, &hf_sm_mapd_eps_b_cont_id, enc::be);
+        d.step(1);
+
+        /* Length of Mapped EPS bearer context*/
+        int length = (int)d.tvb->get_ntohs(d.offset);
+        d.add_item(2, &hf_sm_length, enc::be);
+        d.step(2);
+
+        /*     8   7      6    5   4  3  2  1          */
+        /* operation code | DEB |  E | number of EPS params     */
+        subtree->set_length(length + 3);
+
+        auto nep = d.tvb->get_uint8(d.offset);
+        auto opt_code = nep&0xc0;
+        nep           = nep & 0x0f;
+
+        /* operation code = 3 Modify existing EPS bearer */
+        if (opt_code == 3){
+            d.add_bits(mapd_eps_b_cont_flags_modify);
+        }else{
+            d.add_bits(mapd_eps_b_cont_flags);
+        }
+        d.step(1);
+
+        /* EPS parameters list */
+        auto i = 1;
+        while(nep>0){
+            auto consumed = dissect_eps_param(d, i, ctx);
+            d.step(consumed);
+            --nep;
+            ++i;
+        }
+        ++n;
+    }
+    return d.length;
+}
+
+int sm::dissect_backoff_gprs_timer3(dissector d, context* ctx) {
+    bug("no dissect\n");
+    return d.length;
+}
+
+const true_false_string tfs_supported_not_supported = {"Supported", "Not supported"};
+
+const field_meta hf_sm_rqos_b0 = {
+    "Reflective QoS(RqoS)",
+    "nas_5gs.sm.rqos",
+    ft::ft_boolean,
+    fd::base_dec,
+    nullptr,
+    (&tfs_supported_not_supported),
+    nullptr,
+    0x01,
+};
+/*
+ *       9.11.4.1    5GSM capability
+ */
+int sm::dissect_sm_cap(dissector d, context* ctx) {
+    static const field_meta* flags[] = {
+        &hf_spare_b7,
+        &hf_spare_b6,
+        &hf_spare_b5,
+        &hf_spare_b4,
+        &hf_spare_b3,
+        &hf_spare_b2,
+        &hf_spare_b1,
+        &hf_sm_rqos_b0,
+        nullptr,
+    };
+    d.add_bits(flags);
+    return 1;
+}
+
+//  *     9.11.4.9    Maximum number of supported packet filters
+int sm::dissect_max_num_sup_kpt_flt(dissector d, context* ctx) {
+    bug("no dissect\n");
+    return d.length;
+}
 
 //  *      9.11.4.14    Session-AMBR
-
-static const value_string nas_5gs_sm_unit_for_session_ambr_values[] = {
+extern const value_string sm::nas_5gs_sm_unit_for_session_ambr_values[] = {
     {0x00, "value is not used"},
     {0x01, "value is incremented in multiples of 1 Kbps"},
     {0x02, "value is incremented in multiples of 4 Kbps"},
@@ -529,7 +762,7 @@ static const value_string nas_5gs_sm_unit_for_session_ambr_values[] = {
     {0, nullptr},
 };
 
-uint32_t get_ext_ambr_unit(uint32_t unit, const char** unit_str) {
+uint32_t sm::get_ext_ambr_unit(uint32_t unit, const char** unit_str) {
     uint32_t mult = 1;
 
     if (unit == 0) {
@@ -560,40 +793,6 @@ uint32_t get_ext_ambr_unit(uint32_t unit, const char** unit_str) {
     return mult;
 }
 
-const field_meta hf_sm_ses_ambr_dl_unit = {
-    "Unit for Session-AMBR for downlink",
-    "nas_5gs.sm.unit_for_session_ambr_dl",
-    ft::ft_uint8,
-    fd::base_dec,
-    (nas_5gs_sm_unit_for_session_ambr_values),nullptr,nullptr,
-    0x0,
-};
-const field_meta hf_sm_ses_ambr_ul_unit = {
-    "Unit for Session-AMBR for uplink",
-    "nas_5gs.sm.unit_for_session_ambr_ul",
-    ft::ft_uint8,
-    fd::base_dec,
-    (nas_5gs_sm_unit_for_session_ambr_values),nullptr,nullptr,
-    0x0,
-};
-const field_meta hf_sm_ses_ambr_dl = {
-    "Session-AMBR for downlink",
-    "nas_5gs.sm.session_ambr_dl",
-    ft::ft_uint16,
-    fd::base_dec,
-    nullptr,nullptr,nullptr,
-    0x0,
-};
-const field_meta hf_sm_ses_ambr_ul = {
-    "Session-AMBR for uplink",
-    "nas_5gs.sm.session_ambr_ul",
-    ft::ft_uint16,
-    fd::base_dec,
-    nullptr,
-    nullptr,
-    nullptr,
-    0x0,
-};
 
 int sm::dissect_ses_ambr(dissector d, context* ctx) {
     auto len = d.length;

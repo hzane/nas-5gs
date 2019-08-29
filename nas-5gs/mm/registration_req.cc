@@ -306,46 +306,6 @@ int mm_reg_req::dissect_nksi_key_set_id(dissector d, context* ctx) {
     return dissect_mobile_id(d, ctx);
 }
 
-const field_meta hf_spare_b7 = {
-    "Spare",
-    "nas_5gs.spare_b7",
-    ft::ft_uint8,
-    fd::base_dec,
-    nullptr,nullptr,nullptr,
-    0x80,
-};
-const field_meta hf_spare_b6 = {
-    "Spare",
-    "nas_5gs.spare_b6",
-    ft::ft_uint8,
-    fd::base_dec,
-    nullptr,nullptr,nullptr,
-    0x40,
-};
-const field_meta hf_spare_b5 = {
-    "Spare",
-    "nas_5gs.spare_b5",
-    ft::ft_uint8,
-    fd::base_dec,
-    nullptr,nullptr,nullptr,
-    0x20,
-};
-const field_meta hf_spare_b4 = {
-    "Spare",
-    "nas_5gs.spare_b4",
-    ft::ft_uint8,
-    fd::base_dec,
-    nullptr,nullptr,nullptr,
-    0x10,
-};
-const field_meta hf_spare_b3 = {
-    "Spare",
-    "nas_5gs.spare_b3",
-    ft::ft_uint8,
-    fd::base_dec,
-    nullptr,nullptr,nullptr,
-    0x08,
-};
 
 const field_meta hf_lpp_cap_b2 = {
     "LTE Positioning Protocol (LPP) capability",

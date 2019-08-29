@@ -111,4 +111,74 @@ __declspec(selectany) extern const field_meta hf_dnn = {
 int dissect_dnn(dissector d, context* ctx);
 int dissect_s_nssai(dissector d, context* ctx);
 
+__declspec(selectany) extern const field_meta hf_spare_b7 = {
+    "Spare",
+    "nas_5gs.spare_b7",
+    ft::ft_uint8,
+    fd::base_dec,
+    nullptr,
+    nullptr,
+    nullptr,
+    0x80,
+};
+__declspec(selectany) extern const field_meta hf_spare_b6 = {
+    "Spare",
+    "nas_5gs.spare_b6",
+    ft::ft_uint8,
+    fd::base_dec,
+    nullptr,
+    nullptr,
+    nullptr,
+    0x40,
+};
+__declspec(selectany) extern const field_meta hf_spare_b5 = {
+    "Spare",
+    "nas_5gs.spare_b5",
+    ft::ft_uint8,
+    fd::base_dec,
+    nullptr,
+    nullptr,
+    nullptr,
+    0x20,
+};
+__declspec(selectany) extern const field_meta hf_spare_b4 = {
+    "Spare",
+    "nas_5gs.spare_b4",
+    ft::ft_uint8,
+    fd::base_dec,
+    nullptr,
+    nullptr,
+    nullptr,
+    0x10,
+};
+__declspec(selectany) extern const field_meta hf_spare_b3 = {
+    "Spare",
+    "nas_5gs.spare_b3",
+    ft::ft_uint8,
+    fd::base_dec,
+    nullptr,
+    nullptr,
+    nullptr,
+    0x08,
+};
+__declspec(selectany) extern const field_meta hf_spare_b2 = {
+    "Spare",
+    "nas_5gs.spare_b2",
+    ft::ft_uint8,
+    fd::base_dec,
+    nullptr,
+    nullptr,
+    nullptr,
+    0x04,
+};
+__declspec(selectany) extern const field_meta hf_spare_b1 = {
+    "Spare",
+    "nas_5gs.spare_b1",
+    ft::ft_uint8,
+    fd::base_dec,
+    nullptr,
+    nullptr,
+    nullptr,
+    0x02,
+};
 } // namespace nas

@@ -59,6 +59,7 @@ int dissect_sm_cause(dissector d, context* ctx);
 int dissect_ext_pco(dissector d, context* ctx);
 int dissect_eap_msg(dissector d, context* ctx);
 int dissect_authorized_qos_rules(dissector d, context* ctx);
+int dissect_qos_rules(dissector d, context* ctx);
 int dissect_mapped_eps_b_cont(dissector d, context* ctx);
 int dissect_backoff_gprs_timer3(dissector d, context* ctx);
 int dissect_sm_cap(dissector d, context* ctx);
@@ -123,4 +124,48 @@ __declspec(selectany) extern const element_meta always_on_pdu_ses_ind = {
     dissect_always_on_pdu_ses_ind,
 };
 
+uint32_t get_ext_ambr_unit(uint32_t unit, const char** unit_str);
+
+extern const value_string nas_5gs_sm_unit_for_session_ambr_values[];
+
+__declspec(selectany) extern const field_meta hf_sm_ses_ambr_dl_unit = {
+    "Unit for Session-AMBR for downlink",
+    "nas_5gs.sm.unit_for_session_ambr_dl",
+    ft::ft_uint8,
+    fd::base_dec,
+    (nas_5gs_sm_unit_for_session_ambr_values),
+    nullptr,
+    nullptr,
+    0x0,
+};
+__declspec(selectany) extern const field_meta hf_sm_ses_ambr_ul_unit = {
+    "Unit for Session-AMBR for uplink",
+    "nas_5gs.sm.unit_for_session_ambr_ul",
+    ft::ft_uint8,
+    fd::base_dec,
+    (nas_5gs_sm_unit_for_session_ambr_values),
+    nullptr,
+    nullptr,
+    0x0,
+};
+__declspec(selectany) extern const field_meta hf_sm_ses_ambr_dl = {
+    "Session-AMBR for downlink",
+    "nas_5gs.sm.session_ambr_dl",
+    ft::ft_uint16,
+    fd::base_dec,
+    nullptr,
+    nullptr,
+    nullptr,
+    0x0,
+};
+__declspec(selectany) extern const field_meta hf_sm_ses_ambr_ul = {
+    "Session-AMBR for uplink",
+    "nas_5gs.sm.session_ambr_ul",
+    ft::ft_uint16,
+    fd::base_dec,
+    nullptr,
+    nullptr,
+    nullptr,
+    0x0,
+};
 } // namespace sm

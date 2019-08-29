@@ -21,37 +21,36 @@ int sm::pdu_ses_mod_req(dissector d, context* ctx) {
     d.pinfo->dir = pi_dir::ul;
 
     /* 28    5GSM capability    5GSM capability 9.11.4.10    O    TLV    3-15 */
-    // ELEM_OPT_TLV(0x28, NAS_5GS_PDU_TYPE_SM, DE_NAS_5GS_SM_5GSM_CAP, NULL);
+    // ELEM_OPT_TLV(0x28, , DE_NAS_5GS_SM_5GSM_CAP, NULL);
     auto consumed = dissect_opt_elem_tlv(nullptr, &sm_cap, d, ctx);
     d.step(consumed);
 
     /* 59    5GSM cause    5GSM cause 9.11.4.2    O    TV    2 */
-    // ELEM_OPT_TLV(0x59, NAS_5GS_PDU_TYPE_SM, DE_NAS_5GS_SM_5GSM_CAUSE, NULL);
+    // ELEM_OPT_TLV(0x59, , DE_NAS_5GS_SM_5GSM_CAUSE, NULL);
     consumed = dissect_opt_elem_tlv(nullptr, &sm_cause, d, ctx);
     d.step(consumed);
 
     /*55    Maximum number of suuported packet filter    Maximum number of suuported
      * packet filter   9.11.4.6    O    TV    3*/
-    // ELEM_OPT_TV(0x55, NAS_5GS_PDU_TYPE_SM, DE_NAS_5GS_SM_MAX_NUM_SUP_PKT_FLT, NULL);
+    // ELEM_OPT_TV(0x55, , DE_NAS_5GS_SM_MAX_NUM_SUP_PKT_FLT, NULL);
     consumed = dissect_opt_elem_tv(nullptr, &max_num_sup_kpt_flt, d, ctx);
     d.step(consumed);
 
     /* B-    Always-on PDU session requested    Always-on PDU session requested 9.11.4.4
      * O    TV    1 */
     // ELEM_OPT_TV_SHORT(
-    //     0xB0, NAS_5GS_PDU_TYPE_SM, DE_NAS_5GS_SM_ALWAYS_ON_PDU_SES_REQ, NULL);
+    // 0xB0, , DE_NAS_5GS_SM_ALWAYS_ON_PDU_SES_REQ, NULL);
     consumed = dissect_opt_elem_tv_short(nullptr, &always_on_pdu_ses_req, d, ctx);
     d.step(consumed);
 
     /* 13    Integrity protection maximum data rate    Integrity protection maximum data
      * rate 9.11.4.7    O    TV    3 */
-    // ELEM_OPT_TV(0x13, NAS_5GS_PDU_TYPE_SM, DE_NAS_5GS_SM_INT_PROT_MAX_DATA_RTE, NULL);
+    // ELEM_OPT_TV(0x13, , DE_NAS_5GS_SM_INT_PROT_MAX_DATA_RTE, NULL);
     consumed = dissect_opt_elem_tv(nullptr, &int_prot_max_data_rate, d, ctx);
     d.step(consumed);
 
     /*7A    Requested QoS rules    QoS rules 9.11.4.6    O    TLV-E    3-65538 */
-    // ELEM_OPT_TLV_E(
-    //     0x7A, NAS_5GS_PDU_TYPE_SM, DE_NAS_5GS_SM_QOS_RULES, " - Requested QoS rules");
+    // ELEM_OPT_TLV_E(0x7A, , DE_NAS_5GS_SM_QOS_RULES, " - Requested QoS rules");
     consumed = dissect_opt_elem_tlv_e(nullptr, &requested_qos_rules, d, ctx);
     d.step(consumed);
 
