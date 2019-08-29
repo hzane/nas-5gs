@@ -491,7 +491,7 @@ int sm::dissect_authorized_qos_rules(dissector d, context* ctx) {
 
 int sm::dissect_mapped_eps_b_cont(dissector d, context* ctx) { return 0; }
 
-int sm::dissect_backoff_gprs_timer3(dissector d, context* ctx) { return 0; }
+int sm::dissect_backoff_gprs_timer3(dissector d, context* ctx) { return d.length; }
 
 int sm::dissect_sm_cap(dissector d, context* ctx) { return 0; }
 

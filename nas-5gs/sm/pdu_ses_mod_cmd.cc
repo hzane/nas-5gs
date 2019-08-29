@@ -60,7 +60,6 @@ int sm::pdu_ses_mod_cmd(dissector d, context* ctx) {
     consumed = dissect_opt_elem_tlv_e(nullptr, &ext_pco, d, ctx);
     d.step(consumed);
 
-    // extraneous_data_check(d.pinfo, d.tree, d.tvb, d.offset, d.length, 0);
     d.extraneous_data_check(0);
 
     return d.tvb->reported_length;
