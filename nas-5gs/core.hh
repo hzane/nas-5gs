@@ -7,19 +7,17 @@
 #include "proto.hh"
 #include "tvbuff.hh"
 #include "field_meta.hh"
-
-extern void nas_5gs_module_init();
-extern void nas_5gs_module_cleanup();
+#include "tree_meta.hh"
 
 struct context {
     std::vector<std::string> paths = {};
-    std::string                path() const;
+    NO_DISCARD std::string                path() const;
 };
 struct use_context{
     context* ctx;
     use_context(context* ctx, const char* path) : ctx(ctx) {
         if (ctx) ctx->paths.emplace_back(path);
-        bug("%s\n", path);
+        diag("%s\n", path);
     }
     ~use_context(){if(ctx) {
         ctx->paths.pop_back();
@@ -40,11 +38,6 @@ struct expert_meta : field_meta {
     const char* summary;
 };
 
-
-struct tree_meta {
-    const char* name;
-    const char* alias;
-};
 
 namespace tree_metas { // tree_metas
 __declspec(selectany) extern const tree_meta ett_none     = {};

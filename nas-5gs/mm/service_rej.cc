@@ -48,7 +48,7 @@ extern const element_meta t3346_gprs_timer2 = {
 };
 
 int dissect_t3346_gprs_timer2(dissector d, context* ctx) {
-    bug("no dissect\n");
+    diag("no dissect\n");
     return d.length;
 }
 

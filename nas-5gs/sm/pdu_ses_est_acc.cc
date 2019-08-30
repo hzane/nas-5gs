@@ -225,7 +225,7 @@ int dissect_pdu_address(dissector d, context* ctx) {
         d.step(4);
         break;
     default:
-        bug("known value %d", val);
+        diag("known value %d", val);
     }
     return 0;
 }

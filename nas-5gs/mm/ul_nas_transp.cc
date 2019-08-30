@@ -135,7 +135,7 @@ int dissect_pdu_ses_id(dissector d, context* ctx) {
     return 1;
 }
 int dissect_add_inf(dissector d, context* ctx) {
-    bug("no dissect for %s\n", "additional-information");
+    diag("no dissect for %s\n", "additional-information");
     return d.length;
 }
 

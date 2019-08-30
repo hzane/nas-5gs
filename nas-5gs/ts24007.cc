@@ -447,10 +447,9 @@ int add_generic_msg_elem_body(dissector d, context *ctx) {
     return d.length;
 }
 
-int add_unknown(dissector d,
-                uint8_t   iei, // message type ie
-                context * ctx) {
-    d.tree->add_expert(
-        d.pinfo, d.tvb, d.offset, d.length, "Unknown Message Type %#02x", iei);
+int add_unknown(dissector d, uint8_t iei, context *ctx) {
+    diag("unknown iei %d\n", iei);
+
+    d.add_item(d.length, "Unknown Message Type %#02x", iei);
     return d.length;
 }

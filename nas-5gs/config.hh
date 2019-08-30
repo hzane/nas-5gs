@@ -8,9 +8,9 @@
 #define NO_DISCARD [[nodiscard]]
 #define NO_RETURN [[noreturn]]
 #else
-#define MUST_USE_RESULT 
-#define NO_DISCARD 
-#define NO_RETURN 
+#define MUST_USE_RESULT
+#define NO_DISCARD
+#define NO_RETURN
 #endif
 
 #if __cplusplus <= 199711L
@@ -46,7 +46,7 @@ using string = std::string;
 
 using ustring = std::vector<uint8_t>;
 
-extern void bug(const char* format, ...);
+extern void diag(const char* format, ...);
 
 namespace enc {
 __declspec(selectany) extern const uint32_t na   = 0;
@@ -69,13 +69,14 @@ struct dissector {
         length -= consumed;
         return *this;
     }
-    proto_node* add_item(int len, const field_meta* fm, uint32_t e = enc::be);
-    void        add_bits(const field_meta* metas[]);
-    void        extraneous_data_check(int maxlen);
+    proto_node*    add_item(int len, const field_meta* fm, uint32_t e = enc::be);
+    proto_node*    add_item(int len, const char* format, ...);
+    void           add_bits(const field_meta* metas[]);
+    void           extraneous_data_check(int max_len);
     const uint8_t* safe_ptr() const;
     int            safe_length(int len) const;
-    dissector   slice(int len) const;
-    dissector use_elem(void* d)const;
+    dissector      slice(int len) const;
+    dissector      use_elem(void* d) const;
     void           set_private(const char* name, uint64_t val);
     uint64_t       get_private(const char* name, uint64_t dft = 0);
 };
@@ -173,6 +174,6 @@ std::vector< std::string > find_bitset_string(const val_string* vstr, uint32_t b
 
 std::string join(const std::vector< std::string >& strs, const char* sep = " ");
 
-// std::string bits7_string(const uint8_t* data, int len);
+string bits7_string(const uint8_t* data, int len);
 
 ustring ts_23_038_7bits_string(const uint8_t* ptr, int bit_offset, int no_of_chars);

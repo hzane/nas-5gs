@@ -91,7 +91,7 @@ int sm::dissect_sm_cause(dissector d, context* ctx) {
 }
 
 int sm::dissect_ext_pco(dissector d, context* ctx) {
-    bug("no dissect\n");
+    diag("no dissect\n");
     return d.length;
 }
 
@@ -690,7 +690,7 @@ int sm::dissect_mapped_eps_b_cont(dissector d, context* ctx) {
 }
 
 int sm::dissect_backoff_gprs_timer3(dissector d, context* ctx) {
-    bug("no dissect\n");
+    diag("no dissect\n");
     return d.length;
 }
 
@@ -727,7 +727,7 @@ int sm::dissect_sm_cap(dissector d, context* ctx) {
 
 //  *     9.11.4.9    Maximum number of supported packet filters
 int sm::dissect_max_num_sup_kpt_flt(dissector d, context* ctx) {
-    bug("no dissect\n");
+    diag("no dissect\n");
     return d.length;
 }
 
@@ -823,7 +823,7 @@ int sm::dissect_ses_ambr(dissector d, context* ctx) {
 }
 
 int sm::dissect_rq_gprs_timer(dissector d, context* ctx) {
-    bug("no dissect\n");
+    diag("no dissect\n");
     return d.length;
 }
 
@@ -832,7 +832,7 @@ int sm::dissect_rq_gprs_timer(dissector d, context* ctx) {
  */
 
 int sm::dissect_always_on_pdu_ses_ind(dissector d, context* ctx) {
-    bug("no dissect\n");
+    diag("no dissect\n");
     return d.length;
 }
 

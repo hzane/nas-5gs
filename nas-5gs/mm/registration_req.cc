@@ -1653,7 +1653,7 @@ int mm_reg_req::dissect_requested_drx_param(dissector d, context* ctx) {
  *   9.11.3.24    EPS NAS message container
  */
 int mm_reg_req::dissect_eps_nas_msg_cont(dissector d, context* ctx) {
-    bug("no eps dissector\n");
+    diag("no eps dissector\n");
     return d.length;
 }
 

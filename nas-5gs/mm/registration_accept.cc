@@ -603,22 +603,22 @@ int dissect_mico_ind(dissector d, context* ctx) { return mm::dissect_mico_ind(d,
 
 
 int dissect_t2512_gprs_timer_3(dissector d, context* ctx) {
-    bug("no dissector, %s\n", ctx->path().c_str());
+    diag("no dissector, %s\n", ctx->path().c_str());
     return d.length;
 }
 
 int dissect_de_reg_timer_gprs_timer2(dissector d, context* ctx) {
-    bug("no dissector, %s\n", ctx->path().c_str());
+    diag("no dissector, %s\n", ctx->path().c_str());
     return d.length;
 }
 
 int dissect_t3502_gprs_timer_2(dissector d, context* ctx) {
-    bug("no dissector, %s\n", ctx->path().c_str());
+    diag("no dissector, %s\n", ctx->path().c_str());
     return d.length;
 }
 
 int dissect_emerg_num_list(dissector d, context* ctx) {
-    bug("no dissector, %s\n", ctx->path().c_str());
+    diag("no dissector, %s\n", ctx->path().c_str());
     return d.length;
 }
 
@@ -1046,7 +1046,7 @@ int              dissect_sor_trans_cont(dissector d, context* ctx) {
 /* 9.10.2.2     EAP message*/
 /* EAP message as specified in IETF RFC 3748 */
 int dissect_eap_message(dissector d, context* ctx) {
-    bug("eap message specified in rfc 3748\n");
+    diag("eap message specified in rfc 3748\n");
     return d.length;
 }
 

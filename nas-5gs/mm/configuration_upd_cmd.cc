@@ -506,7 +506,7 @@ int dissect_mico_ind(dissector d, context* ctx) {
  *   9.11.3.46    Rejected NSSAI
  */
 int dissect_rej_nssai(dissector d, context* ctx) {
-    bug("ie %s not dissect yet\n", "rejected NSSAI");
+    diag("ie %s not dissect yet\n", "rejected NSSAI");
     return d.length;
 }
 
@@ -620,7 +620,7 @@ int dissect_full_name_network(dissector d, context* ctx) {
         auto num_text_bits = (d.length << 3) - num_spare_bits;
         if (num_text_bits && (num_text_bits % 7)){
             // text string must be multiple of 7
-            bug("num of text bits %d must be multiple of 7\n", num_text_bits);
+            diag("num of text bits %d must be multiple of 7\n", num_text_bits);
         }
         auto item = d.add_item(d.length, &hf_text_string, enc::none);
         // 3GPP TS 23.038 7 bits        alphabet
@@ -632,7 +632,7 @@ int dissect_full_name_network(dissector d, context* ctx) {
     } break;
     default:
         // d.add_expert("invalid code scheme %d", code_scheme);
-        bug("invalid code scheme %d\n", code_scheme);
+        diag("invalid code scheme %d\n", code_scheme);
     }
     return len;
 }

@@ -229,7 +229,7 @@ int mm::dissect_ta_id_list(dissector d, context* ctx) {
  *   9.11.3.46    Rejected NSSAI
  */
 int mm::dissect_rej_nssai(dissector d, context* ctx) {
-    bug("ie %s not dissect yet\n", "rejected NSSAI");
+    diag("ie %s not dissect yet\n", "rejected NSSAI");
     return d.length;
 }
 

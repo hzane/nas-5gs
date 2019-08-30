@@ -10,7 +10,7 @@ void OutputDebugStringA(const char*){}
 #endif
 
 // declared in config.hh
-void bug(const char* format, ...) {
+void diag(const char* format, ...) {
 
     va_list args;
     va_start(args, format);
@@ -29,7 +29,7 @@ void bug(const char* format, ...) {
 
 void extraneous_data_check(dissector d, int maxlen) {
     if (d.length < 0) {
-        bug("overflow at %d\n", d.offset);
+        diag("overflow at %d\n", d.offset);
     }
     if (d.length > maxlen) {
         d.tree->add_expert(d.pinfo,
@@ -42,3 +42,9 @@ void extraneous_data_check(dissector d, int maxlen) {
 }
 
 string context::path() const { return join(paths, "/"); }
+
+string bits7_string(const uint8_t* data, int len){
+    auto d = ts_23_038_7bits_string(data, 0, (len<<3)/7);
+    return string(d.begin(), d.end());
+}
+

@@ -526,13 +526,13 @@ int dissect_replayed_ue_sec_cap(dissector d, context* ctx) {
 
 // IMEISV request     9.11.3.28
 int dissect_imeisv_req(dissector d, context* ctx) {
-    bug("no dissect %s\n", ctx->path().c_str());
+    diag("no dissect %s\n", ctx->path().c_str());
     return d.length;
 }
 
 // * 9.11.3.12    Additional 5G security information
 int dissect_selected_eps_sec_algo(dissector d, context* ctx) {
-    bug("no dissect %s\n", ctx->path().c_str());
+    diag("no dissect %s\n", ctx->path().c_str());
     return d.length;
 }
 const field_meta hf_spare_b3 = {

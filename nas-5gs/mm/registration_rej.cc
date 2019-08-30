@@ -65,12 +65,12 @@ extern const element_meta t3502_gprs_timer_2 = {
 };
 
 int dissect_t3346_gprs_timer2(dissector d, context* ctx) {
-    bug("no dissect\n", ctx->path().c_str());
+    diag("no dissect\n", ctx->path().c_str());
     return d.length;
 }
 
 int dissect_t3502_gprs_timer_2(dissector d, context* ctx) {
-    bug("no dissect\n", ctx->path().c_str());
+    diag("no dissect\n", ctx->path().c_str());
     return d.length;
 }
 

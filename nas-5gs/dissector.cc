@@ -3,6 +3,7 @@
 #include "field_meta.hh"
 #include "tvbuff.hh"
 #include "packet_info.hh"
+#include <cstdarg>
 
 // struct dissector defined in config.hh
 
@@ -15,9 +16,17 @@ proto_node* dissector::add_item(int len, const field_meta* meta, uint32_t enc) {
     return tree->add_item(pinfo, tvb, offset, len, meta, enc);
 }
 
+proto_node *dissector::add_item(int len, const char*format, ...){
+    va_list args;
+    va_start(args, format);
+    auto txt = vformat(format, args);
+    va_end(args);
+    return tree->add_subtree(pinfo, tvb, offset, len, txt.c_str());
+}
+
 void dissector::extraneous_data_check(int maxlen) {
     if (length < 0) {
-        bug("overflow at %d\n", offset);
+        diag("overflow at %d\n", offset);
     }
     if (length > maxlen) {
         tree->add_expert(pinfo,

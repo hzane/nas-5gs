@@ -17,8 +17,7 @@ struct proto_node {
                          uint32_t          encoding);
 
     proto_item* set_uint(uint64_t val, uint32_t enc, const char* format, ...);
-
-    proto_item* set_int(int64_t val, uint32_t enc, const char* format, ...);
+    proto_item* set_int(int64_t v, uint32_t enc, const char* format, ...);
 
     proto_item* set_string(const string &v);
 
@@ -42,12 +41,13 @@ struct proto_node {
     uint64_t                 val      = 0;
     uint32_t                 enc    = enc::na; // enc::na
     const field_meta*        meta   = nullptr;
+    const tree_meta* tree_meta = nullptr;
     const uint8_t*           data   = nullptr;
     int                      length = 0;
     int                      offset   = 0;
 
     virtual ~proto_node();
-    proto_node(){};
+    proto_node()= default;;
 };
 
 inline void print_node(std::ostream& out, proto_node* node, int indent = 0) {
@@ -58,8 +58,8 @@ inline void print_node(std::ostream& out, proto_node* node, int indent = 0) {
     }
     out << std::endl;
 
-    for (auto node : node->children){
-        print_node(out, node, indent + 1);
+    for (auto n : node->children){
+        print_node(out, n, indent + 1);
     }
 }
 

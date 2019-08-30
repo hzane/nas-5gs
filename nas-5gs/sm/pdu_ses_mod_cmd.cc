@@ -78,7 +78,7 @@ extern const element_meta authorized_qos_flow_des = {
 
 // 9.11.4.4 Always-on PDU session requested
 int dissect_always_on_pdu_ses_req(dissector d, context* ctx) {
-    bug("no dissect\n");
+    diag("no dissect\n");
     return d.length;
 }
 

@@ -1,3 +1,6 @@
 #pragma once
-#include "core.hh"
-// defined in core.hh
+
+struct tree_meta {
+    const char* name;
+    const char* alias;
+};
