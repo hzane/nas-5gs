@@ -30,10 +30,6 @@ extern const field_meta*  hf_msg_auth_code;
 extern const field_meta   hf_pdu_ipv4_mask;
 extern const field_meta   hf_pid_next_hd;
 extern const field_meta   hf_single_port_type;
-// extern const field_meta   hf_5gs_reg_type;
-// extern const field_meta   hf_tsc_h1;
-// extern const field_meta   hf_nas_key_set_id_h1;
-
 extern const field_meta   hf_dnn;
 extern const field_meta   hf_spare_b7;
 extern const field_meta   hf_spare_b6;
