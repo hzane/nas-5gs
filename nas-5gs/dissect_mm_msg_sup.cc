@@ -41,7 +41,7 @@ const field_meta mm::hf_5gs_reg_type = {
         0x07,
 };
 
-extern const true_false_string mm::nas_5gs_mm_tsc_tfs = {
+extern const true_false_string mm::tfs_mm_tsc = {
     "Mapped security context (for KSIASME)",
     "Native security context (for KSIAMF)",
 };
@@ -52,7 +52,7 @@ const field_meta mm::hf_tsc = {
     ft::ft_boolean,
     8,
     nullptr,
-    &nas_5gs_mm_tsc_tfs,
+    &tfs_mm_tsc,
     nullptr,
     0x08,
 };
@@ -74,7 +74,7 @@ const field_meta mm::hf_tsc_h1 = {
     ft::ft_boolean,
     8,
     nullptr,
-    &nas_5gs_mm_tsc_tfs,
+    &tfs_mm_tsc,
     nullptr,
     0x80,
 };
@@ -250,7 +250,7 @@ const true_false_string tfs_nas_5gs_raai = {
     "all PLMN registration area not allocated",
 };
 
-const field_meta mm::hfm_nas_5gs_mm_raai_b0 = {
+const field_meta mm::hfm_mm_raai_b0 = {
     "Registration Area Allocation Indication (RAAI)",
     "nas_5gs.mm.raai_b0",
     ft::ft_boolean,
@@ -260,7 +260,7 @@ const field_meta mm::hfm_nas_5gs_mm_raai_b0 = {
     nullptr,
     0x01,
 };
-const field_meta* mm::hf_mm_raai_b0 = &hfm_nas_5gs_mm_raai_b0;
+const field_meta* mm::hf_mm_raai_b0 = &hfm_mm_raai_b0;
 
 const field_meta mm::hfm_mm_conf_upd_ind_ack_b0 = {
     "Acknowledgement",
@@ -873,7 +873,7 @@ const true_false_string mm::tfs_sal_al_t = {
     "TAIs in the list are in the allowed area",
 };
 
-const field_meta mm::hf_nas_5gs_mm_sal_al_t = {
+const field_meta mm::hf_mm_sal_al_t = {
     "Allowed type",
     "nas_5gs.mm.sal_al_t",
     ft::ft_boolean,

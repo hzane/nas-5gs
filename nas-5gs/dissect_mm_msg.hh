@@ -115,10 +115,13 @@ extern const element_meta abba;
 extern const true_false_string tfs_supported_not_supported;
 extern const true_false_string tfs_nas_5gs_mm_n1_mod;
 extern const true_false_string tfs_nas_5gs_mm_s1_mod;
-
-extern const field_meta hfm_nas_5gs_mm_conf_upd_ind_red_b1;
 extern const val_string nas_5gs_mm_type_of_enc_algo_vals[];
 extern const val_string nas_5gs_mm_type_of_ip_algo_vals[];
+extern const val_string nas_5gs_mm_req_type_vals[];
+extern const val_string nas_5gs_mm_serv_type_vals[];
+extern const val_string        mm_sal_t_li_values[];
+
+extern const field_meta hfm_nas_5gs_mm_conf_upd_ind_red_b1;
 extern const field_meta hfm_nas_5gs_mm_nas_sec_algo_enc;
 extern const field_meta hfm_nas_5gs_mm_nas_sec_algo_ip;
 extern const field_meta hfm_nas_5gs_mm_conf_upd_ind_red_b1;
@@ -130,9 +133,7 @@ extern const field_meta hfm_nas_5gs_mm_odd_even;
 extern const field_meta hfm_nas_5gs_mm_length;
 extern const field_meta hfm_nas_5gs_mm_abba;
 extern const field_meta hfm_nas_5gs_mm_pld_cont;
-extern const val_string nas_5gs_mm_req_type_vals[];
 extern const field_meta hfm_nas_5gs_mm_req_type;
-extern const val_string nas_5gs_mm_serv_type_vals[];
 extern const field_meta hfm_nas_5gs_mm_serv_type;
 extern const field_meta hfm_nas_5gs_mm_5g_ea0;
 extern const field_meta hfm_nas_5gs_mm_128_5g_ea1;
@@ -171,12 +172,11 @@ extern const field_meta hf_mm_s1_mode_reg_b0;
 extern const field_meta hf_mm_sal_t_li;
 extern const field_meta hf_proc_trans_id;
 extern const field_meta hf_element;
-extern const field_meta hf_nas_5gs_mm_sal_al_t;
-extern const val_string mm_sal_t_li_values[];
+extern const field_meta hf_mm_sal_al_t;
 extern const field_meta hf_abba;
 
 extern const true_false_string tfs_follow_on_req;
-extern const true_false_string nas_5gs_mm_tsc_tfs;
+extern const true_false_string tfs_mm_tsc;
 extern const true_false_string tfs_sms_requested;
 
 /* 9.11.3.7    5GS registration type */
@@ -189,5 +189,5 @@ extern const field_meta        hf_sms_requested;
 extern const field_meta hf_nas_key_set_id_h1;
 extern const field_meta hf_tsc_h1;
 extern const field_meta hf_nas_key_set_id;
-extern const field_meta hfm_nas_5gs_mm_raai_b0;
+extern const field_meta hfm_mm_raai_b0;
 } // namespace mm
