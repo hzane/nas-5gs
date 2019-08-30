@@ -49,15 +49,15 @@ extern const val_string nas_5gs_epd_values[] = {
     {0, nullptr},
 };
 
-const field_meta hfm_nas_5gs_epd                            = {
-        "Extended protocol discriminator",
-        "nas_5gs.epd",
-        ft::ft_uint8,
-        fd::base_dec,
-        nas_5gs_epd_values,
-        nullptr,
-        nullptr,
-        0x0,
+const field_meta hfm_nas_5gs_epd = {
+    "Extended protocol discriminator",
+    "nas_5gs.epd",
+    ft::ft_uint8,
+    fd::base_dec,
+    nas_5gs_epd_values,
+    nullptr,
+    nullptr,
+    0x0,
 };
 const field_meta* nas::hf_epd = &hfm_nas_5gs_epd;
 
@@ -71,14 +71,14 @@ const val_string nas_5gs_security_header_type_values[] = {
 };
 
 field_meta hfm_nas_5gs_security_header_type = {
-        "Security header type",
-        "nas_5gs.security_header_type",
-        ft::ft_uint8,
-        fd::base_dec,
-        nas_5gs_security_header_type_values,
-        nullptr,
-        nullptr,
-        0x0f,
+    "Security header type",
+    "nas_5gs.security_header_type",
+    ft::ft_uint8,
+    fd::base_dec,
+    nas_5gs_security_header_type_values,
+    nullptr,
+    nullptr,
+    0x0f,
 };
 const field_meta* nas::hf_sec_header_type = &hfm_nas_5gs_security_header_type;
 
@@ -173,14 +173,14 @@ const val_string  nas_5gs_pdu_session_id_values[] = {
     {0, nullptr},
 };
 const field_meta hfm_pdu_session_id = {
-        "PDU session identity",
-        "nas_5gs.pdu_session_id",
-        ft::ft_uint8,
-        fd::base_dec,
-        nas_5gs_pdu_session_id_values,
-        nullptr,
-        nullptr,
-        0x0,
+    "PDU session identity",
+    "nas_5gs.pdu_session_id",
+    ft::ft_uint8,
+    fd::base_dec,
+    nas_5gs_pdu_session_id_values,
+    nullptr,
+    nullptr,
+    0x0,
 };
 const field_meta* nas::hf_pdu_sess_id = &hfm_pdu_session_id;
 
@@ -267,38 +267,7 @@ const element_meta nas::eap_msg = {
     dissect_eap_msg,
 };
 
-const field_meta nas::hf_sal_num_e = {
-    "Number of elements",
-    "nas_5gs.mm.sal_num_e",
-    ft::ft_uint8,
-    fd::base_dec,
-    nullptr,
-    nullptr,
-    nullptr,
-    0x1f,
-};
 
-const field_meta nas::hf_sd = {
-    "Slice differentiator (SD)",
-    "nas_5gs.mm.mm_sd",
-    ft::ft_uint24,
-    fd::base_dec,
-    nullptr,
-    nullptr,
-    nullptr,
-    0x0,
-};
-
-const field_meta nas::hf_mapped_conf_sst = {
-    "Mapped configured SST",
-    "nas_5gs.mm.mapped_conf_sst",
-    ft::ft_uint8,
-    fd::base_dec,
-    nullptr,
-    nullptr,
-    nullptr,
-    0x0,
-};
 const field_meta nas::hf_dnn = {
     "DNN",
     "nas_5gs.cmn.dnn",
@@ -310,16 +279,6 @@ const field_meta nas::hf_dnn = {
     0x0,
 };
 
-const field_meta nas::hf_mapped_conf_ssd = {
-    "Mapped configured SD",
-    "nas_5gs.mm.mapped_conf_ssd",
-    ft::ft_uint24,
-    fd::base_dec,
-    nullptr,
-    nullptr,
-    nullptr,
-    0x0,
-};
 
 const field_meta nas::hf_spare_b7 = {
     "Spare",
@@ -397,9 +356,20 @@ const true_false_string nas::tfs_allowed_not_allowed = {
     "Not Allowed",
 };
 
-const field_meta nas::hf_sst = {
-    "Slice/service type (SST)",
-    "nas_5gs.mm.sst",
+
+const field_meta nas::hf_pdu_ipv4_mask = {
+    "IPv4 address mask",
+    "nas_5gs.ipv4_address_mask",
+    ft::ft_uint32,
+    fd::ipv4,
+    nullptr,
+    nullptr,
+    nullptr,
+    0x0,
+};
+const field_meta nas::hf_pid_next_hd = {
+    "Protocol identifier/Next header type",
+    "nas_5gs.protocol_identifier_or_next_hd",
     ft::ft_uint8,
     fd::base_dec,
     nullptr,
@@ -407,19 +377,13 @@ const field_meta nas::hf_sst = {
     nullptr,
     0x0,
 };
-
-const true_false_string nas::tfs_follow_on_req = {
-    "Follow-on request pending",
-    "No follow-on request pending",
-};
-
-const field_meta nas::hf_follow_on_req = {
-    "Follow-On Request bit (FOR)",
-    "nas_5gs.mm.for",
-    ft::ft_boolean,
-    fd::sep_dot,
+const field_meta nas::hf_single_port_type = {
+    "Port number",
+    "nas_5gs.port_type",
+    ft::ft_uint16,
+    fd::base_dec,
     nullptr,
-    &tfs_follow_on_req,
     nullptr,
-    0x08,
+    nullptr,
+    0x0,
 };

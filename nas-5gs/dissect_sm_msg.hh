@@ -36,6 +36,7 @@ int dissect_rq_gprs_timer(dissector d, context* ctx);
 int dissect_always_on_pdu_ses_ind(dissector d, context* ctx);
 int dissect_int_prot_max_data_rate(dissector d, context* ctx);
 int dissect_allowed_ssc_mode(dissector d, context* ctx);
+int dissect_sm_s_nssai(dissector d, context* ctx);
 
 //*      9.11.4.16    SSC mode
 int dissect_ssc_mode(dissector d, context* ctx);
@@ -86,9 +87,6 @@ extern const field_meta hf_sm_pkt_flt_dir;
 extern const field_meta hf_sm_pf_len;
 extern const field_meta hf_sm_pf_type;
 extern const field_meta hf_pdu_addr_ipv4;
-extern const field_meta hf_pdu_ipv4_mask;
-extern const field_meta hf_pid_next_hd;
-extern const field_meta hf_single_port_type;
 extern const field_meta hf_sm_qos_rule_precedence;
 
 /*   9.11.4.8 Mapped EPS bearer contexts  */

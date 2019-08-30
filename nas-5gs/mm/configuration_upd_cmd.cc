@@ -293,7 +293,7 @@ int dissect_sal(dissector d, context* ctx) {
     static const field_meta* flags[] = {
         &hf_sal_al_t,
         &hf_sal_t_li,
-        &nas::hf_sal_num_e,
+        &hf_sal_num_e,
         nullptr,
     };
     auto num_par_sal = 1;

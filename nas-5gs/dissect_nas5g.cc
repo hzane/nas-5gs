@@ -192,39 +192,6 @@ int nas::dissect_dnn(dissector d, context* ctx) {
     return len;
 }
 
-/* 9.10.2.8    S-NSSAI */
-int nas::dissect_s_nssai(dissector d, context* ctx) {
-    /* SST    octet 3
-     * This field contains the 8 bit SST value. The coding of the SST value part is
-     * defined in 3GPP TS 23.003
-     */
-    d.add_item(1, &hf_sst, enc::be);
-    d.step(1);
-    if (d.length <= 0) {
-        return 1;
-    }
-
-    /* SD    octet 4 - octet 6* */
-    d.add_item(3, &hf_sd, enc::be);
-    d.step(3);
-    if (d.length <= 0) {
-        return 4;
-    }
-
-    /* Mapped configured SST    octet 7* */
-    d.add_item(1, &hf_mapped_conf_sst, enc::be);
-    d.step(1);
-    if (d.length <= 0) {
-        return 5;
-    }
-
-    /* Mapped configured SD    octet 8 - octet 10* */
-    d.add_item(3, &hf_mapped_conf_ssd, enc::be);
-    d.step(3);
-
-    d.extraneous_data_check(0);
-    return 8;
-}
 
 const message_meta* find_dissector(uint8_t iei, const message_meta* meta) {
     while (meta->type) {

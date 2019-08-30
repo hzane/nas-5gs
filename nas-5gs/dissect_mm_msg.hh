@@ -63,6 +63,7 @@ int dissect_updp(dissector d, context* ctx);
 int dissect_nw_slicing_ind(dissector d, context* ctx);
 int dissect_nas_ksi(dissector d, context* ctx);
 int dissect_nas_msg_cont(dissector d, context* ctx = nullptr);
+int dissect_s_nssai(dissector d, context* ctx);
 
 int dissect_abba(dissector d, context* ctx);
 
@@ -84,6 +85,7 @@ extern const field_meta   hfm_mm_cause;
 extern const field_meta   hf_mm_cause;
 extern const field_meta   hf_mm_type_id;
 extern const field_meta   hf_mm_sst;
+extern const field_meta   hf_sst;
 
 extern const value_string mm_pld_cont_type_values[];
 extern const val_string   mm_type_id_values[];
@@ -102,6 +104,7 @@ extern const field_meta  hf_pld_cont;
 extern const field_meta  hf_pld_cont_type;
 extern const field_meta  hfm_nas_eps_tsc;
 extern const field_meta* hf_nas_eps_tsc;
+extern const field_meta  hf_follow_on_req;
 
 extern const field_meta   hf_abba;
 extern const field_meta   hfm_mm_conf_upd_ind_ack_b0;
@@ -170,10 +173,11 @@ extern const field_meta hfm_nas_5gs_mm_eia7;
 extern const field_meta hf_mm_n1_mode_reg_b1;
 extern const field_meta hf_mm_s1_mode_reg_b0;
 extern const field_meta hf_mm_sal_t_li;
-extern const field_meta hf_proc_trans_id;
+// extern const field_meta hf_proc_trans_id;
 extern const field_meta hf_element;
 extern const field_meta hf_mm_sal_al_t;
 extern const field_meta hf_abba;
+extern const field_meta hf_sal_num_e;
 
 extern const true_false_string tfs_follow_on_req;
 extern const true_false_string tfs_mm_tsc;
@@ -185,9 +189,12 @@ extern const val_string        values_registration_type[];
 extern const field_meta        hf_5gs_reg_type;
 extern const field_meta        hf_tsc;
 extern const field_meta        hf_sms_requested;
+extern const field_meta        hf_sd;
 
 extern const field_meta hf_nas_key_set_id_h1;
 extern const field_meta hf_tsc_h1;
 extern const field_meta hf_nas_key_set_id;
 extern const field_meta hfm_mm_raai_b0;
+extern const field_meta hf_mapped_conf_sst;
+extern const field_meta hf_mapped_conf_ssd;
 } // namespace mm

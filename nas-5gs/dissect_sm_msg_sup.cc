@@ -373,36 +373,7 @@ const field_meta sm::hf_pdu_addr_ipv4 = {
     nullptr,
     0x0,
 };
-const field_meta sm::hf_pdu_ipv4_mask = {
-    "IPv4 address mask",
-    "nas_5gs.ipv4_address_mask",
-    ft::ft_uint32,
-    fd::ipv4,
-    nullptr,
-    nullptr,
-    nullptr,
-    0x0,
-};
-const field_meta sm::hf_pid_next_hd = {
-    "Protocol identifier/Next header type",
-    "nas_5gs.protocol_identifier_or_next_hd",
-    ft::ft_uint8,
-    fd::base_dec,
-    nullptr,
-    nullptr,
-    nullptr,
-    0x0,
-};
-const field_meta sm::hf_single_port_type = {
-    "Port number",
-    "nas_5gs.port_type",
-    ft::ft_uint16,
-    fd::base_dec,
-    nullptr,
-    nullptr,
-    nullptr,
-    0x0,
-};
+
 const field_meta sm::hf_sm_qos_rule_precedence = {
     "QoS rule precedence",
     "nas_5gs.sm.qos_rule_precedence",

@@ -1,7 +1,7 @@
 #include "dissect_mm_msg.hh"
 
 using namespace mm;
-
+using namespace nas;
 
 /* * 9.11.3.9A    5GS update type*/
 
@@ -77,6 +77,18 @@ const field_meta mm::hf_tsc_h1 = {
     &tfs_mm_tsc,
     nullptr,
     0x80,
+};
+
+
+const field_meta mm::hf_sal_num_e = {
+    "Number of elements",
+    "nas_5gs.mm.sal_num_e",
+    ft::ft_uint8,
+    fd::base_dec,
+    nullptr,
+    nullptr,
+    nullptr,
+    0x1f,
 };
 
 const field_meta mm::hf_nas_key_set_id_h1 = {
@@ -903,7 +915,7 @@ const field_meta mm::hf_mm_sal_t_li      = {
     nullptr,
     0x60,
 };
-
+#if 0
 const field_meta mm::hf_proc_trans_id = {
     "Procedure transaction identity",
     "nas_5gs.proc_trans_id",
@@ -914,7 +926,7 @@ const field_meta mm::hf_proc_trans_id = {
     nullptr,
     0x0,
 };
-
+#endif
 const field_meta mm::hf_element = {
     "Message Elements",
     "nas_5gs.message_elements",
@@ -936,7 +948,7 @@ int mm::dissect_updp(dissector d, context* ctx) {
      * 3GPP TS 24.007
      * XXX Only 5GSM ?
      */
-    d.add_item(1, &hf_proc_trans_id, enc::be);
+    d.add_item(1, hf_proc_trans_id, enc::be);
     d.step(1);
 
     /* Message type IE*/
@@ -1276,4 +1288,64 @@ const field_meta mm::hf_abba = {
     nullptr,
     nullptr,
     0x00,
+};
+
+const field_meta mm::hf_sd = {
+    "Slice differentiator (SD)",
+    "nas_5gs.mm.mm_sd",
+    ft::ft_uint24,
+    fd::base_dec,
+    nullptr,
+    nullptr,
+    nullptr,
+    0x0,
+};
+
+const field_meta mm::hf_mapped_conf_sst = {
+    "Mapped configured SST",
+    "nas_5gs.mm.mapped_conf_sst",
+    ft::ft_uint8,
+    fd::base_dec,
+    nullptr,
+    nullptr,
+    nullptr,
+    0x0,
+};
+
+const field_meta mm::hf_mapped_conf_ssd = {
+    "Mapped configured SD",
+    "nas_5gs.mm.mapped_conf_ssd",
+    ft::ft_uint24,
+    fd::base_dec,
+    nullptr,
+    nullptr,
+    nullptr,
+    0x0,
+};
+
+const field_meta mm::hf_sst = {
+    "Slice/service type (SST)",
+    "nas_5gs.mm.sst",
+    ft::ft_uint8,
+    fd::base_dec,
+    nullptr,
+    nullptr,
+    nullptr,
+    0x0,
+};
+
+const field_meta mm::hf_follow_on_req = {
+    "Follow-On Request bit (FOR)",
+    "nas_5gs.mm.for",
+    ft::ft_boolean,
+    fd::sep_dot,
+    nullptr,
+    &tfs_follow_on_req,
+    nullptr,
+    0x08,
+};
+
+const true_false_string mm::tfs_follow_on_req = {
+    "Follow-on request pending",
+    "No follow-on request pending",
 };

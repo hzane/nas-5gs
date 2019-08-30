@@ -738,7 +738,7 @@ int mm::dissect_sal(dissector d, context* ctx) {
     static const field_meta* flags[] = {
         &hf_sal_al_t,
         &hf_sal_t_li,
-        &nas::hf_sal_num_e,
+        &hf_sal_num_e,
         nullptr,
     };
     auto num_par_sal = 1;
@@ -1092,3 +1092,39 @@ int mm::dissect_abba(dissector d, context* ctx) {
     d.add_item(d.length, &hf_abba, enc::be);
     return d.length;
 }
+
+
+/* 9.10.2.8    S-NSSAI */
+int mm::dissect_s_nssai(dissector d, context* ctx) {
+    /* SST    octet 3
+     * This field contains the 8 bit SST value. The coding of the SST value part is
+     * defined in 3GPP TS 23.003
+     */
+    d.add_item(1, &hf_sst, enc::be);
+    d.step(1);
+    if (d.length <= 0) {
+        return 1;
+    }
+
+    /* SD    octet 4 - octet 6* */
+    d.add_item(3, &hf_sd, enc::be);
+    d.step(3);
+    if (d.length <= 0) {
+        return 4;
+    }
+
+    /* Mapped configured SST    octet 7* */
+    d.add_item(1, &hf_mapped_conf_sst, enc::be);
+    d.step(1);
+    if (d.length <= 0) {
+        return 5;
+    }
+
+    /* Mapped configured SD    octet 8 - octet 10* */
+    d.add_item(3, &hf_mapped_conf_ssd, enc::be);
+    d.step(3);
+
+    d.extraneous_data_check(0);
+    return 8;
+}
+
