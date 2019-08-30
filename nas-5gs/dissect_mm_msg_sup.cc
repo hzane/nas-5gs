@@ -372,7 +372,7 @@ const field_meta mm::hfm_nas_5gs_mm_type_id = {
     "nas_5gs.mm.type_id",
     ft::ft_uint8,
     fd::base_dec,
-    nas_5gs_mm_type_id_vals,
+    mm_type_id_values,
     nullptr,
     nullptr,
     0x07,
@@ -1101,7 +1101,7 @@ extern const element_meta mm::mobile_id = {
 /*
  * 9.11.3.4    5GS mobile identity
  */
-extern const val_string mm::nas_5gs_mm_type_id_vals[] = {
+extern const val_string mm::mm_type_id_values[] = {
     {0x0, "No identity"},
     {0x1, "SUCI"},
     {0x2, "5G-GUTI"},
@@ -1115,7 +1115,7 @@ extern const field_meta mm::hf_nas_5gs_mm_type_id = {
     "nas_5gs.mm.type_id",
     ft::ft_uint8,
     fd::base_dec,
-    (nas_5gs_mm_type_id_vals),
+    (mm_type_id_values),
     nullptr,
     nullptr,
     0x07,
