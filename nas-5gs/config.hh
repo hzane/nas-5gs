@@ -76,7 +76,7 @@ struct dissector {
     const uint8_t* safe_ptr() const;
     int            safe_length(int len) const;
     dissector      slice(int len) const;
-    dissector      use_elem(void* d) const;
+    dissector      use_elem(void* elem) const;
     void           set_private(const char* name, uint64_t val);
     uint64_t       get_private(const char* name, uint64_t dft = 0);
 };
@@ -155,13 +155,14 @@ string format_hex(const uint8_t* data,
                   int            len,
                   const char*    sep = " ",
                   const char*    lf  = "\n");
+
 string format_bit(const uint8_t* data, int len, const char* sep = " ");
 string format_int(uint64_t v, uint32_t ftype, uint32_t display);
 string format_int_hex(uint64_t v, uint32_t ftype);
 string format_int_dec(uint64_t v, uint32_t ftype);
 
-std::string formats(const char* format, ...);
-std::string vformat(const char* format, va_list);
+string formats(const char* format, ...);
+string vformat(const char* format, va_list);
 
 const char* find_val_string(const val_string* vstr,
                             uint32_t          id,
@@ -170,10 +171,16 @@ const char* find_r_string(const range_string* rstr,
                           uint32_t            id,
                           const char*         missing = "Unknown");
 
-std::vector< std::string > find_bitset_string(const val_string* vstr, uint32_t bits);
+std::vector< std::string > find_bits_string(const val_string* strings, uint32_t bits);
 
-std::string join(const std::vector< std::string >& strs, const char* sep = " ");
+string join(const std::vector< string >& strings, const char* sep = " ");
 
 string bits7_string(const uint8_t* data, int len);
 
 ustring ts_23_038_7bits_string(const uint8_t* ptr, int bit_offset, int no_of_chars);
+
+int ws_ctz(uint64_t x);
+
+uint32_t get_ext_ambr_unit(uint32_t unit, const char** unit_str);
+
+string ambr_string(uint32_t val, uint32_t unit);

@@ -156,9 +156,10 @@
     <ClCompile Include="dissector.cc" />
     <ClCompile Include="dissect_mm_msg.cc" />
     <ClCompile Include="dissect_mm_msg_i.cc" />
-    <ClCompile Include="dissect_nas_5gs.cc" />
-    <ClCompile Include="dissect_nas_5gs_i.cc" />
+    <ClCompile Include="dissect_nas5g.cc" />
+    <ClCompile Include="dissect_nas5g_sup.cc" />
     <ClCompile Include="dissect_sm_msg.cc" />
+    <ClCompile Include="dissect_sm_msg_sup.cc" />
     <ClCompile Include="field_meta.cc" />
     <ClCompile Include="formats.cc" />
     <ClCompile Include="mm\authentication_failure.cc" />
@@ -211,11 +212,13 @@
     <ClInclude Include="config.hh" />
     <ClInclude Include="core.hh" />
     <ClInclude Include="dissect_mm_msg.hh" />
-    <ClInclude Include="dissect_nas_5gs.hh" />
+    <ClInclude Include="dissect_nas5g.hh" />
     <ClInclude Include="dissect_sm_msg.hh" />
+    <ClInclude Include="eps.hh" />
     <ClInclude Include="expert_meta.hh" />
     <ClInclude Include="field_meta.hh" />
     <ClCompile Include="mm\registration_req_i.cc" />
+    <ClInclude Include="gsm.hh" />
     <ClInclude Include="nas-5gs.hh" />
     <ClInclude Include="packet_info.hh" />
     <ClInclude Include="proto.hh" />

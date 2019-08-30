@@ -48,3 +48,39 @@ string bits7_string(const uint8_t* data, int len){
     return string(d.begin(), d.end());
 }
 
+uint32_t get_ext_ambr_unit(uint32_t unit, const char** unit_str) {
+    uint32_t mult = 1;
+
+    if (unit == 0) {
+        *unit_str = "Unit value 0, Illegal";
+        return mult;
+    }
+    unit = unit - 1;
+
+    if (unit <= 0x05) {
+        mult      = 1 << (2 * unit); // pow4(guint32, unit);
+        *unit_str = "Kbps";
+    } else if (unit <= 0x0a) {
+        mult      = 1 << (2 * (unit - 0x05)); // pow4(guint32, unit - 0x05);
+        *unit_str = "Mbps";
+    } else if (unit <= 0x0e) {
+        mult      = 1 << (2 * (unit - 0x07)); // pow4(guint32, unit - 0x07);
+        *unit_str = "Gbps";
+    } else if (unit <= 0x14) {
+        mult      = 1 << (2 * (unit - 0x0c)); // pow4(guint32, unit - 0x0c);
+        *unit_str = "Tbps";
+    } else if (unit <= 0x19) {
+        mult      = 1 << (2 * (unit - 0x11)); // pow4(guint32, unit - 0x11);
+        *unit_str = "Pbps";
+    } else {
+        mult      = 256;
+        *unit_str = "Pbps";
+    }
+    return mult;
+}
+
+string ambr_string(uint32_t val, uint32_t unit){
+    const char* unit_str = "";
+    auto multi = get_ext_ambr_unit(unit, &unit_str);
+    return formats("%u %s (%u)", val * multi, unit_str, val);
+}

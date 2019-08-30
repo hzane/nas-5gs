@@ -11,12 +11,6 @@ struct true_false_string {
 };
 using value_string = val_string;
 
-// [val_min, val_max]
-struct range_string {
-    uint32_t    val_min;
-    uint32_t    val_max;
-    const char* text;
-};
 
 __declspec(selectany) extern const true_false_string true_false = {"true", "false"};
 
@@ -73,8 +67,10 @@ __declspec(selectany) extern const uint32_t base_bit     = 7; // show as bit set
 __declspec(selectany) extern const uint32_t base_string  = 8;
 __declspec(selectany) extern const uint32_t bits7        = 13u; // bits7 ascii string
 __declspec(selectany) extern const uint32_t ipv4         = 14u; // xxx.xxx.xxx.xxx
+__declspec(selectany) extern const uint32_t ipv6         = 17u; // xxx.xxx.xxx.xxx
 __declspec(selectany) extern const uint32_t timer        = 15u; // gprs timer
 __declspec(selectany) extern const uint32_t mmc          = 16u; //
+__declspec(selectany) extern const uint32_t mac          = 18u; //
 
 /* Byte separators  when ft == ft_bytes */
 /* hexadecimal bytes with a period (.) between each byte */

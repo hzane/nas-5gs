@@ -1,18 +1,17 @@
 #pragma once
-#include "config.hh"
+#include <iostream>
 #include <list>
 #include <string>
 #include <vector>
-#include <iostream>
+#include "config.hh"
+#include "packet_info.hh"
 
 struct proto_node {
-    void set_length(int length);
-    void set_generated(bool generated = true);
-
+    void set_length(int len);
     proto_item* add_item(packet_info*      pinfo,
                          tvbuff*           buf,
-                         int               offset,
-                         int               length,
+                         int               start,
+                         int               len,
                          const field_meta* field,
                          uint32_t          encoding);
 
@@ -23,15 +22,15 @@ struct proto_node {
 
     proto_item* add_expert(packet_info* pinfo,
                            tvbuff*      buf,
-                           int          offset,
-                           int          length,
+                           int          start,
+                           int          len,
                            const char*  format,
                            ...);
 
     proto_tree* add_subtree(packet_info* pinfo,
                             tvbuff*      buf,
-                            int          offset,
-                            int          length,
+                            int          start,
+                            int          len,
                             const char*  format,
                             ...);
 
@@ -62,5 +61,4 @@ inline void print_node(std::ostream& out, proto_node* node, int indent = 0) {
         print_node(out, n, indent + 1);
     }
 }
-
 

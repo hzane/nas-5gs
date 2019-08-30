@@ -1,5 +1,5 @@
 #pragma once
-#include "dissect_nas_5gs.hh"
+#include "dissect_nas5g.hh"
 
 /* 9.7  Message type */
 
@@ -374,6 +374,8 @@ __declspec(selectany) extern const element_meta nas_ksi = {
     "NAS key set identifier",
     dissect_nas_ksi,
 };
+
+extern const field_meta hf_abba;
 } // namespace mm
 
 

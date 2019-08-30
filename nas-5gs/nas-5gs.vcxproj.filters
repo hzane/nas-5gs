@@ -18,12 +18,6 @@
     <ClCompile Include="nas-5gs.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="dissect_nas_5gs_i.cc">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="dissect_nas_5gs.cc">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="proto.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -183,6 +177,15 @@
     <ClCompile Include="mm\de_reg_req_ue_term.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="dissect_nas5g.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="dissect_nas5g_sup.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="dissect_sm_msg_sup.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="config.hh">
@@ -224,10 +227,16 @@
     <ClInclude Include="dissect_sm_msg.hh">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="dissect_nas_5gs.hh">
+    <ClInclude Include="dissect_mm_msg.hh">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="dissect_mm_msg.hh">
+    <ClInclude Include="dissect_nas5g.hh">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gsm.hh">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="eps.hh">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

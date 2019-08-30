@@ -55,14 +55,14 @@ int dissector::safe_length(int len) const {
 }
 
 void dissector::set_private(const char* name, uint64_t v) {
-    pinfo->iprivates[string(name)] = v;
+    pinfo->i_privates[string(name)] = v;
 }
 uint64_t dissector::get_private(const char* name, uint64_t v) {
-    auto i = pinfo->iprivates.find(string(name));
-    if (i != pinfo->iprivates.end()) return i->second;
+    auto i = pinfo->i_privates.find(string(name));
+    if (i != pinfo->i_privates.end()) return i->second;
     return v;
 }
 
-dissector dissector::use_elem(void* data)const {
-    return dissector{pinfo, tree, tvb, offset, length, data};
+dissector dissector::use_elem(void* elem)const {
+    return dissector{pinfo, tree, tvb, offset, length, elem};
 }

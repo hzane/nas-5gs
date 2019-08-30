@@ -1,20 +1,17 @@
+#include "dissect_nas5g.hh"
 #include "core.hh"
-#include "dissect_nas_5gs.hh"
-#include "dissect_sm_msg.hh"
 #include "dissect_mm_msg.hh"
+#include "dissect_sm_msg.hh"
 #include "ts24007.hh"
 
 using namespace nas;
 
-extern const field_meta* hf_seq_no;
-extern const field_meta* hf_proc_trans_id;
-
-int dissect_nas_5gs(dissector d, context* ctx) {
+int dissect_nas5g(dissector d, context* ctx) {
     auto item = d.tree->add_subtree(d.pinfo, d.tvb, d.offset, -1, nas_5gs_module.name);
 
     auto epd = d.tvb->uint8(d.offset);
     if (epd == EPD::SM5G) { // always plain format
-        return dissect_nas_5gs_plain(d, ctx);
+        return dissect_nas5g_plain(d, ctx);
     }
 
     /* Security header type associated with a spare half octet; */
@@ -23,7 +20,7 @@ int dissect_nas_5gs(dissector d, context* ctx) {
     auto sec_type = d.tvb->uint8(d.offset + 1);
 
     if (sec_type == 0) { // NAS_5GS_PLAIN_NAS_MSG;
-        return dissect_nas_5gs_plain(d, ctx);
+        return dissect_nas5g_plain(d, ctx);
     }
     /* Security protected NAS 5GS message*/
     auto sub_tree =
@@ -53,7 +50,7 @@ int dissect_nas_5gs(dissector d, context* ctx) {
     return d.tvb->length;
 }
 
-int dissect_nas_5gs_plain(dissector d, context* ctx) {
+int dissect_nas5g_plain(dissector d, context* ctx) {
     /* Plain NAS 5GS Message */
     auto subtree =
         d.tree->add_subtree(d.pinfo, d.tvb, d.offset, -1, "Plain NAS 5GS Message");
@@ -164,16 +161,6 @@ static int dissect_mm_msg(dissector d, context* ctx) {
     return len;
 }
 
-extern const field_meta nas::hf_sst = {
-    "Slice/service type (SST)",
-    "nas_5gs.mm.sst",
-    ft::ft_uint8,
-    fd::base_dec,
-    nullptr,
-    nullptr,
-    nullptr,
-    0x0,
-};
 
 /* 9.10.2.2    EAP message*/
 int nas::dissect_eap_msg(dissector d, context* ctx) {
@@ -239,3 +226,10 @@ int nas::dissect_s_nssai(dissector d, context* ctx) {
     return 8;
 }
 
+const message_meta* find_dissector(uint8_t iei, const message_meta* meta) {
+    while (meta->type) {
+        if (meta->type == iei) return meta;
+        meta++;
+    }
+    return nullptr;
+}

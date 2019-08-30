@@ -2,8 +2,9 @@
 #include "ts24007.hh"
 
 using namespace nas;
+using namespace mm;
 
-extern const field_meta hf_abba = {
+const field_meta mm::hf_abba = {
     "ABBA Contents",
     "nas_5gs.mm.abba_contents",
     ft::ft_uint16,
@@ -997,7 +998,7 @@ int mm::dissect_pld_cont(dissector d, context* ctx) {
     auto typi = d.get_private("payload-content-type", 0);
     switch (typi) {
     case 1: { /* N1 SM information */
-        dissect_nas_5gs_plain(d, ctx);
+        dissect_nas5g_plain(d, ctx);
     } break;
     case 2: { // SMS
         d.add_item(d.length, &hf_pld_cont, enc::na);

@@ -1,5 +1,5 @@
 #include "ts24007.hh"
-#include "dissect_nas_5gs.hh"
+#include "dissect_nas5g.hh"
 #include "field_meta.hh"
 
 int dissect_elem_mandatory(const field_meta*   type_meta,

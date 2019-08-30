@@ -1,6 +1,8 @@
-#include "dissect_nas_5gs.hh"
+#include "dissect_nas5g.hh"
 
-static const field_meta hfm_spare_half_octet = {
+using namespace nas;
+
+const field_meta hfm_spare_half_octet = {
     "Spare Half Octet",
     "nas_5gs.spare_half_octet",
     ft::ft_uint8,
@@ -12,7 +14,7 @@ static const field_meta hfm_spare_half_octet = {
 };
 const field_meta* nas::hf_spare_half_octet = &hfm_spare_half_octet;
 
-static field_meta hfm_nas_5gs_msg_elems = {
+const field_meta hfm_nas_5gs_msg_elems = {
     "Message Elements",
     "nas_5gs.message_elements",
     ft::ft_bytes,
@@ -47,7 +49,7 @@ extern const val_string nas_5gs_epd_values[] = {
     {0, nullptr},
 };
 
-static const field_meta hfm_nas_5gs_epd                            = {
+const field_meta hfm_nas_5gs_epd                            = {
         "Extended protocol discriminator",
         "nas_5gs.epd",
         ft::ft_uint8,
@@ -68,7 +70,7 @@ const val_string nas_5gs_security_header_type_values[] = {
     {0, nullptr},
 };
 
-static field_meta hfm_nas_5gs_security_header_type = {
+field_meta hfm_nas_5gs_security_header_type = {
         "Security header type",
         "nas_5gs.security_header_type",
         ft::ft_uint8,
@@ -80,7 +82,7 @@ static field_meta hfm_nas_5gs_security_header_type = {
 };
 const field_meta* nas::hf_sec_header_type = &hfm_nas_5gs_security_header_type;
 
-static field_meta hfm_nas_5gs_msg_auth_code = {
+field_meta hfm_nas_5gs_msg_auth_code = {
     "Message authentication code",
     "nas_5gs.msg_auth_code",
     ft::ft_uint32,
@@ -92,7 +94,7 @@ static field_meta hfm_nas_5gs_msg_auth_code = {
 };
 const field_meta* nas::hf_msg_auth_code = &hfm_nas_5gs_msg_auth_code;
 
-static field_meta hfm_nas_5gs_seq_no = {
+field_meta hfm_nas_5gs_seq_no = {
     "Sequence number",
     "nas_5gs.seq_no",
     ft::ft_uint8,
@@ -102,7 +104,7 @@ static field_meta hfm_nas_5gs_seq_no = {
     nullptr,
     0x0,
 };
-const field_meta* hf_seq_no = &hfm_nas_5gs_seq_no;
+const field_meta* nas::hf_seq_no = &hfm_nas_5gs_seq_no;
 
 /* 5GS session management messages */
 const val_string nas_5gs_sm_message_type_vals[] = {
@@ -139,7 +141,7 @@ const val_string nas_5gs_sm_message_type_vals[] = {
     {0, nullptr},
 };
 
-static field_meta hfm_nas_5gs_sm_msg_type = {
+field_meta hfm_nas_5gs_sm_msg_type = {
     "Message type",
     "nas_5gs.sm.message_type",
     ft::ft_uint8,
@@ -182,7 +184,7 @@ const field_meta hfm_pdu_session_id = {
 };
 const field_meta* nas::hf_pdu_session_id = &hfm_pdu_session_id;
 
-static field_meta hfm_nas_5gs_proc_trans_id = {
+field_meta hfm_nas_5gs_proc_trans_id = {
     "Procedure transaction identity",
     "nas_5gs.proc_trans_id",
     ft::ft_uint8,
@@ -192,12 +194,12 @@ static field_meta hfm_nas_5gs_proc_trans_id = {
     nullptr,
     0x0,
 };
-const field_meta* hf_proc_trans_id = &hfm_nas_5gs_proc_trans_id;
+const field_meta* nas::hf_proc_trans_id = &hfm_nas_5gs_proc_trans_id;
 
 /* 9.7  Message type */
 
 /* 5GS mobility management messages */
-static const val_string values_mm_message_type[] = {
+const val_string values_mm_message_type[] = {
     {0x41, "Registration request"},
     {0x42, "Registration accept"},
     {0x43, "Registration complete"},
@@ -246,14 +248,162 @@ static const val_string values_mm_message_type[] = {
     {0x68, "DL NAS transport"},
     {0, nullptr},
 };
-static field_meta       hfm_mm_msg_type          = {
-        "Message type",
-        "nas_5gs.sm.message_type",
-        ft::ft_uint8,
-        fd::base_hex ,
-        values_mm_message_type,
-        nullptr,
-        nullptr,
-        0x0,
+const field_meta hfm_mm_msg_type = {
+    "Message type",
+    "nas_5gs.sm.message_type",
+    ft::ft_uint8,
+    fd::base_hex,
+    values_mm_message_type,
+    nullptr,
+    nullptr,
+    0x0,
 };
 const field_meta* nas::hf_mm_msg_type = &hfm_mm_msg_type;
+
+// as specified in IETF RFC 3748
+const element_meta nas::eap_msg = {
+    0x78,
+    "EAP message",
+    dissect_eap_msg,
+};
+
+const field_meta nas::hf_sal_num_e = {
+    "Number of elements",
+    "nas_5gs.mm.sal_num_e",
+    ft::ft_uint8,
+    fd::base_dec,
+    nullptr,
+    nullptr,
+    nullptr,
+    0x1f,
+};
+
+const field_meta nas::hf_sd = {
+    "Slice differentiator (SD)",
+    "nas_5gs.mm.mm_sd",
+    ft::ft_uint24,
+    fd::base_dec,
+    nullptr,
+    nullptr,
+    nullptr,
+    0x0,
+};
+
+const field_meta nas::hf_mapped_conf_sst = {
+    "Mapped configured SST",
+    "nas_5gs.mm.mapped_conf_sst",
+    ft::ft_uint8,
+    fd::base_dec,
+    nullptr,
+    nullptr,
+    nullptr,
+    0x0,
+};
+const field_meta nas::hf_dnn = {
+    "DNN",
+    "nas_5gs.cmn.dnn",
+    ft::ft_bytes,
+    fd::base_none,
+    nullptr,
+    nullptr,
+    nullptr,
+    0x0,
+};
+
+const field_meta nas::hf_mapped_conf_ssd = {
+    "Mapped configured SD",
+    "nas_5gs.mm.mapped_conf_ssd",
+    ft::ft_uint24,
+    fd::base_dec,
+    nullptr,
+    nullptr,
+    nullptr,
+    0x0,
+};
+
+const field_meta nas::hf_spare_b7 = {
+    "Spare",
+    "nas_5gs.spare_b7",
+    ft::ft_uint8,
+    fd::base_dec,
+    nullptr,
+    nullptr,
+    nullptr,
+    0x80,
+};
+const field_meta nas::hf_spare_b6 = {
+    "Spare",
+    "nas_5gs.spare_b6",
+    ft::ft_uint8,
+    fd::base_dec,
+    nullptr,
+    nullptr,
+    nullptr,
+    0x40,
+};
+const field_meta nas::hf_spare_b5 = {
+    "Spare",
+    "nas_5gs.spare_b5",
+    ft::ft_uint8,
+    fd::base_dec,
+    nullptr,
+    nullptr,
+    nullptr,
+    0x20,
+};
+const field_meta nas::hf_spare_b4 = {
+    "Spare",
+    "nas_5gs.spare_b4",
+    ft::ft_uint8,
+    fd::base_dec,
+    nullptr,
+    nullptr,
+    nullptr,
+    0x10,
+};
+const field_meta nas::hf_spare_b3 = {
+    "Spare",
+    "nas_5gs.spare_b3",
+    ft::ft_uint8,
+    fd::base_dec,
+    nullptr,
+    nullptr,
+    nullptr,
+    0x08,
+};
+const field_meta nas::hf_spare_b2 = {
+    "Spare",
+    "nas_5gs.spare_b2",
+    ft::ft_uint8,
+    fd::base_dec,
+    nullptr,
+    nullptr,
+    nullptr,
+    0x04,
+};
+const field_meta nas::hf_spare_b1 = {
+    "Spare",
+    "nas_5gs.spare_b1",
+    ft::ft_uint8,
+    fd::base_dec,
+    nullptr,
+    nullptr,
+    nullptr,
+    0x02,
+};
+
+const true_false_string nas::tfs_allowed_not_allowed = {
+    "Allowed",
+    "Not Allowed",
+};
+
+const field_meta nas::hf_sst = {
+    "Slice/service type (SST)",
+    "nas_5gs.mm.sst",
+    ft::ft_uint8,
+    fd::base_dec,
+    nullptr,
+    nullptr,
+    nullptr,
+    0x0,
+};

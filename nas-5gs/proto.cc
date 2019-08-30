@@ -1,15 +1,11 @@
-#include "core.hh"
 #include "proto.hh"
-#include "tvbuff.hh"
+#include <bitset>
 #include <cstdarg>
 #include <vector>
-#include <sstream>
-#include <iomanip>
-#include <bitset>
+#include "core.hh"
+#include "tvbuff.hh"
 
-void proto_node::set_length(int length) {}
-
-void proto_node::set_generated(bool generated) {}
+void proto_node::set_length(int len) { this->length = len;}
 
 std::string print_text(const field_meta* meta,
                        const uint8_t*    data,
@@ -18,16 +14,17 @@ std::string print_text(const field_meta* meta,
 
 std::string print_text(const field_meta* meta, uint64_t v);
 
-proto_item* proto_node::add_item(packet_info*      pinfo,
+proto_item* proto_node::add_item(packet_info*      ,
                                  tvbuff*           buf,
-                                 int               offset,
-                                 int               length,
+                                 int               start,
+                                 int               len,
                                  const field_meta* field,
                                  uint32_t          encoding) {
     auto item = new proto_node();
     item->meta = field;
-    item->data = buf->data+offset;
-    item->length = length;
+    item->data = buf->data+ start;
+    item->offset = start;
+    item->length = len;
     item->enc    = encoding;
     children.push_back(item);
 
@@ -35,22 +32,22 @@ proto_item* proto_node::add_item(packet_info*      pinfo,
     if (field){
         item->name = field->name;
     }
-    if (encoding != enc::none){
-        if (meta && ft::is_integer(meta->ftype)) {
-            this->val = n2uint(buf->data + offset, length);
-        }
-        item->text = print_text(field, buf->data + offset, length, encoding);
+    if (encoding == enc::na || encoding == enc::none) return item;
+
+    if (meta && ft::is_integer(meta->ftype)) {
+        this->val = n2uint(item->data, len);
     }
+    item->text = print_text(field, item->data, len, encoding);
+
     return item;
 }
 
-proto_item* proto_node::set_uint(uint64_t v, uint32_t enc, const char* format, ...) {
+proto_item* proto_node::set_uint(uint64_t v, uint32_t encode, const char* format, ...) {
     using namespace std;
 
-    if (enc != enc::none) this->enc = enc;
+    if (encode != enc::none) enc = encode;
     val = v;
 
-    // TODO:
     va_list args;
     va_start(args, format);
     if (format)
@@ -61,10 +58,10 @@ proto_item* proto_node::set_uint(uint64_t v, uint32_t enc, const char* format, .
     return this;
 }
 
-proto_item* proto_node::set_int(int64_t v, uint32_t enc, const char* format, ...) {
+proto_item* proto_node::set_int(int64_t v, uint32_t encode, const char* format, ...) {
     using namespace std;
 
-    if (enc != enc::none) this->enc = enc;
+    if (encode != enc::none) enc = encode;
     val = v;
 
     va_list args;
@@ -87,16 +84,16 @@ proto_item* proto_node::set_string(const string &v) {
 }
 
 
-proto_item* proto_node::add_expert(packet_info* pinfo,
+proto_item* proto_node::add_expert(packet_info* ,
                                    tvbuff*      buf,
-                                   int          offset,
-                                   int          length,
+                                   int          start,
+                                   int          len,
                                    const char*  format,
                                    ...) {
     using namespace std;
     auto item    = new proto_tree();
-    item->data   = buf->data + offset;
-    item->length = length;
+    item->data   = buf->data + start;
+    item->length = len;
 
     va_list args;
     va_start(args, format);
@@ -107,16 +104,16 @@ proto_item* proto_node::add_expert(packet_info* pinfo,
     return item;
 }
 
-proto_tree* proto_node::add_subtree(packet_info* pinfo,
+proto_tree* proto_node::add_subtree(packet_info* ,
                                     tvbuff*      buf,
-                                    int          offset,
-                                    int          length,
+                                    int          start,
+                                    int          len,
                                     const char*  format,
                                     ...) {
     using namespace std;
     auto item    = new proto_tree();
-    item->data   = buf->data + offset;
-    item->length = length;
+    item->data   = buf->data + start;
+    item->length = len;
 
     va_list args;
     va_start(args, format);

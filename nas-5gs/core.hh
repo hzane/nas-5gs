@@ -3,25 +3,28 @@
 #include <string>
 #include <vector>
 #include "config.hh"
+#include "field_meta.hh"
 #include "packet_info.hh"
 #include "proto.hh"
-#include "tvbuff.hh"
-#include "field_meta.hh"
+#include "range_string.hh"
 #include "tree_meta.hh"
+#include "tvbuff.hh"
 
 struct context {
-    std::vector<std::string> paths = {};
-    NO_DISCARD std::string                path() const;
+    std::vector< std::string > paths = {};
+    NO_DISCARD std::string path() const;
 };
-struct use_context{
+struct use_context {
     context* ctx;
     use_context(context* ctx, const char* path) : ctx(ctx) {
         if (ctx) ctx->paths.emplace_back(path);
         diag("%s\n", path);
     }
-    ~use_context(){if(ctx) {
-        ctx->paths.pop_back();
-    }}
+    ~use_context() {
+        if (ctx) {
+            ctx->paths.pop_back();
+        }
+    }
 };
 
 namespace em_severity {
@@ -34,39 +37,39 @@ __declspec(selectany) extern const int error   = 4;
 
 struct expert_meta : field_meta {
     const char* name;
-    int         severity;  // em_severity
+    int         severity; // em_severity
     const char* summary;
 };
 
-
 namespace tree_metas { // tree_metas
-__declspec(selectany) extern const tree_meta ett_none     = {};
+__declspec(selectany) extern const tree_meta ett_none     = {"-", nullptr};
 __declspec(selectany) extern const tree_meta ett_protocol = {};
 __declspec(selectany) extern const tree_meta ett_message  = {};
-__declspec(selectany) extern const tree_meta ett_element  = {};
-__declspec(selectany) extern const tree_meta ett_expert   = {};
+__declspec(selectany) extern const tree_meta ett_element  = {"Element", nullptr};
+__declspec(selectany) extern const tree_meta ett_expert   = {"Expert", nullptr};
 __declspec(selectany) extern const tree_meta ett_any      = {};
-} // namespace tm
+} // namespace tree_metas
 
 struct protocol_meta {
-    const char*      name;
-    const char*      full_name;
-    dissect_fnc_t    dissector;
+    const char*   name;
+    const char*   full_name;
+    dissect_fnc_t dissector;
 };
 
-extern int dissect_nas_5gs(dissector, context*);
+// protocol dissect entry
+extern int dissect_nas5g(dissector, context*);
 
 __declspec(selectany) extern const protocol_meta nas_5gs_module = {
     "NAS-5GS",
     "Non-Access-Stratum 5GS (NAS)PDU",
-    dissect_nas_5gs,
+    dissect_nas5g,
 };
 
 // Extended protocol discriminator
-namespace EPD{
-__declspec(selectany) extern const uint8_t MM5G = 0x7e; //TGPP_PD_5GMM
-__declspec(selectany) extern const uint8_t SM5G = 0x2e; //TGPP_PD_5GSM
-}
+namespace EPD {
+__declspec(selectany) extern const uint8_t MM5G = 0x7e; // TGPP_PD_5GMM
+__declspec(selectany) extern const uint8_t SM5G = 0x2e; // TGPP_PD_5GSM
+} // namespace EPD
 
 typedef dissect_fnc_t dissect_msg_fnc_t;
 
@@ -74,7 +77,7 @@ struct message_meta {
     uint8_t           type; // iei
     const char*       name;
     dissect_msg_fnc_t fnc;
-    const char* alias;
+    const char*       alias;
 };
 
 typedef message_meta element_meta;

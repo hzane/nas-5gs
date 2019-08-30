@@ -28,11 +28,11 @@ size_t u32utf8(uint32_t ch, uint8_t *dest) {
     return 0;
 }
 
-void ustring_add_utf8(ustring &strbuf, const uint32_t c) {
+void ustring_add_utf8(ustring &s, const uint32_t c) {
     uint8_t buf[6] = {};
     
     size_t nchar = u32utf8(c, buf);
-    strbuf.insert(strbuf.end(), buf, buf + nchar);
+    s.insert(s.end(), buf, buf + nchar);
 }
 
 bool char_is_escape(unsigned char value) {
@@ -40,7 +40,7 @@ bool char_is_escape(unsigned char value) {
     return (value == GN_CHAR_ESCAPE);
 }
 
-uint32_t GSMext2UNICHAR(uint8_t c) {
+uint32_t GSMe2UNICHAR(uint8_t c) {
     switch (c) {
     case 0x0a:
         return 0x0c; /* form feed */
@@ -62,6 +62,7 @@ uint32_t GSMext2UNICHAR(uint8_t c) {
         return '|';
     case 0x65:
         return 0x20ac; /* euro */
+    default:return UNREP;
     }
 
     return UNREP; /* invalid character */
@@ -93,7 +94,7 @@ static uint32_t GSM2UNICHAR(uint8_t c) {
     return UNREP;
 }
 
-bool handle_ts_23_038_char(ustring &strbuf, uint8_t code_point, bool saw_escape) {
+bool handle_ts_23_038_char(ustring &s, uint8_t code_point, bool saw_escape) {
     uint32_t uchar;
 
     if (char_is_escape(code_point)) {
@@ -105,16 +106,13 @@ bool handle_ts_23_038_char(ustring &strbuf, uint8_t code_point, bool saw_escape)
          */
         saw_escape = true;
     } else {
-        /*
-         * Have we seen an escape?
-         */
         if (saw_escape) {
             saw_escape = false;
-            uchar      = GSMext2UNICHAR(code_point);
+            uchar      = GSMe2UNICHAR(code_point);
         } else {
             uchar = GSM2UNICHAR(code_point);
         }
-        ustring_add_utf8(strbuf, uchar);
+        ustring_add_utf8(s, uchar);
     }
     return saw_escape;
 }
