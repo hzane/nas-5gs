@@ -653,7 +653,7 @@ int mm::dissect_pdu_ses_react_res(dissector d, context* ctx) {
 
 int mm::dissect_mm_cause(dissector d, context* ctx) {
     auto cause = d.tvb->uint8(d.offset);
-    d.tree->add_item(d.pinfo, d.tvb, d.offset, 1, hf_mm_cause, enc::be);
+    d.tree->add_item(d.pinfo, d.tvb, d.offset, 1, &hf_mm_cause, enc::be);
     return 1;
 }
 
@@ -706,7 +706,7 @@ static const true_false_string tfs_nas_5gs_raai = {
 int mm::dissect_mico_ind(dissector d, context* ctx) {
     auto len = d.length;
 
-    d.add_item(1, hf_nas_5gs_mm_raai_b0, enc::be);
+    d.add_item(1, hf_mm_raai_b0, enc::be);
     return 1;
 }
 
@@ -717,7 +717,7 @@ const field_meta hf_sal_al_t = {
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
-    &tfs_nas_5gs_sal_al_t,
+    &tfs_sal_al_t,
     nullptr,
     0x80,
 };
@@ -898,9 +898,9 @@ int mm::dissect_mobile_id(dissector d, context* ctx) {
     switch (type_id) {
     case 0: {
         auto item = d.tree->add_item(
-            d.pinfo, d.tvb, d.offset, 1, &hf_nas_5gs_mm_odd_even, enc::be);
+            d.pinfo, d.tvb, d.offset, 1, &hf_mm_odd_even, enc::be);
         item = d.tree->add_item(
-            d.pinfo, d.tvb, d.offset, 1, &hf_nas_5gs_mm_type_id, enc::none);
+            d.pinfo, d.tvb, d.offset, 1, &hf_mm_type_id, enc::none);
         item->set_uint(type_id, enc::be, nullptr);
     } break;
     case 1: { // SUCI
@@ -908,7 +908,7 @@ int mm::dissect_mobile_id(dissector d, context* ctx) {
             d.tree->add_item(d.pinfo, d.tvb, d.offset, 1, &hf_spare_b7, enc::be);
         d.add_item(1, &hf_nas_5gs_mm_supi_fmt, enc::be);
         d.add_item(1, &hf_spare_b3, enc::be);
-        item = d.add_item(1, &hf_nas_5gs_mm_type_id, enc::be);
+        item = d.add_item(1, &hf_mm_type_id, enc::be);
         item->set_uint(type_id, enc::be, nullptr);
         d.step(1);
 
@@ -927,9 +927,9 @@ int mm::dissect_mobile_id(dissector d, context* ctx) {
     } break;
     case 2: { // 5G-GUTI
         auto item = d.tree->add_item(
-            d.pinfo, d.tvb, d.offset, 1, &hf_nas_5gs_mm_odd_even, enc::be);
+            d.pinfo, d.tvb, d.offset, 1, &hf_mm_odd_even, enc::be);
         item = d.tree->add_item(
-            d.pinfo, d.tvb, d.offset, 1, &hf_nas_5gs_mm_type_id, enc::none);
+            d.pinfo, d.tvb, d.offset, 1, &hf_mm_type_id, enc::none);
         item->set_uint(type_id, enc::be, nullptr);
 
         d.step(1);
@@ -945,15 +945,15 @@ int mm::dissect_mobile_id(dissector d, context* ctx) {
         add_generic_msg_elem_body(d, ctx);
     } break;
     case 3: { // IMEI
-        auto item = d.add_item(1, &hf_nas_5gs_mm_odd_even, enc::be);
-        item      = d.add_item(1, &hf_nas_5gs_mm_type_id, enc::none);
+        auto item = d.add_item(1, &hf_mm_odd_even, enc::be);
+        item      = d.add_item(1, &hf_mm_type_id, enc::none);
         item->set_uint(type_id, enc::be, nullptr);
         d.step(1);
         d.add_item(d.length, &hf_nas_5gs_mm_imei, enc::be);
     } break;
     case 4: { // 5G-S-TMSI
-        auto item = d.add_item(1, &hf_nas_5gs_mm_odd_even, enc::be);
-        item      = d.add_item(1, &hf_nas_5gs_mm_type_id, enc::none);
+        auto item = d.add_item(1, &hf_mm_odd_even, enc::be);
+        item      = d.add_item(1, &hf_mm_type_id, enc::none);
         item->set_uint(type_id, enc::be, nullptr);
         d.step(1);
         /* AMF Set ID */
@@ -964,14 +964,14 @@ int mm::dissect_mobile_id(dissector d, context* ctx) {
         d.add_item(4, &hf_nas_5gs_tmsi, enc::be);
     } break;
     case 5: { // IMEISV
-        auto item = d.add_item(1, &hf_nas_5gs_mm_odd_even, enc::be);
-        item      = d.add_item(1, &hf_nas_5gs_mm_type_id, enc::none);
+        auto item = d.add_item(1, &hf_mm_odd_even, enc::be);
+        item      = d.add_item(1, &hf_mm_type_id, enc::none);
         item->set_uint(type_id, enc::be, nullptr);
         d.step(1);
         d.add_item(d.length, &hf_nas_5gs_mm_imeisv, enc::be);
     } break;
     default: {
-        auto item = d.add_item(1, &hf_nas_5gs_mm_type_id, enc::none);
+        auto item = d.add_item(1, &hf_mm_type_id, enc::none);
         item->set_uint(type_id, enc::be, nullptr);
         d.tree->add_expert(d.pinfo, d.tvb, d.offset, d.length, nullptr);
     } break;

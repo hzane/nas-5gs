@@ -586,7 +586,7 @@ int dissect_pdu_ses_react_res_err_c(dissector d, context* ctx) {
     while(d.length>0){
         d.add_item(1, hf_pdu_sess_id, enc::be);
         d.step(1);
-        d.add_item(1, hf_mm_cause, enc::be);
+        d.add_item(1, &hf_mm_cause, enc::be);
         d.step(1);
     }
     return len;

@@ -272,7 +272,7 @@ const field_meta hf_sal_al_t = {
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
-    &tfs_nas_5gs_sal_al_t,
+    &tfs_sal_al_t,
     nullptr,
     0x80,
 };
@@ -498,7 +498,7 @@ static const true_false_string tfs_nas_5gs_raai = {
 int dissect_mico_ind(dissector d, context* ctx) {
     auto len = d.length;
 
-    d.add_item(1, hf_nas_5gs_mm_raai_b0, enc::be);
+    d.add_item(1, hf_mm_raai_b0, enc::be);
     return 1;
 }
 

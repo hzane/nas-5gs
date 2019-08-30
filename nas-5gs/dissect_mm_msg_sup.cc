@@ -132,7 +132,7 @@ extern const val_string mm::values_cause[] = {
     {0, nullptr},
 };
 
-const field_meta nas::hf_5gmm_cause = {
+const field_meta mm::hf_mm_cause = {
     "5GMM cause",
     "nas_5gs.mm.5gmm_cause",
     ft::ft_uint8,
@@ -145,7 +145,8 @@ const field_meta nas::hf_5gmm_cause = {
 
 
 
-const field_meta nas::hf_nas_5gs_mm_sst = {
+
+const field_meta mm::hf_mm_sst = {
     "Slice/service type (SST)",
     "nas_5gs.mm.sst",
     ft::ft_uint8,
@@ -249,7 +250,7 @@ const true_false_string tfs_nas_5gs_raai = {
     "all PLMN registration area not allocated",
 };
 
-const field_meta hfm_nas_5gs_mm_raai_b0 = {
+const field_meta mm::hfm_nas_5gs_mm_raai_b0 = {
     "Registration Area Allocation Indication (RAAI)",
     "nas_5gs.mm.raai_b0",
     ft::ft_boolean,
@@ -259,9 +260,9 @@ const field_meta hfm_nas_5gs_mm_raai_b0 = {
     nullptr,
     0x01,
 };
-const field_meta* mm::hf_nas_5gs_mm_raai_b0 = &hfm_nas_5gs_mm_raai_b0;
+const field_meta* mm::hf_mm_raai_b0 = &hfm_nas_5gs_mm_raai_b0;
 
-const field_meta mm::hfm_nas_5gs_mm_conf_upd_ind_ack_b0 = {
+const field_meta mm::hfm_mm_conf_upd_ind_ack_b0 = {
     "Acknowledgement",
     "nas_5gs.mm.conf_upd_ind.ack",
     ft::ft_boolean,
@@ -829,7 +830,7 @@ const true_false_string mm::tfs_nas_5gs_mm_n1_mod = {
     "UE is in 5GMM-REGISTERED state",
     "UE is not in 5GMM-REGISTERED state",
 };
-const field_meta mm::hf_nas_5gs_mm_n1_mode_reg_b1 = {
+const field_meta mm::hf_mm_n1_mode_reg_b1 = {
     "N1 mode reg",
     "nas_5gs.mm.n1_mode_reg_b1",
     ft::ft_boolean,
@@ -867,7 +868,7 @@ const field_meta mm::hf_mm_s1_mode_reg_b0 = {
 
 /* *     9.11.3.49    Service area list */
 
-const true_false_string mm::tfs_nas_5gs_sal_al_t = {
+const true_false_string mm::tfs_sal_al_t = {
     "TAIs in the list are in the non-allowed area",
     "TAIs in the list are in the allowed area",
 };
@@ -878,7 +879,7 @@ const field_meta mm::hf_nas_5gs_mm_sal_al_t = {
     ft::ft_boolean,
     8,
     nullptr,
-    &tfs_nas_5gs_sal_al_t,
+    &tfs_sal_al_t,
     nullptr,
     0x80,
 
@@ -1053,7 +1054,7 @@ extern const field_meta mm::hf_mm_length = {
     nullptr,
     0x0,
 };
-extern const field_meta* mm::hf_nas_5gs_mm_raai_b0;
+extern const field_meta* mm::hf_mm_raai_b0;
 
 //  9.11.3.46    Rejected NSSAI
 extern const element_meta mm::rej_nssai = {
@@ -1091,7 +1092,6 @@ extern const field_meta mm::hfm_mm_cause = {
     nullptr,
     0x0,
 };
-extern const field_meta* mm::hf_mm_cause = &hfm_mm_cause;
 
 extern const element_meta mm::mobile_id = {
     0xff,
@@ -1110,7 +1110,7 @@ extern const val_string mm::mm_type_id_values[] = {
     {0x5, "IMEISV"},
     {0, nullptr},
 };
-extern const field_meta mm::hf_nas_5gs_mm_type_id = {
+extern const field_meta mm::hf_mm_type_id = {
     "Type of identity",
     "nas_5gs.mm.type_id",
     ft::ft_uint8,
@@ -1122,7 +1122,7 @@ extern const field_meta mm::hf_nas_5gs_mm_type_id = {
 };
 extern const true_false_string mm::tfs_odd_even;
 
-extern const field_meta mm::hf_nas_5gs_mm_odd_even = {
+extern const field_meta mm::hf_mm_odd_even = {
     "Odd/even indication",
     "nas_5gs.mm.odd_even",
     ft::ft_boolean,
@@ -1135,7 +1135,7 @@ extern const field_meta mm::hf_nas_5gs_mm_odd_even = {
 /*
  *   9.11.3.40    Payload container type
  */
-extern const value_string mm::nas_5gs_mm_pld_cont_type_vals[] = {
+extern const value_string mm::mm_pld_cont_type_values[] = {
     {0x01, "N1 SM information"},
     {0x02, "SMS"},
     {0x03, "LTE Positioning Protocol (LPP) message container"},
@@ -1153,7 +1153,7 @@ extern const field_meta mm::hf_plt_cont_type = {
     "nas_5gs.mm.pld_cont_type",
     ft::ft_uint8,
     fd::base_dec,
-    nas_5gs_mm_pld_cont_type_vals,
+    mm_pld_cont_type_values,
     nullptr,
     nullptr,
     0x0f,
@@ -1164,7 +1164,7 @@ extern const field_meta mm::hf_pld_cont = {
     "nas_5gs.mm.pld_cont_type",
     ft::ft_uint8,
     fd::base_dec,
-    nas_5gs_mm_pld_cont_type_vals,
+    mm_pld_cont_type_values,
     nullptr,
     nullptr,
     0x0f,
@@ -1218,7 +1218,7 @@ extern const field_meta* mm::hf_nas_eps_tsc = &hfm_nas_eps_tsc;
 /* NAS key set identifier (octet 1) Bits 3  2   1 */
 
 extern const
-    val_string mm::nas_eps_emm_nas_key_set_identifier_vals[] = {
+    val_string mm::nas_eps_emm_nas_ksi_values[] = {
         {0, ""},
         {1, ""},
         {2, ""},
@@ -1235,7 +1235,7 @@ extern const field_meta mm::hfm_nas_eps_nas_ksi = {
     "nas_eps.emm.nas_key_set_id",
     ft::ft_uint8,
     fd::base_dec,
-    nas_eps_emm_nas_key_set_identifier_vals,
+    nas_eps_emm_nas_ksi_values,
     nullptr,
     nullptr,
     0x00,

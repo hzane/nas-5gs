@@ -68,7 +68,7 @@ int dissect_abba(dissector d, context* ctx);
 
 extern const message_meta      msgs[];
 extern const true_false_string tfs_requested_not_requested;
-extern const true_false_string tfs_nas_5gs_sal_al_t;
+extern const true_false_string tfs_sal_al_t;
 extern const true_false_string tfs_odd_even;
 extern const true_false_string tfs_eps_tsc;
 
@@ -81,29 +81,30 @@ extern const element_meta pdu_ses_status;
 extern const element_meta mobile_id;
 extern const field_meta   hf_mm_length;
 extern const field_meta   hfm_mm_cause;
-extern const field_meta*  hf_mm_cause;
-extern const field_meta   hf_nas_5gs_mm_type_id;
+extern const field_meta   hf_mm_cause;
+extern const field_meta   hf_mm_type_id;
+extern const field_meta   hf_mm_sst;
 
 extern const val_string   mm_type_id_values[];
 extern const val_string   values_cause[];
 extern const val_string   mm_sal_t_li_values[];
-extern const value_string nas_5gs_mm_pld_cont_type_vals[];
-extern const val_string   nas_eps_emm_nas_key_set_identifier_vals[];
+extern const value_string mm_pld_cont_type_values[];
+extern const val_string   nas_eps_emm_nas_ksi_values[];
 extern const val_string   values_pld_cont_type[];
 
 extern const field_meta  hf_tac;
 extern const field_meta  hf_tal_num_e;
 extern const field_meta  hf_tal_t_li;
-extern const field_meta* hf_nas_5gs_mm_raai_b0;
+extern const field_meta* hf_mm_raai_b0;
 extern const field_meta  hf_plt_cont_type;
-extern const field_meta  hf_nas_5gs_mm_odd_even;
+extern const field_meta  hf_mm_odd_even;
 extern const field_meta  hf_pld_cont;
 extern const field_meta  hf_pld_cont_type;
 extern const field_meta  hfm_nas_eps_tsc;
 extern const field_meta* hf_nas_eps_tsc;
 
 extern const field_meta   hf_abba;
-extern const field_meta   hfm_nas_5gs_mm_conf_upd_ind_ack_b0;
+extern const field_meta   hfm_mm_conf_upd_ind_ack_b0;
 extern const field_meta   hfm_nas_eps_nas_ksi;
 extern const field_meta*  hf_nas_eps_nas_ksi;
 extern const element_meta nas_ksi;
@@ -165,7 +166,7 @@ extern const field_meta hfm_nas_5gs_mm_eia4;
 extern const field_meta hfm_nas_5gs_mm_eia5;
 extern const field_meta hfm_nas_5gs_mm_eia6;
 extern const field_meta hfm_nas_5gs_mm_eia7;
-extern const field_meta hf_nas_5gs_mm_n1_mode_reg_b1;
+extern const field_meta hf_mm_n1_mode_reg_b1;
 extern const field_meta hf_mm_s1_mode_reg_b0;
 extern const field_meta hf_mm_sal_t_li;
 extern const field_meta hf_proc_trans_id;
@@ -175,18 +176,18 @@ extern const val_string mm_sal_t_li_values[];
 extern const field_meta hf_abba;
 
 extern const true_false_string tfs_follow_on_req;
-
+extern const true_false_string nas_5gs_mm_tsc_tfs;
 extern const true_false_string tfs_sms_requested;
-extern const field_meta        hf_sms_requested;
 
 /* 9.11.3.7    5GS registration type */
-
 extern const val_string        values_registration_type[];
+
 extern const field_meta        hf_5gs_reg_type;
-extern const true_false_string nas_5gs_mm_tsc_tfs;
 extern const field_meta        hf_tsc;
+extern const field_meta        hf_sms_requested;
 
 extern const field_meta hf_nas_key_set_id_h1;
 extern const field_meta hf_tsc_h1;
 extern const field_meta hf_nas_key_set_id;
+extern const field_meta hfm_nas_5gs_mm_raai_b0;
 } // namespace mm
