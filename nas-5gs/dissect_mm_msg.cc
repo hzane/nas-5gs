@@ -4,16 +4,6 @@
 using namespace nas;
 using namespace mm;
 
-const field_meta mm::hf_abba = {
-    "ABBA Contents",
-    "nas_5gs.mm.abba_contents",
-    ft::ft_uint16,
-    fd::base_hex,
-    nullptr,
-    nullptr,
-    nullptr,
-    0x00,
-};
 /*
  * 8.2.15 De-registration accept (UE terminated de-registration)
  */
@@ -1075,4 +1065,30 @@ int mm::dissect_nas_ksi(dissector d, context* ctx) {
     item->set_uint(nas_ksi, enc::be, nullptr);
 
     return 1;
+}
+
+/*
+ * 9.4.14a  Mobile Station Classmark 2
+ * With the exception of the IEI, the contents are specified in subclause 10.5.1.6 in 3GPP
+ * TS 24.008 [8]. (packet-gsm_a_common.c)
+ */
+/*
+ * 9.4.15   NAS message container
+ * Octets 3 to 253 contain the SMS message (i.e. CP DATA, CP ACK or CP ERROR)
+ * as defined in subclause 7.2 of 3GPP TS 24.011 [10]
+ */
+int mm::dissect_nas_msg_cont(dissector d, context* ctx) {
+    /* Octets 3 to 253 contain the SMS message (i.e. CP DATA, CP ACK or CP ERROR)
+     * as defined in subclause 7.2 of 3GPP TS 24.011 [10]
+     */
+    dissect_nas5g(d, ctx);
+    return d.length;
+}
+
+/*
+ * 9.11.3.10    ABBA
+ */
+int mm::dissect_abba(dissector d, context* ctx) {
+    d.add_item(d.length, &hf_abba, enc::be);
+    return d.length;
 }

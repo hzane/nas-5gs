@@ -30,9 +30,6 @@
     <ClCompile Include="dissect_sm_msg.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="dissect_mm_msg_i.cc">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="ts24007.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -184,6 +181,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="dissect_sm_msg_sup.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="dissect_mm_msg_sup.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

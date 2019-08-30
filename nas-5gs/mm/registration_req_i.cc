@@ -76,21 +76,3 @@ namespace mm {
 };
 
 
-
-/*
- * 9.4.14a  Mobile Station Classmark 2
- * With the exception of the IEI, the contents are specified in subclause 10.5.1.6 in 3GPP
- * TS 24.008 [8]. (packet-gsm_a_common.c)
- */
-/*
- * 9.4.15   NAS message container
- * Octets 3 to 253 contain the SMS message (i.e. CP DATA, CP ACK or CP ERROR)
- * as defined in subclause 7.2 of 3GPP TS 24.011 [10]
- */
-int dissect_nas_msg_cont(dissector d, context* ctx) {
-    /* Octets 3 to 253 contain the SMS message (i.e. CP DATA, CP ACK or CP ERROR)
-     * as defined in subclause 7.2 of 3GPP TS 24.011 [10]
-     */
-    dissect_nas5g(d, ctx);
-    return d.length;
-}

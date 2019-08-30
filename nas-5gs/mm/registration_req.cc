@@ -317,10 +317,7 @@ const field_meta hf_lpp_cap_b2 = {
     nullptr,
     0x04,
 };
-const true_false_string tfs_supported_not_supported = {
-    "Supported",
-    "Not supported",
-};
+
 const field_meta hf_ho_attach_b1 = {
     "HO attach",
     "nas_5gs.mm.ho_attach_b1",
