@@ -407,3 +407,19 @@ const field_meta nas::hf_sst = {
     nullptr,
     0x0,
 };
+
+const true_false_string nas::tfs_follow_on_req = {
+    "Follow-on request pending",
+    "No follow-on request pending",
+};
+
+const field_meta nas::hf_follow_on_req = {
+    "Follow-On Request bit (FOR)",
+    "nas_5gs.mm.for",
+    ft::ft_boolean,
+    fd::sep_dot,
+    nullptr,
+    &tfs_follow_on_req,
+    nullptr,
+    0x08,
+};

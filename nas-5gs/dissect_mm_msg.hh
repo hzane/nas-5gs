@@ -178,4 +178,20 @@ extern const field_meta        hf_element;
 extern const field_meta        hf_nas_5gs_mm_sal_al_t;
 extern const val_string        nas_5gs_mm_sal_t_li_values[];
 extern const field_meta hf_abba ;
+
+extern const true_false_string tfs_follow_on_req;
+
+extern const true_false_string tfs_sms_requested ;
+extern const field_meta hf_sms_requested ;
+
+/* 9.11.3.7    5GS registration type */
+
+extern const val_string values_registration_type[] ;
+extern const field_meta hf_5gs_reg_type;
+extern const true_false_string nas_5gs_mm_tsc_tfs ;
+extern const field_meta hf_tsc ;
+
+extern const field_meta hf_nas_key_set_id_h1;
+extern const field_meta hf_tsc_h1;
+extern const field_meta hf_nas_key_set_id;
 } // namespace mm

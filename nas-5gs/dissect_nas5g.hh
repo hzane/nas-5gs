@@ -29,14 +29,14 @@ extern const field_meta   hf_sal_num_e;
 
 extern const field_meta* hf_msg_auth_code;
 extern const field_meta* hf_mm_follow_on_req;
-extern const field_meta  hf_sms_requested;
+// extern const field_meta  hf_sms_requested;
 extern const field_meta  hf_5gs_reg_type;
-extern const field_meta  hf_tsc;
+// extern const field_meta  hf_tsc;
 extern const field_meta  hf_tsc_h1;
 extern const field_meta  hf_nas_key_set_id_h1;
 extern const field_meta  hf_5gmm_cause;
 extern const field_meta  hf_nas_5gs_mm_sst;
-extern const field_meta  hf_nas_key_set_id;
+// extern const field_meta  hf_nas_key_set_id;
 extern const field_meta  hf_follow_on_req;
 extern const field_meta  hf_mm_sal_t_li;
 extern const field_meta  hf_nas_5gs_mm_sal_al_t;
@@ -59,5 +59,7 @@ extern const field_meta  hf_spare_b2;
 extern const field_meta  hf_spare_b1;
 extern const field_meta* hf_seq_no;
 extern const field_meta* hf_proc_trans_id;
-extern const field_meta  nas::hf_sst;
+extern const field_meta  hf_sst;
+
+extern const true_false_string tfs_follow_on_req;
 } // namespace nas

@@ -2,30 +2,14 @@
 
 using namespace mm;
 
-const true_false_string tfs_follow_on_req = {
-    "Follow-on request pending",
-    "No follow-on request pending",
-};
-
-const field_meta nas::hf_follow_on_req = {
-    "Follow-On Request bit (FOR)",
-    "nas_5gs.mm.for",
-    ft::ft_boolean,
-    fd::sep_dot,
-    nullptr,
-    &tfs_follow_on_req,
-    nullptr,
-    0x08,
-};
-
 
 /* * 9.11.3.9A    5GS update type*/
 
-const true_false_string tfs_sms_requested = {
+const true_false_string mm::tfs_sms_requested = {
     "SMS over NAS supported",
     "SMS over NAS not supported",
 };
-const field_meta nas::hf_sms_requested = {
+const field_meta mm::hf_sms_requested = {
     "SMS requested",
     "nas_5gs.mm.sms_requested",
     ft::ft_boolean,
@@ -38,7 +22,7 @@ const field_meta nas::hf_sms_requested = {
 
 /* 9.11.3.7    5GS registration type */
 
-extern const val_string values_registration_type[] = {
+extern const val_string mm::values_registration_type[] = {
     {0x1, "initial registration"},
     {0x2, "mobility registration updating"},
     {0x3, "periodic registration updating"},
@@ -46,7 +30,7 @@ extern const val_string values_registration_type[] = {
     {0x7, "reserved"},
     {0, nullptr},
 };
-const field_meta nas::hf_5gs_reg_type = {
+const field_meta mm::hf_5gs_reg_type = {
         "5GS registration type",
         "nas_5gs.mm.5gs_reg_type",
         ft::ft_uint8,
@@ -57,12 +41,12 @@ const field_meta nas::hf_5gs_reg_type = {
         0x07,
 };
 
-extern const true_false_string nas_5gs_mm_tsc_tfs = {
+extern const true_false_string mm::nas_5gs_mm_tsc_tfs = {
     "Mapped security context (for KSIASME)",
     "Native security context (for KSIAMF)",
 };
 
-const field_meta nas::hf_tsc = {
+const field_meta mm::hf_tsc = {
     "Type of security context flag (TSC)",
     "nas_5gs.mm.tsc",
     ft::ft_boolean,
@@ -73,7 +57,7 @@ const field_meta nas::hf_tsc = {
     0x08,
 };
 
-const field_meta nas::hf_nas_key_set_id = {
+const field_meta mm::hf_nas_key_set_id = {
     "NAS key set identifier",
     "nas_5gs.mm.nas_key_set_id",
     ft::ft_uint8,
@@ -84,7 +68,7 @@ const field_meta nas::hf_nas_key_set_id = {
     0x07,
 };
 
-const field_meta nas::hf_tsc_h1 = {
+const field_meta mm::hf_tsc_h1 = {
     "Type of security context flag (TSC)",
     "nas_5gs.mm.tsc.h1",
     ft::ft_boolean,
@@ -95,7 +79,7 @@ const field_meta nas::hf_tsc_h1 = {
     0x80,
 };
 
-const field_meta nas::hf_nas_key_set_id_h1 = {
+const field_meta mm::hf_nas_key_set_id_h1 = {
     "NAS key set identifier",
     "nas_5gs.mm.nas_key_set_id.h1",
     ft::ft_uint8,

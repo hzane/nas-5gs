@@ -39,12 +39,10 @@ struct val_string;
 struct true_false_string;
 struct range_string;
 
-typedef proto_node proto_tree;
-typedef proto_node proto_item;
-
-using string = std::string;
-
-using ustring = std::vector<uint8_t>;
+using proto_tree = proto_node;
+using proto_item = proto_node;
+using string     = std::string;
+using ustring    = std::vector< uint8_t >;
 
 extern void diag(const char* format, ...);
 
