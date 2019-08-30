@@ -845,7 +845,7 @@ const true_false_string mm::tfs_nas_5gs_mm_s1_mod = {
     "UE is in EMM-REGISTERED state",
     "UE is not in EMM-REGISTERED state",
 };
-const field_meta mm::hf_nas_5gs_mm_s1_mode_reg_b0 = {
+const field_meta mm::hf_mm_s1_mode_reg_b0 = {
     "S1 mode reg",
     "nas_5gs.mm.s1_mode_reg_b0",
     ft::ft_boolean,
@@ -884,7 +884,7 @@ const field_meta mm::hf_nas_5gs_mm_sal_al_t = {
 
 };
 
-extern const val_string mm::nas_5gs_mm_sal_t_li_values[] = {
+extern const val_string mm::mm_sal_t_li_values[] = {
     {0x00, "list of TACs belonging to one PLMN, with non-consecutive TAC values"},
     {0x01, "list of TACs belonging to one PLMN, with consecutive TAC values"},
     {0x02, "list of TAIs belonging to different PLMNs"},
@@ -897,7 +897,7 @@ const field_meta mm::hf_mm_sal_t_li      = {
     "nas_5gs.mm.sal_t_li",
     ft::ft_uint8,
     fd::base_dec,
-    nas_5gs_mm_sal_t_li_values,
+    mm_sal_t_li_values,
     nullptr,
     nullptr,
     0x60,

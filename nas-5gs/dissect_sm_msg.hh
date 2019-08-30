@@ -40,9 +40,11 @@ int dissect_allowed_ssc_mode(dissector d, context* ctx);
 //*      9.11.4.16    SSC mode
 int dissect_ssc_mode(dissector d, context* ctx);
 
-extern const value_string nas_5gs_sm_unit_for_session_ambr_values[];
+extern const value_string sm_unit_for_session_ambr_values[];
 
 extern const true_false_string tfs_allowed_not_allowed;
+extern const true_false_string tfs_nas_5gs_sm_dqr ;
+extern const true_false_string tfs_supported_not_supported;
 
 extern const message_meta msgs[];
 
@@ -64,16 +66,15 @@ extern const field_meta hf_sm_ses_ambr_ul_unit ;
 extern const field_meta hf_sm_ses_ambr_dl;
 extern const field_meta hf_sm_ses_ambr_ul;
 
-extern const value_string nas_5gs_sm_cause_vals[];
+extern const value_string sm_cause_values[];
 extern const field_meta   hf_sm_cause;
 
 // *     9.11.4.13    QoS rules
 
-extern const true_false_string tfs_nas_5gs_sm_dqr ;
-extern const value_string nas_5gs_rule_operation_code_values[] ;
-extern const value_string nas_5gs_sm_pf_type_values[] ;
-extern const value_string nas_5gs_sm_pkt_flt_dir_values[] ;
-extern const value_string nas_5gs_rule_param_cont[] ;
+extern const value_string rule_operation_code_values[] ;
+extern const value_string sm_pf_type_values[] ;
+extern const value_string sm_pkt_flt_dir_values[] ;
+extern const value_string rule_param_cont[] ;
 extern const field_meta hf_sm_dqr;
 extern const field_meta hf_sm_rop ;
 extern const field_meta hf_sm_nof_pkt_filters;
@@ -91,11 +92,11 @@ extern const field_meta hf_single_port_type;
 extern const field_meta hf_sm_qos_rule_precedence;
 
 /*   9.11.4.8 Mapped EPS bearer contexts  */
-extern const value_string nas_5gs_sm_mapd_eps_b_cont_opt_code_vals[] ;
-extern const value_string nas_5gs_sm_mapd_eps_b_cont_DEB_vals[] ;
-extern const value_string nas_5gs_sm_mapd_eps_b_cont_E_vals[] ;
-extern const value_string nas_5gs_sm_mapd_eps_b_cont_E_Modify_vals[] ;
-extern const value_string nas_5gs_sm_mapd_eps_b_cont_param_id_vals[] ;
+extern const value_string sm_mapd_eps_b_cont_opt_code_values[] ;
+extern const value_string sm_mapd_eps_b_cont_deb_values[] ;
+extern const value_string sm_mapd_eps_b_cont_e_values[] ;
+extern const value_string sm_mapd_eps_b_cont_E_Modify_values[] ;
+extern const value_string sm_mapd_eps_b_cont_param_id_values[] ;
 
 extern const field_meta hf_sm_mapd_eps_b_cont_opt_code ;
 extern const field_meta hf_sm_mapd_eps_b_cont_deb ;
@@ -105,14 +106,13 @@ extern const field_meta hf_sm_mapd_eps_b_cont_e_mod ;
 extern const field_meta hf_sm_mapd_eps_b_cont_id ;
 extern const field_meta hf_sm_mapd_eps_b_cont_num_eps_param_id;
 extern const field_meta hf_sm_mapd_eps_b_cont_eps_param_cont ;
-extern const true_false_string tfs_supported_not_supported;
 extern const field_meta hf_sm_rqos_b0 ;
 
 //  *      9.11.4.14    Session-AMBR
-extern const value_string sm::nas_5gs_sm_unit_for_session_ambr_values[] ;
+extern const value_string sm_unit_for_session_ambr_values[] ;
 
 // * 9.11.4.7 Integrity protection maximum data rate
-extern const value_string nas_5gs_sm_int_prot_max_data_rate_vals[] ;
+extern const value_string sm_int_prot_max_data_rate_values[] ;
 
 extern const field_meta hf_sm_int_prot_max_data_rate_ul;
 extern const field_meta hf_sm_int_prot_max_data_rate_dl;
@@ -123,6 +123,6 @@ extern const field_meta hf_sm_all_ssc_mode_b0 ;
 
 /* 9.11.4.16    SSC mode */
 
-extern const value_string nas_5gs_sc_mode_values[] ;
+extern const value_string sc_mode_values[] ;
 extern const field_meta hf_sm_sc_mode;
 } // namespace sm

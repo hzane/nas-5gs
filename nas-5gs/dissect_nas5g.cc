@@ -81,7 +81,7 @@ int dissect_nas5g_plain(dissector d, context* ctx) {
          * session identity IE. The PDU session identity and its use to identify a
          * message flow are defined in 3GPP TS 24.007
          */
-        subtree->add_item(d.pinfo, d.tvb, d.offset, 1, hf_pdu_session_id, enc::be);
+        subtree->add_item(d.pinfo, d.tvb, d.offset, 1, hf_pdu_sess_id, enc::be);
         d.offset++;
 
         /* 9.6  Procedure transaction identity

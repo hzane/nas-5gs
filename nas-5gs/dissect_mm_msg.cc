@@ -726,7 +726,7 @@ const field_meta hf_sal_t_li = {
     "nas_5gs.mm.sal_t_li",
     ft::ft_uint8,
     fd::base_dec,
-    nas_5gs_mm_sal_t_li_values,
+    mm_sal_t_li_values,
     nullptr,
     nullptr,
     0x60,

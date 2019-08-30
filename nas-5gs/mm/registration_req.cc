@@ -1545,7 +1545,7 @@ const field_meta hf_nas_5gs_mm_n1_mode_reg_b1 = {
     nullptr,
     0x02,
 };
-const field_meta hf_nas_5gs_mm_s1_mode_reg_b0 = {
+const field_meta hf_mm_s1_mode_reg_b0 = {
     "S1 mode reg",
     "nas_5gs.mm.s1_mode_reg_b0",
     ft::ft_boolean,
@@ -1566,7 +1566,7 @@ int mm_reg_req::dissect_ue_status(dissector d, context* ctx) {
         &hf_nas_5gs_spare_b3,
         &hf_nas_5gs_spare_b2,
         &hf_nas_5gs_mm_n1_mode_reg_b1,
-        &hf_nas_5gs_mm_s1_mode_reg_b0,
+        &hf_mm_s1_mode_reg_b0,
         nullptr,
     };
     /* 0     0     0     0     0     0     0 Spare    S1  mode reg */

@@ -96,7 +96,7 @@ const field_meta sm::hf_sm_ses_ambr_dl_unit = {
     "nas_5gs.sm.unit_for_session_ambr_dl",
     ft::ft_uint8,
     fd::base_dec,
-    (nas_5gs_sm_unit_for_session_ambr_values),
+    (sm_unit_for_session_ambr_values),
     nullptr,
     nullptr,
     0x0,
@@ -106,7 +106,7 @@ const field_meta sm::hf_sm_ses_ambr_ul_unit = {
     "nas_5gs.sm.unit_for_session_ambr_ul",
     ft::ft_uint8,
     fd::base_dec,
-    (nas_5gs_sm_unit_for_session_ambr_values),
+    (sm_unit_for_session_ambr_values),
     nullptr,
     nullptr,
     0x0,
@@ -147,7 +147,7 @@ const element_meta sm::allowed_ssc_mode = {
  * 9.11.4.2    5GSM cause
  */
 
-extern const value_string sm::nas_5gs_sm_cause_vals[] = {
+extern const value_string sm::sm_cause_values[] = {
     {0x1a, "Insufficient resources"},
     {0x1b, "Missing or unknown DNN"},
     {0x1c, "Unknown PDU session type"},
@@ -189,7 +189,7 @@ const field_meta sm::hf_sm_cause = {
     "nas_5gs.sm.5gsm_cause",
     ft::ft_uint8,
     fd::base_dec,
-    (nas_5gs_sm_cause_vals),
+    (sm_cause_values),
     nullptr,
     nullptr,
     0x0,
@@ -202,7 +202,7 @@ const true_false_string sm::tfs_nas_5gs_sm_dqr = {
     "The QoS rule is not the default QoS rule",
 };
 
-extern const value_string sm::nas_5gs_rule_operation_code_values[] = {
+extern const value_string sm::rule_operation_code_values[] = {
     {0x0, "Reserved"},
     {0x1, "Create new QoS rule"},
     {0x2, "Delete existing QoS rule"},
@@ -214,7 +214,7 @@ extern const value_string sm::nas_5gs_rule_operation_code_values[] = {
     {0, nullptr},
 };
 
-extern const value_string sm::nas_5gs_sm_pf_type_values[] = {
+extern const value_string sm::sm_pf_type_values[] = {
     {0x01, "Match-all type"},
     {0x10, "IPv4 remote address type"},
     {0x11, "IPv4 local address type"},
@@ -238,7 +238,7 @@ extern const value_string sm::nas_5gs_sm_pf_type_values[] = {
     {0, nullptr},
 };
 
-extern const value_string sm::nas_5gs_sm_pkt_flt_dir_values[] = {
+extern const value_string sm::sm_pkt_flt_dir_values[] = {
     {0x00, "Reserved"},
     {0x01, "Downlink only"},
     {0x02, "Uplink only"},
@@ -246,7 +246,7 @@ extern const value_string sm::nas_5gs_sm_pkt_flt_dir_values[] = {
     {0, nullptr},
 };
 
-extern const value_string sm::nas_5gs_rule_param_cont[] = {
+extern const value_string sm::rule_param_cont[] = {
     {0x0, "Reserved"},
     {0x01, "5QI 1"},
     {0x02, "5QI 2"},
@@ -275,7 +275,7 @@ const field_meta sm::hf_sm_rop = {
     "nas_5gs.sm.rop",
     ft::ft_uint8,
     fd::base_dec,
-    (nas_5gs_rule_operation_code_values),
+    (rule_operation_code_values),
     nullptr,
     nullptr,
     0xe0,
@@ -337,7 +337,7 @@ const field_meta sm::hf_sm_pkt_flt_dir = {
     "nas_5gs.sm.pkt_flt_dir",
     ft::ft_uint8,
     fd::base_dec,
-    (nas_5gs_sm_pkt_flt_dir_values),
+    (sm_pkt_flt_dir_values),
     nullptr,
     nullptr,
     0x30,
@@ -357,7 +357,7 @@ const field_meta sm::hf_sm_pf_type = {
     "nas_5gs.sm.pf_type",
     ft::ft_uint8,
     fd::base_dec,
-    (nas_5gs_sm_pf_type_values),
+    (sm_pf_type_values),
     nullptr,
     nullptr,
     0x0,
@@ -417,7 +417,7 @@ const field_meta sm::hf_sm_qos_rule_precedence = {
 /*
  *     9.11.4.8 Mapped EPS bearer contexts
  */
-extern const value_string sm::nas_5gs_sm_mapd_eps_b_cont_opt_code_vals[] = {
+extern const value_string sm::sm_mapd_eps_b_cont_opt_code_values[] = {
     {0x0, "Reserved"},
     {0x01, "Create new EPS bearer"},
     {0x02, "Delete existing EPS bearer"},
@@ -425,25 +425,25 @@ extern const value_string sm::nas_5gs_sm_mapd_eps_b_cont_opt_code_vals[] = {
     {0, nullptr},
 };
 
-extern const value_string sm::nas_5gs_sm_mapd_eps_b_cont_DEB_vals[] = {
+extern const value_string sm::sm_mapd_eps_b_cont_deb_values[] = {
     {0x0, "the EPS bearer is not the default EPS bearer."},
     {0x01, "the EPS bearer is the default EPS bearer"},
     {0, nullptr},
 };
 
-extern const value_string sm::nas_5gs_sm_mapd_eps_b_cont_E_vals[] = {
+extern const value_string sm::sm_mapd_eps_b_cont_e_values[] = {
     {0x0, "parameters list is not included"},
     {0x01, "parameters list is included"},
     {0, nullptr},
 };
 
-extern const value_string sm::nas_5gs_sm_mapd_eps_b_cont_E_Modify_vals[] = {
+extern const value_string sm::sm_mapd_eps_b_cont_E_Modify_values[] = {
     {0x0, "previously provided parameters list extension"},
     {0x01, "previously provided parameters list replacement"},
     {0, nullptr},
 };
 
-extern const value_string sm::nas_5gs_sm_mapd_eps_b_cont_param_id_vals[] = {
+extern const value_string sm::sm_mapd_eps_b_cont_param_id_values[] = {
     {0x01, "Mapped EPS QoS parameters"},
     {0x02, "Mapped extended EPS QoS parameters"},
     {0x03, "Traffic flow template"},
@@ -457,7 +457,7 @@ const field_meta sm::hf_sm_mapd_eps_b_cont_opt_code = {
     "nas_5gs.sm.mapd_eps_b_cont_opt_code",
     ft::ft_uint8,
     fd::base_dec,
-    nas_5gs_sm_mapd_eps_b_cont_opt_code_vals,
+    sm_mapd_eps_b_cont_opt_code_values,
     nullptr,
     nullptr,
     0xc0,
@@ -467,7 +467,7 @@ const field_meta sm::hf_sm_mapd_eps_b_cont_deb = {
     "nas_5gs.sm.mapd_eps_b_cont_DEB",
     ft::ft_uint8,
     fd::base_dec,
-    nas_5gs_sm_mapd_eps_b_cont_DEB_vals,
+    sm_mapd_eps_b_cont_deb_values,
     nullptr,
     nullptr,
     0x20,
@@ -477,7 +477,7 @@ const field_meta sm::hf_sm_mapd_eps_b_cont_e = {
     "nas_5gs.sm.mapd_eps_b_cont_E",
     ft::ft_uint8,
     fd::base_dec,
-    nas_5gs_sm_mapd_eps_b_cont_E_vals,
+    sm_mapd_eps_b_cont_e_values,
     nullptr,
     nullptr,
     0x10,
@@ -497,7 +497,7 @@ const field_meta sm::hf_sm_mapd_eps_b_cont_e_mod = {
     "nas_5gs.sm.mapd_eps_b_cont_E_mod",
     ft::ft_uint8,
     fd::base_dec,
-    nas_5gs_sm_mapd_eps_b_cont_E_Modify_vals,
+    sm_mapd_eps_b_cont_E_Modify_values,
     nullptr,
     nullptr,
     0x10,
@@ -518,7 +518,7 @@ const field_meta sm::hf_sm_mapd_eps_b_cont_num_eps_param_id = {
     "nas_5gs.sm.mapd_eps_b_cont_param_id",
     ft::ft_uint8,
     fd::base_dec,
-    nas_5gs_sm_mapd_eps_b_cont_param_id_vals,
+    sm_mapd_eps_b_cont_param_id_values,
     nullptr,
     nullptr,
     0x0,
@@ -551,7 +551,7 @@ const field_meta sm::hf_sm_rqos_b0 = {
 };
 
 //  *      9.11.4.14    Session-AMBR
-extern const value_string sm::nas_5gs_sm_unit_for_session_ambr_values[] = {
+extern const value_string sm::sm_unit_for_session_ambr_values[] = {
     {0x00, "value is not used"},
     {0x01, "value is incremented in multiples of 1 Kbps"},
     {0x02, "value is incremented in multiples of 4 Kbps"},
@@ -582,7 +582,7 @@ extern const value_string sm::nas_5gs_sm_unit_for_session_ambr_values[] = {
 };
 
 // * 9.11.4.7 Integrity protection maximum data rate
-extern const value_string sm::nas_5gs_sm_int_prot_max_data_rate_vals[] = {
+extern const value_string sm::sm_int_prot_max_data_rate_values[] = {
     {0x0, "64 kbps"},
     {0xff, "Full data rate"},
     {0, nullptr},
@@ -593,7 +593,7 @@ const field_meta sm::hf_sm_int_prot_max_data_rate_ul = {
     "nas_5gs.sm.int_prot_max_data_rate_ul",
     ft::ft_uint8,
     fd::base_dec,
-    (nas_5gs_sm_int_prot_max_data_rate_vals),
+    (sm_int_prot_max_data_rate_values),
     nullptr,
     nullptr,
     0x0,
@@ -603,7 +603,7 @@ const field_meta sm::hf_sm_int_prot_max_data_rate_dl = {
     "nas_5gs.sm.int_prot_max_data_rate_dl",
     ft::ft_uint8,
     fd::base_dec,
-    (nas_5gs_sm_int_prot_max_data_rate_vals),
+    (sm_int_prot_max_data_rate_values),
     nullptr,
     nullptr,
     0x0,
@@ -644,7 +644,7 @@ const field_meta sm::hf_sm_all_ssc_mode_b0 = {
  *      9.11.4.16    SSC mode
  */
 
-extern const value_string sm::nas_5gs_sc_mode_values[] = {
+extern const value_string sm::sc_mode_values[] = {
     {0x1, "SSC mode 1"},
     {0x2, "SSC mode 2"},
     {0x3, "SSC mode 3"},
@@ -656,7 +656,7 @@ const field_meta sm::hf_sm_sc_mode = {
     "nas_5gs.sm.sc_mode",
     ft::ft_uint8,
     fd::base_dec,
-    (nas_5gs_sc_mode_values),
+    (sc_mode_values),
     nullptr,
     nullptr,
     0x0f,

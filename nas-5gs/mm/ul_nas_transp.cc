@@ -131,7 +131,7 @@ int dissect_pld_cont_type(dissector d, context* ctx) {
 }
 int dissect_pld_cont(dissector d, context* ctx) { return mm::dissect_pld_cont(d, ctx); }
 int dissect_pdu_ses_id(dissector d, context* ctx) {
-    d.add_item(1, hf_pdu_session_id, enc::be);
+    d.add_item(1, hf_pdu_sess_id, enc::be);
     return 1;
 }
 int dissect_add_inf(dissector d, context* ctx) {
@@ -143,7 +143,7 @@ int dissect_add_inf(dissector d, context* ctx) {
  *   9.11.3.41    PDU session identity 2
  */
 int dissect_old_pdu_ses_id(dissector d, context* ctx) {
-    d.add_item(1, hf_pdu_session_id, enc::be);
+    d.add_item(1, hf_pdu_sess_id, enc::be);
     return 1;
 }
 

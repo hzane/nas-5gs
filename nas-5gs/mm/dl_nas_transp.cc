@@ -105,7 +105,7 @@ extern const element_meta backoff_gprs_timer3 = {
  *   9.11.3.41    PDU session identity 2
  */
 int dissect_pdu_ses_id(dissector d, context* ctx) {
-    d.add_item(1, hf_pdu_session_id, enc::be);
+    d.add_item(1, hf_pdu_sess_id, enc::be);
     return 1;
 }
 

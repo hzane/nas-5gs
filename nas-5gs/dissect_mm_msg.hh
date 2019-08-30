@@ -89,7 +89,7 @@ extern const field_meta        hf_nas_5gs_mm_type_id;
 
 extern const val_string        nas_5gs_mm_type_id_vals[];
 extern const val_string values_cause[];
-extern const val_string        nas_5gs_mm_sal_t_li_values[];
+extern const val_string        mm_sal_t_li_values[];
 extern const value_string nas_5gs_mm_pld_cont_type_vals[];
 extern const val_string   nas_eps_emm_nas_key_set_identifier_vals[];
 extern const val_string   values_pld_cont_type[];
@@ -115,10 +115,8 @@ extern const element_meta nas_msg_cont;
 extern const element_meta abba;
 
 extern const true_false_string tfs_supported_not_supported;
-extern const true_false_string nas_5gs_odd_even_tfs;
 extern const true_false_string tfs_nas_5gs_mm_n1_mod;
 extern const true_false_string tfs_nas_5gs_mm_s1_mod;
-extern const true_false_string tfs_nas_5gs_sal_al_t;
 
 extern const field_meta        hfm_nas_5gs_mm_conf_upd_ind_red_b1;
 extern const val_string        nas_5gs_mm_type_of_enc_algo_vals[];
@@ -171,12 +169,12 @@ extern const field_meta        hfm_nas_5gs_mm_eia5;
 extern const field_meta        hfm_nas_5gs_mm_eia6;
 extern const field_meta        hfm_nas_5gs_mm_eia7;
 extern const field_meta        hf_nas_5gs_mm_n1_mode_reg_b1;
-extern const field_meta        hf_nas_5gs_mm_s1_mode_reg_b0;
+extern const field_meta        hf_mm_s1_mode_reg_b0;
 extern const field_meta        hf_mm_sal_t_li;
 extern const field_meta        hf_proc_trans_id;
 extern const field_meta        hf_element;
 extern const field_meta        hf_nas_5gs_mm_sal_al_t;
-extern const val_string        nas_5gs_mm_sal_t_li_values[];
+extern const val_string        mm_sal_t_li_values[];
 extern const field_meta hf_abba ;
 
 extern const true_false_string tfs_follow_on_req;
