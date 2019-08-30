@@ -186,6 +186,9 @@
     <ClCompile Include="dissect_mm_msg_sup.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="gsm.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="config.hh">

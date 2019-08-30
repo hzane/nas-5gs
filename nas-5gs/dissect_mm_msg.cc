@@ -5,6 +5,11 @@ using namespace nas;
 using namespace mm;
 
 /*
+ * 8.2.13 De-registration accept (UE originating de-registration)
+ */
+/* No data */
+
+/*
  * 8.2.15 De-registration accept (UE terminated de-registration)
  */
 /* No data */
@@ -1085,9 +1090,7 @@ int mm::dissect_nas_msg_cont(dissector d, context* ctx) {
     return d.length;
 }
 
-/*
- * 9.11.3.10    ABBA
- */
+/* 9.11.3.10    ABBA */
 int mm::dissect_abba(dissector d, context* ctx) {
     d.add_item(d.length, &hf_abba, enc::be);
     return d.length;

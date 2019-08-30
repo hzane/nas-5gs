@@ -162,6 +162,7 @@
     <ClCompile Include="dissect_sm_msg_sup.cc" />
     <ClCompile Include="field_meta.cc" />
     <ClCompile Include="formats.cc" />
+    <ClCompile Include="gsm.cc" />
     <ClCompile Include="mm\authentication_failure.cc" />
     <ClCompile Include="mm\authentication_rej.cc" />
     <ClCompile Include="mm\authentication_req.cc" />

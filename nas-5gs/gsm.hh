@@ -1,9 +1,6 @@
 #pragma once
-//
-// Created by hzane on 2019/8/30.
-//
+#include "config.hh"
 
-#ifndef NAS_5GS_GSM_HH
-#define NAS_5GS_GSM_HH
-
-#endif // NAS_5GS_GSM_HH
+int dissect_gprs_timer(dissector d, context *ctx);
+int dissect_gprs_timer2(dissector d, context *ctx);
+int dissect_gprs_timer3(dissector d, context *ctx);
