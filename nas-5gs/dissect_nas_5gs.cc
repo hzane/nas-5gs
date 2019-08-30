@@ -12,15 +12,15 @@ extern const field_meta* hf_proc_trans_id;
 int dissect_nas_5gs(dissector d, context* ctx) {
     auto item = d.tree->add_subtree(d.pinfo, d.tvb, d.offset, -1, nas_5gs_module.name);
 
-    auto epd = d.tvb->get_uint8(d.offset);
-    if (epd == TGPP_PD::SM5G) { // always plain format
+    auto epd = d.tvb->uint8(d.offset);
+    if (epd == EPD::SM5G) { // always plain format
         return dissect_nas_5gs_plain(d, ctx);
     }
 
     /* Security header type associated with a spare half octet; */
     /* or PDU session identity           octet 2 */
     /* Determine if it's a plain 5GS NAS Message or not */
-    auto sec_type = d.tvb->get_uint8(d.offset + 1);
+    auto sec_type = d.tvb->uint8(d.offset + 1);
 
     if (sec_type == 0) { // NAS_5GS_PLAIN_NAS_MSG;
         return dissect_nas_5gs_plain(d, ctx);
@@ -50,7 +50,7 @@ int dissect_nas_5gs(dissector d, context* ctx) {
     // TODO: decrypt the body
     item->add_subtree(d.pinfo, d.tvb, d.offset, -1, "Encrypted data");
 
-    return d.tvb->reported_length;
+    return d.tvb->length;
 }
 
 int dissect_nas_5gs_plain(dissector d, context* ctx) {
@@ -59,14 +59,14 @@ int dissect_nas_5gs_plain(dissector d, context* ctx) {
         d.tree->add_subtree(d.pinfo, d.tvb, d.offset, -1, "Plain NAS 5GS Message");
 
     /* Extended protocol discriminator  octet 1 */
-    auto epd = d.tvb->get_uint8(d.offset);
+    auto epd = d.tvb->uint8(d.offset);
     subtree->add_item(d.pinfo, d.tvb, d.offset, 1, hf_epd, enc::be);
     d.offset++;
 
     /* Security header type associated with a spare half octet; or
      * PDU session identity octet 2
      */
-    if (epd == TGPP_PD::MM5G){
+    if (epd == EPD::MM5G){
         /* 9.5  Spare half octet
          * Bits 5 to 8 of the second octet of every 5GMM message contains the spare
          * half octet which is filled with spare bits set to zero.
@@ -78,7 +78,7 @@ int dissect_nas_5gs_plain(dissector d, context* ctx) {
                            1, hf_sec_header_type,
                            enc::be);
     }
-    else if (epd == TGPP_PD::SM5G){
+    else if (epd == EPD::SM5G){
         /* 9.4  PDU session identity
          * Bits 1 to 8 of the second octet of every 5GSM message contain the PDU
          * session identity IE. The PDU session identity and its use to identify a
@@ -104,21 +104,21 @@ int dissect_nas_5gs_plain(dissector d, context* ctx) {
     d.tree = subtree;
     d.length = d.tvb->remain(d.offset);
 
-    if (epd == TGPP_PD::MM5G) {
+    if (epd == EPD::MM5G) {
         dissect_mm_msg(d, ctx);
     } else {
         dissect_sm_msg(d, ctx);
     }
 
-    return d.tvb->reported_length;
+    return d.tvb->length;
 }
 
 // begin with offset == 2, message type
 static int dissect_sm_msg(dissector d, context* ctx) {
-    auto len = d.tvb->reported_length;
+    auto len = d.tvb->length;
 
     /* Message type IE*/
-    uint8_t iei = d.tvb->get_uint8(d.offset); // offset == 2
+    uint8_t iei = d.tvb->uint8(d.offset); // offset == 2
 
     auto meta  = find_dissector(iei, sm::msgs);
     if (meta == nullptr ){
@@ -140,10 +140,10 @@ static int dissect_sm_msg(dissector d, context* ctx) {
 }
 
 static int dissect_mm_msg(dissector d, context* ctx) {
-    auto len = d.tvb->reported_length;
+    auto len = d.tvb->length;
 
     /* Message type IE*/
-    uint8_t iei = d.tvb->get_uint8(d.offset); // offset == 2
+    uint8_t iei = d.tvb->uint8(d.offset); // offset == 2
 
     auto meta = find_dissector(iei, mm::msgs);
     if (meta == nullptr) {

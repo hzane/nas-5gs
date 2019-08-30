@@ -3,6 +3,24 @@
 #include <string>
 #include <vector>
 
+#if __cplusplus >= 201703L
+#define MUST_USE_RESULT __attribute__((warn_unused_result))
+#define NO_DISCARD [[nodiscard]]
+#define NO_RETURN [[noreturn]]
+#else
+#define MUST_USE_RESULT 
+#define NO_DISCARD 
+#define NO_RETURN 
+#endif
+
+#if __cplusplus <= 199711L
+#define nullptr 0
+#endif
+
+#if _MSC_VER
+#define __attribute__(...)
+#endif
+
 typedef unsigned int uint_t;
 typedef int          int_t;
 
@@ -57,6 +75,7 @@ struct dissector {
     const uint8_t* safe_ptr() const;
     int            safe_length(int len) const;
     dissector   slice(int len) const;
+    dissector use_elem(void* d)const;
     void           set_private(const char* name, uint64_t val);
     uint64_t       get_private(const char* name, uint64_t dft = 0);
 };

@@ -114,7 +114,7 @@ int mm::conf_upd_cmd(dissector d, context* ctx) {
     d.step(consumed);
 
     d.extraneous_data_check(0);
-    return d.tvb->reported_length;
+    return d.tvb->length;
 }
 
 namespace mm_conf_upd_cmd {
@@ -306,7 +306,7 @@ int dissect_sal(dissector d, context* ctx) {
 
         /*Head of Partial service area list*/
         /* Allowed type    Type of list    Number of elements    octet 1 */
-        auto sal_head = d.tvb->get_uint8(d.offset);
+        auto sal_head = d.tvb->uint8(d.offset);
         auto sal_t_li  = (sal_head & 0x60) >> 5;
         auto sal_num_e = (sal_head & 0x1f) + 1;
         d.add_bits(flags);
@@ -378,22 +378,22 @@ int dissect_time_zone_time(dissector d, context* ctx) {
     auto len = d.length;
     tm   t   = {0, 0, 0, 0, 0, 0, 0, 0, -1};
 
-    auto oct = (int)d.tvb->get_uint8(d.offset);
+    auto oct = (int) d.tvb->uint8(d.offset);
     t.tm_year = (oct & 0x0f) * 10 + ((oct & 0xf0) >> 4) * 100;
 
-    oct = d.tvb->get_uint8(d.offset + 1);
+    oct = d.tvb->uint8(d.offset + 1);
     t.tm_mon = (oct & 0x0f) * 10 + ((oct & 0xf0) >> 4) - 1;
 
-    oct = d.tvb->get_uint8(d.offset + 2);
+    oct = d.tvb->uint8(d.offset + 2);
     t.tm_mday = (oct & 0x0f) * 10 + ((oct & 0xf0) >> 4);
 
-    oct = d.tvb->get_uint8(d.offset + 3);
+    oct = d.tvb->uint8(d.offset + 3);
     t.tm_hour = (oct & 0x0f) * 10 + ((oct & 0xf0) >> 4);
 
-    oct       = d.tvb->get_uint8(d.offset + 4);
+    oct       = d.tvb->uint8(d.offset + 4);
     t.tm_min= (oct & 0x0f) * 10 + ((oct & 0xf0) >> 4);
 
-    oct       = d.tvb->get_uint8(d.offset + 5);
+    oct       = d.tvb->uint8(d.offset + 5);
     t.tm_sec = (oct & 0x0f) * 10 + ((oct & 0xf0) >> 4);
 
     // auto tv = mktime(&t);
@@ -401,7 +401,7 @@ int dissect_time_zone_time(dissector d, context* ctx) {
     d.tree->add_subtree(d.pinfo, d.tvb, d.offset, 6, abs_time_str(t).c_str());
     d.step(6);
 
-    oct = d.tvb->get_uint8(d.offset);
+    oct = d.tvb->uint8(d.offset);
     auto sign = (oct & 0x08) ? '-' : '+';
     oct       = (oct >> 4) + (oct & 0x07) * 10;
     d.tree->add_subtree(d.pinfo,
@@ -463,7 +463,7 @@ int dissect_ladn_inf(dissector d, context* ctx) {
          * LADN DNN value is coded as the length and value part of DNN information element
          * as specified in subclause 9.11.2.1A starting with the second octet
          */
-        auto length = (int)d.tvb->get_uint8(d.offset);
+        auto length = (int) d.tvb->uint8(d.offset);
         d.add_item(1, &hf_mm_length, enc::be);
         d.step(1);
 
@@ -478,7 +478,7 @@ int dissect_ladn_inf(dissector d, context* ctx) {
         d.add_item(1, &hf_mm_length, enc::be);
         d.step(consumed);
 
-        length   = d.tvb->get_uint8(d.offset);
+        length   = d.tvb->uint8(d.offset);
         consumed = dissect_ta_id_list(d.slice(length), ctx);
         d.step(consumed);
         subtree->set_length(d.offset - start);
@@ -603,7 +603,7 @@ const field_meta hf_text_string = {
 
 int dissect_full_name_network(dissector d, context* ctx) {
     auto len = d.length;
-    auto oct = d.tvb->get_uint8(d.offset);
+    auto oct = d.tvb->uint8(d.offset);
     d.add_item(1, &hf_a_extension, enc::be);
     auto code_scheme = (oct & 0x70) >> 4;
     d.add_item(1, &hf_coding_scheme, enc::be);
@@ -655,7 +655,7 @@ int dissect_local_time_zone(dissector d, context* ctx) {
      * the first bit (bit 3 of the seventh octet of the TP-Service-Centre-Time-Stamp
      * field) represents the algebraic sign of this difference (0: positive, 1: negative).
      */
-    auto oct = d.tvb->get_uint8(d.offset);
+    auto oct = d.tvb->uint8(d.offset);
     auto sign = (oct & 0x08) ? '-' : '+';
 
     oct = (oct >> 4) + (oct & 0x07) * 10;
@@ -700,7 +700,7 @@ int dissect_op_def_acc_cat_def(dissector d, context* ctx) {
         // d.tree = subtree;
         use_tree ut(d, subtree);
 
-        auto length = (int) d.tvb->get_uint8(d.offset);
+        auto length = (int) d.tvb->uint8(d.offset);
         d.add_item(1, &hf_mm_length, enc::be);
         d.step(1);
 

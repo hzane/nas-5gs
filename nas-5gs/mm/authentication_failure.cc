@@ -27,7 +27,7 @@ int mm::authentication_failure(dissector d, context* ctx) {
     d.length -= consumed;
 
     d.extraneous_data_check(0);
-    return d.tvb->reported_length;
+    return d.tvb->length;
 }
 namespace mm_authentication_failure {
 int dissect_auth_fail_param(dissector d, context* ctx);

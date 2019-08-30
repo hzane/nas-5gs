@@ -63,7 +63,7 @@ int mm::dl_nas_transp(dissector d, context* ctx) {
     d.length -= consumed;
 
     d.extraneous_data_check(0);
-    return d.tvb->reported_length;
+    return d.tvb->length;
 }
 
 namespace mm_dl_nas_transp {

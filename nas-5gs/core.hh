@@ -43,6 +43,7 @@ struct expert_meta : field_meta {
 
 struct tree_meta {
     const char* name;
+    const char* alias;
 };
 
 namespace tree_metas { // tree_metas
@@ -67,7 +68,9 @@ __declspec(selectany) extern const protocol_meta nas_5gs_module = {
     "Non-Access-Stratum 5GS (NAS)PDU",
     dissect_nas_5gs,
 };
-namespace TGPP_PD{
+
+// Extended protocol discriminator
+namespace EPD{
 __declspec(selectany) extern const uint8_t MM5G = 0x7e; //TGPP_PD_5GMM
 __declspec(selectany) extern const uint8_t SM5G = 0x2e; //TGPP_PD_5GSM
 }
@@ -78,6 +81,7 @@ struct message_meta {
     uint8_t           type; // iei
     const char*       name;
     dissect_msg_fnc_t fnc;
+    const char* alias;
 };
 
 typedef message_meta element_meta;

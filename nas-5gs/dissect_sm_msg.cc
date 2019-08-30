@@ -84,7 +84,7 @@ const field_meta hf_sm_cause = {
     0x0,
 };
 int sm::dissect_sm_cause(dissector d, context* ctx) {
-    uint32_t cause = (uint32_t)d.tvb->get_uint8(d.offset);
+    uint32_t cause = (uint32_t) d.tvb->uint8(d.offset);
     d.add_item(1, &hf_sm_cause, enc::be);
 
     return 1;
@@ -368,7 +368,7 @@ int dissect_packet_filters(dissector d, int rop, context* ctx) {
     d.step(1);
 
     /* Length of packet filter contents */
-    auto pfclen = (int) d.tvb->get_uint8(d.offset);
+    auto pfclen = (int) d.tvb->uint8(d.offset);
     d.add_item(1, &hf_sm_pf_len, enc::be);
     d.step(1);
 
@@ -385,7 +385,7 @@ int dissect_packet_filters(dissector d, int rop, context* ctx) {
          * length packet filter component value field. The packet filter
          * component type identifier shall be transmitted first.
          */
-        auto pf_type = d.tvb->get_uint8(d.offset);
+        auto pf_type = d.tvb->uint8(d.offset);
         d.add_item(1, &hf_sm_pf_type, enc::be);
         d.step(1);
         /* Packet filter length contains the length of component type and
@@ -416,19 +416,19 @@ int sm::dissect_qos_rules(dissector d, context* ctx){
         use_tree ut(d, subtree);
 
         /* QoS rule identifier Octet 4*/
-        auto rule_id = d.tvb->get_uint8(d.offset);
+        auto rule_id = d.tvb->uint8(d.offset);
         d.add_item(1, &hf_sm_qos_rule_id, enc::be);
         d.step(1);
 
         /* Length of QoS rule Octet 5 - 6*/
-        auto length = (int) d.tvb->get_ntohs(d.offset);
+        auto length = (int) d.tvb->ntohs(d.offset);
         d.add_item(2, &hf_sm_length, enc::be);
         d.step(2);
 
         subtree->set_length(length + 3);
 
         /* Rule operation code    DQR bit    Number of packet filters */
-        auto n_filters = d.tvb->get_uint8(d.offset);
+        auto n_filters = d.tvb->uint8(d.offset);
         auto rop       = n_filters >> 5;
         n_filters      = n_filters & 0x0f;
         d.add_bits(pkt_flt_flags);
@@ -604,12 +604,12 @@ int dissect_eps_param(dissector d, int i, context* ctx){
     use_tree ut(d, subtree);
 
     /* EPS parameter identifier */
-    uint32_t param_id = (uint32_t)d.tvb->get_uint8(d.offset);
+    uint32_t param_id = (uint32_t) d.tvb->uint8(d.offset);
     d.add_item(1, &hf_sm_mapd_eps_b_cont_num_eps_param_id, enc::be);
     d.step(1);
 
     /*length of the EPS parameter contents field */
-    int length = (int)d.tvb->get_uint8(d.offset);
+    int length = (int) d.tvb->uint8(d.offset);
     d.add_item(1, &hf_sm_length, enc::be);
     d.step(1);
 
@@ -656,7 +656,7 @@ int sm::dissect_mapped_eps_b_cont(dissector d, context* ctx) {
         d.step(1);
 
         /* Length of Mapped EPS bearer context*/
-        int length = (int)d.tvb->get_ntohs(d.offset);
+        int length = (int) d.tvb->ntohs(d.offset);
         d.add_item(2, &hf_sm_length, enc::be);
         d.step(2);
 
@@ -664,7 +664,7 @@ int sm::dissect_mapped_eps_b_cont(dissector d, context* ctx) {
         /* operation code | DEB |  E | number of EPS params     */
         subtree->set_length(length + 3);
 
-        auto nep = d.tvb->get_uint8(d.offset);
+        auto nep = d.tvb->uint8(d.offset);
         auto opt_code = nep&0xc0;
         nep           = nep & 0x0f;
 
@@ -798,24 +798,24 @@ int sm::dissect_ses_ambr(dissector d, context* ctx) {
     auto len = d.length;
 
     /* Unit for Session-AMBR for downlink */
-    auto unit = (int)d.tvb->get_uint8(d.offset);
+    auto unit = (int) d.tvb->uint8(d.offset);
     d.add_item(1, &hf_sm_ses_ambr_dl_unit, enc::be);
     d.step(1);
 
     const char* unit_str = "";
     /* Session-AMBR for downlink (octets 4 and 5) */
     auto mult = get_ext_ambr_unit(unit, &unit_str);
-    auto ambr_val = (uint32_t)d.tvb->get_ntohs(d.offset);
+    auto ambr_val = (uint32_t) d.tvb->ntohs(d.offset);
     auto item = d.add_item(2, &hf_sm_ses_ambr_dl, enc::none);
     item->set_string(formats("%u %s (%u)", ambr_val * mult, unit_str, ambr_val));
     d.step(2);
 
-    unit = (int)d.tvb->get_uint8(d.offset);
+    unit = (int) d.tvb->uint8(d.offset);
     d.add_item(1, &hf_sm_ses_ambr_ul_unit, enc::be);
     d.step(1);
 
     mult = get_ext_ambr_unit(unit, &unit_str);
-    ambr_val = (uint32_t)d.tvb->get_ntohs(d.offset);
+    ambr_val = (uint32_t) d.tvb->ntohs(d.offset);
     item = d.add_item(2, &hf_sm_ses_ambr_ul, enc::none);
     item->set_string(formats("%u %s (%u)", ambr_val * mult, unit_str, ambr_val));
 

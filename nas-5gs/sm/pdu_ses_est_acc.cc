@@ -102,7 +102,7 @@ int sm::pdu_ses_est_acc(dissector d, context* ctx) {
     // extraneous_data_check(d.pinfo, d.tree, d.tvb, d.offset, d.length, 0);
     d.extraneous_data_check(0);
 
-    return d.tvb->reported_length;
+    return d.tvb->length;
 }
 
 namespace sm_pdu_ses_est {
@@ -195,7 +195,7 @@ const field_meta hf_pdu_addr_ipv6 = {
 
 int dissect_pdu_address(dissector d, context* ctx) {
     auto len = d.length;
-    uint32_t val = (uint32_t)d.tvb->get_uint8(d.offset);
+    uint32_t val = (uint32_t) d.tvb->uint8(d.offset);
     auto item = d.add_item(1, &hf_sm_pdu_ses_type, enc::be);
     d.step(1);
 

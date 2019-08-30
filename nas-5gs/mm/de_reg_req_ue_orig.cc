@@ -27,7 +27,7 @@ int mm::dissect_reg_req_ue_orig(dissector d, context* ctx) {
     d.step(consumed);
 
     d.extraneous_data_check(0);
-    return d.tvb->reported_length;
+    return d.tvb->length;
 }
 
 namespace mm_de_reg {

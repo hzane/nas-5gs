@@ -23,5 +23,5 @@ int sm::pdu_ses_rel_req(dissector d, context* ctx) {
 
     d.extraneous_data_check(0);
 
-    return d.tvb->reported_length;
+    return d.tvb->length;
 }

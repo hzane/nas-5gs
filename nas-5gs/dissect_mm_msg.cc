@@ -66,7 +66,7 @@ int mm::dissect_allowed_nssai(dissector d, context* ctx) {
     while (d.length > 0) {
         auto subtree = d.tree->add_subtree(d.pinfo, d.tvb, d.offset, -1, "S-NSSAI %u", i);
         d.tree       = subtree;
-        auto l       = d.tvb->get_uint8(d.offset);
+        auto l       = d.tvb->uint8(d.offset);
         auto item    = d.add_item(1, &hf_mm_length, enc::be);
         d.step(1);
 
@@ -157,7 +157,7 @@ int mm::dissect_ta_id_list(dissector d, context* ctx) {
             d.pinfo, d.tvb, d.offset, -1, "Partial tracking area list  %u", num_par_tal);
         /*Head of Partial tracking area list*/
         /* Type of list    Number of elements    octet 1 */
-        auto head  = d.tvb->get_uint8(d.offset);
+        auto head  = d.tvb->uint8(d.offset);
         auto li    = (head & 0x60u) >> 5u;
         auto num_e = (head & 0x1fu) + 1;
         d.add_bits(flags);
@@ -243,7 +243,7 @@ int mm::dissect_configured_nssai(dissector d, context* ctx) {
         auto subtree = d.tree->add_subtree(d.pinfo, d.tvb, d.offset, 2, "S-NSSAI %u", i);
         d.tree       = subtree;
 
-        int length = (int) d.tvb->get_uint8(d.offset);
+        int length = (int) d.tvb->uint8(d.offset);
         d.add_item(1, &hf_mm_length, enc::be);
         d.step(1);
 
@@ -661,7 +661,7 @@ int mm::dissect_pdu_ses_react_res(dissector d, context* ctx) {
 }
 
 int mm::dissect_mm_cause(dissector d, context* ctx) {
-    auto cause = d.tvb->get_uint8(d.offset);
+    auto cause = d.tvb->uint8(d.offset);
     d.tree->add_item(d.pinfo, d.tvb, d.offset, 1, hf_mm_cause, enc::be);
     return 1;
 }
@@ -680,7 +680,7 @@ int mm::dissect_ladn_inf(dissector d, context* ctx) {
          * LADN DNN value is coded as the length and value part of DNN information element
          * as specified in subclause 9.11.2.1A starting with the second octet
          */
-        auto length = (int) d.tvb->get_uint8(d.offset);
+        auto length = (int) d.tvb->uint8(d.offset);
         d.add_item(1, &hf_mm_length, enc::be);
         d.step(1);
 
@@ -695,7 +695,7 @@ int mm::dissect_ladn_inf(dissector d, context* ctx) {
         d.add_item(1, &hf_mm_length, enc::be);
         d.step(consumed);
 
-        length   = d.tvb->get_uint8(d.offset);
+        length   = d.tvb->uint8(d.offset);
         consumed = dissect_ta_id_list(d.slice(length), ctx);
         d.step(consumed);
         subtree->set_length(d.offset - start);
@@ -761,7 +761,7 @@ int mm::dissect_sal(dissector d, context* ctx) {
 
         /*Head of Partial service area list*/
         /* Allowed type    Type of list    Number of elements    octet 1 */
-        auto sal_head  = d.tvb->get_uint8(d.offset);
+        auto sal_head  = d.tvb->uint8(d.offset);
         auto sal_t_li  = (sal_head & 0x60) >> 5;
         auto sal_num_e = (sal_head & 0x1f) + 1;
         d.add_bits(flags);
@@ -902,7 +902,7 @@ const field_meta hf_nas_5gs_tmsi = {
 
 int mm::dissect_mobile_id(dissector d, context* ctx) {
     auto len     = d.length;
-    auto oct     = d.tvb->get_uint8(d.offset);
+    auto oct     = d.tvb->uint8(d.offset);
     auto type_id = oct & 0x07;
     switch (type_id) {
     case 0: {
@@ -1015,7 +1015,7 @@ int mm::dissect_pld_cont(dissector d, context* ctx) {
     return len;
 }
 int mm::dissect_pld_cont_type(dissector d, context* ctx) {
-    auto oct = d.tvb->get_uint8(d.offset);
+    auto oct = d.tvb->uint8(d.offset);
     d.set_private("payload-content-type", oct);
 
     d.add_item(1, &hf_pld_cont_type, enc::be);
@@ -1062,7 +1062,7 @@ int mm::dissect_nw_slicing_ind(dissector d, context* ctx) {
 
 // nas key set id nas-key-set-id
 int mm::dissect_nas_ksi(dissector d, context* ctx) {
-    auto v = d.tvb->get_uint8(d.offset);
+    auto v = d.tvb->uint8(d.offset);
 
     /* Type of security context flag (TSC) (octet 1)    V   1/2   */
     auto tsc  = (v & 0x10) >> 4;

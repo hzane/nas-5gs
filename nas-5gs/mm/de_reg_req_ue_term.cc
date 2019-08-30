@@ -33,7 +33,7 @@ int mm::dissect_registration_req_ue_term(dissector d, context* ctx) {
     d.length -= consumed;
 
     d.extraneous_data_check(0);
-    return d.tvb->reported_length;
+    return d.tvb->length;
 }
 
 namespace mm_de_reg {

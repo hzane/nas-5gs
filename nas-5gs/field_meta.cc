@@ -52,7 +52,7 @@ string field_meta::format(uint64_t v) const {
         return formats("%c", (char)v);
     }
 
-    if (val_strings && display == fd::base_bitset) {
+    if (val_strings && display == fd::base_bit) {
         auto flags = find_bitset_string(val_strings, (uint32_t)v);
         return join(flags, " | ");
     }

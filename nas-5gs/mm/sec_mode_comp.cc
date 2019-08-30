@@ -19,5 +19,5 @@ int mm::sec_mode_comp(dissector d, context* ctx) {
     d.step(consumed);
 
     d.extraneous_data_check(0);
-    return d.tvb->reported_length;
+    return d.tvb->length;
 }

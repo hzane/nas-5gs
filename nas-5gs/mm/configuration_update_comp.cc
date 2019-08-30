@@ -9,5 +9,5 @@ int mm::conf_update_comp(dissector d, context* ctx) {
 
     /* No Data */
     d.extraneous_data_check(0);
-    return d.tvb->reported_length;
+    return d.tvb->length;
 }

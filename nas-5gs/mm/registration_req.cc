@@ -161,7 +161,7 @@ int mm::registration_req(dissector d, context* ctx) {
     // extraneous_data_check(d.pinfo, d.tree, d.tvb, d.offset, d.length, 0);
     d.extraneous_data_check(0);
 
-    return d.tvb->reported_length;
+    return d.tvb->length;
 }
 
 namespace mm_reg_req{
@@ -1662,7 +1662,7 @@ int mm_reg_req::dissect_ladn_inf(dissector d, context* ctx) {
 }
 
 int mm_reg_req::dissect_pld_cont_type(dissector d, context* ctx) {
-    auto oct = d.tvb->get_uint8(d.offset);
+    auto oct = d.tvb->uint8(d.offset);
     d.set_private("payload-content-type", oct);
 
     d.add_item(1, &mm::hf_pld_cont_type, enc::be);
@@ -1717,7 +1717,7 @@ int mm_reg_req::dissect_requested_nssai(dissector d, context* ctx) {
         auto subtree = d.tree->add_subtree(d.pinfo, d.tvb, d.offset, 2, "S-NSSAI %u", i);
         use_tree ut(d, subtree);
 
-        auto length = (int)d.tvb->get_uint8(d.offset);
+        auto length = (int) d.tvb->uint8(d.offset);
         d.add_item(1, &hf_mm_length, enc::be);
         d.step(1);
 

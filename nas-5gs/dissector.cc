@@ -53,3 +53,7 @@ uint64_t dissector::get_private(const char* name, uint64_t v) {
     if (i != pinfo->iprivates.end()) return i->second;
     return v;
 }
+
+dissector dissector::use_elem(void* data)const {
+    return dissector{pinfo, tree, tvb, offset, length, data};
+}

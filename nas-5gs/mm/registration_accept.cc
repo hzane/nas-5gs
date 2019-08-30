@@ -194,7 +194,7 @@ int mm::registration_accept(dissector d, context* ctx) {
 
     d.extraneous_data_check(0);
 
-    return d.tvb->reported_length;
+    return d.tvb->length;
 }
 namespace mm_reg_accept {
 
@@ -679,7 +679,7 @@ int dissect_emerg_num_list_7a(dissector d, context* ctx) {
             d.pinfo, d.tvb, d.offset, -1, "Extended emergency number #%u", i++);
         use_tree ut(d, subtree);
 
-        auto len = (int)d.tvb->get_uint8(d.offset);
+        auto len = (int) d.tvb->uint8(d.offset);
         d.add_item(1, &hf_ext_emerge_num_len, enc::be);
         d.step(1);
         if (len>0){
@@ -688,7 +688,7 @@ int dissect_emerg_num_list_7a(dissector d, context* ctx) {
             // item->set_string(string());
             d.step(len);
         }
-        len = d.tvb->get_uint8(d.offset);
+        len = d.tvb->uint8(d.offset);
         d.add_item(1, &hf_ext_emerge_sub_serv_field_len, enc::be);
         d.step(1);
         if (len>0){
@@ -983,7 +983,7 @@ int              dissect_sor_trans_cont(dissector d, context* ctx) {
         nullptr,
     };
     auto i = 1;
-    auto oct = d.tvb->get_uint8(d.offset);
+    auto oct = d.tvb->uint8(d.offset);
     auto data_type = oct &0x01;
 
     if (data_type == 0){
@@ -1103,7 +1103,7 @@ int dissect_operator_defined_acd(dissector d, context* ctx) {
                                 "Operator-defined access category definition  %u",
                                 i);
         use_tree ut(d, subtree);
-        auto len = (int)d.tvb->get_uint8(d.offset);
+        auto len = (int) d.tvb->uint8(d.offset);
         d.add_item(1, &hf_mm_length, enc::be);
         d.step(1);
 

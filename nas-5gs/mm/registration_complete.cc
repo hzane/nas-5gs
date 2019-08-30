@@ -10,5 +10,5 @@ int mm::registration_complete(dissector d, context* ctx) {
     /* 73    SOR transparent container    SOR transparent container 9.11.3.51    O TLV-E
      * 20-2048 */
     d.extraneous_data_check(0);
-    return d.tvb->reported_length;
+    return d.tvb->length;
 }

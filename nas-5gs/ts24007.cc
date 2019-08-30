@@ -2,6 +2,74 @@
 #include "dissect_nas_5gs.hh"
 #include "field_meta.hh"
 
+int dissect_elem_mandatory(const field_meta*   type_meta,
+                                  const element_meta* val_meta,
+                                  dissector           d,
+                                  tlv_fnc_t           fnc,
+                                  context*            ctx) {
+    auto consumed = 0;
+    if (d.length > 0) {
+        consumed = fnc(type_meta, val_meta, d, ctx);
+        d.step(consumed);
+    }
+    if (consumed <= 0) {
+        d.tree->add_expert(d.pinfo,
+                           d.tvb,
+                           d.offset,
+                           0,
+                           "Missing Mandatory element %s, rest of dissection is suspect",
+                           safe_str(val_meta->name));
+        consumed = 0;
+    }
+
+    return consumed;
+}
+
+int dissect_elem_t(const field_meta*   type_meta,
+                          const element_meta* val_meta,
+                          dissector           d,
+                          context*            ctx) {
+    return dissect_elem_mandatory(type_meta, val_meta, d, dissect_opt_elem_t, ctx);
+}
+int dissect_elem_lv(const field_meta*   type_meta,
+                           const element_meta* val_meta,
+                           dissector           d,
+                           context*            ctx) {
+    return dissect_elem_mandatory(type_meta, val_meta, d, dissect_opt_elem_lv, ctx);
+}
+int dissect_elem_lv_e(const field_meta*   type_meta,
+                             const element_meta* val_meta,
+                             dissector           d,
+                             context*            ctx) {
+    return dissect_elem_mandatory(type_meta, val_meta, d, dissect_opt_elem_lv_e, ctx);
+}
+int dissect_elem_v(const field_meta*   type_meta,
+                          const element_meta* val_meta,
+                          dissector           d,
+                          context*            ctx) {
+    return dissect_elem_mandatory(type_meta, val_meta, d, dissect_opt_elem_v, ctx);
+}
+int dissect_elem_tv_short(const field_meta*   type_meta,
+                                 const element_meta* val_meta,
+                                 dissector           d,
+                                 context*            ctx) {
+    return dissect_elem_mandatory(type_meta, val_meta, d, dissect_opt_elem_tv_short, ctx);
+}
+int dissect_elem_tv(const field_meta*   type_meta,
+                           const element_meta* val_meta,
+                           dissector           d,
+                           context*            ctx) {
+    return dissect_elem_mandatory(type_meta, val_meta, d, dissect_opt_elem_tv, ctx);
+}
+
+
+int dissect_elem_tlv(const field_meta*   type_meta,
+                            const element_meta* val_meta,
+                            dissector           d,
+                            context*            ctx) {
+    return dissect_elem_mandatory(type_meta, val_meta, d, dissect_opt_elem_tlv, ctx);
+}
+
 /*
  * Type (T) element dissector
  */
@@ -9,14 +77,18 @@ int dissect_opt_elem_t(const field_meta *,
                        const element_meta *val_meta,
                        dissector           d,
                        context *           ctx) {
+    auto e = (opt_elem*)d.data;
+    set_elem_presence(e, false);
+
     if (d.length <= 0) return 0;
 
-    auto iei = d.tvb->get_uint8(d.offset);
+    auto iei = d.tvb->uint8(d.offset);
     if (iei != val_meta->type) return 0;
 
+    set_elem_presence(e, true);
+    set_elem_type(e, iei);
+
     d.tree->add_subtree(d.pinfo, d.tvb, d.offset, 1, val_meta->name);
-    // auto item = tree->add_item(pinfo, tvb, offset, 1, type_meta, enc::none);
-    // item->set_uint(iei, enc::be, nullptr);
 
     return 1;
 }
@@ -29,9 +101,14 @@ int dissect_opt_elem_lv(const field_meta *,
                         const element_meta *val_meta,
                         dissector           d,
                         context *           ctx) {
-    if (d.length <= 0) return 0;
+    auto e = (opt_elem*)d.data;
+    set_elem_presence(e,false);
 
-    auto parm_len = d.tvb->get_uint8(d.offset);
+    if (d.length <= 0) return 0;
+    set_elem_presence(e, true);
+
+    auto parm_len = d.tvb->uint8(d.offset);
+    set_elem_length(e, (int) parm_len);
 
     auto subtree = d.tree->add_subtree(d.pinfo, d.tvb, d.offset, 1 + parm_len, val_meta->name);
     auto l = subtree->add_item(d.pinfo, d.tvb, d.offset, 1, hf_gsm_a_length, enc::none);
@@ -43,7 +120,9 @@ int dissect_opt_elem_lv(const field_meta *,
     d.offset      = d.offset + 1;
     d.length      = parm_len;
     d.tree        = subtree;
-    auto consumed = fnc(d, ctx);
+    auto consumed = fnc(d.use_elem(e? e->elem : nullptr), ctx);
+    d.step(consumed);
+
     return consumed + 1;
 }
 
@@ -54,9 +133,15 @@ int dissect_opt_elem_lv_e(const field_meta *,
                           const element_meta *val_meta,
                           dissector           d,
                           context *           ctx) {
+    auto e = (opt_elem*)d.data;
+    set_elem_presence(e, false);
+
     if (d.length <= 0) return 0;
 
-    auto parm_len = d.tvb->get_ntohs(d.offset);
+    auto parm_len = d.tvb->ntohs(d.offset);
+    set_elem_presence(e, true);
+    set_elem_length(e, parm_len);
+
     auto subtree =
         d.tree->add_subtree(d.pinfo, d.tvb, d.offset, 2 + parm_len, val_meta->name);
 
@@ -68,7 +153,8 @@ int dissect_opt_elem_lv_e(const field_meta *,
     d.length      = parm_len;
     d.tree        = subtree;
     auto fnc      = val_meta->fnc ? val_meta->fnc : add_generic_msg_elem_body;
-    auto consumed = fnc(d, ctx);
+    auto consumed = fnc(d.use_elem(get_elem_data(e)), ctx);
+    d.step(consumed);
 
     return consumed + 2;
 }
@@ -83,6 +169,9 @@ int dissect_opt_elem_v(const field_meta *,
                        const element_meta *val_meta,
                        dissector           d,
                        context *           ctx) {
+    auto e = (opt_elem*)d.data;
+    set_elem_presence(e, false);
+
     if (d.length <= 0) return 0;
 
     auto subtree  = d.tree->add_subtree(d.pinfo, d.tvb, d.offset, -1, val_meta->name);
@@ -91,6 +180,9 @@ int dissect_opt_elem_v(const field_meta *,
     d.length      = -1;
     auto consumed = val_meta->fnc(d, ctx);
     subtree->set_length(consumed);
+
+    set_elem_presence(e, consumed>0);
+    set_elem_length(e, consumed);
 
     return consumed;
 }
@@ -109,20 +201,25 @@ int dissect_opt_elem_tv_short(const field_meta *,
                               const element_meta *val_meta,
                               dissector           d,
                               context *           ctx) {
+    auto e = (opt_elem*)d.data;
+    set_elem_presence(e, false);
+
     if (d.length <= 0) return 0;
 
-    auto iei = d.tvb->get_uint8(d.offset) & 0xF0;
+    auto iei = d.tvb->uint8(d.offset) & 0xF0;
     if (iei != (val_meta->type & 0xF0)) return 0;
+
+    set_elem_presence(e, true);
+    set_elem_type(e, iei);
 
     auto subtree = d.tree->add_subtree(d.pinfo, d.tvb, d.offset, -1, val_meta->name);
 
-    // auto item = subtree->add_item(pinfo, tvb, offset, 1, type_meta, enc::none);
-    // item->set_uint(iei, enc::be, "0x1x-", iei >> 4);
-
     d.tree        = subtree;
     d.length      = right_nibble;
-    auto consumed = val_meta->fnc(d, ctx);
+    auto consumed = val_meta->fnc(d.use_elem(get_elem_data(e)), ctx);
     subtree->set_length(consumed);
+
+    set_elem_length(e, consumed);
 
     return consumed;
 }
@@ -137,21 +234,26 @@ int dissect_opt_elem_tv_short(const field_meta *,
 int dissect_opt_elem_tv(const field_meta *,
                         const element_meta *val_meta,
                         dissector           d,
-                        context *           ctx) {    
+                        context *           ctx) {
+    auto e = (opt_elem*)d.data;
+    set_elem_presence(e, false);
+
     if (d.length <= 0) return 0;
 
-    auto iei = d.tvb->get_uint8(d.offset);
+    auto iei = d.tvb->uint8(d.offset);
     if (iei != val_meta->type) return 0;
+
+    set_elem_presence(e, true);
+    set_elem_type(e, iei);
 
     auto subtree = d.tree->add_subtree(d.pinfo, d.tvb, d.offset, -1, val_meta->name);
 
-    // auto item    = subtree->add_item(pinfo, tvb, offset, 1, type_meta, enc::none);
-    // item->set_uint(iei, enc::be, nullptr);
     d.offset      = d.offset + 1;
     d.length      = -1;
     d.tree        = subtree;
-    auto consumed = val_meta->fnc(d, ctx);
+    auto consumed = val_meta->fnc(d.use_elem(get_elem_data(e)), ctx);
     subtree->set_length(consumed + 1);
+    set_elem_length(e, consumed);
 
     return consumed + 1;
 }
@@ -163,18 +265,21 @@ int dissect_opt_elem_tlv(const field_meta *,
                          const element_meta *val_meta,
                          dissector           d,
                          context *           ctx) {
+    auto e = (opt_elem*)d.data;
+    set_elem_presence(e, false);
+
     if (d.length <= 0) return 0;
 
-    auto iei = d.tvb->get_uint8(d.offset);
+    auto iei = d.tvb->uint8(d.offset);
     if (iei != val_meta->type) return 0;
 
-    auto parm_len = d.tvb->get_uint8(d.offset + 1);
+    set_elem_presence(e, true);
+    set_elem_type(e, iei);
+
+    auto parm_len = d.tvb->uint8(d.offset + 1);
 
     auto subtree =
         d.tree->add_subtree(d.pinfo, d.tvb, d.offset, parm_len + 1 + 1, val_meta->name);
-
-    // auto item = subtree->add_item(pinfo, tvb, offset, 1, type_meta, enc::none);
-    // item->set_uint(iei, enc::be, nullptr);
 
     auto t =
         subtree->add_item(d.pinfo, d.tvb, d.offset + 1, 1, hf_gsm_a_length, enc::none);
@@ -185,7 +290,10 @@ int dissect_opt_elem_tlv(const field_meta *,
     d.length      = parm_len;
     d.tree        = subtree;
     auto fnc      = val_meta->fnc ? val_meta->fnc : add_generic_msg_elem_body;
-    auto consumed = fnc(d, ctx);
+
+    auto consumed = fnc(d.use_elem(get_elem_data(e)), ctx);
+    d.step(consumed);
+    set_elem_length(e, consumed);
 
     return consumed + 2;
 }
@@ -202,17 +310,23 @@ int dissect_opt_elem_telv(const field_meta *,
                           const element_meta *val_meta,
                           dissector           d,
                           context *           ctx) {
+    auto e = (opt_elem *) d.data;
+    set_elem_presence(e, false);
+
     if (d.length <= 0) return 0;
 
-    auto iei = d.tvb->get_uint8(d.offset);
+    auto iei = d.tvb->uint8(d.offset);
     if (iei != val_meta->type) return 0;
 
-    uint16_t parm_len     = d.tvb->get_uint8(d.offset + 1);
+    set_elem_presence(e, true);
+    set_elem_type(e, iei);
+
+    uint16_t parm_len     = d.tvb->uint8(d.offset + 1);
     auto     lengt_length = 1;
 
     if ((parm_len & 0x80) == 0) {
         /* length in 2 octets */
-        parm_len     = d.tvb->get_ntohs(d.offset + 1);
+        parm_len     = d.tvb->ntohs(d.offset + 1);
         lengt_length = 2;
     } else {
         parm_len = parm_len & 0x7F;
@@ -220,9 +334,6 @@ int dissect_opt_elem_telv(const field_meta *,
 
     auto subtree = d.tree->add_subtree(
         d.pinfo, d.tvb, d.offset, parm_len + 1 + lengt_length, val_meta->name);
-
-    // auto item = subtree->add_item(pinfo, buf, offset, 1, type_meta, enc::none);
-    // item->set_uint(iei, enc::be, nullptr);
 
     auto item = subtree->add_item(
         d.pinfo, d.tvb, d.offset + 1, lengt_length, hf_gsm_e_length, enc::none);
@@ -234,7 +345,9 @@ int dissect_opt_elem_telv(const field_meta *,
     d.length      = parm_len;
     d.tree        = subtree;
     auto fnc      = val_meta->fnc ? val_meta->fnc : add_generic_msg_elem_body;
-    auto consumed = fnc(d, ctx);
+    auto consumed = fnc(d.use_elem(get_elem_data(e)), ctx);
+
+    set_elem_length(e, consumed);
 
     return 1 + lengt_length + consumed;
 }
@@ -250,18 +363,19 @@ int dissect_opt_elem_tlv_e(const field_meta *,
                            const element_meta *val_meta,
                            dissector           d,
                            context *           ctx) {
+    auto e = (opt_elem*)d.data;
     if (d.length<= 0) return 0;
 
-    auto iei = d.tvb->get_uint8(d.offset);
+    auto iei = d.tvb->uint8(d.offset);
     if (iei != val_meta->type) return 0;
 
-    auto parm_len = d.tvb->get_ntohs(d.offset + 1);
+    set_elem_presence(e, true);
+    set_elem_type(e, iei);
+
+    auto parm_len = d.tvb->ntohs(d.offset + 1);
 
     auto subtree =
         d.tree->add_subtree(d.pinfo, d.tvb, d.offset, 1 + 2 + parm_len, val_meta->name);
-
-    // auto item = subtree->add_item(pinfo, buf, offset, 1, type_meta, enc::none);
-    // item->set_uint(iei, enc::be, nullptr);
 
     auto item =
         subtree->add_item(d.pinfo, d.tvb, d.offset + 1, 2, hf_gsm_e_length, enc::none);
@@ -273,7 +387,9 @@ int dissect_opt_elem_tlv_e(const field_meta *,
     d.offset      = d.offset + 1 + 2;
     d.length      = parm_len;
     auto fnc = val_meta->fnc ? val_meta->fnc : add_generic_msg_elem_body;
-    auto consumed = fnc(d, ctx);
+    auto consumed = fnc(d.use_elem(get_elem_data(e)), ctx);
+
+    set_elem_length(e, consumed);
 
     return 1 + 2 + consumed;
 }

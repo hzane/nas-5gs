@@ -61,7 +61,7 @@ int sm::pdu_ses_est_req(dissector d, context* ctx) {
     // extraneous_data_check(d.pinfo, d.tree, d.tvb, d.offset, d.length, 0);
     d.extraneous_data_check(0);
 
-    return d.tvb->reported_length;
+    return d.tvb->length;
 }
 namespace sm_pdu_ses_est {
 extern const element_meta int_prot_max_date_rate = {

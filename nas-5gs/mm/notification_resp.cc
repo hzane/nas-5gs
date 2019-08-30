@@ -13,5 +13,5 @@ int mm::notification_resp(dissector d, context* ctx) {
     d.step(consumed);
 
     d.extraneous_data_check(0);
-    return d.tvb->reported_length;
+    return d.tvb->length;
 }

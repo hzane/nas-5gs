@@ -957,7 +957,7 @@ int mm::dissect_updp(dissector d, context* ctx) {
 
     /* Message type IE*/
     // TODO: implement
-    auto oct = d.tvb->get_uint8(d.offset);
+    auto oct = d.tvb->uint8(d.offset);
     d.add_item(d.length, &hf_element, enc::be);
     return len;
 }

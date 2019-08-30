@@ -65,7 +65,7 @@ int sm::pdu_ses_mod_cmd(dissector d, context* ctx) {
 
     d.extraneous_data_check(0);
 
-    return d.tvb->reported_length;
+    return d.tvb->length;
 }
 namespace sm_pdu_ses_mod {
 int dissect_authorized_qos_flow_des(dissector d, context* ctx);
@@ -206,12 +206,12 @@ int dissect_qos(dissector d, int j, context* ctx) {
     auto start = d.offset;
 
     /* Parameter identifier */
-    uint32_t param_id = (uint32_t)d.tvb->get_uint8(d.offset);
+    uint32_t param_id = (uint32_t) d.tvb->uint8(d.offset);
     d.add_item(1, &hf_sm_param_id, enc::be);
     d.step(1);
 
     /* Length of parameter contents */
-    int param_len = (int)d.tvb->get_uint8(d.offset);
+    int param_len = (int) d.tvb->uint8(d.offset);
     d.add_item(1, &hf_sm_param_len, enc::be);
     d.step(1);
 
@@ -226,14 +226,14 @@ int dissect_qos(dissector d, int j, context* ctx) {
     case 0x02:
     case 0x04: {
         /* Unit for Session-AMBR for uplink */
-        uint32_t unit = (uint32_t) d.tvb->get_uint8(d.offset);
+        uint32_t unit = (uint32_t) d.tvb->uint8(d.offset);
         d.add_item(1, &hf_sm_ses_ambr_ul_unit, enc::be);
         d.step(1);
 
         /* Session-AMBR for downlink */
         const char* unit_str = "";
         auto mult      = get_ext_ambr_unit(unit, &unit_str);
-        auto        ambr_val = d.tvb->get_ntohs(d.offset);
+        auto        ambr_val = d.tvb->ntohs(d.offset);
         auto item = d.add_item(param_len - 1, &hf_sm_ses_ambr_ul, enc::be);
         item->set_string(formats("%u %s (%u)", ambr_val * mult, unit_str, ambr_val));
         d.step(param_len - 1);
@@ -242,14 +242,14 @@ int dissect_qos(dissector d, int j, context* ctx) {
     case 0x03:/* 03H (GFBR downlink); 05H (MFBR downlink);*/
     case 0x05:{
         /* Unit for Session-AMBR for uplink */
-        uint32_t unit = (uint32_t) d.tvb->get_uint8(d.offset);
+        uint32_t unit = (uint32_t) d.tvb->uint8(d.offset);
         d.add_item(1, &hf_sm_ses_ambr_dl_unit, enc::be);
         d.step(1);
 
         /* Session-AMBR for downlink*/
         const char* unit_str = "";
         auto mult      = get_ext_ambr_unit(unit, &unit_str);
-        auto        ambr_val = d.tvb->get_ntohs(d.offset);
+        auto        ambr_val = d.tvb->ntohs(d.offset);
 
         auto item = d.add_item(param_len - 1, &hf_sm_ses_ambr_dl, enc::be);
         item->set_string(formats("%u %s (%u)", ambr_val * mult, unit_str, ambr_val));
@@ -312,7 +312,7 @@ int dissect_authorized_qos_flow_des(dissector d, context* ctx) {
         d.step(1);
 
         /* 0 Spare    E    Number of parameters */
-        auto num_param = d.tvb->get_uint8(d.offset);
+        auto num_param = d.tvb->uint8(d.offset);
         num_param = num_param & 0x3f;
         d.add_bits(param_flags);
         d.step(1);

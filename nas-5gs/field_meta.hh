@@ -1,13 +1,9 @@
 #pragma once
-// defined in core.hh
 
 #include "config.hh"
+#include "val_string.hh"
 #include <string>
 
-struct val_string {
-    uint32_t    id;
-    const char* text;
-};
 
 struct true_false_string {
     const char* true_string;
@@ -56,30 +52,29 @@ inline bool is_integer(uint32_t t){return t&ft_integer;}
 inline bool is_unsigned(uint32_t t){ return is_integer(t) && !(t&ft_signed);}
 inline bool is_signed(uint32_t t){ return is_integer(t) && (t&ft_signed);}
 inline uint32_t integer_size(uint32_t t){
-    return (t==ft_uint8||t==ft_int8)
-           ? 1u: (t==ft_uint16||t==ft_int16)
-           ? 2u: (t==ft_uint24||t==ft_int24)
-           ? 3u: (t==ft_uint32||t==ft_int32)
-           ? 4u: (t==ft_uint48||t==ft_int48)
-           ? 6u: (t==ft_uint64||t==ft_int64)
-           ? 8u: 0;
+    return (t==ft_uint8||t==ft_int8) ? 1u
+                                     : (t==ft_uint16||t==ft_int16)  ? 2u
+                                     : (t==ft_uint24||t==ft_int24)           ? 3u
+                                     : (t==ft_uint32||t==ft_int32)           ? 4u
+                                     : (t==ft_uint48||t==ft_int48)           ? 6u
+                                     : (t==ft_uint64||t==ft_int64)           ? 8u: 0;
 }
 } // namespace ft
 
 namespace fd {
 __declspec(selectany) extern const uint32_t base_none    = 0; /* none */
-
-// when ft== ft_int...
 __declspec(selectany) extern const uint32_t base_dec     = 1; /* decimal */
 __declspec(selectany) extern const uint32_t base_hex     = 2; /* hexadecimal */
 __declspec(selectany) extern const uint32_t base_oct     = 3; /* octal */
 __declspec(selectany) extern const uint32_t base_dec_hex = 4; /* decimal (hexadecimal) */
 __declspec(selectany) extern const uint32_t base_hex_dec = 5; /* hexadecimal (decimal) */
-__declspec(selectany) extern const uint32_t base_bin     = 6;
-__declspec(selectany) extern const uint32_t base_bitset  = 7;
+__declspec(selectany) extern const uint32_t base_bin     = 6; // show as bit string
+__declspec(selectany) extern const uint32_t base_bit     = 7; // show as bit set
 __declspec(selectany) extern const uint32_t base_string  = 8;
 __declspec(selectany) extern const uint32_t bits7        = 13u; // bits7 ascii string
 __declspec(selectany) extern const uint32_t ipv4         = 14u; // xxx.xxx.xxx.xxx
+__declspec(selectany) extern const uint32_t timer        = 15u; // gprs timer
+__declspec(selectany) extern const uint32_t mmc          = 16u; //
 
 /* Byte separators  when ft == ft_bytes */
 /* hexadecimal bytes with a period (.) between each byte */
@@ -95,16 +90,16 @@ inline uint32_t get(uint32_t d) { return d & 0xff; }
 using string = std::string;
 
 struct field_meta {
-    const char*              name;       /* full name of this field */
-    const char*              abbrev;     /* abbreviated name of this field */
-    uint32_t                 ftype;       /* field_type::*/
-    uint32_t                 display;    /* one of base_ */
+    const char*              name;    /* full name of this field */
+    const char*              abbrev;  /* abbreviated name of this field */
+    uint32_t                 ftype;   /* field_type::*/
+    uint32_t                 display; /* one of base_ */
     const val_string*        val_strings;
     const true_false_string* tf_strings;
     const range_string*      range_strings;
     uint64_t                 bitmask; /* bitmask of interesting bits */
 
-    string format(const uint8_t*d, int len, uint32_t enc) const;
-    string format(uint64_t val)const;
+    string format(const uint8_t* d, int len, uint32_t enc) const;
+    NO_DISCARD string format(uint64_t val) const;
 };
 

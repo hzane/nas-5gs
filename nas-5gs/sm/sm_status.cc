@@ -18,5 +18,5 @@ int sm::sm_status(dissector d, context* ctx) {
 
     d.extraneous_data_check(0);
 
-    return d.tvb->reported_length;
+    return d.tvb->length;
 }
