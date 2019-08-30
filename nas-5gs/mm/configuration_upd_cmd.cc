@@ -238,8 +238,8 @@ const field_meta hf_conf_upd_ind_ack_b0 = {
  */
 int dissect_conf_upd_ind(dissector d, context* ctx) {
     static const field_meta* flags[] = {
-        &hf_nas_5gs_spare_b3,
-        &hf_nas_5gs_spare_b2,
+        &hf_spare_b3,
+        &hf_spare_b2,
         &hf_conf_upd_ind_red_b1,
         &hf_conf_upd_ind_ack_b0,
         nullptr,

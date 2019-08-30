@@ -1070,8 +1070,8 @@ const field_meta hf_nssai_inc_mode = {
 };
 int dissect_nssai_inclusion_mode(dissector d, context* ctx) {
     static const field_meta* flags[] = {
-        &hf_nas_5gs_spare_b3,
-        &hf_nas_5gs_spare_b2,
+        &hf_spare_b3,
+        &hf_spare_b2,
         &hf_nssai_inc_mode,
         nullptr,
     };

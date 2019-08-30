@@ -905,9 +905,9 @@ int mm::dissect_mobile_id(dissector d, context* ctx) {
     } break;
     case 1: { // SUCI
         auto item =
-            d.tree->add_item(d.pinfo, d.tvb, d.offset, 1, &hf_nas_5gs_spare_b7, enc::be);
+            d.tree->add_item(d.pinfo, d.tvb, d.offset, 1, &hf_spare_b7, enc::be);
         d.add_item(1, &hf_nas_5gs_mm_supi_fmt, enc::be);
-        d.add_item(1, &hf_nas_5gs_spare_b3, enc::be);
+        d.add_item(1, &hf_spare_b3, enc::be);
         item = d.add_item(1, &hf_nas_5gs_mm_type_id, enc::be);
         item->set_uint(type_id, enc::be, nullptr);
         d.step(1);
@@ -1042,8 +1042,8 @@ const field_meta        hf_nssci                = {
 //  9.11.3.36    Network slicing indication
 int mm::dissect_nw_slicing_ind(dissector d, context* ctx) {
     static const field_meta* flags[] = {
-        &hf_nas_5gs_spare_b3,
-        &hf_nas_5gs_spare_b2,
+        &hf_spare_b3,
+        &hf_spare_b2,
         &hf_dcni,
         &hf_nssci,
         nullptr,

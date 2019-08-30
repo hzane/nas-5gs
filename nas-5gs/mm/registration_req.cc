@@ -1559,12 +1559,12 @@ const field_meta hf_mm_s1_mode_reg_b0 = {
 
 int mm_reg_req::dissect_ue_status(dissector d, context* ctx) {
     static const field_meta* flags[] = {
-        &hf_nas_5gs_spare_b7,
+        &hf_spare_b7,
         &hf_nas_5gs_spare_b6,
         &hf_nas_5gs_spare_b5,
         &hf_nas_5gs_spare_b4,
-        &hf_nas_5gs_spare_b3,
-        &hf_nas_5gs_spare_b2,
+        &hf_spare_b3,
+        &hf_spare_b2,
         &hf_nas_5gs_mm_n1_mode_reg_b1,
         &hf_mm_s1_mode_reg_b0,
         nullptr,
@@ -1612,8 +1612,8 @@ const field_meta hf_nas_5gs_mm_ue_usage_setting = {
 };
 int mm_reg_req::dissect_usage_set(dissector d, context* ctx) {
     static const field_meta* flags[] = {
-        &hf_nas_5gs_spare_b3,
-        &hf_nas_5gs_spare_b2,
+        &hf_spare_b3,
+        &hf_spare_b2,
         &hf_nas_5gs_spare_b1,
         &hf_nas_5gs_mm_ue_usage_setting,
         nullptr,
@@ -1692,8 +1692,8 @@ const field_meta hf_ng_ran_rcu = {
 
 int mm_reg_req::dissect_update_type(dissector d, context* ctx) {
     static const field_meta* flags[] = {
-        &hf_nas_5gs_spare_b3,
-        &hf_nas_5gs_spare_b2,
+        &hf_spare_b3,
+        &hf_spare_b2,
         &hf_ng_ran_rcu,
         &hf_sms_requested,
         nullptr,

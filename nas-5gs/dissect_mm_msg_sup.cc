@@ -994,7 +994,7 @@ extern const message_meta mm::msgs[] = {
     {0x68, "DL NAS transport", dl_nas_transp},
     {0, nullptr, nullptr},
 };
-
+#if 0
 extern const field_meta mm::hf_nas_5gs_spare_b7 = {
     "Spare",
     "nas_5gs.spare_b7",
@@ -1025,7 +1025,7 @@ extern const field_meta mm::hf_nas_5gs_spare_b2 = {
     nullptr,
     0x02,
 };
-
+#endif
 extern const true_false_string mm::tfs_requested_not_requested = {
     "Requested",
     "Not Requested",
