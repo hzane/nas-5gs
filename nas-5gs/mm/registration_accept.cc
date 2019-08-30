@@ -338,7 +338,7 @@ const element_meta nego_drx_param = {
     "Negotiated DRX parameters",
     dissect_nego_drx_param,
 };
-const true_false_string tfs_allowed_not_allowed = {"Allowed", "Not Allowed"};
+
 const field_meta hf_reg_res_sms_allowed = {
     "SMS over NAS",
     "nas_5gs.mm.reg_res.sms_all",

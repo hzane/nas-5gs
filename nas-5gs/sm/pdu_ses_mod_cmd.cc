@@ -20,12 +20,12 @@ int sm::pdu_ses_mod_cmd(dissector d, context* ctx) {
     d.pinfo->dir = pi_dir::dl;
 
     /*59    5GSM cause    5GSM cause 9.11.4.2    O    TV    2*/
-    // ELEM_OPT_TV(0x59, NAS_5GS_PDU_TYPE_SM, DE_NAS_5GS_SM_5GSM_CAUSE, NULL);
+    // ELEM_OPT_TV(0x59, , DE_NAS_5GS_SM_5GSM_CAUSE, NULL);
     auto consumed = dissect_opt_elem_tv(nullptr, &sm_cause, d, ctx);
     d.step(consumed);
 
     /*2A    Session AMBR    Session-AMBR     9.11.4.14    O    TLV    8*/
-    // ELEM_OPT_TLV(0x2A, NAS_5GS_PDU_TYPE_SM, DE_NAS_5GS_SM_SESSION_AMBR, NULL);
+    // ELEM_OPT_TLV(0x2A, , DE_NAS_5GS_SM_SESSION_AMBR, NULL);
     consumed = dissect_opt_elem_tlv(nullptr, &ses_ambr, d, ctx);
     d.step(consumed);
 
@@ -82,47 +82,6 @@ int dissect_always_on_pdu_ses_req(dissector d, context* ctx) {
     return d.length;
 }
 
-// * 9.11.4.7 Integrity protection maximum data rate
-static const value_string nas_5gs_sm_int_prot_max_data_rate_vals[] = {
-    {0x0, "64 kbps"},
-    {0xff, "Full data rate"},
-    {0, nullptr},
-};
-
-const field_meta hf_sm_int_prot_max_data_rate_ul = {
-    "Integrity protection maximum data rate for uplink",
-    "nas_5gs.sm.int_prot_max_data_rate_ul",
-    ft::ft_uint8,
-    fd::base_dec,
-    (nas_5gs_sm_int_prot_max_data_rate_vals),
-    nullptr,
-    nullptr,
-    0x0,
-};
-const field_meta hf_sm_int_prot_max_data_rate_dl = {
-    "Integrity protection maximum data rate for downlink",
-    "nas_5gs.sm.int_prot_max_data_rate_dl",
-    ft::ft_uint8,
-    fd::base_dec,
-    (nas_5gs_sm_int_prot_max_data_rate_vals),
-    nullptr,
-    nullptr,
-    0x0,
-};
-
-int dissect_int_prot_max_data_rate(
-    dissector d,
-    context*  ctx) {
-    /* Maximum data rate per UE for user-plane integrity protection for uplink */
-    d.add_item(1, &hf_sm_int_prot_max_data_rate_ul, enc::be);
-    d.step(1);
-
-    /* Maximum data rate per UE for user-plane integrity protection for downlink */
-    d.add_item(1, &hf_sm_int_prot_max_data_rate_dl, enc::be);
-    d.step(1);
-
-    return 2;
-}
 
 /*
  *     9.11.4.13    QoS rules

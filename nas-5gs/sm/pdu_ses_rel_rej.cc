@@ -18,11 +18,10 @@ int sm::pdu_ses_rel_rej(dissector d, context* ctx) {
 
     /*7B    Extended protocol configuration options    Extended protocol configuration
      * options    9.11.4.2    O    TLV - E    4 - 65538*/
-    // ELEM_OPT_TLV_E(0x7B, NAS_PDU_TYPE_ESM, DE_ESM_EXT_PCO, NULL);
+    // ELEM_OPT_TLV_E(0x7B, , DE_ESM_EXT_PCO, NULL);
     consumed = dissect_opt_elem_tlv_e(nullptr, &ext_pco, d, ctx);
     d.step(consumed);
 
-    // extraneous_data_check(d.pinfo, d.tree, d.tvb, d.offset, d.length, 0);
     d.extraneous_data_check(0);
 
     return d.tvb->reported_length;

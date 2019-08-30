@@ -8,6 +8,9 @@ extern const element_meta pdu_ses_type;
 extern const element_meta ssc_mode;
 } // namespace sm_pdu_ses_est
 
+using namespace nas;
+using namespace sm;
+
 /*
  * 8.3.1 PDU session establishment request
  */
@@ -61,13 +64,10 @@ int sm::pdu_ses_est_req(dissector d, context* ctx) {
     return d.tvb->reported_length;
 }
 namespace sm_pdu_ses_est {
-int dissect_int_prot_max_date_rate(dissector d, context* ctx);
-int dissect_ssc_mode(dissector d, context* ctx);
-
 extern const element_meta int_prot_max_date_rate = {
     0xff,
     "Integrity protection maximum data rate",
-    dissect_int_prot_max_date_rate,
+    dissect_int_prot_max_data_rate,
 };
 
 extern const element_meta ssc_mode = {

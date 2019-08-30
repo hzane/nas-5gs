@@ -822,6 +822,130 @@ int sm::dissect_ses_ambr(dissector d, context* ctx) {
     return len;
 }
 
-int sm::dissect_rq_gprs_timer(dissector d, context* ctx) { return d.length; }
+int sm::dissect_rq_gprs_timer(dissector d, context* ctx) {
+    bug("no dissect\n");
+    return d.length;
+}
 
-int sm::dissect_always_on_pdu_ses_ind(dissector d, context* ctx) { return 0; }
+/*
+ * 9.11.4.3 Always-on PDU session indication
+ */
+
+int sm::dissect_always_on_pdu_ses_ind(dissector d, context* ctx) {
+    bug("no dissect\n");
+    return d.length;
+}
+
+// * 9.11.4.7 Integrity protection maximum data rate
+static const value_string nas_5gs_sm_int_prot_max_data_rate_vals[] = {
+    {0x0, "64 kbps"},
+    {0xff, "Full data rate"},
+    {0, nullptr},
+};
+
+const field_meta hf_sm_int_prot_max_data_rate_ul = {
+    "Integrity protection maximum data rate for uplink",
+    "nas_5gs.sm.int_prot_max_data_rate_ul",
+    ft::ft_uint8,
+    fd::base_dec,
+    (nas_5gs_sm_int_prot_max_data_rate_vals),
+    nullptr,
+    nullptr,
+    0x0,
+};
+const field_meta hf_sm_int_prot_max_data_rate_dl = {
+    "Integrity protection maximum data rate for downlink",
+    "nas_5gs.sm.int_prot_max_data_rate_dl",
+    ft::ft_uint8,
+    fd::base_dec,
+    (nas_5gs_sm_int_prot_max_data_rate_vals),
+    nullptr,
+    nullptr,
+    0x0,
+};
+
+//  * 9.11.4.7 Integrity protection maximum data rate
+int sm::dissect_int_prot_max_data_rate(dissector d, context* ctx) {
+    /* Maximum data rate per UE for user-plane integrity protection for uplink */
+    d.add_item(1, &hf_sm_int_prot_max_data_rate_ul, enc::be);
+    d.step(1);
+
+    /* Maximum data rate per UE for user-plane integrity protection for downlink */
+    d.add_item(1, &hf_sm_int_prot_max_data_rate_dl, enc::be);
+    d.step(1);
+
+    return 2;
+}
+
+
+const field_meta hf_sm_all_ssc_mode_b2 = {
+    "SSC mode 3",
+    "nas_5gs.sm.all_ssc_mode_b2",
+    ft::ft_boolean,
+    fd::base_dec,
+    nullptr,
+    &sm::tfs_allowed_not_allowed,
+    nullptr,
+    0x04,
+};
+const field_meta hf_sm_all_ssc_mode_b1 = {
+    "SSC mode 2",
+    "nas_5gs.sm.all_ssc_mode_b1",
+    ft::ft_boolean,
+    fd::base_dec,
+    nullptr,
+    &sm::tfs_allowed_not_allowed,
+    nullptr,
+    0x02,
+};
+const field_meta hf_sm_all_ssc_mode_b0 = {
+    "SSC mode 1",
+    "nas_5gs.sm.all_ssc_mode_b0",
+    ft::ft_boolean,
+    fd::base_dec,
+    nullptr,
+    &sm::tfs_allowed_not_allowed,
+    nullptr,
+    0x01,
+};
+
+/*
+ * 9.11.4.5    Allowed SSC mode
+ */
+int sm::dissect_allowed_ssc_mode(dissector d, context* ctx) {
+    static const field_meta* flags[] = {
+        &hf_spare_b3,
+        &hf_sm_all_ssc_mode_b2,
+        &hf_sm_all_ssc_mode_b1,
+        &hf_sm_all_ssc_mode_b0,
+        nullptr,
+    };
+    d.add_bits(flags);
+    return 1;
+}
+
+/*
+ *      9.11.4.16    SSC mode
+ */
+
+static const value_string nas_5gs_sc_mode_values[] = {
+    {0x1, "SSC mode 1"},
+    {0x2, "SSC mode 2"},
+    {0x3, "SSC mode 3"},
+    {0, nullptr},
+};
+
+const field_meta hf_sm_sc_mode = {
+    "SSC mode",
+    "nas_5gs.sm.sc_mode",
+    ft::ft_uint8,
+    fd::base_dec,
+    (nas_5gs_sc_mode_values),
+    nullptr,
+    nullptr,
+    0x0f,
+};
+int sm::dissect_ssc_mode(dissector d, context* ctx) {
+    d.add_item(1, &hf_sm_sc_mode, enc::be);
+    return 1;
+}

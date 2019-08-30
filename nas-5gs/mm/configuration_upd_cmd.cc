@@ -218,7 +218,7 @@ const field_meta hf_conf_upd_ind_red_b1 = {
     "nas_5gs.mm.conf_upd_ind.red",
     ft::ft_boolean,
     fd::base_dec,
-    nullptr, 
+    nullptr,
     &tfs_requested_not_requested,
     nullptr,
     0x02,
@@ -359,7 +359,7 @@ int dissect_sal(dissector d, context* ctx) {
         }
 
         /*calculate the length of IE?*/
-        d.tree->set_length(d.offset - start);        
+        d.tree->set_length(d.offset - start);
         /*calculate the number of Partial service area list*/
         num_par_sal++;
     }
@@ -719,7 +719,7 @@ int dissect_op_def_acc_cat_def(dissector d, context* ctx) {
     }
     return len;
 }
-const true_false_string tfs_allowed_not_allowed = {"Allowed", "Not Allowed"};
+
 const field_meta hf_sms_indic_sai = {
     "SMS over NAS",
     "nas_5gs.mm.ms_indic.sai",

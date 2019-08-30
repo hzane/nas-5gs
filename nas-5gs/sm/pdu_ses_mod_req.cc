@@ -9,6 +9,8 @@ extern const element_meta requested_qos_rules;
 extern const element_meta authorized_qos_flow_des;
 } // namespace sm_pdu_ses_mod
 
+using namespace nas;
+using namespace sm;
 /*
  *8.3.7 PDU session modification request
  */
@@ -56,14 +58,13 @@ int sm::pdu_ses_mod_req(dissector d, context* ctx) {
 
     /* 79    Requested QoS flow descriptions    QoS flow descriptions 9.11.4.12    O
      * TLV-E    5-65538 */
-    // ELEM_OPT_TLV_E(
-    //     0x79, NAS_5GS_PDU_TYPE_SM, DE_NAS_5GS_SM_QOS_FLOW_DES, " - Authorized");
+    // ELEM_OPT_TLV_E(  0x79, , DE_NAS_5GS_SM_QOS_FLOW_DES, " - Authorized");
     consumed = dissect_opt_elem_tlv_e(nullptr, &authorized_qos_flow_des, d, ctx);
     d.step(consumed);
 
     /* 75    Mapped EPS bearer contexts    Mapped EPS bearer contexts 9.11.4.8    O
      * TLV-E    7-65538 */
-    // ELEM_OPT_TLV_E(0x75, NAS_5GS_PDU_TYPE_SM, DE_NAS_5GS_SM_MAPPED_EPS_B_CONT, NULL);
+    // ELEM_OPT_TLV_E(0x75, , DE_NAS_5GS_SM_MAPPED_EPS_B_CONT, NULL);
     consumed = dissect_opt_elem_tlv_e(nullptr, &mapped_eps_b_cont, d, ctx);
     d.step(consumed);
 
@@ -81,7 +82,6 @@ int sm::pdu_ses_mod_req(dissector d, context* ctx) {
 
 namespace sm_pdu_ses_mod {
 int dissect_always_on_pdu_ses_req(dissector d, context* ctx);
-int dissect_int_prot_max_data_rate(dissector d, context* ctx);
 int dissect_requested_qos_rules(dissector d, context* ctx);
 
 extern const element_meta always_on_pdu_ses_req = {

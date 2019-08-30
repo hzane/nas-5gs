@@ -3,9 +3,10 @@
 #include "../ts24007.hh"
 
 namespace sm_pdu_ses_est {
-extern const element_meta allowed_ssc_mode;
-}
 
+}
+using namespace nas;
+using namespace sm;
 /*
  * 8.3.3 PDU session establishment reject
  */
@@ -29,7 +30,7 @@ int sm::pdu_ses_est_rej(dissector d, context* ctx) {
 
     /*F-    Allowed SSC mode    Allowed SSC mode 9.11.4.3    O    TV    1*/
     // ELEM_OPT_TV_SHORT(
-    //     0xF0, NAS_5GS_PDU_TYPE_SM, DE_NAS_5GS_SM_5GSM_ALLOWED_SSC_MODE, NULL);
+    //     0xF0, , DE_NAS_5GS_SM_5GSM_ALLOWED_SSC_MODE, NULL);
     consumed = dissect_opt_elem_tv_short(nullptr, &allowed_ssc_mode, d, ctx);
     d.step(consumed);
 
@@ -50,12 +51,5 @@ int sm::pdu_ses_est_rej(dissector d, context* ctx) {
     return d.tvb->reported_length;
 }
 namespace sm_pdu_ses_est {
-int dissect_allowed_ssc_mode(dissector d, context* ctx);
 
-extern const element_meta allowed_ssc_mode = {
-    0xf0,
-    "Allowed SSC mode",
-    dissect_allowed_ssc_mode,
-};
-int dissect_allowed_ssc_mode(dissector d, context* ctx) { return 0; }
 } // namespace sm_pdu_ses_est

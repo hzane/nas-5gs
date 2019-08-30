@@ -168,4 +168,21 @@ __declspec(selectany) extern const field_meta hf_sm_ses_ambr_ul = {
     nullptr,
     0x0,
 };
+
+int dissect_int_prot_max_data_rate(dissector d, context* ctx);
+int dissect_allowed_ssc_mode(dissector d, context* ctx);
+
+__declspec(selectany) extern const true_false_string tfs_allowed_not_allowed = {
+    "Allowed",
+    "Not Allowed",
+};
+
+//*      9.11.4.16    SSC mode
+int dissect_ssc_mode(dissector d, context* ctx);
+
+__declspec(selectany) extern const element_meta allowed_ssc_mode = {
+    0xf0,
+    "Allowed SSC mode",
+    dissect_allowed_ssc_mode,
+};
 } // namespace sm

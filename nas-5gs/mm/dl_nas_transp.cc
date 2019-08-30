@@ -69,7 +69,6 @@ int mm::dl_nas_transp(dissector d, context* ctx) {
 namespace mm_dl_nas_transp {
 int dissect_pdu_ses_id(dissector d, context* ctx);
 int dissect_add_inf(dissector d, context* ctx);
-int dissect_backoff_gprs_timer3(dissector d, context* ctx);
 
 extern const element_meta pld_cont_type = {
     0xff,
@@ -91,6 +90,9 @@ extern const element_meta add_inf = {
     "Additional information",
     dissect_add_inf,
 };
+
+int dissect_backoff_gprs_timer3(dissector d, context* ctx);
+
 extern const element_meta backoff_gprs_timer3 = {
     0x37,
     "GPRS timer - Back-off timer",

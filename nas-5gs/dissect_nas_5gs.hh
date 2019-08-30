@@ -181,4 +181,9 @@ __declspec(selectany) extern const field_meta hf_spare_b1 = {
     nullptr,
     0x02,
 };
+
+__declspec(selectany) extern const true_false_string tfs_allowed_not_allowed = {
+    "Allowed",
+    "Not Allowed",
+};
 } // namespace nas

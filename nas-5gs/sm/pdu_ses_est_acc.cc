@@ -150,9 +150,9 @@ extern const element_meta dnn = {
     "DNN",
     dissect_dnn,
 };
-int dissect_int_prot_max_date_rate(dissector d, context* ctx) { return 0; }
+
 int dissect_pdu_ses_type(dissector d, context* ctx) { return 0; }
-int dissect_ssc_mode(dissector d, context* ctx) { return 0; }
+
 
 /*
  *     9.11.4.10    PDU address
