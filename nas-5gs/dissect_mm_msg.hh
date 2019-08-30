@@ -85,10 +85,10 @@ extern const field_meta   hf_mm_cause;
 extern const field_meta   hf_mm_type_id;
 extern const field_meta   hf_mm_sst;
 
+extern const value_string mm_pld_cont_type_values[];
 extern const val_string   mm_type_id_values[];
 extern const val_string   values_cause[];
 extern const val_string   mm_sal_t_li_values[];
-extern const value_string mm_pld_cont_type_values[];
 extern const val_string   nas_eps_emm_nas_ksi_values[];
 extern const val_string   values_pld_cont_type[];
 
