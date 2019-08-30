@@ -378,7 +378,7 @@ const field_meta mm::hfm_nas_5gs_mm_type_id = {
     0x07,
 };
 
-const true_false_string mm::nas_5gs_odd_even_tfs = {
+const true_false_string mm::tfs_odd_even = {
     "Odd number of identity digits",
     "Even number of identity digits",
 };
@@ -388,7 +388,7 @@ const field_meta mm::hfm_nas_5gs_mm_odd_even = {
     ft::ft_boolean,
     8,
     nullptr,
-    &nas_5gs_odd_even_tfs,
+    &tfs_odd_even,
     nullptr,
     0x08,
 };
@@ -1120,7 +1120,7 @@ extern const field_meta mm::hf_nas_5gs_mm_type_id = {
     nullptr,
     0x07,
 };
-extern const true_false_string mm::nas_5gs_odd_even_tfs;
+extern const true_false_string mm::tfs_odd_even;
 
 extern const field_meta mm::hf_nas_5gs_mm_odd_even = {
     "Odd/even indication",
@@ -1128,7 +1128,7 @@ extern const field_meta mm::hf_nas_5gs_mm_odd_even = {
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
-    &nas_5gs_odd_even_tfs,
+    &tfs_odd_even,
     nullptr,
     0x08,
 };
@@ -1199,7 +1199,7 @@ extern const field_meta mm::hf_pld_cont_type = {
 /*
  * Type of security context flag (TSC) (octet 1)
  */
-extern const true_false_string mm::nas_eps_tsc_value = {
+extern const true_false_string mm::tfs_eps_tsc = {
     "Mapped security context (for KSIsgsn)",
     "Native security context (for KSIasme)",
 };
@@ -1209,7 +1209,7 @@ extern const field_meta mm::hfm_nas_eps_tsc = {
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
-    &nas_eps_tsc_value,
+    &tfs_eps_tsc,
     nullptr,
     0x0,
 };
