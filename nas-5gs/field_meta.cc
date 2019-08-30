@@ -3,7 +3,7 @@
 #include "tvbuff.hh"
 
 string field_meta::format(const uint8_t*p , int length, uint32_t enc) const {
-    if (p && length == 0) return string();
+    if (!p || length == 0) return string();
     if (ftype == ft::none || ftype == ft::protocol) return string();
 
     if (ftype == ft::ft_boolean) {
@@ -16,6 +16,9 @@ string field_meta::format(const uint8_t*p , int length, uint32_t enc) const {
     }
     if (ftype == ft::ft_char) {
         return formats("%c", (char)*p);
+    }
+    if (ftype == ft::ft_bstrn){
+        return bstrn_string(p, length);
     }
     switch (display){
         case fd::base_string: return string((const char*)p, length);

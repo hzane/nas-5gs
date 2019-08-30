@@ -77,6 +77,8 @@ struct dissector {
     dissector      use_elem(void* elem) const;
     void           set_private(const char* name, uint64_t val);
     uint64_t       get_private(const char* name, uint64_t dft = 0);
+    uint8_t        uint8()const;
+    uint16_t       ntohs()const;
 };
 
 struct use_tree{
@@ -182,3 +184,5 @@ int ws_ctz(uint64_t x);
 uint32_t get_ext_ambr_unit(uint32_t unit, const char** unit_str);
 
 string ambr_string(uint32_t val, uint32_t unit);
+
+string bstrn_string(const uint8_t* d, int len);

@@ -41,6 +41,7 @@ __declspec(selectany) extern const uint32_t ft_double     = 25;
 __declspec(selectany) extern const uint32_t ft_string     = 17;
 __declspec(selectany) extern const uint32_t ft_bytes      = 20;
 __declspec(selectany) extern const uint32_t ft_char       = 22;
+__declspec(selectany) extern const uint32_t ft_bstrn      = 22;
 
 inline bool is_integer(uint32_t t){return t&ft_integer;}
 inline bool is_unsigned(uint32_t t){ return is_integer(t) && !(t&ft_signed);}

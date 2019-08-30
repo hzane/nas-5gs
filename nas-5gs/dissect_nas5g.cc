@@ -7,9 +7,9 @@
 using namespace nas;
 
 int dissect_nas5g(dissector d, context* ctx) {
-    auto item = d.tree->add_subtree(d.pinfo, d.tvb, d.offset, -1, nas_5gs_module.name);
-
-    auto epd = d.tvb->uint8(d.offset);
+    auto len = d.length;
+    // auto epd = d.tvb->uint8(d.offset);
+    auto epd = d.uint8();
     if (epd == EPD::SM5G) { // always plain format
         return dissect_nas5g_plain(d, ctx);
     }
@@ -18,47 +18,57 @@ int dissect_nas5g(dissector d, context* ctx) {
     /* or PDU session identity           octet 2 */
     /* Determine if it's a plain 5GS NAS Message or not */
     auto sec_type = d.tvb->uint8(d.offset + 1);
-
+ 
     if (sec_type == 0) { // NAS_5GS_PLAIN_NAS_MSG;
         return dissect_nas5g_plain(d, ctx);
     }
+    // auto     item = d.add_item(-1, nas_5gs_module.name);
+    // use_tree ut(d, item);
+
     /* Security protected NAS 5GS message*/
-    auto sub_tree =
-        item->add_subtree(d.pinfo, d.tvb, d.offset, 7, "Security protected NAS 5GS message");
+
+    auto subtree = d.add_item(7, "Security protected NAS 5GS message");
+    use_tree    ut(d, subtree);
+    use_context uc(ctx, subtree->name.c_str());
 
     /* Extended protocol discriminator  octet 1 */
-    sub_tree->add_item(d.pinfo, d.tvb, d.offset, 1, hf_epd, enc::be);
-    d.offset++;
+    d.add_item(1, hf_epd, enc::be);
+    // sub_tree->add_item(d.pinfo, d.tvb, d.offset, 1, hf_epd, enc::be);
+    d.step(1);
 
     /* Security header type associated with a spare half octet    octet 2 */
-    sub_tree->add_item(d.pinfo, d.tvb, d.offset, 1, hf_spare_half_octet, enc::be);
-    sub_tree->add_item(
-        d.pinfo, d.tvb, d.offset, 1, hf_sec_header_type, enc::be);
-    d.offset++;
+    d.add_item(1, hf_spare_half_octet, enc::be);
+    d.add_item(1, hf_sec_header_type, enc::be);
+    d.step(1);
+    
 
     /* Message authentication code octet 3 - 6 */
-    sub_tree->add_item(d.pinfo, d.tvb, d.offset, 4, hf_msg_auth_code, enc::be);
-    d.offset += 4;
+    d.add_item(4, hf_msg_auth_code, enc::be);
+    d.step(4);    
 
     /* Sequence number    octet 7 */
-    sub_tree->add_item(d.pinfo, d.tvb, d.offset, 1, hf_seq_no, enc::be);
-    d.offset++;
+    d.add_item(1, hf_seq_no, enc::be);
+    d.step(1);
 
     // TODO: decrypt the body
-    item->add_subtree(d.pinfo, d.tvb, d.offset, -1, "Encrypted data");
+    // This should work when the NAS ciphering algorithm is NULL (128-EEA0)
+    auto consumed = dissect_nas5g_plain(d, ctx);
 
-    return d.tvb->length;
+    return len;
 }
 
 int dissect_nas5g_plain(dissector d, context* ctx) {
+    auto len = d.length;
     /* Plain NAS 5GS Message */
     auto subtree =
         d.tree->add_subtree(d.pinfo, d.tvb, d.offset, -1, "Plain NAS 5GS Message");
+    use_tree    ut(d, subtree);
+    use_context uc(ctx, subtree->name.c_str());
 
     /* Extended protocol discriminator  octet 1 */
-    auto epd = d.tvb->uint8(d.offset);
-    subtree->add_item(d.pinfo, d.tvb, d.offset, 1, hf_epd, enc::be);
-    d.offset++;
+    auto epd = d.uint8();
+    d.add_item(1, hf_epd, enc::be);
+    d.step(1);
 
     /* Security header type associated with a spare half octet; or
      * PDU session identity octet 2
@@ -68,12 +78,8 @@ int dissect_nas5g_plain(dissector d, context* ctx) {
          * Bits 5 to 8 of the second octet of every 5GMM message contains the spare
          * half octet which is filled with spare bits set to zero.
          */
-        subtree->add_item(d.pinfo, d.tvb, d.offset, 1, hf_spare_half_octet, enc::be);
-        subtree->add_item(d.pinfo,
-                           d.tvb,
-                           d.offset,
-                           1, hf_sec_header_type,
-                           enc::be);
+        d.add_item(1, hf_spare_half_octet, enc::be);
+        d.add_item(1, hf_sec_header_type, enc::be);
     }
     else if (epd == EPD::SM5G){
         /* 9.4  PDU session identity
@@ -81,8 +87,8 @@ int dissect_nas5g_plain(dissector d, context* ctx) {
          * session identity IE. The PDU session identity and its use to identify a
          * message flow are defined in 3GPP TS 24.007
          */
-        subtree->add_item(d.pinfo, d.tvb, d.offset, 1, hf_pdu_sess_id, enc::be);
-        d.offset++;
+        d.add_item(1, hf_pdu_sess_id, enc::be);
+        d.step(1);        
 
         /* 9.6  Procedure transaction identity
          * Bits 1 to 8 of the third octet of every 5GSM message contain the procedure
@@ -90,16 +96,13 @@ int dissect_nas5g_plain(dissector d, context* ctx) {
          * defined in 3GPP TS 24.007
          * XXX Only 5GSM ?
          */
-        subtree->add_item(d.pinfo, d.tvb, d.offset, 1, hf_proc_trans_id, enc::be);
+        d.add_item(1, hf_proc_trans_id, enc::be);
     }
     else{
-        subtree->add_expert(d.pinfo, d.tvb, d.offset, -1, "Not a NAS 5GS PD %u", epd);
+        diag("Not a NAS 5GS PD %u\n", epd);
         return 0;
     }
-
-    d.offset++; // skip the second oct
-    d.tree = subtree;
-    d.length = d.tvb->remain(d.offset);
+    d.step(1);
 
     if (epd == EPD::MM5G) {
         dissect_mm_msg(d, ctx);
@@ -107,7 +110,7 @@ int dissect_nas5g_plain(dissector d, context* ctx) {
         dissect_sm_msg(d, ctx);
     }
 
-    return d.tvb->length;
+    return len;
 }
 
 // begin with offset == 2, message type
@@ -115,24 +118,13 @@ static int dissect_sm_msg(dissector d, context* ctx) {
     auto len = d.tvb->length;
 
     /* Message type IE*/
-    uint8_t iei = d.tvb->uint8(d.offset); // offset == 2
+    uint8_t iei = d.uint8(); // offset == 2
+    d.add_item(1, hf_sm_msg_type, enc::be);
+    d.step(1);
 
     auto meta  = find_dissector(iei, sm::msgs);
-    if (meta == nullptr ){
-        add_unknown(d, iei, ctx); // ignore return
-        return len;
-    }
-
-    // Add NAS message name
-    d.tree->add_item(d.pinfo, d.tvb, d.offset, 1, hf_sm_msg_type, enc::be);
-    d.offset++;
-
-    d.length = d.length - d.offset;
-    if (meta->fnc){
-        (meta->fnc)(d, ctx);
-    } else {
-        add_generic_msg_elem_body(d, ctx);
-    }
+    if (meta && meta->fnc) meta->fnc(d, ctx);
+    // ignore unknown messages
     return len;
 }
 
@@ -140,24 +132,12 @@ static int dissect_mm_msg(dissector d, context* ctx) {
     auto len = d.tvb->length;
 
     /* Message type IE*/
-    uint8_t iei = d.tvb->uint8(d.offset); // offset == 2
+    uint8_t iei = d.uint8(); // offset == 2
+    d.add_item(1, hf_mm_msg_type, enc::be);
+    d.step(1);
 
     auto meta = find_dissector(iei, mm::msgs);
-    if (meta == nullptr) {
-        add_unknown(d, iei, ctx); // ignore return
-        return len;
-    }
-
-    // Add NAS message name
-    d.tree->add_item(d.pinfo, d.tvb, d.offset, 1, hf_mm_msg_type, enc::be);
-    d.offset++;
-    d.length = d.length - d.offset;
-
-    if (meta->fnc) {
-        (meta->fnc)(d, ctx);
-    } else {
-        add_generic_msg_elem_body(d, ctx);
-    }
+    if (meta && meta->fnc) meta->fnc(d, ctx);
     return len;
 }
 
@@ -165,27 +145,20 @@ static int dissect_mm_msg(dissector d, context* ctx) {
 /* 9.10.2.2    EAP message*/
 int nas::dissect_eap_msg(dissector d, context* ctx) {
     /* EAP message as specified in IETF RFC 3748 */
-    add_generic_msg_elem_body(d, ctx);
+    // add_generic_msg_elem_body(d, ctx);
+    diag("no dissect %s\n", ctx->path().c_str());
     return d.length;
 }
 
-/*
- * 9.11.2.1A    DNN
- */
+/*  9.11.2.1A    DNN */
 int nas::dissect_dnn(dissector d, context* ctx) {
     auto len = d.length;
     /* A DNN value field contains an APN as defined in 3GPP TS 23.003 */
-    string str(d.safe_ptr(), d.safe_ptr() + d.safe_length(-1));
-    size_t i = 0;
-    while (i < str.size()) {
-        auto next = str[i];
-        str[i]    = '.';
-        i         = i + next + 1;
-    }
+    auto   str = bstrn_string(d.safe_ptr(), d.safe_length(-1));
+
     /* Highlight bytes including the first length byte */
-    auto item = d.add_item(len, &hf_dnn, enc::none);
-    item->set_string(str);
-    // d.tree->add_subtree(d.pinfo, d.tvb, d.offset, d.length, str.c_str());
+    auto item = d.add_item(len, &hf_dnn, enc::be);
+    // item->set_string(str);
     d.step(len);
 
     d.extraneous_data_check(0);

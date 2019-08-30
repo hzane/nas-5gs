@@ -271,8 +271,8 @@ const element_meta nas::eap_msg = {
 const field_meta nas::hf_dnn = {
     "DNN",
     "nas_5gs.cmn.dnn",
-    ft::ft_bytes,
-    fd::base_none,
+    ft::ft_bstrn,
+    fd::base_string,
     nullptr,
     nullptr,
     nullptr,

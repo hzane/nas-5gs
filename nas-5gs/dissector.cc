@@ -66,3 +66,15 @@ uint64_t dissector::get_private(const char* name, uint64_t v) {
 dissector dissector::use_elem(void* elem)const {
     return dissector{pinfo, tree, tvb, offset, length, elem};
 }
+
+uint8_t dissector::uint8() const{
+    auto p = safe_ptr();
+    if (p) return *p;
+    return 0;
+}
+uint16_t dissector::ntohs() const {
+    auto p = safe_ptr();
+    int  l = safe_length(2);
+    if (p && l > 0) return n2uint16(p);
+    return 0;
+}

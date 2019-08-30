@@ -84,3 +84,16 @@ string ambr_string(uint32_t val, uint32_t unit){
     auto multi = get_ext_ambr_unit(unit, &unit_str);
     return formats("%u %s (%u)", val * multi, unit_str, val);
 }
+
+string bstrn_string(const uint8_t*d, int len){
+    if (!d || !len) return string();
+
+    string str(d, d + len);
+    size_t i = 0;
+    while (i < str.size()) {
+        auto next = str[i];
+        str[i]    = '.';
+        i         = i + next + 1;
+    }
+    return str;
+}
