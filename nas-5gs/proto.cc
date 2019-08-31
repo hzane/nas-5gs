@@ -4,6 +4,7 @@
 #include <vector>
 #include "core.hh"
 #include "tvbuff.hh"
+#include "field_meta.hh"
 
 void proto_node::set_length(int len) { this->length = len;}
 
@@ -35,13 +36,17 @@ proto_item* proto_node::add_item(packet_info*      ,
     if (encoding == enc::na || encoding == enc::none) return item;
 
     if (meta && ft::is_integer(meta->ftype)) {
-        this->val = n2uint(item->data, len);
+        val = n2uint(item->data, len);
+        if(meta->bitmask){
+            val = (val&meta->bitmask)>>ws_ctz(meta->bitmask);
+        }
     }
     item->text = print_text(field, item->data, len, encoding);
 
     return item;
 }
 
+// don't apply bitmask to v
 proto_item* proto_node::set_uint(uint64_t v, uint32_t encode, const char* format, ...) {
     using namespace std;
 
