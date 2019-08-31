@@ -250,7 +250,7 @@ const val_string values_mm_message_type[] = {
 };
 const field_meta hfm_mm_msg_type = {
     "Message type",
-    "nas_5gs.sm.message_type",
+    "nas_5gs.mm.message_type",
     ft::ft_uint8,
     fd::base_hex,
     values_mm_message_type,
@@ -259,6 +259,17 @@ const field_meta hfm_mm_msg_type = {
     0x0,
 };
 const field_meta* nas::hf_mm_msg_type = &hfm_mm_msg_type;
+
+const field_meta nas::hf_service_request_msg_id = {
+    "Service request message identity",
+    "nas_5gs.mm.message_type",
+    ft::ft_uint8,
+    fd::base_hex,
+    values_mm_message_type,
+    nullptr,
+    nullptr,
+    0x0,
+};
 
 // as specified in IETF RFC 3748
 const element_meta nas::eap_msg = {

@@ -18,7 +18,7 @@ int dissect_nas5g(dissector d, context* ctx) {
     /* or PDU session identity           octet 2 */
     /* Determine if it's a plain 5GS NAS Message or not */
     auto sec_type = d.tvb->uint8(d.offset + 1);
- 
+
     if (sec_type == 0) { // NAS_5GS_PLAIN_NAS_MSG;
         return dissect_nas5g_plain(d, ctx);
     }
@@ -40,11 +40,11 @@ int dissect_nas5g(dissector d, context* ctx) {
     d.add_item(1, hf_spare_half_octet, enc::be);
     d.add_item(1, hf_sec_header_type, enc::be);
     d.step(1);
-    
+
 
     /* Message authentication code octet 3 - 6 */
     d.add_item(4, hf_msg_auth_code, enc::be);
-    d.step(4);    
+    d.step(4);
 
     /* Sequence number    octet 7 */
     d.add_item(1, hf_seq_no, enc::be);
@@ -88,7 +88,7 @@ int dissect_nas5g_plain(dissector d, context* ctx) {
          * message flow are defined in 3GPP TS 24.007
          */
         d.add_item(1, hf_pdu_sess_id, enc::be);
-        d.step(1);        
+        d.step(1);
 
         /* 9.6  Procedure transaction identity
          * Bits 1 to 8 of the third octet of every 5GSM message contain the procedure
@@ -141,16 +141,29 @@ static int dissect_mm_msg(dissector d, context* ctx) {
     return len;
 }
 
+const field_meta hf_eap = {
+    "EAP",
+    "nas_5gs.eap",
+    ft::ft_bytes,
+    fd::base_none,
+    nullptr,
+    nullptr,
+    nullptr,
+    0,
+};
 
-/* 9.10.2.2    EAP message*/
+// RFC2284 RFC3748
+// http://tools.ietf.org/html/draft-bersani-eap-synthesis-sharedkeymethods-00
+/* 9.11.2.2    EAP message*/
 int nas::dissect_eap_msg(dissector d, context* ctx) {
     /* EAP message as specified in IETF RFC 3748 */
-    // add_generic_msg_elem_body(d, ctx);
     diag("no dissect %s\n", ctx->path().c_str());
+    d.add_item(d.length, &hf_eap, enc::na);
     return d.length;
 }
 
 /*  9.11.2.1A    DNN */
+// a type 4 information page.348
 int nas::dissect_dnn(dissector d, context* ctx) {
     auto len = d.length;
     /* A DNN value field contains an APN as defined in 3GPP TS 23.003 */
@@ -165,11 +178,29 @@ int nas::dissect_dnn(dissector d, context* ctx) {
     return len;
 }
 
+// 9.11.2.6 Intra N1 mode NAS transparent container page.349
+//  a type 4 information element with a length of 9 octets
+int dissect_n1_mode_container(dissector d, context* ctx){
+    /*The value part of the Intra N1 mode NAS transparent container information element is
+included in specific information elements within some RRC messages sent to the UE.*/
 
-const message_meta* find_dissector(uint8_t iei, const message_meta* meta) {
-    while (meta->type) {
-        if (meta->type == iei) return meta;
-        meta++;
-    }
-    return nullptr;
+    return d.length;
+}
+
+const field_meta hf_n1_to_s1_mode = {
+    "N1 mode to S1 mode NAS transparent container",
+    "n1_mode_2_s1_mode_container",
+    ft::ft_uint16,
+    fd::base_dec,
+    nullptr,
+    nullptr,
+    nullptr,
+    0,
+};
+// 9.11.2.7 N1 mode to S1 mode NAS transparent container page.350
+int dissect_n1_to_s1_mode_container(dissector d, context* ctx){
+    // a type 3 information element with a length of 2 octets
+    // auto seq = d.ntohs();
+    d.add_item(2, &hf_n1_to_s1_mode, enc::be);
+    return d.length;
 }

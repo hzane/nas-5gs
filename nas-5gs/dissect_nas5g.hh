@@ -40,5 +40,5 @@ extern const field_meta   hf_spare_b2;
 extern const field_meta   hf_spare_b1;
 extern const field_meta*  hf_seq_no;
 extern const field_meta*  hf_proc_trans_id;
-
+extern const field_meta   hf_service_request_msg_id;
 } // namespace nas
