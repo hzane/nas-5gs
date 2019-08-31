@@ -10,6 +10,7 @@ extern const element_meta key_set_id;
  * 8.2.12 De-registration request (UE originating de-registration)
  */
 int mm::dissect_reg_req_ue_orig(dissector d, context* ctx) {
+    auto        len = d.length;
     use_context uc(ctx, "ue-originating-de-registration");
 
     using namespace mm_de_reg;
@@ -27,7 +28,7 @@ int mm::dissect_reg_req_ue_orig(dissector d, context* ctx) {
     d.step(consumed);
 
     d.extraneous_data_check(0);
-    return d.tvb->length;
+    return len;
 }
 
 namespace mm_de_reg {

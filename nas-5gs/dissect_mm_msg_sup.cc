@@ -486,7 +486,7 @@ const field_meta mm::hfm_nas_5gs_mm_serv_type = {
     nas_5gs_mm_serv_type_vals,
     nullptr,
     nullptr,
-    0x04,
+    0xF0,
 };
 
 const field_meta mm::hfm_nas_5gs_mm_5g_ea0 = {
@@ -1056,9 +1056,10 @@ extern const element_meta mm::allowed_nssai = {
     dissect_allowed_nssai,
 };
 
+// 9.11.3.9
 extern const element_meta mm::ta_id_list = {
     0x54,
-    "TAI list",
+    "5GS tracking area identity list - TAI list",
     dissect_ta_id_list,
 };
 

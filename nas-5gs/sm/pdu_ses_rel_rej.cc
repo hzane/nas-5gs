@@ -6,6 +6,7 @@
  * 8.3.13 PDU session release reject
  */
 int sm::pdu_ses_rel_rej(dissector d, context* ctx) {
+    auto        len = d.length;
     use_context uc(ctx, "pdu-session-release-reject");
 
     /* Direction: network to UE */
@@ -24,5 +25,5 @@ int sm::pdu_ses_rel_rej(dissector d, context* ctx) {
 
     d.extraneous_data_check(0);
 
-    return d.tvb->length;
+    return len;
 }

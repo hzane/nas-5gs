@@ -13,6 +13,7 @@ using namespace sm;
  * 8.3.9 PDU session modification command
  */
 int sm::pdu_ses_mod_cmd(dissector d, context* ctx) {
+    auto        len = d.length;
     use_context uc(ctx, "pdu-session-modification-command");
 
     using namespace sm_pdu_ses_mod;
@@ -65,7 +66,7 @@ int sm::pdu_ses_mod_cmd(dissector d, context* ctx) {
 
     d.extraneous_data_check(0);
 
-    return d.tvb->length;
+    return len;
 }
 namespace sm_pdu_ses_mod {
 int dissect_authorized_qos_flow_des(dissector d, context* ctx);

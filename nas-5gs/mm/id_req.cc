@@ -11,6 +11,7 @@ using namespace mm;
  * 8.2.21 Identity request
  */
 int mm::id_req(dissector d, context* ctx) {
+    auto        len = d.length;
     use_context uc(ctx, "identity-request");
 
     using namespace mm_id;
@@ -23,7 +24,7 @@ int mm::id_req(dissector d, context* ctx) {
     d.step(consumed);
 
     d.extraneous_data_check(0);
-    return d.tvb->length;
+    return len;
 }
 
 namespace mm_id {

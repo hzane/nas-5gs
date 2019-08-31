@@ -18,6 +18,7 @@ int dissect_eap_msg(dissector d, context* ctx);
 extern const true_false_string tfs_allowed_not_allowed;
 // extern const true_false_string tfs_follow_on_req;
 
+extern const element_meta t3348_gprs_timer3;
 extern const element_meta eap_msg;
 extern const field_meta*  hf_msg_elem;
 extern const field_meta*  hf_spare_half_octet;

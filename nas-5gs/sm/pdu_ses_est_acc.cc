@@ -17,6 +17,7 @@ using namespace sm;
  * 8.3.2 PDU session establishment accept
  */
 int sm::pdu_ses_est_acc(dissector d, context* ctx) {
+    auto        len = d.length;
     use_context uc(ctx, "pdu-session-establishment-accept");
 
     using namespace sm_pdu_ses_est;
@@ -102,7 +103,7 @@ int sm::pdu_ses_est_acc(dissector d, context* ctx) {
     // extraneous_data_check(d.pinfo, d.tree, d.tvb, d.offset, d.length, 0);
     d.extraneous_data_check(0);
 
-    return d.tvb->length;
+    return len;
 }
 
 namespace sm_pdu_ses_est {

@@ -6,6 +6,7 @@
  * 8.3.16 5GSM status
  */
 int sm::sm_status(dissector d, context* ctx) {
+    auto        len = d.length;
     use_context uc(ctx, "5gsm-status");
 
     /* Direction: both */
@@ -18,5 +19,5 @@ int sm::sm_status(dissector d, context* ctx) {
 
     d.extraneous_data_check(0);
 
-    return d.tvb->length;
+    return len;
 }

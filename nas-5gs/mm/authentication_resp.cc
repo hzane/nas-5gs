@@ -11,6 +11,7 @@ using namespace nas;
  *8.2.2    Authentication response
  */
 int mm::authentication_resp(dissector d, context* ctx) {
+    auto        len = d.length;
     use_context uc(ctx, "authentication-response");
 
     using namespace mm_authentication_resp;
@@ -27,7 +28,7 @@ int mm::authentication_resp(dissector d, context* ctx) {
     d.step(consumed);
 
     d.extraneous_data_check(0);
-    return d.tvb->length;
+    return len;
 }
 namespace mm_authentication_resp {
 

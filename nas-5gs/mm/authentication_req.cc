@@ -9,10 +9,9 @@ extern const element_meta auth_parm_autn;
 
 using namespace nas;
 
-/*
- * 8.2.1    Authentication request
- */
+/* 8.2.1.1    Authentication request */
 int mm::authentication_req(dissector d, context* ctx) {
+    auto        len = d.length;
     use_context uc(ctx, "authentication-request");
 
     using namespace mm_authentication_req;
@@ -51,7 +50,7 @@ int mm::authentication_req(dissector d, context* ctx) {
     d.step(consumed);
 
     d.extraneous_data_check(0);
-    return d.tvb->length;
+    return len;
 }
 namespace mm_authentication_req {
 

@@ -6,6 +6,7 @@
  * 8.3.4 PDU session authentication command
  */
 int sm::pdu_ses_auth_cmd(dissector d, context* ctx) {
+    auto        len = d.length;
     use_context uc(ctx, "pdu-session-authentication-command");
 
     /* Direction: network to UE */
@@ -25,5 +26,5 @@ int sm::pdu_ses_auth_cmd(dissector d, context* ctx) {
 
     d.extraneous_data_check(0);
 
-    return d.tvb->length;
+    return len;
 }

@@ -148,10 +148,10 @@ int dissect_opt_elem_lv_e(const field_meta *,
     auto item =
         subtree->add_item(d.pinfo, d.tvb, d.offset, 2, hf_gsm_e_length, enc::none);
     item->set_uint(parm_len, enc::be, nullptr);
+    d.step(2);
 
-    d.offset      = d.offset + 2;
-    d.length      = parm_len;
-    d.tree        = subtree;
+    use_tree ut(d, subtree);
+    
     auto fnc      = val_meta->fnc ? val_meta->fnc : add_generic_msg_elem_body;
     auto consumed = fnc(d.use_elem(get_elem_data(e)), ctx);
     d.step(consumed);

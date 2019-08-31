@@ -7,6 +7,7 @@ using namespace nas;
  * 8.2.3 Authentication result
  */
 int mm::authentication_result(dissector d, context* ctx) {
+    auto        len = d.length;
     use_context uc(ctx, "authentication-result");
 
     /* ngKSI    NAS key set identifier 9.11.3.27    M    V    1/2
@@ -30,7 +31,7 @@ int mm::authentication_result(dissector d, context* ctx) {
     d.step(consumed);
 
     d.extraneous_data_check(0);
-    return d.tvb->length;
+    return len;
 }
 
 

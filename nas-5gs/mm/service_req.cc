@@ -2,7 +2,7 @@
 #include "../ts24007.hh"
 
 namespace mm_service_req {
-
+extern const element_meta mm_service_type;
 extern const element_meta key_set_id;
 extern const element_meta s_tmsi;
 extern const element_meta uplink_data_status;
@@ -16,69 +16,70 @@ using namespace mm;
  * 8.2.16 Service request page.317
  */
 int mm::service_req(dissector d, context* ctx) {
+    auto        len = d.length;
     use_context uc(ctx, "service-request");
 
     using namespace mm_service_req;
 
-    // Service request message identity Message type 9.7 M V 1
-    d.tree->add_item(d.pinfo, d.tvb, d.offset, 1, &hf_service_request_msg_id, enc::be);
-
     /*  ELEM_MAND_V(,DE_NAS_5GS_MM_NAS_KEY_SET_ID," - ngKSI", );*/
-    /* ngKSI     NAS key set identifier 9.11.3.29    M    V    1/2 */
+    /* ngKSI     NAS key set identifier 9.11.3.32    M    V    1/2 */
     auto consumed = dissect_elem_v(nullptr, &key_set_id, d, ctx);
-    d.offset += consumed;
-    d.length -= consumed;
 
-    /* 5G-S-TMSI    5GS mobile identity 9.11.3.4    M    LV    6 */
+    // Service type Service type 9.11.3.50 M V 1 / 2
+    consumed = dissect_elem_v(nullptr, &mm_service_type, d, ctx);
+    d.step(1);
+
+    /* 5G-S-TMSI    5GS mobile identity 9.11.3.4    M    LV    9 */
     /*ELEM_MAND_LV_E(,DE_NAS_5GS_MM_5GS_MOBILE_ID, );*/
     consumed = dissect_elem_lv_e(nullptr, &s_tmsi, d, ctx);
-    d.offset += consumed;
-    d.length -= consumed;
+    d.step(consumed);
 
-    /*40    Uplink data status    Uplink data status         9.11.3.53    O    TLV    4 -
-     * 34*/
+    /*40 Uplink data status  9.11.3.57   O   TLV  4 - 34*/
     // ELEM_OPT_TLV(0x40, , DE_NAS_5GS_MM_UL_DATA_STATUS, NULL);
     consumed = dissect_opt_elem_tlv(nullptr, &uplink_data_status, d, ctx);
-    d.offset += consumed;
-    d.length -= consumed;
+    d.step(consumed);
 
-    /*50    PDU session status    PDU session status         9.11.3.40    O    TLV    4 -
-     * 34*/
+    /*50 PDU session status  9.11.3.44  O  TLV   4 - 34*/
     // ELEM_OPT_TLV(0x50, , DE_NAS_5GS_MM_PDU_SES_STATUS, NULL);
     consumed = dissect_opt_elem_tlv(nullptr, &pdu_ses_status, d, ctx);
-    d.offset += consumed;
-    d.length -= consumed;
+    d.step(consumed);
 
-    /*25    Allowed PDU session status    Allowed PDU session status         9.11.3.11
-     * O    TLV    4 - 34*/
+    /*25 Allowed PDU session status  9.11.3.13  O    TLV    4 - 34*/
     // ELEM_OPT_TLV(0x25, , DE_NAS_5GS_MM_ALLOW_PDU_SES_STS, NULL);
     consumed = dissect_opt_elem_tlv(nullptr, &allowed_pdu_ses_status, d, ctx);
-    d.offset += consumed;
-    d.length -= consumed;
+    d.step(consumed);
 
-    /* 71    NAS message container    NAS message container 9.11.3.33    O    TLV-E    4-n
-     */
-    // ELEM_OPT_TLV_E(0x71, NAS_5GS_PDU_TYPE_MM, DE_NAS_5GS_MM_NAS_MSG_CONT, NULL);
+    /* 71  NAS message container 9.11.3.33    O    TLV-E    4-n */
+    // ELEM_OPT_TLV_E(0x71, , DE_NAS_5GS_MM_NAS_MSG_CONT, NULL);
     consumed = dissect_opt_elem_tlv_e(nullptr, &nas_msg_cont, d, ctx);
-    d.offset += consumed;
-    d.length -= consumed;
+    d.step(consumed);
 
     d.extraneous_data_check(0);
 
-    return d.tvb->length;
+    return len;
 }
 namespace mm_service_req {
 int                dissect_key_set_id(dissector d, context* ctx);
+
 const element_meta key_set_id = {
     0xff,
     "NAS key set identifier - ngKSI",
     dissect_key_set_id,
 };
 
+int dissect_mm_service_type(dissector d, context* ctx);
+
+const element_meta mm_service_type = {
+    0xff,
+    "Service type",
+    dissect_mm_service_type,
+};
+
+// 9.11.3.50
 int                dissect_s_tmsi(dissector d, context* ctx);
 const element_meta s_tmsi = {
     0xff,
-    "5G-S-TMSI",
+    "5GS mobile identity - 5G-S-TMSI",
     dissect_s_tmsi,
 };
 
@@ -109,6 +110,15 @@ int dissect_key_set_id(dissector d, context* ctx) {
     return 1;
 }
 
+/* *     9.11.3.50    Service type page.396 */
+int dissect_mm_service_type(dissector d, context*ctx){
+    d.add_item(1, &hfm_nas_5gs_mm_serv_type, enc::be);
+    d.step(1);
+    return 1;
+}
+
+// 5GS mobile identity 9.11.3.4
+// 5G-S-TMSI
 int dissect_s_tmsi(dissector d, context* ctx) { return dissect_mobile_id(d, ctx); }
 
 /*

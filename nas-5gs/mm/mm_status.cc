@@ -4,6 +4,7 @@
  * 8.2.29 5GMM status
  */
 int mm::mm_status(dissector d, context* ctx) {
+    auto        len = d.length;
     use_context uc(ctx, "5gmm-status");
 
     /* Direction: both*/
@@ -15,5 +16,5 @@ int mm::mm_status(dissector d, context* ctx) {
     d.step(consumed);
 
     d.extraneous_data_check(0);
-    return d.tvb->length;
+    return len;
 }

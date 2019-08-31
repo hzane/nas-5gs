@@ -9,6 +9,7 @@ extern const element_meta auth_fail_param;
  * 8.2.4 Authentication failure
  */
 int mm::authentication_failure(dissector d, context* ctx) {
+    auto        len = d.length;
     use_context uc(ctx, "authentication-failure");
 
     using namespace mm_authentication_failure;
@@ -27,7 +28,7 @@ int mm::authentication_failure(dissector d, context* ctx) {
     d.length -= consumed;
 
     d.extraneous_data_check(0);
-    return d.tvb->length;
+    return len;
 }
 namespace mm_authentication_failure {
 int dissect_auth_fail_param(dissector d, context* ctx);

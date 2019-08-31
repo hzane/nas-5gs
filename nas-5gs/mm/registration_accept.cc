@@ -31,6 +31,7 @@ using namespace nas;
  * 8.2.7    Registration accept
  */
 int mm::registration_accept(dissector d, context* ctx) {
+    auto        len = d.length;
     use_context uc(ctx, "registration-accept");
 
     using namespace mm_reg_accept;
@@ -194,7 +195,7 @@ int mm::registration_accept(dissector d, context* ctx) {
 
     d.extraneous_data_check(0);
 
-    return d.tvb->length;
+    return len;
 }
 namespace mm_reg_accept {
 

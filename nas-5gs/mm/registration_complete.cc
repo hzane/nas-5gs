@@ -5,10 +5,11 @@
  * 8.2.8 Registration complete
  */
 int mm::registration_complete(dissector d, context* ctx) {
+    auto        len = d.length;
     use_context uc(ctx, "registration-complete");
 
     /* 73    SOR transparent container    SOR transparent container 9.11.3.51    O TLV-E
      * 20-2048 */
     d.extraneous_data_check(0);
-    return d.tvb->length;
+    return len;
 }

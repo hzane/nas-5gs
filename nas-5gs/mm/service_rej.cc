@@ -11,6 +11,7 @@ using namespace nas;
  * 8.2.18 Service reject
  */
 int mm::service_rej(dissector d, context* ctx) {
+    auto        len = d.length;
     use_context uc(ctx, "service-reject");
 
     using namespace mm_service_rej;
@@ -19,7 +20,7 @@ int mm::service_rej(dissector d, context* ctx) {
     auto consumed = dissect_elem_v(nullptr, &mm_cause, d, ctx);
     d.step(consumed);
 
-    /*50    PDU session status    PDU session status 9.11.3.44    O    TLV    4*/
+    /*50  PDU session status 9.11.3.44    O    TLV    4 - 34*/
     // ELEM_OPT_TLV(0x50, NAS_5GS_PDU_TYPE_MM, DE_NAS_5GS_MM_PDU_SES_STATUS, NULL);
     consumed = dissect_opt_elem_tlv(nullptr, &pdu_ses_status, d, ctx);
     d.step(consumed);
@@ -29,14 +30,16 @@ int mm::service_rej(dissector d, context* ctx) {
     consumed = dissect_opt_elem_tlv(nullptr, &t3346_gprs_timer2, d, ctx);
     d.step(consumed);
 
-    /* 78    EAP message    EAP message 9.11.2.2    O    TLV-E    7-1503 */
-    // ELEM_OPT_TLV_E(0x78, NAS_5GS_PDU_TYPE_COMMON, DE_NAS_5GS_CMN_EAP_MESSAGE, NULL);
+    /* 78   EAP message 9.11.2.2    O    TLV-E    7-1503 */
+    // ELEM_OPT_TLV_E(0x78, , DE_NAS_5GS_CMN_EAP_MESSAGE, NULL);
     consumed = dissect_opt_elem_tlv_e(nullptr, &eap_msg, d, ctx);
     d.step(consumed);
 
+    // T3448 GPRS timer 3
+
     d.extraneous_data_check(0);
 
-    return d.tvb->length;
+    return len;
 }
 
 namespace mm_service_rej {

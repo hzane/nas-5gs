@@ -31,6 +31,7 @@ using namespace nas;
 
 /* * 8.2.6 Registration request */
 int mm::registration_req(dissector d, context* ctx) {
+    auto len = d.length;
     // using namespace em_de_mm;
     using namespace mm_reg_req;
 
@@ -161,7 +162,7 @@ int mm::registration_req(dissector d, context* ctx) {
     // extraneous_data_check(d.pinfo, d.tree, d.tvb, d.offset, d.length, 0);
     d.extraneous_data_check(0);
 
-    return d.tvb->length;
+    return len;
 }
 
 namespace mm_reg_req{

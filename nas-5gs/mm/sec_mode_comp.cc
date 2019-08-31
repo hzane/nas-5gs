@@ -5,6 +5,7 @@
  * 8.2.26 Security mode complete
  */
 int mm::sec_mode_comp(dissector d, context* ctx) {
+    auto        len = d.length;
     use_context uc(ctx, "security-mode-complete");
 
     /* 77    IMEISV    5G mobile identity 9.11.3.4    O    TLV-E    11 */
@@ -19,5 +20,5 @@ int mm::sec_mode_comp(dissector d, context* ctx) {
     d.step(consumed);
 
     d.extraneous_data_check(0);
-    return d.tvb->length;
+    return len;
 }

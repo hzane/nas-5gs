@@ -19,59 +19,56 @@ extern const element_meta sms_ind;
 
 using namespace mm;
 using namespace nas;
-/*
- * 8.2.19 Configuration update command
- */
+
+/* 8.2.19 Configuration update command */
 int mm::conf_upd_cmd(dissector d, context* ctx) {
+    auto        len = d.length;
     use_context uc(ctx, "configuration-update-command");
 
     using namespace mm_conf_upd_cmd;
 
-    /*D-    Configuration update indication    Configuration update indication 9.11.3.16
-     * O    TV    1 */
-    // ELEM_OPT_TV_SHORT(0xD0, NAS_5GS_PDU_TYPE_MM, DE_NAS_5GS_MM_CONF_UPD_IND, NULL);
+    /*D-    Configuration update indication 9.11.3.18 O    TV    1 */
+    // ELEM_OPT_TV_SHORT(0xD0, , DE_NAS_5GS_MM_CONF_UPD_IND, NULL);
     auto consumed = dissect_opt_elem_tv_short(nullptr, &conf_upd_ind, d, ctx);
     d.step(consumed);
 
     /*77    5G-GUTI    5GS mobile identity     9.11.3.4    O    TLV    TBD*/
-    // ELEM_OPT_TLV_E(0x77, NAS_5GS_PDU_TYPE_MM, DE_NAS_5GS_MM_5GS_MOBILE_ID, NULL);
-    consumed = dissect_opt_elem_tlv_e(nullptr, &mobile_id, d, ctx);
+    // ELEM_OPT_TLV_E(0x77, , DE_NAS_5GS_MM_5GS_MOBILE_ID, NULL);
+    consumed = dissect_opt_elem_tlv_e(nullptr, &guti, d, ctx);
     d.step(consumed);
 
-    /*54    TAI list    Tracking area identity list     9.11.3.45    O    TLV    8-98*/
+    /*54    TAI list    Tracking area identity list     9.11.3.9    O    TLV    8-98*/
     // ELEM_OPT_TLV(0x54, NAS_5GS_PDU_TYPE_MM, DE_NAS_5GS_MM_5GS_TA_ID_LIST, NULL);
     consumed = dissect_opt_elem_tlv(nullptr, &ta_id_list, d, ctx);
     d.step(consumed);
 
-    /*15    Allowed NSSAI    NSSAI     9.11.3.28    O    TLV    4-74*/
-    // ELEM_OPT_TLV(0x15, NAS_5GS_PDU_TYPE_MM, DE_NAS_5GS_MM_NSSAI, " - Allowed NSSAI");
+    /*15    Allowed NSSAI    NSSAI     9.11.3.37    O    TLV    4-74*/
+    // ELEM_OPT_TLV(0x15, , DE_NAS_5GS_MM_NSSAI, " - Allowed NSSAI");
     consumed = dissect_opt_elem_tlv(nullptr, &allowed_nssai, d, ctx);
     d.step(consumed);
 
-    /*27    Service area list    Service area list     9.11.3.39    O    TLV    6-194 */
-    // ELEM_OPT_TLV(0x70, NAS_5GS_PDU_TYPE_MM, DE_NAS_5GS_MM_SAL, NULL);
+    /*27    Service area list    9.11.3.49    O    TLV    6-194 */
+    // ELEM_OPT_TLV(0x70, , DE_NAS_5GS_MM_SAL, NULL);
     consumed = dissect_opt_elem_tlv(nullptr, &service_area_list, d, ctx);
     d.step(consumed);
 
-    /*43    Full name for network    Network name     9.11.3.26    O    TLV    3-n*/
+    /*43  Full name for network   Network name    9.11.3.35   O   TLV    3-n*/
     // ELEM_OPT_TLV(0x43, , DE_NETWORK_NAME, " - Full name for network");
     consumed = dissect_opt_elem_tlv(nullptr, &full_name_network, d, ctx);
     d.step(consumed);
 
-    /*45    Short name for network    Network name     9.11.3.26    O    TLV    3-n*/
+    /*45    Short name for network    Network name     9.11.3.35    O    TLV    3-n*/
     // ELEM_OPT_TLV(0x45, GSM_A_PDU_TYPE_DTAP, DE_NETWORK_NAME, " - Short Name");
     consumed = dissect_opt_elem_tlv(nullptr, &short_name_network, d, ctx);
     d.step(consumed);
 
-    /*46    Local time zone    Time zone     9.11.3.46    O    TV    2*/
+    /*46    Local time zone    Time zone     9.11.3.52    O    TV    2*/
     // ELEM_OPT_TV(0x46, GSM_A_PDU_TYPE_DTAP, DE_TIME_ZONE, " - Local");
     consumed = dissect_opt_elem_tv(nullptr, &local_time_zone, d, ctx);
     d.step(consumed);
 
-    /*47    Universal time and local time zone    Time zone and time     9.11.3.47    O
-     * TV    8*/
-    /*ELEM_OPT_TV(0x47,GSM_A_PDU_TYPE_DTAP,DE_TIME_ZONE_TIME," - Universal Time and Local
-     * Time Zone");*/
+    /*47  Universal time and local time zone  Time zone and time  9.11.3.53  O TV  8*/
+    /*ELEM_OPT_TV(0x47,,DE_TIME_ZONE_TIME," - Universal Time and Local Time Zone");*/
     consumed = dissect_opt_elem_tv(nullptr, &u_time_zone_time, d, ctx);
     d.step(consumed);
 
@@ -97,14 +94,13 @@ int mm::conf_upd_cmd(dissector d, context* ctx) {
     consumed = dissect_opt_elem_tlv(nullptr, &configured_nssai, d, ctx);
     d.step(consumed);
 
-    /*11    Rejected NSSAI     Rejected NSSAI   9.11.3.42   O   TLV   4-42*/
+    /*11    Rejected NSSAI   9.11.3.42   O   TLV   4-42*/
     // ELEM_OPT_TLV(0x11, NAS_5GS_PDU_TYPE_MM, DE_NAS_5GS_MM_REJ_NSSAI, NULL);
     consumed = dissect_opt_elem_tlv(nullptr, &rej_nssai, d, ctx);
     d.step(consumed);
 
-    /* 76    Operator-defined access category definitions    Operator-defined access
-     * category definitions 9.11.3.38    O    TLV-E    3-TBD */
-    // ELEM_OPT_TLV_E(0x76, NAS_5GS_PDU_TYPE_MM, DE_NAS_5GS_MM_OP_DEF_ACC_CAT_DEF, NULL);
+    /* 76 Operator-defined access category definitions   9.11.3.38   O   TLV-E  3-n */
+    // ELEM_OPT_TLV_E(0x76, , DE_NAS_5GS_MM_OP_DEF_ACC_CAT_DEF, NULL);
     consumed = dissect_opt_elem_tlv_e(nullptr, &op_def_acc_cat_def, d, ctx);
     d.step(consumed);
 
@@ -114,7 +110,7 @@ int mm::conf_upd_cmd(dissector d, context* ctx) {
     d.step(consumed);
 
     d.extraneous_data_check(0);
-    return d.tvb->length;
+    return len;
 }
 
 namespace mm_conf_upd_cmd {
@@ -170,33 +166,38 @@ extern const element_meta local_time_zone = {
     dissect_local_time_zone,
 };
 
+// 9.11.3.53
 extern const element_meta u_time_zone_time = {
     0x47,
-    "Universal time and local time zone",
+    "Time zone and time - Universal time and local time zone",
     dissect_time_zone_time,
 };
 
+// 9.11.3.19
 extern const element_meta day_saving_time = {
     0x49,
     "Network daylight saving time",
     dissect_day_saving_time,
 };
 
+// 9.11.3.30
 extern const element_meta ladn_inf = {
     0x79,
     "LADN information",
     dissect_ladn_inf,
 };
 
+// 9.11.3.31
 extern const element_meta mico_ind = {
     0xB0,
     "MICO indication",
     dissect_mico_ind,
 };
 
+// 9.11.3.37
 extern const element_meta configured_nssai = {
     0x31,
-    "Configured NSSAI",
+    "NSSAI - Configured NSSAI",
     dissect_configured_nssai,
 };
 
@@ -248,7 +249,7 @@ int dissect_conf_upd_ind(dissector d, context* ctx) {
     return 1;
 }
 
-int dissect_guti(dissector d, context* ctx) { return 0; }
+int dissect_guti(dissector d, context* ctx) { return dissect_mobile_id(d, ctx); }
 
 
 

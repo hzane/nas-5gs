@@ -1,5 +1,6 @@
 #include "dissect_mm_msg.hh"
 #include "ts24007.hh"
+#include <cassert>
 
 using namespace nas;
 using namespace mm;
@@ -1012,7 +1013,7 @@ int mm::dissect_mobile_id(dissector d, context* ctx) {
         d.step(1);
         /* AMF Set ID */
         item = d.add_item(2, &hf_nas_5gs_amf_set_id, enc::be);
-        d.step(2); // todo: may be 1 byte
+        d.step(2); 
         /* AMF Pointer AMF Set ID (continued) */
         d.add_item(1, &hf_nas_5gs_amf_pointer, enc::be);
         d.add_item(4, &hf_nas_5gs_tmsi, enc::be);
@@ -1030,6 +1031,7 @@ int mm::dissect_mobile_id(dissector d, context* ctx) {
         d.tree->add_expert(d.pinfo, d.tvb, d.offset, d.length, nullptr);
     } break;
     }
+
     return len;
 }
 

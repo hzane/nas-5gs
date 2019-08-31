@@ -15,6 +15,7 @@ using namespace sm;
  * 8.3.1 PDU session establishment request
  */
 int sm::pdu_ses_est_req(dissector d, context* ctx) {
+    auto        len = d.length;
     use_context uc(ctx, "pdu-session-establishment-request");
 
     using namespace sm_pdu_ses_est;
@@ -61,7 +62,7 @@ int sm::pdu_ses_est_req(dissector d, context* ctx) {
     // extraneous_data_check(d.pinfo, d.tree, d.tvb, d.offset, d.length, 0);
     d.extraneous_data_check(0);
 
-    return d.tvb->length;
+    return len;
 }
 namespace sm_pdu_ses_est {
 extern const element_meta int_prot_max_date_rate = {

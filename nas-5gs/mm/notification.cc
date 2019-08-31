@@ -11,6 +11,7 @@ using namespace nas;
  * 8.2.23 Notification
  */
 int mm::notification(dissector d, context* ctx) {
+    auto        len = d.length;
     use_context uc(ctx, "notification");
 
     using namespace mm_notification;
@@ -24,7 +25,7 @@ int mm::notification(dissector d, context* ctx) {
     d.step(consumed);
 
     d.extraneous_data_check(0);
-    return d.tvb->length;
+    return len;
 }
 namespace mm_notification {
 int                       dissect_access_type(dissector d, context*);

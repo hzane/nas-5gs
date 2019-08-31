@@ -6,6 +6,7 @@
  * 8.3.12 PDU session release request
  */
 int sm::pdu_ses_rel_req(dissector d, context* ctx) {
+    auto        len = d.length;
     use_context uc(ctx, "pdu-session-release-request");
     /* Direction: UE to network */
     d.pinfo->dir = pi_dir::ul;
@@ -23,5 +24,5 @@ int sm::pdu_ses_rel_req(dissector d, context* ctx) {
 
     d.extraneous_data_check(0);
 
-    return d.tvb->length;
+    return len;
 }

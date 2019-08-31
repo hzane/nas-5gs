@@ -78,8 +78,8 @@ int dissect_nas5g_plain(dissector d, context* ctx) {
          * Bits 5 to 8 of the second octet of every 5GMM message contains the spare
          * half octet which is filled with spare bits set to zero.
          */
-        d.add_item(1, hf_spare_half_octet, enc::be);
         d.add_item(1, hf_sec_header_type, enc::be);
+        d.add_item(1, hf_spare_half_octet, enc::be);
     }
     else if (epd == EPD::SM5G){
         /* 9.4  PDU session identity

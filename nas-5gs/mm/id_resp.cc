@@ -8,6 +8,7 @@ namespace mm_id_resp {
  * 8.2.22 Identity response
  */
 int mm::id_resp(dissector d, context* ctx) {
+    auto        len = d.length;
     use_context uc(ctx, "identity-response");
 
     using namespace mm_id_resp;
@@ -17,7 +18,7 @@ int mm::id_resp(dissector d, context* ctx) {
     d.step(consumed);
 
     d.extraneous_data_check(0);
-    return d.tvb->length;
+    return len;
 }
 
 namespace mm_id_resp {

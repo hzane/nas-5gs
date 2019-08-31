@@ -6,6 +6,7 @@
  * 8.3.11 PDU session modification command reject
  */
 int sm::pdu_ses_mod_com_rej(dissector d, context* ctx) {
+    auto        len = d.length;
     use_context uc(ctx, "pdu-session-modification-command-reject");
 
     /* Direction: UE to network */
@@ -24,5 +25,5 @@ int sm::pdu_ses_mod_com_rej(dissector d, context* ctx) {
 
     d.extraneous_data_check(0);
 
-    return d.tvb->length;
+    return len;
 }

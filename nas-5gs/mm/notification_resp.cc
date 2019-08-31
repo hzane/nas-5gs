@@ -5,6 +5,7 @@
  * 8.2.24 Notification response
  */
 int mm::notification_resp(dissector d, context* ctx) {
+    auto        len = d.length;
     use_context uc(ctx, "notification-response");
 
     /* 50    PDU session status    PDU session status 9.11.3.40    O    TLV    4-34 */
@@ -13,5 +14,5 @@ int mm::notification_resp(dissector d, context* ctx) {
     d.step(consumed);
 
     d.extraneous_data_check(0);
-    return d.tvb->length;
+    return len;
 }

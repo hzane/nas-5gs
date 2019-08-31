@@ -5,6 +5,7 @@
  * 8.2.27 Security mode reject
  */
 int mm::sec_mode_rej(dissector d, context* ctx) {
+    auto        len = d.length;
     use_context uc(ctx, "security-mode-reject");
 
     /* 5GMM cause    5GMM cause 9.11.3.2    M    V    1 */
@@ -17,5 +18,5 @@ int mm::sec_mode_rej(dissector d, context* ctx) {
 
     // extraneous_data_check(d.pinfo, d.tree, d.tvb, d.offset, d.length, 0);
     d.extraneous_data_check(0);
-    return d.tvb->length;
+    return len;
 }

@@ -1,4 +1,5 @@
 #include "dissect_nas5g.hh"
+#include "gsm.hh"
 
 using namespace nas;
 
@@ -278,6 +279,12 @@ const element_meta nas::eap_msg = {
     dissect_eap_msg,
 };
 
+// GPRS timer 39.11.2.4
+const element_meta nas::t3348_gprs_timer3{
+    0xff,
+    "GPRS timer3 - T4448 value",
+    dissect_gprs_timer3,
+};
 
 const field_meta nas::hf_dnn = {
     "DNN",

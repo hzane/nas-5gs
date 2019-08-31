@@ -17,7 +17,8 @@ using namespace mm;
  * 8.2.25 Security mode command
  */
 int mm::sec_mode_cmd(dissector d, context* ctx) {
-    using namespace mm_sec_mode_cmd;
+      auto        len = d.length;
+  using namespace mm_sec_mode_cmd;
     /* Direction: network to UE */
     d.pinfo->dir = pi_dir::dl;
 
@@ -85,7 +86,7 @@ int mm::sec_mode_cmd(dissector d, context* ctx) {
     d.length -= consumed;
 
     d.extraneous_data_check(0);
-    return d.tvb->length;
+    return len;
 }
 
 namespace mm_sec_mode_cmd {

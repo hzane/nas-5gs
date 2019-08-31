@@ -6,6 +6,7 @@
  * 8.3.5 PDU session authentication complete
  */
 int sm::pdu_ses_auth_comp(dissector d, context* ctx) {
+    auto        len = d.length;
     use_context uc(ctx, "pdu-session-authentication-complete");
 
     /* Direction: UE to network */
@@ -25,5 +26,5 @@ int sm::pdu_ses_auth_comp(dissector d, context* ctx) {
     // extraneous_data_check(d.pinfo, d.tree, d.tvb, d.offset, d.length, 0);
     d.extraneous_data_check(0);
 
-    return d.tvb->length;
+    return len;
 }
