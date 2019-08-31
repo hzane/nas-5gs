@@ -460,7 +460,7 @@ const field_meta mm::hfm_nas_5gs_mm_req_type = {
     0x0f,
 };
 
-/* *     9.11.3.50    Service type */
+/* *     9.11.3.50    Service type page.396 */
 
 /* Used inline as H1 (Upper nibble)*/
 const val_string mm::nas_5gs_mm_serv_type_vals[] = {
@@ -470,6 +470,12 @@ const val_string mm::nas_5gs_mm_serv_type_vals[] = {
     {0x03, "Emergency services"},
     {0x04, "Emergency services fallback"},
     {0x05, "High priority access"},
+    {0x06, "elevated signalling"},
+    {0x07, R"(unused; shall be interpreted as "signalling", if received by the network)"},
+    {0x08, "unused; shall be interpreted as \"signalling\", if received by the network"},
+    {0x09, "unused; shall be interpreted as \"data\", if received by the network"},
+    {0x0a, "unused; shall be interpreted as \"data\", if received by the network"},
+    {0x0b, "unused; shall be interpreted as \"data\", if received by the network"},
     {0, nullptr},
 };
 const field_meta mm::hfm_nas_5gs_mm_serv_type = {
@@ -480,7 +486,7 @@ const field_meta mm::hfm_nas_5gs_mm_serv_type = {
     nas_5gs_mm_serv_type_vals,
     nullptr,
     nullptr,
-    0x70,
+    0x04,
 };
 
 const field_meta mm::hfm_nas_5gs_mm_5g_ea0 = {
@@ -1072,7 +1078,7 @@ extern const field_meta* mm::hf_mm_raai_b0;
 extern const element_meta mm::rej_nssai = {
     0x11,
     "Rejected NSSAI",
-    dissect_rej_nssai,
+    dissect_rejected_nssai,
 };
 
 extern const element_meta mm::configured_nssai = {
