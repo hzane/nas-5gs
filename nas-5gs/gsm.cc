@@ -92,9 +92,7 @@ int dissect_gprs_timer(dissector d, context *ctx) {
     return 1;
 }
 
-/*
- * [7] 10.5.7.4
- */
+/* * 3GPP TS 24.008 g10 10.5.7.4 */
 int dissect_gprs_timer2(dissector d, context*ctx) {
     proto_node *subtree = nullptr;
     auto        oct     = d.tvb->uint8(d.offset);
@@ -131,9 +129,7 @@ int dissect_gprs_timer2(dissector d, context*ctx) {
     return 1;
 }
 
-/*
- * [10] 10.5.7.4a
- */
+/* * 3GPP TS 24.008 g10 10.5.7.4a */
 static const value_string gsm_a_gm_gprs_timer3_unit_vals[] = {
     {0x00, "value is incremented in multiples of 10 minutes"},
     {0x01, "value is incremented in multiples of 1 hour"},
@@ -142,7 +138,8 @@ static const value_string gsm_a_gm_gprs_timer3_unit_vals[] = {
     {0x04, "value is incremented in multiples of 30 seconds"},
     {0x05, "value is incremented in multiples of 1 minute"},
     {0x07, "value indicates that the timer is deactivated"},
-    {0, NULL}};
+    {0, nullptr},
+};
 const field_meta hf_gprs_timer3_unit = {
     "Unit",
     "gsm_a.gm.gmm.gprs_timer3_unit",
@@ -163,6 +160,8 @@ const field_meta hf_gprs_timer3_value = {
     nullptr,
     0x1f,
 };
+
+
 int dissect_gprs_timer3(dissector d, context *ctx) {
     proto_node *subtree = nullptr;
     auto        oct     = d.tvb->uint8(d.offset);

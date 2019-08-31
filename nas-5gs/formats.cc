@@ -151,4 +151,10 @@ int ws_ctz(uint64_t x) {
     else
         return ws_ctz32(lo);
 }
-
+#if 0
+int ms_ctz(uint64_t x) {
+    unsigned long idx    = 0;
+    _BitScanForward64(&idx, x); // assert(x != 0)
+    return (int)idx;
+}
+#endif
