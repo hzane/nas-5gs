@@ -169,6 +169,8 @@ const field_meta hf_req_type = {
     nullptr,
     0x0f,
 };
+
+// 9.11.3.47 Request type page.390
 int dissect_req_type(dissector d, context* ctx) {
     d.add_item(1, &hf_req_type, enc::be);
     return 1;

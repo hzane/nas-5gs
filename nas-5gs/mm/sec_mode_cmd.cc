@@ -904,7 +904,8 @@ const field_meta hf_emm_gea7 = {
     0x01,
 };
 
-//  * 9.9.3.36 UE security capability
+// 9.11.3.48A S1 UE security capability page.391
+// See subclause 9.9.3.36 in 3GPP TS 24.301 [15].
 int dissect_reported_s1_ue_sec_cap(dissector d, context* ctx) {
     auto len = d.length;
 

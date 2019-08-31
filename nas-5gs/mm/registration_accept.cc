@@ -1068,6 +1068,9 @@ const field_meta hf_nssai_inc_mode = {
     nullptr,
     0x03,
 };
+
+// 9.11.3.37A NSSAI inclusion mode page.381
+// a type 1 information element
 int dissect_nssai_inclusion_mode(dissector d, context* ctx) {
     static const field_meta* flags[] = {
         &hf_spare_b3,

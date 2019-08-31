@@ -125,7 +125,6 @@ int dissect_time_zone_time(dissector d, context* ctx);
 int dissect_day_saving_time(dissector d, context* ctx);
 int dissect_ladn_inf(dissector d, context* ctx);
 int dissect_mico_ind(dissector d, context* ctx);
-int dissect_rej_nssai(dissector d, context* ctx);
 int dissect_full_name_network(dissector d, context* ctx);
 int dissect_short_name_network(dissector d, context* ctx);
 int dissect_local_time_zone(dissector d, context* ctx);
@@ -501,15 +500,6 @@ int dissect_mico_ind(dissector d, context* ctx) {
     d.add_item(1, hf_mm_raai_b0, enc::be);
     return 1;
 }
-
-/*
- *   9.11.3.46    Rejected NSSAI
- */
-int dissect_rej_nssai(dissector d, context* ctx) {
-    diag("ie %s not dissect yet\n", "rejected NSSAI");
-    return d.length;
-}
-
 
 /*
  * [3] 10.5.3.5a Network Name

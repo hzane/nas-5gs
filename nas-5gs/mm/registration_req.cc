@@ -1175,6 +1175,9 @@ const field_meta hf_nas_eps_spare_bits = {
     nullptr,
     0x0,
 };
+
+// 9.11.3.48 S1 UE network capability page.391
+// See subclause 9.9.3.34 in 3GPP TS 24.301 [15].
 int mm_reg_req::dissect_s1_ue_net_cap(dissector d, context* ctx) {
     static const field_meta* oct3_flags[] = {
         &hf_nas_eps_emm_eea0,

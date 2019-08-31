@@ -2,7 +2,7 @@
 #include "../ts24007.hh"
 
 namespace mm_service_req {
-extern const field_meta*  hf_service_type;
+
 extern const element_meta key_set_id;
 extern const element_meta s_tmsi;
 extern const element_meta uplink_data_status;
@@ -13,17 +13,15 @@ using namespace nas;
 using namespace mm;
 
 /*
- * 8.2.16 Service request
+ * 8.2.16 Service request page.317
  */
 int mm::service_req(dissector d, context* ctx) {
     use_context uc(ctx, "service-request");
 
     using namespace mm_service_req;
 
-    /* Service type    Service type 9.11.3.46    M    V    1/2 */
-    // proto_tree_add_item(
-    //    tree, hf_nas_5gs_mm_serv_type, tvb, curr_offset, 1, ENC_BIG_ENDIAN);
-    d.tree->add_item(d.pinfo, d.tvb, d.offset, 1, hf_service_type, enc::be);
+    // Service request message identity Message type 9.7 M V 1
+    d.tree->add_item(d.pinfo, d.tvb, d.offset, 1, &hf_service_request_msg_id, enc::be);
 
     /*  ELEM_MAND_V(,DE_NAS_5GS_MM_NAS_KEY_SET_ID," - ngKSI", );*/
     /* ngKSI     NAS key set identifier 9.11.3.29    M    V    1/2 */
@@ -70,33 +68,6 @@ int mm::service_req(dissector d, context* ctx) {
     return d.tvb->length;
 }
 namespace mm_service_req {
-/*
- *     9.11.3.50    Service type
- */
-
-/* Used inline as H1 (Upper nibble)*/
-const val_string nas_5gs_mm_serv_type_vals[] = {
-    {0x00, "Signalling"},
-    {0x01, "Data"},
-    {0x02, "Mobile terminated services"},
-    {0x03, "Emergency services"},
-    {0x04, "Emergency services fallback"},
-    {0x05, "High priority access"},
-    {0, nullptr},
-};
-
-extern const field_meta hfm_service_type = {
-    "Service type",
-    "nas_5gs.mm.serv_type",
-    ft::ft_uint8,
-    fd::base_dec,
-    nas_5gs_mm_serv_type_vals,
-    nullptr,
-    nullptr,
-    0x70,
-};
-const field_meta* hf_service_type = &hfm_service_type;
-
 int                dissect_key_set_id(dissector d, context* ctx);
 const element_meta key_set_id = {
     0xff,
