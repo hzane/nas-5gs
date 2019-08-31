@@ -179,10 +179,14 @@ string bits7_string(const uint8_t* data, int len);
 
 ustring ts_23_038_7bits_string(const uint8_t* ptr, int bit_offset, int no_of_chars);
 
-int ws_ctz(uint64_t x);
+int ws_ctz(uint64_t mask);
+int ms_ctz(uint64_t mask);
 
 uint32_t get_ext_ambr_unit(uint32_t unit, const char** unit_str);
 
 string ambr_string(uint32_t val, uint32_t unit);
 
 string bstrn_string(const uint8_t* d, int len);
+
+string gprs_timer3_format(uint8_t oct);
+string gprs_timer2_format(uint8_t oct);

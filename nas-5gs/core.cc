@@ -85,6 +85,7 @@ string ambr_string(uint32_t val, uint32_t unit){
     return formats("%u %s (%u)", val * multi, unit_str, val);
 }
 
+// ascii strings
 string bstrn_string(const uint8_t*d, int len){
     if (!d || !len) return string();
 
@@ -96,4 +97,76 @@ string bstrn_string(const uint8_t*d, int len){
         i         = i + next + 1;
     }
     return str;
+}
+
+/* * 3GPP TS 24.008 g10 10.5.7.4a */
+string gprs_timer3_format(uint8_t oct) {
+    auto        uf   = oct >> 5u;
+    auto        val  = uint32_t(oct) & 0x1fu;
+    const char* unit = "hr";
+    uint32_t    mul  = 1;
+
+    switch (uf) {
+    case 0:
+        unit = "min";
+        mul  = 10;
+        break;
+    case 1:
+        unit = "hr";
+        break;
+    case 2:
+        unit = "hr";
+        mul  = 10;
+        break;
+    case 3:
+        unit = "sec";
+        mul  = 2;
+        break;
+    case 4:
+        unit = "sec";
+        mul  = 30;
+        break;
+    case 5:
+        unit = "min";
+        break;
+    case 7:
+        break; // todo: what's timer is deactivated?
+    default:
+        break;
+    }
+    return formats("GPRS Timer : %u %s (%u)", val * mul, unit, val);
+}
+
+/* * 3GPP TS 24.008 g10 10.5.7.4 */
+string gprs_timer2_format(uint8_t oct) {
+    auto        val  = uint8_t(oct) & 0x1fu;
+    const char* unit = "min";
+    uint32_t    mul  = 1;
+    switch (oct >> 5u) {
+    case 0:
+        unit = "sec";
+        mul  = 2;
+        break;
+    case 1:
+        unit = "min";
+        break;
+    case 2:
+        unit = "min";
+        mul  = 6;
+        break;
+    case 7:
+        break; // timer is deactivated
+    default:
+        break;
+    }
+    return formats("GPRS Timer : %u %s (%u)", val * mul, unit, val);
+}
+
+// assure: iei != 0
+const message_meta* find_dissector(uint8_t iei, const message_meta* meta) {
+    while (meta->name) { // meta->type may be zero
+        if (meta->type == iei) return meta;
+        meta++;
+    }
+    return nullptr;
 }
