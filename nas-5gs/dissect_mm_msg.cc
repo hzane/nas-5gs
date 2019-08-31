@@ -22,9 +22,20 @@ int dissect_abba(dissector d, context* ctx) {
     return d.length;
 }
 
+#pragma pack(push, 1)
+struct s_nssai {
+    uint8_t iei;
+    uint8_t length;
+    uint8_t sst;         // mandatory
+    uint8_t sd[3];       // when length >=4
+    uint8_t hplmn_sst;   // length>=5
+    uint8_t hplnn_sd[3]; // length == 8
+};
+#pragma pack(pop)
 
-/* 9.10.2.8    S-NSSAI */
-int mm::dissect_nssai(dissector d, context* ctx) {
+/* 9.11.2.8    S-NSSAI */
+//  a type 4 information element
+int mm::dissect_s_nssai(dissector d, context* ctx) {
     auto len = d.length;
     /* SST    octet 3
      * This field contains the 8 bit SST value. The coding of the SST value part is
@@ -49,14 +60,17 @@ int mm::dissect_nssai(dissector d, context* ctx) {
     d.add_item(3, &hf_mapped_conf_ssd, enc::be);
     d.step(3);
 
+    d.extraneous_data_check(0);
     return len;
 }
 
-
 /*
- *   9.11.3.37    NSSAI
+ * 9.11.3.37    NSSAI
+ * S-NSSAI value is coded as the length and value part of S-NSSAI information element
+as specified in subclause 9.11.2.8 starting with the second octet.
  */
 int mm::dissect_allowed_nssai(dissector d, context* ctx) {
+
     auto len = d.length;
     auto i   = 0;
     while (d.length > 0) {
@@ -66,7 +80,7 @@ int mm::dissect_allowed_nssai(dissector d, context* ctx) {
         auto item    = d.add_item(1, &hf_mm_length, enc::be);
         d.step(1);
 
-        auto consumed = dissect_nssai(d.slice(l), ctx);
+        auto consumed = dissect_s_nssai(d.slice(l), ctx);
         d.tree->set_length(consumed + 1);
         d.step(consumed);
 
@@ -75,6 +89,10 @@ int mm::dissect_allowed_nssai(dissector d, context* ctx) {
     return len;
 }
 
+int dissect_requested_nssai(dissector d, context* ctx){
+    auto len = d.length;
+    return len;
+}
 
 /*
  * 9.11.3.9     5GS tracking area identity list
@@ -219,31 +237,62 @@ int mm::dissect_ta_id_list(dissector d, context* ctx) {
     }
     return len;
 }
+const val_string ref_nssai_cause_values[] = {
+    {0, "S-NSSAI not available in the current PLMN"},
+    {
+        1,
+        "S-NSSAI not available in the current registration area All other values are "
+        "reserved.",
+    },
+    {0, nullptr},
+};
+const field_meta hf_rej_nssai_cause = {
+    "Cause",
+    "nas_5gs.mm.cause",
+    ft::ft_uint8,
+    fd::base_dec,
+    ref_nssai_cause_values,
+    nullptr,
+    nullptr,
+    0x0f,
+};
 
+/* *   9.11.3.46    Rejected NSSAI page.389 */
+int mm::dissect_rejected_nssai(dissector d, context* ctx) {
+    auto len = d.length;
+    auto i = 1;
+    while(d.length>0){
+        auto subtree = d.tree->add_subtree(d.pinfo, d.tvb, d.offset, 2, "Rejected S-NSSAI %u", i);
+        use_tree ut(d, subtree);
 
-/*
- *   9.11.3.46    Rejected NSSAI
- */
-int mm::dissect_rej_nssai(dissector d, context* ctx) {
-    diag("ie %s not dissect yet\n", "rejected NSSAI");
-    return d.length;
+        auto len = int(d.uint8()>>4);
+        d.add_item(1, &hf_rej_nssai_cause, enc::be);
+        d.step(1);
+
+        d.add_item(1, &hf_sst, enc::be);
+        d.step(1);
+        if (len==1) continue; // len == 1 || len == 4
+
+        d.add_item(3, &hf_sd, enc::be);
+        d.step(3);
+        ++i;
+    }
+    return len;
 }
 
-/*
- *   9.11.3.37    NSSAI
- */
+/* 9.11.3.37    NSSAI */
 int mm::dissect_configured_nssai(dissector d, context* ctx) {
     auto len = d.length;
     auto i   = 1;
     while (d.length > 0) {
         auto subtree = d.tree->add_subtree(d.pinfo, d.tvb, d.offset, 2, "S-NSSAI %u", i);
-        d.tree       = subtree;
+        use_tree ut(d, subtree);
 
         int length = (int) d.tvb->uint8(d.offset);
         d.add_item(1, &hf_mm_length, enc::be);
         d.step(1);
 
-        auto consumed = dissect_nssai(d.slice(length), ctx);
+        auto consumed = dissect_s_nssai(d.slice(length), ctx);
         d.step(consumed);
 
         ++i;
@@ -715,7 +764,7 @@ int mm::dissect_mico_ind(dissector d, context* ctx) {
     return 1;
 }
 
-namespace mm{
+namespace mm {
 const field_meta hf_sal_al_t = {
     "Allowed type",
     "nas_5gs.mm.sal_al_t",
@@ -737,7 +786,8 @@ const field_meta hf_sal_t_li = {
     0x60,
 };
 } // namespace mm
-// 9.11.3.49    Service area list
+
+// 9.11.3.49    Service area list page.391
 int mm::dissect_sal(dissector d, context* ctx) {
     auto                     len     = d.length;
     static const field_meta* flags[] = {
@@ -763,7 +813,7 @@ int mm::dissect_sal(dissector d, context* ctx) {
         d.add_bits(flags);
         d.step(1);
         switch (sal_t_li) {
-        case 0: {
+        case 0: { // type of list = "00"
             /*octet 2  MCC digit2  MCC digit1*/
             /*octet 3  MNC digit3  MCC digit3*/
             /*octet 4  MNC digit2  MNC digit1*/
@@ -775,7 +825,7 @@ int mm::dissect_sal(dissector d, context* ctx) {
                 --sal_num_e;
             }
         } break;
-        case 1: {
+        case 1: { // type of list = "01"
             /*octet 2  MCC digit2  MCC digit1*/
             /*octet 3  MNC digit3  MCC digit3*/
             /*octet 4  MNC digit2  MNC digit1*/
@@ -786,7 +836,7 @@ int mm::dissect_sal(dissector d, context* ctx) {
             d.add_item(3, &hf_tac, enc::be);
             d.step(3);
         } break;
-        case 2: {
+        case 2: { // type of list = "10"
             while (sal_num_e > 0) {
                 /*octet 2  MCC digit2  MCC digit1*/
                 /*octet 3  MNC digit3  MCC digit3*/
@@ -800,16 +850,15 @@ int mm::dissect_sal(dissector d, context* ctx) {
                 --sal_num_e;
             }
         } break;
-        case 3: {
+        case 3: { // type of list = "11"
             dissect_e212_mcc_mnc(d, ctx);
             d.step(3);
         } break;
-        default:
-            d.tree->add_expert(d.pinfo, d.tvb, d.offset, d.length, nullptr);
+        default: // never goes here
             break;
         }
 
-        /*calculate the length of IE?*/
+        /*calculate the length of IE */
         d.tree->set_length(d.offset - start);
         /*calculate the number of Partial service area list*/
         num_par_sal++;
@@ -1094,40 +1143,5 @@ int mm::dissect_nas_msg_cont(dissector d, context* ctx) {
 int mm::dissect_abba(dissector d, context* ctx) {
     d.add_item(d.length, &hf_abba, enc::be);
     return d.length;
-}
-
-
-/* 9.10.2.8    S-NSSAI */
-int mm::dissect_s_nssai(dissector d, context* ctx) {
-    /* SST    octet 3
-     * This field contains the 8 bit SST value. The coding of the SST value part is
-     * defined in 3GPP TS 23.003
-     */
-    d.add_item(1, &hf_sst, enc::be);
-    d.step(1);
-    if (d.length <= 0) {
-        return 1;
-    }
-
-    /* SD    octet 4 - octet 6* */
-    d.add_item(3, &hf_sd, enc::be);
-    d.step(3);
-    if (d.length <= 0) {
-        return 4;
-    }
-
-    /* Mapped configured SST    octet 7* */
-    d.add_item(1, &hf_mapped_conf_sst, enc::be);
-    d.step(1);
-    if (d.length <= 0) {
-        return 5;
-    }
-
-    /* Mapped configured SD    octet 8 - octet 10* */
-    d.add_item(3, &hf_mapped_conf_ssd, enc::be);
-    d.step(3);
-
-    d.extraneous_data_check(0);
-    return 8;
 }
 

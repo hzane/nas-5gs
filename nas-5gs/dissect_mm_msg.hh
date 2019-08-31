@@ -41,7 +41,7 @@ int dissect_ta_id_list(dissector d, context* ctx);
 int dissect_e212_mcc_mnc(dissector d, context* ctx);
 int dissect_nssai(dissector d, context* ctx);
 //  9.11.3.46    Rejected NSSAI
-int dissect_rej_nssai(dissector d, context* ctx);
+int dissect_rejected_nssai(dissector d, context* ctx);
 
 int dissect_configured_nssai(dissector d, context* ctx);
 
