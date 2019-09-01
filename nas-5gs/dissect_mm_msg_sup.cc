@@ -3,6 +3,10 @@
 using namespace mm;
 using namespace nas;
 
+extern const true_false_string mm::tfs_requested_not_requested = {
+    "Requested",
+    "Not Requested",
+};
 /* * 9.11.3.9A    5GS update type*/
 
 const true_false_string mm::tfs_sms_requested = {
@@ -169,7 +173,7 @@ const field_meta mm::hf_mm_sst = {
     0x0,
 };
 
-const field_meta hfm_nas_5gs_mm_sd = {
+const field_meta hfm_mm_sd = {
     "Slice differentiator (SD)",
     "nas_5gs.mm.mm_sd",
     ft::ft_uint24,
@@ -180,7 +184,7 @@ const field_meta hfm_nas_5gs_mm_sd = {
     0x0,
 };
 
-const field_meta hfm_nas_5gs_mm_mapped_conf_sst = {
+const field_meta hfm_mm_mapped_conf_sst = {
     "Mapped configured SST",
     "nas_5gs.mm.mapped_conf_sst",
     ft::ft_uint8,
@@ -191,7 +195,7 @@ const field_meta hfm_nas_5gs_mm_mapped_conf_sst = {
     0x0,
 };
 
-const field_meta hfm_nas_5gs_mm_mapped_conf_ssd = {
+const field_meta hfm_mm_mapped_conf_ssd = {
     "Mapped configured SD",
     "nas_5gs.mm.mapped_conf_ssd",
     ft::ft_uint24,
@@ -208,48 +212,48 @@ const field_meta hfm_nas_5gs_mm_mapped_conf_ssd = {
 
 /* *   9.11.3.20    De-registration type */
 
-const true_false_string nas_5gs_mm_switch_off_tfs = {
+const true_false_string mm_switch_off_tfs = {
     "Switch off",
     "Normal de-registration",
 };
-const field_meta hfm_nas_5gs_mm_switch_off = {
+const field_meta hfm_mm_switch_off = {
     "Switch off",
     "nas_5gs.mm.switch_off",
     ft::ft_boolean,
     8,
     nullptr,
-    &nas_5gs_mm_switch_off_tfs,
+    &mm_switch_off_tfs,
     nullptr,
     0x08,
 };
 
-const true_false_string nas_5gs_mm_re_reg_req_tfs = {
+const true_false_string mm_re_reg_req_tfs = {
     "re-registration required",
     "re-registration not required",
 };
-const field_meta hfm_nas_5gs_mm_re_reg_req = {
+const field_meta hfm_mm_re_reg_req = {
     "Re-registration required",
     "nas_5gs.mm.re_reg_req",
     ft::ft_boolean,
     8,
     nullptr,
-    &nas_5gs_mm_re_reg_req_tfs,
+    &mm_re_reg_req_tfs,
     nullptr,
     0x04,
 };
 
-extern const val_string nas_5gs_mm_acc_type_vals[] = {
+extern const val_string mm_acc_type_vals[] = {
     {0x1, "3GPP access"},
     {0x2, "Non-3GPP access"},
     {0x3, "3GPP access and non-3GPP access"},
     {0, nullptr},
 };
-const field_meta hfm_nas_5gs_mm_acc_type = {
+const field_meta hfm_mm_acc_type = {
     "Access type",
     "nas_5gs.mm.acc_type",
     ft::ft_uint8,
     fd::base_dec,
-    nas_5gs_mm_acc_type_vals,
+    mm_acc_type_vals,
     nullptr,
     nullptr,
     0x03,
@@ -257,7 +261,7 @@ const field_meta hfm_nas_5gs_mm_acc_type = {
 
 /* *   9.11.3.31    MICO indication */
 
-const true_false_string tfs_nas_5gs_raai = {
+const true_false_string tfs_raai = {
     "all PLMN registration area allocated",
     "all PLMN registration area not allocated",
 };
@@ -268,7 +272,7 @@ const field_meta mm::hfm_mm_raai_b0 = {
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
-    &tfs_nas_5gs_raai,
+    &tfs_raai,
     nullptr,
     0x01,
 };
@@ -296,7 +300,7 @@ const field_meta mm::hfm_nas_5gs_mm_conf_upd_ind_red_b1 = {
     0x02,
 };
 
-extern const val_string mm::nas_5gs_mm_type_of_enc_algo_vals[] = {
+extern const val_string mm::mm_type_of_enc_algo_vals[] = {
     {0x0, "5G-EA0 (null ciphering algorithm)"},
     {0x1, "128-5G-EA1"},
     {0x2, "128-5G-EA2"},
@@ -307,12 +311,12 @@ extern const val_string mm::nas_5gs_mm_type_of_enc_algo_vals[] = {
     {0x7, "5G-EA7"},
     {0, nullptr},
 };
-const field_meta mm::hfm_nas_5gs_mm_nas_sec_algo_enc = {
+const field_meta mm::hfm_mm_nas_sec_algo_enc = {
     "Type of ciphering algorithm",
     "nas_5gs.mm.nas_sec_algo_enc",
     ft::ft_uint8,
     fd::base_dec,
-    nas_5gs_mm_type_of_enc_algo_vals,
+    mm_type_of_enc_algo_vals,
     nullptr,
     nullptr,
     0xf0,
@@ -320,7 +324,7 @@ const field_meta mm::hfm_nas_5gs_mm_nas_sec_algo_enc = {
 
 /* *   9.11.3.34    NAS security algorithms */
 
-extern const val_string mm::nas_5gs_mm_type_of_ip_algo_vals[] = {
+extern const val_string mm::mm_type_of_ip_algo_vals[] = {
     {0x0, "5G-IA0 (null integrity protection algorithm)"},
     {0x1, "128-5G-IA1"},
     {0x2, "128-5G-IA2"},
@@ -331,18 +335,18 @@ extern const val_string mm::nas_5gs_mm_type_of_ip_algo_vals[] = {
     {0x7, "5G-IA7"},
     {0, nullptr},
 };
-const field_meta mm::hfm_nas_5gs_mm_nas_sec_algo_ip = {
+const field_meta mm::hfm_mm_nas_sec_algo_ip = {
     "Type of integrity protection algorithm",
     "nas_5gs.mm.nas_sec_algo_ip",
     ft::ft_uint8,
     fd::base_dec,
-    nas_5gs_mm_type_of_ip_algo_vals,
+    mm_type_of_ip_algo_vals,
     nullptr,
     nullptr,
     0x0f,
 };
 
-const field_meta mm::hfm_nas_5gs_mm_s1_mode_b0 = {
+const field_meta mm::hfm_mm_s1_mode_b0 = {
     "S1 mode",
     "nas_5gs.mm.s1_mode_b0",
     ft::ft_boolean,
@@ -357,7 +361,7 @@ const true_false_string mm::tfs_supported_not_supported = {
     "Supported",
     "Not supported",
 };
-const field_meta mm::hfm_nas_5gs_mm_ho_attach_b1 = {
+const field_meta mm::hfm_mm_ho_attach_b1 = {
     "HO attach",
     "nas_5gs.mm.ho_attach_b1",
     ft::ft_boolean,
@@ -368,7 +372,7 @@ const field_meta mm::hfm_nas_5gs_mm_ho_attach_b1 = {
     0x02,
 };
 
-const field_meta mm::hfm_nas_5gs_mm_lpp_cap_b2 = {
+const field_meta mm::hfm_mm_lpp_cap_b2 = {
     "LTE Positioning Protocol (LPP) capability",
     "nas_5gs.mm.lpp_cap_b2",
     ft::ft_boolean,
@@ -378,9 +382,21 @@ const field_meta mm::hfm_nas_5gs_mm_lpp_cap_b2 = {
     nullptr,
     0x04,
 };
+/*
+ * 9.11.3.4    5GS mobile identity
+ */
+extern const val_string mm::mm_type_id_values[] = {
+    {0x0, "No identity"},
+    {0x1, "SUCI"},
+    {0x2, "5G-GUTI"},
+    {0x3, "IMEI"},
+    {0x4, "5G-S-TMSI"},
+    {0x5, "IMEISV"},
+    {0, nullptr},
+};
 
 /* * 9.11.3.4    5GS mobile identity */
-const field_meta mm::hfm_nas_5gs_mm_type_id = {
+const field_meta mm::hfm_mm_type_id = {
     "Type of identity",
     "nas_5gs.mm.type_id",
     ft::ft_uint8,
@@ -395,7 +411,7 @@ const true_false_string mm::tfs_odd_even = {
     "Odd number of identity digits",
     "Even number of identity digits",
 };
-const field_meta mm::hfm_nas_5gs_mm_odd_even = {
+const field_meta mm::hfm_mm_odd_even = {
     "Odd/even indication",
     "nas_5gs.mm.odd_even",
     ft::ft_boolean,
@@ -406,7 +422,7 @@ const field_meta mm::hfm_nas_5gs_mm_odd_even = {
     0x08,
 };
 
-const field_meta mm::hfm_nas_5gs_mm_length = {
+const field_meta mm::hfm_mm_length = {
     "Length",
     "nas_5gs.mm.length",
     ft::ft_uint8,
@@ -417,7 +433,7 @@ const field_meta mm::hfm_nas_5gs_mm_length = {
     0x0,
 };
 
-const field_meta mm::hfm_nas_5gs_mm_abba = {
+const field_meta mm::hfm_mm_abba = {
     "ABBA Contents",
     "nas_5gs.mm.abba_contents",
     ft::ft_uint16,
@@ -427,7 +443,7 @@ const field_meta mm::hfm_nas_5gs_mm_abba = {
     nullptr,
     0x00,
 };
-const field_meta mm::hfm_nas_5gs_mm_pld_cont = {
+const field_meta mm::hfm_mm_pld_cont = {
     "Payload container",
     "nas_5gs.mm.pld_cont",
     ft::ft_bytes,
@@ -440,7 +456,7 @@ const field_meta mm::hfm_nas_5gs_mm_pld_cont = {
 
 /* *     9.11.3.47    Request type */
 
-const val_string mm::nas_5gs_mm_req_type_vals[] = {
+const val_string mm::mm_req_type_vals[] = {
     {0x01, "Initial request"},
     {0x02, "Existing PDU session"},
     {0x03, "Initial emergency request"},
@@ -449,12 +465,12 @@ const val_string mm::nas_5gs_mm_req_type_vals[] = {
     {0x07, "Reserved"},
     {0, nullptr},
 };
-const field_meta mm::hfm_nas_5gs_mm_req_type = {
+const field_meta mm::hfm_mm_req_type = {
     "Request type",
     "nas_5gs.mm.req_typ",
     ft::ft_uint8,
     fd::base_dec,
-    nas_5gs_mm_req_type_vals,
+    mm_req_type_vals,
     nullptr,
     nullptr,
     0x0f,
@@ -463,7 +479,7 @@ const field_meta mm::hfm_nas_5gs_mm_req_type = {
 /* *     9.11.3.50    Service type page.396 */
 
 /* Used inline as H1 (Upper nibble)*/
-const val_string mm::nas_5gs_mm_serv_type_vals[] = {
+const val_string mm::mm_serv_type_vals[] = {
     {0x00, "Signalling"},
     {0x01, "Data"},
     {0x02, "Mobile terminated services"},
@@ -478,18 +494,18 @@ const val_string mm::nas_5gs_mm_serv_type_vals[] = {
     {0x0b, "unused; shall be interpreted as \"data\", if received by the network"},
     {0, nullptr},
 };
-const field_meta mm::hfm_nas_5gs_mm_serv_type = {
+const field_meta mm::hfm_mm_serv_type = {
     "Service type",
     "nas_5gs.mm.serv_type",
     ft::ft_uint8,
     fd::base_dec,
-    nas_5gs_mm_serv_type_vals,
+    mm_serv_type_vals,
     nullptr,
     nullptr,
     0xF0,
 };
 
-const field_meta mm::hfm_nas_5gs_mm_5g_ea0 = {
+const field_meta mm::hfm_mm_5g_ea0 = {
     "5G-EA0",
     "nas_5gs.mm.5g_ea0",
     ft::ft_boolean,
@@ -500,7 +516,7 @@ const field_meta mm::hfm_nas_5gs_mm_5g_ea0 = {
     0x80,
 };
 
-const field_meta mm::hfm_nas_5gs_mm_128_5g_ea1 = {
+const field_meta mm::hfm_mm_128_5g_ea1 = {
     "128-5G-EA1",
     "nas_5gs.mm.128_5g_ea1",
     ft::ft_boolean,
@@ -511,7 +527,7 @@ const field_meta mm::hfm_nas_5gs_mm_128_5g_ea1 = {
     0x40,
 };
 
-const field_meta mm::hfm_nas_5gs_mm_128_5g_ea2 = {
+const field_meta mm::hfm_mm_128_5g_ea2 = {
     "128-5G-EA2",
     "nas_5gs.mm.128_5g_ea2",
     ft::ft_boolean,
@@ -522,7 +538,7 @@ const field_meta mm::hfm_nas_5gs_mm_128_5g_ea2 = {
     0x20,
 };
 
-const field_meta mm::hfm_nas_5gs_mm_128_5g_ea3 = {
+const field_meta mm::hfm_mm_128_5g_ea3 = {
     "128-5G-EA3",
     "nas_5gs.mm.128_5g_ea3",
     ft::ft_boolean,
@@ -533,7 +549,7 @@ const field_meta mm::hfm_nas_5gs_mm_128_5g_ea3 = {
     0x10,
 };
 
-const field_meta mm::hfm_nas_5gs_mm_5g_ea4 = {
+const field_meta mm::hfm_mm_5g_ea4 = {
     "5G-EA4",
     "nas_5gs.mm.5g_ea4",
     ft::ft_boolean,
@@ -544,7 +560,7 @@ const field_meta mm::hfm_nas_5gs_mm_5g_ea4 = {
     0x08,
 };
 
-const field_meta mm::hfm_nas_5gs_mm_5g_ea5 = {
+const field_meta mm::hfm_mm_5g_ea5 = {
     "5G-EA5",
     "nas_5gs.mm.5g_ea5",
     ft::ft_boolean,
@@ -555,7 +571,7 @@ const field_meta mm::hfm_nas_5gs_mm_5g_ea5 = {
     0x04,
 };
 
-const field_meta mm::hfm_nas_5gs_mm_5g_ea6 = {
+const field_meta mm::hfm_mm_5g_ea6 = {
     "5G-EA6",
     "nas_5gs.mm.5g_ea6",
     ft::ft_boolean,
@@ -566,7 +582,7 @@ const field_meta mm::hfm_nas_5gs_mm_5g_ea6 = {
     0x02,
 };
 
-const field_meta mm::hfm_nas_5gs_mm_5g_ea7 = {
+const field_meta mm::hfm_mm_5g_ea7 = {
     "5G-EA7",
     "nas_5gs.mm.5g_ea7",
     ft::ft_boolean,
@@ -577,7 +593,7 @@ const field_meta mm::hfm_nas_5gs_mm_5g_ea7 = {
     0x01,
 };
 
-const field_meta mm::hfm_nas_5gs_mm_5g_ia0 = {
+const field_meta mm::hfm_mm_5g_ia0 = {
     "5G-IA0",
     "nas_5gs.mm.ia0",
     ft::ft_boolean,
@@ -588,7 +604,7 @@ const field_meta mm::hfm_nas_5gs_mm_5g_ia0 = {
     0x80,
 };
 
-const field_meta mm::hfm_nas_5gs_mm_5g_128_ia1 = {
+const field_meta mm::hfm_mm_5g_128_ia1 = {
     "128-5G-IA1",
     "nas_5gs.mm.5g_128_ia1",
     ft::ft_boolean,
@@ -599,7 +615,7 @@ const field_meta mm::hfm_nas_5gs_mm_5g_128_ia1 = {
     0x40,
 };
 
-const field_meta mm::hfm_nas_5gs_mm_5g_128_ia2 = {
+const field_meta mm::hfm_mm_5g_128_ia2 = {
     "128-5G-IA2",
     "nas_5gs.mm.5g_128_ia2",
     ft::ft_boolean,
@@ -610,7 +626,7 @@ const field_meta mm::hfm_nas_5gs_mm_5g_128_ia2 = {
     0x20,
 };
 
-const field_meta mm::hfm_nas_5gs_mm_5g_128_ia3 = {
+const field_meta mm::hfm_mm_5g_128_ia3 = {
     "128-5G-IA3",
     "nas_5gs.mm.5g_128_ia4",
     ft::ft_boolean,
@@ -621,7 +637,7 @@ const field_meta mm::hfm_nas_5gs_mm_5g_128_ia3 = {
     0x10,
 };
 
-const field_meta mm::hfm_nas_5gs_mm_5g_ia4 = {
+const field_meta mm::hfm_mm_5g_ia4 = {
     "5G-IA4",
     "nas_5gs.mm.5g_128_ia4",
     ft::ft_boolean,
@@ -943,26 +959,6 @@ const field_meta mm::hf_element = {
     nullptr,
     0x0,
 };
-/* UPDP */
-/* D.6.1 UE policy delivery service message type */
-int mm::dissect_updp(dissector d, context* ctx) {
-    auto len = d.length;
-
-    /* 9.6  Procedure transaction identity
-     * Bits 1 to 8 of the third octet of every 5GSM message contain the procedure
-     * transaction identity. The procedure transaction identity and its use are defined in
-     * 3GPP TS 24.007
-     * XXX Only 5GSM ?
-     */
-    d.add_item(1, hf_proc_trans_id, enc::be);
-    d.step(1);
-
-    /* Message type IE*/
-    // TODO: implement
-    auto oct = d.tvb->uint8(d.offset);
-    d.add_item(d.length, &hf_element, enc::be);
-    return len;
-}
 
 extern const message_meta mm::msgs[] = {
     {0x41, "Registration request", registration_req},
@@ -1045,10 +1041,6 @@ extern const field_meta mm::hf_nas_5gs_spare_b2 = {
     0x02,
 };
 #endif
-extern const true_false_string mm::tfs_requested_not_requested = {
-    "Requested",
-    "Not Requested",
-};
 
 extern const element_meta mm::allowed_nssai = {
     0x15,
@@ -1073,7 +1065,6 @@ extern const field_meta mm::hf_mm_length = {
     nullptr,
     0x0,
 };
-extern const field_meta* mm::hf_mm_raai_b0;
 
 //  9.11.3.46    Rejected NSSAI
 extern const element_meta mm::rej_nssai = {
@@ -1117,18 +1108,7 @@ extern const element_meta mm::mobile_id = {
     "Mobile identity",
     dissect_mobile_id,
 };
-/*
- * 9.11.3.4    5GS mobile identity
- */
-extern const val_string mm::mm_type_id_values[] = {
-    {0x0, "No identity"},
-    {0x1, "SUCI"},
-    {0x2, "5G-GUTI"},
-    {0x3, "IMEI"},
-    {0x4, "5G-S-TMSI"},
-    {0x5, "IMEISV"},
-    {0, nullptr},
-};
+
 extern const field_meta mm::hf_mm_type_id = {
     "Type of identity",
     "nas_5gs.mm.type_id",
@@ -1139,7 +1119,6 @@ extern const field_meta mm::hf_mm_type_id = {
     nullptr,
     0x07,
 };
-extern const true_false_string mm::tfs_odd_even;
 
 extern const field_meta mm::hf_mm_odd_even = {
     "Odd/even indication",
@@ -1341,6 +1320,11 @@ const field_meta mm::hf_sst = {
     0x0,
 };
 
+const true_false_string mm::tfs_follow_on_req = {
+    "Follow-on request pending",
+    "No follow-on request pending",
+};
+
 const field_meta mm::hf_follow_on_req = {
     "Follow-On Request bit (FOR)",
     "nas_5gs.mm.for",
@@ -1350,9 +1334,4 @@ const field_meta mm::hf_follow_on_req = {
     &tfs_follow_on_req,
     nullptr,
     0x08,
-};
-
-const true_false_string mm::tfs_follow_on_req = {
-    "Follow-on request pending",
-    "No follow-on request pending",
 };

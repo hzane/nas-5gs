@@ -72,6 +72,8 @@ __declspec(selectany) extern const uint32_t ipv6         = 17u; // xxx.xxx.xxx.x
 __declspec(selectany) extern const uint32_t timer        = 15u; // gprs timer
 __declspec(selectany) extern const uint32_t mmc          = 16u; //
 __declspec(selectany) extern const uint32_t mac          = 18u; //
+__declspec(selectany) extern const uint32_t mcc          = 19u; //
+__declspec(selectany) extern const uint32_t mnc          = 20u; //
 
 /* Byte separators  when ft == ft_bytes */
 /* hexadecimal bytes with a period (.) between each byte */

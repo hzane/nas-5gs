@@ -1,4 +1,5 @@
 #include "../dissect_mm_msg.hh"
+#include "../gsm.hh"
 #include "../ts24007.hh"
 
 namespace mm_reg_req {
@@ -173,7 +174,7 @@ extern const element_meta mico_ind = {
     dissect_mico_ind,
 };
 /*2F    Requested NSSAI    NSSAI 9.11.3.37    O    TLV    4-74*/
-int                dissect_requested_nssai(dissector d, context* ctx = nullptr);
+
 const element_meta requested_nssai = {
     0x2f,
     "Requested NSSAI",
@@ -1688,7 +1689,7 @@ int mm_reg_req::dissect_update_type(dissector d, context* ctx) {
 int mm_reg_req::dissect_mico_ind(dissector d, context* ctx) {
     return mm::dissect_mico_ind(d, ctx);
 }
-
+#if 0
 /* 9.11.3.37    NSSAI*/
 int mm_reg_req::dissect_requested_nssai(dissector d, context* ctx) {
     auto len = d.length;
@@ -1708,3 +1709,4 @@ int mm_reg_req::dissect_requested_nssai(dissector d, context* ctx) {
     }
     return len;
 }
+#endif

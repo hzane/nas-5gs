@@ -112,7 +112,7 @@ int dissect_key_set_id(dissector d, context* ctx) {
 
 /* *     9.11.3.50    Service type page.396 */
 int dissect_mm_service_type(dissector d, context*ctx){
-    d.add_item(1, &hfm_nas_5gs_mm_serv_type, enc::be);
+    d.add_item(1, &hfm_mm_serv_type, enc::be);
     d.step(1);
     return 1;
 }

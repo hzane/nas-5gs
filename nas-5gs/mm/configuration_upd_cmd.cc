@@ -1,6 +1,7 @@
-#include "../dissect_mm_msg.hh"
-#include "../ts24007.hh"
 #include <ctime>
+#include "../dissect_mm_msg.hh"
+#include "../gsm.hh"
+#include "../ts24007.hh"
 
 namespace mm_conf_upd_cmd {
 extern const element_meta conf_upd_ind;

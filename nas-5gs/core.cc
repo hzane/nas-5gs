@@ -170,3 +170,35 @@ const message_meta* find_dissector(uint8_t iei, const message_meta* meta) {
     }
     return nullptr;
 }
+
+/* Little Endian
+ * MNC of length 3:
+ *
+ *   8   7   6   5   4   3   2   1
+ * +---+---+---+---+---+---+---+---+
+ * |  MCC digit 2  |  MCC digit 1  |  octet x
+ * +---------------+---------------+
+ * |  MNC digit 3  |  MCC digit 3  |  octet x+1
+ * +---------------+---------------+
+ * |  MNC digit 2  |  MNC digit 1  |  octet x+2
+ * +---------------+---------------+
+ * */
+uint32_t mcc_mnc3(const uint8_t*d, uint32_t*mcc, uint32_t *mnc){
+    /* Mobile country code MCC */
+    auto octet = (uint32_t)d[0];
+    auto mcc1 = octet & 0x0fu;
+    auto mcc2 = octet >> 4u;
+
+    octet = d[1];
+    auto mcc3 = octet & 0x0fu;
+    /* MNC, Mobile network code (octet 3 bits 5 to 8, octet 4)  */
+    auto mnc3 = octet >> 4u;
+
+    octet = d[2];
+    auto mnc1 = octet & 0x0fu;
+    auto mnc2 = octet >> 4u;
+
+    *mcc = 100 * mcc1 + 10 * mcc2 + mcc3;
+    *mnc = 100 * mnc1 + 10*mnc2 + mnc3;
+    return (*mcc)*1000 + *mnc;
+}

@@ -190,3 +190,5 @@ string bstrn_string(const uint8_t* d, int len);
 
 string gprs_timer3_format(uint8_t oct);
 string gprs_timer2_format(uint8_t oct);
+
+uint32_t mcc_mnc3(const uint8_t*d, uint32_t*mcc, uint32_t *mnc); // return mcc*1000+mnc

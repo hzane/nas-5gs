@@ -1,6 +1,7 @@
 #include "dissect_mm_msg.hh"
-#include "ts24007.hh"
 #include <cassert>
+#include "gsm.hh"
+#include "ts24007.hh"
 
 using namespace nas;
 using namespace mm;
@@ -22,17 +23,6 @@ int dissect_abba(dissector d, context* ctx) {
     d.add_item(d.length, &hf_abba, enc::be);
     return d.length;
 }
-
-#pragma pack(push, 1)
-struct s_nssai {
-    uint8_t iei;
-    uint8_t length;
-    uint8_t sst;         // mandatory
-    uint8_t sd[3];       // when length >=4
-    uint8_t hplmn_sst;   // length>=5
-    uint8_t hplnn_sd[3]; // length == 8
-};
-#pragma pack(pop)
 
 /* 9.11.2.8    S-NSSAI */
 //  a type 4 information element
@@ -90,8 +80,23 @@ int mm::dissect_allowed_nssai(dissector d, context* ctx) {
     return len;
 }
 
-int dissect_requested_nssai(dissector d, context* ctx){
+/* 9.11.3.37    NSSAI*/
+int mm::dissect_requested_nssai(dissector d, context* ctx) {
     auto len = d.length;
+    auto i = 1;
+    while(d.length>0){
+        auto subtree = d.tree->add_subtree(d.pinfo, d.tvb, d.offset, 2, "S-NSSAI %u", i);
+        use_tree ut(d, subtree);
+
+        auto length = (int) d.tvb->uint8(d.offset);
+        d.add_item(1, &hf_mm_length, enc::be);
+        d.step(1);
+
+        auto consumed = dissect_s_nssai(d.slice(length), ctx);
+        d.step(consumed);
+        subtree->set_length(length + 1);
+        ++i;
+    }
     return len;
 }
 
@@ -154,8 +159,6 @@ const field_meta mm::hf_tac = {
     nullptr,
     0x0,
 };
-// todo: implement
-int mm::dissect_e212_mcc_mnc(dissector d, context* ctx) { return 3; }
 
 int mm::dissect_ta_id_list(dissector d, context* ctx) {
     static const field_meta* flags[] = {
@@ -754,7 +757,7 @@ int mm::dissect_ladn_inf(dissector d, context* ctx) {
 /*
  *   9.11.3.31    MICO indication
  */
-static const true_false_string tfs_nas_5gs_raai = {
+static const true_false_string tfs_raai = {
     "all PLMN registration area allocated",
     "all PLMN registration area not allocated",
 };
@@ -1147,3 +1150,23 @@ int mm::dissect_abba(dissector d, context* ctx) {
     return d.length;
 }
 
+/* UPDP */
+/* D.6.1 UE policy delivery service message type */
+int mm::dissect_updp(dissector d, context* ctx) {
+    auto len = d.length;
+
+    /* 9.6  Procedure transaction identity
+     * Bits 1 to 8 of the third octet of every 5GSM message contain the procedure
+     * transaction identity. The procedure transaction identity and its use are defined in
+     * 3GPP TS 24.007
+     * XXX Only 5GSM ?
+     */
+    d.add_item(1, hf_proc_trans_id, enc::be);
+    d.step(1);
+
+    /* Message type IE*/
+    // TODO: implement
+    auto oct = d.tvb->uint8(d.offset);
+    d.add_item(d.length, &hf_element, enc::be);
+    return len;
+}

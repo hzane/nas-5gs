@@ -1,6 +1,6 @@
 #include "dissect_sm_msg.hh"
 
-// using namespace nas;
+using namespace sm;
 
 extern const message_meta sm::msgs[] = {
     {0xc1, "PDU session establishment request", pdu_ses_est_req},
@@ -91,6 +91,37 @@ const element_meta sm::always_on_pdu_ses_ind = {
     dissect_always_on_pdu_ses_ind,
 };
 
+//  *      9.11.4.14    Session-AMBR
+extern const value_string sm::sm_unit_for_session_ambr_values[] = {
+    {0x00, "value is not used"},
+    {0x01, "value is incremented in multiples of 1 Kbps"},
+    {0x02, "value is incremented in multiples of 4 Kbps"},
+    {0x03, "value is incremented in multiples of 16 Kbps"},
+    {0x04, "value is incremented in multiples of 64 Kbps"},
+    {0x05, "value is incremented in multiples of 256 kbps"},
+    {0x06, "value is incremented in multiples of 1 Mbps"},
+    {0x07, "value is incremented in multiples of 4 Mbps"},
+    {0x08, "value is incremented in multiples of 16 Mbps"},
+    {0x09, "value is incremented in multiples of 64 Mbps"},
+    {0x0a, "value is incremented in multiples of 256 Mbps"},
+    {0x0b, "value is incremented in multiples of 1 Gbps"},
+    {0x0c, "value is incremented in multiples of 4 Gbps"},
+    {0x0d, "value is incremented in multiples of 16 Gbps"},
+    {0x0e, "value is incremented in multiples of 64 Gbps"},
+    {0x0f, "value is incremented in multiples of 256 Gbps"},
+    {0x10, "value is incremented in multiples of 1 Tbps"},
+    {0x11, "value is incremented in multiples of 4 Tbps"},
+    {0x12, "value is incremented in multiples of 16 Tbps"},
+    {0x13, "value is incremented in multiples of 64 Tbps"},
+    {0x14, "value is incremented in multiples of 256 Tbps"},
+    {0x15, "value is incremented in multiples of 1 Pbps"},
+    {0x16, "value is incremented in multiples of 4 Pbps"},
+    {0x17, "value is incremented in multiples of 16 Pbps"},
+    {0x18, "value is incremented in multiples of 64 Pbps"},
+    {0x19, "value is incremented in multiples of 256 Pbps"},
+    {0, nullptr},
+};
+
 const field_meta sm::hf_sm_ses_ambr_dl_unit = {
     "Unit for Session-AMBR for downlink",
     "nas_5gs.sm.unit_for_session_ambr_dl",
@@ -143,10 +174,7 @@ const element_meta sm::allowed_ssc_mode = {
     dissect_allowed_ssc_mode,
 };
 
-/*
- * 9.11.4.2    5GSM cause
- */
-
+/* * 9.11.4.2    5GSM cause */
 extern const value_string sm::sm_cause_values[] = {
     {0x1a, "Insufficient resources"},
     {0x1b, "Missing or unknown DNN"},
@@ -196,7 +224,6 @@ const field_meta sm::hf_sm_cause = {
 };
 
 // *     9.11.4.13    QoS rules
-
 const true_false_string sm::tfs_nas_5gs_sm_dqr = {
     "The QoS rule is the default QoS rule",
     "The QoS rule is not the default QoS rule",
@@ -519,37 +546,6 @@ const field_meta sm::hf_sm_rqos_b0 = {
     (&tfs_supported_not_supported),
     nullptr,
     0x01,
-};
-
-//  *      9.11.4.14    Session-AMBR
-extern const value_string sm::sm_unit_for_session_ambr_values[] = {
-    {0x00, "value is not used"},
-    {0x01, "value is incremented in multiples of 1 Kbps"},
-    {0x02, "value is incremented in multiples of 4 Kbps"},
-    {0x03, "value is incremented in multiples of 16 Kbps"},
-    {0x04, "value is incremented in multiples of 64 Kbps"},
-    {0x05, "value is incremented in multiples of 256 kbps"},
-    {0x06, "value is incremented in multiples of 1 Mbps"},
-    {0x07, "value is incremented in multiples of 4 Mbps"},
-    {0x08, "value is incremented in multiples of 16 Mbps"},
-    {0x09, "value is incremented in multiples of 64 Mbps"},
-    {0x0a, "value is incremented in multiples of 256 Mbps"},
-    {0x0b, "value is incremented in multiples of 1 Gbps"},
-    {0x0c, "value is incremented in multiples of 4 Gbps"},
-    {0x0d, "value is incremented in multiples of 16 Gbps"},
-    {0x0e, "value is incremented in multiples of 64 Gbps"},
-    {0x0f, "value is incremented in multiples of 256 Gbps"},
-    {0x10, "value is incremented in multiples of 1 Tbps"},
-    {0x11, "value is incremented in multiples of 4 Tbps"},
-    {0x12, "value is incremented in multiples of 16 Tbps"},
-    {0x13, "value is incremented in multiples of 64 Tbps"},
-    {0x14, "value is incremented in multiples of 256 Tbps"},
-    {0x15, "value is incremented in multiples of 1 Pbps"},
-    {0x16, "value is incremented in multiples of 4 Pbps"},
-    {0x17, "value is incremented in multiples of 16 Pbps"},
-    {0x18, "value is incremented in multiples of 64 Pbps"},
-    {0x19, "value is incremented in multiples of 256 Pbps"},
-    {0, nullptr},
 };
 
 // * 9.11.4.7 Integrity protection maximum data rate

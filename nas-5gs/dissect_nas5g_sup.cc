@@ -15,7 +15,7 @@ const field_meta hfm_spare_half_octet = {
 };
 const field_meta* nas::hf_spare_half_octet = &hfm_spare_half_octet;
 
-const field_meta hfm_nas_5gs_msg_elems = {
+const field_meta hfm_msg_elements = {
     "Message Elements",
     "nas_5gs.message_elements",
     ft::ft_bytes,
@@ -25,9 +25,9 @@ const field_meta hfm_nas_5gs_msg_elems = {
     nullptr,
     0x0,
 };
-const field_meta* nas::hf_msg_elem = &hfm_nas_5gs_msg_elems;
+const field_meta* nas::hf_msg_elem = &hfm_msg_elements;
 
-extern const val_string nas_5gs_epd_values[] = {
+extern const val_string epd_values[] = {
     {0x00, "Group call control"},
     {0x01, "Broadcast call control"},
     {0x02, "EPS session management messages"},
@@ -44,25 +44,25 @@ extern const val_string nas_5gs_epd_values[] = {
     {0x0d, "Unknown"},
     {0x0e, "Reserved for extension of the PD to one octet length "},
     {0x0f,
-     "Tests procedures described in 3GPP TS 44.014, 3GPP TS 34.109 and 3GPP TS 36.509"},
+     "Tests procedures described in 3GPP TS 44.014, 3GPP TS 34.109 and 3GPP TS 36.509",},
     {0x2e, "5G session management messages"},
     {0x7e, "5G mobility management messages"},
     {0, nullptr},
 };
 
-const field_meta hfm_nas_5gs_epd = {
+const field_meta hfm_epd = {
     "Extended protocol discriminator",
     "nas_5gs.epd",
     ft::ft_uint8,
     fd::base_dec,
-    nas_5gs_epd_values,
+    epd_values,
     nullptr,
     nullptr,
     0x0,
 };
-const field_meta* nas::hf_epd = &hfm_nas_5gs_epd;
+const field_meta* nas::hf_epd = &hfm_epd;
 
-const val_string nas_5gs_security_header_type_values[] = {
+const val_string security_header_type_values[] = {
     {0, "Plain NAS message, not security protected"},
     {1, "Integrity protected"},
     {2, "Integrity protected and ciphered"},
@@ -71,19 +71,19 @@ const val_string nas_5gs_security_header_type_values[] = {
     {0, nullptr},
 };
 
-field_meta hfm_nas_5gs_security_header_type = {
+field_meta hfm_security_header_type = {
     "Security header type",
     "nas_5gs.security_header_type",
     ft::ft_uint8,
     fd::base_dec,
-    nas_5gs_security_header_type_values,
+    security_header_type_values,
     nullptr,
     nullptr,
     0x0f,
 };
-const field_meta* nas::hf_sec_header_type = &hfm_nas_5gs_security_header_type;
+const field_meta* nas::hf_sec_header_type = &hfm_security_header_type;
 
-field_meta hfm_nas_5gs_msg_auth_code = {
+field_meta hfm_msg_auth_code = {
     "Message authentication code",
     "nas_5gs.msg_auth_code",
     ft::ft_uint32,
@@ -93,9 +93,9 @@ field_meta hfm_nas_5gs_msg_auth_code = {
     nullptr,
     0x0,
 };
-const field_meta* nas::hf_msg_auth_code = &hfm_nas_5gs_msg_auth_code;
+const field_meta* nas::hf_msg_auth_code = &hfm_msg_auth_code;
 
-field_meta hfm_nas_5gs_seq_no = {
+field_meta hfm_seq_no = {
     "Sequence number",
     "nas_5gs.seq_no",
     ft::ft_uint8,
@@ -105,10 +105,10 @@ field_meta hfm_nas_5gs_seq_no = {
     nullptr,
     0x0,
 };
-const field_meta* nas::hf_seq_no = &hfm_nas_5gs_seq_no;
+const field_meta* nas::hf_seq_no = &hfm_seq_no;
 
 /* 5GS session management messages */
-const val_string nas_5gs_sm_message_type_vals[] = {
+const val_string sm_message_type_values[] = {
 
     {0xc1, "PDU session establishment request"},
     {0xc2, "PDU session establishment accept"},
@@ -142,19 +142,19 @@ const val_string nas_5gs_sm_message_type_vals[] = {
     {0, nullptr},
 };
 
-field_meta hfm_nas_5gs_sm_msg_type = {
+field_meta hfm_sm_message_type = {
     "Message type",
     "nas_5gs.sm.message_type",
     ft::ft_uint8,
     fd::base_hex,
-    nas_5gs_sm_message_type_vals,
+    sm_message_type_values,
     nullptr,
     nullptr,
     0x0,
 };
-const field_meta* nas::hf_sm_msg_type = &hfm_nas_5gs_sm_msg_type;
+const field_meta* nas::hf_sm_msg_type = &hfm_sm_message_type;
 
-const val_string  nas_5gs_pdu_session_id_values[] = {
+const val_string pdu_session_id_values[] = {
     {0x00, "No PDU session identity assigned"},
     {0x01, "Reserved"},
     {0x02, "Reserved"},
@@ -178,14 +178,14 @@ const field_meta hfm_pdu_session_id = {
     "nas_5gs.pdu_session_id",
     ft::ft_uint8,
     fd::base_dec,
-    nas_5gs_pdu_session_id_values,
+    pdu_session_id_values,
     nullptr,
     nullptr,
     0x0,
 };
 const field_meta* nas::hf_pdu_sess_id = &hfm_pdu_session_id;
 
-field_meta hfm_nas_5gs_proc_trans_id = {
+field_meta hfm_proc_trans_id = {
     "Procedure transaction identity",
     "nas_5gs.proc_trans_id",
     ft::ft_uint8,
@@ -195,7 +195,7 @@ field_meta hfm_nas_5gs_proc_trans_id = {
     nullptr,
     0x0,
 };
-const field_meta* nas::hf_proc_trans_id = &hfm_nas_5gs_proc_trans_id;
+const field_meta* nas::hf_proc_trans_id = &hfm_proc_trans_id;
 
 /* 9.7  Message type */
 

@@ -68,12 +68,6 @@ uint32_t GSMe2UNICHAR(uint8_t c) {
     return UNREP; /* invalid character */
 }
 
-/*
- * FROM GNOKII
- * gsm-encoding.c
- * gsm-sms.c
- */
-
 /* ETSI GSM 03.38, version 6.0.1, section 6.2.1; Default alphabet */
 static const uint16_t gsm_default_alphabet[0x80] = {
     '@',   0xa3,  '$',   0xa5, 0xe8,  0xe9, 0xf9,  0xec,  0xf2,  0xc7,  '\n',  0xd8,

@@ -5,3 +5,4 @@ struct val_string {
     uint32_t    id;
     const char* text;
 };
+
