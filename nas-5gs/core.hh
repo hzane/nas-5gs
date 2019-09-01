@@ -17,8 +17,9 @@ struct context {
 struct use_context {
     context* ctx;
     use_context(context* ctx, const char* path) : ctx(ctx) {
-        if (ctx) ctx->paths.emplace_back(path);
-        diag("%s\n", path);
+        if(!ctx) return;
+        ctx->paths.emplace_back(path);
+        diag("%s%s\n",string(' ', ctx->paths.size()).c_str(), path);
     }
     ~use_context() {
         if (ctx) {

@@ -16,10 +16,7 @@ int sm::pdu_ses_auth_res(dissector d, context* ctx) {
     d.pinfo->dir = pi_dir::dl;
 
     /*EAP message    EAP message 9.11.2.2    M    LV-E    6-1502 */
-    // ELEM_MAND_LV_E(NAS_5GS_PDU_TYPE_COMMON,
-    //                DE_NAS_5GS_CMN_EAP_MESSAGE,
-    //                NULL,
-    //                ei_nas_5gs_missing_mandatory_elemen);
+    // ELEM_MAND_LV_E(,  DE_NAS_5GS_CMN_EAP_MESSAGE,  );
     auto consumed = dissect_elem_lv_e(nullptr, &eap_msg, d, ctx);
     d.step(consumed);
 
@@ -385,11 +382,6 @@ int sm::dissect_ses_ambr(dissector d, context* ctx) {
     item->set_string(ambr_string(ambr_val, unit));
 
     return len;
-}
-
-int sm::dissect_rq_gprs_timer(dissector d, context* ctx) {
-    diag("no dissect\n");
-    return d.length;
 }
 
 /*  9.11.4.3 Always-on PDU session indication */

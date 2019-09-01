@@ -84,7 +84,7 @@ const element_meta sm::ses_ambr = {
 const element_meta sm::rq_gprs_timer = {
     0x56,
     "GPRS timer- PDU session release time",
-    dissect_rq_gprs_timer,
+    dissect_gprs_timer3,
 };
 const element_meta sm::always_on_pdu_ses_ind = {
     0x80,

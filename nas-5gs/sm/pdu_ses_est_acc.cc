@@ -36,8 +36,7 @@ int sm::pdu_ses_est_acc(dissector d, context* ctx) {
 
     /*Authorized QoS rules    QoS rules 9.11.4.6    M    LV-E    2-65537
      * DE_NAS_5GS_SM_QOS_RULES*/
-    // ELEM_MAND_LV_E(,DE_NAS_5GS_SM_QOS_RULES, " - Authorized QoS
-    // rules",);
+    // ELEM_MAND_LV_E(,DE_NAS_5GS_SM_QOS_RULES, " - Authorized QoS rules",);
     consumed = dissect_elem_lv_e(nullptr, &authorized_qos_rules, d, ctx);
     d.step(consumed);
 
@@ -66,20 +65,18 @@ int sm::pdu_ses_est_acc(dissector d, context* ctx) {
     consumed = dissect_opt_elem_tlv(nullptr, &sm_s_nssai, d, ctx);
     d.step(consumed);
 
-    /* 8-    Always-on PDU session indication    Always-on PDU session indication 9.11.4.3
-     * O    TV    1 */
+    /* 8-    Always-on PDU session indication   9.11.4.3  O    TV    1 */
     // ELEM_OPT_TV_SHORT(w 0x80, , DE_NAS_5GS_SM_ALWAYS_ON_PDU_SES_IND, NULL);
     consumed = dissect_opt_elem_tv_short(nullptr, &always_on_pdu_ses_ind, d, ctx);
     d.step(consumed);
 
-    /* 75    Mapped EPS bearer contexts    Mapped EPS bearer contexts 9.11.4.9    O
-     * TLV-E    7-65538 */
-    // ELEM_OPT_TLV_E(0x75, NAS_5GS_PDU_TYPE_SM, DE_NAS_5GS_SM_MAPPED_EPS_B_CONT, NULL);
+    /* 75    Mapped EPS bearer contexts  9.11.4.9    O  TLV-E    7-65538 */
+    // ELEM_OPT_TLV_E(0x75, , DE_NAS_5GS_SM_MAPPED_EPS_B_CONT, NULL);
     consumed = dissect_opt_elem_tlv_e(nullptr, &mapped_eps_b_cont, d, ctx);
     d.step(consumed);
 
     /*78    EAP message    EAP message 9.11.3.14    O    TLV-E    7-1503*/
-    // ELEM_OPT_TLV_E(0x78, NAS_5GS_PDU_TYPE_COMMON, DE_NAS_5GS_CMN_EAP_MESSAGE, NULL);
+    // ELEM_OPT_TLV_E(0x78, , DE_NAS_5GS_CMN_EAP_MESSAGE, NULL);
     consumed = dissect_opt_elem_tlv_e(nullptr, &eap_msg, d, ctx);
     d.step(consumed);
 
@@ -91,12 +88,12 @@ int sm::pdu_ses_est_acc(dissector d, context* ctx) {
 
     /*7B    Extended protocol configuration options    Extended protocol configuration
      * options 9.11.4.2    O    TLV-E    4-65538*/
-    // ELEM_OPT_TLV_E(0x7B, NAS_PDU_TYPE_ESM, DE_ESM_EXT_PCO, NULL);
+    // ELEM_OPT_TLV_E(0x7B, , DE_ESM_EXT_PCO, NULL);
     consumed = dissect_opt_elem_tlv_e(nullptr, &ext_pco, d, ctx);
     d.step(consumed);
 
     /* 25    DNN    DNN 9.11.2.1A    O    TLV    3-102 */
-    // ELEM_OPT_TLV(0x25, NAS_5GS_PDU_TYPE_COMMON, DE_NAS_5GS_CMN_DNN, NULL);
+    // ELEM_OPT_TLV(0x25, , DE_NAS_5GS_CMN_DNN, NULL);
     consumed = dissect_opt_elem_tlv(nullptr, &dnn, d, ctx);
     d.step(consumed);
 
