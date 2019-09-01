@@ -3,7 +3,7 @@
 #include <string>
 #include <vector>
 
-#if __cplusplus >= 201703L
+#if !defined _MSC_VER 
 #define MUST_USE_RESULT __attribute__((warn_unused_result))
 #define NO_DISCARD [[nodiscard]]
 #define NO_RETURN [[noreturn]]
@@ -13,12 +13,8 @@
 #define NO_RETURN
 #endif
 
-#if __cplusplus <= 199711L
+#if _MSC_VER < 1920
 #define nullptr 0
-#endif
-
-#if _MSC_VER
-#define __attribute__(...)
 #endif
 
 typedef unsigned int uint_t;
