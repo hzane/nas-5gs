@@ -1,4 +1,5 @@
 #include "../dissect_mm_msg.hh"
+#include "../gsm.hh"
 #include "../ts24007.hh"
 
 namespace mm_dl_nas_transp {
@@ -92,12 +93,11 @@ extern const element_meta add_inf = {
     dissect_add_inf,
 };
 
-int dissect_backoff_gprs_timer3(dissector d, context* ctx);
 
 extern const element_meta backoff_gprs_timer3 = {
     0x37,
     "GPRS timer - Back-off timer",
-    dissect_backoff_gprs_timer3,
+    dissect_gprs_timer3,
 };
 
 
@@ -116,8 +116,4 @@ int dissect_add_inf(dissector d, context* ctx) {
     return d.length;
 }
 
-int dissect_backoff_gprs_timer3(dissector d, context* ctx) {
-    // no dissect
-    return d.length;
-}
 } // namespace mm_dl_nas_transp

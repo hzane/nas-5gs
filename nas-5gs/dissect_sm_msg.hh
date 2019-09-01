@@ -28,7 +28,7 @@ int dissect_eap_msg(dissector d, context* ctx);
 int dissect_authorized_qos_rules(dissector d, context* ctx);
 int dissect_qos_rules(dissector d, context* ctx);
 int dissect_mapped_eps_b_cont(dissector d, context* ctx);
-int dissect_backoff_gprs_timer3(dissector d, context* ctx);
+
 int dissect_sm_cap(dissector d, context* ctx);
 int dissect_max_num_sup_kpt_flt(dissector d, context* ctx);
 int dissect_ses_ambr(dissector d, context* ctx);

@@ -1,4 +1,5 @@
 #include "dissect_sm_msg.hh"
+#include "gsm.hh"
 
 using namespace sm;
 
@@ -63,7 +64,7 @@ const element_meta sm::mapped_eps_b_cont = {
 const element_meta sm::backoff_gprs_timer3 = {
     0x37,
     "GPRS timer - Back-off timer value",
-    dissect_backoff_gprs_timer3,
+    dissect_gprs_timer3,
 };
 const element_meta sm::sm_cap = {
     0x28,

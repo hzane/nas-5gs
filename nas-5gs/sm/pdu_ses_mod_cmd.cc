@@ -232,11 +232,9 @@ int dissect_qos(dissector d, int j, context* ctx) {
         d.step(1);
 
         /* Session-AMBR for downlink */
-        const char* unit_str = "";
-        auto mult      = get_ext_ambr_unit(unit, &unit_str);
         auto        ambr_val = d.tvb->ntohs(d.offset);
         auto item = d.add_item(param_len - 1, &hf_sm_ses_ambr_ul, enc::be);
-        item->set_string(formats("%u %s (%u)", ambr_val * mult, unit_str, ambr_val));
+        item->set_string(ambr_string(ambr_val, unit));
         d.step(param_len - 1);
     } break;
 
@@ -248,12 +246,10 @@ int dissect_qos(dissector d, int j, context* ctx) {
         d.step(1);
 
         /* Session-AMBR for downlink*/
-        const char* unit_str = "";
-        auto mult      = get_ext_ambr_unit(unit, &unit_str);
-        auto        ambr_val = d.tvb->ntohs(d.offset);
 
+        auto        ambr_val = d.tvb->ntohs(d.offset);
         auto item = d.add_item(param_len - 1, &hf_sm_ses_ambr_dl, enc::be);
-        item->set_string(formats("%u %s (%u)", ambr_val * mult, unit_str, ambr_val));
+        item->set_string(ambr_string(ambr_val, unit));
         d.step(param_len - 1);
     }
         break;

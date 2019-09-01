@@ -72,6 +72,11 @@ string field_meta::format(uint64_t v) const {
         auto s = find_r_string(range_strings, uint32_t(v));
         return formats("%s (%#x)", s, uint32_t(v));
     }
-
+    if (display == fd::timer3 || display == fd::timer){
+        return gprs_timer3_format((uint8_t)v);
+    }
+    if (display == fd::timer2){
+        return gprs_timer2_format((uint8_t)v);
+    }
     return format_int(v, ftype, display);
 }

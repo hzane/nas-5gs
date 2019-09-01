@@ -29,8 +29,11 @@ int dissect_elem_t(const field_meta*   type_meta,
                           const element_meta* val_meta,
                           dissector           d,
                           context*            ctx) {
+    unused(dissect_elem_t);
     return dissect_elem_mandatory(type_meta, val_meta, d, dissect_opt_elem_t, ctx);
 }
+
+
 int dissect_elem_lv(const field_meta*   type_meta,
                            const element_meta* val_meta,
                            dissector           d,
@@ -59,6 +62,7 @@ int dissect_elem_tv(const field_meta*   type_meta,
                            const element_meta* val_meta,
                            dissector           d,
                            context*            ctx) {
+    unused(dissect_elem_tv);
     return dissect_elem_mandatory(type_meta, val_meta, d, dissect_opt_elem_tv, ctx);
 }
 
@@ -67,6 +71,7 @@ int dissect_elem_tlv(const field_meta*   type_meta,
                             const element_meta* val_meta,
                             dissector           d,
                             context*            ctx) {
+    unused(dissect_elem_tlv);
     return dissect_elem_mandatory(type_meta, val_meta, d, dissect_opt_elem_tlv, ctx);
 }
 
@@ -77,6 +82,7 @@ int dissect_opt_elem_t(const field_meta *,
                        const element_meta *val_meta,
                        dissector           d,
                        context *           ctx) {
+    unused(ctx);
     auto e = (opt_elem*)d.data;
     set_elem_presence(e, false);
 
@@ -188,7 +194,7 @@ int dissect_opt_elem_v(const field_meta *,
 }
 
 static const int right_nibble = -1;
-static const int left_nibble  = -2;
+// static const int left_nibble  = -2;
 
 /*
  * Type Value (TV) element dissector
@@ -206,8 +212,8 @@ int dissect_opt_elem_tv_short(const field_meta *,
 
     if (d.length <= 0) return 0;
 
-    auto iei = d.tvb->uint8(d.offset) & 0xF0;
-    if (iei != (val_meta->type & 0xF0)) return 0;
+    auto iei = d.tvb->uint8(d.offset) & 0xF0u;
+    if (iei != (val_meta->type & 0xF0u)) return 0;
 
     set_elem_presence(e, true);
     set_elem_type(e, iei);
@@ -324,12 +330,12 @@ int dissect_opt_elem_telv(const field_meta *,
     uint16_t parm_len     = d.tvb->uint8(d.offset + 1);
     auto     lengt_length = 1;
 
-    if ((parm_len & 0x80) == 0) {
+    if ((parm_len & 0x80u) == 0) {
         /* length in 2 octets */
         parm_len     = d.tvb->ntohs(d.offset + 1);
         lengt_length = 2;
     } else {
-        parm_len = parm_len & 0x7F;
+        parm_len = parm_len & 0x7Fu;
     }
 
     auto subtree = d.tree->add_subtree(
@@ -420,7 +426,7 @@ const field_meta *hf_gsm_a_element_value = &hfm_gsm_a_element_value;
 
 static field_meta const hfm_gsm_e_length = {
     "Length",
-    "gsm_e.length",
+    "gsm_a.length2",
     ft::ft_uint16,
     fd::base_dec,
     nullptr,
@@ -444,12 +450,5 @@ const field_meta *hf_gsm_a_common_elem_id_f0 = &hfm_gsm_a_common_elem_id_f0;
 
 int add_generic_msg_elem_body(dissector d, context *ctx) {
     d.tree->add_item(d.pinfo, d.tvb, d.offset, d.length, nas::hf_msg_elem, enc::na);
-    return d.length;
-}
-
-int add_unknown(dissector d, uint8_t iei, context *ctx) {
-    diag("unknown iei %d\n", iei);
-
-    d.add_item(d.length, "Unknown Message Type %#02x", iei);
     return d.length;
 }

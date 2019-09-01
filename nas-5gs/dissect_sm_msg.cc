@@ -336,11 +336,6 @@ int sm::dissect_mapped_eps_b_cont(dissector d, context* ctx) {
     return d.length;
 }
 
-int sm::dissect_backoff_gprs_timer3(dissector d, context* ctx) {
-    diag("no dissect\n");
-    return d.length;
-}
-
 /*  9.11.4.1    5GSM capability */
 int sm::dissect_sm_cap(dissector d, context* ctx) {
     static const field_meta* flags[] = {
@@ -375,20 +370,19 @@ int sm::dissect_ses_ambr(dissector d, context* ctx) {
 
     const char* unit_str = "";
     /* Session-AMBR for downlink (octets 4 and 5) */
-    auto mult = get_ext_ambr_unit(unit, &unit_str);
     auto ambr_val = (uint32_t) d.tvb->ntohs(d.offset);
+
     auto item = d.add_item(2, &hf_sm_ses_ambr_dl, enc::none);
-    item->set_string(formats("%u %s (%u)", ambr_val * mult, unit_str, ambr_val));
+    item->set_string(ambr_string(ambr_val, unit));
     d.step(2);
 
     unit = (int) d.tvb->uint8(d.offset);
     d.add_item(1, &hf_sm_ses_ambr_ul_unit, enc::be);
     d.step(1);
 
-    mult = get_ext_ambr_unit(unit, &unit_str);
     ambr_val = (uint32_t) d.tvb->ntohs(d.offset);
     item = d.add_item(2, &hf_sm_ses_ambr_ul, enc::none);
-    item->set_string(formats("%u %s (%u)", ambr_val * mult, unit_str, ambr_val));
+    item->set_string(ambr_string(ambr_val, unit));
 
     return len;
 }

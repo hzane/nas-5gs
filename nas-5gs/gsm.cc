@@ -62,10 +62,10 @@ const field_meta hf_gprs_timer3 = {
 int dissect_gprs_timer(dissector d, context *ctx) {
     proto_node *subtree = nullptr;
     auto        oct     = d.tvb->uint8(d.offset);
-    auto        val     = oct & 0x1f;
+    auto        val     = oct & 0x1fu;
     const char *unit    = "";
 
-    switch (oct >> 5) {
+    switch (oct >> 5u) {
     case 0:
         unit = "sec";
         val *= 2;
@@ -96,10 +96,10 @@ int dissect_gprs_timer(dissector d, context *ctx) {
 int dissect_gprs_timer2(dissector d, context*ctx) {
     proto_node *subtree = nullptr;
     auto        oct     = d.tvb->uint8(d.offset);
-    auto        val     = oct & 0x1f;
+    auto        val     = oct & 0x1fu;
     const char *unit    = "";
 
-    switch (oct >> 5) {
+    switch (oct >> 5u) {
     case 0:
         unit = "sec";
         val *= 2;
@@ -165,10 +165,10 @@ const field_meta hf_gprs_timer3_value = {
 int dissect_gprs_timer3(dissector d, context *ctx) {
     proto_node *subtree = nullptr;
     auto        oct     = d.tvb->uint8(d.offset);
-    auto        val     = oct & 0x1f;
+    auto        val     = oct & 0x1fu;
     const char *unit    = "";
 
-    switch (oct >> 5) {
+    switch (oct >> 5u) {
     case 0:
         unit = "min";
         val *= 10;

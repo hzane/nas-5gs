@@ -158,6 +158,3 @@ inline int dissect_elem_tlv_e(const field_meta*   type_meta,
 };
 
 int add_generic_msg_elem_body(dissector d, context* ctx);
-
-int add_unknown(dissector d, uint8_t iet, context* ctx);
-

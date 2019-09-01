@@ -40,7 +40,6 @@ struct proto_node {
     uint64_t                 val      = 0;
     uint32_t                 enc    = enc::na; // enc::na
     const field_meta*        meta   = nullptr;
-    const tree_meta* tree_meta = nullptr;
     const uint8_t*           data   = nullptr;
     int                      length = 0;
     int                      offset   = 0;

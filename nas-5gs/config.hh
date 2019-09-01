@@ -17,8 +17,11 @@
 #define nullptr 0
 #endif
 
-typedef unsigned int uint_t;
-typedef int          int_t;
+#if _MSC_VER > 1900
+template <typename... Args> inline void unused(Args&&...) {}
+#else
+#define unused(...) (void)
+#endif
 
 struct tvbuff;
 
@@ -29,7 +32,7 @@ struct context;
 struct protocol_meta;
 struct field_meta;
 struct tree_meta;
-struct expert_meta;
+// struct expert_meta;
 
 struct val_string;
 struct true_false_string;
@@ -47,7 +50,6 @@ __declspec(selectany) extern const uint32_t na   = 0;
 __declspec(selectany) extern const uint32_t be   = 1; // big endian
 __declspec(selectany) extern const uint32_t le   = 2; // little endian
 __declspec(selectany) extern const uint32_t none = 4; // host order
-__declspec(selectany) extern const uint32_t str  = 8; //
 } // namespace enc
 
 struct dissector {
@@ -160,10 +162,10 @@ string format_int_dec(uint64_t v, uint32_t ftype);
 string formats(const char* format, ...);
 string vformat(const char* format, va_list);
 
-const char* find_val_string(const val_string* vstr,
+const char* find_val_string(const val_string* strings,
                             uint32_t          id,
                             const char*       missing = "Unknown");
-const char* find_r_string(const range_string* rstr,
+const char* find_r_string(const range_string* strings,
                           uint32_t            id,
                           const char*         missing = "Unknown");
 
