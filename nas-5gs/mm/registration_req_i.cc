@@ -98,7 +98,7 @@ const field_meta mm_reg_req::hf_ngksi_nas_ksi = {
     nullptr,
     0xF0,
 };
-const element_meta mm_reg_req::registration_request = {
+const element_meta mm_reg_req::registration_request_type = {
     0xff,
     "5GS registration type",
     dissect_reg_req_type,

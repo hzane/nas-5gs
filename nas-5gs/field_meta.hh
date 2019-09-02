@@ -101,6 +101,6 @@ struct field_meta {
     uint64_t                 bitmask; /* bitmask of interesting bits */
 
     string format(const uint8_t* d, int len, uint32_t enc) const;
-    NO_DISCARD string format(uint64_t val) const;
+    string format(uint64_t val) const;
 };
 

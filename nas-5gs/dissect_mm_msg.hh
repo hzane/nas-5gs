@@ -51,7 +51,7 @@ int dissect_pdu_ses_react_res(dissector d, context* ctx = nullptr);
 int dissect_pdu_ses_status(dissector d, context* ctx = nullptr);
 int dissect_mm_cause(dissector d, context* ctx);
 
-int dissect_ladn_inf(dissector d, context* ctx);
+int dissect_ladn_ind(dissector d, context* ctx);
 int dissect_mico_ind(dissector d, context* ctx);
 int dissect_sal(dissector d, context* ctx);
 int dissect_mobile_id(dissector d, context* ctx);
@@ -68,6 +68,14 @@ int dissect_s_nssai(dissector d, context* ctx);
 int dissect_abba(dissector d, context* ctx);
 int dissect_requested_nssai(dissector d, context* ctx);
 int dissect_eps_bearer_context_status(dissector d, context* ctx);
+
+int dissect_mobile_id_noid(dissector d, context* ctx);    // 0, no identity
+int dissect_mobile_id_suci(dissector d, context* ctx);    // 1, SUCI
+int dissect_mobile_id_5gguti(dissector d, context* ctx);  // 2, 5G-GUTI
+int dissect_mobile_id_imei(dissector d, context* ctx);    // 3, IMEI
+int dissect_mobile_id_5gstmsi(dissector d, context* ctx); // 4, 5G-S-TMSI
+int dissect_mobile_id_imeisv(dissector d, context* ctx);  // 5, IMEISV
+int dissect_mobile_id_mac(dissector d, context* ctx);     // 6, MAC address
 
 extern const message_meta      msgs[];
 extern const true_false_string tfs_requested_not_requested;

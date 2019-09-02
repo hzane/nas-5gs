@@ -7,7 +7,7 @@ extern const element_meta plmn_list;
 extern const element_meta eap_message;
 extern const element_meta nego_drx_param;
 extern const element_meta t3512_gprs_timer_3;
-extern const element_meta ladn_inf;
+extern const element_meta ladn_ind;
 extern const element_meta mico_ind;
 extern const element_meta nssai_inclusion_mode;
 extern const element_meta t3502_gprs_timer_2;
@@ -107,7 +107,7 @@ int mm::registration_accept(dissector d, context* ctx) {
 
     /*79    LADN information    LADN information     9.11.3.19    O    TLV-E    11-1579*/
     // ELEM_OPT_TLV_E(0x79, , DE_NAS_5GS_MM_LADN_INF, NULL);
-    consumed = dissect_opt_elem_tlv_e(nullptr, &ladn_inf, d, ctx);
+    consumed = dissect_opt_elem_tlv_e(nullptr, &ladn_ind, d, ctx);
     d.offset += consumed;
     d.length -= consumed;
 
@@ -244,11 +244,11 @@ const element_meta pdu_ses_react_res_err_c = {
     dissect_pdu_ses_react_res_err_c,
 };
 
-int                dissect_ladn_inf(dissector d, context* ctx = nullptr);
-const element_meta ladn_inf = {
+int                dissect_ladn_ind(dissector d, context* ctx = nullptr);
+const element_meta ladn_ind = {
     0x79,
     "LADN information",
-    dissect_ladn_inf,
+    dissect_ladn_ind,
 };
 
 int                dissect_mico_ind(dissector d, context* ctx = nullptr);
@@ -597,7 +597,7 @@ int dissect_pdu_ses_react_res_err_c(dissector d, context* ctx) {
 /*
  *   9.11.3.30    LADN information
  */
-int dissect_ladn_inf(dissector d, context* ctx) { return mm::dissect_ladn_inf(d, ctx); }
+int dissect_ladn_ind(dissector d, context* ctx) { return mm::dissect_ladn_ind(d, ctx); }
 
 int dissect_mico_ind(dissector d, context* ctx) { return mm::dissect_mico_ind(d, ctx); }
 

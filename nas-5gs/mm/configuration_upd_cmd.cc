@@ -7,7 +7,7 @@ namespace mm_conf_upd_cmd {
 extern const element_meta conf_upd_ind;
 extern const element_meta guti;
 extern const element_meta day_saving_time;
-extern const element_meta ladn_inf;
+extern const element_meta ladn_ind;
 extern const element_meta mico_ind;
 extern const element_meta service_area_list;
 extern const element_meta full_name_network;
@@ -81,7 +81,7 @@ int mm::conf_upd_cmd(dissector d, context* ctx) {
 
     /*79    LADN information    LADN information     9.11.3.19    O    TLV-E    11-1579*/
     // ELEM_OPT_TLV_E(0x79, NAS_5GS_PDU_TYPE_MM, DE_NAS_5GS_MM_LADN_INF, NULL);
-    consumed = dissect_opt_elem_tlv_e(nullptr, &ladn_inf, d, ctx);
+    consumed = dissect_opt_elem_tlv_e(nullptr, &ladn_ind, d, ctx);
     d.step(consumed);
 
     /*B-    MICO indication    MICO indication     9.11.3.21    O    TV    1*/
@@ -120,7 +120,7 @@ int dissect_guti(dissector d, context* ctx);
 int dissect_sal(dissector d, context* ctx);
 int dissect_time_zone_time(dissector d, context* ctx);
 int dissect_day_saving_time(dissector d, context* ctx);
-int dissect_ladn_inf(dissector d, context* ctx);
+int dissect_ladn_ind(dissector d, context* ctx);
 int dissect_mico_ind(dissector d, context* ctx);
 int dissect_full_name_network(dissector d, context* ctx);
 int dissect_short_name_network(dissector d, context* ctx);
@@ -182,10 +182,10 @@ extern const element_meta day_saving_time = {
 };
 
 // 9.11.3.30
-extern const element_meta ladn_inf = {
+extern const element_meta ladn_ind = {
     0x79,
     "LADN information",
-    dissect_ladn_inf,
+    dissect_ladn_ind,
 };
 
 // 9.11.3.31
@@ -453,7 +453,7 @@ int dissect_day_saving_time(dissector d, context* ctx) {
 /*
  *   9.11.3.30    LADN information
  */
-int dissect_ladn_inf(dissector d, context* ctx) {
+int dissect_ladn_ind(dissector d, context* ctx) {
     auto len = d.length;
     auto i   = 1;
     while(d.length>0){

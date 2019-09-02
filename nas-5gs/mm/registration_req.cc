@@ -6,21 +6,19 @@
 
 using namespace mm;
 using namespace nas;
-
+using namespace mm_reg_req;
 
 
 /* * 8.2.6 Registration request */
 int mm::registration_req(dissector d, context* ctx) {
     auto len = d.length;
-    // using namespace em_de_mm;
-    using namespace mm_reg_req;
 
     d.pinfo->dir = pi_dir::ul;
     // get private data
 
     /*   5GS registration type  9.11.3.7    M    V    1/2  H0*/
     // d.add_item(1, hf_reg_req_flags, enc::be);
-    auto consumed = dissect_elem_v(nullptr, &registration_request, d, ctx);
+    auto consumed = dissect_elem_v(nullptr, &registration_request_type, d, ctx);
     d.add_item(1, &hf_ngksi_nas_ksi, enc::be);
     /*    ngKSI    NAS key set identifier 9.11.3.32    M    V    1/2 H1*/
     d.step(consumed);
@@ -109,7 +107,7 @@ int mm::registration_req(dissector d, context* ctx) {
 
     /* 74    LADN indication    LADN indication 9.11.3.29    O    TLV-E    3-811 */
     // ELEM_OPT_TLV_E(0x74, , DE_NAS_5GS_MM_LADN_INF, NULL);
-    consumed = dissect_opt_elem_tlv_e(nullptr, &ladn_inf, d, ctx);
+    consumed = dissect_opt_elem_tlv_e(nullptr, &ladn_ind, d, ctx);
     d.step(consumed);
 
     /* 8-    Payload container type  9.11.3.40    O    TV    1 */
@@ -275,11 +273,11 @@ const element_meta eps_nas_msg_cont = {
     dissect_eps_nas_msg_cont,
 };
 
-int dissect_ladn_inf(dissector d, context* ctx = nullptr);
-__declspec(selectany) const element_meta ladn_inf = {
+int dissect_ladn_ind(dissector d, context* ctx = nullptr);
+__declspec(selectany) const element_meta ladn_ind = {
     0x74,
     "LADN indication",
-    dissect_ladn_inf,
+    dissect_ladn_ind,
 };
 
 int                dissect_pld_cont_type(dissector d, context* ctx = nullptr);
@@ -1625,8 +1623,8 @@ int mm_reg_req::dissect_eps_nas_msg_cont(dissector d, context* ctx) {
     return d.length;
 }
 
-int mm_reg_req::dissect_ladn_inf(dissector d, context* ctx) {
-    return mm::dissect_ladn_inf(d, ctx);
+int mm_reg_req::dissect_ladn_ind(dissector d, context* ctx) {
+    return mm::dissect_ladn_ind(d, ctx);
 }
 
 int mm_reg_req::dissect_pld_cont_type(dissector d, context* ctx) {
