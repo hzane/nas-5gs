@@ -244,11 +244,11 @@ const element_meta pdu_ses_react_res_err_c = {
     dissect_pdu_ses_react_res_err_c,
 };
 
-int                dissect_ladn_ind(dissector d, context* ctx = nullptr);
+int                dissect_ladn_inf(dissector d, context* ctx = nullptr);
 const element_meta ladn_ind = {
     0x79,
     "LADN information",
-    dissect_ladn_ind,
+    dissect_ladn_inf,
 };
 
 int                dissect_mico_ind(dissector d, context* ctx = nullptr);
@@ -597,7 +597,7 @@ int dissect_pdu_ses_react_res_err_c(dissector d, context* ctx) {
 /*
  *   9.11.3.30    LADN information
  */
-int dissect_ladn_ind(dissector d, context* ctx) { return mm::dissect_ladn_ind(d, ctx); }
+int dissect_ladn_inf(dissector d, context* ctx) { return mm::dissect_ladn_inf(d, ctx); }
 
 int dissect_mico_ind(dissector d, context* ctx) { return mm::dissect_mico_ind(d, ctx); }
 

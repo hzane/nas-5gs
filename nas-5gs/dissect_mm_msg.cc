@@ -334,6 +334,7 @@ const field_meta mm::hf_tac = {
     0x0,
 };
 
+// 9.11.3.9	5GS tracking area identity list
 int mm::dissect_ta_id_list(dissector d, context* ctx) {
     static const field_meta* flags[] = {
         &hf_tal_t_li,
@@ -345,8 +346,8 @@ int mm::dissect_ta_id_list(dissector d, context* ctx) {
     /*Partial tracking area list*/
     while (d.length > 0) {
         auto orig_offset = d.offset;
-        auto subtree     = d.tree->add_subtree(
-            d.pinfo, d.tvb, d.offset, -1, "Partial tracking area list  %u", num_par_tal);
+        auto subtree     = d.add_item(-1, "Partial tracking area list  %u", num_par_tal);
+        use_tree ut(d, subtree);
         /*Head of Partial tracking area list*/
         /* Type of list    Number of elements    octet 1 */
         auto head  = d.tvb->uint8(d.offset);
@@ -356,11 +357,10 @@ int mm::dissect_ta_id_list(dissector d, context* ctx) {
         d.step(1);
 
         switch (li) {
-        case 0: {
+        case 0: { // 00
             /*octet 2  MCC digit2  MCC digit1*/
             /*octet 3  MNC digit3  MCC digit3*/
             /*octet 4  MNC digit2  MNC digit1*/
-            // TODO: implement
             auto consumed = dissect_e212_mcc_mnc(d, ctx);
             d.step(consumed);
 
@@ -368,11 +368,11 @@ int mm::dissect_ta_id_list(dissector d, context* ctx) {
                 d.add_item(3, &hf_tac, enc::be);
                 d.step(3);
 
-                num_e--;
+                --num_e;
             }
 
         } break;
-        case 1: {
+        case 1: { // 01
             /*octet 2  MCC digit2  MCC digit1*/
             /*octet 3  MNC digit3  MCC digit3*/
             /*octet 4  MNC digit2  MNC digit1*/
@@ -383,7 +383,7 @@ int mm::dissect_ta_id_list(dissector d, context* ctx) {
             d.add_item(3, &hf_tac, enc::be);
             d.step(3);
         } break;
-        case 2: {
+        case 2: { // 10
             while (num_e > 0) {
                 /*octet 2  MCC digit2  MCC digit1*/
                 /*octet 3  MNC digit3  MCC digit3*/
@@ -395,20 +395,20 @@ int mm::dissect_ta_id_list(dissector d, context* ctx) {
                 d.add_item(3, &hf_tac, enc::be);
                 d.step(3);
 
-                num_e--;
+                --num_e;
             }
         } break;
-        case 3: {
+        case 3: { // All other values are reserved.
+        // not defined in 24.501 16.1.0
             auto consumed = dissect_e212_mcc_mnc(d, ctx);
             d.step(consumed);
         } break;
         default:
-            d.tree->add_expert(d.pinfo, d.tvb, d.offset, d.length, nullptr);
+            diag("reserved type of list %d\n", li);
             d.step(d.length); // consumed all left bytes
             break;
         }
 
-        /*calculate the length of IE?*/
         subtree->set_length(d.offset - orig_offset);
         /*calculate the number of Partial tracking area list*/
         num_par_tal++;
@@ -893,35 +893,52 @@ int mm::dissect_mm_cause(dissector d, context* ctx) {
     d.tree->add_item(d.pinfo, d.tvb, d.offset, 1, &hf_mm_cause, enc::be);
     return 1;
 }
-
-/*
- *   9.11.3.30    LADN information
- */
+/*  9.11.3.29    LADN indication  */
 int mm::dissect_ladn_ind(dissector d, context* ctx) {
     auto len = d.length;
     auto i   = 1;
+    while(d.length>0){
+        auto subtree = d.add_item(2, "LADN DNN value %u", i);
+        use_tree ut(d, subtree);
+        /*LADN DNN value is coded as the length and value part of DNN information element
+         * as specified in subclause 9.11.2.1A starting with the second octet*/
+        int length = (int)d.uint8();
+        d.step(1);
+
+        auto consumed = dissect_dnn(d.slice(length), ctx);
+        d.step(consumed);
+        subtree->set_length(length + 1);
+        ++i;
+    }
+    return len;
+}
+/*  9.11.3.30    LADN information  */
+int mm::dissect_ladn_inf(dissector d, context* ctx) {
+    auto len = d.length;
+    auto i   = 1;
     while (d.length > 0) {
-        auto start   = d.offset;
-        auto subtree = d.tree->add_subtree(d.pinfo, d.tvb, d.offset, 2, "LADN %u", i);
-        d.tree       = subtree;
+        auto     start   = d.offset;
+        auto     subtree = d.tree->add_subtree(d.pinfo, d.tvb, d.offset, 2, "LADN %u", i);
+        use_tree ut(d, subtree);
+
         /* DNN value (octet 5 to octet m):
-         * LADN DNN value is coded as the length and value part of DNN information element
-         * as specified in subclause 9.11.2.1A starting with the second octet
+         * LADN DNN value is coded as the length and value part of DNN information
+         * element as specified in subclause 9.11.2.1A starting with the second octet
          */
         auto length = (int) d.tvb->uint8(d.offset);
         d.add_item(1, &hf_mm_length, enc::be);
         d.step(1);
 
-        /* 5GS tracking area identity list (octet m+1 to octet a):
-         * 5GS tracking area identity list field is coded as the length and the value part
-         * of the 5GS Tracking area identity list information element as specified in
-         * subclause 9.11.3.9 starting with the second octet
-         */
         auto consumed = dissect_dnn(d.slice(length), ctx);
         d.step(consumed);
 
+        /* 5GS tracking area identity list (octet m+1 to octet a):
+         * 5GS tracking area identity list field is coded as the length and the value
+         * part of the 5GS Tracking area identity list information element as
+         * specified in subclause 9.11.3.9 starting with the second octet
+         */
         d.add_item(1, &hf_mm_length, enc::be);
-        d.step(consumed);
+        d.step(1);
 
         length   = d.tvb->uint8(d.offset);
         consumed = dissect_ta_id_list(d.slice(length), ctx);
@@ -933,21 +950,20 @@ int mm::dissect_ladn_ind(dissector d, context* ctx) {
     return len;
 }
 
-/*
- *   9.11.3.31    MICO indication
- */
+/*  9.11.3.31    MICO indication */
 static const true_false_string tfs_raai = {
     "all PLMN registration area allocated",
     "all PLMN registration area not allocated",
 };
 
+/*  9.11.3.31    MICO indication */
 int mm::dissect_mico_ind(dissector d, context* ctx) {
     auto len = d.length;
 
     d.add_item(1, hf_mm_raai_b0, enc::be);
 
-    // In the UE to network direction bit 1 is spare. The UE shall set this bit to zero.
-    // In the network to UE and the UE to network direction:
+    // In the UE to network direction bit 1 is spare. The UE shall set this bit to
+    // zero. In the network to UE and the UE to network direction:
     d.add_item(1, &hf_mm_sprti, enc::be);
     return 1;
 }
@@ -973,59 +989,51 @@ const field_meta hf_sal_t_li = {
     nullptr,
     0x60,
 };
-} // namespace mm
+    } // namespace mm
 
-// 9.11.3.49    Service area list page.391
-int mm::dissect_sal(dissector d, context* ctx) {
-    auto                     len     = d.length;
-    static const field_meta* flags[] = {
-        &hf_sal_al_t,
-        &hf_sal_t_li,
-        &hf_sal_num_e,
-        nullptr,
-    };
-    auto num_par_sal = 1;
-    /*Partial service area list*/
-    while (d.length > 0) {
-        auto start   = d.offset;
-        auto subtree = d.tree->add_subtree(
-            d.pinfo, d.tvb, d.offset, -1, "Partial service area list  %u", num_par_sal);
-        // d.tree = subtree;
-        use_tree ut(d, subtree);
+    // 9.11.3.49    Service area list page.391
+    int mm::dissect_sal(dissector d, context * ctx) {
+        auto                     len     = d.length;
+        static const field_meta* flags[] = {
+            &hf_sal_al_t,
+            &hf_sal_t_li,
+            &hf_sal_num_e,
+            nullptr,
+        };
+        auto num_par_sal = 1;
+        /*Partial service area list*/
+        while (d.length > 0) {
+            auto start   = d.offset;
+            auto subtree = d.tree->add_subtree(d.pinfo,
+                                               d.tvb,
+                                               d.offset,
+                                               -1,
+                                               "Partial service area list  %u",
+                                               num_par_sal);
+            // d.tree = subtree;
+            use_tree ut(d, subtree);
 
-        /*Head of Partial service area list*/
-        /* Allowed type    Type of list    Number of elements    octet 1 */
-        auto sal_head  = d.tvb->uint8(d.offset);
-        auto sal_t_li  = (sal_head & 0x60) >> 5;
-        auto sal_num_e = (sal_head & 0x1f) + 1;
-        d.add_bits(flags);
-        d.step(1);
-        switch (sal_t_li) {
-        case 0: { // type of list = "00"
-            /*octet 2  MCC digit2  MCC digit1*/
-            /*octet 3  MNC digit3  MCC digit3*/
-            /*octet 4  MNC digit2  MNC digit1*/
-            dissect_e212_mcc_mnc(d, ctx);
-            d.step(3);
-            while (sal_num_e > 0) {
-                d.add_item(3, &hf_tac, enc::be);
+            /*Head of Partial service area list*/
+            /* Allowed type    Type of list    Number of elements    octet 1 */
+            auto sal_head  = d.tvb->uint8(d.offset);
+            auto sal_t_li  = (sal_head & 0x60) >> 5;
+            auto sal_num_e = (sal_head & 0x1f) + 1;
+            d.add_bits(flags);
+            d.step(1);
+            switch (sal_t_li) {
+            case 0: { // type of list = "00"
+                /*octet 2  MCC digit2  MCC digit1*/
+                /*octet 3  MNC digit3  MCC digit3*/
+                /*octet 4  MNC digit2  MNC digit1*/
+                dissect_e212_mcc_mnc(d, ctx);
                 d.step(3);
-                --sal_num_e;
-            }
-        } break;
-        case 1: { // type of list = "01"
-            /*octet 2  MCC digit2  MCC digit1*/
-            /*octet 3  MNC digit3  MCC digit3*/
-            /*octet 4  MNC digit2  MNC digit1*/
-            dissect_e212_mcc_mnc(d, ctx);
-            d.step(3);
-
-            /*octet 5  TAC 1*/
-            d.add_item(3, &hf_tac, enc::be);
-            d.step(3);
-        } break;
-        case 2: { // type of list = "10"
-            while (sal_num_e > 0) {
+                while (sal_num_e > 0) {
+                    d.add_item(3, &hf_tac, enc::be);
+                    d.step(3);
+                    --sal_num_e;
+                }
+            } break;
+            case 1: { // type of list = "01"
                 /*octet 2  MCC digit2  MCC digit1*/
                 /*octet 3  MNC digit3  MCC digit3*/
                 /*octet 4  MNC digit2  MNC digit1*/
@@ -1035,308 +1043,322 @@ int mm::dissect_sal(dissector d, context* ctx) {
                 /*octet 5  TAC 1*/
                 d.add_item(3, &hf_tac, enc::be);
                 d.step(3);
-                --sal_num_e;
+            } break;
+            case 2: { // type of list = "10"
+                while (sal_num_e > 0) {
+                    /*octet 2  MCC digit2  MCC digit1*/
+                    /*octet 3  MNC digit3  MCC digit3*/
+                    /*octet 4  MNC digit2  MNC digit1*/
+                    dissect_e212_mcc_mnc(d, ctx);
+                    d.step(3);
+
+                    /*octet 5  TAC 1*/
+                    d.add_item(3, &hf_tac, enc::be);
+                    d.step(3);
+                    --sal_num_e;
+                }
+            } break;
+            case 3: { // type of list = "11"
+                dissect_e212_mcc_mnc(d, ctx);
+                d.step(3);
+            } break;
+            default: // never goes here
+                break;
             }
-        } break;
-        case 3: { // type of list = "11"
-            dissect_e212_mcc_mnc(d, ctx);
-            d.step(3);
-        } break;
-        default: // never goes here
-            break;
+
+            /*calculate the length of IE */
+            d.tree->set_length(d.offset - start);
+            /*calculate the number of Partial service area list*/
+            num_par_sal++;
         }
-
-        /*calculate the length of IE */
-        d.tree->set_length(d.offset - start);
-        /*calculate the number of Partial service area list*/
-        num_par_sal++;
+        return len;
     }
-    return len;
-}
 
-namespace mm{
-const val_string nas_5gs_mm_supi_fmt_vals[] = {
-    {0x0, "IMSI"},
-    {0x1, "Network Specific Identifier"},
-    {0, nullptr},
-};
-const field_meta hf_nas_5gs_mm_supi_fmt = {
-    "SUPI format",
-    "nas_5gs.mm.suci.supi_fmt",
-    ft::ft_uint8,
-    fd::base_dec,
-    (nas_5gs_mm_supi_fmt_vals),
-    nullptr,
-    nullptr,
-    0x70,
-};
+    namespace mm {
+        const val_string nas_5gs_mm_supi_fmt_vals[] = {
+            {0x0, "IMSI"},
+            {0x1, "Network Specific Identifier"},
+            {0, nullptr},
+        };
+        const field_meta hf_nas_5gs_mm_supi_fmt = {
+            "SUPI format",
+            "nas_5gs.mm.suci.supi_fmt",
+            ft::ft_uint8,
+            fd::base_dec,
+            (nas_5gs_mm_supi_fmt_vals),
+            nullptr,
+            nullptr,
+            0x70,
+        };
 
-const field_meta hf_nas_5gs_mm_suci_nai = {
-    "NAI",
-    "nas_5gs.mm.suci.nai",
-    ft::ft_bytes,
-    fd::base_string,
-    nullptr,
-    nullptr,
-    nullptr,
-    0,
-};
-const field_meta hf_nas_5gs_mm_imei = {
-    "IMEI",
-    "nas_5gs.mm.imei",
-    ft::ft_bytes,
-    fd::base_hex,
-    nullptr,
-    nullptr,
-    nullptr,
-    0,
-};
-const field_meta hf_nas_5gs_mm_imeisv = {
-    "IMEISV",
-    "nas_5gs.mm.imeisv",
-    ft::ft_bytes,
-    fd::base_hex,
-    nullptr,
-    nullptr,
-    nullptr,
-    0,
-};
-const field_meta hf_nas_5gs_amf_set_id = {
-    "AMF Set ID",
-    "nas_5gs.amf_set_id",
-    ft::ft_uint16,
-    fd::base_dec,
-    nullptr,
-    nullptr,
-    nullptr,
-    0xffc0,
-};
-const field_meta hf_nas_5gs_amf_pointer = {
-    "AMF Pointer",
-    "nas_5gs.amf_pointer",
-    ft::ft_uint8,
-    fd::base_dec,
-    nullptr,
-    nullptr,
-    nullptr,
-    0x3f,
-};
-const field_meta hf_nas_5gs_tmsi = {
-    "5G-TMSI",
-    "nas_5gs.5g_tmsi",
-    ft::ft_uint32,
-    fd::base_hex,
-    nullptr,
-    nullptr,
-    nullptr,
-    0x0,
-};
-} // namespace mm
+        const field_meta hf_nas_5gs_mm_suci_nai = {
+            "NAI",
+            "nas_5gs.mm.suci.nai",
+            ft::ft_bytes,
+            fd::base_string,
+            nullptr,
+            nullptr,
+            nullptr,
+            0,
+        };
+        const field_meta hf_nas_5gs_mm_imei = {
+            "IMEI",
+            "nas_5gs.mm.imei",
+            ft::ft_bytes,
+            fd::base_hex,
+            nullptr,
+            nullptr,
+            nullptr,
+            0,
+        };
+        const field_meta hf_nas_5gs_mm_imeisv = {
+            "IMEISV",
+            "nas_5gs.mm.imeisv",
+            ft::ft_bytes,
+            fd::base_hex,
+            nullptr,
+            nullptr,
+            nullptr,
+            0,
+        };
+        const field_meta hf_nas_5gs_amf_set_id = {
+            "AMF Set ID",
+            "nas_5gs.amf_set_id",
+            ft::ft_uint16,
+            fd::base_dec,
+            nullptr,
+            nullptr,
+            nullptr,
+            0xffc0,
+        };
+        const field_meta hf_nas_5gs_amf_pointer = {
+            "AMF Pointer",
+            "nas_5gs.amf_pointer",
+            ft::ft_uint8,
+            fd::base_dec,
+            nullptr,
+            nullptr,
+            nullptr,
+            0x3f,
+        };
+        const field_meta hf_nas_5gs_tmsi = {
+            "5G-TMSI",
+            "nas_5gs.5g_tmsi",
+            ft::ft_uint32,
+            fd::base_hex,
+            nullptr,
+            nullptr,
+            nullptr,
+            0x0,
+        };
+    } // namespace mm
 
-const field_meta hf_mm_routing_ind = {
-    "Routing indicator",
-    "nas_5gs.mm.suci.routing_indicator",
-    ft::ft_bytes,
-    fd::base_string,
-    nullptr,
-    nullptr,
-    nullptr,
-    0,
-};
-static const value_string nas_5gs_mm_prot_scheme_id_vals[] = {
-    {0x0, "NULL scheme"},
-    {0x1, "ECIES scheme profile A"},
-    {0x2, "ECIES scheme profile B"},
-    {0, nullptr},
-};
+    const field_meta hf_mm_routing_ind = {
+        "Routing indicator",
+        "nas_5gs.mm.suci.routing_indicator",
+        ft::ft_bytes,
+        fd::base_string,
+        nullptr,
+        nullptr,
+        nullptr,
+        0,
+    };
+    static const value_string nas_5gs_mm_prot_scheme_id_vals[] = {
+        {0x0, "NULL scheme"},
+        {0x1, "ECIES scheme profile A"},
+        {0x2, "ECIES scheme profile B"},
+        {0, nullptr},
+    };
 
-const field_meta hf_mm_prot_scheme_id = {
-    "Protection scheme Id",
-    "nas_5gs.mm.suci.scheme_id",
-    ft::ft_uint8,
-    fd::base_dec,
-    (nas_5gs_mm_prot_scheme_id_vals),
-    nullptr,
-    nullptr,
-    0x0f,
-};
-const field_meta hf_mm_pki = {
-    "Home network public key identifier",
-    "nas_5gs.mm.suci.pki",
-    ft::ft_uint8,
-    fd::base_dec,
-    nullptr,
-    nullptr,
-    nullptr,
-    0x0,
-};
+    const field_meta hf_mm_prot_scheme_id = {
+        "Protection scheme Id",
+        "nas_5gs.mm.suci.scheme_id",
+        ft::ft_uint8,
+        fd::base_dec,
+        (nas_5gs_mm_prot_scheme_id_vals),
+        nullptr,
+        nullptr,
+        0x0f,
+    };
+    const field_meta hf_mm_pki = {
+        "Home network public key identifier",
+        "nas_5gs.mm.suci.pki",
+        ft::ft_uint8,
+        fd::base_dec,
+        nullptr,
+        nullptr,
+        nullptr,
+        0x0,
+    };
 
-const field_meta hf_mm_supi_null_scheme = {
-    "Scheme output",
-    "nas_5gs.mm.suci.supi_null_scheme",
-    ft::ft_bytes,
-    fd::base_string,
-    nullptr,
-    nullptr,
-    nullptr,
-    0,
-};
+    const field_meta hf_mm_supi_null_scheme = {
+        "Scheme output",
+        "nas_5gs.mm.suci.supi_null_scheme",
+        ft::ft_bytes,
+        fd::base_string,
+        nullptr,
+        nullptr,
+        nullptr,
+        0,
+    };
 
-const field_meta hf_mm_scheme_output = {
-    "Scheme output",
-    "nas_5gs.mm.suci.scheme_output",
-    ft::ft_bytes,
-    fd::base_none,
-    nullptr,
-    nullptr,
-    nullptr,
-    0x0,
-};
+    const field_meta hf_mm_scheme_output = {
+        "Scheme output",
+        "nas_5gs.mm.suci.scheme_output",
+        ft::ft_bytes,
+        fd::base_none,
+        nullptr,
+        nullptr,
+        nullptr,
+        0x0,
+    };
 
-const field_meta hf_amf_region_id = {
-    "AMF Region ID",
-    "nas_5gs.amf_region_id",
-    ft::ft_uint8,
-    fd::base_dec,
-    nullptr,nullptr,nullptr,
-    0x0,
-};
-const field_meta hf_amf_set_id = {
-    "AMF Set ID",
-    "nas_5gs.amf_set_id",
-    ft::ft_uint16,
-    fd::base_dec,
-    nullptr,
-    nullptr,
-    nullptr,
-    0xffc0,
-};
-const field_meta hf_amf_pointer = {
-    "AMF Pointer",
-    "nas_5gs.amf_pointer",
-    ft::ft_uint8,
-    fd::base_dec,
-    nullptr,
-    nullptr,
-    nullptr,
-    0x3f,
-};
-const field_meta hf_5g_tmsi = {
-    "5G-TMSI",
-    "nas_5gs.5g_tmsi",
-    ft::ft_uint32,
-    fd::base_hex,
-    nullptr,
-    nullptr,
-    nullptr,
-    0x0,
-};
+    const field_meta hf_amf_region_id = {
+        "AMF Region ID",
+        "nas_5gs.amf_region_id",
+        ft::ft_uint8,
+        fd::base_dec,
+        nullptr,
+        nullptr,
+        nullptr,
+        0x0,
+    };
+    const field_meta hf_amf_set_id = {
+        "AMF Set ID",
+        "nas_5gs.amf_set_id",
+        ft::ft_uint16,
+        fd::base_dec,
+        nullptr,
+        nullptr,
+        nullptr,
+        0xffc0,
+    };
+    const field_meta hf_amf_pointer = {
+        "AMF Pointer",
+        "nas_5gs.amf_pointer",
+        ft::ft_uint8,
+        fd::base_dec,
+        nullptr,
+        nullptr,
+        nullptr,
+        0x3f,
+    };
+    const field_meta hf_5g_tmsi = {
+        "5G-TMSI",
+        "nas_5gs.5g_tmsi",
+        ft::ft_uint32,
+        fd::base_hex,
+        nullptr,
+        nullptr,
+        nullptr,
+        0x0,
+    };
 
-const field_meta hf_mac_address = {
-    "MAC address",
-    "nas_5gs.mac",
-    ft::ft_bytes,
-    fd::sep_colon,
-    nullptr,
-    nullptr,
-    nullptr,
-    0,
-};
-namespace{
-static const field_meta* flags_odd_even_tid[] = {
-    &hf_mm_odd_even,
-    &hf_mm_type_id,
-    nullptr,
-};
+    const field_meta hf_mac_address = {
+        "MAC address",
+        "nas_5gs.mac",
+        ft::ft_bytes,
+        fd::sep_colon,
+        nullptr,
+        nullptr,
+        nullptr,
+        0,
+    };
+    namespace {
+        static const field_meta* flags_odd_even_tid[] = {
+            &hf_mm_odd_even,
+            &hf_mm_type_id,
+            nullptr,
+        };
 
-static const field_meta* flags_supi_fmt_tid[] = {
-    &hf_spare_b7,
-    &hf_nas_5gs_mm_supi_fmt,
-    &hf_spare_b3,
-    &hf_mm_type_id,
-    nullptr,
-};
-}
-// type_id = 6, MAC address
-int mm::dissect_mobile_id_mac(dissector d, context*ctx) {
-    d.add_bits(flags_odd_even_tid);
-    d.step(1);
-
-    d.add_item(6, &hf_mac_address, enc::be);
-    d.step(6);
-
-    d.extraneous_data_check(0);
-    return 7;
-}
-// type_id = 0, no identity
-int mm::dissect_mobile_id_noid(dissector d, context* ctx) {
-    d.add_bits(flags_odd_even_tid);
-    d.step(1);
-
-    d.extraneous_data_check(0);
-    return 1;
-}
-
-// type_id = 4, 5G-S-TMSI
-int mm::dissect_mobile_id_5gstmsi(dissector d, context* ctx) {
-    d.add_bits(flags_odd_even_tid);
-    d.step(1);
-
-    /* AMF Set ID */
-    auto item = d.add_item(2, &hf_nas_5gs_amf_set_id, enc::be);
-
-    d.step(1);
-    /* AMF Pointer AMF Set ID (continued) */
-    d.add_item(1, &hf_nas_5gs_amf_pointer, enc::be);
-    d.step(1);
-
-    d.add_item(4, &hf_nas_5gs_tmsi, enc::be);
-    d.step(4);
-
-    d.extraneous_data_check(0);
-    return 7;
-}
-
-// type_id = 1, SUCI
-int mm::dissect_mobile_id_suci(dissector d, context* ctx) {
-    auto oct = d.uint8();
-    d.add_bits(flags_supi_fmt_tid);
-    d.step(1);
-
-    const auto supi_fmt = oct & 0x70;
-    if (supi_fmt == 0) { // IMSI
-        /* MCC digit 2    MCC digit 1
-         * MNC digit 3    MCC digit 3
-         * MNC digit 2    MNC digit 1             */
-        auto consumed = dissect_e212_mcc_mnc(d, ctx);
-        d.step(consumed);
-
-        /* Routing indicator octet 8-9 */
-        d.add_item(2, &hf_mm_routing_ind, enc::na);
-        d.step(2);
-
-        /* Protection scheme id octet 10 */
-        const auto scheme_id = d.uint8() & 0x0fu;
-        d.add_item(1, &hf_mm_prot_scheme_id, enc::be);
+        static const field_meta* flags_supi_fmt_tid[] = {
+            &hf_spare_b7,
+            &hf_nas_5gs_mm_supi_fmt,
+            &hf_spare_b3,
+            &hf_mm_type_id,
+            nullptr,
+        };
+    }
+    // type_id = 6, MAC address
+    int mm::dissect_mobile_id_mac(dissector d, context * ctx) {
+        d.add_bits(flags_odd_even_tid);
         d.step(1);
 
-        /* Home network public key identifier octet 11 */
-        d.add_item(1, &hf_mm_pki, enc::be);
+        d.add_item(6, &hf_mac_address, enc::be);
+        d.step(6);
+
+        d.extraneous_data_check(0);
+        return 7;
+    }
+    // type_id = 0, no identity
+    int mm::dissect_mobile_id_noid(dissector d, context * ctx) {
+        d.add_bits(flags_odd_even_tid);
         d.step(1);
 
-        /* Scheme output octet 12-x */
-        if (scheme_id == 0) { // Null scheme
-            d.add_item(d.length, &hf_mm_supi_null_scheme, enc::be);
+        d.extraneous_data_check(0);
+        return 1;
+    }
+
+    // type_id = 4, 5G-S-TMSI
+    int mm::dissect_mobile_id_5gstmsi(dissector d, context * ctx) {
+        d.add_bits(flags_odd_even_tid);
+        d.step(1);
+
+        /* AMF Set ID */
+        auto item = d.add_item(2, &hf_nas_5gs_amf_set_id, enc::be);
+
+        d.step(1);
+        /* AMF Pointer AMF Set ID (continued) */
+        d.add_item(1, &hf_nas_5gs_amf_pointer, enc::be);
+        d.step(1);
+
+        d.add_item(4, &hf_nas_5gs_tmsi, enc::be);
+        d.step(4);
+
+        d.extraneous_data_check(0);
+        return 7;
+    }
+
+    // type_id = 1, SUCI
+    int mm::dissect_mobile_id_suci(dissector d, context * ctx) {
+        auto oct = d.uint8();
+        d.add_bits(flags_supi_fmt_tid);
+        d.step(1);
+
+        const auto supi_fmt = oct & 0x70;
+        if (supi_fmt == 0) { // IMSI
+            /* MCC digit 2    MCC digit 1
+             * MNC digit 3    MCC digit 3
+             * MNC digit 2    MNC digit 1             */
+            auto consumed = dissect_e212_mcc_mnc(d, ctx);
+            d.step(consumed);
+
+            /* Routing indicator octet 8-9 */
+            d.add_item(2, &hf_mm_routing_ind, enc::na);
+            d.step(2);
+
+            /* Protection scheme id octet 10 */
+            const auto scheme_id = d.uint8() & 0x0fu;
+            d.add_item(1, &hf_mm_prot_scheme_id, enc::be);
+            d.step(1);
+
+            /* Home network public key identifier octet 11 */
+            d.add_item(1, &hf_mm_pki, enc::be);
+            d.step(1);
+
+            /* Scheme output octet 12-x */
+            if (scheme_id == 0) { // Null scheme
+                d.add_item(d.length, &hf_mm_supi_null_scheme, enc::be);
+            } else {
+                d.add_item(d.length, &hf_mm_scheme_output, enc::na);
+            }
+            d.step(d.length);
+        } else if (supi_fmt == 1) { // nai, network specific identifier
+            d.add_item(d.length, &hf_nas_5gs_mm_suci_nai, enc::be);
         } else {
-            d.add_item(d.length, &hf_mm_scheme_output, enc::na);
+            diag("unknown supi format %d\n", supi_fmt);
         }
-        d.step(d.length);
-    } else if (supi_fmt == 1) { // nai, network specific identifier
-        d.add_item(d.length, &hf_nas_5gs_mm_suci_nai, enc::be);
-    } else {
-        diag("unknown supi format %d\n", supi_fmt);
-    }
-    return d.length;
+        return d.length;
     }
 
 // type_id = 2, 5G-GUTI
@@ -1495,6 +1517,7 @@ int mm::dissect_nw_slicing_ind(dissector d, context* ctx) {
         &hf_nssci,
         nullptr,
     };
+    d.add_bits(flags);
     return 1;
 }
 

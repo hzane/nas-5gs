@@ -1278,6 +1278,7 @@ extern const element_meta mm::nas_msg_cont = {
     dissect_nas_msg_cont,
 };
 
+// EPS bearer context status	9.11.3.59
 extern const element_meta mm::eps_bearer_ctx_status = {
     0x60,
     "EPS bearer context status",

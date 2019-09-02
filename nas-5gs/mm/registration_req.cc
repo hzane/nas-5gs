@@ -103,7 +103,7 @@ int mm::registration_req(dissector d, context* ctx) {
     consumed = dissect_opt_elem_tlv_e(nullptr, &eps_nas_msg_cont, d, ctx);
     d.step(consumed);
 
-    /* 74    LADN indication    LADN indication 9.11.3.29    O    TLV-E    3-811 */
+    /* 74    LADN indication  9.11.3.29    O    TLV-E    3-811 */
     // ELEM_OPT_TLV_E(0x74, , DE_NAS_5GS_MM_LADN_INF, NULL);
     consumed = dissect_opt_elem_tlv_e(nullptr, &ladn_ind, d, ctx);
     d.step(consumed);
@@ -129,7 +129,7 @@ int mm::registration_req(dissector d, context* ctx) {
     d.step(consumed);
 
     /* Mobile station classmark 2 9.11.3.61
-     * Supported codec list 9.11.3.62     
+     * Supported codec list 9.11.3.62
      */
 
     /* 71    NAS message container 9.11.3.33    O    TLV-E    4-n */
@@ -137,7 +137,7 @@ int mm::registration_req(dissector d, context* ctx) {
     consumed = dissect_opt_elem_tlv_e(nullptr, &nas_msg_cont, d, ctx);
     d.step(consumed);
 
-    /*60	EPS bearer context status	9.11.3.60	O	TLV	4 */
+    /*60	EPS bearer context status	9.11.3.59	O	TLV	4 */
     consumed = dissect_opt_elem_tlv(nullptr, &eps_bearer_ctx_status, d, ctx);
     d.step(consumed);
 
@@ -176,22 +176,25 @@ const element_meta pld_cont = {
 };
 
 /* 9-  Network slicing indication  Network slicing indication 9.11.3.36  O  TV 1 */
-
+// 9.11.3.36
 const element_meta nw_slicing_ind = {
     0x90,
     "Network slicing indication",
     dissect_nw_slicing_ind,
 };
 
-int                dissect_update_type(dissector d, context* ctx = nullptr);
+// 9.11.3.9A 5GS update type
+int dissect_update_type(dissector d, context* ctx = nullptr);
+
+// 9.11.3.9A 5GS update type
 const element_meta update_type = {
     0x53,
     "5GS update type",
     dissect_update_type,
 };
 
+int dissect_nksi_key_set_id(dissector d, context* ctx = nullptr);
 
-int                dissect_nksi_key_set_id(dissector d, context* ctx = nullptr);
 const element_meta nksi_key_set_id = {
     0xc0,
     "Non-current native NAS KSI",
@@ -290,6 +293,7 @@ const element_meta eps_nas_msg_cont = {
     dissect_eps_nas_msg_cont,
 };
 
+// 9.11.3.29
 int dissect_ladn_ind(dissector d, context* ctx = nullptr);
 __declspec(selectany) const element_meta ladn_ind = {
     0x74,
@@ -1814,6 +1818,7 @@ int mm_reg_req::dissect_eps_nas_msg_cont(dissector d, context* ctx) {
     return d.length;
 }
 
+// 9.11.3.29
 int mm_reg_req::dissect_ladn_ind(dissector d, context* ctx) {
     return mm::dissect_ladn_ind(d, ctx);
 }
@@ -1835,7 +1840,6 @@ int mm_reg_req::dissect_pld_cont(dissector d, context* ctx) {
 /*
  * 9.11.3.9A    5GS update type
  */
-
 const true_false_string tfs_nas5gs_sms_requested = {
     "SMS over NAS supported",
     "SMS over NAS not supported",
@@ -1851,11 +1855,26 @@ const field_meta hf_ng_ran_rcu = {
     nullptr,
     0x02,
 };
+const val_string pnb_ciot_values[] = {
+    {0, "no additional information"},
+    {1, "control plane CIot 5GS optimization"},
+    {2, "user plane CIot 5GS optimization"},
+    {3, "reserved"},
+    {0, nullptr},
+};
+const field_meta hf_pnb_ciot = {
+    "",
+    "nas_5gs.mm.pnb_ciot",
+    ft::ft_uint8,
+    fd::base_dec,
+    pnb_ciot_values, nullptr, nullptr,0,
+};
 
+// 9.11.3.9A 5GS update type
 int mm_reg_req::dissect_update_type(dissector d, context* ctx) {
     static const field_meta* flags[] = {
         &hf_spare_b3,
-        &hf_spare_b2,
+        &hf_pnb_ciot,
         &hf_ng_ran_rcu,
         &hf_sms_requested,
         nullptr,

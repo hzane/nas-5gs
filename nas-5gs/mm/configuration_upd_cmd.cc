@@ -120,7 +120,7 @@ int dissect_guti(dissector d, context* ctx);
 int dissect_sal(dissector d, context* ctx);
 int dissect_time_zone_time(dissector d, context* ctx);
 int dissect_day_saving_time(dissector d, context* ctx);
-int dissect_ladn_ind(dissector d, context* ctx);
+// int dissect_ladn_ind(dissector d, context* ctx);
 int dissect_mico_ind(dissector d, context* ctx);
 int dissect_full_name_network(dissector d, context* ctx);
 int dissect_short_name_network(dissector d, context* ctx);
@@ -453,7 +453,7 @@ int dissect_day_saving_time(dissector d, context* ctx) {
 /*
  *   9.11.3.30    LADN information
  */
-int dissect_ladn_ind(dissector d, context* ctx) {
+int dissect_ladn_inf(dissector d, context* ctx) {
     auto len = d.length;
     auto i   = 1;
     while(d.length>0){

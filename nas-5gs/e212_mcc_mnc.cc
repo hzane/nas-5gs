@@ -2459,9 +2459,9 @@ const field_meta hf_e212_mnc = {
  */
 int dissect_e212_mcc_mnc(dissector d, context*) {
     /* Mobile country code MCC */
-    auto octet = (uint32_t)d.uint8();
-    auto mcc1 = octet & 0x0fu;
-    auto mcc2 = octet >> 4u;
+    auto octet = static_cast< uint32_t >(d.uint8());
+    const auto mcc1 = octet & 0x0fu;
+    const auto mcc2 = octet >> 4u;
 
     d.step(1);
     octet = d.uint8();

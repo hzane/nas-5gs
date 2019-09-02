@@ -51,6 +51,7 @@ int dissect_pdu_ses_react_res(dissector d, context* ctx = nullptr);
 int dissect_pdu_ses_status(dissector d, context* ctx = nullptr);
 int dissect_mm_cause(dissector d, context* ctx);
 
+int dissect_ladn_inf(dissector d, context* ctx);
 int dissect_ladn_ind(dissector d, context* ctx);
 int dissect_mico_ind(dissector d, context* ctx);
 int dissect_sal(dissector d, context* ctx);
