@@ -37,7 +37,7 @@ int mm::registration_req(dissector d, context* ctx) {
     consumed = dissect_opt_elem_tlv(nullptr, &mm_cap, d, ctx);
     d.step(consumed);
 
-    /*2E    UE security capability    UE security capability 9.11.3.54    O    TLV 4-10*/
+    /*2E    UE security capability   9.11.3.54    O    TLV 4-10*/
     // ELEM_OPT_TLV(0x2e, , DE_NAS_5GS_MM_UE_SEC_CAP, NULL);
     consumed = dissect_opt_elem_tlv(nullptr, &ue_sec_cap, d, ctx);
     d.step(consumed);
@@ -54,27 +54,27 @@ int mm::registration_req(dissector d, context* ctx) {
     d.step(consumed);
 
     /*17    S1 UE network capability  9.11.3.48    O    TLV  4-15 */
-    //    ELEM_OPT_TLV(0x17, , DE_EMM_UE_NET_CAP, NULL);
+    // ELEM_OPT_TLV(0x17, , DE_EMM_UE_NET_CAP, NULL);
     consumed = dissect_opt_elem_tlv(nullptr, &s1_ue_net_cap, d, ctx);
     d.step(consumed);
 
     /*40    Uplink data status  9.11.3.57    O    TLV    4-34 */
-    //ELEM_OPT_TLV(0x40, , DE_NAS_5GS_MM_UL_DATA_STATUS, NULL);
+    // ELEM_OPT_TLV(0x40, , DE_NAS_5GS_MM_UL_DATA_STATUS, NULL);
     consumed = dissect_opt_elem_tlv(nullptr, &ul_data_status, d, ctx);
     d.step(consumed);
 
     /*50    PDU session status  9.11.3.44    O    TLV    4-34 */
-    //    ELEM_OPT_TLV(0x50, , DE_NAS_5GS_MM_PDU_SES_STATUS, NULL);
+    // ELEM_OPT_TLV(0x50, , DE_NAS_5GS_MM_PDU_SES_STATUS, NULL);
     consumed = dissect_opt_elem_tlv(nullptr, &pdu_ses_status, d, ctx);
     d.step(consumed);
 
     /*B-    MICO indication    MICO indication 9.11.3.31    O    TV    1*/
-    //    ELEM_OPT_TV_SHORT(0xb0, , DE_NAS_5GS_MM_MICO_IND, NULL);
+    // ELEM_OPT_TV_SHORT(0xb0, , DE_NAS_5GS_MM_MICO_IND, NULL);
     consumed = dissect_opt_elem_tv_short(nullptr, &mico_ind, d, ctx);
     d.step(consumed);
 
     /*2B    UE status    UE status 9.11.3.56    O    TLV    3*/
-    //    ELEM_OPT_TLV(0x2b, , DE_NAS_5GS_MM_UE_STATUS, NULL);
+    // ELEM_OPT_TLV(0x2b, , DE_NAS_5GS_MM_UE_STATUS, NULL);
     consumed = dissect_opt_elem_tlv(nullptr, &ue_status, d, ctx);
     d.step(consumed);
 
@@ -93,14 +93,12 @@ int mm::registration_req(dissector d, context* ctx) {
     consumed = dissect_opt_elem_tlv(nullptr, &ue_usage_set, d, ctx);
     d.step(consumed);
 
-    /*51    Requested DRX parameters    5GS DRX parameters 9.11.3.2A    O    TLV    3 */
-    /* ELEM_OPT_TLV(0x51,DE_NAS_5GS_MM_5GS_DRX_PARAM, " - Requested DRX parameters");
-     */
+    /* 51    Requested DRX parameters    5GS DRX parameters 9.11.3.2A    O    TLV    3 */
+    /* ELEM_OPT_TLV(0x51,DE_NAS_5GS_MM_5GS_DRX_PARAM, " - Requested DRX parameters"); */
     consumed = dissect_opt_elem_tlv(nullptr, &requested_drx_param, d, ctx);
     d.step(consumed);
 
-    /*70    EPS NAS message container  9.11.3.24    O    TLV-E
-     * 4-n */
+    /* 70    EPS NAS message container  9.11.3.24    O    TLV-E 4-n */
     // ELEM_OPT_TLV_E(0x70, , DE_NAS_5GS_MM_EPS_NAS_MSG_CONT, NULL);
     consumed = dissect_opt_elem_tlv_e(nullptr, &eps_nas_msg_cont, d, ctx);
     d.step(consumed);
@@ -116,7 +114,7 @@ int mm::registration_req(dissector d, context* ctx) {
     d.step(consumed);
 
     /* 7B    Payload container  9.11.3.39    O    TLV-E    4-65538 */
-    // ELEM_OPT_TLV_E(0x7B, NAS_5GS_PDU_TYPE_MM, DE_NAS_5GS_MM_PLD_CONT, NULL);
+    // ELEM_OPT_TLV_E(0x7B, , DE_NAS_5GS_MM_PLD_CONT, NULL);
     consumed = dissect_opt_elem_tlv_e(nullptr, &pld_cont, d, ctx);
     d.step(consumed);
 
@@ -152,21 +150,25 @@ int mm::registration_req(dissector d, context* ctx) {
 }
 
 namespace mm_reg_req{
-int                       dissect_mico_ind(dissector d, context* ctx = nullptr);
+// 9.11.3.31
+int dissect_mico_ind(dissector d, context* ctx = nullptr);
+
 extern const element_meta mico_ind = {
     0xb0,
     "MICO indication",
     dissect_mico_ind,
 };
-/*2F    Requested NSSAI    NSSAI 9.11.3.37    O    TLV    4-74*/
 
+/*2F    Requested NSSAI    NSSAI 9.11.3.37    O    TLV    4-74*/
 const element_meta requested_nssai = {
     0x2f,
     "Requested NSSAI",
     dissect_requested_nssai,
 };
 
-int                dissect_pld_cont(dissector d, context* ctx = nullptr);
+// 9.11.3.39
+int dissect_pld_cont(dissector d, context* ctx = nullptr);
+
 const element_meta pld_cont = {
     0x7B,
     "Payload container",
@@ -203,14 +205,18 @@ const element_meta mm_cap = {
     dissect_mm_cap,
 };
 
-int                dissect_use_sec_cap(dissector d, context* ctx = nullptr);
+// 9.11.3.54
+int dissect_use_sec_cap(dissector d, context* ctx = nullptr);
+
 const element_meta ue_sec_cap = {
     0x2e,
     "UE security capability",
     dissect_use_sec_cap,
 };
 
-int                dissect_last_v_tai(dissector d, context* ctx = nullptr);
+//  9.11.3.8
+int dissect_last_v_tai(dissector d, context* ctx = nullptr);
+
 const element_meta last_v_tai = {
     0x52,
     "Last visited registered TAI",
@@ -231,13 +237,16 @@ const element_meta ul_data_status = {
     dissect_ul_data_status,
 };
 
-int                dissect_ue_status(dissector d, context* ctx = nullptr);
+// 9.11.3.56
+int dissect_ue_status(dissector d, context* ctx = nullptr);
+
 const element_meta ue_status = {
     0x2b,
     "UE status",
     dissect_ue_status,
 };
 
+// 9.11.3.4
 int                dissect_aguti_mobile_id(dissector d, context* ctx = nullptr);
 const element_meta aguti_mobile_id = {
     0x77,
@@ -245,28 +254,36 @@ const element_meta aguti_mobile_id = {
     dissect_aguti_mobile_id,
 };
 
-int                dissect_pdu_ses_sts(dissector d, context* ctx = nullptr);
+// 9.11.3.13
+int dissect_pdu_ses_sts(dissector d, context* ctx = nullptr);
+
 const element_meta allow_pdu_ses_sts = {
     0x25,
     "Allowed PDU session status",
     dissect_pdu_ses_sts,
 };
 
-int                dissect_usage_set(dissector d, context* ctx = nullptr);
+// 9.11.3.55
+int dissect_usage_set(dissector d, context* ctx = nullptr);
+
 const element_meta ue_usage_set = {
     0x18,
     "UE's usage setting",
     dissect_usage_set,
 };
 
-int                dissect_requested_drx_param(dissector d, context* ctx = nullptr);
+// 9.11.3.2A
+int dissect_requested_drx_param(dissector d, context* ctx = nullptr);
+
 const element_meta requested_drx_param = {
     0x51,
     "Requested DRX parameters",
     dissect_requested_drx_param,
 };
 
-int                dissect_eps_nas_msg_cont(dissector d, context* ctx = nullptr);
+// 9.11.3.24
+int dissect_eps_nas_msg_cont(dissector d, context* ctx = nullptr);
+
 const element_meta eps_nas_msg_cont = {
     0x70,
     "EPS NAS message container",
@@ -280,7 +297,9 @@ __declspec(selectany) const element_meta ladn_ind = {
     dissect_ladn_ind,
 };
 
-int                dissect_pld_cont_type(dissector d, context* ctx = nullptr);
+// 9.11.3.40
+int dissect_pld_cont_type(dissector d, context* ctx = nullptr);
+
 const element_meta pld_cont_type = {
     0x80,
     "Payload container type",
@@ -289,10 +308,98 @@ const element_meta pld_cont_type = {
 
 } // namespace mm_reg_req
 
+// 9.11.3.32
 int mm_reg_req::dissect_nksi_key_set_id(dissector d, context* ctx) {
-    return dissect_mobile_id(d, ctx);
+    return dissect_nas_ksi(d, ctx);
 }
 
+const true_false_string tfs_mm_cap7 = {
+    "service gap control supported",
+    "service gap control not supported",
+};
+
+const field_meta hf_mm_cap_7 = {
+    "Service gap control SGC",
+    "nas_5gs.mm.sgc",
+    ft::ft_boolean,
+    fd::base_dec,
+    nullptr,
+    (&tfs_mm_cap7),
+    nullptr,
+    0x80,
+};
+const true_false_string tfs_mm_cap_6 = {
+    "Header compression for control plane CIoT 5GS optimization supported",
+    "Header compression for control plane CIoT 5GS optimization not supported",
+};
+const field_meta hf_mm_cap_6 = {
+    "Header compression for control plane CIoT 5GS optimization (5G-HC-CP-CIoT)",
+    "nas_5gs.mm.5g_hc_cp_ciot",
+    ft::ft_boolean,
+    fd::base_dec,
+    nullptr,
+    (&tfs_mm_cap_6),
+    nullptr,
+    0x40,
+};
+
+const true_false_string    tfs_mm_cap5  = {
+    "Header compression for control plane CIoT 5GS optimization supported",
+    "Header compression for control plane CIoT 5GS optimization not supported",
+};
+const true_false_string tfs_mm_cap4 = {
+    "N3 data transfer not supported",
+    "N3 data transfer supported",
+};
+const true_false_string tfs_mm_cap3 = {
+    "Restriction on use of enhanced coverage supported",
+    "Restriction on use of enhanced coverage not supported",
+};
+const true_false_string tfs_mm_cap2 = {
+    "LPP in N1 mode supported",
+    "LPP in N1 mode not supported",
+};
+const true_false_string tfs_mm_cap1 = {
+    "ATTACH REQUEST message containing PDN CONNECTIVITY REQUEST message with request "
+    "type set to \"handover\" or \"handover of emergency bearer services\" to "
+    "transfer PDU session from N1 mode to S1 mode supported",
+    "ATTACH REQUEST message containing PDN CONNECTIVITY REQUEST message with request "
+    "type set to \"handover\" or \"handover of emergency bearer services\" to transfer PDU session from N1 mode to S1 mode not supported",
+};
+const true_false_string tfs_mm_cap0 = {
+    "S1 mode supported",
+    "S1 mode not supported",
+};
+const field_meta hf_mm_cap_5 = {
+    "N3 data transfer",
+    "nas_5gs.mm.n3data",
+    ft::ft_boolean,
+    fd::base_dec,
+    nullptr,
+    (&tfs_mm_cap5),
+    nullptr,
+    0x20,
+};
+const field_meta hf_mm_cap_4 = {
+    "Control plane CIoT 5GS optimization (5G-CP CIoT)",
+    "nas_5gs.mm.5g_cp_ciot",
+    ft::ft_boolean,
+    fd::base_dec,
+    nullptr,
+    (&tfs_mm_cap4),
+    nullptr,
+    0x10,
+};
+const field_meta hf_mm_cap_3 = {
+    "Restriction on use of enhanced coverage support (RestrictEC)",
+    "nas_5gs.mm.restrict_ec",
+    ft::ft_boolean,
+    fd::base_dec,
+    nullptr,
+    (&tfs_mm_cap3),
+    nullptr,
+    0x08,
+};
 
 const field_meta hf_lpp_cap_b2 = {
     "LTE Positioning Protocol (LPP) capability",
@@ -300,7 +407,7 @@ const field_meta hf_lpp_cap_b2 = {
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
-    (&tfs_requested_not_requested),
+    (&tfs_mm_cap2),
     nullptr,
     0x04,
 };
@@ -311,7 +418,7 @@ const field_meta hf_ho_attach_b1 = {
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
-    (&tfs_supported_not_supported),
+    (&tfs_mm_cap1),
     nullptr,
     0x02,
 };
@@ -321,18 +428,18 @@ const field_meta hf_s1_mode_b0 = {
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
-    (&tfs_requested_not_requested),
+    (&tfs_mm_cap0),
     nullptr,
     0x01,
 };
 /* 9.11.3.1     5GMM capability*/
 int mm_reg_req::dissect_mm_cap(dissector d, context* ctx) {
     static const field_meta* flags[] = {
-        &hf_spare_b7,
-        &hf_spare_b6,
-        &hf_spare_b5,
-        &hf_spare_b4,
-        &hf_spare_b3,
+        &hf_mm_cap_7,
+        &hf_mm_cap_6,
+        &hf_mm_cap_5,
+        &hf_mm_cap_4,
+        &hf_mm_cap_3,
         &hf_lpp_cap_b2,
         &hf_ho_attach_b1,
         &hf_s1_mode_b0,
@@ -343,13 +450,20 @@ int mm_reg_req::dissect_mm_cap(dissector d, context* ctx) {
     d.extraneous_data_check(0);
     return 1;
 }
-
+namespace {
+const true_false_string tfs_supp_or_not = {
+    "Supported",
+    "Not supported",
+};
+}
 const field_meta hf_nas_5gs_mm_5g_ea0 = {
     "5G-EA0",
     "nas_5gs.mm.5g_ea0",
     ft::ft_boolean,
     fd::base_dec,
-    nullptr,&tfs_supported_not_supported,nullptr,
+    nullptr,
+    &tfs_supp_or_not,
+    nullptr,
     0x80,
 };
 const field_meta hf_nas_5gs_mm_5g_ea1 = {
@@ -357,7 +471,9 @@ const field_meta hf_nas_5gs_mm_5g_ea1 = {
     "nas_5gs.mm.128_5g_ea1",
     ft::ft_boolean,
     fd::base_dec,
-    nullptr,&tfs_supported_not_supported,nullptr,
+    nullptr,
+    &tfs_supp_or_not,
+    nullptr,
     0x40,
 };
 const field_meta hf_nas_5gs_mm_5g_ea2 = {
@@ -365,7 +481,9 @@ const field_meta hf_nas_5gs_mm_5g_ea2 = {
     "nas_5gs.mm.128_5g_ea2",
     ft::ft_boolean,
     fd::base_dec,
-    nullptr,&tfs_supported_not_supported,nullptr,
+    nullptr,
+    &tfs_supp_or_not,
+    nullptr,
     0x20,
 };
 const field_meta hf_nas_5gs_mm_5g_ea3 = {
@@ -373,7 +491,9 @@ const field_meta hf_nas_5gs_mm_5g_ea3 = {
     "nas_5gs.mm.128_5g_ea3",
     ft::ft_boolean,
     fd::base_dec,
-    nullptr,&tfs_supported_not_supported,nullptr,
+    nullptr,
+    &tfs_supp_or_not,
+    nullptr,
     0x10,
 };
 const field_meta hf_nas_5gs_mm_5g_ea4 = {
@@ -381,7 +501,9 @@ const field_meta hf_nas_5gs_mm_5g_ea4 = {
     "nas_5gs.mm.5g_ea4",
     ft::ft_boolean,
     fd::base_dec,
-    nullptr,&tfs_supported_not_supported,nullptr,
+    nullptr,
+    &tfs_supp_or_not,
+    nullptr,
     0x08,
 };
 const field_meta hf_nas_5gs_mm_5g_ea5 = {
@@ -389,7 +511,9 @@ const field_meta hf_nas_5gs_mm_5g_ea5 = {
     "nas_5gs.mm.5g_ea5",
     ft::ft_boolean,
     fd::base_dec,
-    nullptr,&tfs_supported_not_supported,nullptr,
+    nullptr,
+    &tfs_supp_or_not,
+    nullptr,
     0x04,
 };
 const field_meta hf_nas_5gs_mm_5g_ea6 = {
@@ -397,7 +521,9 @@ const field_meta hf_nas_5gs_mm_5g_ea6 = {
     "nas_5gs.mm.5g_ea6",
     ft::ft_boolean,
     fd::base_dec,
-    nullptr,&tfs_supported_not_supported,nullptr,
+    nullptr,
+    &tfs_supp_or_not,
+    nullptr,
     0x02,
 };
 const field_meta hf_nas_5gs_mm_5g_ea7 = {
@@ -405,7 +531,9 @@ const field_meta hf_nas_5gs_mm_5g_ea7 = {
     "nas_5gs.mm.5g_ea7",
     ft::ft_boolean,
     fd::base_dec,
-    nullptr,&tfs_supported_not_supported,nullptr,
+    nullptr,
+    &tfs_supp_or_not,
+    nullptr,
     0x01,
 };
 
@@ -414,7 +542,9 @@ const field_meta hf_nas_5gs_mm_5g_ia0 = {
     "nas_5gs.mm.ia0",
     ft::ft_boolean,
     fd::base_dec,
-    nullptr,&tfs_supported_not_supported,nullptr,
+    nullptr,
+    &tfs_supp_or_not,
+    nullptr,
     0x80,
 };
 const field_meta hf_nas_5gs_mm_5g_ia1 = {
@@ -422,7 +552,9 @@ const field_meta hf_nas_5gs_mm_5g_ia1 = {
     "nas_5gs.mm.5g_128_ia1",
     ft::ft_boolean,
     fd::base_dec,
-    nullptr,&tfs_supported_not_supported,nullptr,
+    nullptr,
+    &tfs_supp_or_not,
+    nullptr,
     0x40,
 };
 const field_meta hf_nas_5gs_mm_5g_ia2 = {
@@ -430,7 +562,9 @@ const field_meta hf_nas_5gs_mm_5g_ia2 = {
     "nas_5gs.mm.5g_128_ia2",
     ft::ft_boolean,
     fd::base_dec,
-    nullptr,&tfs_supported_not_supported,nullptr,
+    nullptr,
+    &tfs_supp_or_not,
+    nullptr,
     0x20,
 };
 const field_meta hf_nas_5gs_mm_5g_ia3 = {
@@ -438,7 +572,9 @@ const field_meta hf_nas_5gs_mm_5g_ia3 = {
     "nas_5gs.mm.5g_128_ia4",
     ft::ft_boolean,
     fd::base_dec,
-    nullptr,&tfs_supported_not_supported,nullptr,
+    nullptr,
+    &tfs_supp_or_not,
+    nullptr,
     0x10,
 };
 const field_meta hf_nas_5gs_mm_5g_ia4 = {
@@ -446,7 +582,9 @@ const field_meta hf_nas_5gs_mm_5g_ia4 = {
     "nas_5gs.mm.5g_128_ia4",
     ft::ft_boolean,
     fd::base_dec,
-    nullptr,&tfs_supported_not_supported,nullptr,
+    nullptr,
+    &tfs_supp_or_not,
+    nullptr,
     0x08,
 };
 const field_meta hf_nas_5gs_mm_5g_ia5 = {
@@ -454,7 +592,9 @@ const field_meta hf_nas_5gs_mm_5g_ia5 = {
     "nas_5gs.mm.5g_ia5",
     ft::ft_boolean,
     fd::base_dec,
-    nullptr,&tfs_supported_not_supported,nullptr,
+    nullptr,
+    &tfs_supp_or_not,
+    nullptr,
     0x04,
 };
 const field_meta hf_nas_5gs_mm_5g_ia6 = {
@@ -462,7 +602,9 @@ const field_meta hf_nas_5gs_mm_5g_ia6 = {
     "nas_5gs.mm.5g_ia6",
     ft::ft_boolean,
     fd::base_dec,
-    nullptr,&tfs_supported_not_supported,nullptr,
+    nullptr,
+    &tfs_supp_or_not,
+    nullptr,
     0x02,
 };
 const field_meta hf_nas_5gs_mm_5g_ia7 = {
@@ -470,7 +612,9 @@ const field_meta hf_nas_5gs_mm_5g_ia7 = {
     "nas_5gs.mm.5g_ia7",
     ft::ft_boolean,
     fd::base_dec,
-    nullptr,&tfs_supported_not_supported,nullptr,
+    nullptr,
+    &tfs_supp_or_not,
+    nullptr,
     0x01,
 };
 
@@ -479,7 +623,9 @@ const field_meta hf_nas_5gs_mm_eea0 = {
     "nas_5gs.mm.eea0",
     ft::ft_boolean,
     fd::base_dec,
-    nullptr,&tfs_supported_not_supported,nullptr,
+    nullptr,
+    &tfs_supp_or_not,
+    nullptr,
     0x80,
 };
 const field_meta hf_nas_5gs_mm_eea1 = {
@@ -487,7 +633,9 @@ const field_meta hf_nas_5gs_mm_eea1 = {
     "nas_5gs.mm.128eea1",
     ft::ft_boolean,
     fd::base_dec,
-    nullptr,&tfs_supported_not_supported,nullptr,
+    nullptr,
+    &tfs_supp_or_not,
+    nullptr,
     0x40,
 };
 const field_meta hf_nas_5gs_mm_eea2 = {
@@ -495,7 +643,9 @@ const field_meta hf_nas_5gs_mm_eea2 = {
     "nas_5gs.mm.128eea2",
     ft::ft_boolean,
     fd::base_dec,
-    nullptr,&tfs_supported_not_supported,nullptr,
+    nullptr,
+    &tfs_supp_or_not,
+    nullptr,
     0x20,
 };
 const field_meta hf_nas_5gs_mm_eea3 = {
@@ -503,7 +653,9 @@ const field_meta hf_nas_5gs_mm_eea3 = {
     "nas_5gs.mm.eea3",
     ft::ft_boolean,
     fd::base_dec,
-    nullptr,&tfs_supported_not_supported,nullptr,
+    nullptr,
+    &tfs_supp_or_not,
+    nullptr,
     0x10,
 };
 const field_meta hf_nas_5gs_mm_eea4 = {
@@ -511,7 +663,9 @@ const field_meta hf_nas_5gs_mm_eea4 = {
     "nas_5gs.mm.eea4",
     ft::ft_boolean,
     fd::base_dec,
-    nullptr,&tfs_supported_not_supported,nullptr,
+    nullptr,
+    &tfs_supp_or_not,
+    nullptr,
     0x08,
 };
 const field_meta hf_nas_5gs_mm_eea5 = {
@@ -519,7 +673,9 @@ const field_meta hf_nas_5gs_mm_eea5 = {
     "nas_5gs.mm.eea5",
     ft::ft_boolean,
     fd::base_dec,
-    nullptr,&tfs_supported_not_supported,nullptr,
+    nullptr,
+    &tfs_supp_or_not,
+    nullptr,
     0x04,
 };
 const field_meta hf_nas_5gs_mm_eea6 = {
@@ -527,7 +683,9 @@ const field_meta hf_nas_5gs_mm_eea6 = {
     "nas_5gs.mm.eea6",
     ft::ft_boolean,
     fd::base_dec,
-    nullptr,&tfs_supported_not_supported,nullptr,
+    nullptr,
+    &tfs_supp_or_not,
+    nullptr,
     0x02,
 };
 const field_meta hf_nas_5gs_mm_eea7 = {
@@ -535,7 +693,9 @@ const field_meta hf_nas_5gs_mm_eea7 = {
     "nas_5gs.mm.eea7",
     ft::ft_boolean,
     fd::base_dec,
-    nullptr,&tfs_supported_not_supported,nullptr,
+    nullptr,
+    &tfs_supp_or_not,
+    nullptr,
     0x01,
 };
 
@@ -544,7 +704,9 @@ const field_meta hf_nas_5gs_mm_eia0 = {
     "nas_5gs.mm.eia0",
     ft::ft_boolean,
     fd::base_dec,
-    nullptr,&tfs_supported_not_supported,nullptr,
+    nullptr,
+    &tfs_supp_or_not,
+    nullptr,
     0x80,
 };
 const field_meta hf_nas_5gs_mm_eia1 = {
@@ -552,7 +714,9 @@ const field_meta hf_nas_5gs_mm_eia1 = {
     "nas_5gs.mm.128eia1",
     ft::ft_boolean,
     fd::base_dec,
-    nullptr,&tfs_supported_not_supported,nullptr,
+    nullptr,
+    &tfs_supp_or_not,
+    nullptr,
     0x40,
 };
 const field_meta hf_nas_5gs_mm_eia2 = {
@@ -560,7 +724,9 @@ const field_meta hf_nas_5gs_mm_eia2 = {
     "nas_5gs.mm.128eia2",
     ft::ft_boolean,
     fd::base_dec,
-    nullptr,&tfs_supported_not_supported,nullptr,
+    nullptr,
+    &tfs_supp_or_not,
+    nullptr,
     0x20,
 };
 const field_meta hf_nas_5gs_mm_eia3 = {
@@ -568,7 +734,9 @@ const field_meta hf_nas_5gs_mm_eia3 = {
     "nas_5gs.mm.eia3",
     ft::ft_boolean,
     fd::base_dec,
-    nullptr,&tfs_supported_not_supported,nullptr,
+    nullptr,
+    &tfs_supp_or_not,
+    nullptr,
     0x10,
 };
 const field_meta hf_nas_5gs_mm_eia4 = {
@@ -576,7 +744,9 @@ const field_meta hf_nas_5gs_mm_eia4 = {
     "nas_5gs.mm.eia4",
     ft::ft_boolean,
     fd::base_dec,
-    nullptr,&tfs_supported_not_supported,nullptr,
+    nullptr,
+    &tfs_supp_or_not,
+    nullptr,
     0x08,
 };
 const field_meta hf_nas_5gs_mm_eia5 = {
@@ -584,7 +754,9 @@ const field_meta hf_nas_5gs_mm_eia5 = {
     "nas_5gs.mm.eia5",
     ft::ft_boolean,
     fd::base_dec,
-    nullptr,&tfs_supported_not_supported,nullptr,
+    nullptr,
+    &tfs_supp_or_not,
+    nullptr,
     0x04,
 };
 const field_meta hf_nas_5gs_mm_eia6 = {
@@ -592,7 +764,9 @@ const field_meta hf_nas_5gs_mm_eia6 = {
     "nas_5gs.mm.eia6",
     ft::ft_boolean,
     fd::base_dec,
-    nullptr,&tfs_supported_not_supported,nullptr,
+    nullptr,
+    &tfs_supp_or_not,
+    nullptr,
     0x02,
 };
 const field_meta hf_nas_5gs_mm_eia7 = {
@@ -600,7 +774,9 @@ const field_meta hf_nas_5gs_mm_eia7 = {
     "nas_5gs.mm.eia7",
     ft::ft_boolean,
     fd::base_dec,
-    nullptr,&tfs_supported_not_supported,nullptr,
+    nullptr,
+    &tfs_supp_or_not,
+    nullptr,
     0x01,
 };
 
@@ -608,9 +784,9 @@ const field_meta hf_nas_5gs_mm_eia7 = {
 int mm_reg_req::dissect_use_sec_cap(dissector d, context* ctx) {
     static const field_meta* oct3_flags[] = {
         &hf_nas_5gs_mm_5g_ea0,
-        &hf_nas_5gs_mm_5g_ea1,
-        &hf_nas_5gs_mm_5g_ea2,
-        &hf_nas_5gs_mm_5g_ea3,
+        &hf_nas_5gs_mm_5g_ea1, // 128-
+        &hf_nas_5gs_mm_5g_ea2, // 128-
+        &hf_nas_5gs_mm_5g_ea3, // 128-
         &hf_nas_5gs_mm_5g_ea4,
         &hf_nas_5gs_mm_5g_ea5,
         &hf_nas_5gs_mm_5g_ea6,
@@ -620,9 +796,9 @@ int mm_reg_req::dissect_use_sec_cap(dissector d, context* ctx) {
 
     static const field_meta* oct4_flags[] = {
         &hf_nas_5gs_mm_5g_ia0,
-        &hf_nas_5gs_mm_5g_ia1,
-        &hf_nas_5gs_mm_5g_ia2,
-        &hf_nas_5gs_mm_5g_ia3,
+        &hf_nas_5gs_mm_5g_ia1, // 128-
+        &hf_nas_5gs_mm_5g_ia2, // 128-
+        &hf_nas_5gs_mm_5g_ia3, // 128-
         &hf_nas_5gs_mm_5g_ia4,
         &hf_nas_5gs_mm_5g_ia5,
         &hf_nas_5gs_mm_5g_ia6,
@@ -632,9 +808,9 @@ int mm_reg_req::dissect_use_sec_cap(dissector d, context* ctx) {
 
     static const field_meta* oct5_flags[] = {
         &hf_nas_5gs_mm_eea0,
-        &hf_nas_5gs_mm_eea1,
-        &hf_nas_5gs_mm_eea2,
-        &hf_nas_5gs_mm_eea3,
+        &hf_nas_5gs_mm_eea1, // 128-
+        &hf_nas_5gs_mm_eea2, // 128-
+        &hf_nas_5gs_mm_eea3, // 128-
         &hf_nas_5gs_mm_eea4,
         &hf_nas_5gs_mm_eea5,
         &hf_nas_5gs_mm_eea6,
@@ -644,9 +820,9 @@ int mm_reg_req::dissect_use_sec_cap(dissector d, context* ctx) {
 
     static const field_meta* oct6_flags[] = {
         &hf_nas_5gs_mm_eia0,
-        &hf_nas_5gs_mm_eia1,
-        &hf_nas_5gs_mm_eia2,
-        &hf_nas_5gs_mm_eia3,
+        &hf_nas_5gs_mm_eia1, // 128-
+        &hf_nas_5gs_mm_eia2, // 128-
+        &hf_nas_5gs_mm_eia3, // 128-
         &hf_nas_5gs_mm_eia4,
         &hf_nas_5gs_mm_eia5,
         &hf_nas_5gs_mm_eia6,
@@ -676,7 +852,11 @@ int mm_reg_req::dissect_use_sec_cap(dissector d, context* ctx) {
     d.add_bits(oct6_flags);
     d.step(1);
 
-    return 4;
+    if (d.length <= 0) return 4;
+
+    // 7-10 is spare
+
+    return 4 + d.length;
 }
 
 //* 9.11.3.8     5GS tracking area identity
@@ -684,10 +864,12 @@ int mm_reg_req::dissect_last_v_tai(dissector d, context* ctx) {
     /* MCC digit 2    MCC digit 1 Octet 2*/
     /* MNC digit 3    MCC digit 3 Octet 3*/
     /* MNC digit 2    MNC digit 1 Octet 4*/
-    /* TAC Octet 5 - 7 */
    auto consumed =  dissect_e212_mcc_mnc(d, ctx);
    d.step(3);
-   return 3;
+
+    /* TAC Octet 5 - 7 */
+   d.add_item(3, &hf_tac, enc::na);
+   return 6;
 }
 
 // S1 UE network capability 9.11.3.48
@@ -705,6 +887,7 @@ const field_meta hf_nas_eps_emm_eea0 = {
     nullptr,&tfs_supported_not_supported,nullptr,
     0x80,
 };
+
 const field_meta hf_nas_eps_emm_128eea1 = {
     "128-EEA1",
     "nas_eps.emm.128eea1",
@@ -713,6 +896,7 @@ const field_meta hf_nas_eps_emm_128eea1 = {
     nullptr,&tfs_supported_not_supported,nullptr,
     0x40,
 };
+
 const field_meta hf_nas_eps_emm_128eea2 = {
     "128-EEA2",
     "nas_eps.emm.128eea2",
@@ -721,6 +905,7 @@ const field_meta hf_nas_eps_emm_128eea2 = {
     nullptr,&tfs_supported_not_supported,nullptr,
     0x20,
 };
+
 const field_meta hf_nas_eps_emm_eea3 = {
     "128-EEA3",
     "nas_eps.emm.eea3",
@@ -1500,7 +1685,8 @@ static true_false_string tfs_nas_5gs_mm_s1_mod = {
     "UE is in EMM-REGISTERED state",
     "UE is not in EMM-REGISTERED state",
 };
-const field_meta hf_nas_5gs_spare_b6 = {
+#if 0
+const field_meta hf_spare_b6 = {
     "Spare",
     "nas_5gs.spare_b6",
     ft::ft_uint8,
@@ -1508,7 +1694,7 @@ const field_meta hf_nas_5gs_spare_b6 = {
     nullptr,nullptr,nullptr,
     0x40,
 };
-const field_meta hf_nas_5gs_spare_b5 = {
+const field_meta hf_spare_b5 = {
     "Spare",
     "nas_5gs.spare_b5",
     ft::ft_uint8,
@@ -1524,14 +1710,15 @@ const field_meta hf_nas_5gs_spare_b4 = {
     nullptr,nullptr,nullptr,
     0x10,
 };
+#endif
 
-
+// 9.11.3.56
 int mm_reg_req::dissect_ue_status(dissector d, context* ctx) {
     static const field_meta* flags[] = {
         &hf_spare_b7,
-        &hf_nas_5gs_spare_b6,
-        &hf_nas_5gs_spare_b5,
-        &hf_nas_5gs_spare_b4,
+        &hf_spare_b6,
+        &hf_spare_b5,
+        &hf_spare_b4,
         &hf_spare_b3,
         &hf_spare_b2,
         &hf_mm_n1_mode_reg_b1,
@@ -1543,10 +1730,12 @@ int mm_reg_req::dissect_ue_status(dissector d, context* ctx) {
     return 1;
 }
 
+// 9.11.3.4
 int mm_reg_req::dissect_aguti_mobile_id(dissector d, context* ctx) {
     return mm::dissect_mobile_id(d, ctx);
 }
 
+// 9.11.3.13
 int mm_reg_req::dissect_pdu_ses_sts(dissector d, context* ctx) {
     return mm::dissect_pdu_ses_status(d, ctx);
 }
@@ -1579,11 +1768,13 @@ const field_meta hf_nas_5gs_mm_ue_usage_setting = {
     nullptr,
     0x01,
 };
+
+// 9.11.3.55
 int mm_reg_req::dissect_usage_set(dissector d, context* ctx) {
     static const field_meta* flags[] = {
         &hf_spare_b3,
         &hf_spare_b2,
-        &hf_nas_5gs_spare_b1,
+        &hf_spare_b1,
         &hf_nas_5gs_mm_ue_usage_setting,
         nullptr,
     };
@@ -1609,17 +1800,17 @@ const field_meta hf_drx_param = {
     nullptr,
     0x0f,
 };
+
 /* 9.11.3.2A    5GS DRX parameters*/
 int mm_reg_req::dissect_requested_drx_param(dissector d, context* ctx) {
     d.add_item(1, &hf_drx_param, enc::be);
     return 0;
 }
 
-/*
- *   9.11.3.24    EPS NAS message container
- */
+/* 9.11.3.24    EPS NAS message container */
 int mm_reg_req::dissect_eps_nas_msg_cont(dissector d, context* ctx) {
     diag("no eps dissector\n");
+    // An EPS NAS message as specified in 3GPP TS 24.301
     return d.length;
 }
 
@@ -1627,14 +1818,16 @@ int mm_reg_req::dissect_ladn_ind(dissector d, context* ctx) {
     return mm::dissect_ladn_ind(d, ctx);
 }
 
+// 9.11.3.40
 int mm_reg_req::dissect_pld_cont_type(dissector d, context* ctx) {
-    auto oct = d.tvb->uint8(d.offset);
+    const auto oct = d.tvb->uint8(d.offset) & 0x0fu;
     d.set_private("payload-content-type", oct);
 
     d.add_item(1, &mm::hf_pld_cont_type, enc::be);
     return 1;
 }
 
+// 9.11.3.39
 int mm_reg_req::dissect_pld_cont(dissector d, context* ctx) {
     return mm::dissect_pld_cont(d, ctx);
 }
@@ -1671,6 +1864,7 @@ int mm_reg_req::dissect_update_type(dissector d, context* ctx) {
     return 1;
 }
 
+// 9.11.3.31
 int mm_reg_req::dissect_mico_ind(dissector d, context* ctx) {
     return mm::dissect_mico_ind(d, ctx);
 }

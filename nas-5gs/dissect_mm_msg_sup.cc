@@ -278,6 +278,24 @@ const field_meta mm::hfm_mm_raai_b0 = {
 };
 const field_meta* mm::hf_mm_raai_b0 = &hfm_mm_raai_b0;
 
+// In the network to UE and the UE to network direction:
+const true_false_string tfs_sprti        = {
+    "strictly periodic registration timer supported",
+    "strictly periodic registration timer not supported",
+};
+
+// In the network to UE and the UE to network direction:
+const field_meta mm::hf_mm_sprti= {
+    "Strictly Periodic Registration Timer Indication (SPRTI)",
+    "nas_5gs.mm.sprti",
+    ft::ft_boolean,
+    fd::base_dec,
+    nullptr,
+    &tfs_sprti,
+    nullptr,
+    0x02,
+};
+
 const field_meta mm::hfm_mm_conf_upd_ind_ack_b0 = {
     "Acknowledgement",
     "nas_5gs.mm.conf_upd_ind.ack",

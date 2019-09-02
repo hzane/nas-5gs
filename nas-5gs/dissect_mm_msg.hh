@@ -208,4 +208,5 @@ extern const field_meta hf_nas_key_set_id;
 extern const field_meta hfm_mm_raai_b0;
 extern const field_meta hf_mapped_conf_sst;
 extern const field_meta hf_mapped_conf_ssd;
+extern const field_meta hf_mm_sprti;
 } // namespace mm

@@ -82,16 +82,16 @@ int mm::dissect_allowed_nssai(dissector d, context* ctx) {
 
 /* 9.11.3.37    NSSAI*/
 int mm::dissect_requested_nssai(dissector d, context* ctx) {
-    auto len = d.length;
+    const auto len = d.length;
     auto i = 1;
     while(d.length>0){
         auto subtree = d.tree->add_subtree(d.pinfo, d.tvb, d.offset, 2, "S-NSSAI %u", i);
         use_tree ut(d, subtree);
 
-        auto length = (int) d.tvb->uint8(d.offset);
+        auto length = static_cast< int >(d.tvb->uint8(d.offset));
         d.add_item(1, &hf_mm_length, enc::be);
         d.step(1);
-
+        // 9.11.2.8
         auto consumed = dissect_s_nssai(d.slice(length), ctx);
         d.step(consumed);
         subtree->set_length(length + 1);
@@ -327,7 +327,7 @@ const field_meta mm::hf_tac = {
     "TAC",
     "nas_5gs.tac",
     ft::ft_uint24,
-    fd::base_dec,
+    fd::base_hex,
     nullptr,
     nullptr,
     nullptr,
@@ -660,7 +660,7 @@ int mm::dissect_pdu_ses_status(dissector d, context* ctx) {
         &hf_nas_5gs_pdu_ses_sts_psi_2_b2,
         &hf_nas_5gs_pdu_ses_sts_psi_1_b1,
         &hf_nas_5gs_pdu_ses_sts_psi_0_b0,
-        NULL,
+        nullptr,
     };
 
     static const field_meta* psi_8_15_flags[] = {
@@ -672,16 +672,20 @@ int mm::dissect_pdu_ses_status(dissector d, context* ctx) {
         &hf_nas_5gs_pdu_ses_sts_psi_10_b2,
         &hf_nas_5gs_pdu_ses_sts_psi_9_b1,
         &hf_nas_5gs_pdu_ses_sts_psi_8_b0,
-        NULL,
+        nullptr,
     };
-    auto orig_offset = d.offset;
+
+    const auto len = d.length;
+
     d.add_bits(psi_0_7_flags);
     d.step(1);
+
     d.add_bits(psi_8_15_flags);
     d.step(1);
 
-    d.extraneous_data_check(0);
-    return 2;
+    // All bits in octet 5 to 34 are spare and shall be coded as zero, if the respective octet is included in the information element
+    // d.extraneous_data_check(0);
+    return len;
 }
 
 //  *   9.11.3.42    PDU session reactivation result
@@ -936,10 +940,15 @@ static const true_false_string tfs_raai = {
     "all PLMN registration area allocated",
     "all PLMN registration area not allocated",
 };
+
 int mm::dissect_mico_ind(dissector d, context* ctx) {
     auto len = d.length;
 
     d.add_item(1, hf_mm_raai_b0, enc::be);
+
+    // In the UE to network direction bit 1 is spare. The UE shall set this bit to zero.
+    // In the network to UE and the UE to network direction:
+    d.add_item(1, &hf_mm_sprti, enc::be);
     return 1;
 }
 
@@ -1419,9 +1428,7 @@ int mm::dissect_mobile_id(dissector d, context* ctx) {
     return len;
 }
 
-/*
- *   9.11.3.39    Payload container
- */
+/*  9.11.3.39    Payload container */
 int mm::dissect_pld_cont(dissector d, context* ctx) {
     auto len = d.length;
 
