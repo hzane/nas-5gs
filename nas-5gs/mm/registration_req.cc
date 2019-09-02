@@ -1,34 +1,13 @@
 #include "../dissect_mm_msg.hh"
 #include "../gsm.hh"
 #include "../ts24007.hh"
+#include "registration_req.hh"
 
-namespace mm_reg_req {
-extern const field_meta* hf_reg_req_flags;
-
-extern const element_meta nw_slicing_ind;
-extern const element_meta eps_nas_msg_cont;
-extern const element_meta ue_status;
-extern const element_meta last_v_tai;
-extern const element_meta nksi_key_set_id;
-extern const element_meta pld_cont;
-extern const element_meta ladn_inf;
-extern const element_meta ue_sec_cap;
-extern const element_meta mm_cap;
-extern const element_meta ul_data_status;
-extern const element_meta s1_ue_net_cap;
-extern const element_meta ue_usage_set;
-extern const element_meta allow_pdu_ses_sts;
-extern const element_meta aguti_mobile_id;
-extern const element_meta pld_cont_type;
-extern const element_meta update_type;
-extern const element_meta requested_drx_param;
-extern const element_meta mico_ind;
-extern const element_meta requested_nssai;
-
-} // namespace mm_reg_req
 
 using namespace mm;
 using namespace nas;
+
+
 
 /* * 8.2.6 Registration request */
 int mm::registration_req(dissector d, context* ctx) {
@@ -39,13 +18,15 @@ int mm::registration_req(dissector d, context* ctx) {
     d.pinfo->dir = pi_dir::ul;
     // get private data
 
-    /*   5GS registration type    5GS registration type 9.11.3.7    M    V    1/2  H0*/
+    /*   5GS registration type  9.11.3.7    M    V    1/2  H0*/
+    // d.add_item(1, hf_reg_req_flags, enc::be);
+    auto consumed = dissect_elem_v(nullptr, &registration_request, d, ctx);
+    d.add_item(1, &hf_ngksi_nas_ksi, enc::be);
     /*    ngKSI    NAS key set identifier 9.11.3.32    M    V    1/2 H1*/
-    d.tree->add_item(d.pinfo, d.tvb, d.offset, 1, hf_reg_req_flags, enc::be);
-    d.step(1);
+    d.step(consumed);
 
     /*    Mobile identity    5GS mobile identity 9.11.3.4    M    LV-E    6-n*/
-    auto consumed = dissect_elem_lv_e(nullptr, &mobile_id, d, ctx);
+    consumed = dissect_elem_lv_e(nullptr, &mobile_id, d, ctx);
     d.step(consumed);
 
     /*C-    Non-current native NAS KSI    NAS key set identifier 9.11.3.32    O    TV 1*/
@@ -53,7 +34,7 @@ int mm::registration_req(dissector d, context* ctx) {
     consumed = dissect_opt_elem_tv_short(nullptr, &nksi_key_set_id, d, ctx);
     d.step(consumed);
 
-    /*10    5GMM capability    5GMM capability 9.11.3.1    O    TLV    3-15*/
+    /*10    5GMM capability  9.11.3.1    O    TLV    3-15*/
     // ELEM_OPT_TLV(0x10, , DE_NAS_5GS_MM_5GMM_CAP, NULL);
     consumed = dissect_opt_elem_tlv(nullptr, &mm_cap, d, ctx);
     d.step(consumed);
@@ -74,18 +55,17 @@ int mm::registration_req(dissector d, context* ctx) {
     consumed = dissect_opt_elem_tv(nullptr, &last_v_tai, d, ctx);
     d.step(consumed);
 
-    /*17    S1 UE network capability    S1 UE network capability 9.11.3.48    O    TLV
-     * 4-15 */
+    /*17    S1 UE network capability  9.11.3.48    O    TLV  4-15 */
     //    ELEM_OPT_TLV(0x17, , DE_EMM_UE_NET_CAP, NULL);
     consumed = dissect_opt_elem_tlv(nullptr, &s1_ue_net_cap, d, ctx);
     d.step(consumed);
 
-    /*40    Uplink data status    Uplink data status 9.11.3.57    O    TLV    4-34 */
-    //    ELEM_OPT_TLV(0x40, , DE_NAS_5GS_MM_UL_DATA_STATUS, NULL);
+    /*40    Uplink data status  9.11.3.57    O    TLV    4-34 */
+    //ELEM_OPT_TLV(0x40, , DE_NAS_5GS_MM_UL_DATA_STATUS, NULL);
     consumed = dissect_opt_elem_tlv(nullptr, &ul_data_status, d, ctx);
     d.step(consumed);
 
-    /*50    PDU session status    PDU session status 9.11.3.44    O    TLV    4-34 */
+    /*50    PDU session status  9.11.3.44    O    TLV    4-34 */
     //    ELEM_OPT_TLV(0x50, , DE_NAS_5GS_MM_PDU_SES_STATUS, NULL);
     consumed = dissect_opt_elem_tlv(nullptr, &pdu_ses_status, d, ctx);
     d.step(consumed);
@@ -105,13 +85,12 @@ int mm::registration_req(dissector d, context* ctx) {
     consumed = dissect_opt_elem_tlv_e(nullptr, &aguti_mobile_id, d, ctx);
     d.step(consumed);
 
-    /*25    Allowed PDU session status    Allowed PDU session status         9.11.3.13
-     * O    TLV    4 - 34 */
-    //    ELEM_OPT_TLV(0x25, , DE_NAS_5GS_MM_ALLOW_PDU_SES_STS, NULL);
+    /*25    Allowed PDU session status    9.11.3.13  O    TLV    4 - 34 */
+    // ELEM_OPT_TLV(0x25, , DE_NAS_5GS_MM_ALLOW_PDU_SES_STS, NULL);
     consumed = dissect_opt_elem_tlv(nullptr, &allow_pdu_ses_sts, d, ctx);
     d.step(consumed);
 
-    /*18    UE's usage setting    UE's usage setting         9.11.3.55    O    TLV    3 */
+    /*18    UE's usage setting    9.11.3.55    O    TLV    3 */
     // ELEM_OPT_TLV(0x18, , DE_NAS_5GS_MM_UE_USAGE_SET, NULL);
     consumed = dissect_opt_elem_tlv(nullptr, &ue_usage_set, d, ctx);
     d.step(consumed);
@@ -122,7 +101,7 @@ int mm::registration_req(dissector d, context* ctx) {
     consumed = dissect_opt_elem_tlv(nullptr, &requested_drx_param, d, ctx);
     d.step(consumed);
 
-    /*70    EPS NAS message container    EPS NAS message container 9.11.3.24    O    TLV-E
+    /*70    EPS NAS message container  9.11.3.24    O    TLV-E
      * 4-n */
     // ELEM_OPT_TLV_E(0x70, , DE_NAS_5GS_MM_EPS_NAS_MSG_CONT, NULL);
     consumed = dissect_opt_elem_tlv_e(nullptr, &eps_nas_msg_cont, d, ctx);
@@ -133,34 +112,42 @@ int mm::registration_req(dissector d, context* ctx) {
     consumed = dissect_opt_elem_tlv_e(nullptr, &ladn_inf, d, ctx);
     d.step(consumed);
 
-    /* 8-    Payload container type    Payload container type 9.11.3.40    O    TV    1 */
-    // ELEM_OPT_TV_SHORT(0x80, NAS_5GS_PDU_TYPE_MM, DE_NAS_5GS_MM_PLD_CONT_TYPE, NULL);
+    /* 8-    Payload container type  9.11.3.40    O    TV    1 */
+    // ELEM_OPT_TV_SHORT(0x80, , DE_NAS_5GS_MM_PLD_CONT_TYPE, NULL);
     consumed = dissect_opt_elem_tv_short(nullptr, &pld_cont_type, d, ctx);
     d.step(consumed);
 
-    /* 7B    Payload container     Payload container 9.11.3.39    O    TLV-E    4-65538 */
+    /* 7B    Payload container  9.11.3.39    O    TLV-E    4-65538 */
     // ELEM_OPT_TLV_E(0x7B, NAS_5GS_PDU_TYPE_MM, DE_NAS_5GS_MM_PLD_CONT, NULL);
     consumed = dissect_opt_elem_tlv_e(nullptr, &pld_cont, d, ctx);
     d.step(consumed);
 
-    /* 9-    Network slicing indication    Network slicing indication 9.11.3.36    O    TV
-     * 1 */
-    // ELEM_OPT_TV_SHORT(0x90, NAS_5GS_PDU_TYPE_MM, DE_NAS_5GS_MM_NW_SLICING_IND, NULL);
+    /* 9-    Network slicing indication 9.11.3.36    O    TV 1 */
+    // ELEM_OPT_TV_SHORT(0x90, , DE_NAS_5GS_MM_NW_SLICING_IND, NULL);
     consumed = dissect_opt_elem_tv_short(nullptr, &nw_slicing_ind, d, ctx);
     d.step(consumed);
 
-    /* 53    5GS update type    5GS update type 9.11.3.9A    O    TLV    3 */
+    /* 53    5GS update type 9.11.3.9A    O    TLV    3 */
     // ELEM_OPT_TLV(0x53, , DE_NAS_5GS_MM_UPDATE_TYPE, NULL);
     consumed = dissect_opt_elem_tlv(nullptr, &update_type, d, ctx);
     d.step(consumed);
 
-    /* 71    NAS message container    NAS message container 9.11.3.33    O    TLV-E    4-n
+    /* Mobile station classmark 2 9.11.3.61
+     * Supported codec list 9.11.3.62     
      */
+
+    /* 71    NAS message container 9.11.3.33    O    TLV-E    4-n */
     // ELEM_OPT_TLV_E(0x71, , DE_NAS_5GS_MM_NAS_MSG_CONT, NULL);
     consumed = dissect_opt_elem_tlv_e(nullptr, &nas_msg_cont, d, ctx);
     d.step(consumed);
 
-    // extraneous_data_check(d.pinfo, d.tree, d.tvb, d.offset, d.length, 0);
+    /*60	EPS bearer context status	9.11.3.60	O	TLV	4 */
+    consumed = dissect_opt_elem_tlv(nullptr, &eps_bearer_ctx_status, d, ctx);
+    d.step(consumed);
+
+    /* XX	Requested extended DRX parameters	Extended DRX parameters 9.11.3.60	O	TLV	3*/
+    /* TBD	T3324 value	GPRS timer 3 9.11.2.5	O	TLV	3 */
+
     d.extraneous_data_check(0);
 
     return len;
@@ -1710,3 +1697,15 @@ int mm_reg_req::dissect_requested_nssai(dissector d, context* ctx) {
     return len;
 }
 #endif
+
+
+
+int mm_reg_req::dissect_reg_req_type(dissector d, context* ctx) {
+    const field_meta* flags[] = {
+        &hf_mm_for,
+        &hf_mm_reg_type,
+        nullptr,
+    };
+    d.add_bits(flags);
+    return 1;
+}

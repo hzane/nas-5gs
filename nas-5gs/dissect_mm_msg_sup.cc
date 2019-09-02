@@ -66,7 +66,7 @@ const field_meta mm::hf_nas_key_set_id = {
     "nas_5gs.mm.nas_key_set_id",
     ft::ft_uint8,
     fd::base_dec,
-    nullptr,
+    nas_eps_emm_nas_ksi_values,
     nullptr,
     nullptr,
     0x07,
@@ -1103,6 +1103,7 @@ extern const field_meta mm::hfm_mm_cause = {
     0x0,
 };
 
+// 9.11.3.4
 extern const element_meta mm::mobile_id = {
     0xff,
     "Mobile identity",
@@ -1211,12 +1212,11 @@ extern const field_meta mm::hfm_nas_eps_tsc = {
     nullptr,
     0x0,
 };
-extern const field_meta* mm::hf_nas_eps_tsc = &hfm_nas_eps_tsc;
+const field_meta* mm::hf_nas_eps_tsc = &hfm_nas_eps_tsc;
 
 /* NAS key set identifier (octet 1) Bits 3  2   1 */
 
-extern const
-    val_string mm::nas_eps_emm_nas_ksi_values[] = {
+extern const val_string mm::nas_eps_emm_nas_ksi_values[] = {
         {0, ""},
         {1, ""},
         {2, ""},
@@ -1246,6 +1246,7 @@ extern const element_meta mm::nas_ksi = {
     dissect_nas_ksi,
 };
 
+// 9.11.3.2	5GMM cause
 extern const element_meta mm::mm_cause = {
     0xff,
     "5GMM cause",
@@ -1257,6 +1258,12 @@ extern const element_meta mm::nas_msg_cont = {
     0x71,
     "NAS message container",
     dissect_nas_msg_cont,
+};
+
+extern const element_meta mm::eps_bearer_ctx_status = {
+    0x60,
+    "EPS bearer context status",
+    dissect_eps_bearer_context_status,
 };
 
 extern const element_meta mm::abba = {

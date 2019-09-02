@@ -19,32 +19,29 @@ int mm::authentication_req(dissector d, context* ctx) {
     /* Spare half octet    Spare half octet     9.5    M    V    1/2 H1 */
     d.tree->add_item(d.pinfo, d.tvb, d.offset, 1, hf_spare_half_octet, enc::be);
 
-    /*ngKSI     NAS key set identifier 9.11.3.29    M    V    1/2  */
+    /*ngKSI     NAS key set identifier 9.11.3.32    M    V    1/2  */
     // ELEM_MAND_V(DE_NAS_5GS_MM_NAS_KEY_SET_ID, " - ngKSI",ei_nas_5gs_missing_mandatory_elemen);
     auto consumed = dissect_elem_v(nullptr, &nas_ksi, d, ctx);
     d.step(consumed);
 
     /* ABBA    ABBA 9.11.3.10    M    LV    3-n */
-    // ELEM_MAND_LV(DE_NAS_5GS_MM_ABBA,ei_nas_5gs_missing_mandatory_elemen);
+    // ELEM_MAND_LV(DE_NAS_5GS_MM_ABBA,);
     consumed = dissect_elem_lv(nullptr, &abba, d, ctx);
     d.step(consumed);
 
     /*21    Authentication parameter RAND (5G authentication challenge)    Authentication
-     * parameter RAND     9.11.3.13    O    TV    17*/
-    // ELEM_OPT_TV(        0x21, GSM_A_PDU_TYPE_DTAP, DE_AUTH_PARAM_RAND, " - 5G
-    // authentication challenge");
+     * parameter RAND     9.11.3.16    O    TV    17*/
+    // ELEM_OPT_TV(0x21, , DE_AUTH_PARAM_RAND, " - 5G authentication challenge");
     consumed = dissect_opt_elem_tv(nullptr, &auth_parm_rand, d, ctx);
     d.step(consumed);
 
     /*20    Authentication parameter AUTN (5G authentication challenge)    Authentication
-     * parameter AUTN     9.11.3.14    O    TLV    18*/
-    // ELEM_OPT_TLV(
-    //     0x20, GSM_A_PDU_TYPE_DTAP, DE_AUTH_PARAM_AUTN, " - 5G authentication
-    //     challenge");
+     * parameter AUTN     9.11.3.15    O    TLV    18*/
+    // ELEM_OPT_TLV(0x20, , DE_AUTH_PARAM_AUTN, " - 5G authentication challenge");
     consumed = dissect_opt_elem_tlv(nullptr, &auth_parm_autn, d, ctx);
     d.step(consumed);
 
-    /*78    EAP message    EAP message 9.10.2.2    O    TLV-E    7-1503 */
+    /*78    EAP message    EAP message 9.11.2.2    O    TLV-E    7-1503 */
     // ELEM_OPT_TLV_E(0x78, NAS_5GS_PDU_TYPE_COMMON, DE_NAS_5GS_CMN_EAP_MESSAGE, NULL);
     consumed = dissect_opt_elem_tlv_e(nullptr, &eap_msg, d, ctx);
     d.step(consumed);
@@ -54,15 +51,17 @@ int mm::authentication_req(dissector d, context* ctx) {
 }
 namespace mm_authentication_req {
 
+// 9.11.3.16	Authentication parameter RAND
+int dissect_auth_parm_rand(dissector d, context* ctx);
 
-int                       dissect_auth_parm_rand(dissector d, context* ctx);
 extern const element_meta auth_parm_rand = {
     0x21,
     "Authentication parameter RAND (5G authentication challenge)",
     dissect_auth_parm_rand,
 };
 
-int                       dissect_auth_parm_autn(dissector d, context* ctx);
+int dissect_auth_parm_autn(dissector d, context* ctx);
+
 extern const element_meta auth_parm_autn = {
     0x20,
     "Authentication parameter AUTN (5G authentication challenge)",
@@ -82,10 +81,9 @@ extern const field_meta hf_dtap_rand = {
     0x00,
 };
 
-/*
- * [9] 10.5.3.1 Authentication parameter RAND
- */
+/* * 9.11.3.16	Authentication parameter RAND */
 int dissect_auth_parm_rand(dissector d, context* ctx) {
+    // See subclause 10.5.3.1 in 3GPP TS 24.008 [12].
     /* The RAND value is 16 octets long */
     d.add_item(16, &hf_dtap_rand, enc::be);
 
@@ -131,12 +129,12 @@ extern const field_meta hf_dtap_autn_mac = {
     0x00,
 };
 
-/*
- * [9] 10.5.3.1.1 Authentication Parameter AUTN (UMTS and EPS authentication challenge)
- */
+/* 9.11.3.15	Authentication parameter AUTN
+ * [9] 10.5.3.1.1 Authentication Parameter AUTN (UMTS and EPS authentication challenge)  */
 int dissect_auth_parm_autn(dissector d, context* ctx) {
-    auto len     = d.length;
-    auto subtree= d.add_item(d.length, &hf_dtap_autn, enc::na);
+    // See subclause 10.5.3.1 in 3GPP TS 24.008 [12].
+    const auto len     = d.length;
+    const auto subtree= d.add_item(d.length, &hf_dtap_autn, enc::na);
     if(d.length == 16){
         // d.tree = subtree;
         use_tree ut(d, subtree);
@@ -150,8 +148,7 @@ int dissect_auth_parm_autn(dissector d, context* ctx) {
         d.add_item(8, &hf_dtap_autn_mac, enc::be);
         d.step(8);
     }else{
-        d.tree->add_expert(
-            d.pinfo, d.tvb, d.offset, d.length, "auth param autn length is %d", d.length);
+        diag("auth param auth length is %d", d.length, paths(ctx));
     }
     return len;
 }

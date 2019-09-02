@@ -245,5 +245,8 @@
     <ClInclude Include="eps.hh">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="mm\registration_req.hh">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

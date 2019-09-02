@@ -12,14 +12,15 @@
 
 struct context {
     std::vector< std::string > paths = {};
-    NO_DISCARD std::string path() const;
+    std::string path() const;
 };
+
 struct use_context {
     context* ctx;
     use_context(context* ctx, const char* path) : ctx(ctx) {
         if(!ctx) return;
         ctx->paths.emplace_back(path);
-        diag("%s%s\n",string(' ', ctx->paths.size()).c_str(), path);
+        diag("%s%s\n", string(ctx->paths.size(), ' ').c_str(), path);
     }
     ~use_context() {
         if (ctx) {
@@ -27,6 +28,11 @@ struct use_context {
         }
     }
 };
+
+inline string paths(context*ctx) {
+    if (!ctx) return string();
+    return ctx->path();
+}
 
 namespace em_severity {
 __declspec(selectany) extern const int comment = 0;

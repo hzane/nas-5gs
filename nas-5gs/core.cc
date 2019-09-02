@@ -202,3 +202,4 @@ uint32_t mcc_mnc3(const uint8_t*d, uint32_t*mcc, uint32_t *mnc){
     *mnc = 100 * mnc1 + 10*mnc2 + mnc3;
     return (*mcc)*1000 + *mnc;
 }
+

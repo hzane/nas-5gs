@@ -221,6 +221,7 @@
     <ClInclude Include="field_meta.hh" />
     <ClCompile Include="mm\registration_req_i.cc" />
     <ClInclude Include="gsm.hh" />
+    <ClInclude Include="mm\registration_req.hh" />
     <ClInclude Include="nas-5gs.hh" />
     <ClInclude Include="packet_info.hh" />
     <ClInclude Include="proto.hh" />

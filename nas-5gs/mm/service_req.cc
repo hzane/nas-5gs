@@ -102,7 +102,7 @@ const element_meta allowed_pdu_ses_status = {
 int dissect_key_set_id(dissector d, context* ctx) {
     static const field_meta* flags[] = {
         &hf_tsc,
-        &hf_nas_key_set_id,
+        hf_nas_eps_nas_ksi,
         nullptr,
     };
     /* NAS key set identifier IEI   TSC     NAS key set identifier */

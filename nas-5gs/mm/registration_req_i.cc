@@ -1,6 +1,7 @@
 #include "../core.hh"
 #include "../dissect_mm_msg.hh"
 #include "../ts24007.hh"
+#include "registration_req.hh"
 
 namespace mm_reg_req {
 
@@ -21,7 +22,40 @@ static field_meta hfm_registration_req_flags = {
     nas_5gs_mm_reg_req_vals,
     nullptr,
     nullptr,
-    0x0,
+    0x0F,
+};
+
+// 9.11.3.7	5GS registration type
+const value_string nas_5gs_registration_type_values[] = {
+    {0x1, "initial registration"},
+    {0x2, "mobility registration updating"},
+    {0x3, "periodic registration updating"},
+    {0x4, "emergency registration"},
+    {0x7, "reserved"},
+    {0, nullptr},
+};
+
+true_false_string nas_5gs_for_tfs = {
+    "Follow-on request pending",
+    "No follow-on request pending",
+};
+const field_meta hf_mm_for = {
+    "Follow-On Request bit (FOR)",
+    "nas_5gs.mm.for",
+    ft::ft_boolean,
+    fd::base_dec,
+    nullptr, (&nas_5gs_for_tfs),nullptr,
+    0x08,
+};
+const field_meta hf_mm_reg_type = {
+    "5GS registration type",
+    "nas_5gs.mm.5gs_reg_type",
+    ft::ft_uint8,
+    fd::base_dec,
+    (nas_5gs_registration_type_values),
+    nullptr,
+    nullptr,
+    0x07,
 };
 
 const field_meta* hf_reg_req_flags = &hfm_registration_req_flags;
@@ -51,28 +85,21 @@ static const val_string nas_5gs_mm_registration_req_elem[] = {
     {0, nullptr},
 };
 
-/* 9.11.3.4     5GS mobile identity*/
-
-
-
-
 } // namespace mm_reg_req
 
-extern const val_string values_cause[];
-
-
-using namespace mm;
-
-
-namespace mm{
-
-
-} // namespace mm
-
-const true_false_string nas_5gs_odd_even_tfs;
-
-namespace mm {
-
+// only spare half octet
+const field_meta mm_reg_req::hf_ngksi_nas_ksi = {
+    "NAS key set identifier - ngKSI",
+    "nas_5gs.mm.ngksi",
+    ft::ft_uint8,
+    fd::base_dec,
+    nullptr,
+    nullptr,
+    nullptr,
+    0xF0,
 };
-
-
+const element_meta mm_reg_req::registration_request = {
+    0xff,
+    "5GS registration type",
+    dissect_reg_req_type,
+};

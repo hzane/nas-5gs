@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 
+#if 0
 #if !defined _MSC_VER 
 #define MUST_USE_RESULT __attribute__((warn_unused_result))
 #define NO_DISCARD [[nodiscard]]
@@ -11,6 +12,7 @@
 #define MUST_USE_RESULT
 #define NO_DISCARD
 #define NO_RETURN
+#endif
 #endif
 
 #if _MSC_VER < 1920
@@ -190,3 +192,5 @@ string gprs_timer3_format(uint8_t oct);
 string gprs_timer2_format(uint8_t oct);
 
 uint32_t mcc_mnc3(const uint8_t*d, uint32_t*mcc, uint32_t *mnc); // return mcc*1000+mnc
+
+string paths(context* ctx);

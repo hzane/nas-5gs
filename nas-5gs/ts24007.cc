@@ -13,12 +13,8 @@ int dissect_elem_mandatory(const field_meta*   type_meta,
         d.step(consumed);
     }
     if (consumed <= 0) {
-        d.tree->add_expert(d.pinfo,
-                           d.tvb,
-                           d.offset,
-                           0,
-                           "Missing Mandatory element %s, rest of dissection is suspect",
-                           safe_str(val_meta->name));
+        diag("Missing Mandatory element %s, rest of dissection is suspect %s, %s\n",
+             paths(ctx).c_str(), val_meta->name);
         consumed = 0;
     }
 

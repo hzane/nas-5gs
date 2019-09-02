@@ -67,6 +67,7 @@ int dissect_s_nssai(dissector d, context* ctx);
 
 int dissect_abba(dissector d, context* ctx);
 int dissect_requested_nssai(dissector d, context* ctx);
+int dissect_eps_bearer_context_status(dissector d, context* ctx);
 
 extern const message_meta      msgs[];
 extern const true_false_string tfs_requested_not_requested;
@@ -115,6 +116,7 @@ extern const element_meta nas_ksi;
 extern const element_meta mm_cause;
 extern const element_meta nas_msg_cont;
 extern const element_meta abba;
+extern const element_meta eps_bearer_ctx_status;
 
 extern const true_false_string tfs_supported_not_supported;
 extern const true_false_string tfs_nas_5gs_mm_n1_mod;

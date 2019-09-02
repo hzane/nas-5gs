@@ -17,12 +17,12 @@ int mm::authentication_resp(dissector d, context* ctx) {
     using namespace mm_authentication_resp;
 
     /* 2D    Authentication response parameter    Authentication response
-     * parameter 9.11.3.15    O    TLV    6-18 */
+     * parameter 9.11.3.17    O    TLV    18 */
     // ELEM_OPT_TLV(0x2d, NAS_PDU_TYPE_EMM, DE_EMM_AUTH_RESP_PAR, NULL);
     auto consumed = dissect_opt_elem_tlv(nullptr, &auth_resp_par, d, ctx);
     d.step(consumed);
 
-    /* 78 EAP message    EAP message     9.10.2.2    O    TLV-E    7-1503 */
+    /* 78 EAP message    EAP message     9.11.2.2    O    TLV-E    7-1503 */
     // ELEM_OPT_TLV_E(0x78, NAS_5GS_PDU_TYPE_COMMON, DE_NAS_5GS_CMN_EAP_MESSAGE, NULL);
     consumed = dissect_opt_elem_tlv_e(nullptr, &eap_msg, d, ctx);
     d.step(consumed);
@@ -34,6 +34,7 @@ namespace mm_authentication_resp {
 
 int dissect_auth_resp_param(dissector d, context* ctx);
 
+// 9.11.3.17
 extern const element_meta auth_resp_par = {
     0x2d,
     "Authentication response parameter",
@@ -51,8 +52,8 @@ extern const field_meta hf_dtap_sres = {
     0x00,
 };
 
-/*
- * [9] 10.5.3.2 Authentication Response parameter
+/* 9.11.3.17	Authentication response parameter
+ * 9.9.3.4 in 3GPP TS 24.301 [15].
  */
 int dissect_auth_resp_param(dissector d, context* ctx) {
 
