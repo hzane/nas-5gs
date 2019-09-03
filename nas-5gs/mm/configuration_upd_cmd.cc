@@ -8,6 +8,7 @@ extern const element_meta conf_upd_ind;
 extern const element_meta guti;
 extern const element_meta day_saving_time;
 extern const element_meta ladn_ind;
+extern const element_meta ladn_inf;
 extern const element_meta mico_ind;
 extern const element_meta service_area_list;
 extern const element_meta full_name_network;
@@ -81,7 +82,7 @@ int mm::conf_upd_cmd(dissector d, context* ctx) {
 
     /*79    LADN information    LADN information     9.11.3.19    O    TLV-E    11-1579*/
     // ELEM_OPT_TLV_E(0x79, NAS_5GS_PDU_TYPE_MM, DE_NAS_5GS_MM_LADN_INF, NULL);
-    consumed = dissect_opt_elem_tlv_e(nullptr, &ladn_ind, d, ctx);
+    consumed = dissect_opt_elem_tlv_e(nullptr, &ladn_inf, d, ctx);
     d.step(consumed);
 
     /*B-    MICO indication    MICO indication     9.11.3.21    O    TV    1*/
@@ -182,10 +183,10 @@ extern const element_meta day_saving_time = {
 };
 
 // 9.11.3.30
-extern const element_meta ladn_ind = {
+extern const element_meta ladn_inf = {
     0x79,
     "LADN information",
-    dissect_ladn_ind,
+    dissect_ladn_inf,
 };
 
 // 9.11.3.31
