@@ -20,6 +20,7 @@ string field_meta::format(const uint8_t*p , int length, uint32_t enc) const {
     if (ftype == ft::ft_bstrn){
         return bstrn_string(p, length);
     }
+
     switch (display){
         case fd::base_string: return string((const char*)p, length);
         case fd::base_bin: return format_bit(p, length, " ");
@@ -37,6 +38,10 @@ string field_meta::format(const uint8_t*p , int length, uint32_t enc) const {
             return format_hex(p, length, ":");
         case fd::mac:
             return format_hex(p, length, ":");
+        case fd::mcc:
+            return mcc_aux(p, length);
+        case fd::mnc:
+            return mnc_aux(p, length);
     }
 
     return string();

@@ -66,23 +66,24 @@ __declspec(selectany) extern const uint32_t base_hex_dec = 5; /* hexadecimal (de
 __declspec(selectany) extern const uint32_t base_bin     = 6; // show as bit string
 __declspec(selectany) extern const uint32_t base_bit     = 7; // show as bit set
 __declspec(selectany) extern const uint32_t base_string  = 8;
-__declspec(selectany) extern const uint32_t bits7        = 13u; // bits7 ascii string
-__declspec(selectany) extern const uint32_t ipv4         = 14u; // xxx.xxx.xxx.xxx
-__declspec(selectany) extern const uint32_t ipv6         = 17u; // xxx.xxx.xxx.xxx
-__declspec(selectany) extern const uint32_t timer3       = 21u; // gprs timer
-__declspec(selectany) extern const uint32_t timer2       = 22u; // gprs timer
-__declspec(selectany) extern const uint32_t timer        = 23u; // gprs timer
-__declspec(selectany) extern const uint32_t mmc          = 16u; //
-__declspec(selectany) extern const uint32_t mac          = 18u; //
-__declspec(selectany) extern const uint32_t mcc          = 19u; //
-__declspec(selectany) extern const uint32_t mnc          = 20u; //
+__declspec(selectany) extern const uint32_t bits7        = 9u; // bits7 ascii string
+__declspec(selectany) extern const uint32_t ipv4         = 10u; // xxx.xxx.xxx.xxx
+__declspec(selectany) extern const uint32_t ipv6         = 11u; // xxx.xxx.xxx.xxx
+__declspec(selectany) extern const uint32_t timer3       = 12u; // gprs timer
+__declspec(selectany) extern const uint32_t timer2       = 13u; // gprs timer
+__declspec(selectany) extern const uint32_t timer        = 14u; // gprs timer
+__declspec(selectany) extern const uint32_t mmc          = 15u; //
+__declspec(selectany) extern const uint32_t mac          = 16u; //
+__declspec(selectany) extern const uint32_t mcc          = 17u; //
+__declspec(selectany) extern const uint32_t mnc          = 18u; //
+__declspec(selectany) extern const uint32_t bcd          = 19u; // BCD Number
 
 /* Byte separators  when ft == ft_bytes */
 /* hexadecimal bytes with a period (.) between each byte */
-__declspec(selectany) extern const uint32_t sep_dot   = 9u ;
-__declspec(selectany) extern const uint32_t sep_dash  = 10u;
-__declspec(selectany) extern const uint32_t sep_colon = 11u;
-__declspec(selectany) extern const uint32_t sep_space = 12u;
+__declspec(selectany) extern const uint32_t sep_dot   = 20u ;
+__declspec(selectany) extern const uint32_t sep_dash  = 21u;
+__declspec(selectany) extern const uint32_t sep_colon = 22u;
+__declspec(selectany) extern const uint32_t sep_space = 23u;
 
 inline uint32_t get(uint32_t d) { return d & 0xff; }
 
