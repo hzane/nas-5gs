@@ -104,7 +104,7 @@ int mm::registration_req(dissector d, context* ctx) {
     d.step(consumed);
 
     /* 74    LADN indication  9.11.3.29    O    TLV-E    3-811 */
-    // ELEM_OPT_TLV_E(0x74, , DE_NAS_5GS_MM_LADN_INF, NULL);
+    // ELEM_OPT_TLV_E(0x74, , DE_NAS_5GS_MM_LADN_IND, NULL);
     consumed = dissect_opt_elem_tlv_e(nullptr, &ladn_ind, d, ctx);
     d.step(consumed);
 
