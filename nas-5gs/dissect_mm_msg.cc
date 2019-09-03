@@ -63,19 +63,20 @@ as specified in subclause 9.11.2.8 starting with the second octet.
 int mm::dissect_allowed_nssai(dissector d, context* ctx) {
 
     auto len = d.length;
-    auto i   = 0;
+    auto i   = 1;
     while (d.length > 0) {
-        auto subtree = d.tree->add_subtree(d.pinfo, d.tvb, d.offset, -1, "S-NSSAI %u", i);
-        d.tree       = subtree;
-        auto l       = d.tvb->uint8(d.offset);
+        auto     subtree = d.add_item(-1, "S-NSSAI %u", i);
+        use_tree ut(d, subtree);
+
+        auto l       = d.uint8();
         auto item    = d.add_item(1, &hf_mm_length, enc::be);
         d.step(1);
 
         auto consumed = dissect_s_nssai(d.slice(l), ctx);
-        d.tree->set_length(consumed + 1);
         d.step(consumed);
+        d.tree->set_length(consumed + 1);
 
-        i++;
+        ++i;
     }
     return len;
 }
@@ -237,10 +238,8 @@ const field_meta hf_eps_emm_ebi8  = {
     0x01,
 };
 
-/*
- * 9.11.3.59  EPS bearer context status
- * See subclause 9.9.2.1 in 3GPP TS 24.301 [15].
- */
+/*  9.11.3.59  EPS bearer context status
+ * See subclause 9.9.2.1 in 3GPP TS 24.301 [15]. */
 int mm::dissect_eps_bearer_context_status(dissector d, context* ctx) {
     const field_meta* flags[] = {
         &hf_eps_emm_ebi7,
@@ -443,7 +442,7 @@ int mm::dissect_rejected_nssai(dissector d, context* ctx) {
         auto subtree = d.tree->add_subtree(d.pinfo, d.tvb, d.offset, 2, "Rejected S-NSSAI %u", i);
         use_tree ut(d, subtree);
 
-        auto len = int(d.uint8()>>4);
+        auto len = int(d.uint8()>>4u);
         d.add_item(1, &hf_rej_nssai_cause, enc::be);
         d.step(1);
 
@@ -460,6 +459,8 @@ int mm::dissect_rejected_nssai(dissector d, context* ctx) {
 
 /* 9.11.3.37    NSSAI */
 int mm::dissect_configured_nssai(dissector d, context* ctx) {
+    /*S-NSSAI value is coded as the length and value part of S-NSSAI information element
+     * as specified in subclause 9.11.2.8 starting with the second octet.*/
     auto len = d.length;
     auto i   = 1;
     while (d.length > 0) {
@@ -650,6 +651,7 @@ const field_meta hf_nas_5gs_pdu_ses_sts_psi_8_b0 = {
 };
 } // namespace mm
 
+// PDU session status   9.11.3.44
 int mm::dissect_pdu_ses_status(dissector d, context* ctx) {
     static const field_meta* psi_0_7_flags[] = {
         &hf_nas_5gs_pdu_ses_sts_psi_7_b7,
@@ -852,9 +854,9 @@ const field_meta hf_nas_5gs_pdu_ses_rect_res_psi_8_b0  = {
     0x01,
 };
 
-
+// PDU session reactivation result   9.11.3.42
 int mm::dissect_pdu_ses_react_res(dissector d, context* ctx) {
-
+    auto len = d.length;
     static const field_meta* psi_0_7_flags[] = {
         &hf_nas_5gs_pdu_ses_rect_res_psi_7_b7,
         &hf_nas_5gs_pdu_ses_rect_res_psi_6_b6,
@@ -883,8 +885,9 @@ int mm::dissect_pdu_ses_react_res(dissector d, context* ctx) {
     d.add_bits(psi_8_15_flags);
     d.step(1);
 
-    d.extraneous_data_check(0);
-    return 2;
+    // 5-34 is optional
+
+    return len;
 }
 
 // 9.11.3.2	5GMM cause
@@ -989,51 +992,57 @@ const field_meta hf_sal_t_li = {
     nullptr,
     0x60,
 };
-    } // namespace mm
+} // namespace mm
 
-    // 9.11.3.49    Service area list page.391
-    int mm::dissect_sal(dissector d, context * ctx) {
-        auto                     len     = d.length;
-        static const field_meta* flags[] = {
-            &hf_sal_al_t,
-            &hf_sal_t_li,
-            &hf_sal_num_e,
-            nullptr,
-        };
-        auto num_par_sal = 1;
-        /*Partial service area list*/
-        while (d.length > 0) {
-            auto start   = d.offset;
-            auto subtree = d.tree->add_subtree(d.pinfo,
-                                               d.tvb,
-                                               d.offset,
-                                               -1,
-                                               "Partial service area list  %u",
-                                               num_par_sal);
-            // d.tree = subtree;
-            use_tree ut(d, subtree);
+// 9.11.3.49    Service area list page.391
+int mm::dissect_sal(dissector d, context* ctx) {
+    auto                     len     = d.length;
+    static const field_meta* flags[] = {
+        &hf_sal_al_t,
+        &hf_sal_t_li,
+        &hf_sal_num_e,
+        nullptr,
+    };
+    auto num_par_sal = 1;
+    /*Partial service area list*/
+    while (d.length > 0) {
+        auto     start   = d.offset;
+        auto     subtree = d.add_item(-1, "Partial service area list  %u", num_par_sal);
+        use_tree ut(d, subtree);
 
-            /*Head of Partial service area list*/
-            /* Allowed type    Type of list    Number of elements    octet 1 */
-            auto sal_head  = d.tvb->uint8(d.offset);
-            auto sal_t_li  = (sal_head & 0x60) >> 5;
-            auto sal_num_e = (sal_head & 0x1f) + 1;
-            d.add_bits(flags);
-            d.step(1);
-            switch (sal_t_li) {
-            case 0: { // type of list = "00"
-                /*octet 2  MCC digit2  MCC digit1*/
-                /*octet 3  MNC digit3  MCC digit3*/
-                /*octet 4  MNC digit2  MNC digit1*/
-                dissect_e212_mcc_mnc(d, ctx);
+        /*Head of Partial service area list*/
+        /* Allowed type    Type of list    Number of elements    octet 1 */
+        auto sal_head  = d.tvb->uint8(d.offset);
+        auto sal_t_li  = (sal_head & 0x60) >> 5;
+        auto sal_num_e = (sal_head & 0x1f) + 1;
+        d.add_bits(flags);
+        d.step(1);
+        switch (sal_t_li) {
+        case 0: { // type of list = "00"
+            /*octet 2  MCC digit2  MCC digit1*/
+            /*octet 3  MNC digit3  MCC digit3*/
+            /*octet 4  MNC digit2  MNC digit1*/
+            dissect_e212_mcc_mnc(d, ctx);
+            d.step(3);
+            while (sal_num_e > 0) {
+                d.add_item(3, &hf_tac, enc::be);
                 d.step(3);
-                while (sal_num_e > 0) {
-                    d.add_item(3, &hf_tac, enc::be);
-                    d.step(3);
-                    --sal_num_e;
-                }
-            } break;
-            case 1: { // type of list = "01"
+                --sal_num_e;
+            }
+        } break;
+        case 1: { // type of list = "01"
+            /*octet 2  MCC digit2  MCC digit1*/
+            /*octet 3  MNC digit3  MCC digit3*/
+            /*octet 4  MNC digit2  MNC digit1*/
+            dissect_e212_mcc_mnc(d, ctx);
+            d.step(3);
+
+            /*octet 5  TAC 1*/
+            d.add_item(3, &hf_tac, enc::be);
+            d.step(3);
+        } break;
+        case 2: { // type of list = "10"
+            while (sal_num_e > 0) {
                 /*octet 2  MCC digit2  MCC digit1*/
                 /*octet 3  MNC digit3  MCC digit3*/
                 /*octet 4  MNC digit2  MNC digit1*/
@@ -1043,35 +1052,23 @@ const field_meta hf_sal_t_li = {
                 /*octet 5  TAC 1*/
                 d.add_item(3, &hf_tac, enc::be);
                 d.step(3);
-            } break;
-            case 2: { // type of list = "10"
-                while (sal_num_e > 0) {
-                    /*octet 2  MCC digit2  MCC digit1*/
-                    /*octet 3  MNC digit3  MCC digit3*/
-                    /*octet 4  MNC digit2  MNC digit1*/
-                    dissect_e212_mcc_mnc(d, ctx);
-                    d.step(3);
-
-                    /*octet 5  TAC 1*/
-                    d.add_item(3, &hf_tac, enc::be);
-                    d.step(3);
-                    --sal_num_e;
-                }
-            } break;
-            case 3: { // type of list = "11"
-                dissect_e212_mcc_mnc(d, ctx);
-                d.step(3);
-            } break;
-            default: // never goes here
-                break;
+                --sal_num_e;
             }
-
-            /*calculate the length of IE */
-            d.tree->set_length(d.offset - start);
-            /*calculate the number of Partial service area list*/
-            num_par_sal++;
+        } break;
+        case 3: { // type of list = "11"
+            dissect_e212_mcc_mnc(d, ctx);
+            d.step(3);
+        } break;
+        default: // never goes here
+            break;
         }
-        return len;
+
+        /*calculate the length of IE */
+        d.tree->set_length(d.offset - start);
+        /*calculate the number of Partial service area list*/
+        num_par_sal++;
+    }
+    return len;
     }
 
     namespace mm {

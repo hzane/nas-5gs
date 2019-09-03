@@ -1060,6 +1060,7 @@ extern const field_meta mm::hf_nas_5gs_spare_b2 = {
 };
 #endif
 
+// Allowed NSSAI    NSSAI     9.11.3.37
 extern const element_meta mm::allowed_nssai = {
     0x15,
     "Allowed NSSAI",
@@ -1091,12 +1092,14 @@ extern const element_meta mm::rej_nssai = {
     dissect_rejected_nssai,
 };
 
+// Configured NSSAI    NSSAI 9.11.3.37
 extern const element_meta mm::configured_nssai = {
     0x31,
     "Configured NSSAI",
     dissect_configured_nssai,
 };
 
+// PDU session reactivation result   9.11.3.42
 extern const element_meta mm::pdu_ses_react_res = {
     0x26,
     "PDU session reactivation result",
