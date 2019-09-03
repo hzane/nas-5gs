@@ -203,3 +203,60 @@ uint32_t mcc_mnc3(const uint8_t*d, uint32_t*mcc, uint32_t *mnc){
     return (*mcc)*1000 + *mnc;
 }
 
+static char digit_tbcd[] =
+    {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '?', 'B', 'C', '*', '#', '?'};
+
+inline char d2asc(uint8_t v) { return v < 9 ? digit_tbcd[v] : char(v + 55); }
+
+// Decode the MCC/MNC from 3 octets in 'octs'
+string mcc_aux(const uint8_t* d, int length) {
+    if (length < 3) return string();
+
+    char mcc[4]={0};
+
+    mcc[0] = d2asc(d[0] & 0x0fu);
+    mcc[1] = d2asc((d[0] & 0xf0u) >> 4);
+    mcc[2] = d2asc(d[1] & 0x0fu);
+    mcc[3] = '\0';
+
+    return string((const char*) mcc);
+}
+
+string mnc_aux(const uint8_t* d, int length) {
+    if (length < 3) return string();
+
+    char mnc[4]={0};
+    mnc[2]     = d2asc((d[1] & 0xf0u) >> 4);
+    mnc[0]     = d2asc(d[2] & 0x0fu);
+    mnc[1]     = d2asc((d[2] & 0xf0u) >> 4);
+
+    if (mnc[1]=='F') // only 1 digit MNC
+        mnc[1]='\0';
+    else if (mnc[2]=='F') // only 2 digit MNC
+        mnc[2] = '\0';
+    else mnc[3] = '\0';
+
+    return string((const char*) mnc);
+}
+
+namespace{
+static const char digits_bcd[] =
+    {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '?', '?', '?', '?', '?', '?'};
+}
+// BCD number
+string bcd_string(const uint8_t*d, int length){
+    if (length<=0 || !d) return string();
+
+    string ret = {};
+    for(int i =0; i < length; i++){
+        auto a   = d[i] & 0x0fu;
+        ret.push_back(digits_bcd[a]);
+
+        auto b   = (d[i] & 0xf0u) >> 4;
+
+        // if the last octet's lower-order nibble is 0x0f
+        // ignore it
+        if (i != length - 1 || b != 0x0fu) ret.push_back(digits_bcd[b]);
+    }
+    return ret;
+}

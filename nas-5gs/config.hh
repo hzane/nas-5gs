@@ -4,7 +4,7 @@
 #include <vector>
 
 #if 0
-#if !defined _MSC_VER 
+#if !defined _MSC_VER
 #define MUST_USE_RESULT __attribute__((warn_unused_result))
 #define NO_DISCARD [[nodiscard]]
 #define NO_RETURN [[noreturn]]
@@ -192,5 +192,12 @@ string gprs_timer3_format(uint8_t oct);
 string gprs_timer2_format(uint8_t oct);
 
 uint32_t mcc_mnc3(const uint8_t*d, uint32_t*mcc, uint32_t *mnc); // return mcc*1000+mnc
+
+//  [3] 10.5.1.13 PLMN list TS24.008
+string mcc_aux(const uint8_t* d, int length = 3);
+string mnc_aux(const uint8_t* d, int length = 3);
+
+// BCD number
+string bcd_string(const uint8_t*d, int length);
 
 string paths(context* ctx);
