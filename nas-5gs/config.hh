@@ -70,15 +70,15 @@ struct dissector {
     proto_node*    add_item(int len, const field_meta* fm, uint32_t e = enc::be);
     proto_node*    add_item(int len, const char* format, ...);
     void           add_bits(const field_meta* metas[]);
-    void           extraneous_data_check(int max_len);
+    void           extraneous_data_check(int max_len, context* ctx = nullptr);
     const uint8_t* safe_ptr() const;
     int            safe_length(int len) const;
     dissector      slice(int len) const;
     dissector      use_elem(void* elem) const;
-    void           set_private(const char* name, uint64_t val);
-    uint64_t       get_private(const char* name, uint64_t dft = 0);
     uint8_t        uint8()const;
     uint16_t       ntohs()const;
+    //    void           set_private(const char* name, uint64_t val);
+    //    uint64_t       get_private(const char* name, uint64_t dft = 0);
 };
 
 struct use_tree{
@@ -89,6 +89,32 @@ struct use_tree{
 };
 
 typedef int (*dissect_fnc_t)(dissector, context* ctx);
+
+struct context {
+    std::vector< std::string > paths = {};
+    std::string                path() const;
+};
+
+struct use_context {
+    context* ctx;
+    use_context(context* ctx, const char* path) : ctx(ctx) {
+        if (!ctx) return;
+        ctx->paths.emplace_back(path);
+        diag("%s%s\n", string(ctx->paths.size(), ' ').c_str(), path);
+    }
+    ~use_context() {
+        if (ctx) {
+            ctx->paths.pop_back();
+        }
+    }
+};
+
+inline string paths(context* ctx) {
+    if (!ctx) return string();
+    return ctx->path();
+}
+
+void extraneous_data_check(int len, int maxlen, context* ctx);
 
 inline uint8_t  n2uint7(const uint8_t* d) { return *d & 0x7F; };
 inline uint8_t  n2uint8(const uint8_t* d) { return *d; };

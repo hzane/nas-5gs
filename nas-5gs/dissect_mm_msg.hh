@@ -47,9 +47,8 @@ int dissect_configured_nssai(dissector d, context* ctx);
 
 int dissect_pdu_ses_react_res(dissector d, context* ctx = nullptr);
 
-/* 9.11.3.44    PDU session status */
-int dissect_pdu_ses_status(dissector d, context* ctx = nullptr);
-int dissect_mm_cause(dissector d, context* ctx);
+int dissect_pdu_ses_status(dissector d, context* ctx = nullptr); /* 9.11.3.44*/
+int dissect_mm_cause(dissector d, context* ctx); // 5GMM cause   9.11.3.2
 
 int dissect_ladn_inf(dissector d, context* ctx);
 int dissect_ladn_ind(dissector d, context* ctx);

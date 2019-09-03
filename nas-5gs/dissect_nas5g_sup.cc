@@ -272,6 +272,7 @@ const field_meta nas::hf_service_request_msg_id = {
     0x0,
 };
 
+// EAP message  9.11.2.2
 // as specified in IETF RFC 3748
 const element_meta nas::eap_msg = {
     0x78,

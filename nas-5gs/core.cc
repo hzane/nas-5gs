@@ -260,3 +260,13 @@ string bcd_string(const uint8_t*d, int length){
     }
     return ret;
 }
+
+void extraneous_data_check(int offset, int len, int maxlen, context*ctx){
+    if (len<0){
+        diag("underflow %s %d:%d\n", paths(ctx).c_str(), offset, len);
+        return;
+    }
+    if (len>maxlen){
+        diag("extraneous data %s %d:%d\n", paths(ctx).c_str(), offset, len);
+    }
+}

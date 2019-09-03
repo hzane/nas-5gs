@@ -1446,18 +1446,146 @@ int mm::dissect_mobile_id(dissector d, context* ctx) {
 
     return len;
 }
+const field_meta hf_pld_cont_entry_nie = {
+    "Number of optional IEs",
+    "nas_5gs.mm.pld_cont.n_optional_ies",
+    ft::ft_uint8,
+    fd::base_dec,
+    nullptr,
+    nullptr,
+    nullptr,
+    0xf0u,
+};
+const field_meta hf_pld_cont_entry_contents = {
+    "Payload container entry contents",
+    "nas_5gs.mm.pld_cont.pcec",
+    ft::ft_bytes,
+    fd::base_none,
+    nullptr,
+    nullptr,
+    nullptr,
+    0x0,
+};
+const field_meta hf_pld_optional_ie = {
+    "Optional IE",
+    "nas_5gs.mm.pld_cont.optional_ie",
+    ft::ft_bytes,
+    fd::base_none,
+    nullptr,
+    nullptr,
+    nullptr,
+    0x0,
+};
+const value_string pld_optional_ie_type_values[] = {
+    {0x12, "PDU session ID"},         // see subclause 9.11.3.41
+    {0x24, "Additional information"}, // 9.11.2.1
+    {0x58, "5GMM cause"},             // 9.11.3.2
+    {0x37, "Back-off timer value"},   // 9.11.2.5
+    {0x59, "Old PDU session ID"},     // 9.11.3.41
+    {0x80, "Request type"},           // 9.11.3.47
+    {0x22, "S-NSSAI"},                // 9.11.2.8
+    {0x25, "DNN"},                    // 9.11.2.1A
+    {0, nullptr},
+};
+const field_meta hf_pld_optional_ie_type = {
+    "Type of Optional IE",
+    "nas_5gs.mm.pld_cont.optional_ie.type",
+    ft::ft_uint8,
+    fd::base_hex,
+    nullptr,
+    nullptr,
+    nullptr,
+    0x0,
+};
+const field_meta hf_pld_optional_ie_length = {
+    "Length of Optional IE",
+    "nas_5gs.mm.pld_cont.optional_ie.length",
+    ft::ft_uint8,
+    fd::base_dec,
+    nullptr,
+    nullptr,
+    nullptr,
+    0x0,
+};
+const field_meta hf_pld_optional_ie_value = {
+    "Value of Optional IE",
+    "nas_5gs.mm.pld_cont.optional_ie.value",
+    ft::ft_bytes,
+    fd::base_none,
+    nullptr,
+    nullptr,
+    nullptr,
+    0x0,
+};
+int dissect_optional_ie(dissector d, context* ctx) {
+    auto start = d.offset;
 
+    auto subtree = d.add_item(-1, &hf_pld_optional_ie, enc::na);
+    use_tree ut(d, subtree);
+
+    d.add_item(1, &hf_pld_optional_ie_type, enc::be);
+    d.step(1);
+
+    auto len = (int)d.uint8();
+    d.add_item(1, &hf_pld_optional_ie_length, enc::be);
+    d.step(1);
+
+    d.add_item(len, &hf_pld_optional_ie_value, enc::na);
+    return d.offset - start;
+}
+
+int dissect_pld_cont_entry(dissector d, context*ctx){
+    auto len = (int)d.ntohs();
+
+    d.add_item(1, &hf_pld_cont_type, enc::be);
+
+    auto nie = (d.uint8() & 0xf0u) >> 4;
+    d.add_item(1, &hf_pld_cont_entry_nie, enc::be);
+    d.step(1);
+
+    while(nie>0){
+        auto consumed = dissect_optional_ie(d, ctx);
+        d.step(consumed);
+
+        --nie;
+    }
+    d.add_item(d.length, &hf_pld_cont_entry_contents, enc::na);
+    return len;
+}
+
+namespace mm_reg_accept{
+int dissect_sor_trans_cont(dissector d, context* ctx);
+}
 /*  9.11.3.39    Payload container */
 int mm::dissect_pld_cont(dissector d, context* ctx) {
     auto len = d.length;
+    auto typi = retrive_payload_content_type(d.pinfo) & 0x0fu;
 
-    auto typi = d.get_private("payload-content-type", 0);
     switch (typi) {
     case 1: { /* N1 SM information */
         dissect_nas5g_plain(d, ctx);
     } break;
     case 2: { // SMS
         d.add_item(d.length, &hf_pld_cont, enc::na);
+        /*
+        If the payload container type is set to "SMS", the payload container contents
+        contain an SMS message (i.e. CP-DATA, CP-ACK or CP-ERROR) as defined in
+        subclause 7.2 in 3GPP TS 24.011 [13].*/
+    } break;
+    case 4: { // SOR transparent container, 9.11.3.51
+              /*
+              If the payload container type is set to "SOR transparent container" and is
+              included in the DL NAS TRANSPORT message, the payload container contents are coded
+              the same way as the contents of the SOR transparent container IE (see
+              subclause 9.11.3.51) for SOR data type is set to value "0" except that the first
+              three octets are not included.
+
+              If the payload container type is set to "SOR transparent container" and is
+              included in the UL NAS TRANSPORT message, the payload container contents are coded
+              the same way as the contents of the SOR transparent container IE (see
+              subclause 9.11.3.51) for SOR data type is set to value "1" except that the first
+              three octets are not included.
+              */
     } break;
     case 3: { // LPP
         d.add_item(d.length, &hf_pld_cont, enc::na);
@@ -1465,15 +1593,48 @@ int mm::dissect_pld_cont(dissector d, context* ctx) {
     case 5: { /* UE policy container */
         dissect_updp(d, ctx);
     } break;
+    case 6: { // UE parameters update transparent container
+              /*
+              If the payload container type is set to "UE parameters update transparent
+              container" and is included in the DL NAS TRANSPORT message, the payload container
+              contents are coded the same way as the contents of the UE parameters update
+              transparent container IE (see subclause 9.11.3.53A) for UE parameters update data
+              type is set to value "0" except that the first three octets are not included.
+
+              If the payload container type is set to "UE parameters update transparent
+              container" and is included in the UL NAS TRANSPORT message, the payload container
+              contents are coded the same way as the contents of the UE parameters update
+              transparent container IE (see subclause 9.11.3.53A) for UE parameters update data
+              type is set to value "1" except that the first three octets are not included.
+              */
+    } break;
+    case 15: { // Multiple payloads
+        auto nentries = d.uint8();
+        d.step(1);
+        while(nentries>0){
+            auto consumed = dissect_pld_cont_entry(d, ctx);
+            d.step(consumed);
+            --nentries;
+        }
+        /*
+        If the payload container type is set to "Multiple payloads", the number of entries
+        field represents the total number of payload container entries, and the payload
+        container entry contents field is coded as a list of payload container entry
+        according to figure 9.11.3.39.2, with each payload container entry is coded
+        according to figure 9.11.3.39.3 and figure 9.11.3.39.4.*/
+    }
     default:
         d.add_item(d.length, &hf_pld_cont, enc::na);
     }
 
     return len;
 }
+
+// Payload container type   9.11.3.40
 int mm::dissect_pld_cont_type(dissector d, context* ctx) {
-    auto oct = d.tvb->uint8(d.offset);
-    d.set_private("payload-content-type", oct);
+    auto oct = d.tvb->uint8(d.offset) & 0x0fu;
+    // d.set_private("payload-content-type", oct);
+    store_payload_content_type(d.pinfo, oct);
 
     d.add_item(1, &hf_pld_cont_type, enc::be);
     return 1;

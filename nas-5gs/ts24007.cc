@@ -85,7 +85,7 @@ int dissect_opt_elem_t(const field_meta *,
     if (d.length <= 0) return 0;
 
     auto iei = d.tvb->uint8(d.offset);
-    if (iei != val_meta->type) return 0;
+    if (iei != val_meta->type && val_meta->type != 0xffu) return 0;
 
     set_elem_presence(e, true);
     set_elem_type(e, iei);
@@ -153,7 +153,7 @@ int dissect_opt_elem_lv_e(const field_meta *,
     d.step(2);
 
     use_tree ut(d, subtree);
-    
+
     auto fnc      = val_meta->fnc ? val_meta->fnc : add_generic_msg_elem_body;
     auto consumed = fnc(d.use_elem(get_elem_data(e)), ctx);
     d.step(consumed);
@@ -208,8 +208,8 @@ int dissect_opt_elem_tv_short(const field_meta *,
 
     if (d.length <= 0) return 0;
 
-    auto iei = d.tvb->uint8(d.offset) & 0xF0u;
-    if (iei != (val_meta->type & 0xF0u)) return 0;
+    auto iei = d.tvb->uint8(d.offset) >> 4u;
+    if (iei != val_meta->type && val_meta->type != 0xffu) return 0;
 
     set_elem_presence(e, true);
     set_elem_type(e, iei);
@@ -243,7 +243,7 @@ int dissect_opt_elem_tv(const field_meta *,
     if (d.length <= 0) return 0;
 
     auto iei = d.tvb->uint8(d.offset);
-    if (iei != val_meta->type) return 0;
+    if (iei != val_meta->type && val_meta->type != 0xffu) return 0;
 
     set_elem_presence(e, true);
     set_elem_type(e, iei);
@@ -273,7 +273,7 @@ int dissect_opt_elem_tlv(const field_meta *,
     if (d.length <= 0) return 0;
 
     auto iei = d.tvb->uint8(d.offset);
-    if (iei != val_meta->type) return 0;
+    if (iei != val_meta->type && val_meta->type != 0xffu) return 0;
 
     set_elem_presence(e, true);
     set_elem_type(e, iei);
@@ -318,7 +318,7 @@ int dissect_opt_elem_telv(const field_meta *,
     if (d.length <= 0) return 0;
 
     auto iei = d.tvb->uint8(d.offset);
-    if (iei != val_meta->type) return 0;
+    if (iei != val_meta->type && val_meta->type != 0xffu) return 0;
 
     set_elem_presence(e, true);
     set_elem_type(e, iei);
@@ -369,7 +369,7 @@ int dissect_opt_elem_tlv_e(const field_meta *,
     if (d.length<= 0) return 0;
 
     auto iei = d.tvb->uint8(d.offset);
-    if (iei != val_meta->type) return 0;
+    if (iei != val_meta->type && val_meta->type != 0xffu) return 0;
 
     set_elem_presence(e, true);
     set_elem_type(e, iei);

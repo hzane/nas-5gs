@@ -24,17 +24,15 @@ proto_node *dissector::add_item(int len, const char*format, ...){
     return tree->add_subtree(pinfo, tvb, offset, len, txt.c_str());
 }
 
-void dissector::extraneous_data_check(int maxlen) {
+void dissector::extraneous_data_check(int maxlen, context* ctx) {
     if (length < 0) {
-        diag("overflow at %d\n", offset);
+        diag("underflow at %s %d:%d\n", paths(ctx).c_str(), offset, length);
     }
     if (length > maxlen) {
-        tree->add_expert(pinfo,
-                         tvb,
-                         offset,
-                         length - maxlen,
-                         "extraneous data (%d) bytes",
-                         (length - maxlen));
+        diag("extraneous data (%d) bytes at %s %d\n",
+             (length - maxlen),
+             paths(ctx).c_str(),
+             offset);
     }
 }
 
@@ -54,6 +52,7 @@ int dissector::safe_length(int len) const {
     return 0;
 }
 
+#if 0
 void dissector::set_private(const char* name, uint64_t v) {
     pinfo->i_privates[string(name)] = v;
 }
@@ -62,6 +61,7 @@ uint64_t dissector::get_private(const char* name, uint64_t v) {
     if (i != pinfo->i_privates.end()) return i->second;
     return v;
 }
+#endif
 
 dissector dissector::use_elem(void* elem)const {
     return dissector{pinfo, tree, tvb, offset, length, elem};

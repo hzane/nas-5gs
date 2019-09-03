@@ -107,7 +107,6 @@ const field_meta mm::hf_nas_key_set_id_h1 = {
 };
 
 /* * 9.11.3.2 5GMM cause */
-
 extern const val_string mm::values_cause[] = {
     {0x03, "Illegal UE"},
     {0x05, "PEI not accepted"},
@@ -148,6 +147,7 @@ extern const val_string mm::values_cause[] = {
     {0, nullptr},
 };
 
+// 5GMM cause   9.11.3.2
 const field_meta mm::hf_mm_cause = {
     "5GMM cause",
     "nas_5gs.mm.5gmm_cause",
@@ -1113,6 +1113,7 @@ extern const element_meta mm::pdu_ses_status = {
     dissect_pdu_ses_status,
 };
 
+// 5GMM cause   9.11.3.2
 extern const field_meta mm::hfm_mm_cause = {
     "5GMM cause",
     "nas_5gs.mm.5gmm_cause",

@@ -153,7 +153,6 @@ const field_meta hf_eap = {
 };
 
 // RFC2284 RFC3748
-// http://tools.ietf.org/html/draft-bersani-eap-synthesis-sharedkeymethods-00
 /* 9.11.2.2    EAP message*/
 int nas::dissect_eap_msg(dissector d, context* ctx) {
     /* EAP message as specified in IETF RFC 3748 */

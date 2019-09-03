@@ -1826,7 +1826,7 @@ int mm_reg_req::dissect_ladn_ind(dissector d, context* ctx) {
 // 9.11.3.40
 int mm_reg_req::dissect_pld_cont_type(dissector d, context* ctx) {
     const auto oct = d.tvb->uint8(d.offset) & 0x0fu;
-    d.set_private("payload-content-type", oct);
+    store_payload_content_type(d.pinfo, oct);
 
     d.add_item(1, &mm::hf_pld_cont_type, enc::be);
     return 1;
