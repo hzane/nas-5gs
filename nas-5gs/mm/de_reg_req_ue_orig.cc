@@ -37,6 +37,7 @@ const element_meta de_reg_type = {
     0xff,
     "De-registration type",
     dissect_de_reg_type,
+    nullptr,
 };
 
 int                dissect_key_set_id(dissector d, context* ctx);
@@ -44,6 +45,7 @@ const element_meta key_set_id = {
     0xff,
     "5GS mobile identity",
     dissect_key_set_id,
+    nullptr,
 };
 
 

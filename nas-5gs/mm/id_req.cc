@@ -11,7 +11,7 @@ using namespace mm;
  * 8.2.21 Identity request
  */
 int mm::id_req(dissector d, context* ctx) {
-    auto        len = d.length;
+    const auto        len = d.length;
     use_context uc(ctx, "identity-request");
 
     using namespace mm_id;
@@ -20,13 +20,25 @@ int mm::id_req(dissector d, context* ctx) {
     /* Spare half octet    Spare half octet 9.5    M    V    1/2 */
     d.tree->add_item(d.pinfo, d.tvb, d.offset, 1, hf_spare_half_octet, enc::be);
     // ELEM_MAND_V(DE_NAS_5GS_MM_5GS_IDENTITY_TYPE,ei_nas_5gs_missing_mandatory_elemen);
-    auto consumed = dissect_elem_v(nullptr, &id_type, d, ctx);
+    const auto consumed = dissect_elem_v(nullptr, &id_type, d, ctx);
     d.step(consumed);
 
     d.extraneous_data_check(0);
     return len;
 }
 
+namespace {
+/* * 9.11.3.4    5GS mobile identity */
+static const val_string type_id_values[] = {
+    {0x0, "No identity"},
+    {0x1, "SUCI"},
+    {0x2, "5G-GUTI"},
+    {0x3, "IMEI"},
+    {0x4, "5G-S-TMSI"},
+    {0x5, "IMEISV"},
+    {0, nullptr},
+};
+}
 namespace mm_id {
 int dissect_id_type(dissector d, context* ctx);
 
@@ -34,6 +46,7 @@ extern const element_meta id_type = {
     0xff,
     "Identity type",
     dissect_id_type,
+    nullptr,
 };
 
 
@@ -43,7 +56,7 @@ const field_meta hf_id_type = {
     "nas_5gs.mm.type_id",
     ft::ft_uint8,
     fd::base_dec,
-    mm_type_id_values,
+    type_id_values,
     nullptr,
     nullptr,
     0x07,

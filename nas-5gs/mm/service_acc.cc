@@ -58,6 +58,7 @@ extern const element_meta pdu_ses_react_res_error_c = {
     0x72,
     "PDU session reactivation result error cause",
     dissect_pdu_ses_react_res_err_c,
+    nullptr,
 };
 
 //  *   9.11.3.43    PDU session reactivation result error cause

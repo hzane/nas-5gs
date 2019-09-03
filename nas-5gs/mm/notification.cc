@@ -11,7 +11,7 @@ using namespace nas;
  * 8.2.23 Notification
  */
 int mm::notification(dissector d, context* ctx) {
-    auto        len = d.length;
+    const auto        len = d.length;
     use_context uc(ctx, "notification");
 
     using namespace mm_notification;
@@ -21,7 +21,7 @@ int mm::notification(dissector d, context* ctx) {
     d.tree->add_item(d.pinfo, d.tvb, d.offset, 1, hf_spare_half_octet, enc::be);
 
     // ELEM_MAND_V(DE_NAS_5GS_MM_ACCESS_TYPE,ei_nas_5gs_missing_mandatory_elemen);
-    auto consumed = dissect_elem_v(nullptr, &access_type, d, ctx);
+    const auto consumed = dissect_elem_v(nullptr, &access_type, d, ctx);
     d.step(consumed);
 
     d.extraneous_data_check(0);
@@ -33,6 +33,7 @@ extern const element_meta access_type = {
     0xff,
     "Access type",
     dissect_access_type,
+    nullptr,
 };
 /*
  * 9.11.3.11    Access type

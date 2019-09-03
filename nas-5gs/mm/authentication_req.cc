@@ -58,6 +58,7 @@ extern const element_meta auth_parm_rand = {
     0x21,
     "Authentication parameter RAND (5G authentication challenge)",
     dissect_auth_parm_rand,
+    nullptr,
 };
 
 int dissect_auth_parm_autn(dissector d, context* ctx);
@@ -66,6 +67,7 @@ extern const element_meta auth_parm_autn = {
     0x20,
     "Authentication parameter AUTN (5G authentication challenge)",
     dissect_auth_parm_autn,
+    nullptr,
 };
 
 
@@ -148,7 +150,7 @@ int dissect_auth_parm_autn(dissector d, context* ctx) {
         d.add_item(8, &hf_dtap_autn_mac, enc::be);
         d.step(8);
     }else{
-        diag("auth param auth length is %d", d.length, paths(ctx));
+        diag("auth param auth length is %d, %s", d.length, paths(ctx).c_str());
     }
     return len;
 }

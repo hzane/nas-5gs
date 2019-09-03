@@ -12,13 +12,13 @@ extern const element_meta reported_s1_ue_sec_cap;
 
 using namespace nas;
 using namespace mm;
+using namespace mm_sec_mode_cmd;
 
 /*
  * 8.2.25 Security mode command
  */
 int mm::sec_mode_cmd(dissector d, context* ctx) {
-      auto        len = d.length;
-  using namespace mm_sec_mode_cmd;
+    const auto len = d.length;
     /* Direction: network to UE */
     d.pinfo->dir = pi_dir::dl;
 
@@ -101,32 +101,38 @@ extern const element_meta sec_algo = {
     0xff,
     "Selected NAS security algorithms",
     dissect_sec_algo,
+    nullptr,
 };
 extern const element_meta replayed_ue_sec_cap = {
     0xff,
     "Replayed UE security capabilities",
     dissect_replayed_ue_sec_cap,
+    nullptr,
 };
 extern const element_meta imeisv_req = {
     0xE0,
     "IMEISV request",
     dissect_imeisv_req,
+    nullptr,
 };
 extern const element_meta selected_eps_sec_algo = {
     0x57,
     "Selected EPS NAS security algorithms",
     dissect_selected_eps_sec_algo,
+    nullptr,
 };
 extern const element_meta a_sec_info = {
     0x36,
     "Additional 5G security information",
     dissect_a_sec_info,
+    nullptr,
 };
 
 extern const element_meta reported_s1_ue_sec_cap = {
     0x19,
     "Replayed S1 UE security capabilities",
     dissect_reported_s1_ue_sec_cap,
+    nullptr,
 };
 
 

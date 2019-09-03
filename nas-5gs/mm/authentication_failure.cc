@@ -33,6 +33,7 @@ extern const element_meta auth_fail_param = {
     0x30,
     "Authentication failure parameter",
     dissect_auth_fail_param,
+    nullptr,
 };
 
 const field_meta hf_gsma_dtap_res = {

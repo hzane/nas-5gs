@@ -10,12 +10,12 @@ extern const element_meta sor_trans_cont;
 int mm::registration_complete(dissector d, context* ctx) {
     up_link(d.pinfo);
 
-    auto        len = d.length;
+    const auto  len = d.length;
     use_context uc(ctx, "registration-complete");
 
     /* 73    SOR transparent container 9.11.3.51    O TLV-E 20-2048 */
     // ELEM_OPT_TLV_E(0x73, , DE_NAS_5GS_MM_SOR_TRASP_CONT, NULL);
-    auto consumed =
+    const auto consumed =
         dissect_opt_elem_tlv_e(nullptr, &mm_reg_accept::sor_trans_cont, d, ctx);
     d.step(consumed);
 

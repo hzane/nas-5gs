@@ -278,6 +278,7 @@ const element_meta nas::eap_msg = {
     0x78,
     "EAP message",
     dissect_eap_msg,
+    nullptr,
 };
 
 // GPRS timer 39.11.2.4
@@ -285,6 +286,7 @@ const element_meta nas::t3348_gprs_timer3{
     0xff,
     "GPRS timer3 - T4448 value",
     dissect_gprs_timer3,
+    nullptr,
 };
 
 const field_meta nas::hf_dnn = {

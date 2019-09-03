@@ -8,7 +8,7 @@ extern const element_meta t3346_gprs_timer2;
 
 /*  8.2.14 De-registration request (UE terminated de-registration) */
 int mm::dissect_registration_req_ue_term(dissector d, context* ctx) {
-    auto        len = d.length;
+    const auto  len = d.length;
     use_context uc(ctx, "de-registration-request");
 
     using namespace mm_de_reg;
@@ -41,6 +41,7 @@ extern const element_meta t3346_gprs_timer2 = {
     0x5f,
     "GPRS timer 2 - T3346 value",
     dissect_t3346_gprs_timer2,
+    nullptr,
 };
 
 // 24.008 g10 

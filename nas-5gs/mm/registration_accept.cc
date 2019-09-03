@@ -3,11 +3,21 @@
 using namespace mm;
 using namespace nas;
 
+namespace {
+static const true_false_string tfs_allowed_or_not = {
+    "Allowed",
+    "Not Allowed",
+};
+static const true_false_string tfs_requested_or_not = {
+    "Requested",
+    "Not Requested",
+};
+}
 /*
  * 8.2.7    Registration accept
  */
 int mm::registration_accept(dissector d, context* ctx) {
-    auto        len = d.length;
+    const auto        len = d.length;
     use_context uc(ctx, "registration-accept");
 
     using namespace mm_reg_accept;
@@ -163,6 +173,7 @@ const element_meta reg_res = {
     0xff,
     "5GS registration result",
     dissect_reg_res,
+    nullptr,
 };
 
 // 5G-GUTI    5GS mobile identity 9.11.3.4
@@ -172,6 +183,7 @@ const element_meta guti_5gs_mobile_id = {
     0x77,
     "5GS mobile identity - 5G-GUTI",
     dissect_guti_5gs_mobile_id,
+    nullptr,
 };
 
 /*4A    Equivalent PLMNs    PLMN list     9.11.3.45    O    TLV    5-47*/
@@ -181,6 +193,7 @@ const element_meta plmn_list = {
     0x4a,
     "Equivalent PLMNs",
     dissect_plmn_list,
+    nullptr,
 };
 
 // 5GS network feature support   9.11.3.5
@@ -190,6 +203,7 @@ const element_meta nw_feat_sup = {
     0x21,
     "5GS network feature support",
     dissect_nw_feat_sup,
+    nullptr,
 };
 
 
@@ -200,6 +214,7 @@ const element_meta pdu_ses_react_res_err_c = {
     0x72,
     "PDU session reactivation result error cause",
     dissect_pdu_ses_react_res_err_c,
+    nullptr,
 };
 
 // LADN information   9.11.3.30
@@ -209,6 +224,7 @@ const element_meta ladn_inf = {
     0x79,
     "LADN information",
     dissect_ladn_inf,
+    nullptr,
 };
 
 //  MICO indication    9.11.3.31
@@ -218,6 +234,7 @@ extern const element_meta mico_ind = {
     0xb0,
     "MICO indication",
     dissect_mico_ind,
+    nullptr,
 };
 
 // Network slicing indication  9.11.3.36
@@ -225,6 +242,7 @@ extern const element_meta nw_slicing_ind = {
     0x90,
     "Network slicing indication",
     dissect_nw_slicing_ind,
+    nullptr,
 };
 
 //  Service area list   9.11.3.49
@@ -232,6 +250,7 @@ const element_meta sal = {
     0x27,
     "Service area list",
     dissect_sal,
+    nullptr,
 };
 
 // T3512 value    GPRS timer 3     9.11.2.25
@@ -241,6 +260,7 @@ const element_meta t3512_gprs_timer_3 = {
     0x5E,
     "GPRS timer 3 - T3512 value",
     dissect_t3512_gprs_timer_3,
+    nullptr,
 };
 
 // Non-3GPP de-registration timer value  GPRS timer 2 9.11.2.4
@@ -250,6 +270,7 @@ const element_meta de_reg_timer_gprs_timer2 = {
     0x5D,
     "GPRS timer 2 - Non-3GPP de-registration timer value",
     dissect_de_reg_timer_gprs_timer2,
+    nullptr,
 };
 
 // T3502 value    GPRS timer 2     9.11.2.4
@@ -259,6 +280,7 @@ const element_meta t3502_gprs_timer_2 = {
     0x16,
     "GPRS timer 2 - T3502 value",
     dissect_t3502_gprs_timer_2,
+    nullptr,
 };
 
 // Emergency number list  9.11.3.23
@@ -268,6 +290,7 @@ const element_meta emerg_num_list = {
     0x34,
     "Emergency number list",
     dissect_emerg_num_list,
+    nullptr,
 };
 
 // Extended emergency number list  9.11.3.26
@@ -277,6 +300,7 @@ const element_meta emerg_num_list_7a = {
     0x7A,
     "Extended emergency number list",
     dissect_emerg_num_list_7a,
+    nullptr,
 };
 
 // SOR transparent container   9.11.3.51
@@ -287,6 +311,7 @@ const element_meta sor_trans_cont = {
     0x73,
     "SOR transparent container",
     dissect_sor_trans_cont,
+    nullptr,
 };
 
 // EAP message  9.11.2.2
@@ -297,6 +322,7 @@ const element_meta eap_message = {
     0x78,
     "EAP message",
     dissect_eap_message,
+    nullptr,
 };
 
 // NSSAI inclusion mode  9.11.3.37A
@@ -307,6 +333,7 @@ const element_meta nssai_inclusion_mode = {
     0xA0,
     "NSSAI inclusion mode",
     dissect_nssai_inclusion_mode,
+    nullptr,
 };
 
 //  Operator-defined access category definitions 9.11.3.38
@@ -317,6 +344,7 @@ const element_meta operator_defined_acd = {
     0x76,
     "Operator-defined access category definitions",
     dissect_operator_defined_acd,
+    nullptr,
 };
 
 // Negotiated DRX parameters 9.11.3.2A
@@ -327,6 +355,7 @@ const element_meta nego_drx_param = {
     0x51,
     "Negotiated DRX parameters",
     dissect_nego_drx_param,
+    nullptr,
 };
 
 /* [14] 10.5.5.37 Non-3GPP NW provided policies */
@@ -360,6 +389,7 @@ const element_meta n3gpp_nw_provided_policies = {
     0xd0,
     "",
     dissect_n3gpp_nw_provided_policies,
+    nullptr,
 };
 
 const field_meta hf_reg_res_sms_allowed = {
@@ -368,7 +398,7 @@ const field_meta hf_reg_res_sms_allowed = {
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
-    &tfs_allowed_not_allowed,
+    &tfs_allowed_or_not,
     nullptr,
     0x08,
 };
@@ -406,67 +436,6 @@ int dissect_guti_5gs_mobile_id(dissector d, context* ctx) {
     return dissect_mobile_id(d, ctx);
 }
 
-/*  0   1   2   3   4   5   6   7   8   9   a   b   c   d   e   f */
-const char dgt_tbcd[] =
-    {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '?', 'B', 'C', '*', '#', '?'};
-
-/*
- * Decode the MCC/MNC from 3 octets in 'octs'
- */
-void mcc_mnc_aux(const uint8_t* octs, char* mcc, char* mnc) {
-    if ((octs[0] & 0x0f) <= 9) {
-        mcc[0] = dgt_tbcd[octs[0] & 0x0f];
-    } else {
-        mcc[0] = (octs[0] & 0x0f) + 55;
-    }
-
-    if (((octs[0] & 0xf0) >> 4) <= 9) {
-        mcc[1] = dgt_tbcd[(octs[0] & 0xf0) >> 4];
-    } else {
-        mcc[1] = ((octs[0] & 0xf0) >> 4) + 55;
-    }
-
-    if ((octs[1] & 0x0f) <= 9) {
-        mcc[2] = dgt_tbcd[octs[1] & 0x0f];
-    } else {
-        mcc[2] = (octs[1] & 0x0f) + 55;
-    }
-
-    mcc[3] = '\0';
-
-    if (((octs[1] & 0xf0) >> 4) <= 9) {
-        mnc[2] = dgt_tbcd[(octs[1] & 0xf0) >> 4];
-    } else {
-        mnc[2] = ((octs[1] & 0xf0) >> 4) + 55;
-    }
-
-    if ((octs[2] & 0x0f) <= 9) {
-        mnc[0] = dgt_tbcd[octs[2] & 0x0f];
-    } else {
-        mnc[0] = (octs[2] & 0x0f) + 55;
-    }
-
-    if (((octs[2] & 0xf0) >> 4) <= 9) {
-        mnc[1] = dgt_tbcd[(octs[2] & 0xf0) >> 4];
-    } else {
-        mnc[1] = ((octs[2] & 0xf0) >> 4) + 55;
-    }
-
-    if (mnc[1] == 'F') {
-        /*
-         * only a 1 digit MNC (very old)
-         */
-        mnc[1] = '\0';
-    } else if (mnc[2] == 'F') {
-        /*
-         * only a 2 digit MNC
-         */
-        mnc[2] = '\0';
-    } else {
-        mnc[3] = '\0';
-    }
-}
-
 const field_meta hf_mobile_country_code = {
     "Mobile Country Code (MCC)",
     "gsm_a.mobile_country_code",
@@ -491,21 +460,16 @@ const field_meta hf_mobile_network_code = {
 /*  [3] 10.5.1.13 PLMN list GSM-A */
 /*4A    Equivalent PLMNs    PLMN list     9.11.3.45    O    TLV    5-47*/
 int dissect_plmn_list(dissector d, context* ctx) {
-    auto start = d.offset;
-    auto num = 0;
-    char mcc[4] = {0};
-    char mnc[4] = {0};
+    const auto start = d.offset;
+    auto num = 1;
+
     while(d.length>=3){
-        auto     subtree = d.add_item(3, "PLMN[%u]", num + 1);
+        auto     subtree = d.add_item(3, "PLMN[%u]", num);
         use_tree ut(d, subtree);
 
-        // mcc_mnc_aux(d.safe_ptr(), mcc, mnc);
+        d.add_item(3, &hf_mobile_country_code, enc::na);
+        d.add_item(3, &hf_mobile_network_code, enc::na);
 
-        auto item = d.add_item(3, &hf_mobile_country_code, enc::na);
-        // item->set_string(string((const char*)mcc));
-
-        item = d.add_item(3, &hf_mobile_network_code, enc::na);
-        // item->set_string(string((const char*) mnc));
         d.step(3);
         num++;
     }
@@ -788,7 +752,9 @@ const field_meta hf_gsma_eni_length = {
     "gsm_a.dtap.emerg_num_info_length",
     ft::ft_uint8,
     fd::base_dec,
-    0,
+    nullptr,
+    nullptr,
+    nullptr,
     0x0,
 };
 
@@ -853,8 +819,8 @@ int dissect_emerg_num_list(dissector d, context* ctx) {
         &hf_gsma_svc_cat_b4,
         nullptr,
     };
-    auto len = d.length;
-    auto i = 1;
+    const auto len = d.length;
+
     while(d.length>0){
         /* Length of 1st Emergency Number information note 1) octet 3
          * NOTE 1: The length contains the number of octets used to encode the
@@ -939,28 +905,28 @@ int dissect_emerg_num_list_7a(dissector d, context* ctx) {
 
     auto i = 1;
     while (d.length > 0) {
-        auto     start   = d.offset;
+        const auto     start   = d.offset;
         auto     subtree = d.add_item(-1, "Extended emergency number #%u", i++);
         use_tree ut(d, subtree);
 
-        auto len = (int) d.uint8();
+        auto length = static_cast< int >(d.uint8());
         d.add_item(1, &hf_ext_emerge_num_len, enc::be);
         d.step(1);
 
-        if (len>0){
-            auto item = d.add_item(len, &hf_emerge_num, enc::be);
-            d.step(len);
+        if (length>0){
+            d.add_item(length, &hf_emerge_num, enc::be);
+            d.step(length);
         }
 
-        len = d.uint8();
+        length = d.uint8();
         d.add_item(1, &hf_ext_emerge_sub_serv_field_len, enc::be);
         d.step(1);
 
-        if (len>0){
-            d.add_item(len, &hf_emm_emerg_num_list_sub_svc_field, enc::be);
+        if (length>0){
+            d.add_item(length, &hf_emm_emerg_num_list_sub_svc_field, enc::be);
             // auto nchars = (len << 3) / 7;
             // auto str = ts_23_038_7bits_string(d.safe_ptr(), 0, nchars);
-            d.step(len);
+            d.step(length);
         }
         subtree->set_length(d.offset - start);
     }
@@ -991,7 +957,7 @@ const field_meta hf_sor_hdr0_ack = {
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
-    (&tfs_requested_not_requested),
+    (&tfs_requested_or_not),
     nullptr,
     0x08,
 };
@@ -1373,7 +1339,7 @@ const true_false_string tfs_mm_opd_acc_psac = {
     "Standardized access category field is not included",
 };
 
-const field_meta hf_mm_op_defined_acd_psac = {
+const field_meta hf_mm_op_defined_acd_psac = { // NOLINT
     "Presence of standardized access category (PSAC)",
     "nas_5gs.mm.opd_acc_psac",
     ft::ft_uint8,
@@ -1395,11 +1361,11 @@ int dissect_operator_defined_acd(dissector d, context* ctx) {
         use_tree ut(d, subtree);
 
         // Length of operator-defined access category definition contents oct4
-        auto len = (int) d.uint8();
+        const auto length = static_cast< int >(d.uint8());
         d.add_item(1, &hf_mm_length, enc::be);
         d.step(1);
 
-        auto sd = d.slice(len);
+        auto sd = d.slice(length);
         /* Precedence value oct5*/
         sd.add_item(1, &hf_mm_precedence, enc::be);
         sd.step(1);
@@ -1409,7 +1375,7 @@ int dissect_operator_defined_acd(dissector d, context* ctx) {
         sd.step(1);
 
         /* Length of criteria oct7*/
-        auto clen = (int)sd.uint8();
+        const auto clen = static_cast< int >(sd.uint8());
         sd.step(1);
 
         /* Criteria 8 - a-1*/

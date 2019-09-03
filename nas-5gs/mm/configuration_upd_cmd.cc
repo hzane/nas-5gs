@@ -134,12 +134,14 @@ extern const element_meta conf_upd_ind = {
     0xD0,
     "Configuration update indication",
     dissect_conf_upd_ind,
+    nullptr,
 };
 
 extern const element_meta guti = {
     0x77,
     "5GS mobile identity - 5G-GUTI",
     dissect_guti,
+    nullptr,
 };
 
 
@@ -148,24 +150,32 @@ extern const element_meta service_area_list = {
     0x70,
     "Service area list",
     dissect_sal,
+    nullptr,
+
 };
 
 extern const element_meta full_name_network = {
     0x43,
     "Network name - Full Name",
     dissect_full_name_network,
+    nullptr,
+
 };
 
 extern const element_meta short_name_network = {
     0x45,
     "Network Name - Short Name",
     dissect_short_name_network,
+    nullptr,
+
 };
 
 extern const element_meta local_time_zone = {
     0x46,
     "Local time zone",
     dissect_local_time_zone,
+    nullptr,
+
 };
 
 // 9.11.3.53
@@ -173,6 +183,8 @@ extern const element_meta u_time_zone_time = {
     0x47,
     "Time zone and time - Universal time and local time zone",
     dissect_time_zone_time,
+    nullptr,
+
 };
 
 // 9.11.3.19
@@ -180,6 +192,8 @@ extern const element_meta day_saving_time = {
     0x49,
     "Network daylight saving time",
     dissect_day_saving_time,
+    nullptr,
+
 };
 
 // 9.11.3.30
@@ -187,6 +201,8 @@ extern const element_meta ladn_inf = {
     0x79,
     "LADN information",
     dissect_ladn_inf,
+    nullptr,
+
 };
 
 // 9.11.3.31
@@ -194,6 +210,8 @@ extern const element_meta mico_ind = {
     0xB0,
     "MICO indication",
     dissect_mico_ind,
+    nullptr,
+
 };
 
 // 9.11.3.37
@@ -201,27 +219,38 @@ extern const element_meta configured_nssai = {
     0x31,
     "NSSAI - Configured NSSAI",
     dissect_configured_nssai,
+    nullptr,
+
 };
 
 extern const element_meta op_def_acc_cat_def = {
     0x76,
     "Operator-defined access category definitions",
     dissect_op_def_acc_cat_def,
+    nullptr,
+
 };
 
 extern const element_meta sms_ind = {
     0xF0,
     "SMS indication",
     dissect_sms_ind,
-};
+    nullptr,
 
+};
+namespace {
+    static const true_false_string tfs_requested_or_not= {
+        "Requested",
+        "Not Requested",
+    };
+}
 const field_meta hf_conf_upd_ind_red_b1 = {
     "Registration",
     "nas_5gs.mm.conf_upd_ind.red",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
-    &tfs_requested_not_requested,
+    &tfs_requested_or_not,
     nullptr,
     0x02,
 };
@@ -231,7 +260,7 @@ const field_meta hf_conf_upd_ind_ack_b0 = {
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
-    &tfs_requested_not_requested,
+    &tfs_requested_or_not,
     nullptr,
     0x01,
 };
@@ -268,13 +297,19 @@ extern const value_string nas_5gs_mm_sal_t_li_values[] = {
     {0, nullptr},
 };
 
+namespace {
+    static const true_false_string tfs_tai_or_not = {
+        "TAIs in the list are in the non-allowed area",
+        "TAIs in the list are in the allowed area",
+    };
+}
 const field_meta hf_sal_al_t = {
     "Allowed type",
     "nas_5gs.mm.sal_al_t",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
-    &tfs_sal_al_t,
+    &tfs_tai_or_not,
     nullptr,
     0x80,
 };
@@ -377,10 +412,10 @@ string abs_time_str(tm t) {
  * [3] 10.5.3.9 Time Zone and Time
  */
 int dissect_time_zone_time(dissector d, context* ctx) {
-    auto len = d.length;
+    // auto len = d.length;
     tm   t   = {0, 0, 0, 0, 0, 0, 0, 0, -1};
 
-    auto oct = (int) d.tvb->uint8(d.offset);
+    auto oct = static_cast< int >(d.tvb->uint8(d.offset));
     t.tm_year = (oct & 0x0f) * 10 + ((oct & 0xf0) >> 4) * 100;
 
     oct = d.tvb->uint8(d.offset + 1);
@@ -441,8 +476,7 @@ const field_meta hf_dst_adjustment = {
     0x03,
 };
 
-int dissect_day_saving_time(dissector d, context* ctx) {
-    auto len = d.length;
+int dissect_day_saving_time(dissector d, context* ctx) {    
 
     d.add_item(1, &hf_dst_adjustment, enc::be);
     d.step(1);
@@ -455,17 +489,17 @@ int dissect_day_saving_time(dissector d, context* ctx) {
  *   9.11.3.30    LADN information
  */
 int dissect_ladn_inf(dissector d, context* ctx) {
-    auto len = d.length;
+    const auto len = d.length;
     auto i   = 1;
     while(d.length>0){
-        auto start   = d.offset;
+        const auto start   = d.offset;
         auto subtree = d.tree->add_subtree(d.pinfo, d.tvb, d.offset, 2, "LADN %u", i);
         d.tree       = subtree;
         /* DNN value (octet 5 to octet m):
          * LADN DNN value is coded as the length and value part of DNN information element
          * as specified in subclause 9.11.2.1A starting with the second octet
          */
-        auto length = (int) d.tvb->uint8(d.offset);
+        auto length = static_cast< int >(d.tvb->uint8(d.offset));
         d.add_item(1, &hf_mm_length, enc::be);
         d.step(1);
 
@@ -493,12 +527,11 @@ int dissect_ladn_inf(dissector d, context* ctx) {
 /*
  *   9.11.3.31    MICO indication
  */
-static const true_false_string tfs_nas_5gs_raai = {
+static const true_false_string tfs_nas_5gs_raai = { // NOLINT: unused-const-variable
     "all PLMN registration area allocated",
     "all PLMN registration area not allocated",
 };
-int dissect_mico_ind(dissector d, context* ctx) {
-    auto len = d.length;
+int dissect_mico_ind(dissector d, context* ctx) {    
 
     d.add_item(1, hf_mm_raai_b0, enc::be);
     return 1;
@@ -595,22 +628,22 @@ const field_meta hf_text_string = {
 };
 
 int dissect_full_name_network(dissector d, context* ctx) {
-    auto len = d.length;
-    auto oct = d.tvb->uint8(d.offset);
+    const auto len = d.length;
+    const auto oct = d.tvb->uint8(d.offset);
     d.add_item(1, &hf_a_extension, enc::be);
-    auto code_scheme = (oct & 0x70) >> 4;
+    const auto code_scheme = (oct & 0x70) >> 4;
     d.add_item(1, &hf_coding_scheme, enc::be);
     d.add_item(1, &hf_add_ci, enc::be);
 
-    auto num_spare_bits = oct & 0x07;
-    auto item           = d.add_item(1, &hf_number_of_spare_bits, enc::be);
+    const auto num_spare_bits = oct & 0x07;
+    d.add_item(1, &hf_number_of_spare_bits, enc::be);
     d.step(1);
     if (len <= 1) return len;
 
     switch (code_scheme) {
     case 0: {
         /* Check if there was a reasonable value for number of spare bits in last octet */
-        auto num_text_bits = (d.length << 3) - num_spare_bits;
+        const auto num_text_bits = (d.length << 3) - num_spare_bits;
         if (num_text_bits && (num_text_bits % 7)){
             // text string must be multiple of 7
             diag("num of text bits %d must be multiple of 7\n", num_text_bits);
@@ -649,7 +682,7 @@ int dissect_local_time_zone(dissector d, context* ctx) {
      * field) represents the algebraic sign of this difference (0: positive, 1: negative).
      */
     auto oct = d.tvb->uint8(d.offset);
-    auto sign = (oct & 0x08) ? '-' : '+';
+    const auto sign = (oct & 0x08) ? '-' : '+';
 
     oct = (oct >> 4) + (oct & 0x07) * 10;
 
@@ -712,14 +745,19 @@ int dissect_op_def_acc_cat_def(dissector d, context* ctx) {
     }
     return len;
 }
-
+namespace {
+    static const true_false_string tfs_allowed_or_not = {
+        "Allowed",
+        "Not Allowed",
+    };    
+}
 const field_meta hf_sms_indic_sai = {
     "SMS over NAS",
     "nas_5gs.mm.ms_indic.sai",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
-    &tfs_allowed_not_allowed,
+    &tfs_allowed_or_not,
     nullptr,
     0x01,
 };

@@ -4,92 +4,103 @@
 using namespace sm;
 
 extern const message_meta sm::msgs[] = {
-    {0xc1, "PDU session establishment request", pdu_ses_est_req},
-    {0xc2, "PDU session establishment accept", pdu_ses_est_acc},
-    {0xc3, "PDU session establishment reject", pdu_ses_est_rej},
+    {0xc1, "PDU session establishment request", pdu_ses_est_req, nullptr},
+    {0xc2, "PDU session establishment accept", pdu_ses_est_acc, nullptr},
+    {0xc3, "PDU session establishment reject", pdu_ses_est_rej, nullptr},
 
-    {0xc4, "Not used in current version", no_dissect},
-    {0xc5, "PDU session authentication command", pdu_ses_auth_cmd},
+    {0xc4, "Not used in current version", no_dissect, nullptr},
+    {0xc5, "PDU session authentication command", pdu_ses_auth_cmd, nullptr},
 
-    {0xc6, "PDU session authentication complete", pdu_ses_auth_comp},
-    {0xc7, "PDU session authentication result", no_dissect},
-    {0xc8, "Not used in current version", no_dissect},
+    {0xc6, "PDU session authentication complete", pdu_ses_auth_comp, nullptr},
+    {0xc7, "PDU session authentication result", no_dissect, nullptr},
+    {0xc8, "Not used in current version", no_dissect, nullptr},
 
-    {0xc9, "PDU session modification request", pdu_ses_mod_req},
-    {0xca, "PDU session modification reject", pdu_ses_mod_rej},
-    {0xcb, "PDU session modification command", pdu_ses_mod_cmd},
-    {0xcc, "PDU session modification complete", pdu_ses_mod_comp},
-    {0xcd, "PDU session modification command reject", pdu_ses_mod_com_rej},
+    {0xc9, "PDU session modification request", pdu_ses_mod_req, nullptr},
+    {0xca, "PDU session modification reject", pdu_ses_mod_rej, nullptr},
+    {0xcb, "PDU session modification command", pdu_ses_mod_cmd, nullptr},
+    {0xcc, "PDU session modification complete", pdu_ses_mod_comp, nullptr},
+    {0xcd, "PDU session modification command reject", pdu_ses_mod_com_rej, nullptr},
 
-    {0xce, "Not used in current version", no_dissect},
-    {0xcf, "Not used in current version", no_dissect},
-    {0xd0, "Not used in current version", no_dissect},
+    {0xce, "Not used in current version", no_dissect, nullptr},
+    {0xcf, "Not used in current version", no_dissect, nullptr},
+    {0xd0, "Not used in current version", no_dissect, nullptr},
 
-    {0xd1, "PDU session release request", pdu_ses_rel_req},
-    {0xd2, "PDU session release reject", pdu_ses_rel_rej},
-    {0xd3, "PDU session release command", pdu_ses_rel_cmd},
-    {0xd4, "PDU session release complete", pdu_ses_rel_comp},
+    {0xd1, "PDU session release request", pdu_ses_rel_req, nullptr},
+    {0xd2, "PDU session release reject", pdu_ses_rel_rej, nullptr},
+    {0xd3, "PDU session release command", pdu_ses_rel_cmd, nullptr},
+    {0xd4, "PDU session release complete", pdu_ses_rel_comp, nullptr},
 
-    {0xd5, "Not used in current version", no_dissect},
+    {0xd5, "Not used in current version", no_dissect, nullptr},
 
-    {0xd6, "5GSM status", sm_status},
-    {0, nullptr, nullptr},
+    {0xd6, "5GSM status", sm_status, nullptr},
+    {0, nullptr, nullptr, nullptr},
 };
 
 const element_meta sm::sm_cause = {
     0xff,
     "5GSM cause",
     dissect_sm_cause,
+    nullptr,
 };
 const element_meta sm::ext_pco = {
     0x7B,
     "Extended protocol configuration options",
     dissect_ext_pco,
+    nullptr,
 };
 const element_meta sm::eap_msg = {
     0x78,
     "EAP message",
     dissect_eap_msg,
+    nullptr,
 };
 const element_meta sm::authorized_qos_rules = {
     0x7A,
     "Authorized QoS rules",
     dissect_authorized_qos_rules,
+    nullptr,
 };
 const element_meta sm::mapped_eps_b_cont = {
     0x75,
     "Mapped EPS bearer contexts",
     dissect_mapped_eps_b_cont,
+    nullptr,
 };
 const element_meta sm::backoff_gprs_timer3 = {
     0x37,
     "GPRS timer - Back-off timer value",
     dissect_gprs_timer3,
+    nullptr,
 };
 const element_meta sm::sm_cap = {
     0x28,
     "5GSM capability",
     dissect_sm_cap,
+    nullptr,
 };
 const element_meta sm::max_num_sup_kpt_flt = {
     0x55,
     "Maximum number of suuported packet filter",
     dissect_max_num_sup_kpt_flt,
+    nullptr,
 };
 const element_meta sm::ses_ambr = {
     0x2A,
     "Session AMBR",
     dissect_ses_ambr,
+    nullptr,
 };
 const element_meta sm::rq_gprs_timer = {
     0x56,
     "GPRS timer- PDU session release time",
     dissect_gprs_timer3,
+    nullptr,
 };
 const element_meta sm::always_on_pdu_ses_ind = {
     0x80,
     "Always-on PDU session indication",
     dissect_always_on_pdu_ses_ind,
+    nullptr,
 };
 
 //  *      9.11.4.14    Session-AMBR
@@ -173,6 +184,7 @@ const element_meta sm::allowed_ssc_mode = {
     0xf0,
     "Allowed SSC mode",
     dissect_allowed_ssc_mode,
+    nullptr,
 };
 
 /* * 9.11.4.2    5GSM cause */

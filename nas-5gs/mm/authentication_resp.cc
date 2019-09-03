@@ -39,6 +39,7 @@ extern const element_meta auth_resp_par = {
     0x2d,
     "Authentication response parameter",
     dissect_auth_resp_param,
+    nullptr,
 };
 
 extern const field_meta hf_dtap_sres = {

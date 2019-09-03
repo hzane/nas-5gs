@@ -23,15 +23,15 @@ int mm::service_req(dissector d, context* ctx) {
 
     /*  ELEM_MAND_V(,DE_NAS_5GS_MM_NAS_KEY_SET_ID," - ngKSI", );*/
     /* ngKSI     NAS key set identifier 9.11.3.32    M    V    1/2 */
-    auto consumed = dissect_elem_v(nullptr, &key_set_id, d, ctx);
+    dissect_elem_v(nullptr, &key_set_id, d, ctx);    
 
     // Service type Service type 9.11.3.50 M V 1 / 2
-    consumed = dissect_elem_v(nullptr, &mm_service_type, d, ctx);
+    dissect_elem_v(nullptr, &mm_service_type, d, ctx);
     d.step(1);
 
     /* 5G-S-TMSI    5GS mobile identity 9.11.3.4    M    LV    9 */
     /*ELEM_MAND_LV_E(,DE_NAS_5GS_MM_5GS_MOBILE_ID, );*/
-    consumed = dissect_elem_lv_e(nullptr, &s_tmsi, d, ctx);
+    auto consumed = dissect_elem_lv_e(nullptr, &s_tmsi, d, ctx);
     d.step(consumed);
 
     /*40 Uplink data status  9.11.3.57   O   TLV  4 - 34*/
@@ -263,7 +263,6 @@ const field_meta hf_ul_data_sts_psi_8_b0  = {
 
 //  * 9.11.3.57    Uplink data status
 int dissect_uplink_data_status(dissector d, context* ctx) {
-    auto offset = d.offset;
 
     static const field_meta* psi_0_7_flags[] = {
         &hf_ul_data_sts_psi_7_b7,

@@ -61,6 +61,19 @@ const field_meta mm::hf_tsc = {
     0x08,
 };
 
+/* NAS key set identifier (octet 1) Bits 3  2   1 */
+extern const val_string mm::nas_eps_emm_nas_ksi_values[] = {
+    {0, ""},
+    {1, ""},
+    {2, ""},
+    {3, ""},
+    {4, ""},
+    {5, ""},
+    {6, ""},
+    {7, "No key is available"},
+    {0, nullptr},
+};
+
 const field_meta mm::hf_nas_key_set_id = {
     "NAS key set identifier",
     "nas_5gs.mm.nas_key_set_id",
@@ -173,7 +186,7 @@ const field_meta mm::hf_mm_sst = {
     0x0,
 };
 
-const field_meta hfm_mm_sd = {
+const field_meta hfm_mm_sd = { // NOLINT
     "Slice differentiator (SD)",
     "nas_5gs.mm.mm_sd",
     ft::ft_uint24,
@@ -184,7 +197,7 @@ const field_meta hfm_mm_sd = {
     0x0,
 };
 
-const field_meta hfm_mm_mapped_conf_sst = {
+const field_meta hfm_mm_mapped_conf_sst = { // NOLINT
     "Mapped configured SST",
     "nas_5gs.mm.mapped_conf_sst",
     ft::ft_uint8,
@@ -195,7 +208,7 @@ const field_meta hfm_mm_mapped_conf_sst = {
     0x0,
 };
 
-const field_meta hfm_mm_mapped_conf_ssd = {
+const field_meta hfm_mm_mapped_conf_ssd = { // NOLINT
     "Mapped configured SD",
     "nas_5gs.mm.mapped_conf_ssd",
     ft::ft_uint24,
@@ -216,7 +229,7 @@ const true_false_string mm_switch_off_tfs = {
     "Switch off",
     "Normal de-registration",
 };
-const field_meta hfm_mm_switch_off = {
+const field_meta hfm_mm_switch_off = { // NOLINT
     "Switch off",
     "nas_5gs.mm.switch_off",
     ft::ft_boolean,
@@ -231,7 +244,7 @@ const true_false_string mm_re_reg_req_tfs = {
     "re-registration required",
     "re-registration not required",
 };
-const field_meta hfm_mm_re_reg_req = {
+const field_meta hfm_mm_re_reg_req = { // NOLINT
     "Re-registration required",
     "nas_5gs.mm.re_reg_req",
     ft::ft_boolean,
@@ -248,7 +261,8 @@ extern const val_string mm_acc_type_vals[] = {
     {0x3, "3GPP access and non-3GPP access"},
     {0, nullptr},
 };
-const field_meta hfm_mm_acc_type = {
+
+const field_meta hfm_mm_acc_type = { // NOLINT: unused-const-variable
     "Access type",
     "nas_5gs.mm.acc_type",
     ft::ft_uint8,
@@ -979,53 +993,56 @@ const field_meta mm::hf_element = {
 };
 
 extern const message_meta mm::msgs[] = {
-    {0x41, "Registration request", registration_req},
-    {0x42, "Registration accept", registration_accept},
-    {0x43, "Registration complete", registration_complete},
-    {0x44, "Registration reject", registration_rej},
-    {0x45, "Deregistration request (UE originating)", dissect_reg_req_ue_orig},
-    {0x46, "Deregistration accept (UE originating)", nullptr},
-    {0x47, "Deregistration request (UE terminated)", dissect_registration_req_ue_term},
-    {0x48, "Deregistration accept (UE terminated)", nullptr},
+    {0x41, "Registration request", registration_req, nullptr},
+    {0x42, "Registration accept", registration_accept, nullptr},
+    {0x43, "Registration complete", registration_complete, nullptr},
+    {0x44, "Registration reject", registration_rej, nullptr},
+    {0x45, "Deregistration request (UE originating)", dissect_reg_req_ue_orig, nullptr},
+    {0x46, "Deregistration accept (UE originating)", nullptr, nullptr},
+    {0x47,
+     "Deregistration request (UE terminated)",
+     dissect_registration_req_ue_term,
+     nullptr},
+    {0x48, "Deregistration accept (UE terminated)", nullptr, nullptr},
 
-    {0x49, "Not used in current version", no_dissect},
-    {0x4a, "Not used in current version", no_dissect},
-    {0x4b, "Not used in current version", no_dissect},
+    {0x49, "Not used in current version", no_dissect, nullptr},
+    {0x4a, "Not used in current version", no_dissect, nullptr},
+    {0x4b, "Not used in current version", no_dissect, nullptr},
 
-    {0x4c, "Service request", service_req},
-    {0x4d, "Service reject", service_rej},
-    {0x4e, "Service accept", service_acc},
+    {0x4c, "Service request", service_req, nullptr},
+    {0x4d, "Service reject", service_rej, nullptr},
+    {0x4e, "Service accept", service_acc, nullptr},
 
-    {0x4f, "Not used in current version", no_dissect},
-    {0x50, "Not used in current version", no_dissect},
-    {0x51, "Not used in current version", no_dissect},
-    {0x52, "Not used in current version", no_dissect},
-    {0x53, "Not used in current version", no_dissect},
+    {0x4f, "Not used in current version", no_dissect, nullptr},
+    {0x50, "Not used in current version", no_dissect, nullptr},
+    {0x51, "Not used in current version", no_dissect, nullptr},
+    {0x52, "Not used in current version", no_dissect, nullptr},
+    {0x53, "Not used in current version", no_dissect, nullptr},
 
-    {0x54, "Configuration update command", conf_upd_cmd},
-    {0x55, "Configuration update complete", conf_update_comp},
-    {0x56, "Authentication request", authentication_req},
-    {0x57, "Authentication response", authentication_resp},
-    {0x58, "Authentication reject", authentication_rej},
-    {0x59, "Authentication failure", authentication_failure},
+    {0x54, "Configuration update command", conf_upd_cmd, nullptr},
+    {0x55, "Configuration update complete", conf_update_comp, nullptr},
+    {0x56, "Authentication request", authentication_req, nullptr},
+    {0x57, "Authentication response", authentication_resp, nullptr},
+    {0x58, "Authentication reject", authentication_rej, nullptr},
+    {0x59, "Authentication failure", authentication_failure, nullptr},
 
-    {0x5a, "Authentication result", authentication_result},
-    {0x5b, "Identity request", id_req},
-    {0x5c, "Identity response", id_resp},
-    {0x5d, "Security mode command", sec_mode_cmd},
-    {0x5e, "Security mode complete", sec_mode_comp},
-    {0x5f, "Security mode reject", sec_mode_rej},
+    {0x5a, "Authentication result", authentication_result, nullptr},
+    {0x5b, "Identity request", id_req, nullptr},
+    {0x5c, "Identity response", id_resp, nullptr},
+    {0x5d, "Security mode command", sec_mode_cmd, nullptr},
+    {0x5e, "Security mode complete", sec_mode_comp, nullptr},
+    {0x5f, "Security mode reject", sec_mode_rej, nullptr},
 
-    {0x60, "Not used in current version", no_dissect},
-    {0x61, "Not used in current version", no_dissect},
-    {0x62, "Not used in current version", no_dissect},
-    {0x63, "Not used in current version", no_dissect},
-    {0x64, "5GMM status", mm_status},
-    {0x65, "Notification", notification},
-    {0x66, "Notification response", notification_resp},
-    {0x67, "UL NAS transport", ul_nas_transp},
-    {0x68, "DL NAS transport", dl_nas_transp},
-    {0, nullptr, nullptr},
+    {0x60, "Not used in current version", no_dissect, nullptr},
+    {0x61, "Not used in current version", no_dissect, nullptr},
+    {0x62, "Not used in current version", no_dissect, nullptr},
+    {0x63, "Not used in current version", no_dissect, nullptr},
+    {0x64, "5GMM status", mm_status, nullptr},
+    {0x65, "Notification", notification, nullptr},
+    {0x66, "Notification response", notification_resp, nullptr},
+    {0x67, "UL NAS transport", ul_nas_transp, nullptr},
+    {0x68, "DL NAS transport", dl_nas_transp, nullptr},
+    {0, nullptr, nullptr, nullptr},
 };
 #if 0
 extern const field_meta mm::hf_nas_5gs_spare_b7 = {
@@ -1065,6 +1082,7 @@ extern const element_meta mm::allowed_nssai = {
     0x15,
     "Allowed NSSAI",
     dissect_allowed_nssai,
+    nullptr,
 };
 
 // 9.11.3.9
@@ -1072,6 +1090,7 @@ extern const element_meta mm::ta_id_list = {
     0x54,
     "5GS tracking area identity list - TAI list",
     dissect_ta_id_list,
+    nullptr,
 };
 
 extern const field_meta mm::hf_mm_length = {
@@ -1090,6 +1109,7 @@ extern const element_meta mm::rej_nssai = {
     0x11,
     "Rejected NSSAI",
     dissect_rejected_nssai,
+    nullptr,
 };
 
 // Configured NSSAI    NSSAI 9.11.3.37
@@ -1097,6 +1117,7 @@ extern const element_meta mm::configured_nssai = {
     0x31,
     "Configured NSSAI",
     dissect_configured_nssai,
+    nullptr,
 };
 
 // PDU session reactivation result   9.11.3.42
@@ -1104,6 +1125,7 @@ extern const element_meta mm::pdu_ses_react_res = {
     0x26,
     "PDU session reactivation result",
     dissect_pdu_ses_react_res,
+    nullptr,
 };
 
 /* 9.11.3.44    PDU session status */
@@ -1111,6 +1133,7 @@ extern const element_meta mm::pdu_ses_status = {
     0x50,
     "PDU session status",
     dissect_pdu_ses_status,
+    nullptr,
 };
 
 // 5GMM cause   9.11.3.2
@@ -1130,6 +1153,7 @@ extern const element_meta mm::mobile_id = {
     0xff,
     "Mobile identity",
     dissect_mobile_id,
+    nullptr,
 };
 
 extern const field_meta mm::hf_mm_type_id = {
@@ -1236,19 +1260,6 @@ extern const field_meta mm::hfm_nas_eps_tsc = {
 };
 const field_meta* mm::hf_nas_eps_tsc = &hfm_nas_eps_tsc;
 
-/* NAS key set identifier (octet 1) Bits 3  2   1 */
-
-extern const val_string mm::nas_eps_emm_nas_ksi_values[] = {
-        {0, ""},
-        {1, ""},
-        {2, ""},
-        {3, ""},
-        {4, ""},
-        {5, ""},
-        {6, ""},
-        {7, "No key is available"},
-        {0, nullptr},
-};
 
 extern const field_meta mm::hfm_nas_eps_nas_ksi = {
     "NAS key set identifier",
@@ -1266,6 +1277,7 @@ extern const element_meta mm::nas_ksi = {
     0xff,
     "NAS key set identifier",
     dissect_nas_ksi,
+    nullptr,
 };
 
 // 9.11.3.2	5GMM cause
@@ -1273,6 +1285,7 @@ extern const element_meta mm::mm_cause = {
     0xff,
     "5GMM cause",
     mm::dissect_mm_cause,
+    nullptr,
 };
 
 
@@ -1280,6 +1293,7 @@ extern const element_meta mm::nas_msg_cont = {
     0x71,
     "NAS message container",
     dissect_nas_msg_cont,
+    nullptr,
 };
 
 // EPS bearer context status	9.11.3.59
@@ -1287,12 +1301,14 @@ extern const element_meta mm::eps_bearer_ctx_status = {
     0x60,
     "EPS bearer context status",
     dissect_eps_bearer_context_status,
+    nullptr,
 };
 
 extern const element_meta mm::abba = {
     0x38,
     "ABBA",
     dissect_abba,
+    nullptr,
 };
 
 const field_meta mm::hf_abba = {

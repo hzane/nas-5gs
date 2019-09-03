@@ -51,6 +51,7 @@ extern const element_meta t3346_gprs_timer2 = {
     0x5f,
     "T3346 value GPRS timer 2",
     dissect_t3346_gprs_timer2,
+    nullptr,
 };
 
 // T3502 value    GPRS timer 2 9.11.2.4
@@ -61,6 +62,7 @@ extern const element_meta t3502_gprs_timer_2 = {
     0x16,
     "T3502 value    GPRS timer 2",
     dissect_t3502_gprs_timer_2,
+    nullptr,
 };
 
 /* 5F  T3346 value GPRS timer 2     9.11.2.4   O   TLV 3 */

@@ -48,6 +48,7 @@ extern const element_meta t3346_gprs_timer2 = {
     0x5F,
     "T3346 value GPRS timer 2",
     dissect_t3346_gprs_timer2,
+    nullptr,
 };
 
 int dissect_t3346_gprs_timer2(dissector d, context* ctx) {

@@ -8,7 +8,7 @@ namespace mm_id_resp {
  * 8.2.22 Identity response
  */
 int mm::id_resp(dissector d, context* ctx) {
-    auto        len = d.length;
+    const auto  len = d.length;
     use_context uc(ctx, "identity-response");
 
     using namespace mm_id_resp;
