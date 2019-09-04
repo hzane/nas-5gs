@@ -15,15 +15,15 @@ int mm::dissect_reg_req_ue_orig(dissector d, context* ctx) {
 
     using namespace mm_de_reg;
 
-    /* De-registration type    De-registration type     9.11.3.18   M   V   1 */
-    /*ELEM_MAND_V(DE_NAS_5GS_MM_DE_REG_TYPE,ei_nas_5gs_missing_mandatory_elemen);*/
+    /* De-registration type   9.11.3.20   M   V   1 */
+    /*ELEM_MAND_V(DE_NAS_5GS_MM_DE_REG_TYPE,);*/
     auto consumed = dissect_elem_v(nullptr, &de_reg_type, d, ctx);
-    d.step(consumed);
 
     /* ngKSI    NAS key set identifier 9.11.3.32    M    V    1/2 H1 */
+    d.step(consumed);
 
-    /*5GS mobile identity     5GS mobile identity 9.11.3.4    M    LV-E    6-n */
-    /*ELEM_MAND_LV_E(DE_NAS_5GS_MM_5GS_MOBILE_ID,ei_nas_5gs_missing_mandatory_elemen); */
+    /* 5GS mobile identity  9.11.3.4    M    LV-E    6-n */
+    /*ELEM_MAND_LV_E(DE_NAS_5GS_MM_5GS_MOBILE_ID,); */
     consumed = dissect_elem_lv_e(nullptr, &key_set_id, d, ctx);
     d.step(consumed);
 
@@ -32,7 +32,10 @@ int mm::dissect_reg_req_ue_orig(dissector d, context* ctx) {
 }
 
 namespace mm_de_reg {
-int                dissect_de_reg_type(dissector d, context* ctx);
+// De-registration type   9.11.3.20
+int dissect_de_reg_type(dissector d, context* ctx);
+
+// De-registration type   9.11.3.20
 const element_meta de_reg_type = {
     0xff,
     "De-registration type",
@@ -40,7 +43,10 @@ const element_meta de_reg_type = {
     nullptr,
 };
 
-int                dissect_key_set_id(dissector d, context* ctx);
+// 5GS mobile identity  9.11.3.4
+int dissect_key_set_id(dissector d, context* ctx);
+
+// 5GS mobile identity  9.11.3.4
 const element_meta key_set_id = {
     0xff,
     "5GS mobile identity",

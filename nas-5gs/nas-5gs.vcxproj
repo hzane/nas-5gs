@@ -193,6 +193,7 @@
     <ClCompile Include="mm\ul_nas_transp.cc" />
     <ClCompile Include="nas-5gs.cc" />
     <ClCompile Include="proto.cc" />
+    <ClCompile Include="sm\pdu_ses.cc" />
     <ClCompile Include="sm\pdu_ses_auth_cmd.cc" />
     <ClCompile Include="sm\pdu_ses_auth_comp.cc" />
     <ClCompile Include="sm\pdu_ses_est_acc.cc" />
@@ -227,6 +228,11 @@
     <ClInclude Include="packet_info.hh" />
     <ClInclude Include="proto.hh" />
     <ClInclude Include="range_string.hh" />
+    <ClInclude Include="sm\pdu_ses.hh" />
+    <ClInclude Include="sm\pdu_ses_auth.hh" />
+    <ClInclude Include="sm\pdu_ses_est.hh" />
+    <ClInclude Include="sm\pdu_ses_mod.hh" />
+    <ClInclude Include="sm\pdu_ses_rel.hh" />
     <ClInclude Include="tree_meta.hh" />
     <ClInclude Include="ts24007.hh" />
     <ClInclude Include="tvbuff.hh" />

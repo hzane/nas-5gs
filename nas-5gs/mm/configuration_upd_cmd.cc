@@ -10,6 +10,7 @@ extern const element_meta day_saving_time;
 extern const element_meta ladn_ind;
 extern const element_meta ladn_inf;
 extern const element_meta mico_ind;
+extern const element_meta nw_slicing_ind;
 extern const element_meta service_area_list;
 extern const element_meta full_name_network;
 extern const element_meta short_name_network;
@@ -60,12 +61,12 @@ int mm::conf_upd_cmd(dissector d, context* ctx) {
     d.step(consumed);
 
     /*45    Short name for network    Network name     9.11.3.35    O    TLV    3-n*/
-    // ELEM_OPT_TLV(0x45, GSM_A_PDU_TYPE_DTAP, DE_NETWORK_NAME, " - Short Name");
+    // ELEM_OPT_TLV(0x45, , DE_NETWORK_NAME, " - Short Name");
     consumed = dissect_opt_elem_tlv(nullptr, &short_name_network, d, ctx);
     d.step(consumed);
 
     /*46    Local time zone    Time zone     9.11.3.52    O    TV    2*/
-    // ELEM_OPT_TV(0x46, GSM_A_PDU_TYPE_DTAP, DE_TIME_ZONE, " - Local");
+    // ELEM_OPT_TV(0x46, , DE_TIME_ZONE, " - Local");
     consumed = dissect_opt_elem_tv(nullptr, &local_time_zone, d, ctx);
     d.step(consumed);
 
@@ -74,29 +75,32 @@ int mm::conf_upd_cmd(dissector d, context* ctx) {
     consumed = dissect_opt_elem_tv(nullptr, &u_time_zone_time, d, ctx);
     d.step(consumed);
 
-    /*49    Network daylight saving time    Daylight saving time     9.11.3.11    O    TLV
-     * 3*/
-    // ELEM_OPT_TLV(0x49, GSM_A_PDU_TYPE_DTAP, DE_DAY_SAVING_TIME, NULL);
+    /*49 Network daylight saving time Daylight saving time 9.11.3.19 O TLV 3*/
+    // ELEM_OPT_TLV(0x49, , DE_DAY_SAVING_TIME, NULL);
     consumed = dissect_opt_elem_tlv(nullptr, &day_saving_time, d, ctx);
     d.step(consumed);
 
-    /*79    LADN information    LADN information     9.11.3.19    O    TLV-E    11-1579*/
-    // ELEM_OPT_TLV_E(0x79, NAS_5GS_PDU_TYPE_MM, DE_NAS_5GS_MM_LADN_INF, NULL);
+    /*79    LADN information 9.11.3.30    O    TLV-E    11-1579*/
+    // ELEM_OPT_TLV_E(0x79, , DE_NAS_5GS_MM_LADN_INF, NULL);
     consumed = dissect_opt_elem_tlv_e(nullptr, &ladn_inf, d, ctx);
     d.step(consumed);
 
-    /*B-    MICO indication    MICO indication     9.11.3.21    O    TV    1*/
-    // ELEM_OPT_TV_SHORT(0xB0, NAS_5GS_PDU_TYPE_MM, DE_NAS_5GS_MM_MICO_IND, NULL);
+    /*B-    MICO indication  9.11.3.31    O    TV    1*/
+    // ELEM_OPT_TV_SHORT(0xB0, , DE_NAS_5GS_MM_MICO_IND, NULL);
     consumed = dissect_opt_elem_tv_short(nullptr, &mico_ind, d, ctx);
     d.step(consumed);
 
-    /*31    Configured NSSAI    NSSAI     9.11.3.28    O    TLV    4-74*/
-    // ELEM_OPT_TLV(0x31, NAS_5GS_PDU_TYPE_MM, DE_NAS_5GS_MM_NSSAI, " - Configured
-    // NSSAI");
+    // 9-	Network slicing indication	 9.11.3.36 O TV 1
+    // ELEM_OPT_TV_SHORT(0x90, , DE_NAS_5GS_MM_NW_SLICING_IND, NULL);
+    consumed = dissect_opt_elem_tv_short(nullptr, &nw_slicing_ind, d, ctx);
+    d.step(consumed);
+
+    /*31    Configured NSSAI    NSSAI     9.11.3.37    O    TLV    4-74*/
+    // ELEM_OPT_TLV(0x31, , DE_NAS_5GS_MM_NSSAI, " - Configured NSSAI");
     consumed = dissect_opt_elem_tlv(nullptr, &configured_nssai, d, ctx);
     d.step(consumed);
 
-    /*11    Rejected NSSAI   9.11.3.42   O   TLV   4-42*/
+    /*11    Rejected NSSAI   9.11.3.46   O   TLV   4-42*/
     // ELEM_OPT_TLV(0x11, NAS_5GS_PDU_TYPE_MM, DE_NAS_5GS_MM_REJ_NSSAI, NULL);
     consumed = dissect_opt_elem_tlv(nullptr, &rej_nssai, d, ctx);
     d.step(consumed);
@@ -111,7 +115,9 @@ int mm::conf_upd_cmd(dissector d, context* ctx) {
     consumed = dissect_opt_elem_tv_short(nullptr, &sms_ind, d, ctx);
     d.step(consumed);
 
-    d.extraneous_data_check(0);
+    // Tbd	T3447 value	GPRS timer 3    9.11.2.5 O TLV 3
+
+    d.extraneous_data_check(3);
     return len;
 }
 
@@ -476,7 +482,7 @@ const field_meta hf_dst_adjustment = {
     0x03,
 };
 
-int dissect_day_saving_time(dissector d, context* ctx) {    
+int dissect_day_saving_time(dissector d, context* ctx) {
 
     d.add_item(1, &hf_dst_adjustment, enc::be);
     d.step(1);
@@ -531,7 +537,7 @@ static const true_false_string tfs_nas_5gs_raai = { // NOLINT: unused-const-vari
     "all PLMN registration area allocated",
     "all PLMN registration area not allocated",
 };
-int dissect_mico_ind(dissector d, context* ctx) {    
+int dissect_mico_ind(dissector d, context* ctx) {
 
     d.add_item(1, hf_mm_raai_b0, enc::be);
     return 1;
@@ -749,7 +755,7 @@ namespace {
     static const true_false_string tfs_allowed_or_not = {
         "Allowed",
         "Not Allowed",
-    };    
+    };
 }
 const field_meta hf_sms_indic_sai = {
     "SMS over NAS",
@@ -770,4 +776,11 @@ int dissect_sms_ind(dissector d, context* ctx) {
     return 1;
 }
 
+// Network slicing indication  9.11.3.36
+extern const element_meta nw_slicing_ind = {
+    0x90,
+    "Network slicing indication",
+    dissect_nw_slicing_ind,
+    nullptr,
+};
 } // namespace mm_conf_upd_cmd

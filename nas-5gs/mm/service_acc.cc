@@ -21,23 +21,20 @@ int mm::service_acc(dissector d, context* ctx) {
     auto consumed = dissect_opt_elem_tlv(nullptr, &pdu_ses_status, d, ctx);
     d.step(consumed);
 
-    /*26    PDU session reactivation result    PDU session reactivation result 9.11.3.42
-     * O    TLV    4-32*/
-    // ELEM_OPT_TLV(0x26, NAS_5GS_PDU_TYPE_MM, DE_NAS_5GS_MM_PDU_SES_REACT_RES, NULL);
+    /*26    PDU session reactivation result 9.11.3.42 O    TLV    4-32*/
+    // ELEM_OPT_TLV(0x26, , DE_NAS_5GS_MM_PDU_SES_REACT_RES, NULL);
     consumed = dissect_opt_elem_tlv(nullptr, &pdu_ses_react_res, d, ctx);
     d.step(consumed);
 
 
-    /*72    PDU session reactivation result error cause    PDU session reactivation result
-     * error cause 9.11.3.43    O    TLV-E    5-515 */
-    // ELEM_OPT_TLV_E(
-    //    0x72, NAS_5GS_PDU_TYPE_COMMON, DE_NAS_5GS_MM_PDU_SES_REACT_RES_ERR_C, NULL);
+    /*72 PDU session reactivation result error cause 9.11.3.43    O    TLV-E    5-515 */
+    // ELEM_OPT_TLV_E(  0x72, , DE_NAS_5GS_MM_PDU_SES_REACT_RES_ERR_C, NULL);
     consumed = dissect_opt_elem_tlv_e(nullptr, &pdu_ses_react_res_error_c, d, ctx);
     d.step(consumed);
 
 
-    /*78    EAP message    EAP message     9.11.2.2    O    TLV-E    7-1503*/
-    // ELEM_OPT_TLV_E(0x78, NAS_5GS_PDU_TYPE_COMMON, DE_NAS_5GS_CMN_EAP_MESSAGE, NULL);
+    /*78    EAP message 9.11.2.2    O    TLV-E    7-1503*/
+    // ELEM_OPT_TLV_E(0x78, , DE_NAS_5GS_CMN_EAP_MESSAGE, NULL);
     consumed = dissect_opt_elem_tlv_e(nullptr, &eap_msg, d, ctx);
     d.step(consumed);
 
@@ -45,8 +42,7 @@ int mm::service_acc(dissector d, context* ctx) {
     // consumed = dissect_opt_elem_tlv(nullptr, &t3348_gprs_timer3, d, ctx);
     // d.step(consumed);
 
-    // todo: how to dissect t3348
-    d.extraneous_data_check(0); 
+    d.extraneous_data_check(3);
 
     return len;
 }

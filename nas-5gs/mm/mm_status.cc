@@ -10,8 +10,8 @@ int mm::mm_status(dissector d, context* ctx) {
     /* Direction: both*/
     d.pinfo->dir = pi_dir::both;
 
-    /* 5GMM cause    5GMM cause 9.11.3.2    M    V    1 */
-    // ELEM_MAND_V(DE_NAS_5GS_MM_5GMM_CAUSE,ei_nas_5gs_missing_mandatory_elemen);
+    /* 5GMM cause 9.11.3.2    M    V    1 */
+    // ELEM_MAND_V(DE_NAS_5GS_MM_5GMM_CAUSE,);
     const auto consumed = dissect_elem_v(nullptr, &mm_cause, d, ctx);
     d.step(consumed);
 

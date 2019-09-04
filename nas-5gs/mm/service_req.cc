@@ -23,9 +23,9 @@ int mm::service_req(dissector d, context* ctx) {
 
     /*  ELEM_MAND_V(,DE_NAS_5GS_MM_NAS_KEY_SET_ID," - ngKSI", );*/
     /* ngKSI     NAS key set identifier 9.11.3.32    M    V    1/2 */
-    dissect_elem_v(nullptr, &key_set_id, d, ctx);    
+    dissect_elem_v(nullptr, &key_set_id, d, ctx);
 
-    // Service type Service type 9.11.3.50 M V 1 / 2
+    // Service type 9.11.3.50 M V 1 / 2
     dissect_elem_v(nullptr, &mm_service_type, d, ctx);
     d.step(1);
 
@@ -59,8 +59,11 @@ int mm::service_req(dissector d, context* ctx) {
     return len;
 }
 namespace mm_service_req {
-int                dissect_key_set_id(dissector d, context* ctx);
 
+// NAS key set identifier 9.11.3.32
+int dissect_key_set_id(dissector d, context* ctx);
+
+// NAS key set identifier 9.11.3.32
 const element_meta key_set_id = {
     0xff,
     "NAS key set identifier - ngKSI",
@@ -68,8 +71,10 @@ const element_meta key_set_id = {
     nullptr,
 };
 
+// Service type 9.11.3.50
 int dissect_mm_service_type(dissector d, context* ctx);
 
+// Service type 9.11.3.50
 const element_meta mm_service_type = {
     0xff,
     "Service type",
@@ -86,7 +91,10 @@ const element_meta s_tmsi = {
     nullptr,
 };
 
-int                dissect_uplink_data_status(dissector d, context* ctx);
+// Uplink data status  9.11.3.57
+int dissect_uplink_data_status(dissector d, context* ctx);
+
+// Uplink data status  9.11.3.57
 const element_meta uplink_data_status = {
     0x40,
     "Uplink data status",
@@ -94,8 +102,10 @@ const element_meta uplink_data_status = {
     nullptr,
 };
 
+// Allowed PDU session status
 int dissect_allowed_pdu_ses_status(dissector d, context* ctx);
 
+// Allowed PDU session status
 const element_meta allowed_pdu_ses_status = {
     0x25,
     "Allowed PDU session status",
@@ -105,14 +115,7 @@ const element_meta allowed_pdu_ses_status = {
 
 // *   9.11.3.32    NAS key set identifier
 int dissect_key_set_id(dissector d, context* ctx) {
-    static const field_meta* flags[] = {
-        &hf_tsc,
-        hf_nas_eps_nas_ksi,
-        nullptr,
-    };
-    /* NAS key set identifier IEI   TSC     NAS key set identifier */
-    d.add_bits(flags);
-    return 1;
+    return dissect_nas_ksi(d, ctx);
 }
 
 /* *     9.11.3.50    Service type page.396 */
@@ -444,12 +447,9 @@ const field_meta hf_allow_pdu_ses_sts_psi_15_b7 = {
     0x80,
 };
 
-/*
- *  9.11.3.13    Allowed PDU session status
- */
-
-
+/*  9.11.3.13    Allowed PDU session status */
 int dissect_allowed_pdu_ses_status(dissector d, context* ctx) {
+    auto len = d.length;
 
     static const field_meta* psi_0_7_flags[] = {
         &hf_allow_pdu_ses_sts_psi_7_b7,
@@ -481,8 +481,10 @@ int dissect_allowed_pdu_ses_status(dissector d, context* ctx) {
     d.add_bits(psi_8_15_flags);
     d.step(1);
 
-    d.extraneous_data_check(0);
-    return 2;
+    // All bits in octet 5 to 34 are spare and shall be coded as zero, if the respective
+    // octet is included in the information element.
+    d.extraneous_data_check(30);
+    return len;
 }
 
 } // namespace mm_service_req

@@ -1284,11 +1284,11 @@ extern const element_meta mm::nas_ksi = {
 extern const element_meta mm::mm_cause = {
     0xff,
     "5GMM cause",
-    mm::dissect_mm_cause,
+    dissect_mm_cause,
     nullptr,
 };
 
-
+// NAS message container 9.11.3.33
 extern const element_meta mm::nas_msg_cont = {
     0x71,
     "NAS message container",

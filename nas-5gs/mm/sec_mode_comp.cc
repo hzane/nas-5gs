@@ -13,9 +13,8 @@ int mm::sec_mode_comp(dissector d, context* ctx) {
     auto consumed = dissect_opt_elem_tlv_e(nullptr, &mobile_id, d, ctx);
     d.step(consumed);
 
-    /* 71    NAS message container    NAS message container 9.11.3.33    O    TLV-E    4-n
-     */
-    // ELEM_OPT_TLV_E(0x71, NAS_5GS_PDU_TYPE_MM, DE_NAS_5GS_MM_NAS_MSG_CONT, NULL);
+    /* 71    NAS message container  9.11.3.33    O    TLV-E    4-n  */
+    // ELEM_OPT_TLV_E(0x71, , DE_NAS_5GS_MM_NAS_MSG_CONT, NULL);
     consumed = dissect_opt_elem_tlv_e(nullptr, &nas_msg_cont, d, ctx);
     d.step(consumed);
 

@@ -1,5 +1,6 @@
 #include "../dissect_mm_msg.hh"
 #include "../ts24007.hh"
+#include "../gsm.hh"
 
 namespace mm_de_reg {
 extern const element_meta de_reg_type;
@@ -19,7 +20,8 @@ int mm::dissect_registration_req_ue_term(dissector d, context* ctx) {
     d.step(consumed);
 
     /* Spare half octet    Spare half octet 9.5    M    V    1/2 */
-    /* 58 5GMM cause   5GMM cause     9.11.3.2  O   TV   2 */
+
+    /* 58 5GMM cause  9.11.3.2  O   TV   2 */
     // ELEM_OPT_TV(0x58, , DE_NAS_5GS_MM_5GMM_CAUSE, NULL);
     consumed = dissect_opt_elem_tv(nullptr, &mm_cause, d, ctx);
     d.step(consumed);
@@ -35,18 +37,15 @@ int mm::dissect_registration_req_ue_term(dissector d, context* ctx) {
 
 namespace mm_de_reg {
 
+// T3346 value GPRS timer 2     9.11.2.4
 int dissect_t3346_gprs_timer2(dissector d, context*);
 
+// T3346 value GPRS timer 2     9.11.2.4
 extern const element_meta t3346_gprs_timer2 = {
     0x5f,
     "GPRS timer 2 - T3346 value",
-    dissect_t3346_gprs_timer2,
+    dissect_gprs_timer2,
     nullptr,
 };
 
-// 24.008 g10 
-int dissect_t3346_gprs_timer2(dissector d, context* ctx) {
-    // no dissector
-    return d.length;
-}
 } // namespace mm_de_reg_req

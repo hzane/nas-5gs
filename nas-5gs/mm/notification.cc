@@ -16,12 +16,12 @@ int mm::notification(dissector d, context* ctx) {
 
     using namespace mm_notification;
 
-    /* Access type    Access type 9.11.3.11    M    V    1/2 DE_NAS_5GS_MM_ACCESS_TYPE */
+    /* Access type    Access type 9.11.3.11    M    V    1/2  */
+    // ELEM_MAND_V(DE_NAS_5GS_MM_ACCESS_TYPE,);
+    const auto consumed = dissect_elem_v(nullptr, &access_type, d, ctx);
+
     /* Spare half octet    Spare half octet 9.5    M    V    1/2  */
     d.tree->add_item(d.pinfo, d.tvb, d.offset, 1, hf_spare_half_octet, enc::be);
-
-    // ELEM_MAND_V(DE_NAS_5GS_MM_ACCESS_TYPE,ei_nas_5gs_missing_mandatory_elemen);
-    const auto consumed = dissect_elem_v(nullptr, &access_type, d, ctx);
     d.step(consumed);
 
     d.extraneous_data_check(0);

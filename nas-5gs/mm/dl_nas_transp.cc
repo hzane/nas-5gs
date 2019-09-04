@@ -93,7 +93,7 @@ extern const element_meta additional_inf = {
     nullptr,
 };
 
-
+// Back-off timer value    GPRS timer 3 9.11.2.5
 extern const element_meta backoff_gprs_timer3 = {
     0x37,
     "GPRS timer - Back-off timer",

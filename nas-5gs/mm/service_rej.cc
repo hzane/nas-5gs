@@ -15,18 +15,18 @@ int mm::service_rej(dissector d, context* ctx) {
     use_context uc(ctx, "service-reject");
 
     using namespace mm_service_rej;
-    /* 5GMM cause   5GMM cause     9.11.3.2  M   V   1 */
+    /* 5GMM cause  9.11.3.2  M   V   1 */
     /*    ELEM_MAND_V(,DE_NAS_5GS_MM_5GMM_CAUSE, );*/
     auto consumed = dissect_elem_v(nullptr, &mm_cause, d, ctx);
     d.step(consumed);
 
     /*50  PDU session status 9.11.3.44    O    TLV    4 - 34*/
-    // ELEM_OPT_TLV(0x50, NAS_5GS_PDU_TYPE_MM, DE_NAS_5GS_MM_PDU_SES_STATUS, NULL);
+    // ELEM_OPT_TLV(0x50, , DE_NAS_5GS_MM_PDU_SES_STATUS, NULL);
     consumed = dissect_opt_elem_tlv(nullptr, &pdu_ses_status, d, ctx);
     d.step(consumed);
 
     /* 5F  T3346 value GPRS timer 2     9.11.2.4   O   TLV 3 */
-    // ELEM_OPT_TLV(0x5F, GSM_A_PDU_TYPE_GM, DE_GPRS_TIMER_2, " - T3346 value");
+    // ELEM_OPT_TLV(0x5F, , DE_GPRS_TIMER_2, " - T3346 value");
     consumed = dissect_opt_elem_tlv(nullptr, &t3346_gprs_timer2, d, ctx);
     d.step(consumed);
 
@@ -35,9 +35,9 @@ int mm::service_rej(dissector d, context* ctx) {
     consumed = dissect_opt_elem_tlv_e(nullptr, &eap_msg, d, ctx);
     d.step(consumed);
 
-    // T3448 GPRS timer 3
+    // XX	T3448 value	GPRS timer 3    9.11.2.4 O TLV 3
 
-    d.extraneous_data_check(0);
+    d.extraneous_data_check(3);
 
     return len;
 }

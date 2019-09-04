@@ -16,11 +16,11 @@ int mm::id_req(dissector d, context* ctx) {
 
     using namespace mm_id;
 
-    /*     Identity type    5GS identity type 9.11.3.3    M    V    1/2 */
-    /* Spare half octet    Spare half octet 9.5    M    V    1/2 */
+    /* Identity type    5GS identity type 9.11.3.3    M    V    1/2 */
     d.tree->add_item(d.pinfo, d.tvb, d.offset, 1, hf_spare_half_octet, enc::be);
-    // ELEM_MAND_V(DE_NAS_5GS_MM_5GS_IDENTITY_TYPE,ei_nas_5gs_missing_mandatory_elemen);
+    // ELEM_MAND_V(,ei_nas_5gs_missing_mandatory_elemen);
     const auto consumed = dissect_elem_v(nullptr, &id_type, d, ctx);
+    /* Spare half octet    Spare half octet 9.5    M    V    1/2 */
     d.step(consumed);
 
     d.extraneous_data_check(0);

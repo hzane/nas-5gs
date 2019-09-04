@@ -192,6 +192,9 @@
     <ClCompile Include="e212_mcc_mnc.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="sm\pdu_ses.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="config.hh">
@@ -249,6 +252,21 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="mm\registration_accept.hh">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sm\pdu_ses.hh">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sm\pdu_ses_auth.hh">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sm\pdu_ses_est.hh">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sm\pdu_ses_mod.hh">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sm\pdu_ses_rel.hh">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
