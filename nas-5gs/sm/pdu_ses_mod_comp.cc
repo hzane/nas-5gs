@@ -26,8 +26,7 @@ int sm::pdu_ses_mod_comp(dissector d, context* ctx) {
      * the 5GSM cause IE for future extensions of the PDU SESSION MODIFICATION COMPLETE
      * message.*/
 
-    // extraneous_data_check(d.pinfo, d.tree, d.tvb, d.offset, d.length, 0);
-    d.extraneous_data_check(0);
+    d.extraneous_data_check(2); // sm-cause
 
     return len;
 }

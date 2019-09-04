@@ -7,7 +7,8 @@ namespace sm_pdu_ses_mod {
 // extern const element_meta always_on_pdu_ses_req;
 extern const element_meta int_prot_max_data_rate;
 extern const element_meta requested_qos_rules;
-extern const element_meta authorized_qos_flow_des;
+extern const element_meta authorized_qos_flow_des; // Requested QoS flow descriptions QoS
+                                                   // flow descriptions 9.11.4.12
 } // namespace sm_pdu_ses_mod
 
 using namespace nas;
@@ -65,7 +66,7 @@ int sm::pdu_ses_mod_req(dissector d, context* ctx) {
     consumed = dissect_opt_elem_tlv_e(nullptr, &mapped_eps_b_cont, d, ctx);
     d.step(consumed);
 
-    /* 7B    Extended protocol configuration options  9.11.4.6    O    TLV - E    4 - 65538*/
+    /* 7B Extended protocol configuration options  9.11.4.6 O TLV-E    4-65538*/
     // ELEM_OPT_TLV_E(0x7B, , DE_ESM_EXT_PCO, NULL);
     consumed = dissect_opt_elem_tlv_e(nullptr, &ext_pco, d, ctx);
     d.step(consumed);
@@ -78,6 +79,7 @@ int sm::pdu_ses_mod_req(dissector d, context* ctx) {
 namespace sm_pdu_ses_mod {
 int dissect_requested_qos_rules(dissector d, context* ctx);
 
+// Integrity protection maximum data rate   9.11.4.7
 extern const element_meta int_prot_max_data_rate = {
     0x13,
     "Integrity protection maximum data rate",
@@ -85,6 +87,7 @@ extern const element_meta int_prot_max_data_rate = {
     nullptr,
 
 };
+
 extern const element_meta requested_qos_rules = {
     0x7A,
     "Requested QoS rules",

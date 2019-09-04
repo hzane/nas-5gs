@@ -30,9 +30,8 @@ int sm::pdu_ses_auth_res(dissector d, context* ctx) {
     return d.offset - start;
 }
 
-/* 9.11.4.2    5GSM cause */
+// 5GSM cause 9.11.4.2
 int sm::dissect_sm_cause(dissector d, context* ctx) {
-    uint32_t cause = (uint32_t) d.tvb->uint8(d.offset);
     d.add_item(1, &hf_sm_cause, enc::be);
 
     return 1;
@@ -324,21 +323,20 @@ int sm::dissect_authorized_qos_rules(dissector d, context* ctx) {
 
 int dissect_eps_param(dissector d, int i, context* ctx){
     auto start = d.offset;
-    auto subtree =
-        d.tree->add_subtree(d.pinfo, d.tvb, d.offset, -1, "EPS parameter %u", i);
+    auto     subtree = d.add_item(-1, "EPS parameter %u", i);
     use_tree ut(d, subtree);
 
     /* EPS parameter identifier */
-    uint32_t param_id = (uint32_t) d.tvb->uint8(d.offset);
+    uint32_t param_id = (uint32_t) d.uint8();
     d.add_item(1, &hf_sm_mapd_eps_b_cont_num_eps_param_id, enc::be);
     d.step(1);
 
     /*length of the EPS parameter contents field */
-    int length = (int) d.tvb->uint8(d.offset);
+    int length = (int) d.uint8();
     d.add_item(1, &hf_sm_length, enc::be);
     d.step(1);
 
-    subtree->set_length(length+3);
+    subtree->set_length(length+2);
     /*length of the EPS parameter contents field */
     switch(param_id){
     case 1: /* 01H (Mapped EPS QoS parameters) */
@@ -352,10 +350,14 @@ int dissect_eps_param(dissector d, int i, context* ctx){
     }
     return d.offset - start;
 }
+
+// Mapped EPS  bearer contexts     9.11.4.8
 int sm::dissect_mapped_eps_b_cont(dissector d, context* ctx) {
+    auto len = d.length;
+
     static const field_meta* mapd_eps_b_cont_flags[] = {
         &hf_sm_mapd_eps_b_cont_opt_code,
-        &hf_sm_mapd_eps_b_cont_deb,
+        &hf_spare_b5,
         &hf_sm_mapd_eps_b_cont_e,
         &hf_sm_mapd_eps_b_cont_num_eps_parms,
         nullptr,
@@ -363,7 +365,7 @@ int sm::dissect_mapped_eps_b_cont(dissector d, context* ctx) {
 
     static const field_meta* mapd_eps_b_cont_flags_modify[] = {
         &hf_sm_mapd_eps_b_cont_opt_code,
-        &hf_sm_mapd_eps_b_cont_deb,
+        &hf_spare_b5,
         &hf_sm_mapd_eps_b_cont_e_mod,
         &hf_sm_mapd_eps_b_cont_num_eps_parms,
         nullptr,
@@ -372,8 +374,7 @@ int sm::dissect_mapped_eps_b_cont(dissector d, context* ctx) {
     /* The IE contains a number of Mapped EPS bearer context */
     while(d.length>0){
         /* Figure 9.11.4.5.2: Mapped EPS bearer context */
-        auto subtree = d.tree->add_subtree(
-            d.pinfo, d.tvb, d.offset, -1, "Mapped EPS bearer context %u", n);
+        auto subtree = d.add_item(-1, "Mapped EPS bearer context %u", n);
         use_tree ut(d, subtree);
 
         /* EPS bearer identity */
@@ -381,16 +382,16 @@ int sm::dissect_mapped_eps_b_cont(dissector d, context* ctx) {
         d.step(1);
 
         /* Length of Mapped EPS bearer context*/
-        int length = (int) d.tvb->ntohs(d.offset);
+        int length = (int) d.ntohs();
         d.add_item(2, &hf_sm_length, enc::be);
         d.step(2);
 
-        /*     8   7      6    5   4  3  2  1          */
-        /* operation code | DEB |  E | number of EPS params     */
         subtree->set_length(length + 3);
+        /*     8   7      6    5   4  3  2  1          */
+        /* operation code | spare |  E | number of EPS params     */
 
         auto nep = d.tvb->uint8(d.offset);
-        auto opt_code = nep&0xc0;
+        auto opt_code = (nep & 0xc0u) >> 6u;
         nep           = nep & 0x0f;
 
         /* operation code = 3 Modify existing EPS bearer */
@@ -411,7 +412,7 @@ int sm::dissect_mapped_eps_b_cont(dissector d, context* ctx) {
         }
         ++n;
     }
-    return d.length;
+    return len;
 }
 
 /*  9.11.4.1    5GSM capability */
@@ -431,43 +432,84 @@ int sm::dissect_sm_cap(dissector d, context* ctx) {
     return 1;
 }
 
+const field_meta hf_max_supported_packet_filters = {
+    "Maximum number of supported packet filters",
+    "nas_5gs.max_n_supported_filters",
+    ft::ft_uint8,
+    fd::base_hex,
+    nullptr,
+    nullptr,
+    nullptr,
+    0,
+};
+const field_meta hf_max_supported_packet_filters_c = {
+    "Maximum number of supported packet filters(continued)",
+    "nas_5gs.max_n_supported_filters",
+    ft::ft_uint8,
+    fd::base_hex,
+    nullptr,
+    nullptr,
+    nullptr,
+    0xe0u,
+};
+
 //  *     9.11.4.9    Maximum number of supported packet filters
 int sm::dissect_max_num_sup_kpt_flt(dissector d, context* ctx) {
-    diag("no dissect\n");
-    return d.length;
+    d.add_item(1, &hf_max_supported_packet_filters, enc::be);
+    d.step(1);
+    d.add_item(1, &hf_max_supported_packet_filters_c, enc::be);
+    d.step(1);
+
+    return 2;
 }
 
-//  *      9.11.4.14    Session-AMBR
+// 9.11.4.14    Session-AMBR
 int sm::dissect_ses_ambr(dissector d, context* ctx) {
     auto len = d.length;
 
     /* Unit for Session-AMBR for downlink */
-    auto unit = (int) d.tvb->uint8(d.offset);
+    auto unit = (int) d.uint8();
     d.add_item(1, &hf_sm_ses_ambr_dl_unit, enc::be);
     d.step(1);
 
-    const char* unit_str = "";
+    // const char* unit_str = "";
     /* Session-AMBR for downlink (octets 4 and 5) */
-    auto ambr_val = (uint32_t) d.tvb->ntohs(d.offset);
+    auto ambr_val = (uint32_t) d.ntohs();
 
     auto item = d.add_item(2, &hf_sm_ses_ambr_dl, enc::none);
     item->set_string(ambr_string(ambr_val, unit));
     d.step(2);
 
-    unit = (int) d.tvb->uint8(d.offset);
-    d.add_item(1, &hf_sm_ses_ambr_ul_unit, enc::be);
+    unit = (int) d.uint8();
+    item = d.add_item(1, &hf_sm_ses_ambr_ul_unit, enc::be);
     d.step(1);
 
-    ambr_val = (uint32_t) d.tvb->ntohs(d.offset);
+    ambr_val = (uint32_t) d.ntohs();
     item = d.add_item(2, &hf_sm_ses_ambr_ul, enc::none);
     item->set_string(ambr_string(ambr_val, unit));
+    d.step(2);
 
     return len;
 }
 
+const true_false_string tfs_pdu_always_on_ses_id_apsi = {
+    "Always-on PDU session allowed",
+    "Always-on PDU session not allowed"};
+
+const field_meta hf_pdu_always_on_ses_ind = {
+    "Always-on PDU session indication",
+    "nas_5gs.sm.pdu.ses_id",
+    ft::ft_uint8,
+    fd::base_dec,
+    nullptr,
+    &tfs_pdu_always_on_ses_id_apsi,
+    nullptr,
+    0x01,
+};
+
 /*  9.11.4.3 Always-on PDU session indication */
 int sm::dissect_always_on_pdu_ses_ind(dissector d, context* ctx) {
-    diag("no dissect\n");
+    d.add_item(1, &hf_pdu_always_on_ses_ind, enc::be);
     return d.length;
 }
 

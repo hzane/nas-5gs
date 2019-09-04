@@ -36,8 +36,9 @@ extern const message_meta sm::msgs[] = {
     {0, nullptr, nullptr, nullptr},
 };
 
+// 5GSM cause 9.11.4.2
 const element_meta sm::sm_cause = {
-    0xff,
+    0x59,
     "5GSM cause",
     dissect_sm_cause,
     nullptr,
@@ -67,42 +68,55 @@ const element_meta sm::authorized_qos_rules = {
     nullptr,
 };
 
+// Mapped EPS  bearer contexts     9.11.4.5
 const element_meta sm::mapped_eps_b_cont = {
     0x75,
     "Mapped EPS bearer contexts",
     dissect_mapped_eps_b_cont,
     nullptr,
 };
+
+// Back-off timer value    GPRS timer 3 9.11.2.25
 const element_meta sm::backoff_gprs_timer3 = {
     0x37,
     "GPRS timer - Back-off timer value",
     dissect_gprs_timer3,
     nullptr,
 };
+
+// 5GSM capability 9.11.4.1
 const element_meta sm::sm_cap = {
     0x28,
     "5GSM capability",
     dissect_sm_cap,
     nullptr,
 };
+
+// Maximum number of suuported packet filter 9.11.4.9
 const element_meta sm::max_num_sup_kpt_flt = {
     0x55,
     "Maximum number of suuported packet filter",
     dissect_max_num_sup_kpt_flt,
     nullptr,
 };
+
+// Session-AMBR 9.11.4.14
 const element_meta sm::ses_ambr = {
     0x2A,
     "Session AMBR",
     dissect_ses_ambr,
     nullptr,
 };
+
+// RQ timer value    GPRS timer 9.11.2.3
 const element_meta sm::rq_gprs_timer = {
     0x56,
     "GPRS timer- PDU session release time",
-    dissect_gprs_timer3,
+    dissect_gprs_timer,
     nullptr,
 };
+
+// Always-on PDU session indication 9.11.4.3
 const element_meta sm::always_on_pdu_ses_ind = {
     0x80,
     "Always-on PDU session indication",
@@ -146,7 +160,7 @@ const field_meta sm::hf_sm_ses_ambr_dl_unit = {
     "nas_5gs.sm.unit_for_session_ambr_dl",
     ft::ft_uint8,
     fd::base_dec,
-    (sm_unit_for_session_ambr_values),
+    sm_unit_for_session_ambr_values,
     nullptr,
     nullptr,
     0x0,

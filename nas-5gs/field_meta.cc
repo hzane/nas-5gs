@@ -83,5 +83,6 @@ string field_meta::format(uint64_t v) const {
     if (display == fd::timer2){
         return gprs_timer2_format((uint8_t)v);
     }
+
     return format_int(v, ftype, display);
 }

@@ -139,12 +139,15 @@ extern const element_meta pdu_ses_type = {
     dissect_pdu_ses_type,
     nullptr,
 };
+
+// PDU address 9.11.4.10
 extern const element_meta pdu_address = {
     0x29,
     "PDU address",
     dissect_pdu_address,
     nullptr,
 };
+
 extern const element_meta sm_s_nssai = {
     0x22,
     "S-NSSAI",
@@ -202,13 +205,14 @@ int dissect_pdu_ses_type(dissector d, context* ctx) {
     return 1;
 }
 
+// PDU address 9.11.4.10
 int dissect_pdu_address(dissector d, context* ctx) {
     auto len = d.length;
     uint32_t val = (uint32_t) d.tvb->uint8(d.offset);
     auto item = d.add_item(1, &hf_sm_pdu_ses_type, enc::be);
     d.step(1);
 
-    use_tree ut(d, item);
+    // use_tree ut(d, item);
     /* PDU address information */
     switch(val){
     case 1: // ipv4
@@ -234,7 +238,7 @@ int dissect_pdu_address(dissector d, context* ctx) {
         d.step(4);
         break;
     default:
-        diag("known value %d", val);
+        diag("unknown pdu address %d", val);
     }
     return 0;
 }
