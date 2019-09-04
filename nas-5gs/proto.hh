@@ -6,7 +6,7 @@
 #include "config.hh"
 #include "packet_info.hh"
 
-struct proto_node {
+struct proto_node { // NOLINT: special-member-functions
     void set_length(int len);
     proto_item* add_item(packet_info*      pinfo,
                          tvbuff*           buf,

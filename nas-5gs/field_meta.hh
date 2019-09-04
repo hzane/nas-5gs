@@ -101,7 +101,7 @@ struct field_meta {
     const range_string*      range_strings;
     uint64_t                 bitmask; /* bitmask of interesting bits */
 
-    string format(const uint8_t* d, int len, uint32_t enc) const;
+    string format(const uint8_t* p, int len, uint32_t enc) const;
     string format(uint64_t val) const;
 };
 

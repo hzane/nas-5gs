@@ -89,16 +89,21 @@ extern const element_meta always_on_pdu_ses_req = {
     0xB0,
     "Always-on PDU session requested",
     dissect_always_on_pdu_ses_req,
+    nullptr,
 };
 extern const element_meta int_prot_max_data_rate = {
     0x13,
     "Integrity protection maximum data rate",
     dissect_int_prot_max_data_rate,
+    nullptr,
+
 };
 extern const element_meta requested_qos_rules = {
     0x7A,
     "Requested QoS rules",
     dissect_requested_qos_rules,
+    nullptr,
+
 };
 
 } // namespace sm_pdu_ses_mod

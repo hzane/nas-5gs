@@ -4,11 +4,11 @@ using namespace mm;
 using namespace nas;
 
 namespace {
-static const true_false_string tfs_allowed_or_not = {
+const true_false_string tfs_allowed_or_not = {
     "Allowed",
     "Not Allowed",
 };
-static const true_false_string tfs_requested_or_not = {
+const true_false_string tfs_requested_or_not = {
     "Requested",
     "Not Requested",
 };

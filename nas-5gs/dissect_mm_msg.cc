@@ -6,6 +6,21 @@
 using namespace nas;
 using namespace mm;
 
+namespace {
+const true_false_string tfs_sal_allowed_or_not = {
+    "TAIs in the list are in the non-allowed area",
+    "TAIs in the list are in the allowed area",
+};
+const val_string mm_sal_t_li_values[] = {
+    {0x00, "list of TACs belonging to one PLMN, with non-consecutive TAC values"},
+    {0x01, "list of TACs belonging to one PLMN, with consecutive TAC values"},
+    {0x02, "list of TAIs belonging to different PLMNs"},
+    {0x03, "All TAIs belonging to the PLMN are in the allowed area"},
+    {0, nullptr},
+};
+
+} // namespace
+
 /*
  * 8.2.13 De-registration accept (UE originating de-registration)
  */
@@ -68,8 +83,8 @@ int mm::dissect_allowed_nssai(dissector d, context* ctx) {
         auto     subtree = d.add_item(-1, "S-NSSAI %u", i);
         use_tree ut(d, subtree);
 
-        auto l       = d.uint8();
-        auto item    = d.add_item(1, &hf_mm_length, enc::be);
+        auto l    = d.uint8();
+        auto item = d.add_item(1, &hf_mm_length, enc::be);
         d.step(1);
 
         auto consumed = dissect_s_nssai(d.slice(l), ctx);
@@ -84,9 +99,14 @@ int mm::dissect_allowed_nssai(dissector d, context* ctx) {
 /* 9.11.3.37    NSSAI*/
 int mm::dissect_requested_nssai(dissector d, context* ctx) {
     const auto len = d.length;
-    auto i = 1;
-    while(d.length>0){
-        auto subtree = d.tree->add_subtree(d.pinfo, d.tvb, d.offset, 2, "S-NSSAI %u", i);
+    auto       i   = 1;
+    while (d.length > 0) {
+        auto subtree = d.tree->add_subtree(d.pinfo,
+                                               d.tvb,
+                                               d.offset,
+                                               2,
+                                               "S-NSSAI %u",
+                                               i);
         use_tree ut(d, subtree);
 
         auto length = static_cast< int >(d.tvb->uint8(d.offset));
@@ -111,7 +131,7 @@ const field_meta hf_eps_emm_ebi7 = {
     "nas_eps.emm.ebi7",
     ft::ft_boolean,
     fd::base_dec,
-    nullptr,&eps_emm_ebi_vals,nullptr,
+    nullptr, &eps_emm_ebi_vals, nullptr,
     0x80,
 };
 const field_meta hf_eps_emm_ebi6 = {
@@ -119,7 +139,7 @@ const field_meta hf_eps_emm_ebi6 = {
     "nas_eps.emm.ebi6",
     ft::ft_boolean,
     fd::base_dec,
-    nullptr,&eps_emm_ebi_vals,nullptr,
+    nullptr, &eps_emm_ebi_vals, nullptr,
     0x40,
 };
 const field_meta hf_eps_emm_ebi5 = {
@@ -127,7 +147,7 @@ const field_meta hf_eps_emm_ebi5 = {
     "nas_eps.emm.ebi5",
     ft::ft_boolean,
     fd::base_dec,
-    nullptr,&eps_emm_ebi_vals,nullptr,
+    nullptr, &eps_emm_ebi_vals, nullptr,
     0x20,
 };
 const field_meta hf_eps_emm_ebi4 = {
@@ -135,7 +155,7 @@ const field_meta hf_eps_emm_ebi4 = {
     "nas_eps.emm.ebi4",
     ft::ft_boolean,
     fd::base_dec,
-    nullptr,&eps_emm_ebi_vals,nullptr,
+    nullptr, &eps_emm_ebi_vals, nullptr,
     0x10,
 };
 const field_meta hf_eps_emm_ebi3 = {
@@ -143,7 +163,7 @@ const field_meta hf_eps_emm_ebi3 = {
     "nas_eps.emm.ebi3",
     ft::ft_boolean,
     fd::base_dec,
-    nullptr,&eps_emm_ebi_vals,nullptr,
+    nullptr, &eps_emm_ebi_vals, nullptr,
     0x08,
 };
 const field_meta hf_eps_emm_ebi2 = {
@@ -151,7 +171,7 @@ const field_meta hf_eps_emm_ebi2 = {
     "nas_eps.emm.ebi2",
     ft::ft_boolean,
     8,
-    nullptr,&eps_emm_ebi_vals,nullptr,
+    nullptr, &eps_emm_ebi_vals, nullptr,
     0x04,
 };
 const field_meta hf_eps_emm_ebi1 = {
@@ -159,7 +179,7 @@ const field_meta hf_eps_emm_ebi1 = {
     "nas_eps.emm.ebi1",
     ft::ft_boolean,
     fd::base_dec,
-    nullptr,&eps_emm_ebi_vals,nullptr,
+    nullptr, &eps_emm_ebi_vals, nullptr,
     0x02,
 };
 const field_meta hf_eps_emm_ebi0 = {
@@ -178,7 +198,7 @@ const field_meta hf_eps_emm_ebi15 = {
     "nas_eps.emm.ebi15",
     ft::ft_boolean,
     fd::base_dec,
-    nullptr,&eps_emm_ebi_vals,nullptr,
+    nullptr, &eps_emm_ebi_vals, nullptr,
     0x80,
 };
 const field_meta hf_eps_emm_ebi14 = {
@@ -186,7 +206,7 @@ const field_meta hf_eps_emm_ebi14 = {
     "nas_eps.emm.ebi14",
     ft::ft_boolean,
     fd::base_dec,
-    nullptr,&eps_emm_ebi_vals,nullptr,
+    nullptr, &eps_emm_ebi_vals, nullptr,
     0x40,
 };
 const field_meta hf_eps_emm_ebi13 = {
@@ -194,7 +214,7 @@ const field_meta hf_eps_emm_ebi13 = {
     "nas_eps.emm.ebi13",
     ft::ft_boolean,
     fd::base_dec,
-    nullptr,&eps_emm_ebi_vals,nullptr,
+    nullptr, &eps_emm_ebi_vals, nullptr,
     0x20,
 };
 const field_meta hf_eps_emm_ebi12 = {
@@ -202,7 +222,7 @@ const field_meta hf_eps_emm_ebi12 = {
     "nas_eps.emm.ebi12",
     ft::ft_boolean,
     fd::base_dec,
-    nullptr,&eps_emm_ebi_vals,nullptr,
+    nullptr, &eps_emm_ebi_vals, nullptr,
     0x10,
 };
 const field_meta hf_eps_emm_ebi11 = {
@@ -210,7 +230,7 @@ const field_meta hf_eps_emm_ebi11 = {
     "nas_eps.emm.ebi11",
     ft::ft_boolean,
     fd::base_dec,
-    nullptr,&eps_emm_ebi_vals,nullptr,
+    nullptr, &eps_emm_ebi_vals, nullptr,
     0x08,
 };
 const field_meta hf_eps_emm_ebi10 = {
@@ -218,23 +238,23 @@ const field_meta hf_eps_emm_ebi10 = {
     "nas_eps.emm.ebi10",
     ft::ft_boolean,
     8,
-    nullptr,&eps_emm_ebi_vals,nullptr,
+    nullptr, &eps_emm_ebi_vals, nullptr,
     0x04,
 };
-const field_meta hf_eps_emm_ebi9  = {
+const field_meta hf_eps_emm_ebi9 = {
     "EBI(9)",
     "nas_eps.emm.ebi9",
     ft::ft_boolean,
     fd::base_dec,
-    nullptr,&eps_emm_ebi_vals,nullptr,
+    nullptr, &eps_emm_ebi_vals, nullptr,
     0x02,
 };
-const field_meta hf_eps_emm_ebi8  = {
+const field_meta hf_eps_emm_ebi8 = {
     "EBI(8)",
     "nas_eps.emm.ebi8",
     ft::ft_boolean,
     fd::base_dec,
-    nullptr,&eps_emm_ebi_vals,nullptr,
+    nullptr, &eps_emm_ebi_vals, nullptr,
     0x01,
 };
 
@@ -345,7 +365,9 @@ int mm::dissect_ta_id_list(dissector d, context* ctx) {
     /*Partial tracking area list*/
     while (d.length > 0) {
         auto orig_offset = d.offset;
-        auto subtree     = d.add_item(-1, "Partial tracking area list  %u", num_par_tal);
+        auto subtree     = d.add_item(-1,
+                                          "Partial tracking area list  %u",
+                                          num_par_tal);
         use_tree ut(d, subtree);
         /*Head of Partial tracking area list*/
         /* Type of list    Number of elements    octet 1 */
@@ -356,7 +378,8 @@ int mm::dissect_ta_id_list(dissector d, context* ctx) {
         d.step(1);
 
         switch (li) {
-        case 0: { // 00
+        case 0: {
+            // 00
             /*octet 2  MCC digit2  MCC digit1*/
             /*octet 3  MNC digit3  MCC digit3*/
             /*octet 4  MNC digit2  MNC digit1*/
@@ -370,8 +393,10 @@ int mm::dissect_ta_id_list(dissector d, context* ctx) {
                 --num_e;
             }
 
-        } break;
-        case 1: { // 01
+        }
+        break;
+        case 1: {
+            // 01
             /*octet 2  MCC digit2  MCC digit1*/
             /*octet 3  MNC digit3  MCC digit3*/
             /*octet 4  MNC digit2  MNC digit1*/
@@ -381,8 +406,10 @@ int mm::dissect_ta_id_list(dissector d, context* ctx) {
             /*octet 5  TAC 1*/
             d.add_item(3, &hf_tac, enc::be);
             d.step(3);
-        } break;
-        case 2: { // 10
+        }
+        break;
+        case 2: {
+            // 10
             while (num_e > 0) {
                 /*octet 2  MCC digit2  MCC digit1*/
                 /*octet 3  MNC digit3  MCC digit3*/
@@ -396,12 +423,15 @@ int mm::dissect_ta_id_list(dissector d, context* ctx) {
 
                 --num_e;
             }
-        } break;
-        case 3: { // All other values are reserved.
-        // not defined in 24.501 16.1.0
+        }
+        break;
+        case 3: {
+            // All other values are reserved.
+            // not defined in 24.501 16.1.0
             auto consumed = dissect_e212_mcc_mnc(d, ctx);
             d.step(consumed);
-        } break;
+        }
+        break;
         default:
             diag("reserved type of list %d\n", li);
             d.step(d.length); // consumed all left bytes
@@ -414,6 +444,7 @@ int mm::dissect_ta_id_list(dissector d, context* ctx) {
     }
     return len;
 }
+
 const val_string ref_nssai_cause_values[] = {
     {0, "S-NSSAI not available in the current PLMN"},
     {
@@ -437,18 +468,23 @@ const field_meta hf_rej_nssai_cause = {
 /* *   9.11.3.46    Rejected NSSAI page.389 */
 int mm::dissect_rejected_nssai(dissector d, context* ctx) {
     auto len = d.length;
-    auto i = 1;
-    while(d.length>0){
-        auto subtree = d.tree->add_subtree(d.pinfo, d.tvb, d.offset, 2, "Rejected S-NSSAI %u", i);
+    auto i   = 1;
+    while (d.length > 0) {
+        auto subtree = d.tree->add_subtree(d.pinfo,
+                                           d.tvb,
+                                           d.offset,
+                                           2,
+                                           "Rejected S-NSSAI %u",
+                                           i);
         use_tree ut(d, subtree);
 
-        auto len = int(d.uint8()>>4u);
+        auto len = int(d.uint8() >> 4u);
         d.add_item(1, &hf_rej_nssai_cause, enc::be);
         d.step(1);
 
         d.add_item(1, &hf_sst, enc::be);
         d.step(1);
-        if (len==1) continue; // len == 1 || len == 4
+        if (len == 1) continue; // len == 1 || len == 4
 
         d.add_item(3, &hf_sd, enc::be);
         d.step(3);
@@ -464,7 +500,12 @@ int mm::dissect_configured_nssai(dissector d, context* ctx) {
     auto len = d.length;
     auto i   = 1;
     while (d.length > 0) {
-        auto subtree = d.tree->add_subtree(d.pinfo, d.tvb, d.offset, 2, "S-NSSAI %u", i);
+        auto subtree = d.tree->add_subtree(d.pinfo,
+                                               d.tvb,
+                                               d.offset,
+                                               2,
+                                               "S-NSSAI %u",
+                                               i);
         use_tree ut(d, subtree);
 
         int length = (int) d.tvb->uint8(d.offset);
@@ -692,7 +733,7 @@ int mm::dissect_pdu_ses_status(dissector d, context* ctx) {
 
 //  *   9.11.3.42    PDU session reactivation result
 const true_false_string tfs_nas_5gs_pdu_ses_rect_res_psi     = {"1", "0"};
-const field_meta hf_nas_5gs_pdu_ses_rect_res_psi_7_b7 = {
+const field_meta        hf_nas_5gs_pdu_ses_rect_res_psi_7_b7 = {
     "PSI(7)",
     "nas_5gs.pdu_ses_rect_res_psi_3_b7",
     ft::ft_uint8,
@@ -833,7 +874,7 @@ const field_meta hf_nas_5gs_pdu_ses_rect_res_psi_10_b2 = {
     nullptr,
     0x04,
 };
-const field_meta hf_nas_5gs_pdu_ses_rect_res_psi_9_b1  = {
+const field_meta hf_nas_5gs_pdu_ses_rect_res_psi_9_b1 = {
     "PSI(9)",
     "nas_5gs.pdu_ses_rect_res_psi_9_b1",
     ft::ft_uint8,
@@ -843,7 +884,7 @@ const field_meta hf_nas_5gs_pdu_ses_rect_res_psi_9_b1  = {
     nullptr,
     0x02,
 };
-const field_meta hf_nas_5gs_pdu_ses_rect_res_psi_8_b0  = {
+const field_meta hf_nas_5gs_pdu_ses_rect_res_psi_8_b0 = {
     "PSI(8)",
     "nas_5gs.pdu_ses_rect_res_psi_8_b0",
     ft::ft_uint8,
@@ -856,7 +897,7 @@ const field_meta hf_nas_5gs_pdu_ses_rect_res_psi_8_b0  = {
 
 // PDU session reactivation result   9.11.3.42
 int mm::dissect_pdu_ses_react_res(dissector d, context* ctx) {
-    auto len = d.length;
+    auto                     len             = d.length;
     static const field_meta* psi_0_7_flags[] = {
         &hf_nas_5gs_pdu_ses_rect_res_psi_7_b7,
         &hf_nas_5gs_pdu_ses_rect_res_psi_6_b6,
@@ -896,16 +937,17 @@ int mm::dissect_mm_cause(dissector d, context* ctx) {
     d.tree->add_item(d.pinfo, d.tvb, d.offset, 1, &hf_mm_cause, enc::be);
     return 1;
 }
+
 /*  9.11.3.29    LADN indication  */
 int mm::dissect_ladn_ind(dissector d, context* ctx) {
     auto len = d.length;
     auto i   = 1;
-    while(d.length>0){
-        auto subtree = d.add_item(2, "LADN DNN value %u", i);
+    while (d.length > 0) {
+        auto     subtree = d.add_item(2, "LADN DNN value %u", i);
         use_tree ut(d, subtree);
         /*LADN DNN value is coded as the length and value part of DNN information element
          * as specified in subclause 9.11.2.1A starting with the second octet*/
-        int length = (int)d.uint8();
+        int length = (int) d.uint8();
         d.step(1);
 
         auto consumed = dissect_dnn(d.slice(length), ctx);
@@ -915,6 +957,7 @@ int mm::dissect_ladn_ind(dissector d, context* ctx) {
     }
     return len;
 }
+
 /*  9.11.3.30    LADN information  */
 int mm::dissect_ladn_inf(dissector d, context* ctx) {
     auto len = d.length;
@@ -978,7 +1021,7 @@ const field_meta hf_sal_al_t = {
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
-    &tfs_sal_al_t,
+    &tfs_sal_allowed_or_not,
     nullptr,
     0x80,
 };
@@ -1018,7 +1061,8 @@ int mm::dissect_sal(dissector d, context* ctx) {
         d.add_bits(flags);
         d.step(1);
         switch (sal_t_li) {
-        case 0: { // type of list = "00"
+        case 0: {
+            // type of list = "00"
             /*octet 2  MCC digit2  MCC digit1*/
             /*octet 3  MNC digit3  MCC digit3*/
             /*octet 4  MNC digit2  MNC digit1*/
@@ -1029,8 +1073,10 @@ int mm::dissect_sal(dissector d, context* ctx) {
                 d.step(3);
                 --sal_num_e;
             }
-        } break;
-        case 1: { // type of list = "01"
+        }
+        break;
+        case 1: {
+            // type of list = "01"
             /*octet 2  MCC digit2  MCC digit1*/
             /*octet 3  MNC digit3  MCC digit3*/
             /*octet 4  MNC digit2  MNC digit1*/
@@ -1040,8 +1086,10 @@ int mm::dissect_sal(dissector d, context* ctx) {
             /*octet 5  TAC 1*/
             d.add_item(3, &hf_tac, enc::be);
             d.step(3);
-        } break;
-        case 2: { // type of list = "10"
+        }
+        break;
+        case 2: {
+            // type of list = "10"
             while (sal_num_e > 0) {
                 /*octet 2  MCC digit2  MCC digit1*/
                 /*octet 3  MNC digit3  MCC digit3*/
@@ -1054,11 +1102,14 @@ int mm::dissect_sal(dissector d, context* ctx) {
                 d.step(3);
                 --sal_num_e;
             }
-        } break;
-        case 3: { // type of list = "11"
+        }
+        break;
+        case 3: {
+            // type of list = "11"
             dissect_e212_mcc_mnc(d, ctx);
             d.step(3);
-        } break;
+        }
+        break;
         default: // never goes here
             break;
         }
@@ -1069,297 +1120,332 @@ int mm::dissect_sal(dissector d, context* ctx) {
         num_par_sal++;
     }
     return len;
-    }
+}
 
-    namespace mm {
-        const val_string nas_5gs_mm_supi_fmt_vals[] = {
-            {0x0, "IMSI"},
-            {0x1, "Network Specific Identifier"},
-            {0, nullptr},
-        };
-        const field_meta hf_nas_5gs_mm_supi_fmt = {
-            "SUPI format",
-            "nas_5gs.mm.suci.supi_fmt",
-            ft::ft_uint8,
-            fd::base_dec,
-            (nas_5gs_mm_supi_fmt_vals),
-            nullptr,
-            nullptr,
-            0x70,
-        };
+namespace mm {
+const val_string nas_5gs_mm_supi_fmt_vals[] = {
+    {0x0, "IMSI"},
+    {0x1, "Network Specific Identifier"},
+    {0, nullptr},
+};
+const field_meta hf_nas_5gs_mm_supi_fmt = {
+    "SUPI format",
+    "nas_5gs.mm.suci.supi_fmt",
+    ft::ft_uint8,
+    fd::base_dec,
+    (nas_5gs_mm_supi_fmt_vals),
+    nullptr,
+    nullptr,
+    0x70,
+};
 
-        const field_meta hf_nas_5gs_mm_suci_nai = {
-            "NAI",
-            "nas_5gs.mm.suci.nai",
-            ft::ft_bytes,
-            fd::base_string,
-            nullptr,
-            nullptr,
-            nullptr,
-            0,
-        };
-        const field_meta hf_nas_5gs_mm_imei = {
-            "IMEI",
-            "nas_5gs.mm.imei",
-            ft::ft_bytes,
-            fd::base_hex,
-            nullptr,
-            nullptr,
-            nullptr,
-            0,
-        };
-        const field_meta hf_nas_5gs_mm_imeisv = {
-            "IMEISV",
-            "nas_5gs.mm.imeisv",
-            ft::ft_bytes,
-            fd::base_hex,
-            nullptr,
-            nullptr,
-            nullptr,
-            0,
-        };
-        const field_meta hf_nas_5gs_amf_set_id = {
-            "AMF Set ID",
-            "nas_5gs.amf_set_id",
-            ft::ft_uint16,
-            fd::base_dec,
-            nullptr,
-            nullptr,
-            nullptr,
-            0xffc0,
-        };
-        const field_meta hf_nas_5gs_amf_pointer = {
-            "AMF Pointer",
-            "nas_5gs.amf_pointer",
-            ft::ft_uint8,
-            fd::base_dec,
-            nullptr,
-            nullptr,
-            nullptr,
-            0x3f,
-        };
-        const field_meta hf_nas_5gs_tmsi = {
-            "5G-TMSI",
-            "nas_5gs.5g_tmsi",
-            ft::ft_uint32,
-            fd::base_hex,
-            nullptr,
-            nullptr,
-            nullptr,
-            0x0,
-        };
-    } // namespace mm
+const field_meta hf_nas_5gs_mm_suci_nai = {
+    "NAI",
+    "nas_5gs.mm.suci.nai",
+    ft::ft_bytes,
+    fd::base_string,
+    nullptr,
+    nullptr,
+    nullptr,
+    0,
+};
+const field_meta hf_nas_5gs_mm_imei = {
+    "IMEI",
+    "nas_5gs.mm.imei",
+    ft::ft_bytes,
+    fd::base_hex,
+    nullptr,
+    nullptr,
+    nullptr,
+    0,
+};
+const field_meta hf_nas_5gs_mm_imeisv = {
+    "IMEISV",
+    "nas_5gs.mm.imeisv",
+    ft::ft_bytes,
+    fd::base_hex,
+    nullptr,
+    nullptr,
+    nullptr,
+    0,
+};
+const field_meta hf_nas_5gs_amf_set_id = {
+    "AMF Set ID",
+    "nas_5gs.amf_set_id",
+    ft::ft_uint16,
+    fd::base_dec,
+    nullptr,
+    nullptr,
+    nullptr,
+    0xffc0,
+};
+const field_meta hf_nas_5gs_amf_pointer = {
+    "AMF Pointer",
+    "nas_5gs.amf_pointer",
+    ft::ft_uint8,
+    fd::base_dec,
+    nullptr,
+    nullptr,
+    nullptr,
+    0x3f,
+};
+const field_meta hf_nas_5gs_tmsi = {
+    "5G-TMSI",
+    "nas_5gs.5g_tmsi",
+    ft::ft_uint32,
+    fd::base_hex,
+    nullptr,
+    nullptr,
+    nullptr,
+    0x0,
+};
+} // namespace mm
 
-    const field_meta hf_mm_routing_ind = {
-        "Routing indicator",
-        "nas_5gs.mm.suci.routing_indicator",
-        ft::ft_bytes,
-        fd::base_string,
-        nullptr,
-        nullptr,
-        nullptr,
-        0,
-    };
-    static const value_string nas_5gs_mm_prot_scheme_id_vals[] = {
-        {0x0, "NULL scheme"},
-        {0x1, "ECIES scheme profile A"},
-        {0x2, "ECIES scheme profile B"},
-        {0, nullptr},
-    };
+const field_meta hf_mm_routing_ind = {
+    "Routing indicator",
+    "nas_5gs.mm.suci.routing_indicator",
+    ft::ft_bytes,
+    fd::base_string,
+    nullptr,
+    nullptr,
+    nullptr,
+    0,
+};
+static const value_string nas_5gs_mm_prot_scheme_id_vals[] = {
+    {0x0, "NULL scheme"},
+    {0x1, "ECIES scheme profile A"},
+    {0x2, "ECIES scheme profile B"},
+    {0, nullptr},
+};
 
-    const field_meta hf_mm_prot_scheme_id = {
-        "Protection scheme Id",
-        "nas_5gs.mm.suci.scheme_id",
-        ft::ft_uint8,
-        fd::base_dec,
-        (nas_5gs_mm_prot_scheme_id_vals),
-        nullptr,
-        nullptr,
-        0x0f,
-    };
-    const field_meta hf_mm_pki = {
-        "Home network public key identifier",
-        "nas_5gs.mm.suci.pki",
-        ft::ft_uint8,
-        fd::base_dec,
-        nullptr,
-        nullptr,
-        nullptr,
-        0x0,
-    };
+const field_meta hf_mm_prot_scheme_id = {
+    "Protection scheme Id",
+    "nas_5gs.mm.suci.scheme_id",
+    ft::ft_uint8,
+    fd::base_dec,
+    (nas_5gs_mm_prot_scheme_id_vals),
+    nullptr,
+    nullptr,
+    0x0f,
+};
+const field_meta hf_mm_pki = {
+    "Home network public key identifier",
+    "nas_5gs.mm.suci.pki",
+    ft::ft_uint8,
+    fd::base_dec,
+    nullptr,
+    nullptr,
+    nullptr,
+    0x0,
+};
 
-    const field_meta hf_mm_supi_null_scheme = {
-        "Scheme output",
-        "nas_5gs.mm.suci.supi_null_scheme",
-        ft::ft_bytes,
-        fd::base_string,
-        nullptr,
-        nullptr,
-        nullptr,
-        0,
-    };
+const field_meta hf_mm_supi_null_scheme = {
+    "Scheme output",
+    "nas_5gs.mm.suci.supi_null_scheme",
+    ft::ft_bytes,
+    fd::base_string,
+    nullptr,
+    nullptr,
+    nullptr,
+    0,
+};
 
-    const field_meta hf_mm_scheme_output = {
-        "Scheme output",
-        "nas_5gs.mm.suci.scheme_output",
-        ft::ft_bytes,
-        fd::base_none,
-        nullptr,
-        nullptr,
-        nullptr,
-        0x0,
-    };
+const field_meta hf_mm_scheme_output = {
+    "Scheme output",
+    "nas_5gs.mm.suci.scheme_output",
+    ft::ft_bytes,
+    fd::base_none,
+    nullptr,
+    nullptr,
+    nullptr,
+    0x0,
+};
 
-    const field_meta hf_amf_region_id = {
-        "AMF Region ID",
-        "nas_5gs.amf_region_id",
-        ft::ft_uint8,
-        fd::base_dec,
-        nullptr,
-        nullptr,
-        nullptr,
-        0x0,
-    };
-    const field_meta hf_amf_set_id = {
-        "AMF Set ID",
-        "nas_5gs.amf_set_id",
-        ft::ft_uint16,
-        fd::base_dec,
-        nullptr,
-        nullptr,
-        nullptr,
-        0xffc0,
-    };
-    const field_meta hf_amf_pointer = {
-        "AMF Pointer",
-        "nas_5gs.amf_pointer",
-        ft::ft_uint8,
-        fd::base_dec,
-        nullptr,
-        nullptr,
-        nullptr,
-        0x3f,
-    };
-    const field_meta hf_5g_tmsi = {
-        "5G-TMSI",
-        "nas_5gs.5g_tmsi",
-        ft::ft_uint32,
-        fd::base_hex,
-        nullptr,
-        nullptr,
-        nullptr,
-        0x0,
-    };
+const field_meta hf_amf_region_id = {
+    "AMF Region ID",
+    "nas_5gs.amf_region_id",
+    ft::ft_uint8,
+    fd::base_dec,
+    nullptr,
+    nullptr,
+    nullptr,
+    0x0,
+};
+const field_meta hf_amf_set_id = {
+    "AMF Set ID",
+    "nas_5gs.amf_set_id",
+    ft::ft_uint16,
+    fd::base_dec,
+    nullptr,
+    nullptr,
+    nullptr,
+    0xffc0,
+};
+const field_meta hf_amf_pointer = {
+    "AMF Pointer",
+    "nas_5gs.amf_pointer",
+    ft::ft_uint8,
+    fd::base_dec,
+    nullptr,
+    nullptr,
+    nullptr,
+    0x3f,
+};
+const field_meta hf_5g_tmsi = {
+    "5G-TMSI",
+    "nas_5gs.5g_tmsi",
+    ft::ft_uint32,
+    fd::base_hex,
+    nullptr,
+    nullptr,
+    nullptr,
+    0x0,
+};
 
-    const field_meta hf_mac_address = {
-        "MAC address",
-        "nas_5gs.mac",
-        ft::ft_bytes,
-        fd::sep_colon,
-        nullptr,
-        nullptr,
-        nullptr,
-        0,
-    };
-    namespace {
-        static const field_meta* flags_odd_even_tid[] = {
-            &hf_mm_odd_even,
-            &hf_mm_type_id,
-            nullptr,
-        };
+const field_meta hf_mac_address = {
+    "MAC address",
+    "nas_5gs.mac",
+    ft::ft_bytes,
+    fd::sep_colon,
+    nullptr,
+    nullptr,
+    nullptr,
+    0,
+};
 
-        static const field_meta* flags_supi_fmt_tid[] = {
-            &hf_spare_b7,
-            &hf_nas_5gs_mm_supi_fmt,
-            &hf_spare_b3,
-            &hf_mm_type_id,
-            nullptr,
-        };
-    }
-    // type_id = 6, MAC address
-    int mm::dissect_mobile_id_mac(dissector d, context * ctx) {
-        d.add_bits(flags_odd_even_tid);
+namespace {
+const field_meta* flags_odd_even_tid[] = {
+    &hf_mm_odd_even,
+    &hf_mm_type_id,
+    nullptr,
+};
+const field_meta hf_spare_b7 = {
+    "Spare",
+    "nas_5gs.spare_b7",
+    ft::ft_uint8,
+    fd::base_dec,
+    nullptr,
+    nullptr,
+    nullptr,
+    0x80,
+};
+
+const val_string mm_type_id_values[] = {
+    {0x0, "No identity"},
+    {0x1, "SUCI"},
+    {0x2, "5G-GUTI"},
+    {0x3, "IMEI"},
+    {0x4, "5G-S-TMSI"},
+    {0x5, "IMEISV"},
+    {0, nullptr},
+};
+const field_meta hf_mm_type_id = {
+    "Type of identity",
+    "nas_5gs.mm.type_id",
+    ft::ft_uint8,
+    fd::base_dec,
+    (mm_type_id_values),
+    nullptr,
+    nullptr,
+    0x07,
+};
+const field_meta* flags_supi_fmt_tid[] = {
+    &hf_spare_b7,
+    &hf_nas_5gs_mm_supi_fmt,
+    &hf_spare_b3,
+    &hf_mm_type_id,
+    nullptr,
+};
+}
+
+// type_id = 6, MAC address
+int mm::dissect_mobile_id_mac(dissector d, context* ctx) {
+    d.add_bits(flags_odd_even_tid);
+    d.step(1);
+
+    d.add_item(6, &hf_mac_address, enc::be);
+    d.step(6);
+
+    d.extraneous_data_check(0);
+    return 7;
+}
+
+// type_id = 0, no identity
+int mm::dissect_mobile_id_noid(dissector d, context* ctx) {
+    d.add_bits(flags_odd_even_tid);
+    d.step(1);
+
+    d.extraneous_data_check(0);
+    return 1;
+}
+
+// type_id = 4, 5G-S-TMSI
+int mm::dissect_mobile_id_5gstmsi(dissector d, context* ctx) {
+    d.add_bits(flags_odd_even_tid);
+    d.step(1);
+
+    /* AMF Set ID */
+    auto item = d.add_item(2, &hf_nas_5gs_amf_set_id, enc::be);
+
+    d.step(1);
+    /* AMF Pointer AMF Set ID (continued) */
+    d.add_item(1, &hf_nas_5gs_amf_pointer, enc::be);
+    d.step(1);
+
+    d.add_item(4, &hf_nas_5gs_tmsi, enc::be);
+    d.step(4);
+
+    d.extraneous_data_check(0);
+    return 7;
+}
+
+// type_id = 1, SUCI
+int mm::dissect_mobile_id_suci(dissector d, context* ctx) {
+    auto oct = d.uint8();
+    d.add_bits(flags_supi_fmt_tid);
+    d.step(1);
+
+    const auto supi_fmt = oct & 0x70;
+    if (supi_fmt == 0) {
+        // IMSI
+        /* MCC digit 2    MCC digit 1
+         * MNC digit 3    MCC digit 3
+         * MNC digit 2    MNC digit 1             */
+        auto consumed = dissect_e212_mcc_mnc(d, ctx);
+        d.step(consumed);
+
+        /* Routing indicator octet 8-9 */
+        d.add_item(2, &hf_mm_routing_ind, enc::na);
+        d.step(2);
+
+        /* Protection scheme id octet 10 */
+        const auto scheme_id = d.uint8() & 0x0fu;
+        d.add_item(1, &hf_mm_prot_scheme_id, enc::be);
         d.step(1);
 
-        d.add_item(6, &hf_mac_address, enc::be);
-        d.step(6);
-
-        d.extraneous_data_check(0);
-        return 7;
-    }
-    // type_id = 0, no identity
-    int mm::dissect_mobile_id_noid(dissector d, context * ctx) {
-        d.add_bits(flags_odd_even_tid);
+        /* Home network public key identifier octet 11 */
+        d.add_item(1, &hf_mm_pki, enc::be);
         d.step(1);
 
-        d.extraneous_data_check(0);
-        return 1;
-    }
-
-    // type_id = 4, 5G-S-TMSI
-    int mm::dissect_mobile_id_5gstmsi(dissector d, context * ctx) {
-        d.add_bits(flags_odd_even_tid);
-        d.step(1);
-
-        /* AMF Set ID */
-        auto item = d.add_item(2, &hf_nas_5gs_amf_set_id, enc::be);
-
-        d.step(1);
-        /* AMF Pointer AMF Set ID (continued) */
-        d.add_item(1, &hf_nas_5gs_amf_pointer, enc::be);
-        d.step(1);
-
-        d.add_item(4, &hf_nas_5gs_tmsi, enc::be);
-        d.step(4);
-
-        d.extraneous_data_check(0);
-        return 7;
-    }
-
-    // type_id = 1, SUCI
-    int mm::dissect_mobile_id_suci(dissector d, context * ctx) {
-        auto oct = d.uint8();
-        d.add_bits(flags_supi_fmt_tid);
-        d.step(1);
-
-        const auto supi_fmt = oct & 0x70;
-        if (supi_fmt == 0) { // IMSI
-            /* MCC digit 2    MCC digit 1
-             * MNC digit 3    MCC digit 3
-             * MNC digit 2    MNC digit 1             */
-            auto consumed = dissect_e212_mcc_mnc(d, ctx);
-            d.step(consumed);
-
-            /* Routing indicator octet 8-9 */
-            d.add_item(2, &hf_mm_routing_ind, enc::na);
-            d.step(2);
-
-            /* Protection scheme id octet 10 */
-            const auto scheme_id = d.uint8() & 0x0fu;
-            d.add_item(1, &hf_mm_prot_scheme_id, enc::be);
-            d.step(1);
-
-            /* Home network public key identifier octet 11 */
-            d.add_item(1, &hf_mm_pki, enc::be);
-            d.step(1);
-
-            /* Scheme output octet 12-x */
-            if (scheme_id == 0) { // Null scheme
-                d.add_item(d.length, &hf_mm_supi_null_scheme, enc::be);
-            } else {
-                d.add_item(d.length, &hf_mm_scheme_output, enc::na);
-            }
-            d.step(d.length);
-        } else if (supi_fmt == 1) { // nai, network specific identifier
-            d.add_item(d.length, &hf_nas_5gs_mm_suci_nai, enc::be);
+        /* Scheme output octet 12-x */
+        if (scheme_id == 0) {
+            // Null scheme
+            d.add_item(d.length, &hf_mm_supi_null_scheme, enc::be);
         } else {
-            diag("unknown supi format %d\n", supi_fmt);
+            d.add_item(d.length, &hf_mm_scheme_output, enc::na);
         }
-        return d.length;
+        d.step(d.length);
+    } else if (supi_fmt == 1) {
+        // nai, network specific identifier
+        d.add_item(d.length, &hf_nas_5gs_mm_suci_nai, enc::be);
+    } else {
+        diag("unknown supi format %d\n", supi_fmt);
     }
+    return d.length;
+}
 
 // type_id = 2, 5G-GUTI
-int mm::dissect_mobile_id_5gguti(dissector d, context* ctx){
+int mm::dissect_mobile_id_5gguti(dissector d, context* ctx) {
     d.add_bits(flags_odd_even_tid);
     d.step(1);
 
@@ -1387,7 +1473,7 @@ int mm::dissect_mobile_id_5gguti(dissector d, context* ctx){
 }
 
 // type_id = 3, IMEI
-int mm::dissect_mobile_id_imei(dissector d, context* ctx){
+int mm::dissect_mobile_id_imei(dissector d, context* ctx) {
     auto len = d.length;
     d.add_bits(flags_odd_even_tid);
     d.step(1);
@@ -1409,43 +1495,58 @@ int mm::dissect_mobile_id(dissector d, context* ctx) {
     const auto oct     = d.uint8();
     const auto type_id = oct & 0x07u;
 
-
     switch (type_id) {
-    case 0: { // no identity
+    case 0: {
+        // no identity
         d.add_bits(flags_odd_even_tid);
-    } break;
-    case 1: { // SUCI
+    }
+    break;
+    case 1: {
+        // SUCI
         auto consumed = dissect_mobile_id_suci(d, ctx);
         d.step(consumed);
-    } break;
-    case 2: { // 5G-GUTI
+    }
+    break;
+    case 2: {
+        // 5G-GUTI
         auto consumed = dissect_mobile_id_5gguti(d, ctx);
         d.step(consumed);
-    } break;
-    case 3: { // IMEI
+    }
+    break;
+    case 3: {
+        // IMEI
         dissect_mobile_id_imei(d, ctx);
         d.step(d.length);
-    } break;
-    case 4: { // 5G-S-TMSI
+    }
+    break;
+    case 4: {
+        // 5G-S-TMSI
         auto consumed = dissect_mobile_id_5gstmsi(d, ctx);
         d.step(consumed);
-    } break;
-    case 5: { // IMEISV
+    }
+    break;
+    case 5: {
+        // IMEISV
         dissect_mobile_id_imeisv(d, ctx);
         d.step(d.length);
-    } break;
-    case 6: { // MAC address
+    }
+    break;
+    case 6: {
+        // MAC address
         dissect_mobile_id_mac(d, ctx);
         d.step(7);
-    } break;
+    }
+    break;
     default: {
         auto item = d.add_item(1, &hf_mm_type_id, enc::be);
         diag("unknown mobile type id %d\n", type_id);
-    } break;
+    }
+    break;
     }
 
     return len;
 }
+
 const field_meta hf_pld_cont_entry_nie = {
     "Number of optional IEs",
     "nas_5gs.mm.pld_cont.n_optional_ies",
@@ -1517,16 +1618,17 @@ const field_meta hf_pld_optional_ie_value = {
     nullptr,
     0x0,
 };
+
 int dissect_optional_ie(dissector d, context* ctx) {
     auto start = d.offset;
 
-    auto subtree = d.add_item(-1, &hf_pld_optional_ie, enc::na);
+    auto     subtree = d.add_item(-1, &hf_pld_optional_ie, enc::na);
     use_tree ut(d, subtree);
 
     d.add_item(1, &hf_pld_optional_ie_type, enc::be);
     d.step(1);
 
-    auto len = (int)d.uint8();
+    auto len = (int) d.uint8();
     d.add_item(1, &hf_pld_optional_ie_length, enc::be);
     d.step(1);
 
@@ -1534,8 +1636,8 @@ int dissect_optional_ie(dissector d, context* ctx) {
     return d.offset - start;
 }
 
-int dissect_pld_cont_entry(dissector d, context*ctx){
-    auto len = (int)d.ntohs();
+int dissect_pld_cont_entry(dissector d, context* ctx) {
+    auto len = (int) d.ntohs();
 
     d.add_item(1, &hf_pld_cont_type, enc::be);
 
@@ -1543,7 +1645,7 @@ int dissect_pld_cont_entry(dissector d, context*ctx){
     d.add_item(1, &hf_pld_cont_entry_nie, enc::be);
     d.step(1);
 
-    while(nie>0){
+    while (nie > 0) {
         auto consumed = dissect_optional_ie(d, ctx);
         d.step(consumed);
 
@@ -1553,65 +1655,79 @@ int dissect_pld_cont_entry(dissector d, context*ctx){
     return len;
 }
 
-namespace mm_reg_accept{
+namespace mm_reg_accept {
 int dissect_sor_trans_cont(dissector d, context* ctx);
 }
+
 /*  9.11.3.39    Payload container */
 int mm::dissect_pld_cont(dissector d, context* ctx) {
-    auto len = d.length;
-    auto typi = retrive_payload_content_type(d.pinfo) & 0x0fu;
+    auto len  = d.length;
+    auto typi = retrive_payload_content_type(ctx) & 0x0fu;
 
     switch (typi) {
-    case 1: { /* N1 SM information */
+    case 1: {
+        /* N1 SM information */
         dissect_nas5g_plain(d, ctx);
-    } break;
-    case 2: { // SMS
+    }
+    break;
+    case 2: {
+        // SMS
         d.add_item(d.length, &hf_pld_cont, enc::na);
         /*
         If the payload container type is set to "SMS", the payload container contents
         contain an SMS message (i.e. CP-DATA, CP-ACK or CP-ERROR) as defined in
         subclause 7.2 in 3GPP TS 24.011 [13].*/
-    } break;
-    case 4: { // SOR transparent container, 9.11.3.51
-              /*
-              If the payload container type is set to "SOR transparent container" and is
-              included in the DL NAS TRANSPORT message, the payload container contents are coded
-              the same way as the contents of the SOR transparent container IE (see
-              subclause 9.11.3.51) for SOR data type is set to value "0" except that the first
-              three octets are not included.
+    }
+    break;
+    case 4: {
+        // SOR transparent container, 9.11.3.51
+        /*
+        If the payload container type is set to "SOR transparent container" and is
+        included in the DL NAS TRANSPORT message, the payload container contents are coded
+        the same way as the contents of the SOR transparent container IE (see
+        subclause 9.11.3.51) for SOR data type is set to value "0" except that the first
+        three octets are not included.
 
-              If the payload container type is set to "SOR transparent container" and is
-              included in the UL NAS TRANSPORT message, the payload container contents are coded
-              the same way as the contents of the SOR transparent container IE (see
-              subclause 9.11.3.51) for SOR data type is set to value "1" except that the first
-              three octets are not included.
-              */
-    } break;
-    case 3: { // LPP
+        If the payload container type is set to "SOR transparent container" and is
+        included in the UL NAS TRANSPORT message, the payload container contents are coded
+        the same way as the contents of the SOR transparent container IE (see
+        subclause 9.11.3.51) for SOR data type is set to value "1" except that the first
+        three octets are not included.
+        */
+    }
+    break;
+    case 3: {
+        // LPP
         d.add_item(d.length, &hf_pld_cont, enc::na);
-    } break;
-    case 5: { /* UE policy container */
+    }
+    break;
+    case 5: {
+        /* UE policy container */
         dissect_updp(d, ctx);
-    } break;
-    case 6: { // UE parameters update transparent container
-              /*
-              If the payload container type is set to "UE parameters update transparent
-              container" and is included in the DL NAS TRANSPORT message, the payload container
-              contents are coded the same way as the contents of the UE parameters update
-              transparent container IE (see subclause 9.11.3.53A) for UE parameters update data
-              type is set to value "0" except that the first three octets are not included.
+    }
+    break;
+    case 6: {
+        // UE parameters update transparent container
+        /*
+        If the payload container type is set to "UE parameters update transparent
+        container" and is included in the DL NAS TRANSPORT message, the payload container
+        contents are coded the same way as the contents of the UE parameters update
+        transparent container IE (see subclause 9.11.3.53A) for UE parameters update data
+        type is set to value "0" except that the first three octets are not included.
 
-              If the payload container type is set to "UE parameters update transparent
-              container" and is included in the UL NAS TRANSPORT message, the payload container
-              contents are coded the same way as the contents of the UE parameters update
-              transparent container IE (see subclause 9.11.3.53A) for UE parameters update data
-              type is set to value "1" except that the first three octets are not included.
-              */
-    } break;
-    case 15: { // Multiple payloads
+        If the payload container type is set to "UE parameters update transparent
+        container" and is included in the UL NAS TRANSPORT message, the payload container
+        contents are coded the same way as the contents of the UE parameters update
+        transparent container IE (see subclause 9.11.3.53A) for UE parameters update data
+        type is set to value "1" except that the first three octets are not included.
+        */
+    }
+    break;
+    case 15: {
+        // Multiple payloads
         auto nentries = d.uint8();
         d.step(1);
-        while(nentries>0){
+        while (nentries > 0) {
             auto consumed = dissect_pld_cont_entry(d, ctx);
             d.step(consumed);
             --nentries;
@@ -1633,12 +1749,12 @@ int mm::dissect_pld_cont(dissector d, context* ctx) {
 // Payload container type   9.11.3.40
 int mm::dissect_pld_cont_type(dissector d, context* ctx) {
     auto oct = d.tvb->uint8(d.offset) & 0x0fu;
-    // d.set_private("payload-content-type", oct);
-    store_payload_content_type(d.pinfo, oct);
+    store_payload_content_type(ctx, oct);
 
     d.add_item(1, &hf_pld_cont_type, enc::be);
     return 1;
 }
+
 /* 9-  Network slicing indication  Network slicing indication 9.11.3.36  O  TV 1 */
 static const true_false_string nas_5gs_mm_dcni_tfs = {
     "Requested NSSAI created from default configured NSSAI",
@@ -1680,7 +1796,7 @@ int mm::dissect_nw_slicing_ind(dissector d, context* ctx) {
 }
 
 // 9.11.3.32	NAS key set identifier
-int mm::dissect_nas_ksi(dissector d, context*ctx) {
+int mm::dissect_nas_ksi(dissector d, context* ctx) {
     use_context uc(ctx, "NAS key set identifier");
 
     static const field_meta* flags[] = {
@@ -1751,8 +1867,6 @@ int mm::dissect_updp(dissector d, context* ctx) {
     d.step(1);
 
     /* Message type IE*/
-    // TODO: implement
-    auto oct = d.tvb->uint8(d.offset);
     d.add_item(d.length, &hf_element, enc::be);
     return len;
 }

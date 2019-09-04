@@ -1,7 +1,7 @@
 #pragma once
 #include "config.hh"
 
-struct tvbuff {
+struct tvbuff { // NOLINT: typo
     // may be null, if zero-length, or lazily constructed
     const uint8_t *data   = nullptr;
     int            length = 0;

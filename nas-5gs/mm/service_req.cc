@@ -65,6 +65,7 @@ const element_meta key_set_id = {
     0xff,
     "NAS key set identifier - ngKSI",
     dissect_key_set_id,
+    nullptr,
 };
 
 int dissect_mm_service_type(dissector d, context* ctx);
@@ -73,6 +74,7 @@ const element_meta mm_service_type = {
     0xff,
     "Service type",
     dissect_mm_service_type,
+    nullptr,
 };
 
 // 9.11.3.50
@@ -81,6 +83,7 @@ const element_meta s_tmsi = {
     0xff,
     "5GS mobile identity - 5G-S-TMSI",
     dissect_s_tmsi,
+    nullptr,
 };
 
 int                dissect_uplink_data_status(dissector d, context* ctx);
@@ -88,6 +91,7 @@ const element_meta uplink_data_status = {
     0x40,
     "Uplink data status",
     dissect_uplink_data_status,
+    nullptr,
 };
 
 int dissect_allowed_pdu_ses_status(dissector d, context* ctx);
@@ -96,6 +100,7 @@ const element_meta allowed_pdu_ses_status = {
     0x25,
     "Allowed PDU session status",
     dissect_allowed_pdu_ses_status,
+    nullptr,
 };
 
 // *   9.11.3.32    NAS key set identifier

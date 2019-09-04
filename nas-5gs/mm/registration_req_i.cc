@@ -102,4 +102,5 @@ const element_meta mm_reg_req::registration_request_type = {
     0xff,
     "5GS registration type",
     dissect_reg_req_type,
+    nullptr,
 };

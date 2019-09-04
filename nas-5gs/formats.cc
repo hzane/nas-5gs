@@ -53,7 +53,7 @@ std::vector< std::string > find_bits_string(const val_string* strings, uint32_t 
     std::vector< std::string > ret;
     for (auto vstr = strings; vstr->id; vstr++) {
         if ((vstr->id & bits) == vstr->id) {
-            ret.push_back(std::string(vstr->text));
+            ret.emplace_back(vstr->text);
         }
     }
     return ret;

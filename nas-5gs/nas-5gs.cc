@@ -6,8 +6,7 @@ using namespace std;
 
 static const uint8_t packet_sample [] = {0x7e, 0x00, 0x43};
 
-int main()
-{
+int main() { // NOLINT: exception-escape
     packet_info pinfo{};
     tvbuff      tvb{packet_sample, sizeof(packet_sample)};
     proto_node  root{};

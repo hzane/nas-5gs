@@ -133,12 +133,12 @@ extern const val_string        mm_type_of_enc_algo_vals[];
 extern const val_string        mm_type_of_ip_algo_vals[];
 extern const val_string        mm_req_type_vals[];
 extern const val_string        mm_serv_type_vals[];
-extern const val_string        mm_sal_t_li_values[];
+// extern const val_string        mm_sal_t_li_values[];
 
 extern const field_meta hfm_nas_5gs_mm_conf_upd_ind_red_b1;
 extern const field_meta hfm_mm_nas_sec_algo_enc;
 extern const field_meta hfm_mm_nas_sec_algo_ip;
-extern const field_meta hfm_nas_5gs_mm_conf_upd_ind_red_b1;
+// extern const field_meta hfm_nas_5gs_mm_conf_upd_ind_red_b1;
 extern const field_meta hfm_mm_s1_mode_b0;
 extern const field_meta hfm_mm_ho_attach_b1;
 extern const field_meta hfm_mm_lpp_cap_b2;
@@ -187,7 +187,7 @@ extern const field_meta hf_mm_sal_t_li;
 // extern const field_meta hf_proc_trans_id;
 extern const field_meta hf_element;
 extern const field_meta hf_mm_sal_al_t;
-extern const field_meta hf_abba;
+// extern const field_meta hf_abba;
 extern const field_meta hf_sal_num_e;
 
 extern const true_false_string tfs_follow_on_req;

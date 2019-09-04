@@ -36,7 +36,7 @@ proto_item* proto_node::add_item(packet_info*      ,
     if (encoding == enc::na || encoding == enc::none) return item;
 
     if (meta && ft::is_integer(meta->ftype)) {
-        val = n2uint(item->data, len);
+        val = n2_uint(item->data, len);
         if(meta->bitmask){
             val = (val&meta->bitmask)>>ws_ctz(meta->bitmask);
         }
@@ -144,7 +144,7 @@ std::string print_text(const field_meta* meta,
         return format_hex(data, len, " ");
     }
     if (ft::is_integer(meta->ftype)){
-        return meta->format(n2uint(data, len));
+        return meta->format(n2_uint(data, len));
     }
     return meta->format(data, len, enc);
 }

@@ -15,7 +15,7 @@ using namespace sm;
  * 8.3.1 PDU session establishment request
  */
 int sm::pdu_ses_est_req(dissector d, context* ctx) {
-    auto        len = d.length;
+    const auto        len = d.length;
     use_context uc(ctx, "pdu-session-establishment-request");
 
     using namespace sm_pdu_ses_est;
@@ -69,11 +69,13 @@ extern const element_meta int_prot_max_date_rate = {
     0xff,
     "Integrity protection maximum data rate",
     dissect_int_prot_max_data_rate,
+    nullptr,
 };
 
 extern const element_meta ssc_mode = {
     0xa0,
     "SSC mode",
     dissect_ssc_mode,
+    nullptr,
 };
 } // namespace sm_pdu_ses_est

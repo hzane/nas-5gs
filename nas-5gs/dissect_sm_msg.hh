@@ -106,7 +106,7 @@ extern const field_meta hf_sm_mapd_eps_b_cont_eps_param_cont ;
 extern const field_meta hf_sm_rqos_b0 ;
 
 //  *      9.11.4.14    Session-AMBR
-extern const value_string sm_unit_for_session_ambr_values[] ;
+// extern const value_string sm_unit_for_session_ambr_values[] ;
 
 // * 9.11.4.7 Integrity protection maximum data rate
 extern const value_string sm_int_prot_max_data_rate_values[] ;

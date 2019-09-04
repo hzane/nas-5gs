@@ -4,7 +4,7 @@ const uint32_t UNREP = 0x00fffd;
 
 size_t u32utf8(uint32_t ch, uint8_t *dest) {
     if (ch < 0x80) {
-        dest[0] = (char) ch;
+        dest[0] = static_cast< char >(ch);
         return 1;
     }
     if (ch < 0x800) {
@@ -30,8 +30,8 @@ size_t u32utf8(uint32_t ch, uint8_t *dest) {
 
 void ustring_add_utf8(ustring &s, const uint32_t c) {
     uint8_t buf[6] = {};
-    
-    size_t nchar = u32utf8(c, buf);
+
+    const size_t nchar = u32utf8(c, buf);
     s.insert(s.end(), buf, buf + nchar);
 }
 
@@ -62,10 +62,9 @@ uint32_t GSMe2UNICHAR(uint8_t c) {
         return '|';
     case 0x65:
         return 0x20ac; /* euro */
-    default:return UNREP;
+    default:
+        return UNREP;/* invalid character */
     }
-
-    return UNREP; /* invalid character */
 }
 
 /* ETSI GSM 03.38, version 6.0.1, section 6.2.1; Default alphabet */
@@ -121,7 +120,7 @@ ustring ts_23_038_7bits_string(const uint8_t *ptr, int bit_offset, int no_of_cha
 
     ustring ret;
 
-    auto bits = (uint32_t)bit_offset & 0x07u;
+    auto bits = static_cast< uint32_t >(bit_offset) & 0x07u;
     if (!bits) {
         bits = 7;
     }

@@ -132,21 +132,25 @@ extern const element_meta pdu_ses_type = {
     0xff,
     "Selected PDU session type",
     dissect_pdu_ses_type,
+    nullptr,
 };
 extern const element_meta pdu_address = {
     0x29,
     "PDU address",
     dissect_pdu_address,
+    nullptr,
 };
 extern const element_meta sm_s_nssai = {
     0x22,
     "S-NSSAI",
     dissect_sm_s_nssai,
+    nullptr,
 };
 extern const element_meta dnn = {
     0x25,
     "DNN",
     dissect_dnn,
+    nullptr,
 };
 
 int dissect_pdu_ses_type(dissector d, context* ctx) { return 0; }
@@ -177,7 +181,9 @@ const field_meta hf_pdu_addr_ipv4 = {
     "nas_5gs.sm.pdu_addr_inf_ipv4",
     ft::ft_uint32,
     fd::ipv4,
-    NULL,
+    nullptr,
+    nullptr,
+    nullptr,
     0x0,
 };
 const field_meta hf_pdu_addr_ipv6 = {

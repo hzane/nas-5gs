@@ -81,7 +81,7 @@ struct dissector {
     //    uint64_t       get_private(const char* name, uint64_t dft = 0);
 };
 
-struct use_tree{
+struct use_tree{ // NOLINT: special-member-functions
     dissector& d;
     proto_node* prev;
     use_tree(dissector& d, proto_node* p) : d(d), prev(p) { d.tree = p; }
@@ -91,11 +91,12 @@ struct use_tree{
 typedef int (*dissect_fnc_t)(dissector, context* ctx);
 
 struct context {
-    std::vector< std::string > paths = {};
+    uint8_t                    payload_content_type = 0;
+    std::vector< std::string > paths                = {};
     std::string                path() const;
 };
 
-struct use_context {
+struct use_context { // NOLINT: special-member-functions
     context* ctx;
     use_context(context* ctx, const char* path) : ctx(ctx) {
         if (!ctx) return;
@@ -108,6 +109,13 @@ struct use_context {
         }
     }
 };
+inline void store_payload_content_type(context* ctx, uint8_t pct) {
+    if (ctx) ctx->payload_content_type = pct;
+}
+
+inline uint8_t retrive_payload_content_type(context* ctx) {
+    return ctx ? ctx->payload_content_type : 0;
+}
 
 inline string paths(context* ctx) {
     if (!ctx) return string();
@@ -119,7 +127,7 @@ void extraneous_data_check(int len, int maxlen, context* ctx);
 inline uint8_t  n2uint7(const uint8_t* d) { return *d & 0x7F; };
 inline uint8_t  n2uint8(const uint8_t* d) { return *d; };
 inline uint16_t n2uint16(const uint8_t* data) {
-    uint16_t a = data[0];
+    const uint16_t a = data[0];
     uint16_t b = data[1];
     return a << 8 | b;
 };
@@ -157,7 +165,7 @@ inline uint64_t n2uint64(const uint8_t* data) {
     return a << 56 | b << 48 | c << 40 | d << 32 | e << 24 | f << 16 | g << 8 | h;
 };
 
-inline uint64_t n2uint(const uint8_t* data, int len) {
+inline uint64_t n2_uint(const uint8_t* data, int len) {
     switch (len) {
     case 1:
         return n2uint8(data);
@@ -174,7 +182,6 @@ inline uint64_t n2uint(const uint8_t* data, int len) {
     default:
         return 0;
     }
-    return 0;
 }
 
 string format_hex(const uint8_t* data,
@@ -226,4 +233,3 @@ string mnc_aux(const uint8_t* d, int length = 3);
 // BCD number
 string bcd_string(const uint8_t*d, int length);
 
-string paths(context* ctx);

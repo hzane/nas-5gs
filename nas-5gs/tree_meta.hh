@@ -14,7 +14,7 @@ inline string tree_meta::pretty()const{
     string ret(name);
     std::transform(ret.begin(), ret.end(), ret.begin(), [](char c)->char{
       if (isspace(c)) return '-';
-      return tolower(c);
+        return static_cast< char >(tolower(c));
     });
     return ret;
 }

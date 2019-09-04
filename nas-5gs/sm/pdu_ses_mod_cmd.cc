@@ -75,6 +75,7 @@ extern const element_meta authorized_qos_flow_des = {
     0x79,
     "Authorized QoS flow descriptions",
     dissect_authorized_qos_flow_des,
+    nullptr,
 };
 
 // 9.11.4.4 Always-on PDU session requested
