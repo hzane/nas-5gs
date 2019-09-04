@@ -29,7 +29,7 @@ int dissect_nas5g(dissector d, context* ctx) {
 
     auto subtree = d.add_item(7, "Security protected NAS 5GS message");
     use_tree    ut(d, subtree);
-    use_context uc(ctx, subtree->name.c_str());
+    use_context uc(ctx, subtree->name.c_str(), d);
 
     /* Extended protocol discriminator  octet 1 */
     d.add_item(1, hf_epd, enc::be);
@@ -63,7 +63,7 @@ int dissect_nas5g_plain(dissector d, context* ctx) {
     auto subtree =
         d.tree->add_subtree(d.pinfo, d.tvb, d.offset, -1, "Plain NAS 5GS Message");
     use_tree    ut(d, subtree);
-    use_context uc(ctx, subtree->name.c_str());
+    use_context uc(ctx, subtree->name.c_str(), d);
 
     /* Extended protocol discriminator  octet 1 */
     auto epd = d.uint8();

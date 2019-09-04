@@ -6,7 +6,7 @@
  */
 int mm::sec_mode_comp(dissector d, context* ctx) {
     auto        len = d.length;
-    use_context uc(ctx, "security-mode-complete");
+    use_context uc(ctx, "security-mode-complete", d);
 
     /* 77    IMEISV    5G mobile identity 9.11.3.4    O    TLV-E    11 */
     // ELEM_OPT_TLV_E(0x77, NAS_5GS_PDU_TYPE_MM, DE_NAS_5GS_MM_5GS_MOBILE_ID, NULL);

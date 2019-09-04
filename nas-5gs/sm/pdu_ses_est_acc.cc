@@ -17,24 +17,23 @@ using namespace sm_pdu_ses_est;
 
 /* 8.3.2 PDU session establishment accept */
 int sm::pdu_ses_est_acc(dissector d, context* ctx) {
+    use_context uc(ctx, "pdu-session-establishment-accept", d);
     auto        len = d.length;
-    use_context uc(ctx, "pdu-session-establishment-accept");
 
     /* Direction: network to UE */
-    d.pinfo->dir = pi_dir::dl;
+    down_link(d.pinfo);
 
     /* Selected PDU session type    PDU session type 9.11.4.11    M    V    1/2 H0*/
     // ELEM_MAND_V( DE_NAS_5GS_SM_PDU_SESSION_TYPE,);
-    auto consumed = dissect_elem_v(nullptr, &pdu_ses_type, d, ctx);
+    dissect_elem_v(nullptr, &pdu_ses_type, d, ctx);
 
-    /*Selected SSC mode    SSC mode 9.11.4.16    M    V    1/2 H1*/
+    /* Selected SSC mode    SSC mode 9.11.4.16    M    V    1/2 H1*/
     d.tree->add_item(d.pinfo, d.tvb, d.offset, 1, hf_sel_sc_mode, enc::be);
-
-    d.step(consumed);
+    d.step(1);
 
     /* Authorized QoS rules QoS rules 9.11.4.13 M LV-E 2-65537  DE_NAS_5GS_SM_QOS_RULES*/
     // ELEM_MAND_LV_E(,DE_NAS_5GS_SM_QOS_RULES, " - Authorized QoS rules",);
-    consumed = dissect_elem_lv_e(nullptr, &authorized_qos_rules, d, ctx);
+    auto consumed = dissect_elem_lv_e(nullptr, &authorized_qos_rules, d, ctx);
     d.step(consumed);
 
     /* Session-AMBR 9.11.4.14    M    LV    7 */
@@ -114,6 +113,8 @@ static const val_string nas_5gs_sc_mode_values[] = {
     {0x3, "SSC mode 3"},
     {0, nullptr},
 };
+
+// Selected SSC mode    SSC mode 9.11.4.16
 extern const field_meta hfm_sel_sc_mode = {
     "Selected SSC mode",
     "nas_5gs.sm.sel_sc_mode",
@@ -126,9 +127,12 @@ extern const field_meta hfm_sel_sc_mode = {
 };
 const field_meta* hf_sel_sc_mode = &hfm_sel_sc_mode;
 
+// Selected PDU session type    PDU session type 9.11.4.11
 int dissect_pdu_ses_type(dissector d, context* ctx);
+
 int dissect_pdu_address(dissector d, context* ctx);
 
+// Selected PDU session type    PDU session type 9.11.4.11
 extern const element_meta pdu_ses_type = {
     0xff,
     "Selected PDU session type",
@@ -154,13 +158,7 @@ extern const element_meta dnn = {
     nullptr,
 };
 
-int dissect_pdu_ses_type(dissector d, context* ctx) { return 0; }
-
-
-/*
- *     9.11.4.10    PDU address
- */
-
+/*  9.11.4.10    PDU address  */
 static const value_string nas_5gs_sm_pdu_ses_type_vals[] = {
     {0x1, "IPv4"},
     {0x2, "IPv6"},
@@ -197,6 +195,12 @@ const field_meta hf_pdu_addr_ipv6 = {
     nullptr,
     0x0,
 };
+
+// Selected PDU session type    PDU session type 9.11.4.11
+int dissect_pdu_ses_type(dissector d, context* ctx) {
+    d.add_item(1, &hf_sm_pdu_ses_type, enc::be);
+    return 1;
+}
 
 int dissect_pdu_address(dissector d, context* ctx) {
     auto len = d.length;

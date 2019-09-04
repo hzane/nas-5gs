@@ -42,24 +42,31 @@ const element_meta sm::sm_cause = {
     dissect_sm_cause,
     nullptr,
 };
+
+// Extended protocol configuration options  9.11.4.6
 const element_meta sm::ext_pco = {
     0x7B,
     "Extended protocol configuration options",
     dissect_ext_pco,
     nullptr,
 };
+
+// EAP message 9.11.2.2
 const element_meta sm::eap_msg = {
     0x78,
     "EAP message",
     dissect_eap_msg,
     nullptr,
 };
+
+// Authorized QoS rules QoS rules 9.11.4.13
 const element_meta sm::authorized_qos_rules = {
     0x7A,
     "Authorized QoS rules",
     dissect_authorized_qos_rules,
     nullptr,
 };
+
 const element_meta sm::mapped_eps_b_cont = {
     0x75,
     "Mapped EPS bearer contexts",

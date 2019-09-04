@@ -10,7 +10,7 @@ extern const element_meta t3346_gprs_timer2;
 /*  8.2.14 De-registration request (UE terminated de-registration) */
 int mm::dissect_registration_req_ue_term(dissector d, context* ctx) {
     const auto  len = d.length;
-    use_context uc(ctx, "de-registration-request");
+    use_context uc(ctx, "de-registration-request", d);
 
     using namespace mm_de_reg;
 

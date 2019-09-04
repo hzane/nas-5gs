@@ -9,7 +9,7 @@ namespace mm_id_resp {
  */
 int mm::id_resp(dissector d, context* ctx) {
     const auto  len = d.length;
-    use_context uc(ctx, "identity-response");
+    use_context uc(ctx, "identity-response", d);
 
     /* Mobile identity  5GS mobile identity 9.11.3.4    M    LV-E    3-n  */
     // ELEM_MAND_LV_E(DE_NAS_5GS_MM_5GS_MOBILE_ID, );

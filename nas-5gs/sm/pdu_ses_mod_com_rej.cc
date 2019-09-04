@@ -7,7 +7,7 @@
  */
 int sm::pdu_ses_mod_com_rej(dissector d, context* ctx) {
     auto        len = d.length;
-    use_context uc(ctx, "pdu-session-modification-command-reject");
+    use_context uc(ctx, "pdu-session-modification-command-reject", d);
 
     /* Direction: UE to network */
     d.pinfo->dir = pi_dir::ul;

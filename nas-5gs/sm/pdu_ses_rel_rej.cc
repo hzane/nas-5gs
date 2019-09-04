@@ -7,7 +7,7 @@
  */
 int sm::pdu_ses_rel_rej(dissector d, context* ctx) {
     auto        len = d.length;
-    use_context uc(ctx, "pdu-session-release-reject");
+    use_context uc(ctx, "pdu-session-release-reject", d);
 
     /* Direction: network to UE */
     d.pinfo->dir = pi_dir::dl;

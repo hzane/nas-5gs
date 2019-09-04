@@ -12,7 +12,7 @@ using namespace nas;
  */
 int mm::notification(dissector d, context* ctx) {
     const auto        len = d.length;
-    use_context uc(ctx, "notification");
+    use_context uc(ctx, "notification", d);
 
     using namespace mm_notification;
 

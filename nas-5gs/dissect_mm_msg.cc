@@ -1797,7 +1797,7 @@ int mm::dissect_nw_slicing_ind(dissector d, context* ctx) {
 
 // 9.11.3.32	NAS key set identifier
 int mm::dissect_nas_ksi(dissector d, context* ctx) {
-    use_context uc(ctx, "NAS key set identifier");
+    use_context uc(ctx, "NAS key set identifier", d);
 
     static const field_meta* flags[] = {
         &hf_tsc,

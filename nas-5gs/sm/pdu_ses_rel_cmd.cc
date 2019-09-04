@@ -10,7 +10,7 @@ using namespace pdu_ses;
 /* * 8.3.14 PDU session release command */
 int sm::pdu_ses_rel_cmd(dissector d, context* ctx) {
     auto        len = d.length;
-    use_context uc(ctx, "pdu-session-release-command");
+    use_context uc(ctx, "pdu-session-release-command", d);
 
     /* Direction: network to UE */
     d.pinfo->dir = pi_dir::dl;

@@ -5,7 +5,7 @@
  */
 int mm::mm_status(dissector d, context* ctx) {
     const auto        len = d.length;
-    use_context uc(ctx, "5gmm-status");
+    use_context uc(ctx, "5gmm-status", d);
 
     /* Direction: both*/
     d.pinfo->dir = pi_dir::both;

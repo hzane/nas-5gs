@@ -97,11 +97,19 @@ struct context {
 };
 
 struct use_context { // NOLINT: special-member-functions
-    context* ctx;
-    use_context(context* ctx, const char* path) : ctx(ctx) {
+    context* ctx    = 0;
+    int      offset = 0;
+    int      length = 0;
+
+    use_context(context* ctx, const char* path, dissector const& d)
+        : ctx(ctx), offset(d.offset), length(d.length) {
         if (!ctx) return;
         ctx->paths.emplace_back(path);
-        diag("%s%s\n", string(ctx->paths.size(), ' ').c_str(), path);
+        diag("%s%s %d-%d\n",
+             string(ctx->paths.size() << 1u, ' ').c_str(),
+             path,
+             offset,
+             length);
     }
     ~use_context() {
         if (ctx) {

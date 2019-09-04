@@ -10,7 +10,7 @@ extern const element_meta auth_fail_param;
  */
 int mm::authentication_failure(dissector d, context* ctx) {
     auto        len = d.length;
-    use_context uc(ctx, "authentication-failure");
+    use_context uc(ctx, "authentication-failure", d);
 
     using namespace mm_authentication_failure;
 

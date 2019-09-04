@@ -12,7 +12,7 @@ using namespace mm;
  */
 int mm::id_req(dissector d, context* ctx) {
     const auto        len = d.length;
-    use_context uc(ctx, "identity-request");
+    use_context uc(ctx, "identity-request", d);
 
     using namespace mm_id;
 

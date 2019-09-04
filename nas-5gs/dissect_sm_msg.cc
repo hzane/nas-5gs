@@ -30,27 +30,57 @@ int sm::pdu_ses_auth_res(dissector d, context* ctx) {
     return d.offset - start;
 }
 
-/*
- * 9.11.4.2    5GSM cause
- */
-
+/* 9.11.4.2    5GSM cause */
 int sm::dissect_sm_cause(dissector d, context* ctx) {
     uint32_t cause = (uint32_t) d.tvb->uint8(d.offset);
     d.add_item(1, &hf_sm_cause, enc::be);
 
     return 1;
 }
+const field_meta hf_gsma_sm_ext = {
+    "Extension",
+    "nas_5gs.gsm.sm.ext",
+    ft::ft_uint8,
+    fd::base_dec,
+    nullptr,
+    nullptr,
+    nullptr,
+    0x80,
+};
+const field_meta hf_gsma_conf_prot = {
+    "Configuration Protocol",
+    "nas_5gs.gsm.sm.configuration_protocol",
+    ft::ft_uint8,
+    fd::base_dec,
+    nullptr,
+    nullptr,
+    nullptr,
+    0x7,
+};
 
+// Extended protocol configuration options  9.11.4.6
 int sm::dissect_ext_pco(dissector d, context* ctx) {
-    diag("no dissect\n");
-    return d.length;
+    // See subclause 10.5.6.3A in 3GPP TS 24.008
+    auto len = d.length;
+    auto oct = d.uint8();
+
+    /* 1 ext 0 0 0 0 Spare  Configuration protocol */
+    d.add_item(1, &hf_gsma_sm_ext, enc::be);
+    d.add_item(1, &hf_gsma_conf_prot, enc::be);
+    d.step(1);
+
+    // DETAIL:
+
+    return len;
 }
 
+// EAP message 9.11.2.2
 int sm::dissect_eap_msg(dissector d, context* ctx) {
     return nas::dissect_eap_msg(d, ctx);
 }
-// *     9.11.4.13    QoS rules
 
+/*The description and valid combinations of packet filter component type identifiers in a
+ * packet filter are defined in 3GPP TS 23.501 [8].*/
 int dissect_packet_filter(dissector d, int pf_type, context* ctx) {
     auto len = d.length;
     switch (pf_type) {
@@ -83,7 +113,15 @@ int dissect_packet_filter(dissector d, int pf_type, context* ctx) {
         d.step(4);
         len = 8;
     } break;
-    case 48: {
+    case 33: { // IPv6 remote address/prefix length type
+    };
+    case 35: { // IPv6 local address/prefix length type
+        // d.add_item(16, &hf_pdu_addr_ipv6, enc::be);
+        d.step(16);
+        // d.add_item(1, &hf_pdu_addr_ipv6_prefix, enc::be);
+        d.step(1);
+    }break;
+    case 48: { // Protocol identifier/Next header type
         d.add_item(1, &hf_pid_next_hd, enc::be);
         d.step(1);
         len = 1;
@@ -93,16 +131,40 @@ int dissect_packet_filter(dissector d, int pf_type, context* ctx) {
         d.step(2);
         len = 2;
     } break;
+    case 0x51: { // Remote port range type
+        // the packet filter component value field shall be encoded as a sequence of a two
+        // octet port range low limit field and a two octet port range high limit field.
+        // The port range low limit field shall be transmitted first
+        d.step(4);
+    }break;
     case 80: { /* Single remote port type */
+    } ;
+    case 0x41: { // Local port range type
         d.add_item(2, &hf_single_port_type, enc::be);
         d.step(2);
         len = 2;
-    } break;
+    }; break;
+    case 0x60: { // Security parameter index type
+        // For "security parameter index", the packet filter component value field shall
+        // be encoded as four octets which specify the IPSec security parameter index
+        d.step(4);
+    }break;
+    case 0x70: { // Type of service/Traffic class type
+        // For "type of service/traffic class type", the packet filter component value
+        // field shall be encoded as a sequence of a one octet type-of-service/traffic
+        // class field and a one octet type-of-service/traffic class mask field. The
+        // type-of-service/traffic class field shall be transmitted first.
+        d.step(2);
+    }break;
     default:
         d.step(d.length);
     }
     return len;
 }
+
+// Figure 9.11.4.13.4 Packet filter list when the rule operation is "create new QoS rule",
+// or "modify existing QoS rule and add packet filters" or "modify existing QoS rule and
+// replace all packet filters"
 int dissect_packet_filters(dissector d, int rop, context* ctx) {
     auto start = d.offset;
     /* "create new QoS rule", or "modify existing QoS rule and add packet
@@ -114,29 +176,29 @@ int dissect_packet_filters(dissector d, int rop, context* ctx) {
     d.step(1);
 
     /* Length of packet filter contents */
-    auto pfclen = (int) d.tvb->uint8(d.offset);
+    auto pfclen = (int) d.uint8();
     d.add_item(1, &hf_sm_pf_len, enc::be);
     d.step(1);
 
+    d.step(pfclen);
+    pfclen = 0; // skip dissect packet filter contents
+    // TODO: detail
     auto k       = 1;
-
     /* Packet filter contents */
     while (pfclen > 0) {
         auto start = d.offset;
-        auto subtree = d.tree->add_subtree(
-            d.pinfo, d.tvb, d.offset, -1, "Packet filter component %u", k);
+        auto subtree = d.add_item( -1, "Packet filter component %u", k);
         use_tree ut(d, subtree);
         /* Each packet filter component shall be encoded as a sequence of a
          * one octet packet filter component type identifier and a fixed
          * length packet filter component value field. The packet filter
          * component type identifier shall be transmitted first.
          */
-        auto pf_type = d.tvb->uint8(d.offset);
+        auto pf_type = d.uint8();
         d.add_item(1, &hf_sm_pf_type, enc::be);
         d.step(1);
         /* Packet filter length contains the length of component type and
          * content */
-
         auto consumed = dissect_packet_filter(d.slice(pfclen - 1), pf_type, ctx);
         d.step(consumed);
         subtree->set_length(d.offset - start);
@@ -146,7 +208,23 @@ int dissect_packet_filters(dissector d, int rop, context* ctx) {
 
     return d.offset - start;
 }
+const true_false_string tfs_segregation = {
+    "Segregation requested",
+    "Segregation not requested",
+};
+const field_meta hf_segregation = {
+    "Segregation",
+    "nas_5gs.sm.qos_rule.segregation",
+    ft::ft_uint8,
+    fd::base_dec,
+    nullptr,
+    &tfs_segregation,
+    nullptr,
+    0x40u,
+};
+// Authorized QoS rules QoS rules 9.11.4.13
 int sm::dissect_qos_rules(dissector d, context* ctx){
+    use_context              uc(ctx, "authorized-qos-rules", d);
     auto                     len             = d.length;
     static const field_meta* pkt_flt_flags[] = {
         &hf_sm_rop,
@@ -157,8 +235,7 @@ int sm::dissect_qos_rules(dissector d, context* ctx){
     auto i = 1;
     while (d.offset > 0) {
         /* QoS Rule */
-        auto subtree =
-            d.tree->add_subtree(d.pinfo, d.tvb, d.offset, -1, "QoS rule %u", i);
+        auto     subtree = d.add_item(-1, "QoS rule %u", i);
         use_tree ut(d, subtree);
 
         /* QoS rule identifier Octet 4*/
@@ -175,8 +252,8 @@ int sm::dissect_qos_rules(dissector d, context* ctx){
 
         /* Rule operation code    DQR bit    Number of packet filters */
         auto n_filters = d.tvb->uint8(d.offset);
-        auto rop       = n_filters >> 5;
-        n_filters      = n_filters & 0x0f;
+        auto rop       = n_filters >> 5u;
+        n_filters      = n_filters & 0x0fu;
         d.add_bits(pkt_flt_flags);
         d.step(1);
 
@@ -190,8 +267,10 @@ int sm::dissect_qos_rules(dissector d, context* ctx){
             d.step(length - 1);
             continue;
         }
-        if (rop == 2 || rop == 6) {
+        // 6 Modify existing QoS rule without modifying packet filters
+        if (rop == 2 || rop == 6) { // 2 Delete existing QoS rule
             if (n_filters != 0) {
+                diag("the number of packet filters shall be coded as 0\n");
                 d.step(length - 1);
                 ++i;
                 continue;
@@ -200,8 +279,7 @@ int sm::dissect_qos_rules(dissector d, context* ctx){
         /* Packet filter list */
         auto j = 1;
         while (n_filters > 0) {
-            auto subtree =
-                d.tree->add_subtree(d.pinfo, d.tvb, d.offset, -1, "Packet filter %u", j);
+            auto     subtree = d.add_item(-1, "Packet filter %u", j);
             use_tree ut(d, subtree);
             if (rop == 5) {
                 /* modify existing QoS rule and delete packet filters */
@@ -229,12 +307,15 @@ int sm::dissect_qos_rules(dissector d, context* ctx){
          */
         /* Segregation bit (bit 7 of octet z+2) */
         d.add_item(1, &hf_sm_qfi, enc::be);
+        d.add_item(1, &hf_segregation, enc::be);
         d.step(1);
 
         ++i;
     } // while(d.offset)
     return len;
 }
+
+// Authorized QoS rules QoS rules 9.11.4.13
 int sm::dissect_authorized_qos_rules(dissector d, context* ctx) {
     return dissect_qos_rules(d, ctx);
 }

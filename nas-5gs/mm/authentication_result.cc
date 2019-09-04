@@ -8,7 +8,7 @@ using namespace nas;
  */
 int mm::authentication_result(dissector d, context* ctx) {
     auto        len = d.length;
-    use_context uc(ctx, "authentication-result");
+    use_context uc(ctx, "authentication-result", d);
 
     /* ngKSI    NAS key set identifier 9.11.3.32    M    V    1/2
        Spare half octet    Spare half octet 9.5    M    V    1/2  H1 */

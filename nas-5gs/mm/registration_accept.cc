@@ -18,7 +18,7 @@ const true_false_string tfs_requested_or_not = {
  */
 int mm::registration_accept(dissector d, context* ctx) {
     const auto        len = d.length;
-    use_context uc(ctx, "registration-accept");
+    use_context uc(ctx, "registration-accept", d);
 
     using namespace mm_reg_accept;
 

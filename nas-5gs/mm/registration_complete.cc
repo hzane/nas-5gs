@@ -11,7 +11,7 @@ int mm::registration_complete(dissector d, context* ctx) {
     up_link(d.pinfo);
 
     const auto  len = d.length;
-    use_context uc(ctx, "registration-complete");
+    use_context uc(ctx, "registration-complete", d);
 
     /* 73    SOR transparent container 9.11.3.51    O TLV-E 20-2048 */
     // ELEM_OPT_TLV_E(0x73, , DE_NAS_5GS_MM_SOR_TRASP_CONT, NULL);

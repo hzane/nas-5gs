@@ -11,7 +11,7 @@ extern const element_meta key_set_id;
  */
 int mm::dissect_reg_req_ue_orig(dissector d, context* ctx) {
     auto        len = d.length;
-    use_context uc(ctx, "ue-originating-de-registration");
+    use_context uc(ctx, "ue-originating-de-registration", d);
 
     using namespace mm_de_reg;
 

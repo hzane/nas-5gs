@@ -15,7 +15,7 @@ using namespace mm_reg_rej;
 /*  8.2.9 Registration reject */
 int mm::registration_rej(dissector d, context* ctx) {
     auto        len = d.length;
-    use_context uc(ctx, "registration-reject");
+    use_context uc(ctx, "registration-reject", d);
 
     /* 5GMM cause   9.11.3.2  M   V   1 */
     /*ELEM_MAND_V(,DE_NAS_5GS_MM_5GMM_CAUSE, );  */

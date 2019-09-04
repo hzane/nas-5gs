@@ -12,7 +12,7 @@ using namespace nas;
  */
 int mm::authentication_resp(dissector d, context* ctx) {
     auto        len = d.length;
-    use_context uc(ctx, "authentication-response");
+    use_context uc(ctx, "authentication-response", d);
 
     using namespace mm_authentication_resp;
 

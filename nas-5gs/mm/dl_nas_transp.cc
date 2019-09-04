@@ -19,7 +19,7 @@ using namespace mm_dl_nas_transp;
  */
 int mm::dl_nas_transp(dissector d, context* ctx) {
     const auto        len = d.length;
-    use_context uc(ctx, "dl-nas-transport");
+    use_context uc(ctx, "dl-nas-transport", d);
 
 
     /* Initialize the private struct */

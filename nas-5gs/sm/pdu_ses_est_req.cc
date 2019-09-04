@@ -21,7 +21,7 @@ using namespace sm_pdu_ses_est;
  */
 int sm::pdu_ses_est_req(dissector d, context* ctx) {
     const auto        len = d.length;
-    use_context uc(ctx, "pdu-session-establishment-request");
+    use_context uc(ctx, "pdu-session-establishment-request", d);
 
     /* Direction: UE to network */
     d.pinfo->dir = pi_dir::ul;

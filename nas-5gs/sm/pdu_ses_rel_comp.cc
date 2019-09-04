@@ -7,7 +7,7 @@
  */
 int sm::pdu_ses_rel_comp(dissector d, context* ctx) {
     auto        len = d.length;
-    use_context uc(ctx, "pdu-session-release-complete");
+    use_context uc(ctx, "pdu-session-release-complete", d);
 
     /* Direction: UE to network */
     d.pinfo->dir = pi_dir::ul;

@@ -12,7 +12,7 @@ using namespace nas;
  */
 int mm::service_rej(dissector d, context* ctx) {
     auto        len = d.length;
-    use_context uc(ctx, "service-reject");
+    use_context uc(ctx, "service-reject", d);
 
     using namespace mm_service_rej;
     /* 5GMM cause  9.11.3.2  M   V   1 */

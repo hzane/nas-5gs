@@ -11,7 +11,7 @@ using namespace nas;
  */
 int mm::authentication_rej(dissector d, context* ctx) {
     auto        len = d.length;
-    use_context uc(ctx, "authentication-reject");
+    use_context uc(ctx, "authentication-reject", d);
 
     using namespace mm_authentication_rej;
 

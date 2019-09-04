@@ -6,7 +6,7 @@
  */
 int mm::notification_resp(dissector d, context* ctx) {
     auto        len = d.length;
-    use_context uc(ctx, "notification-response");
+    use_context uc(ctx, "notification-response", d);
 
     /* 50 PDU session status 9.11.3.44    O    TLV    4-34 */
     // ELEM_OPT_TLV(0x50, , DE_NAS_5GS_MM_PDU_SES_STATUS, );

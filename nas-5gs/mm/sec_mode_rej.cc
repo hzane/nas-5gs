@@ -6,7 +6,7 @@
  */
 int mm::sec_mode_rej(dissector d, context* ctx) {
     const auto  len = d.length;
-    use_context uc(ctx, "security-mode-reject");
+    use_context uc(ctx, "security-mode-reject", d);
 
     /* 5GMM cause 9.11.3.2    M    V    1 */
     // ELEM_MAND_V(,  DE_NAS_5GS_MM_5GMM_CAUSE,);

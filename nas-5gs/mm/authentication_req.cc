@@ -12,7 +12,7 @@ using namespace nas;
 /* 8.2.1.1    Authentication request */
 int mm::authentication_req(dissector d, context* ctx) {
     auto        len = d.length;
-    use_context uc(ctx, "authentication-request");
+    use_context uc(ctx, "authentication-request", d);
 
     using namespace mm_authentication_req;
 

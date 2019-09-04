@@ -7,7 +7,7 @@
  */
 int sm::sm_status(dissector d, context* ctx) {
     auto        len = d.length;
-    use_context uc(ctx, "5gsm-status");
+    use_context uc(ctx, "5gsm-status", d);
 
     /* Direction: both */
     d.pinfo->dir = pi_dir::both;
