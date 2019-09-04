@@ -890,39 +890,7 @@ const field_meta mm::hfm_nas_5gs_mm_eia7 = {
     0x01,
 };
 
-/* *    9.11.3.56    UE status */
 
-const true_false_string mm::tfs_nas_5gs_mm_n1_mod = {
-    "UE is in 5GMM-REGISTERED state",
-    "UE is not in 5GMM-REGISTERED state",
-};
-const field_meta mm::hf_mm_n1_mode_reg_b1 = {
-    "N1 mode reg",
-    "nas_5gs.mm.n1_mode_reg_b1",
-    ft::ft_boolean,
-    8,
-    nullptr,
-    &tfs_nas_5gs_mm_n1_mod,
-    nullptr,
-    0x02,
-
-};
-
-const true_false_string mm::tfs_nas_5gs_mm_s1_mod = {
-    "UE is in EMM-REGISTERED state",
-    "UE is not in EMM-REGISTERED state",
-};
-const field_meta mm::hf_mm_s1_mode_reg_b0 = {
-    "S1 mode reg",
-    "nas_5gs.mm.s1_mode_reg_b0",
-    ft::ft_boolean,
-    8,
-    nullptr,
-    &tfs_nas_5gs_mm_s1_mod,
-    nullptr,
-    0x01,
-
-};
 
 /* *    9.11.3.48    S1 UE network capability */
 

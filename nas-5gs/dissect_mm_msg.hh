@@ -182,8 +182,6 @@ extern const field_meta hfm_nas_5gs_mm_eia4;
 extern const field_meta hfm_nas_5gs_mm_eia5;
 extern const field_meta hfm_nas_5gs_mm_eia6;
 extern const field_meta hfm_nas_5gs_mm_eia7;
-extern const field_meta hf_mm_n1_mode_reg_b1;
-extern const field_meta hf_mm_s1_mode_reg_b0;
 extern const field_meta hf_mm_sal_t_li;
 // extern const field_meta hf_proc_trans_id;
 extern const field_meta hf_element;

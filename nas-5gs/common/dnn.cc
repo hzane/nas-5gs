@@ -13,7 +13,7 @@ const field_meta cmn::hf_dnn = {
 
 /*  9.11.2.1A    DNN */
 int cmn::dissect_dnn(dissector d, context* ctx) {
-    use_context uc(ctx, "DNN", d, 0);
+    const use_context uc(ctx, "DNN", d, 0);
 
     /* A DNN value field contains an APN as defined in 3GPP TS 23.003 */
     // auto str = bstrn_string(d.safe_ptr(), d.safe_length(-1));

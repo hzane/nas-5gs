@@ -127,31 +127,3 @@ static int dissect_mm_msg(dissector d, context* ctx) {
     return uc.length;
 }
 
-
-// 9.11.2.6 Intra N1 mode NAS transparent container page.349
-//  a type 4 information element with a length of 9 octets
-int dissect_n1_mode_container(dissector d, context* ctx){
-    /*The value part of the Intra N1 mode NAS transparent container information element is
-included in specific information elements within some RRC messages sent to the UE.*/
-
-    return d.length;
-}
-
-const field_meta hf_n1_to_s1_mode = {
-    "N1 mode to S1 mode NAS transparent container",
-    "n1_mode_2_s1_mode_container",
-    ft::ft_uint16,
-    fd::base_dec,
-    nullptr,
-    nullptr,
-    nullptr,
-    0,
-};
-
-// 9.11.2.7 N1 mode to S1 mode NAS transparent container page.350
-int dissect_n1_to_s1_mode_container(dissector d, context* ctx){
-    // a type 3 information element with a length of 2 octets
-    // auto seq = d.ntohs();
-    d.add_item(2, &hf_n1_to_s1_mode, enc::be);
-    return d.length;
-}
