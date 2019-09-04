@@ -1,6 +1,7 @@
 #include "../dissect_nas5g.hh"
 #include "../dissect_sm_msg.hh"
 #include "../ts24007.hh"
+#include "../common/common.hh"
 
 namespace sm_pdu_ses_est {
 extern const field_meta* hf_sel_sc_mode;
@@ -11,6 +12,7 @@ extern const element_meta sm_s_nssai;
 extern const element_meta dnn;
 } // namespace sm_pdu_ses_est
 
+using namespace cmn;
 using namespace nas;
 using namespace sm;
 using namespace sm_pdu_ses_est;

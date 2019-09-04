@@ -5,13 +5,13 @@ namespace mm_ul_nas_transp {
 extern const element_meta pld_cont_type;
 extern const element_meta pld_cont;
 extern const element_meta pdu_ses_id;
-extern const element_meta additional_inf;
 extern const element_meta old_pdu_ses_id;
 extern const element_meta req_type;
 extern const element_meta s_nssai;
 extern const element_meta dnn;
 } // namespace mm_ul_nas_transp
 
+using namespace cmn;
 using namespace nas;
 using namespace mm;
 using namespace mm_ul_nas_transp;
@@ -81,7 +81,6 @@ namespace mm_ul_nas_transp {
 int dissect_pld_cont_type(dissector d, context* ctx); // 9.11.3.40
 int dissect_pld_cont(dissector d, context* ctx);      // 9.11.3.39
 int dissect_pdu_ses_id(dissector d, context* ctx);
-int dissect_additional_inf(dissector d, context* ctx);
 int dissect_old_pdu_ses_id(dissector d, context* ctx);
 int dissect_req_type(dissector d, context* ctx);
 
@@ -106,14 +105,6 @@ extern const element_meta pdu_ses_id = {
     0x12,
     "PDU session ID",
     dissect_pdu_ses_id,
-    nullptr,
-};
-
-// Additional information  9.11.2.1
-extern const element_meta additional_inf = {
-    0x24,
-    "Additional information",
-    dissect_additional_inf,
     nullptr,
 };
 

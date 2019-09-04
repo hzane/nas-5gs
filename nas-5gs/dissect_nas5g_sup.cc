@@ -1,6 +1,8 @@
 #include "dissect_nas5g.hh"
+#include "common/common.hh"
 #include "gsm.hh"
 
+using namespace cmn;
 using namespace nas;
 
 const field_meta hfm_spare_half_octet = {
@@ -289,16 +291,6 @@ const element_meta nas::t3348_gprs_timer3{
     nullptr,
 };
 
-const field_meta nas::hf_dnn = {
-    "DNN",
-    "nas_5gs.cmn.dnn",
-    ft::ft_bstrn,
-    fd::base_string,
-    nullptr,
-    nullptr,
-    nullptr,
-    0x0,
-};
 
 
 const field_meta nas::hf_spare_b7 = {

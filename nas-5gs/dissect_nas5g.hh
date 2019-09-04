@@ -3,17 +3,15 @@
 #include "field_meta.hh"
 
 // dissect_msg_fnc_t
-int dissect_sm_msg(dissector d, context* ctx = nullptr);
-int dissect_mm_msg(dissector d, context* ctx = nullptr);
+int dissect_sm_msg(dissector d, context* ctx);
+int dissect_mm_msg(dissector d, context* ctx);
 
-int dissect_nas5g_plain(dissector d, context* ctx = nullptr);
+int dissect_nas5g_plain(dissector d, context* ctx);
+int dissect_nas5g_security_protected(dissector d, context* ctx);
 
 const message_meta* find_dissector(uint8_t iei, const message_meta* meta);
 
 namespace nas {
-
-int dissect_dnn(dissector d, context* ctx);
-int dissect_eap_msg(dissector d, context* ctx);
 
 extern const true_false_string tfs_allowed_not_allowed;
 // extern const true_false_string tfs_follow_on_req;
@@ -31,7 +29,6 @@ extern const field_meta*  hf_msg_auth_code;
 extern const field_meta   hf_pdu_ipv4_mask;
 extern const field_meta   hf_pid_next_hd;
 extern const field_meta   hf_single_port_type;
-extern const field_meta   hf_dnn;
 extern const field_meta   hf_spare_b7;
 extern const field_meta   hf_spare_b6;
 extern const field_meta   hf_spare_b5;

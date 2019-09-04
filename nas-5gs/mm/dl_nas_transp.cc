@@ -6,10 +6,10 @@ namespace mm_dl_nas_transp {
 extern const element_meta pld_cont_type;
 extern const element_meta pld_cont;
 extern const element_meta pdu_ses_id;
-extern const element_meta additional_inf;
 extern const element_meta backoff_gprs_timer3;
 } // namespace mm_dl_nas_transp
 
+using namespace cmn;
 using namespace nas;
 using namespace mm;
 using namespace mm_dl_nas_transp;
@@ -86,13 +86,6 @@ extern const element_meta pdu_ses_id = {
     nullptr,
 };
 
-extern const element_meta additional_inf = {
-    0x24,
-    "Additional information",
-    dissect_additional_inf,
-    nullptr,
-};
-
 // Back-off timer value    GPRS timer 3 9.11.2.5
 extern const element_meta backoff_gprs_timer3 = {
     0x37,
@@ -111,10 +104,5 @@ int dissect_pdu_ses_id(dissector d, context* ctx) {
     return 1;
 }
 
-/* 9.10.2.1    Additional information*/
-int dissect_additional_inf(dissector d, context* ctx) {
-    diag("no dissect for %s\n", paths(ctx).c_str());
-    return d.length;
-}
 
 } // namespace mm_dl_nas_transp

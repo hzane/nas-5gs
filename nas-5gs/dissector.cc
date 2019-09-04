@@ -24,7 +24,8 @@ proto_node *dissector::add_item(int len, const char*format, ...){
     return tree->add_subtree(pinfo, tvb, offset, len, txt.c_str());
 }
 
-void dissector::extraneous_data_check(int maxlen, context* ctx) {
+void dissector::extraneous_data_check(int maxlen, context* ctx)const {
+    if (maxlen < 0) return;
     if (length < 0) {
         diag("underflow at %s %d:%d\n", paths(ctx).c_str(), offset, length);
     }
@@ -76,5 +77,11 @@ uint16_t dissector::ntohs() const {
     auto p = safe_ptr();
     int  l = safe_length(2);
     if (p && l > 0) return n2uint16(p);
+    return 0;
+}
+uint32_t dissector::uint32() const {
+    auto p = safe_ptr();
+    auto l = safe_length(4);
+    if (p && l > 0) return n2uint32(p);
     return 0;
 }

@@ -3,6 +3,7 @@
 #include "gsm.hh"
 #include "ts24007.hh"
 
+using namespace cmn;
 using namespace nas;
 using namespace mm;
 

@@ -2,6 +2,8 @@
 #include "../ts24007.hh"
 #include "../gsm.hh"
 
+using namespace cmn;
+
 namespace mm_de_reg {
 extern const element_meta de_reg_type;
 extern const element_meta t3346_gprs_timer2;

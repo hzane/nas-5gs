@@ -70,13 +70,14 @@ struct dissector {
     proto_node*    add_item(int len, const field_meta* fm, uint32_t e = enc::be);
     proto_node*    add_item(int len, const char* format, ...);
     void           add_bits(const field_meta* metas[]);
-    void           extraneous_data_check(int max_len, context* ctx = nullptr);
+    void           extraneous_data_check(int max_len, context* ctx = nullptr) const;
     const uint8_t* safe_ptr() const;
     int            safe_length(int len) const;
     dissector      slice(int len) const;
     dissector      use_elem(void* elem) const;
-    uint8_t        uint8()const;
-    uint16_t       ntohs()const;
+    uint8_t        uint8() const;
+    uint16_t       ntohs() const;
+    uint32_t       uint32() const;
     //    void           set_private(const char* name, uint64_t val);
     //    uint64_t       get_private(const char* name, uint64_t dft = 0);
 };
@@ -91,19 +92,23 @@ struct use_tree{ // NOLINT: special-member-functions
 typedef int (*dissect_fnc_t)(dissector, context* ctx);
 
 struct context {
+    uint32_t                   msg_auth_code        = 0;
     uint8_t                    payload_content_type = 0;
     std::vector< std::string > paths                = {};
     std::string                path() const;
 };
 
 struct use_context { // NOLINT: special-member-functions
-    context* ctx    = 0;
-    int      offset = 0;
-    int      length = 0;
+    context*         ctx    = 0;
+    int              offset = 0;
+    int              length = 0;
+    int              maxlen = 0;
+    const dissector& d;
 
-    use_context(context* ctx, const char* path, dissector const& d)
-        : ctx(ctx), offset(d.offset), length(d.length) {
+    use_context(context* ctx, const char* path, dissector const& d, int maxlen = 0)
+        : ctx(ctx), offset(d.offset), length(d.length), d(d), maxlen(maxlen) {
         if (!ctx) return;
+        if (path == nullptr) path = ".";
         ctx->paths.emplace_back(path);
         diag("%s%s %d-%d\n",
              string(ctx->paths.size() << 1u, ' ').c_str(),
@@ -115,6 +120,7 @@ struct use_context { // NOLINT: special-member-functions
         if (ctx) {
             ctx->paths.pop_back();
         }
+        d.extraneous_data_check(maxlen, ctx);
     }
 };
 inline void store_payload_content_type(context* ctx, uint8_t pct) {
@@ -123,6 +129,13 @@ inline void store_payload_content_type(context* ctx, uint8_t pct) {
 
 inline uint8_t retrive_payload_content_type(context* ctx) {
     return ctx ? ctx->payload_content_type : 0;
+}
+// code is host order
+inline void store_msg_auth_code(context*ctx, uint32_t code){
+    if (ctx) ctx->msg_auth_code = code;
+}
+inline uint32_t retrive_msg_auth_code(context*ctx){
+    return ctx ? ctx->msg_auth_code : 0;
 }
 
 inline string paths(context* ctx) {
@@ -241,3 +254,4 @@ string mnc_aux(const uint8_t* d, int length = 3);
 // BCD number
 string bcd_string(const uint8_t*d, int length);
 
+uint64_t uintmap(uint64_t f, uint64_t mask);

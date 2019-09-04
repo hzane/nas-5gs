@@ -20,6 +20,7 @@ extern const element_meta op_def_acc_cat_def;
 extern const element_meta sms_ind;
 } // namespace mm_conf_upd_cmd
 
+using namespace cmn;
 using namespace mm;
 using namespace nas;
 

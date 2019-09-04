@@ -1,5 +1,6 @@
 #include "registration_accept.hh"
 
+using namespace cmn;
 using namespace mm;
 using namespace nas;
 

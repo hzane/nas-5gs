@@ -270,3 +270,7 @@ void extraneous_data_check(int offset, int len, int maxlen, context*ctx){
         diag("extraneous data %s %d:%d\n", paths(ctx).c_str(), offset, len);
     }
 }
+
+uint64_t uintmap(uint64_t f, uint64_t mask) {
+    return mask ? (f&mask)>>ws_ctz(mask) : f;
+}

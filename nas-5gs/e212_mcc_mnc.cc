@@ -1,6 +1,143 @@
 #include "config.hh"
 #include "field_meta.hh"
+#include "common/common.hh"
 
+
+namespace {
+extern const field_meta   hf_e212_mcc;
+extern const field_meta   hf_e212_mnc;
+extern const value_string mcc_mnc_codes[];
+} // namespace
+
+
+/*
+ * MCC/MNC dissection - little endian MNC encoding
+ *
+ * MNC of length 2:
+ *
+ *   8   7   6   5   4   3   2   1
+ * +---+---+---+---+---+---+---+---+
+ * |  MCC digit 2  |  MCC digit 1  |  octet x
+ * +---------------+---------------+
+ * |    Filler     |  MCC digit 3  |  octet x+1
+ * +---------------+---------------+
+ * |  MNC digit 2  |  MNC digit 1  |  octet x+2
+ * +---------------+---------------+
+ *
+ * MNC of length 3:
+ *
+ *   8   7   6   5   4   3   2   1
+ * +---+---+---+---+---+---+---+---+
+ * |  MCC digit 2  |  MCC digit 1  |  octet x
+ * +---------------+---------------+
+ * |  MNC digit 3  |  MCC digit 3  |  octet x+1
+ * +---------------+---------------+
+ * |  MNC digit 2  |  MNC digit 1  |  octet x+2
+ * +---------------+---------------+
+ *
+ */
+/*
+ * Return MCC MNC in a packet scope allocated string that can be used in labels.
+ * Little Endian encoded
+ */
+int cmn::dissect_e212_mcc_mnc(dissector d, context*) {
+
+    /* Mobile country code MCC */
+    auto       octet = static_cast< uint32_t >(d.uint8());
+    const auto mcc1  = octet & 0x0fu;
+    const auto mcc2  = octet >> 4u;
+
+    d.step(1);
+    octet     = d.uint8();
+    auto mcc3 = octet & 0x0fu;
+    /* MNC, Mobile network code (octet 3 bits 5 to 8, octet 4)  */
+    auto mnc3 = octet >> 4u;
+    d.step(1);
+
+    octet     = d.uint8();
+    auto mnc1 = octet & 0x0fu;
+    auto mnc2 = octet >> 4u;
+
+    auto mcc = 100 * mcc1 + 10 * mcc2 + mcc3;
+    auto mnc = 100 * mnc1 + 10 * mnc2 + mnc3;
+
+    d.add_item(3, &hf_e212_mcc, enc::be); // mcc
+    d.add_item(3, &hf_e212_mnc, enc::be); // mcc*1000+mnc
+
+    return 3;
+}
+
+
+/*
+ * When we want to decode the MCC/MNC pair in an address that is encoded according to
+ * E.212 the main problem is that we do not know whether we are dealing with a length 2 or
+ * length 3 MNC. Initially, it was possible to find the length of the MNC by checking the
+ * MCC code. Originally each country employed a pure 2 digit or 3 digit MNC scheme.
+ * However, it is possible to find countries now that employ both lengths for the MNC
+ * (e.g. Canada, India). Since in these cases we can be sure that an MNC cannot possible
+ * be a prefix for another MNC, we initially assume that the MNC is 2 digits long. If the
+ * MCC/MNC combination gives a match in our mcc_mnc_codes list then we can be sure that we
+ * deal with an MNC that is 2 digits long. Otherwise, assume that the MNC is 3 digits
+ * long.
+ *
+ * MNC of length 2:
+ *
+ *     8   7   6   5   4   3   2   1
+ *   +---+---+---+---+---+---+---+---+
+ *   |  MCC digit 2  |  MCC digit 1  |  octet x
+ *   +---------------+---------------+
+ *   |  MNC digit 1  |  MCC digit 3  |  octet x+1
+ *   +---------------+---------------+
+ *   | addr digit 1  |  MNC digit 2  |  octet x+2
+ *   +---------------+---------------+
+ *
+ * MNC of length 3:
+ *
+ *     8   7   6   5   4   3   2   1
+ *   +---+---+---+---+---+---+---+---+
+ *   |  MCC digit 2  |  MCC digit 1  |  octet x
+ *   +---------------+---------------+
+ *   |  MNC digit 1  |  MCC digit 3  |  octet x+1
+ *   +---------------+---------------+
+ *   |  MNC digit 3  |  MNC digit 2  |  octet x+2
+ *   +---------------+---------------+
+ *
+ * This function will consume either 2.5 or 3 octets. For this reason it returns
+ * the number of nibbles consumed, i.e. 5 or 6 (2 or 3 digits long MNC respectively)
+ */
+int dissect_e212_mcc_mnc_in_address(dissector d, context*) {
+    /* MCC digits 1 and 2 */
+    auto octet = (uint32_t) d.uint8();
+    auto mcc1  = octet & 0x0fu;
+    auto mcc2  = octet >> 4u;
+    d.step(1);
+
+    /* MCC digit 3 and MNC digit 1 */
+    octet     = (uint32_t) d.uint8();
+    auto mcc3 = octet & 0x0fu;
+    auto mnc1 = octet >> 4u;
+    d.step(1);
+
+    /* MNC digits 2 and 3 */
+    octet     = d.uint8();
+    auto mnc2 = octet & 0x0fu;
+    auto mnc3 = octet >> 4u;
+
+    auto mcc = 100 * mcc1 + 10 * mcc2 + mcc3;
+    auto mnc = 10 * mnc1 + mnc2;
+
+    auto short_mnc = find_val_string(mcc_mnc_codes, mcc * 1000 + 10 * mnc, nullptr);
+    /* Try to match the MCC and 2 digits MNC with an entry in our list of operators */
+    if (!short_mnc) {
+        mnc = 10 * mnc + mnc3;
+    }
+    d.add_item(3, &hf_e212_mcc, enc::be); // mcc
+    d.add_item(3, &hf_e212_mnc, enc::be); // mcc*1000+mnc if long_mnc
+    //     d.add_item(3, &hf_e212_mnc, enc::be); // mcc*1000+10*mnc if short_mac
+    return 3;
+}
+
+namespace{
 /*
  * Annex to ITU Operational Bulletin
  * No. 1019 - 1.I.2013
@@ -10,7 +147,7 @@
  * Find the bulletins here:
  * http://www.itu.int/en/publications/ITU-T/Pages/publications.aspx?parent=T-SP&view=T-SP1
  */
-static const value_string E212_codes[] = {
+const value_string E212_codes[] = {
     {  202, "Greece" },
     {  203, "Unassigned" },
     {  204, "Netherlands (Kingdom of the)" },
@@ -734,7 +871,7 @@ const field_meta hf_e212_mcc = {
  * only in case of an invalid combination of MNCs, i.e. in the same MCC a
  * 2 digits long MNC is a prefix of a 3 digits long MNC
  */
-static const value_string mcc_mnc_codes[] = {
+extern const value_string mcc_mnc_codes[] = {
     {  202010, "Cosmote" },
     {  202020, "Cosmote" },
     {  202030, "OTE" },
@@ -2400,155 +2537,13 @@ static const value_string mcc_mnc_codes[] = {
     {  0, nullptr },
 };
 const field_meta hf_e212_mnc = {
-    "MNC", "mnc", ft::ft_bytes, fd::mnc, mcc_mnc_codes, nullptr, nullptr,  0,
+    "MNC",
+    "nas_5gs.cmn.mnc",
+    ft::ft_bytes,
+    fd::mnc,
+    mcc_mnc_codes,
+    nullptr,
+    nullptr,
+    0,
 };
-/*
- * MCC/MNC dissection - little endian MNC encoding
- *
- * MNC of length 2:
- *
- *   8   7   6   5   4   3   2   1
- * +---+---+---+---+---+---+---+---+
- * |  MCC digit 2  |  MCC digit 1  |  octet x
- * +---------------+---------------+
- * |    Filler     |  MCC digit 3  |  octet x+1
- * +---------------+---------------+
- * |  MNC digit 2  |  MNC digit 1  |  octet x+2
- * +---------------+---------------+
- *
- * MNC of length 3:
- *
- *   8   7   6   5   4   3   2   1
- * +---+---+---+---+---+---+---+---+
- * |  MCC digit 2  |  MCC digit 1  |  octet x
- * +---------------+---------------+
- * |  MNC digit 3  |  MCC digit 3  |  octet x+1
- * +---------------+---------------+
- * |  MNC digit 2  |  MNC digit 1  |  octet x+2
- * +---------------+---------------+
- *
- *
- * MCC/MNC dissection - big endian MNC encoding
- *
- * MNC of length 2:
- *
- *   8   7   6   5   4   3   2   1
- * +---+---+---+---+---+---+---+---+
- * |  MCC digit 2  |  MCC digit 1  |  octet x
- * +---------------+---------------+
- * |    Filler     |  MCC digit 3  |  octet x+1
- * +---------------+---------------+
- * |  MNC digit 2  |  MNC digit 1  |  octet x+2
- * +---------------+---------------+
- *
- * MNC of length 3:
- *
- *   8   7   6   5   4   3   2   1
- * +---+---+---+---+---+---+---+---+
- * |  MCC digit 2  |  MCC digit 1  |  octet x
- * +---------------+---------------+
- * |  MNC digit 1  |  MCC digit 3  |  octet x+1
- * +---------------+---------------+
- * |  MNC digit 3  |  MNC digit 2  |  octet x+2
- * +---------------+---------------+
- */
-
-/*
- * Return MCC MNC in a packet scope allocated string that can be used in labels.
- * Little Endian encoded
- */
-int dissect_e212_mcc_mnc(dissector d, context*) {
-    /* Mobile country code MCC */
-    auto octet = static_cast< uint32_t >(d.uint8());
-    const auto mcc1 = octet & 0x0fu;
-    const auto mcc2 = octet >> 4u;
-
-    d.step(1);
-    octet = d.uint8();
-    auto mcc3 = octet & 0x0fu;
-    /* MNC, Mobile network code (octet 3 bits 5 to 8, octet 4)  */
-    auto mnc3 = octet >> 4u;
-    d.step(1);
-
-    octet = d.uint8();
-    auto mnc1 = octet & 0x0fu;
-    auto mnc2 = octet >> 4u;
-
-    auto mcc = 100 * mcc1 + 10 * mcc2 + mcc3;
-    auto mnc = 100 * mnc1 + 10*mnc2 + mnc3;
-
-    d.add_item(3, &hf_e212_mcc, enc::be); // mcc
-    d.add_item(3, &hf_e212_mnc, enc::be); // mcc*1000+mnc
-
-    return 3;
-}
-
-
-/*
- * When we want to decode the MCC/MNC pair in an address that is encoded according to E.212
- * the main problem is that we do not know whether we are dealing with a length 2 or length 3
- * MNC. Initially, it was possible to find the length of the MNC by checking the MCC code.
- * Originally each country employed a pure 2 digit or 3 digit MNC scheme. However, it is possible
- * to find countries now that employ both lengths for the MNC (e.g. Canada, India).
- * Since in these cases we can be sure that an MNC cannot possible be a prefix for another MNC, we
- * initially assume that the MNC is 2 digits long. If the MCC/MNC combination gives a match in our
- * mcc_mnc_codes list then we can be sure that we deal with an MNC that is 2 digits long. Otherwise,
- * assume that the MNC is 3 digits long.
- *
- * MNC of length 2:
- *
- *     8   7   6   5   4   3   2   1
- *   +---+---+---+---+---+---+---+---+
- *   |  MCC digit 2  |  MCC digit 1  |  octet x
- *   +---------------+---------------+
- *   |  MNC digit 1  |  MCC digit 3  |  octet x+1
- *   +---------------+---------------+
- *   | addr digit 1  |  MNC digit 2  |  octet x+2
- *   +---------------+---------------+
- *
- * MNC of length 3:
- *
- *     8   7   6   5   4   3   2   1
- *   +---+---+---+---+---+---+---+---+
- *   |  MCC digit 2  |  MCC digit 1  |  octet x
- *   +---------------+---------------+
- *   |  MNC digit 1  |  MCC digit 3  |  octet x+1
- *   +---------------+---------------+
- *   |  MNC digit 3  |  MNC digit 2  |  octet x+2
- *   +---------------+---------------+
- *
- * This function will consume either 2.5 or 3 octets. For this reason it returns
- * the number of nibbles consumed, i.e. 5 or 6 (2 or 3 digits long MNC respectively)
- */
-int dissect_e212_mcc_mnc_in_address(dissector d, context*)
-{
-    /* MCC digits 1 and 2 */
-    auto octet = (uint32_t)d.uint8();
-    auto mcc1  = octet & 0x0fu;
-    auto mcc2  = octet >> 4u;
-    d.step(1);
-
-    /* MCC digit 3 and MNC digit 1 */
-    octet = (uint32_t)d.uint8();
-    auto mcc3  = octet & 0x0fu;
-    auto mnc1  = octet >> 4u;
-    d.step(1);
-
-    /* MNC digits 2 and 3 */
-    octet = d.uint8();
-    auto mnc2  = octet & 0x0fu;
-    auto mnc3  = octet >> 4u;
-
-    auto mcc   = 100 * mcc1 + 10 * mcc2 + mcc3;
-    auto mnc   = 10 * mnc1 + mnc2;
-
-    auto short_mnc = find_val_string(mcc_mnc_codes, mcc*1000+ 10*mnc,nullptr);
-    /* Try to match the MCC and 2 digits MNC with an entry in our list of operators */
-    if (!short_mnc){
-        mnc = 10 * mnc + mnc3;
-    }
-    d.add_item(3, &hf_e212_mcc, enc::be); // mcc
-    d.add_item(3, &hf_e212_mnc, enc::be); // mcc*1000+mnc if long_mnc
-//     d.add_item(3, &hf_e212_mnc, enc::be); // mcc*1000+10*mnc if short_mac
-    return 3;
 }

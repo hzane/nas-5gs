@@ -41,7 +41,7 @@ __declspec(selectany) extern const uint32_t ft_double     = 25;
 __declspec(selectany) extern const uint32_t ft_string     = 17;
 __declspec(selectany) extern const uint32_t ft_bytes      = 20;
 __declspec(selectany) extern const uint32_t ft_char       = 22;
-__declspec(selectany) extern const uint32_t ft_bstrn      = 22;
+// __declspec(selectany) extern const uint32_t ft_bstrn      = 22;
 
 inline bool is_integer(uint32_t t){return t&ft_integer;}
 inline bool is_unsigned(uint32_t t){ return is_integer(t) && !(t&ft_signed);}
@@ -84,6 +84,7 @@ __declspec(selectany) extern const uint32_t sep_dot   = 20u ;
 __declspec(selectany) extern const uint32_t sep_dash  = 21u;
 __declspec(selectany) extern const uint32_t sep_colon = 22u;
 __declspec(selectany) extern const uint32_t sep_space = 23u;
+__declspec(selectany) extern const uint32_t bstrn     = 24u;
 
 inline uint32_t get(uint32_t d) { return d & 0xff; }
 

@@ -1,7 +1,9 @@
 #include "dissect_sm_msg.hh"
 #include "dissect_nas5g.hh"
 #include "ts24007.hh"
+#include "common/common.hh"
 
+using namespace cmn;
 using namespace nas;
 using namespace sm;
 
@@ -75,7 +77,7 @@ int sm::dissect_ext_pco(dissector d, context* ctx) {
 
 // EAP message 9.11.2.2
 int sm::dissect_eap_msg(dissector d, context* ctx) {
-    return nas::dissect_eap_msg(d, ctx);
+    return cmn::dissect_eap_msg(d, ctx);
 }
 
 /*The description and valid combinations of packet filter component type identifiers in a

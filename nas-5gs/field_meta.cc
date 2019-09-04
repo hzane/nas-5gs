@@ -17,9 +17,6 @@ string field_meta::format(const uint8_t*p , int length, uint32_t enc) const {
     if (ftype == ft::ft_char) {
         return formats("%c", (char)*p);
     }
-    if (ftype == ft::ft_bstrn){
-        return bstrn_string(p, length);
-    }
 
     switch (display){
         case fd::base_string: return string((const char*)p, length);
@@ -28,6 +25,8 @@ string field_meta::format(const uint8_t*p , int length, uint32_t enc) const {
         case fd::sep_colon: return format_hex(p, length, ";");
         case fd::sep_dash: return format_hex(p, length, "-");
         case fd::sep_dot: return format_hex(p, length, ".");
+        case fd::bstrn:
+            return bstrn_string(p, length);
         case fd::sep_space:
             return format_hex(p, length, " ");
         case fd::bits7:

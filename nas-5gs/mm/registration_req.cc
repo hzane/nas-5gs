@@ -3,7 +3,7 @@
 #include "../ts24007.hh"
 #include "registration_req.hh"
 
-
+using namespace cmn;
 using namespace mm;
 using namespace nas;
 using namespace mm_reg_req;

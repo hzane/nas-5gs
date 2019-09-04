@@ -1,5 +1,6 @@
 #pragma once
 #include "dissect_nas5g.hh"
+#include "common/common.hh"
 
 /* 9.7  Message type */
 

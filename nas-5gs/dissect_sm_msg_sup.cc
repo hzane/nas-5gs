@@ -1,6 +1,8 @@
 #include "dissect_sm_msg.hh"
 #include "gsm.hh"
+#include "common/common.hh"
 
+using namespace cmn;
 using namespace sm;
 
 extern const message_meta sm::msgs[] = {
