@@ -7,8 +7,6 @@ extern const element_meta pld_cont;
 extern const element_meta pdu_ses_id;
 extern const element_meta old_pdu_ses_id;
 extern const element_meta req_type;
-extern const element_meta s_nssai;
-extern const element_meta dnn;
 } // namespace mm_ul_nas_transp
 
 using namespace cmn;
@@ -124,13 +122,6 @@ extern const element_meta req_type = {
     nullptr,
 };
 
-// S-NSSAI   9.11.2.8
-extern const element_meta s_nssai = {
-    0x22,
-    "S-NSSAI",
-    dissect_s_nssai,
-    nullptr,
-};
 
 // DNN 9.11.2.1A
 extern const element_meta dnn = {

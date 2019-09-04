@@ -35,7 +35,6 @@ int dissect_ses_ambr(dissector d, context* ctx);
 int dissect_always_on_pdu_ses_ind(dissector d, context* ctx);
 int dissect_int_prot_max_data_rate(dissector d, context* ctx);
 int dissect_allowed_ssc_mode(dissector d, context* ctx);
-int dissect_sm_s_nssai(dissector d, context* ctx);
 
 //*      9.11.4.16    SSC mode
 int dissect_ssc_mode(dissector d, context* ctx);

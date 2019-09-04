@@ -8,8 +8,6 @@ extern const field_meta* hf_sel_sc_mode;
 
 extern const element_meta pdu_ses_type;
 extern const element_meta pdu_address;
-extern const element_meta sm_s_nssai;
-extern const element_meta dnn;
 } // namespace sm_pdu_ses_est
 
 using namespace cmn;
@@ -60,7 +58,7 @@ int sm::pdu_ses_est_acc(dissector d, context* ctx) {
 
     /* 22 S-NSSAI 9.11.2.8    O    TLV    3-6*/
     // ELEM_OPT_TLV(0x22, , DE_NAS_5GS_CMN_S_NSSAI, NULL);
-    consumed = dissect_opt_elem_tlv(nullptr, &sm_s_nssai, d, ctx);
+    consumed = dissect_opt_elem_tlv(nullptr, &s_nssai, d, ctx);
     d.step(consumed);
 
     /* 8-    Always-on PDU session indication   9.11.4.3  O    TV    1 */
@@ -150,18 +148,6 @@ extern const element_meta pdu_address = {
     nullptr,
 };
 
-extern const element_meta sm_s_nssai = {
-    0x22,
-    "S-NSSAI",
-    dissect_sm_s_nssai,
-    nullptr,
-};
-extern const element_meta dnn = {
-    0x25,
-    "DNN",
-    dissect_dnn,
-    nullptr,
-};
 
 /*  9.11.4.10    PDU address  */
 static const value_string nas_5gs_sm_pdu_ses_type_vals[] = {

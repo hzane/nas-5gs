@@ -40,7 +40,6 @@ int dl_nas_transp(dissector d, context* ctx);
 int dissect_allowed_nssai(dissector d, context* ctx);
 int dissect_ta_id_list(dissector d, context* ctx);
 
-int dissect_nssai(dissector d, context* ctx);
 //  9.11.3.46    Rejected NSSAI
 int dissect_rejected_nssai(dissector d, context* ctx);
 
@@ -64,7 +63,6 @@ int dissect_updp(dissector d, context* ctx);
 int dissect_nw_slicing_ind(dissector d, context* ctx);
 int dissect_nas_ksi(dissector d, context* ctx);
 int dissect_nas_msg_cont(dissector d, context* ctx = nullptr);
-int dissect_s_nssai(dissector d, context* ctx);
 
 int dissect_abba(dissector d, context* ctx);
 int dissect_requested_nssai(dissector d, context* ctx);

@@ -25,3 +25,10 @@ int cmn::dissect_dnn(dissector d, context* ctx) {
     // d.extraneous_data_check(0);
     return uc.length;
 }
+
+extern const element_meta cmn::dnn = {
+    0x25,
+    "DNN",
+    dissect_dnn,
+    nullptr,
+};

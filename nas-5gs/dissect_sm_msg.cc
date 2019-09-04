@@ -547,11 +547,3 @@ int sm::dissect_ssc_mode(dissector d, context* ctx) {
     return 1;
 }
 
-namespace mm{ // implemented in mm::dissect_s_nssai
-int dissect_s_nssai(dissector d, context* ctx);
-}
-
-/* 9.10.2.8    S-NSSAI */
-int sm::dissect_sm_s_nssai(dissector d, context* ctx) {
-    return mm::dissect_s_nssai(d, ctx);
-}

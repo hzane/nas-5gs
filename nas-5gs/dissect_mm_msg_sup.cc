@@ -1312,16 +1312,6 @@ const field_meta mm::hf_mapped_conf_sst = {
     0x0,
 };
 
-const field_meta mm::hf_mapped_conf_ssd = {
-    "Mapped configured SD",
-    "nas_5gs.mm.mapped_conf_ssd",
-    ft::ft_uint24,
-    fd::base_dec,
-    nullptr,
-    nullptr,
-    nullptr,
-    0x0,
-};
 
 const field_meta mm::hf_sst = {
     "Slice/service type (SST)",
