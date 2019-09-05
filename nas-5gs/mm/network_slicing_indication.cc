@@ -1,5 +1,27 @@
 #include "../dissect_mm_msg.hh"
 
+using namespace cmn;
+using namespace nas;
+
+extern const field_meta hf_dcni;
+extern const field_meta hf_nssci;
+
+//  9.11.3.36    Network slicing indication
+int mm::dissect_nw_slicing_ind(dissector d, context* ctx) {
+    const use_context uc(ctx, "nw-slicing-indication", d, -1);
+
+    static const field_meta* flags[] = {
+        &hf_spare_b3,
+        &hf_spare_b2,
+        &hf_dcni,
+        &hf_nssci,
+        nullptr,
+    };
+    d.add_bits(flags);
+    d.step(1);
+
+    return 1;
+}
 
 // Network slicing indication  9.11.3.36
 extern const element_meta mm::nw_slicing_ind = {
@@ -8,8 +30,6 @@ extern const element_meta mm::nw_slicing_ind = {
     mm::dissect_nw_slicing_ind,
     nullptr,
 };
-
-using namespace nas;
 
 /* 9-  Network slicing indication  Network slicing indication 9.11.3.36  O  TV 1 */
 const true_false_string nas_5gs_mm_dcni_tfs = {
@@ -42,20 +62,3 @@ const field_meta        hf_nssci                = {
     nullptr,
     0x01,
 };
-
-//  9.11.3.36    Network slicing indication
-int mm::dissect_nw_slicing_ind(dissector d, context* ctx) {
-    const use_context uc(ctx, "nw-slicing-indication", d, -1);
-
-    static const field_meta* flags[] = {
-        &hf_spare_b3,
-        &hf_spare_b2,
-        &hf_dcni,
-        &hf_nssci,
-        nullptr,
-    };
-    d.add_bits(flags);
-    d.step(1);
-
-    return 1;
-}

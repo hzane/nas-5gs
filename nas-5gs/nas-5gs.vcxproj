@@ -326,7 +326,6 @@
     <ClInclude Include="mm\mm_dissects.hh" />
     <ClInclude Include="mm\mm_element_meta.hh" />
     <ClInclude Include="mm\mm_field_meta.hh" />
-    <ClInclude Include="mm\registration_accept.hh" />
     <ClInclude Include="mm\registration_req.hh" />
     <ClInclude Include="nas-5gs.hh" />
     <ClInclude Include="packet_info.hh" />

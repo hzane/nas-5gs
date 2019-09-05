@@ -551,9 +551,6 @@
     <ClInclude Include="mm\registration_req.hh">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="mm\registration_accept.hh">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="sm\pdu_ses.hh">
       <Filter>Header Files</Filter>
     </ClInclude>

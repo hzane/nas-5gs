@@ -1,8 +1,5 @@
 #include "../dissect_mm_msg.hh"
 
-//  MICO indication    9.11.3.31
-int dissect_mico_ind(dissector d, context* ctx = nullptr);
-
 extern const element_meta mm::mico_ind = {
     0xb0,
     "MICO indication",
@@ -11,7 +8,7 @@ extern const element_meta mm::mico_ind = {
 };
 
 /* 9.11.3.31    MICO indication */
-static const true_false_string tfs_nas_5gs_raai = {
+const true_false_string tfs_nas_5gs_raai = {
     // NOLINT: unused-const-variable
     "all PLMN registration area allocated",
     "all PLMN registration area not allocated",
@@ -19,7 +16,7 @@ static const true_false_string tfs_nas_5gs_raai = {
 
 
 /*  9.11.3.31    MICO indication */
-static const true_false_string tfs_raai = {
+const true_false_string tfs_raai = {
     "all PLMN registration area allocated",
     "all PLMN registration area not allocated",
 };

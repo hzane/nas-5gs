@@ -2,6 +2,8 @@
 
 /* 9.11.3.54    UE security capability*/
 int mm::dissect_use_sec_cap(dissector d, context* ctx) {
+    const use_context uc(ctx, "ue-security-capability", d, 4);
+
     static const field_meta* oct3_flags[] = {
         &hf_nas_5gs_mm_5g_ea0,
         &hf_nas_5gs_mm_5g_ea1, // 128-

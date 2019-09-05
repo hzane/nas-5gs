@@ -3,9 +3,6 @@
 using namespace cmn;
 
 // LADN information   9.11.3.30
-// int dissect_ladn_inf(dissector d, context* ctx = nullptr);
-
-// LADN information   9.11.3.30
 const element_meta mm::ladn_inf = {
     0x79,
     "LADN information",

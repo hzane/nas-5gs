@@ -1,9 +1,6 @@
 #include "../dissect_mm_msg.hh"
 
 // SOR transparent container   9.11.3.51
-// int dissect_sor_trans_cont(dissector d, context* ctx = nullptr);
-
-// SOR transparent container   9.11.3.51
 const element_meta mm::sor_trans_cont = {
     0x73,
     "SOR transparent container",
@@ -16,7 +13,8 @@ using namespace nas;
 
 // SOR transparent container   9.11.3.51
 int mm::dissect_sor_trans_cont(dissector d, context* ctx) {
-    auto len = d.length;
+    const use_context uc(ctx, "sor-transparent-container", d, 0);
+    
     /* Layout differs depending on SOR data type*/
     static const field_meta* flags_dt0[] = {
         &hf_spare_b7,
@@ -121,6 +119,6 @@ int mm::dissect_sor_trans_cont(dissector d, context* ctx) {
         d.add_item(16, &hf_sor_mac_iue, enc::na);
         d.step(16);
     }
-    d.extraneous_data_check(0);
-    return len;
+    
+    return uc.length;
 }

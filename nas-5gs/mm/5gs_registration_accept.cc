@@ -1,4 +1,5 @@
-#include "registration_accept.hh"
+#include "../dissect_mm_msg.hh"
+#include "../ts24007.hh"
 
 using namespace cmn;
 using namespace mm;
@@ -6,8 +7,7 @@ using namespace nas;
 
 /* 8.2.7    Registration accept */
 int mm::dissect_registration_accept(dissector d, context* ctx) {    
-    use_context uc(ctx, "registration-accept", d, 12);
-  
+    const use_context uc(ctx, "registration-accept", d, 12);
 
     /*      5GS registration result    9.11.3.6    M    LV 2*/
     auto consumed = dissect_elem_lv(nullptr, &reg_res, d, ctx);
@@ -151,14 +151,10 @@ int mm::dissect_registration_accept(dissector d, context* ctx) {
 }
 namespace mm {
 
-
-// 5G-GUTI    5GS mobile identity 9.11.3.4
-int dissect_guti_5gs_mobile_id(dissector d, context* ctx = nullptr);
-
 const element_meta guti_5gs_mobile_id = {
     0x77,
     "5GS mobile identity - 5G-GUTI",
-    dissect_guti_5gs_mobile_id,
+    dissect_mobile_id,
     nullptr,
 };
 
@@ -296,19 +292,11 @@ const field_meta hf_gsm_a_n3en_ind = {
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
-    (&gsm_a_gm_n3en_ind_value),
+    &gsm_a_gm_n3en_ind_value,
     nullptr,
     0x01,
 };
 
-// 9.11.3.58	Non-3GPP NW provided policies
-int mm::dissect_n3gpp_nw_provided_policies(dissector d, context* ctx) {
-    // See subclause 10.5.5.37 in 3GPP TS 24.008
-    d.add_item(1, &hf_gsm_a_n3en_ind, enc::be);
-
-    /* no length check possible */
-    return 1;
-}
 
 // Non - 3GPP NW policies Non - 3GPP NW provided policies 9.11.3.58
 const element_meta mm::n3gpp_nw_provided_policies = {

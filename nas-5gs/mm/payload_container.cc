@@ -10,6 +10,114 @@ const element_meta mm::pld_cont = {
     dissect_pld_cont,
     nullptr,
 };
+extern const field_meta hf_pld_cont_entry_nie;
+extern const field_meta hf_pld_cont_entry_contents;
+
+int dissect_optional_ie(dissector d, context* ctx);
+
+int dissect_pld_cont_entry(dissector d, context* ctx) {
+    using namespace mm;
+    // const use_context uc(ctx, "pld-content-entry", d, -1);
+
+    const auto len = static_cast< int >(d.ntohs());
+
+    d.add_item(1, &hf_pld_cont_type, enc::be);
+
+    auto nie = (d.uint8() & 0xf0u) >> 4;
+    d.add_item(1, &hf_pld_cont_entry_nie, enc::be);
+    d.step(1);
+
+    while (nie > 0) {
+        const auto consumed = dissect_optional_ie(d, ctx);
+        d.step(consumed);
+
+        --nie;
+    }
+    d.add_item(d.length, &hf_pld_cont_entry_contents, enc::na);
+    return len;
+}
+
+/*  9.11.3.39    Payload container */
+int mm::dissect_pld_cont(dissector d, context* ctx) {
+    const use_context uc(ctx, "pld-content", d, 0);
+
+    const auto typi = retrive_payload_content_type(ctx) & 0x0fu;
+
+    switch (typi) {
+    case 1: {
+        /* N1 SM information */
+        dissect_nas5g_plain(d, ctx);
+    } break;
+    case 2: {
+        // SMS
+        d.add_item(d.length, &hf_pld_cont, enc::na);
+        /*
+        If the payload container type is set to "SMS", the payload container contents
+        contain an SMS message (i.e. CP-DATA, CP-ACK or CP-ERROR) as defined in
+        subclause 7.2 in 3GPP TS 24.011 [13].*/
+    } break;
+    case 4: {
+        // SOR transparent container, 9.11.3.51
+        /*
+        If the payload container type is set to "SOR transparent container" and is
+        included in the DL NAS TRANSPORT message, the payload container contents are coded
+        the same way as the contents of the SOR transparent container IE (see
+        subclause 9.11.3.51) for SOR data type is set to value "0" except that the first
+        three octets are not included.
+
+        If the payload container type is set to "SOR transparent container" and is
+        included in the UL NAS TRANSPORT message, the payload container contents are coded
+        the same way as the contents of the SOR transparent container IE (see
+        subclause 9.11.3.51) for SOR data type is set to value "1" except that the first
+        three octets are not included.
+        */
+    } break;
+    case 3: {
+        // LPP
+        d.add_item(d.length, &hf_pld_cont, enc::na);
+    } break;
+    case 5: {
+        /* UE policy container */
+        dissect_updp(d, ctx);
+    } break;
+    case 6: {
+        // UE parameters update transparent container
+        /*
+        If the payload container type is set to "UE parameters update transparent
+        container" and is included in the DL NAS TRANSPORT message, the payload container
+        contents are coded the same way as the contents of the UE parameters update
+        transparent container IE (see subclause 9.11.3.53A) for UE parameters update data
+        type is set to value "0" except that the first three octets are not included.
+
+        If the payload container type is set to "UE parameters update transparent
+        container" and is included in the UL NAS TRANSPORT message, the payload container
+        contents are coded the same way as the contents of the UE parameters update
+        transparent container IE (see subclause 9.11.3.53A) for UE parameters update data
+        type is set to value "1" except that the first three octets are not included.
+        */
+    } break;
+    case 15: {
+        // Multiple payloads
+        auto nentries = d.uint8();
+        d.step(1);
+        while (nentries > 0) {
+            const auto consumed = dissect_pld_cont_entry(d, ctx);
+            d.step(consumed);
+            --nentries;
+        }
+        /*
+        If the payload container type is set to "Multiple payloads", the number of entries
+        field represents the total number of payload container entries, and the payload
+        container entry contents field is coded as a list of payload container entry
+        according to figure 9.11.3.39.2, with each payload container entry is coded
+        according to figure 9.11.3.39.3 and figure 9.11.3.39.4.*/
+    }
+    default:
+        d.add_item(d.length, &hf_pld_cont, enc::na);
+    }
+
+    return uc.length;
+}
 
 /* UPDP */
 /* D.6.1 UE policy delivery service message type */
@@ -125,108 +233,4 @@ int dissect_optional_ie(dissector d, context* ctx) {
     subtree->set_length(d.offset - uc.offset);
 
     return d.offset - uc.offset;
-}
-
-int dissect_pld_cont_entry(dissector d, context* ctx) {
-    // const use_context uc(ctx, "pld-content-entry", d, -1);
-
-    const auto len = static_cast< int >(d.ntohs());
-
-    d.add_item(1, &hf_pld_cont_type, enc::be);
-
-    auto nie = (d.uint8() & 0xf0u) >> 4;
-    d.add_item(1, &hf_pld_cont_entry_nie, enc::be);
-    d.step(1);
-
-    while (nie > 0) {
-        const auto consumed = dissect_optional_ie(d, ctx);
-        d.step(consumed);
-
-        --nie;
-    }
-    d.add_item(d.length, &hf_pld_cont_entry_contents, enc::na);
-    return len;
-}
-
-
-/*  9.11.3.39    Payload container */
-int mm::dissect_pld_cont(dissector d, context* ctx) {
-    const use_context uc(ctx, "pld-content", d, 0);
-
-    const auto typi = retrive_payload_content_type(ctx) & 0x0fu;
-
-    switch (typi) {
-    case 1: {
-        /* N1 SM information */
-        dissect_nas5g_plain(d, ctx);
-    } break;
-    case 2: {
-        // SMS
-        d.add_item(d.length, &hf_pld_cont, enc::na);
-        /*
-        If the payload container type is set to "SMS", the payload container contents
-        contain an SMS message (i.e. CP-DATA, CP-ACK or CP-ERROR) as defined in
-        subclause 7.2 in 3GPP TS 24.011 [13].*/
-    } break;
-    case 4: {
-        // SOR transparent container, 9.11.3.51
-        /*
-        If the payload container type is set to "SOR transparent container" and is
-        included in the DL NAS TRANSPORT message, the payload container contents are coded
-        the same way as the contents of the SOR transparent container IE (see
-        subclause 9.11.3.51) for SOR data type is set to value "0" except that the first
-        three octets are not included.
-
-        If the payload container type is set to "SOR transparent container" and is
-        included in the UL NAS TRANSPORT message, the payload container contents are coded
-        the same way as the contents of the SOR transparent container IE (see
-        subclause 9.11.3.51) for SOR data type is set to value "1" except that the first
-        three octets are not included.
-        */
-    } break;
-    case 3: {
-        // LPP
-        d.add_item(d.length, &hf_pld_cont, enc::na);
-    } break;
-    case 5: {
-        /* UE policy container */
-        dissect_updp(d, ctx);
-    } break;
-    case 6: {
-        // UE parameters update transparent container
-        /*
-        If the payload container type is set to "UE parameters update transparent
-        container" and is included in the DL NAS TRANSPORT message, the payload container
-        contents are coded the same way as the contents of the UE parameters update
-        transparent container IE (see subclause 9.11.3.53A) for UE parameters update data
-        type is set to value "0" except that the first three octets are not included.
-
-        If the payload container type is set to "UE parameters update transparent
-        container" and is included in the UL NAS TRANSPORT message, the payload container
-        contents are coded the same way as the contents of the UE parameters update
-        transparent container IE (see subclause 9.11.3.53A) for UE parameters update data
-        type is set to value "1" except that the first three octets are not included.
-        */
-    } break;
-    case 15: {
-        // Multiple payloads
-        auto nentries = d.uint8();
-        d.step(1);
-        while (nentries > 0) {
-            const auto consumed = dissect_pld_cont_entry(d, ctx);
-            d.step(consumed);
-            --nentries;
-        }
-        /*
-        If the payload container type is set to "Multiple payloads", the number of entries
-        field represents the total number of payload container entries, and the payload
-        container entry contents field is coded as a list of payload container entry
-        according to figure 9.11.3.39.2, with each payload container entry is coded
-        according to figure 9.11.3.39.3 and figure 9.11.3.39.4.*/
-    }
-    default:
-        d.add_item(d.length, &hf_pld_cont, enc::na);
-    }
-
-    return uc.length;
 }

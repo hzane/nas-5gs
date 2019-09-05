@@ -84,6 +84,6 @@ static const val_string nas_5gs_mm_registration_req_elem[] = {
     {0, nullptr},
 };
 
-} // namespace mm_reg_req
+} // namespace 
 
 

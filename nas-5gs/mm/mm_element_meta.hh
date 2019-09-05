@@ -78,7 +78,6 @@ extern const element_meta uplink_data_status;
 extern const element_meta allowed_pdu_ses_status;
 extern const element_meta old_pdu_ses_id;
 extern const element_meta req_type;
-extern const element_meta dnn ;
 extern const element_meta nas_ksi;
 extern const element_meta nas_msg_cont;
 extern const element_meta abba;

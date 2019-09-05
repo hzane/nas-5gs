@@ -7,7 +7,8 @@ using namespace cmn;
 
 // 9.11.3.49    Service area list page.391
 int mm::dissect_sal(dissector d, context* ctx) {
-    auto                     len     = d.length;
+    const use_context        uc(ctx, "service-area-list", d, 0);
+    
     static const field_meta* flags[] = {
         &hf_sal_al_t,
         &hf_sal_t_li,
@@ -83,7 +84,7 @@ int mm::dissect_sal(dissector d, context* ctx) {
         /*calculate the number of Partial service area list*/
         num_par_sal++;
     }
-    return len;
+    return uc.length;
 }
 
 /*  9.11.3.49    Service area list */
