@@ -1,6 +1,7 @@
 #include "../core.hh"
 
 namespace sm{
+extern const field_meta  hf_sm_pdu_ses_type;
 extern const field_meta  hf_abo;
 extern const field_meta* hf_sel_sc_mode;
 extern const field_meta  hfm_sel_sc_mode;

@@ -4,7 +4,6 @@
 #include "pdu_ses.hh"
 
 namespace sm_pdu_ses_est {
-extern const element_meta int_prot_max_date_rate;
 extern const element_meta pdu_ses_type;
 extern const element_meta ssc_mode;
 // extern const element_meta always_on_pdu_ses_req;
@@ -28,7 +27,7 @@ int sm::pdu_ses_est_req(dissector d, context* ctx) {
 
     /*Integrity protection maximum data rate 9.11.4.7    M    V    2*/
     // ELEM_MAND_V(, DE_NAS_5GS_SM_INT_PROT_MAX_DATA_RTE,);
-    auto consumed = dissect_elem_v(nullptr, &int_prot_max_date_rate, d, ctx);
+    auto consumed = dissect_elem_v(nullptr, &int_prot_max_data_rate, d, ctx);
     d.step(consumed);
 
     /*9-    PDU session type     9.11.4.11    O    TV    1*/
@@ -68,29 +67,9 @@ int sm::pdu_ses_est_req(dissector d, context* ctx) {
 
     return len;
 }
-namespace sm_pdu_ses_est {
-extern const element_meta int_prot_max_date_rate = {
-    0xff,
-    "Integrity protection maximum data rate",
-    dissect_int_prot_max_data_rate,
-    nullptr,
-};
+namespace sm {
 
-extern const element_meta ssc_mode = {
-    0xa0,
-    "SSC mode",
-    dissect_ssc_mode,
-    nullptr,
-};
 
-// SM PDU DN request container 9.11.4.15
-int dissect_pdu_dn_req_cont(dissector d, context* ctx) { return d.length; }
 
-// SM PDU DN request container 9.11.4.15
-const element_meta sm_pdu_dn_req_cont={
-    0xffu,
-    "PDU DN request container",
-    dissect_pdu_dn_req_cont,
-    nullptr,
-};
+
 } // namespace sm_pdu_ses_est

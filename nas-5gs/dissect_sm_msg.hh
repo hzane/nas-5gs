@@ -1,5 +1,8 @@
 #pragma once
 #include "core.hh"
+#include "sm/sm_dissects.hh"
+#include "sm/sm_element_meta.hh"
+#include "sm/sm_field_meta.hh"
 
 /* 5GS session management messages */
 namespace sm {

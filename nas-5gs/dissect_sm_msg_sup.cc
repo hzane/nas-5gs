@@ -260,11 +260,6 @@ const field_meta sm::hf_sm_cause = {
     0x0,
 };
 
-// *     9.11.4.13    QoS rules
-const true_false_string sm::tfs_nas_5gs_sm_dqr = {
-    "The QoS rule is the default QoS rule",
-    "The QoS rule is not the default QoS rule",
-};
 
 extern const value_string sm::rule_operation_code_values[] = {
     {0x0, "Reserved"},
@@ -353,17 +348,6 @@ const field_meta sm::hf_sm_nof_pkt_filters = {
     nullptr,
     nullptr,
     0x0f,
-};
-
-const field_meta sm::hf_sm_qfi = {
-    "Qos flow identifier",
-    "nas_5gs.sm.qfi",
-    ft::ft_uint8,
-    fd::base_dec,
-    nullptr,
-    nullptr,
-    nullptr,
-    0x3f,
 };
 
 const field_meta sm::hf_sm_qos_rule_id = {

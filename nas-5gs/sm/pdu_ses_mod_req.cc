@@ -76,24 +76,3 @@ int sm::pdu_ses_mod_req(dissector d, context* ctx) {
     return len;
 }
 
-namespace sm_pdu_ses_mod {
-int dissect_requested_qos_rules(dissector d, context* ctx);
-
-// Integrity protection maximum data rate   9.11.4.7
-extern const element_meta int_prot_max_data_rate = {
-    0x13,
-    "Integrity protection maximum data rate",
-    dissect_int_prot_max_data_rate,
-    nullptr,
-
-};
-
-extern const element_meta requested_qos_rules = {
-    0x7A,
-    "Requested QoS rules",
-    dissect_requested_qos_rules,
-    nullptr,
-
-};
-
-} // namespace sm_pdu_ses_mod
