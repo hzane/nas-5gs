@@ -243,6 +243,12 @@
     <ClCompile Include="mm\drx_parameters.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="mm\5gs_mobile_identity.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\5gs_identity_type.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="config.hh">

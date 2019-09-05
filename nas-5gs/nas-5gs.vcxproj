@@ -177,6 +177,8 @@
     <ClCompile Include="gsm.cc" />
     <ClCompile Include="mm\5gmm_capability.cc" />
     <ClCompile Include="mm\5gmm_cause.cc" />
+    <ClCompile Include="mm\5gs_identity_type.cc" />
+    <ClCompile Include="mm\5gs_mobile_identity.cc" />
     <ClCompile Include="mm\authentication_failure.cc" />
     <ClCompile Include="mm\authentication_rej.cc" />
     <ClCompile Include="mm\authentication_req.cc" />
