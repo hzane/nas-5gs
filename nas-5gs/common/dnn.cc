@@ -22,7 +22,6 @@ int cmn::dissect_dnn(dissector d, context* ctx) {
     auto item = d.add_item(d.length, &hf_dnn, enc::be);
     d.step(d.length);
 
-    // d.extraneous_data_check(0);
     return uc.length;
 }
 

@@ -3,7 +3,7 @@
 
 /* 8.2.8 Registration complete */
 int mm::dissect_registration_complete(dissector d, context* ctx) {
-    use_context uc(ctx, "registration-complete", d);
+    const use_context uc(ctx, "registration-complete", d);
 
     up_link(d.pinfo);
 

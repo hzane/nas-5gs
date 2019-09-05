@@ -3,16 +3,14 @@
 #include <string>
 #include <vector>
 
-#if 0
 #if !defined _MSC_VER
 #define MUST_USE_RESULT __attribute__((warn_unused_result))
 #define NO_DISCARD [[nodiscard]]
 #define NO_RETURN [[noreturn]]
 #else
 #define MUST_USE_RESULT
-#define NO_DISCARD
+#define NO_DISCARD [[nodiscard]]
 #define NO_RETURN
-#endif
 #endif
 
 #if _MSC_VER < 1920
@@ -34,7 +32,6 @@ struct context;
 struct protocol_meta;
 struct field_meta;
 struct tree_meta;
-// struct expert_meta;
 
 struct val_string;
 struct true_false_string;
@@ -78,12 +75,10 @@ struct dissector {
     uint8_t        uint8() const;
     uint16_t       ntohs() const;
     uint32_t       uint32() const;
-    //    void           set_private(const char* name, uint64_t val);
-    //    uint64_t       get_private(const char* name, uint64_t dft = 0);
 };
 
-struct use_tree{ // NOLINT: special-member-functions
-    dissector& d;
+struct use_tree { // NOLINT: special-member-functions
+    dissector&  d;
     proto_node* prev;
     use_tree(dissector& d, proto_node* p) : d(d), prev(p) { d.tree = p; }
     ~use_tree() { d.tree = prev; }
@@ -99,14 +94,14 @@ struct context {
 };
 
 struct use_context { // NOLINT: special-member-functions
-    context*         ctx    = 0;
+    context*         ctx    = nullptr;
     int              offset = 0;
     int              length = 0;
     int              maxlen = 0;
     const dissector& d;
 
-    use_context(context* ctx, const char* path, dissector const& d, int maxlen = 0)
-        : ctx(ctx), offset(d.offset), length(d.length), d(d), maxlen(maxlen) {
+    use_context(context* ctx, const char* path, dissector const& d, const int maxlen = 0)
+        : ctx(ctx), offset(d.offset), length(d.length), maxlen(maxlen), d(d) {
         if (!ctx) return;
         if (path == nullptr) path = ".";
         ctx->paths.emplace_back(path);
@@ -142,8 +137,6 @@ inline string paths(context* ctx) {
     if (!ctx) return string();
     return ctx->path();
 }
-
-void extraneous_data_check(int len, int maxlen, context* ctx);
 
 inline uint8_t  n2uint7(const uint8_t* d) { return *d & 0x7F; };
 inline uint8_t  n2uint8(const uint8_t* d) { return *d; };

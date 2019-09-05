@@ -7,11 +7,140 @@ using namespace mm;
 using namespace nas;
 
 
-namespace mm{
+/* * 8.2.6 Registration request */
+int mm::dissect_registration_req(dissector d, context* ctx) {
+    const use_context uc(ctx, "registration request", d, 6);
 
-} // namespace mm
+    up_link(d.pinfo);
+    // get private data
 
+    /*   5GS registration type  9.11.3.7    M    V    1/2  H0*/
+    // d.add_item(1, hf_reg_req_flags, enc::be);
+    auto consumed = dissect_elem_v(nullptr, &registration_request_type, d, ctx);
+    /*    ngKSI    NAS key set identifier 9.11.3.32    M    V    1/2 H1*/
+    d.add_item(1, &hf_ngksi_nas_ksi, enc::be);
+    d.step(consumed);
 
+    /*    Mobile identity    5GS mobile identity 9.11.3.4    M    LV-E    6-n*/
+    consumed = dissect_elem_lv_e(nullptr, &mobile_id, d, ctx);
+    d.step(consumed);
+
+    /*C-    Non-current native NAS KSI    NAS key set identifier 9.11.3.32    O    TV 1*/
+    // ELEM_OPT_TV_SHORT( 0xc0, , DE_NAS_5GS_MM_NAS_KEY_SET_ID, " - native KSI");
+    consumed = dissect_opt_elem_tv_short(nullptr, &nc_native_nas_ksi, d, ctx);
+    d.step(consumed);
+
+    /*10    5GMM capability  9.11.3.1    O    TLV    3-15*/
+    consumed = dissect_opt_elem_tlv(nullptr, &mm_cap, d, ctx);
+    d.step(consumed);
+
+    /*2E    UE security capability   9.11.3.54    O    TLV 4-10*/
+    // ELEM_OPT_TLV(0x2e, , DE_NAS_5GS_MM_UE_SEC_CAP, NULL);
+    consumed = dissect_opt_elem_tlv(nullptr, &ue_sec_cap, d, ctx);
+    d.step(consumed);
+
+    /*2F    Requested NSSAI    NSSAI 9.11.3.37    O    TLV    4-74*/
+    consumed = dissect_opt_elem_tlv(nullptr, &requested_nssai, d, ctx);
+    d.step(consumed);
+
+    /*52 Last visited registered TAI 5GS tracking area identity 9.11.3.8 O TV  7 */
+    // ELEM_OPT_TV(0x52, DE_NAS_5GS_MM_5GS_TA_ID, " - Last visited registered TAI");
+    consumed = dissect_opt_elem_tv(nullptr, &last_v_tai, d, ctx);
+    d.step(consumed);
+
+    /*17    S1 UE network capability  9.11.3.48    O    TLV  4-15 */
+    // ELEM_OPT_TLV(0x17, , DE_EMM_UE_NET_CAP, NULL);
+    consumed = dissect_opt_elem_tlv(nullptr, &s1_ue_net_cap, d, ctx);
+    d.step(consumed);
+
+    /*40    Uplink data status  9.11.3.57    O    TLV    4-34 */
+    // ELEM_OPT_TLV(0x40, , DE_NAS_5GS_MM_UL_DATA_STATUS, NULL);
+    consumed = dissect_opt_elem_tlv(nullptr, &ul_data_status, d, ctx);
+    d.step(consumed);
+
+    /*50    PDU session status  9.11.3.44    O    TLV    4-34 */
+    // ELEM_OPT_TLV(0x50, , DE_NAS_5GS_MM_PDU_SES_STATUS, NULL);
+    consumed = dissect_opt_elem_tlv(nullptr, &pdu_ses_status, d, ctx);
+    d.step(consumed);
+
+    /*B-  MICO indication 9.11.3.31    O    TV    1*/
+    // ELEM_OPT_TV_SHORT(0xb0, , DE_NAS_5GS_MM_MICO_IND, NULL);
+    consumed = dissect_opt_elem_tv_short(nullptr, &mico_ind, d, ctx);
+    d.step(consumed);
+
+    /*2B UE status 9.11.3.56    O    TLV    3*/
+    // ELEM_OPT_TLV(0x2b, , DE_NAS_5GS_MM_UE_STATUS, NULL);
+    consumed = dissect_opt_elem_tlv(nullptr, &ue_status, d, ctx);
+    d.step(consumed);
+
+    /*77    Additional GUTI    5GS mobile identity 9.11.3.4    O    TLV-E    14 */
+    // ELEM_OPT_TLV_E(0x77, , DE_NAS_5GS_MM_5GS_MOBILE_ID, " -  Additional GUTI");
+    consumed = dissect_opt_elem_tlv_e(nullptr, &aguti_mobile_id, d, ctx);
+    d.step(consumed);
+
+    /*25    Allowed PDU session status    9.11.3.13  O    TLV    4 - 34 */
+    // ELEM_OPT_TLV(0x25, , DE_NAS_5GS_MM_ALLOW_PDU_SES_STS, NULL);
+    consumed = dissect_opt_elem_tlv(nullptr, &allow_pdu_ses_sts, d, ctx);
+    d.step(consumed);
+
+    /*18    UE's usage setting    9.11.3.55    O    TLV    3 */
+    // ELEM_OPT_TLV(0x18, , DE_NAS_5GS_MM_UE_USAGE_SET, NULL);
+    consumed = dissect_opt_elem_tlv(nullptr, &ue_usage_set, d, ctx);
+    d.step(consumed);
+
+    /* 51    Requested DRX parameters    5GS DRX parameters 9.11.3.2A    O    TLV    3 */
+    /* ELEM_OPT_TLV(0x51,DE_NAS_5GS_MM_5GS_DRX_PARAM, " - Requested DRX parameters"); */
+    consumed = dissect_opt_elem_tlv(nullptr, &requested_drx_param, d, ctx);
+    d.step(consumed);
+
+    /* 70    EPS NAS message container  9.11.3.24    O    TLV-E 4-n */
+    // ELEM_OPT_TLV_E(0x70, , DE_NAS_5GS_MM_EPS_NAS_MSG_CONT, NULL);
+    consumed = dissect_opt_elem_tlv_e(nullptr, &eps_nas_msg_cont, d, ctx);
+    d.step(consumed);
+
+    /* 74    LADN indication  9.11.3.29    O    TLV-E    3-811 */
+    // ELEM_OPT_TLV_E(0x74, , DE_NAS_5GS_MM_LADN_IND, NULL);
+    consumed = dissect_opt_elem_tlv_e(nullptr, &ladn_ind, d, ctx);
+    d.step(consumed);
+
+    /* 8-    Payload container type  9.11.3.40    O    TV    1 */
+    // ELEM_OPT_TV_SHORT(0x80, , DE_NAS_5GS_MM_PLD_CONT_TYPE, NULL);
+    consumed = dissect_opt_elem_tv_short(nullptr, &pld_cont_type, d, ctx);
+    d.step(consumed);
+
+    /* 7B    Payload container  9.11.3.39    O    TLV-E    4-65538 */
+    // ELEM_OPT_TLV_E(0x7B, , DE_NAS_5GS_MM_PLD_CONT, NULL);
+    consumed = dissect_opt_elem_tlv_e(nullptr, &pld_cont, d, ctx);
+    d.step(consumed);
+
+    /* 9-    Network slicing indication 9.11.3.36    O    TV 1 */
+    // ELEM_OPT_TV_SHORT(0x90, , DE_NAS_5GS_MM_NW_SLICING_IND, NULL);
+    consumed = dissect_opt_elem_tv_short(nullptr, &nw_slicing_ind, d, ctx);
+    d.step(consumed);
+
+    /* 53    5GS update type 9.11.3.9A    O    TLV    3 */
+    // ELEM_OPT_TLV(0x53, , DE_NAS_5GS_MM_UPDATE_TYPE, NULL);
+    consumed = dissect_opt_elem_tlv(nullptr, &update_type, d, ctx);
+    d.step(consumed);
+
+    /* Mobile station classmark 2 9.11.3.61
+     * Supported codec list 9.11.3.62
+     */
+
+    /* 71    NAS message container 9.11.3.33    O    TLV-E    4-n */
+    // ELEM_OPT_TLV_E(0x71, , DE_NAS_5GS_MM_NAS_MSG_CONT, NULL);
+    consumed = dissect_opt_elem_tlv_e(nullptr, &nas_msg_cont, d, ctx);
+    d.step(consumed);
+
+    /*60	EPS bearer context status	9.11.3.59	O	TLV	4 */
+    consumed = dissect_opt_elem_tlv(nullptr, &eps_bearer_ctx_status, d, ctx);
+    d.step(consumed);
+
+    /* XX	Requested extended DRX parameters 9.11.3.60	O TLV 3*/
+    /* TBD	T3324 value	GPRS timer 3 9.11.2.5	O	TLV	3 */
+
+    return uc.length;
+}
 
 namespace mm {
 const true_false_string tfs_supp_or_not = {
@@ -344,97 +473,6 @@ const field_meta hf_nas_5gs_mm_eia7 = {
 };
 } // namespace mm
 
-/* 9.11.3.54    UE security capability*/
-int mm::dissect_use_sec_cap(dissector d, context* ctx) {
-    static const field_meta* oct3_flags[] = {
-        &hf_nas_5gs_mm_5g_ea0,
-        &hf_nas_5gs_mm_5g_ea1, // 128-
-        &hf_nas_5gs_mm_5g_ea2, // 128-
-        &hf_nas_5gs_mm_5g_ea3, // 128-
-        &hf_nas_5gs_mm_5g_ea4,
-        &hf_nas_5gs_mm_5g_ea5,
-        &hf_nas_5gs_mm_5g_ea6,
-        &hf_nas_5gs_mm_5g_ea7,
-        nullptr,
-    };
-
-    static const field_meta* oct4_flags[] = {
-        &hf_nas_5gs_mm_5g_ia0,
-        &hf_nas_5gs_mm_5g_ia1, // 128-
-        &hf_nas_5gs_mm_5g_ia2, // 128-
-        &hf_nas_5gs_mm_5g_ia3, // 128-
-        &hf_nas_5gs_mm_5g_ia4,
-        &hf_nas_5gs_mm_5g_ia5,
-        &hf_nas_5gs_mm_5g_ia6,
-        &hf_nas_5gs_mm_5g_ia7,
-        nullptr,
-    };
-
-    static const field_meta* oct5_flags[] = {
-        &hf_nas_5gs_mm_eea0,
-        &hf_nas_5gs_mm_eea1, // 128-
-        &hf_nas_5gs_mm_eea2, // 128-
-        &hf_nas_5gs_mm_eea3, // 128-
-        &hf_nas_5gs_mm_eea4,
-        &hf_nas_5gs_mm_eea5,
-        &hf_nas_5gs_mm_eea6,
-        &hf_nas_5gs_mm_eea7,
-        nullptr,
-    };
-
-    static const field_meta* oct6_flags[] = {
-        &hf_nas_5gs_mm_eia0,
-        &hf_nas_5gs_mm_eia1, // 128-
-        &hf_nas_5gs_mm_eia2, // 128-
-        &hf_nas_5gs_mm_eia3, // 128-
-        &hf_nas_5gs_mm_eia4,
-        &hf_nas_5gs_mm_eia5,
-        &hf_nas_5gs_mm_eia6,
-        &hf_nas_5gs_mm_eia7,
-        nullptr,
-    };
-
-    /* 5G-EA0    128-5G-EA1    128-5G-EA2    128-5G-EA3    5G-EA4    5G-EA5    5G-EA6
-     * 5G-EA7    octet 3 */
-    d.add_bits(oct3_flags);
-    d.step(1);
-
-    /* 5G-IA0    128-5G-IA1    128-5G-IA2    128-5G-IA3    5G-IA4    5G-IA5    5G-IA6
-     * 5G-IA7 octet 4 */
-    d.add_bits(oct4_flags);
-    d.step(1);
-
-    if (d.length<-0) {
-        return 2;
-    }
-
-    /* EEA0    128-EEA1    128-EEA2    128-EEA3    EEA4    EEA5    EEA6    EEA7 octet 5 */
-    d.add_bits( oct5_flags);
-    d.step(1);
-
-    /* EIA0    128-EIA1    128-EIA2    128-EIA3    EIA4    EIA5    EIA6    EIA7 octet 6 */
-    d.add_bits(oct6_flags);
-    d.step(1);
-
-    if (d.length <= 0) return 4;
-
-    // 7-10 is spare
-
-    return 4 + d.length;
-}
-
-//* 9.11.3.8     5GS tracking area identity
-int mm::dissect_last_v_tai(dissector d, context* ctx) {
-    /* MCC digit 2    MCC digit 1 Octet 2*/
-    /* MNC digit 3    MCC digit 3 Octet 3*/
-    /* MNC digit 2    MNC digit 1 Octet 4*/
-   dissect_e212_mcc_mnc(d, ctx);
-   d.step(3);
-
-    /* TAC Octet 5 - 7 */
-   d.add_item(3, &hf_tac, enc::na);
-   return 6;
-}
 
 namespace mm {
 // S1 UE network capability 9.11.3.48
@@ -1026,151 +1064,6 @@ const field_meta hf_nas_eps_spare_bits = {
 };
 } // namespace mm
 
-// 9.11.3.48 S1 UE network capability page.391
-// See subclause 9.9.3.34 in 3GPP TS 24.301 [15].
-int mm::dissect_s1_ue_net_cap(dissector d, context* ctx) {
-    static const field_meta* oct3_flags[] = {
-        &hf_nas_eps_emm_eea0,
-        &hf_nas_eps_emm_128eea1,
-        &hf_nas_eps_emm_128eea2,
-        &hf_nas_eps_emm_eea3,
-        &hf_nas_eps_emm_eea4,
-        &hf_nas_eps_emm_eea5,
-        &hf_nas_eps_emm_eea6,
-        &hf_nas_eps_emm_eea7,
-        nullptr,
-    };
-
-    static const field_meta* oct4_flags[] = {
-        &hf_nas_eps_emm_eia0,
-        &hf_nas_eps_emm_128eia1,
-        &hf_nas_eps_emm_128eia2,
-        &hf_nas_eps_emm_eia3,
-        &hf_nas_eps_emm_eia4,
-        &hf_nas_eps_emm_eia5,
-        &hf_nas_eps_emm_eia6,
-        &hf_nas_eps_emm_eia7,
-        nullptr,
-    };
-
-    static const field_meta* oct5_flags[] = {
-        &hf_nas_eps_emm_uea0,
-        &hf_nas_eps_emm_uea1,
-        &hf_nas_eps_emm_uea2,
-        &hf_nas_eps_emm_uea3,
-        &hf_nas_eps_emm_uea4,
-        &hf_nas_eps_emm_uea5,
-        &hf_nas_eps_emm_uea6,
-        &hf_nas_eps_emm_uea7,
-        nullptr,
-    };
-
-    static const field_meta* oct6_flags[] = {
-        &hf_nas_eps_emm_ucs2_supp,
-        &hf_nas_eps_emm_uia1,
-        &hf_nas_eps_emm_uia2,
-        &hf_nas_eps_emm_uia3,
-        &hf_nas_eps_emm_uia4,
-        &hf_nas_eps_emm_uia5,
-        &hf_nas_eps_emm_uia6,
-        &hf_nas_eps_emm_uia7,
-        nullptr,
-    };
-
-    static const field_meta* oct7_flags[] = {
-        &hf_nas_eps_emm_prose_dd_cap,
-        &hf_nas_eps_emm_prose_cap,
-        &hf_nas_eps_emm_h245_ash_cap,
-        &hf_nas_eps_emm_acc_csfb_cap,
-        &hf_nas_eps_emm_lpp_cap,
-        &hf_nas_eps_emm_lcs_cap,
-        &hf_nas_eps_emm_1xsrvcc_cap,
-        &hf_nas_eps_emm_nf_cap,
-        nullptr,
-    };
-
-    static const field_meta* oct8_flags[] = {
-        &hf_nas_eps_emm_epco_cap,
-        &hf_nas_eps_emm_hc_cp_ciot_cap,
-        &hf_nas_eps_emm_er_wo_pdn_cap,
-        &hf_nas_eps_emm_s1u_data_cap,
-        &hf_nas_eps_emm_up_ciot_cap,
-        &hf_nas_eps_emm_cp_ciot_cap,
-        &hf_nas_eps_emm_prose_relay_cap,
-        &hf_nas_eps_emm_prose_dc_cap,
-        nullptr,
-    };
-
-    static const field_meta* oct9_flags[] = {
-        &hf_nas_eps_15_bearers_cap,
-        &hf_nas_eps_sgc_cap,
-        &hf_nas_eps_n1mode_cap,
-        &hf_nas_eps_dcnr_cap,
-        &hf_nas_eps_cp_backoff_cap,
-        &hf_nas_eps_restrict_ec_cap,
-        &hf_nas_eps_v2x_pc5_cap,
-        &hf_nas_eps_multiple_drb_cap,
-        nullptr,
-    };
-    auto len = d.length;
-
-    /* EPS encryption algorithms supported (octet 3) */
-    /* EEA0    128-EEA1    128-EEA2    128-EEA3    EEA4    EEA5    EEA6    EEA7 */
-    d.add_bits(oct3_flags);
-    d.step(1);
-
-    /* EPS integrity algorithms supported (octet 4) */
-    /* EIA0    128-EIA1    128-EIA2    128-EIA3    EIA4    EIA5    EIA6    EIA7 */
-    d.add_bits(oct4_flags);
-    d.step(1);
-
-    /* Following octets are optional */
-    if(d.length<=0) return 2;
-
-    /* UMTS encryption algorithms supported (octet 5)
-     * UEA0    UEA1    UEA2    UEA3    UEA4    UEA5    UEA6    UEA7 */
-    d.add_bits(oct5_flags);
-    d.step(1);
-
-    if (d.length <= 0) return 3;
-
-    /* Octet 6 */
-    /* UCS2    UIA1    UIA2    UIA3    UIA4    UIA5    UIA6    UIA7 */
-    d.add_bits(oct6_flags);
-    d.step(1);
-
-    if (d.length <= 0) return 4;
-
-    /* Octet 7
-     * ProSe-dd ProSe    H.245-ASH    ACC-CSFB    LPP    LCS    1xSR VCC    NF
-     */
-    d.add_bits(oct7_flags);
-    d.step(1);
-
-    if (d.length <= 0) return len;
-
-    /* Octet 8
-     * ePCO    HC-CP CIoT    ERw/oPDN    S1-U data    UP CIoT    CP CIoT    Prose-relay
-     * ProSe-dc
-     */
-    d.add_bits(oct8_flags );
-    d.step(1);
-
-    if (d.length <= 0) return len;
-
-    /* Octet 9
-     * 0 Spare    SGC    N1mode    DCNR    CP backoff    RestrictEC    V2X PC5 multipleDRB
-     */
-    // hf_nas_eps_spare_bits
-    d.add_bits(oct9_flags);
-    d.step(1);
-
-    while (d.length >= 0) {
-        d.add_item(1, &hf_nas_eps_spare_bits, enc::be);
-        d.step(1);
-    }
-    return len;
-}
 /*
  * 9.11.3.57    Uplink data status
  */
@@ -1310,47 +1203,6 @@ const field_meta mm::hf_nas_5gs_ul_data_sts_psi_8_b0 = {
     0x01,
 };
 
-/*40    Uplink data status    Uplink data status 9.11.3.57    O    TLV    4-34 */
-int mm::dissect_ul_data_status(dissector d, context* ctx) {
-    static const field_meta* psi_0_7_flags[] = {
-        &hf_nas_5gs_ul_data_sts_psi_7_b7,
-        &hf_nas_5gs_ul_data_sts_psi_6_b6,
-        &hf_nas_5gs_ul_data_sts_psi_5_b5,
-        &hf_nas_5gs_ul_data_sts_psi_4_b4,
-        &hf_nas_5gs_ul_data_sts_psi_3_b3,
-        &hf_nas_5gs_ul_data_sts_psi_2_b2,
-        &hf_nas_5gs_ul_data_sts_psi_1_b1,
-        &hf_nas_5gs_ul_data_sts_psi_0_b0,
-        nullptr,
-    };
-
-    static const field_meta* psi_8_15_flags[] = {
-        &hf_nas_5gs_ul_data_sts_psi_15_b7,
-        &hf_nas_5gs_ul_data_sts_psi_14_b6,
-        &hf_nas_5gs_ul_data_sts_psi_13_b5,
-        &hf_nas_5gs_ul_data_sts_psi_12_b4,
-        &hf_nas_5gs_ul_data_sts_psi_11_b3,
-        &hf_nas_5gs_ul_data_sts_psi_10_b2,
-        &hf_nas_5gs_ul_data_sts_psi_9_b1,
-        &hf_nas_5gs_ul_data_sts_psi_8_b0,
-        nullptr,
-    };
-
-    d.add_bits(psi_0_7_flags);
-    d.step(1);
-
-    d.add_bits(psi_8_15_flags);
-    d.step(1);
-
-    d.extraneous_data_check(0);
-
-    return 2;
-}
-
-/* 6D   UE status UE status 9.9.3.54 O TLV 3 */
-/*
- *    9.11.3.56    UE status
- */
 
 const true_false_string tfs_nas_5gs_mm_n1_mod = { // NOLINT
     "UE is in 5GMM-REGISTERED state",
@@ -1361,65 +1213,9 @@ const true_false_string tfs_nas_5gs_mm_s1_mod = { // NOLINT
     "UE is in EMM-REGISTERED state",
     "UE is not in EMM-REGISTERED state",
 };
-#if 0
-const field_meta hf_spare_b6 = {
-    "Spare",
-    "nas_5gs.spare_b6",
-    ft::ft_uint8,
-    fd::base_dec,
-    nullptr,nullptr,nullptr,
-    0x40,
-};
-const field_meta hf_spare_b5 = {
-    "Spare",
-    "nas_5gs.spare_b5",
-    ft::ft_uint8,
-    fd::base_dec,
-    nullptr,nullptr,nullptr,
-    0x20,
-};
-const field_meta hf_nas_5gs_spare_b4 = {
-    "Spare",
-    "nas_5gs.spare_b4",
-    ft::ft_uint8,
-    fd::base_dec,
-    nullptr,nullptr,nullptr,
-    0x10,
-};
-#endif
 
-// 9.11.3.56
-int mm::dissect_ue_status(dissector d, context* ctx) {
-    static const field_meta* flags[] = {
-        &hf_spare_b7,
-        &hf_spare_b6,
-        &hf_spare_b5,
-        &hf_spare_b4,
-        &hf_spare_b3,
-        &hf_spare_b2,
-        &hf_mm_n1_mode_reg_b1,
-        &hf_mm_s1_mode_reg_b0,
-        nullptr,
-    };
-    /* 0     0     0     0     0     0     0 Spare    S1  mode reg */
-    d.add_bits(flags);
-    return 1;
-}
-
-// 9.11.3.4
-int mm::dissect_aguti_mobile_id(dissector d, context* ctx) {
-    return mm::dissect_mobile_id(d, ctx);
-}
-
-// 9.11.3.13
-int mm::dissect_pdu_ses_sts(dissector d, context* ctx) {
-    return mm::dissect_pdu_ses_status(d, ctx);
-}
 
 // UE's usage setting    UE's usage setting         9.11.3.55
-/*
- * 9.11.3.55    UE's usage setting
- */
 static true_false_string tfs_nas_5gs_mm_ue_usage_setting = {
     "Data centric",
     "Voice centric",
@@ -1436,31 +1232,8 @@ const field_meta mm::hf_nas_5gs_mm_ue_usage_setting = {
     0x01,
 };
 
-// 9.11.3.55
-int mm::dissect_usage_set(dissector d, context* ctx) {
-    static const field_meta* flags[] = {
-        &hf_spare_b3,
-        &hf_spare_b2,
-        &hf_spare_b1,
-        &hf_nas_5gs_mm_ue_usage_setting,
-        nullptr,
-    };
-    d.add_bits(flags);
-    return 1;
-}
 
-/* 9.11.3.24    EPS NAS message container */
-int mm::dissect_eps_nas_msg_cont(dissector d, context* ctx) {
-    diag("no eps dissector\n");
-    // An EPS NAS message as specified in 3GPP TS 24.301
-    return d.length;
-}
-
-
-
-/*
- * 9.11.3.9A    5GS update type
- */
+/* 9.11.3.9A    5GS update type */
 const true_false_string tfs_nas5gs_sms_requested = { // NOLINT
     "SMS over NAS supported",
     "SMS over NAS not supported",
@@ -1491,55 +1264,3 @@ const field_meta mm::hf_pnb_ciot = {
     pnb_ciot_values, nullptr, nullptr,0,
 };
 
-// 9.11.3.9A 5GS update type
-int mm::dissect_update_type(dissector d, context* ctx) {
-    static const field_meta* flags[] = {
-        &hf_spare_b3,
-        &hf_pnb_ciot,
-        &hf_ng_ran_rcu,
-        &hf_sms_requested,
-        nullptr,
-    };
-    d.add_bits(flags);
-    return 1;
-}
-
-#if 0
-/* 9.11.3.37    NSSAI*/
-int mm::dissect_requested_nssai(dissector d, context* ctx) {
-    auto len = d.length;
-    auto i = 1;
-    while(d.length>0){
-        auto subtree = d.tree->add_subtree(d.pinfo, d.tvb, d.offset, 2, "S-NSSAI %u", i);
-        use_tree ut(d, subtree);
-
-        auto length = (int) d.tvb->uint8(d.offset);
-        d.add_item(1, &hf_mm_length, enc::be);
-        d.step(1);
-
-        auto consumed = dissect_s_nssai(d.slice(length), ctx);
-        d.step(consumed);
-        subtree->set_length(length + 1);
-        ++i;
-    }
-    return len;
-}
-#endif
-
-
-
-int mm::dissect_reg_req_type(dissector d, context* ctx) {
-    const field_meta* flags[] = {
-        &hf_mm_for,
-        &hf_mm_reg_type,
-        nullptr,
-    };
-    d.add_bits(flags);
-    return 1;
-}
-
-/* 9.11.3.2A    5GS DRX parameters*/
-int mm::dissect_requested_drx_param(dissector d, context* ctx) {
-    return dissect_drx_param(d, ctx);
-    // d.add_item(1, &hf_drx_param, enc::be);
-}

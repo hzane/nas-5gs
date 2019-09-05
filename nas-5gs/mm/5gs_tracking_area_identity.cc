@@ -2,6 +2,22 @@
 
 using namespace cmn;
 
+
+//* 9.11.3.8     5GS tracking area identity
+int mm::dissect_last_v_tai(dissector d, context* ctx) {
+    const use_context uc(ctx, "5gs-tracking area identity", d, -1);
+
+    /* MCC digit 2    MCC digit 1 Octet 2*/
+    /* MNC digit 3    MCC digit 3 Octet 3*/
+    /* MNC digit 2    MNC digit 1 Octet 4*/
+    dissect_e212_mcc_mnc(d, ctx);
+    d.step(3);
+
+    /* TAC Octet 5 - 7 */
+    d.add_item(3, &hf_tac, enc::na);
+    return 6;
+}
+
 // 9.11.3.9	5GS tracking area identity list
 int mm::dissect_ta_id_list(dissector d, context* ctx) {
     const use_context uc(ctx, "5gs-tai-list", d, 0);

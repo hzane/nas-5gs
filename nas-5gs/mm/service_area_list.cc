@@ -4,41 +4,6 @@
 
 using namespace cmn;
 
-/*  9.11.3.49    Service area list */
-extern const value_string nas_5gs_mm_sal_t_li_values[] = {
-    {0x00, "list of TACs belonging to one PLMN, with non-consecutive TAC values"},
-    {0x01, "list of TACs belonging to one PLMN, with consecutive TAC values"},
-    {0x02, "list of TAIs belonging to different PLMNs"},
-    {0x03, "All TAIs belonging to the PLMN are in the allowed area"},
-    {0, nullptr},
-};
-
-const true_false_string tfs_tai_or_not = {
-    "TAIs in the list are in the non-allowed area",
-    "TAIs in the list are in the allowed area",
-};
-
-const field_meta mm::hf_sal_al_t = {
-    "Allowed type",
-    "nas_5gs.mm.sal_al_t",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &tfs_tai_or_not,
-    nullptr,
-    0x80,
-};
-const field_meta mm::hf_sal_t_li = {
-    "Type of list",
-    "nas_5gs.mm.sal_t_li",
-    ft::ft_uint8,
-    fd::base_dec,
-    nas_5gs_mm_sal_t_li_values,
-    nullptr,
-    nullptr,
-    0x60,
-};
-
 
 // 9.11.3.49    Service area list page.391
 int mm::dissect_sal(dissector d, context* ctx) {
@@ -120,3 +85,39 @@ int mm::dissect_sal(dissector d, context* ctx) {
     }
     return len;
 }
+
+/*  9.11.3.49    Service area list */
+extern const value_string nas_5gs_mm_sal_t_li_values[] = {
+    {0x00, "list of TACs belonging to one PLMN, with non-consecutive TAC values"},
+    {0x01, "list of TACs belonging to one PLMN, with consecutive TAC values"},
+    {0x02, "list of TAIs belonging to different PLMNs"},
+    {0x03, "All TAIs belonging to the PLMN are in the allowed area"},
+    {0, nullptr},
+};
+
+const true_false_string tfs_tai_or_not = {
+    "TAIs in the list are in the non-allowed area",
+    "TAIs in the list are in the allowed area",
+};
+
+const field_meta mm::hf_sal_al_t = {
+    "Allowed type",
+    "nas_5gs.mm.sal_al_t",
+    ft::ft_boolean,
+    fd::base_dec,
+    nullptr,
+    &tfs_tai_or_not,
+    nullptr,
+    0x80,
+};
+const field_meta mm::hf_sal_t_li = {
+    "Type of list",
+    "nas_5gs.mm.sal_t_li",
+    ft::ft_uint8,
+    fd::base_dec,
+    nas_5gs_mm_sal_t_li_values,
+    nullptr,
+    nullptr,
+    0x60,
+};
+

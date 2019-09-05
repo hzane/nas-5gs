@@ -858,11 +858,11 @@ extern const message_meta mm::msgs[] = {
     {0x42, "Registration accept", dissect_registration_accept, nullptr},
     {0x43, "Registration complete", dissect_registration_complete, nullptr},
     {0x44, "Registration reject", dissect_registration_rej, nullptr},
-    {0x45, "Deregistration request (UE originating)", dissect_reg_req_ue_orig, nullptr},
+    {0x45, "Deregistration request (UE originating)", dissect_dereg_req_ue_orig, nullptr},
     {0x46, "Deregistration accept (UE originating)", nullptr, nullptr},
     {0x47,
      "Deregistration request (UE terminated)",
-     dissect_registration_req_ue_term,
+     dissect_dereg_req_ue_term,
      nullptr},
     {0x48, "Deregistration accept (UE terminated)", nullptr, nullptr},
 

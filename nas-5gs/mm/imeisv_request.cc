@@ -1,1 +1,10 @@
 #include "../dissect_mm_msg.hh"
+
+
+
+// IMEISV request     9.11.3.28
+int mm::dissect_imeisv_req(dissector d, context* ctx) {
+    // See subclause 10.5.5.10 in 3GPP TS 24.008 [12].
+    diag("no dissect %s\n", ctx->path().c_str());
+    return d.length;
+}

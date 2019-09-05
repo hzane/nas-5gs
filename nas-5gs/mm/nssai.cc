@@ -118,7 +118,7 @@ int mm::dissect_requested_nssai(dissector d, context* ctx) {
 
     auto i = 1;
     while (d.length > 0) {
-        auto     subtree = d.add_item(2, "S-NSSAI %u", i);
+        auto     subtree = d.add_item(2, "S-NSSAI %u", i++);
         use_tree ut(d, subtree);
 
         const auto length = static_cast< int >(d.tvb->uint8(d.offset));
@@ -129,7 +129,7 @@ int mm::dissect_requested_nssai(dissector d, context* ctx) {
         const auto consumed = dissect_s_nssai(d.slice(length), ctx);
         d.step(consumed);
         subtree->set_length(length + 1);
-        ++i;
     }
     return uc.length;
 }
+

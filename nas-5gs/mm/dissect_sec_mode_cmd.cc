@@ -62,6 +62,18 @@ int mm::dissect_sec_mode_cmd(dissector d, context* ctx) {
     return uc.length;
 }
 
+int mm::dissect_sec_algo(dissector d, context* ctx) {
+    const use_context uc(ctx, "sec-algo", d, -1);
+
+    static const field_meta* flags[] = {
+        &hf_sec_algo_enc,
+        &hf_sec_algo_ip,
+        nullptr,
+    };
+    d.add_bits(flags);
+    return 1;
+}
+
 namespace mm {
 extern const element_meta sec_algo = {
     0xff,
@@ -102,10 +114,7 @@ extern const element_meta reported_s1_ue_sec_cap = {
 };
 
 
-/*
- *   9.11.3.34    NAS security algorithms
- */
-
+/* 9.11.3.34    NAS security algorithms */
 const value_string nas_5gs_mm_type_of_ip_algo_vals[] = {
     {0x0, "5G-IA0 (null integrity protection algorithm)"},
     {0x1, "128-5G-IA1"},
@@ -149,16 +158,6 @@ const field_meta hf_sec_algo_ip = {
     nullptr,
     0x0f,
 };
-
-int dissect_sec_algo(dissector d, context* ctx) {
-    static const field_meta* flags[] = {
-        &hf_sec_algo_enc,
-        &hf_sec_algo_ip,
-        nullptr,
-    };
-    d.add_bits(flags);
-    return 1;
-}
 
 const field_meta hf_mm_5g_ea0 = {
     "5G-EA0",
@@ -419,95 +418,6 @@ const field_meta hf_mm_eia7 = {
     ,nullptr,&tfs_supported_not_supported,nullptr,
     0x01,
 };
-/*
- *     9.11.3.54    UE security capability
- */
-int dissect_replayed_ue_sec_cap(dissector d, context* ctx) {
-    auto len = d.length;
-
-    static const field_meta* oct3_flags[] = {
-        &hf_mm_5g_ea0,
-        &hf_mm_128_5g_ea1,
-        &hf_mm_128_5g_ea2,
-        &hf_mm_128_5g_ea3,
-        &hf_mm_5g_ea4,
-        &hf_mm_5g_ea5,
-        &hf_mm_5g_ea6,
-        &hf_mm_5g_ea7,
-        nullptr,
-    };
-
-    static const field_meta* oct4_flags[] = {
-        &hf_mm_5g_ia0,
-        &hf_mm_128_5g_ia1,
-        &hf_mm_128_5g_ia2,
-        &hf_mm_128_5g_ia3,
-        &hf_mm_5g_ia4,
-        &hf_mm_5g_ia5,
-        &hf_mm_5g_ia6,
-        &hf_mm_5g_ia7,
-        nullptr,
-    };
-
-    static const field_meta* oct5_flags[] = {
-        &hf_mm_eea0,
-        &hf_mm_128eea1,
-        &hf_mm_128eea2,
-        &hf_mm_eea3,
-        &hf_mm_eea4,
-        &hf_mm_eea5,
-        &hf_mm_eea6,
-        &hf_mm_eea7,
-        nullptr,
-    };
-
-    static const field_meta* oct6_flags[] = {
-        &hf_mm_eia0,
-        &hf_mm_128eia1,
-        &hf_mm_128eia2,
-        &hf_mm_eia3,
-        &hf_mm_eia4,
-        &hf_mm_eia5,
-        &hf_mm_eia6,
-        &hf_mm_eia7,
-        nullptr,
-    };
-
-    /* 5G-EA0    128-5G-EA1    128-5G-EA2    128-5G-EA3    5G-EA4    5G-EA5    5G-EA6
-     * 5G-EA7    octet 3 */
-    d.add_bits(oct3_flags);
-    d.step(1);
-
-    /* 5G-IA0    128-5G-IA1    128-5G-IA2    128-5G-IA3    5G-IA4    5G-IA5    5G-IA6
-     * 5G-IA7 octet 4 */
-    d.add_bits(oct4_flags);
-    d.step(1);
-
-    if (len == 2) {
-        return 2;
-    }
-
-    /* EEA0    128-EEA1    128-EEA2    128-EEA3    EEA4    EEA5    EEA6    EEA7 octet 5 */
-    d.add_bits(oct5_flags);
-    d.step(1);
-
-    /* EIA0    128-EIA1    128-EIA2    128-EIA3    EIA4    EIA5    EIA6    EIA7 octet 6 */
-    d.add_bits(oct6_flags);
-
-    return len;
-}
-
-// IMEISV request     9.11.3.28
-int dissect_imeisv_req(dissector d, context* ctx) {
-    diag("no dissect %s\n", ctx->path().c_str());
-    return d.length;
-}
-
-// * 9.11.3.12    Additional 5G security information
-int dissect_selected_eps_sec_algo(dissector d, context* ctx) {
-    diag("no dissect %s\n", ctx->path().c_str());
-    return d.length;
-}
 const field_meta hf_spare_b3 = {
     "Spare",
     "nas_5gs.spare_b3",
@@ -543,20 +453,6 @@ const field_meta hf_mm_hdp = {
     nullptr,
     0x01,
 };
-
-int dissect_a_sec_info(dissector d, context* ctx) {
-    static const field_meta* flags[] = {
-        &hf_spare_b3,
-        &hf_spare_b2,
-        &hf_mm_rinmr,
-        &hf_mm_hdp,
-        nullptr,
-    };
-
-    d.add_bits(flags);
-
-    return 1;
-}
 
 const field_meta hf_emm_eea0 = {
     "EEA0",
@@ -877,103 +773,4 @@ const field_meta hf_emm_gea7 = {
     0x01,
 };
 
-// 9.11.3.48A S1 UE security capability page.391
-// See subclause 9.9.3.36 in 3GPP TS 24.301 [15].
-int dissect_reported_s1_ue_sec_cap(dissector d, context* ctx) {
-    auto len = d.length;
-
-    static const field_meta* oct3_flags[] = {
-        &hf_emm_eea0,
-        &hf_emm_128eea1,
-        &hf_emm_128eea2,
-        &hf_emm_eea3,
-        &hf_emm_eea4,
-        &hf_emm_eea5,
-        &hf_emm_eea6,
-        &hf_emm_eea7,
-        nullptr,
-    };
-
-    static const field_meta* oct4_flags[] = {
-        &hf_emm_eia0,
-        &hf_emm_128eia1,
-        &hf_emm_128eia2,
-        &hf_emm_eia3,
-        &hf_emm_eia4,
-        &hf_emm_eia5,
-        &hf_emm_eia6,
-        &hf_emm_eia7,
-        nullptr,
-    };
-
-    static const field_meta* oct5_flags[] = {
-        &hf_emm_uea0,
-        &hf_emm_uea1,
-        &hf_emm_uea2,
-        &hf_emm_uea3,
-        &hf_emm_uea4,
-        &hf_emm_uea5,
-        &hf_emm_uea6,
-        &hf_emm_uea7,
-        nullptr,
-    };
-
-    static const field_meta* oct6_flags[] = {
-        &hf_spare_b7,
-        &hf_emm_uia1,
-        &hf_emm_uia2,
-        &hf_emm_uia3,
-        &hf_emm_uia4,
-        &hf_emm_uia5,
-        &hf_emm_uia6,
-        &hf_emm_uia7,
-        nullptr,
-    };
-
-    static const field_meta* oct7_flags[] = {
-        &hf_spare_b7,
-        &hf_emm_gea1,
-        &hf_emm_gea2,
-        &hf_emm_gea3,
-        &hf_emm_gea4,
-        &hf_emm_gea5,
-        &hf_emm_gea6,
-        &hf_emm_gea7,
-        nullptr,
-    };
-
-    /* EPS encryption algorithms supported (octet 3) */
-    d.add_bits( oct3_flags);
-    d.step(1);
-
-    /* EPS integrity algorithms supported (octet 4) */
-    /* EIA0    128-EIA1    128-EIA2    128-EIA3    EIA4    EIA5    EIA6    EIA7 */
-    d.add_bits(oct4_flags );
-    d.step(1);
-
-    /* Octets 5, 6, and 7 are optional. If octet 5 is included,
-     * then also octet 6 shall be included and octet 7 may be included.
-     */
-    if (len == 2) return (len);
-
-    /* UMTS encryption algorithms supported (octet 5)
-     * UEA0    UEA1    UEA2    UEA3    UEA4    UEA5    UEA6    UEA7
-     */
-    d.add_bits(oct5_flags );
-    d.step(1);
-
-    /* UMTS integrity algorithms supported (octet 6) */
-    /* Spare    UIA1    UIA2    UIA3    UIA4    UIA5    UIA6    UIA7 */
-    d.add_bits(oct6_flags );
-    d.step(1);
-
-    if (len == 4) return (len);
-
-    /* GPRS encryption algorithms supported (octet 7) */
-    /* 0 spare    GEA1    GEA2    GEA3    GEA4    GEA5    GEA6    GEA7*/
-    d.add_bits(oct7_flags);
-    d.step(1);
-
-    return (len);
-}
 } // namespace mm_sec_mode_cmd

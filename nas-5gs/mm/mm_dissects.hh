@@ -42,17 +42,8 @@ int dissect_ul_data_status(dissector d, context* ctx);
 
 int dissect_ue_status(dissector d, context* ctx ); // 9.11.3.56
 
-// 9.11.3.4
-int dissect_aguti_mobile_id(dissector d, context* ctx );
-
-// 9.11.3.13
-int dissect_pdu_ses_sts(dissector d, context* ctx );
-
 // 9.11.3.55
 int dissect_usage_set(dissector d, context* ctx );
-
-// 9.11.3.2A
-int dissect_requested_drx_param(dissector d, context* ctx );
 
 // 9.11.3.24
 int dissect_eps_nas_msg_cont(dissector d, context* ctx );
@@ -78,8 +69,8 @@ int dissect_registration_req(dissector d, context* ctx);
 int dissect_registration_accept(dissector d, context* ctx);
 int dissect_registration_complete(dissector d, context* ctx);
 int dissect_registration_rej(dissector d, context* ctx);
-int dissect_reg_req_ue_orig(dissector d, context* ctx);
-int dissect_registration_req_ue_term(dissector d, context* ctx);
+int dissect_dereg_req_ue_orig(dissector d, context* ctx);
+int dissect_dereg_req_ue_term(dissector d, context* ctx);
 int dissect_service_req(dissector d, context* ctx);
 int dissect_service_rej(dissector d, context* ctx);
 int dissect_service_acc(dissector d, context* ctx);

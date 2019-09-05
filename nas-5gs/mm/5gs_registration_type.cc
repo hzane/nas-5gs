@@ -2,6 +2,17 @@
 #include "../ts24007.hh"
 
 /* 9.11.3.7    5GS registration type */
+int mm::dissect_reg_req_type(dissector d, context* ctx) {
+    const use_context uc(ctx, "5gs-registration-type", d, -1);
+
+    const field_meta* flags[] = {
+        &hf_mm_for,
+        &hf_mm_reg_type,
+        nullptr,
+    };
+    d.add_bits(flags);
+    return 1;
+}
 
 extern const val_string mm::values_registration_type[] = {
     {0x1, "initial registration"},
@@ -99,7 +110,7 @@ const element_meta mm::ue_status = {
 const element_meta mm::aguti_mobile_id = {
     0x77,
     "5GS mobile identity - Additional GUTI",
-    dissect_aguti_mobile_id,
+    dissect_mobile_id,
     nullptr,
 };
 
@@ -107,7 +118,7 @@ const element_meta mm::aguti_mobile_id = {
 const element_meta mm::allow_pdu_ses_sts = {
     0x25,
     "Allowed PDU session status",
-    dissect_pdu_ses_sts,
+    dissect_pdu_ses_status,
     nullptr,
 };
 
@@ -123,7 +134,7 @@ const element_meta mm::ue_usage_set = {
 const element_meta mm::requested_drx_param = {
     0x51,
     "5GS DRX parameters - Requested",
-    dissect_requested_drx_param,
+    dissect_drx_param,
     nullptr,
 };
 

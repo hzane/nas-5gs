@@ -48,7 +48,6 @@ int dissect_nas5g_security_protected(dissector d, context* ctx){
     d.step(consumed);
 
     return uc.length;
-    // d.extraneous_data_check(0, ctx);
 }
 
 int dissect_nas5g_plain(dissector d, context* ctx) {
