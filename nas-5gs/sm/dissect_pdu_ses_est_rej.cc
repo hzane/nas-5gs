@@ -6,7 +6,6 @@
 
 using namespace nas;
 using namespace sm;
-using namespace pdu_ses;
 
 /*  8.3.3 PDU session establishment reject */
 int sm::dissect_pdu_ses_est_rej(dissector d, context* ctx) {
@@ -49,6 +48,4 @@ int sm::dissect_pdu_ses_est_rej(dissector d, context* ctx) {
         
     return uc.length;
 }
-namespace sm_pdu_ses_est {
 
-} // namespace sm_pdu_ses_est

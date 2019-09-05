@@ -2,24 +2,14 @@
 #include "../gsm.hh"
 #include "../ts24007.hh"
 
-namespace mm {
-extern const element_meta pld_cont_type;
-extern const element_meta pld_cont;
-extern const element_meta pdu_ses_id;
-extern const element_meta backoff_gprs_timer3;
-} // namespace mm_dl_nas_transp
 
 using namespace cmn;
 using namespace nas;
 using namespace mm;
 
-/*
- * 8.2.11 DL NAS transport
- */
-int mm::dissect_dl_nas_transp(dissector d, context* ctx) {
-    const auto        len = d.length;
-    use_context uc(ctx, "dl-nas-transport", d);
-
+/*  8.2.11 DL NAS transport */
+int mm::dissect_dl_nas_transp(dissector d, context* ctx) {    
+    const use_context uc(ctx, "dl-nas-transport", d, 0);
 
     /* Initialize the private struct */
     // nas5gs_get_private_data(pinfo);
@@ -47,27 +37,21 @@ int mm::dissect_dl_nas_transp(dissector d, context* ctx) {
     d.step(consumed);
 
     /*58    5GMM cause    5GMM cause 9.11.3.2    O    TV    2 */
-    // ELEM_OPT_TV(0x58, NAS_5GS_PDU_TYPE_MM, DE_NAS_5GS_MM_5GMM_CAUSE, NULL);
+    // ELEM_OPT_TV(0x58, , DE_NAS_5GS_MM_5GMM_CAUSE, NULL);
     consumed = dissect_opt_elem_tv(nullptr, &mm_cause, d, ctx);
     d.step(consumed);
 
     /*37    Back-off timer value    GPRS timer 3 9.11.2.5    O    TLV    3 */
-    // ELEM_OPT_TLV(0x37, GSM_A_PDU_TYPE_GM, DE_GPRS_TIMER_3, " - Back-off timer value");
+    // ELEM_OPT_TLV(0x37, , DE_GPRS_TIMER_3, " - Back-off timer value");
     consumed = dissect_opt_elem_tlv(nullptr, &backoff_gprs_timer3, d, ctx);
     d.step(consumed);
-
-    d.extraneous_data_check(0);
-    return len;
+    
+    return uc.length;
 }
-
-namespace mm {
-int dissect_pdu_ses_id(dissector d, context* ctx);
-int dissect_additional_inf(dissector d, context* ctx);
-
 
 
 // Back-off timer value    GPRS timer 3 9.11.2.5
-extern const element_meta backoff_gprs_timer3 = {
+extern const element_meta mm::backoff_gprs_timer3 = {
     0x37,
     "GPRS timer - Back-off timer",
     dissect_gprs_timer3,
@@ -75,6 +59,3 @@ extern const element_meta backoff_gprs_timer3 = {
 };
 
 
-
-
-} // namespace mm_dl_nas_transp

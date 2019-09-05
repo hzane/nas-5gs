@@ -15,7 +15,6 @@ int sm::dissect_pdu_ses_mod_comp(dissector d, context* ctx) {
     d.step(consumed);
 
     /*59    5GSM cause    5GSM cause 9.11.4.2    O    TV    2*/
-    // ELEM_OPT_TV(0x59, , DE_NAS_5GS_SM_5GSM_CAUSE, NULL);
     // consumed = dissect_opt_elem_tv(nullptr, &sm_cause, d, ctx);
     // d.step(consumed);
 
@@ -24,8 +23,6 @@ int sm::dissect_pdu_ses_mod_comp(dissector d, context* ctx) {
      * message, and therefore the IEI 59 cannot be used for other optional IEs other than
      * the 5GSM cause IE for future extensions of the PDU SESSION MODIFICATION COMPLETE
      * message.*/
-
-    // sm-cause
 
     return uc.length;
 }

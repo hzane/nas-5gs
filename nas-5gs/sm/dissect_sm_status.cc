@@ -10,7 +10,6 @@ int sm::dissect_sm_status(dissector d, context* ctx) {
     both_link(d.pinfo);    
 
     /* 5GSM cause    5GSM cause 9.11.4.1    M    V    1 */
-    // ELEM_MAND_V(, DE_NAS_5GS_SM_5GSM_CAUSE,);
     const auto consumed = dissect_elem_v(nullptr, &sm_cause, d, ctx);
     d.step(consumed);
     

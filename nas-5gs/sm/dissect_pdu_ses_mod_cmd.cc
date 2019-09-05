@@ -2,13 +2,8 @@
 #include "../dissect_sm_msg.hh"
 #include "../ts24007.hh"
 
-namespace sm_pdu_ses_mod {
-extern const element_meta authorized_qos_flow_des;
-}
-
 using namespace nas;
 using namespace sm;
-using namespace sm_pdu_ses_mod;
 
 /* 8.3.9 PDU session modification command */
 int sm::dissect_pdu_ses_mod_cmd(dissector d, context* ctx) {    

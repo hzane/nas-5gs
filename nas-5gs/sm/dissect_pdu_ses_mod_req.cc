@@ -5,7 +5,6 @@
 
 using namespace nas;
 using namespace sm;
-using namespace pdu_ses;
 
 /* 8.3.7 PDU session modification request */
 int sm::dissect_pdu_ses_mod_req(dissector d, context* ctx) {    
@@ -15,13 +14,11 @@ int sm::dissect_pdu_ses_mod_req(dissector d, context* ctx) {
     d.pinfo->dir = pi_dir::ul;
 
     /* 28 5GSM capability 9.11.4.1    O    TLV    3-15 */
-    // ELEM_OPT_TLV(0x28, , DE_NAS_5GS_SM_5GSM_CAP, NULL);
     auto consumed = dissect_opt_elem_tlv(nullptr, &sm_cap, d, ctx);
     d.step(consumed);
 
     /* 59 5GSM cause 9.11.4.2    O    TV    2 */
-    // ELEM_OPT_TLV(0x59, , DE_NAS_5GS_SM_5GSM_CAUSE, NULL);
-    consumed = dissect_opt_elem_tlv(nullptr, &sm_cause, d, ctx);
+    consumed = dissect_opt_elem_tv(nullptr, &sm_cause, d, ctx);
     d.step(consumed);
 
     /*55    Maximum number of suuported packet filter 9.11.4.9    O    TV    3*/
@@ -46,8 +43,8 @@ int sm::dissect_pdu_ses_mod_req(dissector d, context* ctx) {
 
     /* 79    Requested QoS flow descriptions    QoS flow descriptions 9.11.4.12    O
      * TLV-E    5-65538 */
-    // ELEM_OPT_TLV_E(  0x79, , DE_NAS_5GS_SM_QOS_FLOW_DES, " - Authorized");
-    consumed = dissect_opt_elem_tlv_e(nullptr, &authorized_qos_flow_des, d, ctx);
+    // ELEM_OPT_TLV_E(  0x79, , DE_NAS_5GS_SM_QOS_FLOW_DES, " - Requested");
+    consumed = dissect_opt_elem_tlv_e(nullptr, &requested_qos_flow_des, d, ctx);
     d.step(consumed);
 
     /* 75  Mapped EPS bearer contexts 9.11.4.8    O TLV-E    7-65538 */
@@ -56,7 +53,6 @@ int sm::dissect_pdu_ses_mod_req(dissector d, context* ctx) {
     d.step(consumed);
 
     /* 7B Extended protocol configuration options  9.11.4.6 O TLV-E    4-65538*/
-    // ELEM_OPT_TLV_E(0x7B, , DE_ESM_EXT_PCO, NULL);
     consumed = dissect_opt_elem_tlv_e(nullptr, &ext_pco, d, ctx);
     d.step(consumed);
     

@@ -10,7 +10,6 @@ int sm::dissect_pdu_ses_auth_cmd(dissector d, context* ctx) {
     down_link(d.pinfo);
 
     /* EAP message 9.11.2.2    M    LV-E    6-1502 */
-    // ELEM_MAND_LV_E(, DE_NAS_5GS_CMN_EAP_MESSAGE,);
     auto consumed = dissect_elem_lv_e(nullptr, &eap_msg, d, ctx);
     d.step(consumed);
 

@@ -5,7 +5,6 @@
 
 using namespace nas;
 using namespace sm;
-using namespace pdu_ses;
 
 /* * 8.3.14 PDU session release command */
 int sm::dissect_pdu_ses_rel_cmd(dissector d, context* ctx) {    
@@ -15,7 +14,6 @@ int sm::dissect_pdu_ses_rel_cmd(dissector d, context* ctx) {
     down_link(d.pinfo);    
 
     /* 5GSM cause 9.11.4.2    M    V    1 */
-    // ELEM_MAND_V(, DE_NAS_5GS_SM_5GSM_CAUSE,);
     auto consumed = dissect_elem_v(nullptr, &sm_cause, d, ctx);
     d.step(consumed);
 
@@ -24,7 +22,7 @@ int sm::dissect_pdu_ses_rel_cmd(dissector d, context* ctx) {
     consumed = dissect_opt_elem_tlv(nullptr, &backoff_gprs_timer3, d, ctx);
     d.step(consumed);
 
-    /*78  EAP message 9.10.2.2    O    TLV - E    7 - 1503*/
+    /*78  EAP message 9.10.2.2    O    TLV-E    7 - 1503*/
     // ELEM_OPT_TLV_E(0x78, , DE_NAS_5GS_CMN_EAP_MESSAGE, NULL);
     consumed = dissect_opt_elem_tlv_e(nullptr, &eap_msg, d, ctx);
     d.step(consumed);
