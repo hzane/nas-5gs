@@ -3,24 +3,13 @@
 #include "../ts24007.hh"
 #include "pdu_ses.hh"
 
-namespace sm_pdu_ses_mod {
-// extern const element_meta always_on_pdu_ses_req;
-extern const element_meta int_prot_max_data_rate;
-extern const element_meta requested_qos_rules;
-extern const element_meta authorized_qos_flow_des; // Requested QoS flow descriptions QoS
-                                                   // flow descriptions 9.11.4.12
-} // namespace sm_pdu_ses_mod
-
 using namespace nas;
 using namespace sm;
 using namespace pdu_ses;
 
 /* 8.3.7 PDU session modification request */
-int sm::dissect_pdu_ses_mod_req(dissector d, context* ctx) {
-    auto        len = d.length;
-    use_context uc(ctx, "pdu-session-modification-request", d);
-
-    using namespace sm_pdu_ses_mod;
+int sm::dissect_pdu_ses_mod_req(dissector d, context* ctx) {    
+    const use_context uc(ctx, "pdu-session-modification-request", d, 0);
 
     /* Direction: UE to network */
     d.pinfo->dir = pi_dir::ul;
@@ -70,9 +59,7 @@ int sm::dissect_pdu_ses_mod_req(dissector d, context* ctx) {
     // ELEM_OPT_TLV_E(0x7B, , DE_ESM_EXT_PCO, NULL);
     consumed = dissect_opt_elem_tlv_e(nullptr, &ext_pco, d, ctx);
     d.step(consumed);
-
-    d.extraneous_data_check(0);
-
-    return len;
+    
+    return uc.length;
 }
 

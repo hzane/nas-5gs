@@ -4,19 +4,12 @@
 #include "pdu_ses.hh"
 #include "pdu_ses_mod.hh"
 
-namespace pdu_ses_mod {
-
-}
-using namespace pdu_ses_mod;
-using namespace pdu_ses;
-
 /*  8.3.8    PDU session modification reject */
-int sm::dissect_pdu_ses_mod_rej(dissector d, context* ctx) {
-    auto        len = d.length;
-    use_context uc(ctx, "pdu-session-modification-reject", d);
+int sm::dissect_pdu_ses_mod_rej(dissector d, context* ctx) {    
+    const use_context uc(ctx, "pdu-session-modification-reject", d, 0);
 
     /* Direction: network to UE */
-    d.pinfo->dir = pi_dir::dl;
+    down_link(d.pinfo);    
 
     /* 5GSM cause 9.11.4.2    M    V    1 */
     // ELEM_MAND_V(,DE_NAS_5GS_SM_5GSM_CAUSE,);
@@ -38,9 +31,7 @@ int sm::dissect_pdu_ses_mod_rej(dissector d, context* ctx) {
 
     /*61 5GSM congestion re-attempt indicator    9.11.4.21	O	TLV	3    */
     consumed = dissect_opt_elem_tlv(nullptr, &sm_congestion_reattempt, d, ctx);
-    d.step(consumed);
+    d.step(consumed); 
 
-    d.extraneous_data_check(0);
-
-    return len;
+    return uc.length;
 }

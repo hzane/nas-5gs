@@ -6,6 +6,8 @@ using namespace sm;
 /*The description and valid combinations of packet filter component type identifiers in a
  * packet filter are defined in 3GPP TS 23.501 [8].*/
 int dissect_packet_filter(dissector d, int pf_type, context* ctx) {
+    const use_context uc(ctx, "packet-filter", d, -1);
+
     auto len = d.length;
     switch (pf_type) {
     case 1: {
@@ -100,7 +102,7 @@ int dissect_packet_filters(dissector d, int rop, context* ctx) {
     d.step(1);
 
     /* Length of packet filter contents */
-    auto pfclen = (int) d.uint8();
+    auto pfclen = static_cast< int >(d.uint8());
     d.add_item(1, &hf_sm_pf_len, enc::be);
     d.step(1);
 

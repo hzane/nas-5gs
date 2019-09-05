@@ -3,27 +3,15 @@
 #include "../ts24007.hh"
 #include "pdu_ses.hh"
 
-namespace sm_pdu_ses_est {
-extern const element_meta pdu_ses_type;
-extern const element_meta ssc_mode;
-// extern const element_meta always_on_pdu_ses_req;
-extern const element_meta sm_pdu_dn_req_cont;
-} // namespace sm_pdu_ses_est
-
 using namespace nas;
 using namespace sm;
-using namespace pdu_ses;
-using namespace sm_pdu_ses_est;
 
-/*
- * 8.3.1 PDU session establishment request
- */
-int sm::dissect_pdu_ses_est_req(dissector d, context* ctx) {
-    const auto        len = d.length;
-    use_context uc(ctx, "pdu-session-establishment-request", d);
+/* 8.3.1 PDU session establishment request */
+int sm::dissect_pdu_ses_est_req(dissector d, context* ctx) {    
+    use_context uc(ctx, "pdu-session-establishment-request", d, 0);
 
     /* Direction: UE to network */
-    d.pinfo->dir = pi_dir::ul;
+    down_link(d.pinfo);    
 
     /*Integrity protection maximum data rate 9.11.4.7    M    V    2*/
     // ELEM_MAND_V(, DE_NAS_5GS_SM_INT_PROT_MAX_DATA_RTE,);
@@ -61,11 +49,9 @@ int sm::dissect_pdu_ses_est_req(dissector d, context* ctx) {
     /*7B    Extended protocol configuration options  9.11.4.2    O    TLV-E    4-65538*/
     // ELEM_OPT_TLV_E(0x7B, , DE_ESM_EXT_PCO, );
     consumed = dissect_opt_elem_tlv_e(nullptr, &ext_pco, d, ctx);
-    d.step(consumed);
+    d.step(consumed);    
 
-    d.extraneous_data_check(0);
-
-    return len;
+    return uc.length;
 }
 namespace sm {
 

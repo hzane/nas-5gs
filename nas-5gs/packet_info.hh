@@ -30,3 +30,6 @@ inline void down_link(packet_info*pinfo){
     if (pinfo) pinfo->dir = pi_dir::dl;
 }
 
+inline void both_link(packet_info*pinfo) {
+    if (pinfo) pinfo->dir = pi_dir::both;
+}

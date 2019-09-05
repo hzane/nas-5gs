@@ -42,6 +42,8 @@ const field_meta sm::hf_sm_qos_des_flow_opt_code = {
 };
 
 int sm::dissect_qos_param(dissector d, int j, context* ctx) {
+    const use_context uc(ctx, "qos-param", d, -1);
+
     /* Parameter list */
     auto     subtree = d.add_item(-1, "Parameter %u", j);
     use_tree ut(d, subtree);
@@ -113,7 +115,7 @@ int sm::dissect_qos_param(dissector d, int j, context* ctx) {
 
 // Authorized QoS flow descriptions     QoS flow descriptions 9.11.4.12
 int sm::dissect_authorized_qos_flow_des(dissector d, context* ctx) {
-    auto start = d.offset;
+    const use_context uc(ctx, "authorized-qos-flow-desc", d, 0);   
 
     static const field_meta* param_flags[] = {
         &hf_sm_e,
@@ -150,5 +152,5 @@ int sm::dissect_authorized_qos_flow_des(dissector d, context* ctx) {
 
         i++;
     }
-    return d.offset - start;
+    return d.offset - uc.offset;
 }

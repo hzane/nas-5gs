@@ -36,8 +36,8 @@ int dissect_eps_param(dissector d, int i, context* ctx) {
 
 // Mapped EPS  bearer contexts     9.11.4.8
 int sm::dissect_mapped_eps_b_cont(dissector d, context* ctx) {
-    auto len = d.length;
-
+    const use_context uc(ctx, "mapped-eps-bearer-contexts", d, 0);
+    
     static const field_meta* mapd_eps_b_cont_flags[] = {
         &hf_sm_mapd_eps_b_cont_opt_code,
         &hf_spare_b5,
@@ -95,5 +95,5 @@ int sm::dissect_mapped_eps_b_cont(dissector d, context* ctx) {
         }
         ++n;
     }
-    return len;
+    return uc.length;
 }

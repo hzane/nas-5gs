@@ -5,12 +5,11 @@
 /*
  * 8.3.15 PDU session release complete
  */
-int sm::dissect_pdu_ses_rel_comp(dissector d, context* ctx) {
-    auto        len = d.length;
-    use_context uc(ctx, "pdu-session-release-complete", d);
+int sm::dissect_pdu_ses_rel_comp(dissector d, context* ctx) {    
+    const use_context uc(ctx, "pdu-session-release-complete", d, 0);
 
     /* Direction: UE to network */
-    d.pinfo->dir = pi_dir::ul;
+    up_link(d.pinfo);    
 
     /* 59 5GSM cause 9.11.4.2    O    TV    2 */
     // ELEM_OPT_TV(0x59, , DE_NAS_5GS_SM_5GSM_CAUSE, NULL);
@@ -24,5 +23,5 @@ int sm::dissect_pdu_ses_rel_comp(dissector d, context* ctx) {
 
     d.extraneous_data_check(0);
 
-    return len;
+    return uc.length;
 }

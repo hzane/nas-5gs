@@ -2,14 +2,12 @@
 #include "../dissect_sm_msg.hh"
 #include "../ts24007.hh"
 
-/*
- * 8.3.12 PDU session release request
- */
-int sm::dissect_pdu_ses_rel_req(dissector d, context* ctx) {
-    auto        len = d.length;
-    use_context uc(ctx, "pdu-session-release-request", d);
+/* 8.3.12 PDU session release request */
+int sm::dissect_pdu_ses_rel_req(dissector d, context* ctx) {    
+    const use_context uc(ctx, "pdu-session-release-request", d, 0);
+
     /* Direction: UE to network */
-    d.pinfo->dir = pi_dir::ul;
+    up_link(d.pinfo);    
 
     /* 59 5GSM cause 9.11.4.2    O    TV    2 */
     // ELEM_OPT_TV(0x59, , DE_NAS_5GS_SM_5GSM_CAUSE, NULL);
@@ -21,7 +19,5 @@ int sm::dissect_pdu_ses_rel_req(dissector d, context* ctx) {
     consumed = dissect_opt_elem_tlv_e(nullptr, &ext_pco, d, ctx);
     d.step(consumed);
 
-    d.extraneous_data_check(0);
-
-    return len;
+    return uc.length;
 }

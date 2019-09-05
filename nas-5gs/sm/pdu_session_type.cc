@@ -3,9 +3,10 @@
 
 /*  8.3.6 PDU session authentication result */
 int sm::dissect_pdu_ses_auth_res(dissector d, context* ctx) {
-    auto start = d.offset;
+    const use_context uc(ctx, "pdu-session-auth-result", d, 0);
+    
     /* Direction: network to UE */
-    d.pinfo->dir = pi_dir::dl;
+    down_link(d.pinfo);    
 
     /*EAP message    EAP message 9.11.2.2    M    LV-E    6-1502 */
     // ELEM_MAND_LV_E(,  DE_NAS_5GS_CMN_EAP_MESSAGE,  );
@@ -17,9 +18,8 @@ int sm::dissect_pdu_ses_auth_res(dissector d, context* ctx) {
     // ELEM_OPT_TLV_E(0x7B, NAS_PDU_TYPE_ESM, DE_ESM_EXT_PCO, NULL);
     consumed = dissect_opt_elem_tlv_e(nullptr, &ext_pco, d, ctx);
     d.step(consumed);
-
-    d.extraneous_data_check(0);
-    return d.offset - start;
+    
+    return d.offset - uc.offset;
 }
 
 // Selected PDU session type    PDU session type 9.11.4.11
@@ -51,6 +51,10 @@ const field_meta sm::hf_sm_pdu_ses_type = {
 
 // Selected PDU session type    PDU session type 9.11.4.11
 int sm::dissect_pdu_ses_type(dissector d, context* ctx) {
+    const use_context uc(ctx, "selected-pdu-session-type", d, -1);
+
     d.add_item(1, &hf_sm_pdu_ses_type, enc::be);
+    d.step(1);
+
     return 1;
 }

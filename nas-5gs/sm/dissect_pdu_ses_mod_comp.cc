@@ -4,7 +4,7 @@
 
 /* * 8.3.10 PDU session modification complete */
 int sm::dissect_pdu_ses_mod_comp(dissector d, context* ctx) {    
-    use_context uc(ctx, "pdu-session-modification-complete", d, 2);
+    const use_context uc(ctx, "pdu-session-modification-complete", d, 2);
 
     /* Direction: UE to network */
     up_link(d.pinfo);    
@@ -25,7 +25,7 @@ int sm::dissect_pdu_ses_mod_comp(dissector d, context* ctx) {
      * the 5GSM cause IE for future extensions of the PDU SESSION MODIFICATION COMPLETE
      * message.*/
 
-    d.extraneous_data_check(2); // sm-cause
+    // sm-cause
 
     return uc.length;
 }

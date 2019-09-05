@@ -27,6 +27,8 @@ const field_meta hf_max_supported_packet_filters_c = {
 
 //  9.11.4.9    Maximum number of supported packet filters
 int sm::dissect_max_num_sup_kpt_flt(dissector d, context* ctx) {
+    const use_context uc(ctx, "max-nof-supported-packet-filters", d, -1);
+
     d.add_item(1, &hf_max_supported_packet_filters, enc::be);
     d.step(1);
     d.add_item(1, &hf_max_supported_packet_filters_c, enc::be);

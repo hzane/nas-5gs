@@ -24,8 +24,9 @@ const field_meta hf_gsma_conf_prot = {
 
 // Extended protocol configuration options  9.11.4.6
 int sm::dissect_ext_pco(dissector d, context* ctx) {
-    // See subclause 10.5.6.3A in 3GPP TS 24.008
-    auto len = d.length;
+    const use_context uc(ctx, "extended-protocol-conf-options", d, 0);
+
+    // See subclause 10.5.6.3A in 3GPP TS 24.008    
     auto oct = d.uint8();
 
     /* 1 ext 0 0 0 0 Spare  Configuration protocol */
@@ -35,5 +36,5 @@ int sm::dissect_ext_pco(dissector d, context* ctx) {
 
     // DETAIL:
 
-    return len;
+    return uc.length;
 }

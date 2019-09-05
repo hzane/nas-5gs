@@ -30,14 +30,14 @@ const field_meta sm::hf_pdu_addr_ipv6 = {
     0x0,
 };
 
-// PDU address 9.11.4.10
+// PDU address 9.11.4.10 15 octets
 int sm::dissect_pdu_address(dissector d, context* ctx) {
-    auto     len  = d.length;
-    uint32_t val  = (uint32_t) d.tvb->uint8(d.offset);
+    const use_context uc(ctx, "pdu-address", d, 8);
+    
+    const auto val  = static_cast< uint32_t >(d.tvb->uint8(d.offset));
     auto     item = d.add_item(1, &hf_sm_pdu_ses_type, enc::be);
     d.step(1);
 
-    // use_tree ut(d, item);
     /* PDU address information */
     switch (val) {
     case 1: // ipv4
@@ -65,5 +65,5 @@ int sm::dissect_pdu_address(dissector d, context* ctx) {
     default:
         diag("unknown pdu address %d", val);
     }
-    return 0;
+    return uc.length;
 }
