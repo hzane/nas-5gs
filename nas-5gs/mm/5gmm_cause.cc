@@ -10,6 +10,8 @@ extern const element_meta mm::mm_cause = {
 
 // 9.11.3.2	5GMM cause
 int mm::dissect_mm_cause(dissector d, context* ctx) {
+    const use_context uc(ctx, "5gmm-cause", d, -1);
+
     d.tree->add_item(d.pinfo, d.tvb, d.offset, 1, &hf_mm_cause, enc::be);
     return 1;
 }

@@ -2,24 +2,15 @@
 #include "../ts24007.hh"
 #include "../gsm.hh"
 
-namespace mm_reg_rej {
-
-extern const element_meta t3346_gprs_timer2;
-extern const element_meta t3502_gprs_timer_2;
-
-} // namespace mm_reg_rej
 
 using namespace cmn;
 using namespace nas;
-using namespace mm_reg_rej;
 
 /*  8.2.9 Registration reject */
-int mm::dissect_registration_rej(dissector d, context* ctx) {
-    auto        len = d.length;
-    use_context uc(ctx, "registration-reject", d);
+int mm::dissect_registration_rej(dissector d, context* ctx) {    
+    const use_context uc(ctx, "registration-reject", d, 0);
 
     /* 5GMM cause   9.11.3.2  M   V   1 */
-    /*ELEM_MAND_V(,DE_NAS_5GS_MM_5GMM_CAUSE, );  */
     auto consumed = dissect_elem_v(nullptr, &mm_cause, d, ctx);
     d.step(consumed);
 
@@ -36,44 +27,8 @@ int mm::dissect_registration_rej(dissector d, context* ctx) {
     /* 78    EAP message  9.11.2.2    O    TLV-E    7-1503 */
     // ELEM_OPT_TLV_E(0x78, , DE_NAS_5GS_CMN_EAP_MESSAGE, NULL);
     consumed = dissect_opt_elem_tlv_e(nullptr, &eap_msg, d, ctx);
-    d.step(consumed);
+    d.step(consumed);    
 
-    d.extraneous_data_check(0);
-
-    return len;
+    return uc.length;
 }
 
-namespace mm_reg_rej {
-/* 5F  T3346 value GPRS timer 2     9.11.2.4   O   TLV 3 */
-int dissect_t3346_gprs_timer2(dissector d, context* ctx);
-
-/* 5F  T3346 value GPRS timer 2     9.11.2.4   O   TLV 3 */
-extern const element_meta t3346_gprs_timer2 = {
-    0x5f,
-    "T3346 value GPRS timer 2",
-    dissect_t3346_gprs_timer2,
-    nullptr,
-};
-
-// T3502 value    GPRS timer 2 9.11.2.4
-int dissect_t3502_gprs_timer_2(dissector d, context* ctx);
-
-// T3502 value    GPRS timer 2 9.11.2.4
-extern const element_meta t3502_gprs_timer_2 = {
-    0x16,
-    "T3502 value    GPRS timer 2",
-    dissect_t3502_gprs_timer_2,
-    nullptr,
-};
-
-/* 5F  T3346 value GPRS timer 2     9.11.2.4   O   TLV 3 */
-int dissect_t3346_gprs_timer2(dissector d, context* ctx) {
-    return dissect_gprs_timer2(d, ctx);
-}
-
-// T3502 value    GPRS timer 2 9.11.2.4
-int dissect_t3502_gprs_timer_2(dissector d, context* ctx) {
-    return dissect_gprs_timer2(d, ctx);
-}
-
-} // namespace mm_reg_rej

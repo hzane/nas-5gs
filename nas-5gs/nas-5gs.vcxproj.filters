@@ -572,9 +572,6 @@
     <ClInclude Include="common\common.hh">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="mm\5gs_registration.hh">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="mm\mm_field_meta.hh">
       <Filter>Header Files</Filter>
     </ClInclude>

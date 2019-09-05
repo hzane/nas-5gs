@@ -21,7 +21,7 @@ int mm::dissect_dl_nas_transp(dissector d, context* ctx) {
     d.tree->add_item(d.pinfo, d.tvb, d.offset, 1, hf_spare_half_octet, enc::be);
     d.step(1);
 
-    /*Payload container     9.11.3.39    M    LV-E    3-65537*/
+    /* Payload container     9.11.3.39    M    LV-E    3-65537*/
     // ELEM_MAND_LV_E(DE_NAS_5GS_MM_PLD_CONT,);
     auto consumed = dissect_elem_lv_e(nullptr, &pld_cont, d, ctx);
     d.step(consumed);
@@ -31,12 +31,12 @@ int mm::dissect_dl_nas_transp(dissector d, context* ctx) {
     consumed = dissect_opt_elem_tv(nullptr, &pdu_ses_id, d, ctx);
     d.step(consumed);
 
-    /*24    Additional information    Additional information    9.11.2.1    O    TLV 3-n*/
+    /*24    Additional information 9.11.2.1    O    TLV 3-n*/
     // ELEM_OPT_TLV(0x24, , DE_NAS_5GS_CMN_ADD_INF, NULL);
     consumed = dissect_opt_elem_tlv(nullptr, &additional_inf, d, ctx);
     d.step(consumed);
 
-    /*58    5GMM cause    5GMM cause 9.11.3.2    O    TV    2 */
+    /*58    5GMM cause  9.11.3.2    O    TV    2 */
     // ELEM_OPT_TV(0x58, , DE_NAS_5GS_MM_5GMM_CAUSE, NULL);
     consumed = dissect_opt_elem_tv(nullptr, &mm_cause, d, ctx);
     d.step(consumed);
@@ -53,7 +53,7 @@ int mm::dissect_dl_nas_transp(dissector d, context* ctx) {
 // Back-off timer value    GPRS timer 3 9.11.2.5
 extern const element_meta mm::backoff_gprs_timer3 = {
     0x37,
-    "GPRS timer - Back-off timer",
+    "GPRS timer 3 - Back-off timer",
     dissect_gprs_timer3,
     nullptr,
 };

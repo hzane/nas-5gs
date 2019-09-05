@@ -1,5 +1,27 @@
 #include "../dissect_mm_msg.hh"
 
+
+/* 9.11.3.1     5GMM capability*/
+int mm::dissect_mm_cap(dissector d, context* ctx) {
+    use_context uc(ctx, "5gmm-capability", d, -1);
+
+    static const field_meta* flags[] = {
+        &hf_sgc_7,
+        &hf_hccp_ciot_6,
+        &hf_n3data_5,
+        &hf_5gcp_ciot_4,
+        &hf_restrict_ec_3,
+        &hf_lpp_b2,
+        &hf_ho_attach_b1,
+        &hf_s1_mode_b0,
+        nullptr,
+    };
+    d.add_bits(flags);
+    d.step(1);
+
+    return 1;
+}
+
 namespace mm {
 const true_false_string tfs_sgc_7 = {
     "service gap control supported",
@@ -96,12 +118,12 @@ const field_meta hf_lpp_b2 = {
 };
 
 const true_false_string tfs_ho_attach_1 = {
-    "ATTACH REQUEST message containing PDN CONNECTIVITY REQUEST message with request "
-    "type set to \"handover\" or \"handover of emergency bearer services\" to "
-    "transfer PDU session from N1 mode to S1 mode supported",
-    "ATTACH REQUEST message containing PDN CONNECTIVITY REQUEST message with request "
-    "type set to \"handover\" or \"handover of emergency bearer services\" to transfer "
-    "PDU session from N1 mode to S1 mode not supported",
+    R"(ATTACH REQUEST message containing PDN CONNECTIVITY REQUEST message with request )"
+    R"(type set to "handover" or "handover of emergency bearer services" to )"
+    R"(transfer PDU session from N1 mode to S1 mode supported)",
+    R"(ATTACH REQUEST message containing PDN CONNECTIVITY REQUEST message with request )"
+    R"(type set to "handover" or "handover of emergency bearer services" to transfer )"
+    R"(PDU session from N1 mode to S1 mode not supported)",
 };
 
 const field_meta hf_ho_attach_b1 = {
@@ -139,26 +161,5 @@ const element_meta mm::mm_cap = {
     dissect_mm_cap,
     nullptr,
 };
-
-/* 9.11.3.1     5GMM capability*/
-int mm::dissect_mm_cap(dissector d, context* ctx) {
-    use_context uc(ctx, "5gmm-capability", d, 0);
-
-    static const field_meta* flags[] = {
-        &hf_sgc_7,
-        &hf_hccp_ciot_6,
-        &hf_n3data_5,
-        &hf_5gcp_ciot_4,
-        &hf_restrict_ec_3,
-        &hf_lpp_b2,
-        &hf_ho_attach_b1,
-        &hf_s1_mode_b0,
-        nullptr,
-    };
-    d.add_bits(flags);
-    d.step(1);
-
-    return 1;
-}
 
 

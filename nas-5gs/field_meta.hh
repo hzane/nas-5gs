@@ -90,6 +90,7 @@ __declspec(selectany) extern const uint32_t sep_dash  = 21u;
 __declspec(selectany) extern const uint32_t sep_colon = 22u;
 __declspec(selectany) extern const uint32_t sep_space = 23u;
 __declspec(selectany) extern const uint32_t bstrn     = 24u;
+__declspec(selectany) extern const uint32_t ext_length = 25u;
 
 inline uint32_t get(uint32_t d) { return d & 0xff; }
 

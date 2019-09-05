@@ -1,5 +1,14 @@
 #include "../dissect_mm_msg.hh"
 
+
+/* * 9.11.3.3 5GS identity type */
+int mm::dissect_5gs_id_type(dissector d, context* ctx) {
+    const use_context uc(ctx, "5gs-identity-type", d, -1);
+
+    d.add_item(1, &hf_id_type, enc::be);
+    return 1;
+}
+
 namespace mm {
 /* * 9.11.3.4    5GS mobile identity */
 const val_string type_id_values[] = {
@@ -33,9 +42,3 @@ extern const element_meta mm::id_type = {
     nullptr,
 };
 
-
-/* * 9.11.3.3 5GS identity type */
-int mm::dissect_5gs_id_type(dissector d, context* ctx) {
-    d.add_item(1, &hf_id_type, enc::be);
-    return 1;
-}

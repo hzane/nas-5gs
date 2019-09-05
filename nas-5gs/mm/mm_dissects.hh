@@ -146,4 +146,5 @@ int dissect_reg_req_type(dissector d, context* ctx);
 int dissect_mm_cap(dissector d, context* ctx);
 
 int dissect_updp(dissector d, context* ctx);
+int dissect_auth_fail_param(dissector d, context* ctx);
 } // namespace mm

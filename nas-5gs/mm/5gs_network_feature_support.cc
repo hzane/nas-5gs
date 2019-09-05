@@ -1,5 +1,41 @@
 #include "../dissect_mm_msg.hh"
 
+
+/* 9.11.3.5     5GS network feature support*/
+int mm::dissect_nw_feat_sup(dissector d, context* ctx) {
+    const use_context uc(ctx, "5gs-network-feature-support", d, 1);
+
+    static const field_meta* flags[] = {
+        &hf_nw_feat_sup_mpsi_b7,
+        &hf_nw_feat_sup_ims_iwk_n26_b6,
+        &hf_nw_feat_sup_ims_emf_b5b4,
+        &hf_nw_feat_sup_ims_emc_b3b2,
+        &hf_nw_feat_sup_ims_vops_b1b0,
+        nullptr,
+    };
+    /* MPSI    IWK N26    EMF    EMC    IMS VoPS    octet 3*/
+    d.add_bits(flags);
+    d.step(1);
+
+    static const field_meta* oct4[] = {
+        &hf_nwfs_b0,
+        &hf_nwfs_b1,
+        &hf_nwfs_b2,
+        &hf_nwfs_b3,
+        &hf_nwfs_b4,
+        &hf_nwfs_b5,
+        &hf_nwfs_b6,
+        &hf_nwfs_b7,
+        nullptr,
+    };
+    d.add_bits(oct4);
+    d.step(1);
+
+    // oct 5 is optional
+
+    return uc.length; // 1-3
+}
+
 namespace mm {
 const value_string nas_5gs_nw_feat_sup_emf_values[] = {
     {0x0, "Emergency services fallback not supported"},
@@ -206,38 +242,3 @@ const element_meta mm::nw_feat_sup = {
     dissect_nw_feat_sup,
     nullptr,
 };
-
-/* 9.11.3.5     5GS network feature support*/
-int mm::dissect_nw_feat_sup(dissector d, context* ctx) {
-    use_context uc(ctx, "5gs-network-feature-support", d, 1);
-
-    static const field_meta* flags[] = {
-        &hf_nw_feat_sup_mpsi_b7,
-        &hf_nw_feat_sup_ims_iwk_n26_b6,
-        &hf_nw_feat_sup_ims_emf_b5b4,
-        &hf_nw_feat_sup_ims_emc_b3b2,
-        &hf_nw_feat_sup_ims_vops_b1b0,
-        nullptr,
-    };
-    /* MPSI    IWK N26    EMF    EMC    IMS VoPS    octet 3*/
-    d.add_bits(flags);
-    d.step(1);
-
-    static const field_meta* oct4[] = {
-        &hf_nwfs_b0,
-        &hf_nwfs_b1,
-        &hf_nwfs_b2,
-        &hf_nwfs_b3,
-        &hf_nwfs_b4,
-        &hf_nwfs_b5,
-        &hf_nwfs_b6,
-        &hf_nwfs_b7,
-        nullptr,
-    };
-    d.add_bits(oct4);
-    d.step(1);
-
-    // oct 5 is optional
-
-    return uc.length; // 1-3
-}

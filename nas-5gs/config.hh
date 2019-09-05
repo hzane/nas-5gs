@@ -255,3 +255,5 @@ string mnc_aux(const uint8_t* d, int length = 3);
 string bcd_string(const uint8_t*d, int length);
 
 uint64_t uintmap(uint64_t f, uint64_t mask);
+
+int ext_length(const uint8_t* d);

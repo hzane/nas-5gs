@@ -44,7 +44,7 @@ int mm::dissect_pdu_ses_id(dissector d, context* ctx) {
 // PDU session ID 2 9.11.3.41
 extern const element_meta mm::pdu_ses_id = {
     0x12,
-    "PDU session ID",
+    "PDU session identity 2 - PDU session ID",
     dissect_pdu_ses_id,
     nullptr,
 };

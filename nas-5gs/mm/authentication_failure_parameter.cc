@@ -1,6 +1,18 @@
 #include "../dissect_mm_msg.hh"
 
 
+// See subclause 10.5.3.2.2 in 3GPP TS 24.008 [12].
+// Authentication failure parameter
+int mm::dissect_auth_fail_param(dissector d, context* ctx) {
+    const use_context uc(ctx, "auth-failure-param", d, -1);
+
+    /* This IE contains either the SRES or the 4 most significant octets of the RES */
+    d.add_item(4, &hf_gsma_dtap_res, enc::na);
+    d.step(4);
+
+    return 4;
+}
+
 extern const element_meta mm::auth_fail_param = {
     0x30,
     "Authentication failure parameter",
@@ -18,11 +30,3 @@ const field_meta mm::hf_gsma_dtap_res = {
     nullptr,
     0x00,
 };
-
-// See subclause 10.5.3.2.2 in 3GPP TS 24.008 [12].
-// Authentication failure parameter
-int mm::dissect_auth_fail_param(dissector d, context* ctx) {
-    /* This IE contains either the SRES or the 4 most significant octets of the RES */
-    d.add_item(4, &hf_gsma_dtap_res, enc::na);
-    return 4;
-}

@@ -323,7 +323,6 @@
     <ClInclude Include="field_meta.hh" />
     <ClCompile Include="mm\registration_req_i.cc" />
     <ClInclude Include="gsm.hh" />
-    <ClInclude Include="mm\5gs_registration.hh" />
     <ClInclude Include="mm\mm_dissects.hh" />
     <ClInclude Include="mm\mm_element_meta.hh" />
     <ClInclude Include="mm\mm_field_meta.hh" />

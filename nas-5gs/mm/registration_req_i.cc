@@ -1,7 +1,6 @@
 #include "../core.hh"
 #include "../dissect_mm_msg.hh"
 #include "../ts24007.hh"
-#include "5gs_registration.hh"
 
 namespace mm {
 

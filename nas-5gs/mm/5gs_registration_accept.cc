@@ -4,24 +4,10 @@ using namespace cmn;
 using namespace mm;
 using namespace nas;
 
-namespace {
-const true_false_string tfs_allowed_or_not = {
-    "Allowed",
-    "Not Allowed",
-};
-const true_false_string tfs_requested_or_not = {
-    "Requested",
-    "Not Requested",
-};
-}
-/*
- * 8.2.7    Registration accept
- */
-int mm::dissect_registration_accept(dissector d, context* ctx) {
-    const auto        len = d.length;
-    use_context uc(ctx, "registration-accept", d);
-
-    using namespace mm_reg_accept;
+/* 8.2.7    Registration accept */
+int mm::dissect_registration_accept(dissector d, context* ctx) {    
+    use_context uc(ctx, "registration-accept", d, 12);
+  
 
     /*      5GS registration result    9.11.3.6    M    LV 2*/
     auto consumed = dissect_elem_lv(nullptr, &reg_res, d, ctx);
@@ -159,11 +145,9 @@ int mm::dissect_registration_accept(dissector d, context* ctx) {
     // tbdT3447 value GPRS timer 3 9.11.2.5 O TLV 3
     // XX T3448 value GPRS timer 3 9.11.2.4 O TLV 3
     // TBD T3324 value GPRS timer 3 9.11.2.5 O TLV 3
+   
 
-
-    d.extraneous_data_check(0);
-
-    return len;
+    return uc.length;
 }
 namespace mm {
 
@@ -340,7 +324,7 @@ const field_meta hf_reg_res_sms_allowed = {
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
-    &tfs_allowed_or_not,
+    &tfs_allowed_not_allowed,
     nullptr,
     0x08,
 };
@@ -631,7 +615,7 @@ const field_meta hf_sor_hdr0_ack = {
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
-    (&tfs_requested_or_not),
+    &tfs_requested_not_requested,
     nullptr,
     0x08,
 };

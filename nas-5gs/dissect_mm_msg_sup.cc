@@ -1080,7 +1080,7 @@ const field_meta* mm::hf_nas_eps_nas_ksi = &hfm_nas_eps_nas_ksi;
 
 extern const element_meta mm::nas_ksi = {
     0xff,
-    "NAS key set identifier",
+    "NAS key set identifier - ngKSI",
     dissect_nas_ksi,
     nullptr,
 };

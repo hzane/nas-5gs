@@ -7,7 +7,7 @@
 const element_meta mm::key_set_id = {
     0xff,
     "NAS key set identifier - ngKSI",
-    dissect_key_set_id,
+    dissect_nas_ksi,
     nullptr,
 };
 
@@ -27,3 +27,4 @@ int mm::dissect_nas_ksi(dissector d, context* ctx) {
 
     return 1;
 }
+

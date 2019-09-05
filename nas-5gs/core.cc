@@ -274,3 +274,10 @@ void extraneous_data_check(int offset, int len, int maxlen, context*ctx){
 uint64_t uintmap(uint64_t f, uint64_t mask) {
     return mask ? (f&mask)>>ws_ctz(mask) : f;
 }
+
+int ext_length(const uint8_t* d) {
+    const auto msb = d[0];
+    /* length in 2 octets */
+    if ((msb & 0x80u) == 0) return (int(msb) << 8) + int(d[1]);
+    return int(msb & 0x7fu);
+}

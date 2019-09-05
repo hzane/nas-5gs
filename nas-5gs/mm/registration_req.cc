@@ -1,7 +1,6 @@
 #include "../dissect_mm_msg.hh"
 #include "../gsm.hh"
 #include "../ts24007.hh"
-#include "5gs_registration.hh"
 
 using namespace cmn;
 using namespace mm;

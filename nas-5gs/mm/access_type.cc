@@ -1,5 +1,14 @@
 #include "../dissect_mm_msg.hh"
 
+/*  9.11.3.11    Access type */
+int mm::dissect_access_type(dissector d, context* ctx) {
+    const use_context uc(ctx, "access-type", d, -1);
+
+    d.add_item(1, &hf_acc_type, enc::be);
+    d.step(1);
+
+    return 1;
+}
 
 extern const element_meta mm::access_type = {
     0xff,
@@ -26,10 +35,3 @@ const field_meta mm::hf_acc_type = {
     nullptr,
     0x03,
 };
-
-int mm::dissect_access_type(dissector d, context*) {
-    // spare_b3
-    // spare_b2
-    d.add_item(1, &hf_acc_type, enc::be);
-    return 1;
-}

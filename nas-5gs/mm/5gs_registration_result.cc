@@ -1,5 +1,16 @@
 #include "../dissect_mm_msg.hh"
 
+
+// 9.11.3.6    5GS registration result
+int mm::dissect_reg_res(dissector d, context* ctx) {
+    use_context uc(ctx, "5gs-registration-result", d, -1);
+
+    /* 0 Spare 0 Spare 0 Spare 0 Spare SMS allowed 5GS registration result value */
+    d.add_item(1, &hf_reg_res_sms_allowed, enc::be);
+    d.add_item(1, &hf_reg_res, enc::be);
+    return 1;
+}
+
 namespace mm {
 
 /* 9.11.3.6    5GS registration result */
@@ -28,13 +39,3 @@ const element_meta mm::reg_res = {
     nullptr,
 };
 
-
-// 9.11.3.6    5GS registration result
-int mm::dissect_reg_res(dissector d, context* ctx) {
-    use_context uc(ctx, "5gs-registration-result", d, 0);
-
-    /* 0 Spare 0 Spare 0 Spare 0 Spare SMS allowed 5GS registration result value */
-    d.add_item(1, &hf_reg_res_sms_allowed, enc::be);
-    d.add_item(1, &hf_reg_res, enc::be);
-    return 1;
-}

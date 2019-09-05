@@ -82,7 +82,7 @@ const element_meta sm::mapped_eps_b_cont = {
 // Back-off timer value    GPRS timer 3 9.11.2.25
 const element_meta sm::backoff_gprs_timer3 = {
     0x37,
-    "GPRS timer - Back-off timer value",
+    "GPRS timer 3 - Back-off timer value",
     dissect_gprs_timer3,
     nullptr,
 };
