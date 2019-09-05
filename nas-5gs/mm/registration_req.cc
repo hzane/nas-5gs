@@ -207,13 +207,6 @@ const element_meta nksi_key_set_id = {
     nullptr,
 };
 
-int                dissect_mm_cap(dissector d, context* ctx = nullptr);
-const element_meta mm_cap = {
-    0x10,
-    "5GMM capability",
-    dissect_mm_cap,
-    nullptr,
-};
 
 // 9.11.3.54
 int dissect_use_sec_cap(dissector d, context* ctx = nullptr);
@@ -336,143 +329,7 @@ int mm_reg_req::dissect_nksi_key_set_id(dissector d, context* ctx) {
     return dissect_nas_ksi(d, ctx);
 }
 
-const true_false_string tfs_mm_cap7 = {
-    "service gap control supported",
-    "service gap control not supported",
-};
 
-const field_meta hf_mm_cap_7 = {
-    "Service gap control SGC",
-    "nas_5gs.mm.sgc",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    (&tfs_mm_cap7),
-    nullptr,
-    0x80,
-};
-const true_false_string tfs_mm_cap_6 = {
-    "Header compression for control plane CIoT 5GS optimization supported",
-    "Header compression for control plane CIoT 5GS optimization not supported",
-};
-const field_meta hf_mm_cap_6 = {
-    "Header compression for control plane CIoT 5GS optimization (5G-HC-CP-CIoT)",
-    "nas_5gs.mm.5g_hc_cp_ciot",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    (&tfs_mm_cap_6),
-    nullptr,
-    0x40,
-};
-
-const true_false_string    tfs_mm_cap5  = {
-    "Header compression for control plane CIoT 5GS optimization supported",
-    "Header compression for control plane CIoT 5GS optimization not supported",
-};
-const true_false_string tfs_mm_cap4 = {
-    "N3 data transfer not supported",
-    "N3 data transfer supported",
-};
-const true_false_string tfs_mm_cap3 = {
-    "Restriction on use of enhanced coverage supported",
-    "Restriction on use of enhanced coverage not supported",
-};
-const true_false_string tfs_mm_cap2 = {
-    "LPP in N1 mode supported",
-    "LPP in N1 mode not supported",
-};
-const true_false_string tfs_mm_cap1 = {
-    "ATTACH REQUEST message containing PDN CONNECTIVITY REQUEST message with request "
-    "type set to \"handover\" or \"handover of emergency bearer services\" to "
-    "transfer PDU session from N1 mode to S1 mode supported",
-    "ATTACH REQUEST message containing PDN CONNECTIVITY REQUEST message with request "
-    "type set to \"handover\" or \"handover of emergency bearer services\" to transfer PDU session from N1 mode to S1 mode not supported",
-};
-const true_false_string tfs_mm_cap0 = {
-    "S1 mode supported",
-    "S1 mode not supported",
-};
-const field_meta hf_mm_cap_5 = {
-    "N3 data transfer",
-    "nas_5gs.mm.n3data",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    (&tfs_mm_cap5),
-    nullptr,
-    0x20,
-};
-const field_meta hf_mm_cap_4 = {
-    "Control plane CIoT 5GS optimization (5G-CP CIoT)",
-    "nas_5gs.mm.5g_cp_ciot",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    (&tfs_mm_cap4),
-    nullptr,
-    0x10,
-};
-const field_meta hf_mm_cap_3 = {
-    "Restriction on use of enhanced coverage support (RestrictEC)",
-    "nas_5gs.mm.restrict_ec",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    (&tfs_mm_cap3),
-    nullptr,
-    0x08,
-};
-
-const field_meta hf_lpp_cap_b2 = {
-    "LTE Positioning Protocol (LPP) capability",
-    "nas_5gs.mm.lpp_cap_b2",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    (&tfs_mm_cap2),
-    nullptr,
-    0x04,
-};
-
-const field_meta hf_ho_attach_b1 = {
-    "HO attach",
-    "nas_5gs.mm.ho_attach_b1",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    (&tfs_mm_cap1),
-    nullptr,
-    0x02,
-};
-const field_meta hf_s1_mode_b0 = {
-    "S1 mode",
-    "nas_5gs.mm.s1_mode_b0",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    (&tfs_mm_cap0),
-    nullptr,
-    0x01,
-};
-/* 9.11.3.1     5GMM capability*/
-int mm_reg_req::dissect_mm_cap(dissector d, context* ctx) {
-    static const field_meta* flags[] = {
-        &hf_mm_cap_7,
-        &hf_mm_cap_6,
-        &hf_mm_cap_5,
-        &hf_mm_cap_4,
-        &hf_mm_cap_3,
-        &hf_lpp_cap_b2,
-        &hf_ho_attach_b1,
-        &hf_s1_mode_b0,
-        nullptr,
-    };
-    d.add_bits(flags);
-    d.step(1);
-    d.extraneous_data_check(0);
-    return 1;
-}
 namespace {
 const true_false_string tfs_supp_or_not = {
     "Supported",
@@ -1789,7 +1646,7 @@ int mm_reg_req::dissect_ul_data_status(dissector d, context* ctx) {
         &hf_nas_5gs_ul_data_sts_psi_8_b0,
         nullptr,
     };
-    
+
     d.add_bits(psi_0_7_flags);
     d.step(1);
 

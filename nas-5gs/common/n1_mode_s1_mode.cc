@@ -33,7 +33,10 @@ const field_meta cmn::hf_mm_n1_mode_reg_b1 = {
 
 // 9.11.2.7 N1 mode to S1 mode NAS transparent container page.350
 int cmn::dissect_n1_to_s1_mode_container(dissector d, context* ctx) {
+    use_context uc(ctx, "n1-mode-to-s1-mode-transparent-container", d, 0);
     // a type 3 information element with a length of 2 octets
-    d.add_item(2, &hf_n1_to_s1_mode, enc::be);
-    return d.length;
+    d.add_item(1, &hf_n1_to_s1_mode, enc::be);
+    d.step(1);
+
+    return uc.length;
 }

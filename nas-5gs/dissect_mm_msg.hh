@@ -90,7 +90,6 @@ extern const element_meta pdu_ses_react_res;
 extern const element_meta pdu_ses_status;
 extern const element_meta mobile_id;
 extern const field_meta   hf_mm_length;
-extern const field_meta   hfm_mm_cause;
 extern const field_meta   hf_mm_cause;
 extern const field_meta   hf_mm_type_id;
 extern const field_meta   hf_mm_sst;
@@ -206,4 +205,10 @@ extern const field_meta hfm_mm_raai_b0;
 extern const field_meta hf_mapped_conf_sst;
 extern const field_meta hf_mapped_conf_ssd;
 extern const field_meta hf_mm_sprti;
+
+//  5GMM capability  9.11.3.1
+int dissect_mm_cap(dissector d, context* ctx);
+
+//  5GMM capability  9.11.3.1
+extern const element_meta mm_cap;
 } // namespace mm

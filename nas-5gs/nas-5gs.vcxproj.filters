@@ -228,6 +228,18 @@
     <ClCompile Include="common\mcc_mnc.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="mm\5gmm_cause.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\5gmm_capability.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\de_reg_accept_ue_term.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\de_reg_accept_ue_orig.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="config.hh">

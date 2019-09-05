@@ -902,12 +902,6 @@ int mm::dissect_pdu_ses_react_res(dissector d, context* ctx) {
     return len;
 }
 
-// 9.11.3.2	5GMM cause
-int mm::dissect_mm_cause(dissector d, context* ctx) {
-    auto cause = d.tvb->uint8(d.offset);
-    d.tree->add_item(d.pinfo, d.tvb, d.offset, 1, &hf_mm_cause, enc::be);
-    return 1;
-}
 
 /*  9.11.3.29    LADN indication  */
 int mm::dissect_ladn_ind(dissector d, context* ctx) {

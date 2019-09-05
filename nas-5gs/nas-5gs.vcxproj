@@ -175,6 +175,8 @@
     <ClCompile Include="field_meta.cc" />
     <ClCompile Include="formats.cc" />
     <ClCompile Include="gsm.cc" />
+    <ClCompile Include="mm\5gmm_capability.cc" />
+    <ClCompile Include="mm\5gmm_cause.cc" />
     <ClCompile Include="mm\authentication_failure.cc" />
     <ClCompile Include="mm\authentication_rej.cc" />
     <ClCompile Include="mm\authentication_req.cc" />
@@ -182,6 +184,8 @@
     <ClCompile Include="mm\authentication_result.cc" />
     <ClCompile Include="mm\configuration_update_comp.cc" />
     <ClCompile Include="mm\configuration_upd_cmd.cc" />
+    <ClCompile Include="mm\de_reg_accept_ue_orig.cc" />
+    <ClCompile Include="mm\de_reg_accept_ue_term.cc" />
     <ClCompile Include="mm\de_reg_req_ue_term.cc" />
     <ClCompile Include="mm\de_reg_req_ue_orig.cc" />
     <ClCompile Include="mm\dl_nas_transp.cc" />

@@ -89,7 +89,7 @@ const field_meta cmn::hf_mm_s1_mode_reg_b0 = {
 };
 
 int cmn::dissect_s1_to_n1_mode_container(dissector d, context* ctx) {
-    const use_context uc(ctx, "s1-mode-to-n1-mode", d, 2);
+    const use_context uc(ctx, "s1-mode-to-n1-mode-transparent-container", d, 2);
 
     /*The value part of the Intra N1 mode NAS transparent container information element is
 included in specific information elements within some RRC messages sent to the UE.*/

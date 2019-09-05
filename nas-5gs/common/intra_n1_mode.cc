@@ -79,7 +79,7 @@ const field_meta hf_seq_no              = {
 } // namespace
 
 // 9.11.2.6 Intra N1 mode NAS transparent container page.349
-int cmn::dissect_n1_mode_container(dissector d, context* ctx) {
+int cmn::dissect_intra_n1_mode_container(dissector d, context* ctx) {
     use_context uc(ctx, "intra-n1-mode-nas-transparent-container", d, 0);
 
     /*The value part of the Intra N1 mode NAS transparent container information element is
