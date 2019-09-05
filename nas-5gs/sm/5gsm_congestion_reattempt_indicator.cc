@@ -10,6 +10,8 @@ const element_meta sm::sm_congestion_reattempt = {
 
 // 5GSM congestion re-attempt indicator 9.11.4.21
 int sm::dissect_sm_congestion_reattempt(dissector d, context* ctx) {
+    const use_context uc(ctx, "5gsm-congestion-reattempt-indicator", d, -1);
+
     d.add_item(1, &hf_abo, enc::be);
     d.step(1);
     return 1;

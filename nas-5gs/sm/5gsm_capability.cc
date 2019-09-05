@@ -5,6 +5,8 @@ using namespace sm;
 
 /*  9.11.4.1    5GSM capability */
 int sm::dissect_sm_cap(dissector d, context* ctx) {
+    const use_context        uc(ctx, "5gsm-capability", d, -1);
+
     static const field_meta* flags[] = {
         &hf_spare_b7,
         &hf_spare_b6,
@@ -17,5 +19,7 @@ int sm::dissect_sm_cap(dissector d, context* ctx) {
         nullptr,
     };
     d.add_bits(flags);
+    d.step(1);
+
     return 1;
 }

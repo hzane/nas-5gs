@@ -17,6 +17,10 @@ const field_meta hf_pdu_always_on_ses_ind = {
 
 /*  9.11.4.3 Always-on PDU session indication */
 int sm::dissect_always_on_pdu_ses_ind(dissector d, context* ctx) {
+    const use_context uc(ctx, "always-on-pdu-session-indication", d, -1);
+
     d.add_item(1, &hf_pdu_always_on_ses_ind, enc::be);
-    return d.length;
+    d.step(1);
+
+    return 1;
 }
