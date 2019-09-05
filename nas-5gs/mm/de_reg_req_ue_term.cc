@@ -24,7 +24,6 @@ int mm::dissect_dereg_req_ue_term(dissector d, context* ctx) {
     consumed = dissect_opt_elem_tlv(nullptr, &t3346_gprs_timer2, d, ctx);
     d.step(consumed);
 
-    d.extraneous_data_check(0);
     return uc.length;
 }
 

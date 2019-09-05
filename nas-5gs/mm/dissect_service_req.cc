@@ -1,25 +1,14 @@
 #include "../dissect_mm_msg.hh"
 #include "../ts24007.hh"
 
-namespace mm_service_req {
-extern const element_meta mm_service_type;
-extern const element_meta key_set_id;
-extern const element_meta s_tmsi;
-extern const element_meta uplink_data_status;
-extern const element_meta allowed_pdu_ses_status;
-} // namespace mm_service_req
+
 
 using namespace nas;
 using namespace mm;
 
-/*
- * 8.2.16 Service request page.317
- */
-int mm::dissect_service_req(dissector d, context* ctx) {
-    auto        len = d.length;
-    use_context uc(ctx, "service-request", d);
-
-    using namespace mm_service_req;
+/* 8.2.16 Service request page.317 */
+int mm::dissect_service_req(dissector d, context* ctx) {    
+    use_context uc(ctx, "service-request", d, 0);
 
     /*  ELEM_MAND_V(,DE_NAS_5GS_MM_NAS_KEY_SET_ID," - ngKSI", );*/
     /* ngKSI     NAS key set identifier 9.11.3.32    M    V    1/2 */
@@ -52,11 +41,9 @@ int mm::dissect_service_req(dissector d, context* ctx) {
     /* 71  NAS message container 9.11.3.33    O    TLV-E    4-n */
     // ELEM_OPT_TLV_E(0x71, , DE_NAS_5GS_MM_NAS_MSG_CONT, NULL);
     consumed = dissect_opt_elem_tlv_e(nullptr, &nas_msg_cont, d, ctx);
-    d.step(consumed);
+    d.step(consumed);    
 
-    d.extraneous_data_check(0);
-
-    return len;
+    return uc.length;
 }
 namespace mm {
 

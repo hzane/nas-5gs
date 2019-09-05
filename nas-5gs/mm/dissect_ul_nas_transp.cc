@@ -1,23 +1,14 @@
 #include "../dissect_mm_msg.hh"
 #include "../ts24007.hh"
 
-namespace mm_ul_nas_transp {
-extern const element_meta pld_cont_type;
-extern const element_meta pld_cont;
-extern const element_meta pdu_ses_id;
-extern const element_meta old_pdu_ses_id;
-extern const element_meta req_type;
-} // namespace mm_ul_nas_transp
 
 using namespace cmn;
 using namespace nas;
 using namespace mm;
-using namespace mm_ul_nas_transp;
 
 /* 8.2.10    UL NAS transport */
 int mm::dissect_ul_nas_transp(dissector d, context* ctx) {
-    auto        len = d.length;
-    use_context uc(ctx, "ul-nas-transport", d);
+    use_context uc(ctx, "ul-nas-transport", d, 1);
     /* Direction: UE to network */
     up_link(d.pinfo);
 
@@ -68,79 +59,7 @@ int mm::dissect_ul_nas_transp(dissector d, context* ctx) {
     d.step(consumed);
 
     // Z	MA PDU session information	MA PDU session information	O	TV	1
+   
 
-    // extraneous_data_check(d.pinfo, d.tree, d.tvb, d.offset, d.length, 0);
-    d.extraneous_data_check(1, ctx);
-
-    return len;
+    return uc.length;
 }
-
-namespace mm {
-int dissect_pld_cont_type(dissector d, context* ctx); // 9.11.3.40
-int dissect_pld_cont(dissector d, context* ctx);      // 9.11.3.39
-int dissect_pdu_ses_id(dissector d, context* ctx);
-int dissect_old_pdu_ses_id(dissector d, context* ctx);
-int dissect_req_type(dissector d, context* ctx);
-
-
-
-// Request type  9.11.3.47
-extern const element_meta req_type = {
-    0x80,
-    "Request type    Request type",
-    dissect_req_type,
-    nullptr,
-};
-
-
-// DNN 9.11.2.1A
-extern const element_meta dnn = {
-    0x25,
-    "DNN",
-    dissect_dnn,
-    nullptr,
-};
-
-
-
-// Additional information  9.11.2.1
-int dissect_additional_inf(dissector d, context* ctx) {
-    // The coding of the additional information value is dependent on the LCS application.
-    diag("no dissect for %s\n", paths(ctx).c_str());
-    return d.length;
-}
-
-/*  9.11.3.41    PDU session identity 2 */
-int dissect_old_pdu_ses_id(dissector d, context* ctx) {
-    d.add_item(1, hf_pdu_sess_id, enc::be);
-    return 1;
-}
-
-/*  9.11.3.47    Request type */
-static const value_string nas_5gs_mm_req_type_vals[] = {
-    {0x01, "Initial request"},
-    {0x02, "Existing PDU session"},
-    {0x03, "Initial emergency request"},
-    {0x04, "Existing emergency PDU session"},
-    {0x05, "Modification request"},
-    {0x07, "Reserved"},
-    {0, nullptr},
-};
-const field_meta hf_req_type = {
-    "Request type",
-    "nas_5gs.mm.req_typ",
-    ft::ft_uint8,
-    fd::base_dec,
-    nas_5gs_mm_req_type_vals,
-    nullptr,
-    nullptr,
-    0x0f,
-};
-
-// 9.11.3.47 Request type page.390
-int dissect_req_type(dissector d, context* ctx) {
-    d.add_item(1, &hf_req_type, enc::be);
-    return 1;
-}
-
-} // namespace mm_ul_nas_transp

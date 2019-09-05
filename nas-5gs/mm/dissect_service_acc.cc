@@ -1,20 +1,12 @@
 #include "../dissect_mm_msg.hh"
 #include "../ts24007.hh"
 
-namespace mm_service_acc {
-extern const element_meta pdu_ses_react_res;
-extern const element_meta pdu_ses_react_res_error_c;
-
-} // namespace mm_service_acc
-
 using namespace nas;
 using namespace mm;
 
 /*  8.2.17 Service accept */
-int mm::dissect_service_acc(dissector d, context* ctx) {
-    auto        len = d.length;
-    use_context uc(ctx, "service-accept", d);
-    using namespace mm_service_acc;
+int mm::dissect_service_acc(dissector d, context* ctx) {    
+    const use_context uc(ctx, "service-accept", d, 3);
 
     /*50  PDU session status     9.11.3.44    O    TLV    4-34*/
     // ELEM_OPT_TLV(0x50, , DE_NAS_5GS_MM_PDU_SES_STATUS, NULL);
@@ -42,13 +34,7 @@ int mm::dissect_service_acc(dissector d, context* ctx) {
     // consumed = dissect_opt_elem_tlv(nullptr, &t3348_gprs_timer3, d, ctx);
     // d.step(consumed);
 
-    d.extraneous_data_check(3);
 
-    return len;
+    return uc.length;
 }
 
-namespace mm {
-
-
-
-} // namespace mm_service_acc

@@ -1,5 +1,16 @@
 #include "../dissect_mm_msg.hh"
 
+using namespace nas;
+
+// PDU session ID 2 9.11.3.41
+int mm::dissect_pdu_ses_id(dissector d, context* ctx) {
+    const use_context uc(ctx, "pdu-session-identity2", d, -1);
+
+    // identity value as defined in 3GPP TS 24.007 [11]
+    d.add_item(1, &hf_pdu_session_id, enc::be);
+    return 1;
+}
+
 namespace mm {
 
 const val_string pdu_session_id_values[] = {
@@ -35,13 +46,6 @@ const field_meta hf_pdu_session_id = {
 }
 
 // PDU session ID 2 9.11.3.41
-int mm::dissect_pdu_ses_id(dissector d, context* ctx) {
-    // identity value as defined in 3GPP TS 24.007 [11]
-    d.add_item(1, &hf_pdu_session_id, enc::be);
-    return 1;
-}
-
-// PDU session ID 2 9.11.3.41
 extern const element_meta mm::pdu_ses_id = {
     0x12,
     "PDU session identity 2 - PDU session ID",
@@ -54,6 +58,6 @@ extern const element_meta mm::pdu_ses_id = {
 extern const element_meta mm::old_pdu_ses_id = {
     0x59,
     "Old PDU session ID",
-    dissect_old_pdu_ses_id,
+    dissect_pdu_ses_id,
     nullptr,
 };

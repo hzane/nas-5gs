@@ -7,12 +7,9 @@ extern const element_meta t3346_gprs_timer2;
 
 using namespace nas;
 
-/*
- * 8.2.18 Service reject
- */
+/* 8.2.18 Service reject */
 int mm::dissect_service_rej(dissector d, context* ctx) {
-    auto        len = d.length;
-    use_context uc(ctx, "service-reject", d);
+    use_context uc(ctx, "service-reject", d, 3);
 
     using namespace mm_service_rej;
     /* 5GMM cause  9.11.3.2  M   V   1 */
@@ -36,24 +33,8 @@ int mm::dissect_service_rej(dissector d, context* ctx) {
     d.step(consumed);
 
     // XX	T3448 value	GPRS timer 3    9.11.2.4 O TLV 3
-
-    d.extraneous_data_check(3);
-
-    return len;
+    
+    return uc.length;
 }
 
-namespace mm_service_rej {
-int                       dissect_t3346_gprs_timer2(dissector d, context* ctx);
-extern const element_meta t3346_gprs_timer2 = {
-    0x5F,
-    "T3346 value GPRS timer 2",
-    dissect_t3346_gprs_timer2,
-    nullptr,
-};
 
-int dissect_t3346_gprs_timer2(dissector d, context* ctx) {
-    diag("no dissect\n");
-    return d.length;
-}
-
-} // namespace mm_service_rej

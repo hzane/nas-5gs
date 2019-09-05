@@ -33,7 +33,6 @@ int dissect_pdu_ses_id(dissector d, context* ctx);
 int dissect_additional_inf(dissector d, context* ctx);
 int dissect_pld_cont_type(dissector d, context* ctx); // 9.11.3.40
 int dissect_pld_cont(dissector d, context* ctx);      // 9.11.3.39
-int dissect_old_pdu_ses_id(dissector d, context* ctx);
 int dissect_req_type(dissector d, context* ctx);
 
 int dissect_last_v_tai(dissector d, context* ctx); //  9.11.3.8

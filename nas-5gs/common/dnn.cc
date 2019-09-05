@@ -25,6 +25,7 @@ int cmn::dissect_dnn(dissector d, context* ctx) {
     return uc.length;
 }
 
+// DNN 9.11.2.1A
 extern const element_meta cmn::dnn = {
     0x25,
     "DNN",

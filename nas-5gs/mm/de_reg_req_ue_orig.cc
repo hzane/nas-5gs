@@ -22,6 +22,3 @@ int mm::dissect_dereg_req_ue_orig(dissector d, context* ctx) {
     return uc.length;
 }
 
-namespace mm {
-
-} // namespace mm_de_reg_req_ue_orig

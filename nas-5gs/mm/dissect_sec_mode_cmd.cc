@@ -773,4 +773,4 @@ const field_meta hf_emm_gea7 = {
     0x01,
 };
 
-} // namespace mm_sec_mode_cmd
+} // namespace mm
