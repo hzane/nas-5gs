@@ -1,5 +1,11 @@
 #include "../dissect_sm_msg.hh"
 
+/*  9.11.4.16    SSC mode */
+int sm::dissect_ssc_mode(dissector d, context* ctx) {
+    d.add_item(1, &hf_sm_sc_mode, enc::be);
+    return 1;
+}
+
 extern const element_meta sm::ssc_mode = {
     0xa0,
     "SSC mode",

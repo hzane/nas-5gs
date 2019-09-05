@@ -402,9 +402,6 @@
     <ClCompile Include="sm\session_ambr.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="sm\session-tmbr.cc">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="sm\sm_pdu_dn_request_container.cc">
       <Filter>Source Files</Filter>
     </ClCompile>

@@ -1,6 +1,7 @@
 #pragma once
 #include "config.hh"
 #include "core.hh"
+#include "dissect_nas5g.hh"
 #include "sm/sm_dissects.hh"
 #include "sm/sm_element_meta.hh"
 #include "sm/sm_field_meta.hh"

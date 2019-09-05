@@ -306,7 +306,6 @@
     <ClCompile Include="sm\reattempt_indicator.cc" />
     <ClCompile Include="sm\scc_mode.cc" />
     <ClCompile Include="sm\serving_plmn_rate_control.cc" />
-    <ClCompile Include="sm\session-tmbr.cc" />
     <ClCompile Include="sm\session_ambr.cc" />
     <ClCompile Include="sm\sm_pdu_dn_request_container.cc" />
     <ClCompile Include="sm\dissect_sm_status.cc" />
