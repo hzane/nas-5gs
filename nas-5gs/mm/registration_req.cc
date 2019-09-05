@@ -1760,31 +1760,6 @@ int mm_reg_req::dissect_usage_set(dissector d, context* ctx) {
     return 1;
 }
 
-static const value_string nas_5gs_mm_drx_vals[] = {
-    {0x0, "DRX value not specified"},
-    {0x1, "DRX cycle parameter T = 32"},
-    {0x2, "DRX cycle parameter T = 64"},
-    {0x3, "DRX cycle parameter T = 128"},
-    {0x4, "DRX cycle parameter T = 256"},
-    {0, nullptr},
-};
-const field_meta hf_drx_param = {
-    "DRX value",
-    "nas_5gs.mm.drx_value",
-    ft::ft_uint8,
-    fd::base_dec,
-    nas_5gs_mm_drx_vals,
-    nullptr,
-    nullptr,
-    0x0f,
-};
-
-/* 9.11.3.2A    5GS DRX parameters*/
-int mm_reg_req::dissect_requested_drx_param(dissector d, context* ctx) {
-    d.add_item(1, &hf_drx_param, enc::be);
-    return 0;
-}
-
 /* 9.11.3.24    EPS NAS message container */
 int mm_reg_req::dissect_eps_nas_msg_cont(dissector d, context* ctx) {
     diag("no eps dissector\n");
@@ -1893,4 +1868,10 @@ int mm_reg_req::dissect_reg_req_type(dissector d, context* ctx) {
     };
     d.add_bits(flags);
     return 1;
+}
+
+/* 9.11.3.2A    5GS DRX parameters*/
+int mm_reg_req::dissect_requested_drx_param(dissector d, context* ctx) {
+    return dissect_drx_param(d, ctx);
+    // d.add_item(1, &hf_drx_param, enc::be);
 }

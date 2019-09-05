@@ -349,13 +349,10 @@ const element_meta operator_defined_acd = {
 };
 
 // Negotiated DRX parameters 9.11.3.2A
-int dissect_nego_drx_param(dissector d, context* ctx = nullptr);
-
-// Negotiated DRX parameters 9.11.3.2A
 const element_meta nego_drx_param = {
     0x51,
     "Negotiated DRX parameters",
-    dissect_nego_drx_param,
+    dissect_drx_param,
     nullptr,
 };
 
@@ -1395,28 +1392,5 @@ int dissect_operator_defined_acd(dissector d, context* ctx) {
     return len;
 }
 
-/* 9.11.3.2A    5GS DRX parameters*/
-static const value_string nas_5gs_mm_drx_vals[] = {
-    {0x0, "DRX value not specified"},
-    {0x1, "DRX cycle parameter T = 32"},
-    {0x2, "DRX cycle parameter T = 64"},
-    {0x3, "DRX cycle parameter T = 128"},
-    {0x4, "DRX cycle parameter T = 256"},
-    {0, nullptr},
-};
-const field_meta hf_drx_param = {
-    "DRX value",
-    "nas_5gs.mm.drx_value",
-    ft::ft_uint8,
-    fd::base_dec,
-    (nas_5gs_mm_drx_vals),nullptr,nullptr,
-    0x0f,
-};
-
-// Negotiated DRX parameters 9.11.3.2A
-int dissect_nego_drx_param(dissector d, context* ctx) {
-    d.add_item(1, &hf_drx_param, enc::be);
-    return 1;
-}
 
 } // namespace mm_reg_accept
