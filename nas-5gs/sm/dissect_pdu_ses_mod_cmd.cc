@@ -11,9 +11,8 @@ using namespace sm;
 using namespace sm_pdu_ses_mod;
 
 /* 8.3.9 PDU session modification command */
-int sm::dissect_pdu_ses_mod_cmd(dissector d, context* ctx) {
-    auto        len = d.length;
-    use_context uc(ctx, "pdu-session-modification-command", d);
+int sm::dissect_pdu_ses_mod_cmd(dissector d, context* ctx) {    
+    const use_context uc(ctx, "pdu-session-modification-command", d, 8);
 
     /* Direction: network to UE */
     d.pinfo->dir = pi_dir::dl;
@@ -59,10 +58,9 @@ int sm::dissect_pdu_ses_mod_cmd(dissector d, context* ctx) {
     d.step(consumed);
 
     /*xx Session-TMBR    9.11.4.19	O	TLV	8    */
+   
 
-    d.extraneous_data_check(8);
-
-    return len;
+    return uc.length;
 }
 namespace sm {
 

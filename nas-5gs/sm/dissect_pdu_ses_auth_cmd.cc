@@ -4,8 +4,7 @@
 
 /* 8.3.4 PDU session authentication command */
 int sm::dissect_pdu_ses_auth_cmd(dissector d, context* ctx) {
-    use_context uc(ctx, "pdu-session-authentication-command", d);
-    auto        len = d.length;
+    const use_context uc(ctx, "pdu-session-authentication-command", d, 0);    
 
     /* Direction: network to UE */
     down_link(d.pinfo);
@@ -17,9 +16,7 @@ int sm::dissect_pdu_ses_auth_cmd(dissector d, context* ctx) {
 
     /*7B    Extended protocol configuration options  9.11.4.6 O TLV-E 4-65538*/
     consumed = dissect_opt_elem_tlv_e(nullptr, &ext_pco, d, ctx);
-    d.step(consumed);
+    d.step(consumed); 
 
-    d.extraneous_data_check(0);
-
-    return len;
+    return uc.length;
 }

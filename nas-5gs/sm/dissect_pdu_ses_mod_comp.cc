@@ -3,16 +3,15 @@
 #include "../ts24007.hh"
 
 /* * 8.3.10 PDU session modification complete */
-int sm::dissect_pdu_ses_mod_comp(dissector d, context* ctx) {
-    auto        len = d.length;
-    use_context uc(ctx, "pdu-session-modification-complete", d);
+int sm::dissect_pdu_ses_mod_comp(dissector d, context* ctx) {    
+    use_context uc(ctx, "pdu-session-modification-complete", d, 2);
 
     /* Direction: UE to network */
-    d.pinfo->dir = pi_dir::ul;
+    up_link(d.pinfo);    
 
     /*7B Extended protocol configuration options 9.11.4.6    O    TLV - E    4 - 65538*/
     // ELEM_OPT_TLV_E(0x7B, , DE_ESM_EXT_PCO, NULL);
-    auto consumed = dissect_opt_elem_tlv_e(nullptr, &ext_pco, d, ctx);
+    const auto consumed = dissect_opt_elem_tlv_e(nullptr, &ext_pco, d, ctx);
     d.step(consumed);
 
     /*59    5GSM cause    5GSM cause 9.11.4.2    O    TV    2*/
@@ -28,5 +27,5 @@ int sm::dissect_pdu_ses_mod_comp(dissector d, context* ctx) {
 
     d.extraneous_data_check(2); // sm-cause
 
-    return len;
+    return uc.length;
 }

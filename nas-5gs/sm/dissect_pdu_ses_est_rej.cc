@@ -10,9 +10,7 @@ using namespace pdu_ses;
 
 /*  8.3.3 PDU session establishment reject */
 int sm::dissect_pdu_ses_est_rej(dissector d, context* ctx) {
-    const auto  len = d.length;
-    use_context uc(ctx, "pdu-session-establishment-reject", d);
-
+    const use_context uc(ctx, "pdu-session-establishment-reject", d, 0);
 
     /* Direction: network to UE */
     d.pinfo->dir = pi_dir::dl;
@@ -48,11 +46,8 @@ int sm::dissect_pdu_ses_est_rej(dissector d, context* ctx) {
     /*61	5GSM congestion re-attempt indicator  9.11.4.21	O	TLV	3    */
     consumed = dissect_opt_elem_tlv(nullptr, &sm_congestion_reattempt, d, ctx);
     d.step(consumed);
-
-    // extraneous_data_check(d.pinfo, d.tree, d.tvb, d.offset, d.length, 0);
-    d.extraneous_data_check(0);
-
-    return len;
+        
+    return uc.length;
 }
 namespace sm_pdu_ses_est {
 

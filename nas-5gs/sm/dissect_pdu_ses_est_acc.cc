@@ -3,22 +3,14 @@
 #include "../ts24007.hh"
 #include "../common/common.hh"
 
-namespace sm {
-extern const field_meta* hf_sel_sc_mode;
-
-extern const element_meta pdu_ses_type;
-extern const element_meta pdu_address;
-} // namespace sm_pdu_ses_est
-
 using namespace cmn;
 using namespace nas;
 using namespace sm;
 
 /* 8.3.2 PDU session establishment accept */
 int sm::dissect_pdu_ses_est_acc(dissector d, context* ctx) {
-    use_context uc(ctx, "pdu-session-establishment-accept", d);
-    auto        len = d.length;
-
+    const use_context uc(ctx, "pdu-session-establishment-accept", d, -1);
+    
     /* Direction: network to UE */
     down_link(d.pinfo);
 
@@ -99,13 +91,6 @@ int sm::dissect_pdu_ses_est_acc(dissector d, context* ctx) {
     */
    // no data length check
 
-    return len;
+    return uc.length;
 }
 
-namespace sm_pdu_ses_est {
-
-
-
-
-
-} // namespace sm_pdu_ses_est

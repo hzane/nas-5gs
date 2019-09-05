@@ -5,12 +5,11 @@
 /*
  * 8.3.11 PDU session modification command reject
  */
-int sm::dissect_pdu_ses_mod_com_rej(dissector d, context* ctx) {
-    auto        len = d.length;
-    use_context uc(ctx, "pdu-session-modification-command-reject", d);
+int sm::dissect_pdu_ses_mod_com_rej(dissector d, context* ctx) {    
+    use_context uc(ctx, "pdu-session-modification-command-reject", d, 0);
 
     /* Direction: UE to network */
-    d.pinfo->dir = pi_dir::ul;
+    up_link(d.pinfo);    
 
     /* 5GSM cause 9.11.4.2    M    V    1 */
     // ELEM_MAND_V(,DE_NAS_5GS_SM_5GSM_CAUSE,);
@@ -22,7 +21,5 @@ int sm::dissect_pdu_ses_mod_com_rej(dissector d, context* ctx) {
     consumed = dissect_opt_elem_tlv_e(nullptr, &ext_pco, d, ctx);
     d.step(consumed);
 
-    d.extraneous_data_check(0);
-
-    return len;
+    return uc.length;
 }
