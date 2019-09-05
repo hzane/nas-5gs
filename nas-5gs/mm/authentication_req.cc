@@ -49,10 +49,7 @@ int mm::authentication_req(dissector d, context* ctx) {
     d.extraneous_data_check(0);
     return len;
 }
-namespace mm_authentication_req {
-
-// 9.11.3.16	Authentication parameter RAND
-int dissect_auth_parm_rand(dissector d, context* ctx);
+namespace mm {
 
 extern const element_meta auth_parm_rand = {
     0x21,
@@ -61,15 +58,12 @@ extern const element_meta auth_parm_rand = {
     nullptr,
 };
 
-int dissect_auth_parm_autn(dissector d, context* ctx);
-
 extern const element_meta auth_parm_autn = {
     0x20,
     "Authentication parameter AUTN (5G authentication challenge)",
     dissect_auth_parm_autn,
     nullptr,
 };
-
 
 
 extern const field_meta hf_dtap_rand = {

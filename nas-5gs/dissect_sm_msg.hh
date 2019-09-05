@@ -43,7 +43,7 @@ extern const value_string sm_unit_for_session_ambr_values[];
 
 extern const true_false_string tfs_allowed_not_allowed;
 extern const true_false_string tfs_nas_5gs_sm_dqr ;
-extern const true_false_string tfs_supported_not_supported;
+// extern const true_false_string tfs_supported_not_supported;
 
 extern const message_meta msgs[];
 

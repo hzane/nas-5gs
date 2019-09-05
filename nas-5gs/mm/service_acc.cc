@@ -47,27 +47,8 @@ int mm::service_acc(dissector d, context* ctx) {
     return len;
 }
 
-namespace mm_service_acc {
+namespace mm {
 
-int                       dissect_pdu_ses_react_res_err_c(dissector d, context*);
-extern const element_meta pdu_ses_react_res_error_c = {
-    0x72,
-    "PDU session reactivation result error cause",
-    dissect_pdu_ses_react_res_err_c,
-    nullptr,
-};
 
-//  *   9.11.3.43    PDU session reactivation result error cause
-int dissect_pdu_ses_react_res_err_c(dissector d, context*) {
-    auto len = d.length;
-    /*Partial service area list*/
-    while (d.length>0) {
-        d.add_item(1, hf_pdu_sess_id, enc::be);
-        d.step(1);
-        d.add_item(1, &hf_mm_cause, enc::be);
-        d.step(1);
-    }
-    return len;
-}
 
 } // namespace mm_service_acc

@@ -75,44 +75,14 @@ int mm::ul_nas_transp(dissector d, context* ctx) {
     return len;
 }
 
-namespace mm_ul_nas_transp {
+namespace mm {
 int dissect_pld_cont_type(dissector d, context* ctx); // 9.11.3.40
 int dissect_pld_cont(dissector d, context* ctx);      // 9.11.3.39
 int dissect_pdu_ses_id(dissector d, context* ctx);
 int dissect_old_pdu_ses_id(dissector d, context* ctx);
 int dissect_req_type(dissector d, context* ctx);
 
-// Payload container type   9.11.3.40
-extern const element_meta pld_cont_type = {
-    0xff,
-    "Payload container type",
-    dissect_pld_cont_type,
-    nullptr,
-};
 
-// Payload container  9.11.3.39
-extern const element_meta pld_cont = {
-    0xff,
-    "Payload container",
-    dissect_pld_cont,
-    nullptr,
-};
-
-// PDU session ID 2 9.11.3.41
-extern const element_meta pdu_ses_id = {
-    0x12,
-    "PDU session ID",
-    dissect_pdu_ses_id,
-    nullptr,
-};
-
-// PDU session identity 2 9.11.3.41
-extern const element_meta old_pdu_ses_id = {
-    0x59,
-    "Old PDU session ID",
-    dissect_old_pdu_ses_id,
-    nullptr,
-};
 
 // Request type  9.11.3.47
 extern const element_meta req_type = {
@@ -131,20 +101,7 @@ extern const element_meta dnn = {
     nullptr,
 };
 
-// Payload container type   9.11.3.40
-int dissect_pld_cont_type(dissector d, context* ctx) {
-    return mm::dissect_pld_cont_type(d, ctx);
-}
 
-// Payload container  9.11.3.39
-int dissect_pld_cont(dissector d, context* ctx) { return mm::dissect_pld_cont(d, ctx); }
-
-// PDU session ID 2 9.11.3.41
-int dissect_pdu_ses_id(dissector d, context* ctx) {
-    // identity value as defined in 3GPP TS 24.007 [11]
-    d.add_item(1, hf_pdu_sess_id, enc::be);
-    return 1;
-}
 
 // Additional information  9.11.2.1
 int dissect_additional_inf(dissector d, context* ctx) {

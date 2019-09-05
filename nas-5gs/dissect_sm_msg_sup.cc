@@ -1,6 +1,7 @@
 #include "dissect_sm_msg.hh"
 #include "gsm.hh"
 #include "common/common.hh"
+#include "dissect_nas5g.hh"
 
 using namespace cmn;
 using namespace sm;
@@ -568,18 +569,13 @@ const field_meta sm::hf_sm_mapd_eps_b_cont_eps_param_cont = {
     0x0,
 };
 
-const true_false_string sm::tfs_supported_not_supported = {
-    "Supported",
-    "Not supported",
-};
-
 const field_meta sm::hf_sm_rqos_b0 = {
     "Reflective QoS(RqoS)",
     "nas_5gs.sm.rqos",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
-    (&tfs_supported_not_supported),
+    &nas::tfs_supported_not_supported,
     nullptr,
     0x01,
 };

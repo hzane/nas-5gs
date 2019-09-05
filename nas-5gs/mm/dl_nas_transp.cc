@@ -2,7 +2,7 @@
 #include "../gsm.hh"
 #include "../ts24007.hh"
 
-namespace mm_dl_nas_transp {
+namespace mm {
 extern const element_meta pld_cont_type;
 extern const element_meta pld_cont;
 extern const element_meta pdu_ses_id;
@@ -12,7 +12,6 @@ extern const element_meta backoff_gprs_timer3;
 using namespace cmn;
 using namespace nas;
 using namespace mm;
-using namespace mm_dl_nas_transp;
 
 /*
  * 8.2.11 DL NAS transport
@@ -61,30 +60,11 @@ int mm::dl_nas_transp(dissector d, context* ctx) {
     return len;
 }
 
-namespace mm_dl_nas_transp {
+namespace mm {
 int dissect_pdu_ses_id(dissector d, context* ctx);
 int dissect_additional_inf(dissector d, context* ctx);
 
-extern const element_meta pld_cont_type = {
-    0xff,
-    "Payload container type",
-    dissect_pld_cont_type,
-    nullptr,
-};
 
-extern const element_meta pld_cont = {
-    0xff,
-    "Payload container",
-    dissect_pld_cont,
-    nullptr,
-};
-
-extern const element_meta pdu_ses_id = {
-    0x12,
-    "PDU session ID",
-    dissect_pdu_ses_id,
-    nullptr,
-};
 
 // Back-off timer value    GPRS timer 3 9.11.2.5
 extern const element_meta backoff_gprs_timer3 = {
@@ -95,14 +75,6 @@ extern const element_meta backoff_gprs_timer3 = {
 };
 
 
-
-/*
- *   9.11.3.41    PDU session identity 2
- */
-int dissect_pdu_ses_id(dissector d, context* ctx) {
-    d.add_item(1, hf_pdu_sess_id, enc::be);
-    return 1;
-}
 
 
 } // namespace mm_dl_nas_transp

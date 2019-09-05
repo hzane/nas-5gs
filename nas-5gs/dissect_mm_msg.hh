@@ -1,6 +1,9 @@
 #pragma once
 #include "dissect_nas5g.hh"
 #include "common/common.hh"
+#include "mm/mm_element_meta.hh"
+#include "mm/mm_field_meta.hh"
+#include "mm/mm_dissects.hh"
 
 /* 9.7  Message type */
 
@@ -51,9 +54,9 @@ int dissect_pdu_ses_status(dissector d, context* ctx = nullptr); /* 9.11.3.44*/
 int dissect_mm_cause(dissector d, context* ctx); // 5GMM cause   9.11.3.2
 int dissect_drx_param(dissector d, context* ctx);
 
-int dissect_ladn_inf(dissector d, context* ctx);
+int dissect_ladn_inf(dissector d, context* ctx);/*  9.11.3.30    LADN information */
 int dissect_ladn_ind(dissector d, context* ctx);
-int dissect_mico_ind(dissector d, context* ctx);
+int dissect_mico_ind(dissector d, context* ctx);//  MICO indication    9.11.3.31
 int dissect_sal(dissector d, context* ctx);
 int dissect_mobile_id(dissector d, context* ctx);
 int dissect_pld_cont(dissector d, context* ctx);
@@ -79,12 +82,19 @@ int dissect_mobile_id_mac(dissector d, context* ctx);     // 6, MAC address
 int dissect_5gs_id_type(dissector d, context* ctx);
 int dissect_nw_feat_sup(dissector d, context* ctx);
 
+/*  5GS registration result    9.11.3.6    M    LV 2 */
+int dissect_reg_res(dissector d, context* ctx = nullptr);
+
+int dissect_reg_req_type(dissector d, context* ctx);
+
 extern const message_meta      msgs[];
 extern const true_false_string tfs_requested_not_requested;
 extern const true_false_string tfs_sal_al_t;
 extern const true_false_string tfs_odd_even;
 extern const true_false_string tfs_eps_tsc;
 
+extern const element_meta registration_request_type;
+extern const element_meta reg_res;
 extern const element_meta nw_feat_sup;
 extern const element_meta allowed_nssai;
 extern const element_meta ta_id_list;
@@ -130,7 +140,8 @@ extern const element_meta nas_msg_cont;
 extern const element_meta abba;
 extern const element_meta eps_bearer_ctx_status;
 
-extern const true_false_string tfs_supported_not_supported;
+__declspec(selectany) extern const true_false_string tfs_supported_not_supported = {"Supported", "Not supported"};
+
 extern const true_false_string tfs_nas_5gs_mm_n1_mod;
 extern const true_false_string tfs_nas_5gs_mm_s1_mod;
 extern const val_string        mm_type_of_enc_algo_vals[];
@@ -217,4 +228,7 @@ int dissect_mm_cap(dissector d, context* ctx);
 
 //  5GMM capability  9.11.3.1
 extern const element_meta mm_cap;
+
+// 9.11.3.40
+extern const element_meta pld_cont_type;
 } // namespace mm

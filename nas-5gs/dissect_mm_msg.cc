@@ -923,169 +923,12 @@ int mm::dissect_ladn_ind(dissector d, context* ctx) {
     return len;
 }
 
-/*  9.11.3.30    LADN information  */
-int mm::dissect_ladn_inf(dissector d, context* ctx) {
-    auto len = d.length;
-    auto i   = 1;
-    while (d.length > 0) {
-        auto     start   = d.offset;
-        auto     subtree = d.tree->add_subtree(d.pinfo, d.tvb, d.offset, 2, "LADN %u", i);
-        use_tree ut(d, subtree);
-
-        /* DNN value (octet 5 to octet m):
-         * LADN DNN value is coded as the length and value part of DNN information
-         * element as specified in subclause 9.11.2.1A starting with the second octet
-         */
-        auto length = (int) d.tvb->uint8(d.offset);
-        d.add_item(1, &hf_mm_length, enc::be);
-        d.step(1);
-
-        auto consumed = dissect_dnn(d.slice(length), ctx);
-        d.step(consumed);
-
-        /* 5GS tracking area identity list (octet m+1 to octet a):
-         * 5GS tracking area identity list field is coded as the length and the value
-         * part of the 5GS Tracking area identity list information element as
-         * specified in subclause 9.11.3.9 starting with the second octet
-         */
-        d.add_item(1, &hf_mm_length, enc::be);
-        d.step(1);
-
-        length   = d.tvb->uint8(d.offset);
-        consumed = dissect_ta_id_list(d.slice(length), ctx);
-        d.step(consumed);
-        subtree->set_length(d.offset - start);
-
-        ++i;
-    }
-    return len;
-}
-
-/*  9.11.3.31    MICO indication */
-static const true_false_string tfs_raai = {
-    "all PLMN registration area allocated",
-    "all PLMN registration area not allocated",
-};
-
-/*  9.11.3.31    MICO indication */
-int mm::dissect_mico_ind(dissector d, context* ctx) {
-    auto len = d.length;
-
-    d.add_item(1, hf_mm_raai_b0, enc::be);
-
-    // In the UE to network direction bit 1 is spare. The UE shall set this bit to
-    // zero. In the network to UE and the UE to network direction:
-    d.add_item(1, &hf_mm_sprti, enc::be);
-    return 1;
-}
 
 namespace mm {
-const field_meta hf_sal_al_t = {
-    "Allowed type",
-    "nas_5gs.mm.sal_al_t",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &tfs_sal_allowed_or_not,
-    nullptr,
-    0x80,
-};
-const field_meta hf_sal_t_li = {
-    "Type of list",
-    "nas_5gs.mm.sal_t_li",
-    ft::ft_uint8,
-    fd::base_dec,
-    mm_sal_t_li_values,
-    nullptr,
-    nullptr,
-    0x60,
-};
+
 } // namespace mm
 
-// 9.11.3.49    Service area list page.391
-int mm::dissect_sal(dissector d, context* ctx) {
-    auto                     len     = d.length;
-    static const field_meta* flags[] = {
-        &hf_sal_al_t,
-        &hf_sal_t_li,
-        &hf_sal_num_e,
-        nullptr,
-    };
-    auto num_par_sal = 1;
-    /*Partial service area list*/
-    while (d.length > 0) {
-        auto     start   = d.offset;
-        auto     subtree = d.add_item(-1, "Partial service area list  %u", num_par_sal);
-        use_tree ut(d, subtree);
 
-        /*Head of Partial service area list*/
-        /* Allowed type    Type of list    Number of elements    octet 1 */
-        auto sal_head  = d.tvb->uint8(d.offset);
-        auto sal_t_li  = (sal_head & 0x60) >> 5;
-        auto sal_num_e = (sal_head & 0x1f) + 1;
-        d.add_bits(flags);
-        d.step(1);
-        switch (sal_t_li) {
-        case 0: {
-            // type of list = "00"
-            /*octet 2  MCC digit2  MCC digit1*/
-            /*octet 3  MNC digit3  MCC digit3*/
-            /*octet 4  MNC digit2  MNC digit1*/
-            dissect_e212_mcc_mnc(d, ctx);
-            d.step(3);
-            while (sal_num_e > 0) {
-                d.add_item(3, &hf_tac, enc::be);
-                d.step(3);
-                --sal_num_e;
-            }
-        }
-        break;
-        case 1: {
-            // type of list = "01"
-            /*octet 2  MCC digit2  MCC digit1*/
-            /*octet 3  MNC digit3  MCC digit3*/
-            /*octet 4  MNC digit2  MNC digit1*/
-            dissect_e212_mcc_mnc(d, ctx);
-            d.step(3);
-
-            /*octet 5  TAC 1*/
-            d.add_item(3, &hf_tac, enc::be);
-            d.step(3);
-        }
-        break;
-        case 2: {
-            // type of list = "10"
-            while (sal_num_e > 0) {
-                /*octet 2  MCC digit2  MCC digit1*/
-                /*octet 3  MNC digit3  MCC digit3*/
-                /*octet 4  MNC digit2  MNC digit1*/
-                dissect_e212_mcc_mnc(d, ctx);
-                d.step(3);
-
-                /*octet 5  TAC 1*/
-                d.add_item(3, &hf_tac, enc::be);
-                d.step(3);
-                --sal_num_e;
-            }
-        }
-        break;
-        case 3: {
-            // type of list = "11"
-            dissect_e212_mcc_mnc(d, ctx);
-            d.step(3);
-        }
-        break;
-        default: // never goes here
-            break;
-        }
-
-        /*calculate the length of IE */
-        d.tree->set_length(d.offset - start);
-        /*calculate the number of Partial service area list*/
-        num_par_sal++;
-    }
-    return len;
-}
 
 namespace mm {
 
@@ -1201,9 +1044,6 @@ int dissect_pld_cont_entry(dissector d, context* ctx) {
     return len;
 }
 
-namespace mm_reg_accept {
-int dissect_sor_trans_cont(dissector d, context* ctx);
-}
 
 /*  9.11.3.39    Payload container */
 int mm::dissect_pld_cont(dissector d, context* ctx) {
@@ -1292,14 +1132,6 @@ int mm::dissect_pld_cont(dissector d, context* ctx) {
     return len;
 }
 
-// Payload container type   9.11.3.40
-int mm::dissect_pld_cont_type(dissector d, context* ctx) {
-    auto oct = d.tvb->uint8(d.offset) & 0x0fu;
-    store_payload_content_type(ctx, oct);
-
-    d.add_item(1, &hf_pld_cont_type, enc::be);
-    return 1;
-}
 
 /* 9-  Network slicing indication  Network slicing indication 9.11.3.36  O  TV 1 */
 static const true_false_string nas_5gs_mm_dcni_tfs = {

@@ -37,7 +37,7 @@ int mm::dissect_registration_req_ue_term(dissector d, context* ctx) {
     return len;
 }
 
-namespace mm_de_reg {
+namespace mm {
 
 // T3346 value GPRS timer 2     9.11.2.4
 int dissect_t3346_gprs_timer2(dissector d, context*);

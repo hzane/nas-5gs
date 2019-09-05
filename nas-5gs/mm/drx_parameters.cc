@@ -9,7 +9,7 @@ static const value_string nas_5gs_mm_drx_vals[] = {
     {0x4, "DRX cycle parameter T = 256"},
     {0, nullptr},
 };
-const field_meta hf_drx_param = {
+const field_meta mm::hf_drx_param = {
     "DRX value",
     "nas_5gs.mm.drx_value",
     ft::ft_uint8,

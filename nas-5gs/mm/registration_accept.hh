@@ -24,6 +24,5 @@ extern const element_meta pdu_ses_react_res_err_c;
 extern const element_meta emerg_num_list_7a;
 extern const element_meta operator_defined_acd;
 extern const element_meta guti_5gs_mobile_id;
-extern const element_meta reg_res;
 extern const element_meta sor_trans_cont;
 } // namespace mm_reg_accept

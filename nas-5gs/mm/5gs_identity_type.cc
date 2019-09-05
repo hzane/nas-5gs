@@ -1,8 +1,8 @@
 #include "../dissect_mm_msg.hh"
 
-namespace {
+namespace mm {
 /* * 9.11.3.4    5GS mobile identity */
-static const val_string type_id_values[] = {
+const val_string type_id_values[] = {
     {0x0, "No identity"},
     {0x1, "SUCI"},
     {0x2, "5G-GUTI"},

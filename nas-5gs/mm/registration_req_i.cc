@@ -1,9 +1,9 @@
 #include "../core.hh"
 #include "../dissect_mm_msg.hh"
 #include "../ts24007.hh"
-#include "registration_req.hh"
+#include "5gs_registration.hh"
 
-namespace mm_reg_req {
+namespace mm {
 
 /* * 8.2.6 Registration request */
 
@@ -87,20 +87,4 @@ static const val_string nas_5gs_mm_registration_req_elem[] = {
 
 } // namespace mm_reg_req
 
-// only spare half octet
-const field_meta mm_reg_req::hf_ngksi_nas_ksi = {
-    "NAS key set identifier - ngKSI",
-    "nas_5gs.mm.ngksi",
-    ft::ft_uint8,
-    fd::base_dec,
-    nullptr,
-    nullptr,
-    nullptr,
-    0xF0,
-};
-const element_meta mm_reg_req::registration_request_type = {
-    0xff,
-    "5GS registration type",
-    dissect_reg_req_type,
-    nullptr,
-};
+

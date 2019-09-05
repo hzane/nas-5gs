@@ -26,32 +26,6 @@ int mm::authentication_failure(dissector d, context* ctx) {
     d.extraneous_data_check(0);
     return len;
 }
-namespace mm_authentication_failure {
-int dissect_auth_fail_param(dissector d, context* ctx);
+namespace mm {
 
-extern const element_meta auth_fail_param = {
-    0x30,
-    "Authentication failure parameter",
-    dissect_auth_fail_param,
-    nullptr,
-};
-
-const field_meta hf_gsma_dtap_res = {
-    "SRES value",
-    "gsm_a.dtap.sres",
-    ft::ft_bytes,
-    fd::base_none,
-    nullptr,
-    nullptr,
-    nullptr,
-    0x00,
-};
-
-// See subclause 10.5.3.2.2 in 3GPP TS 24.008 [12].
-// Authentication failure parameter
-int dissect_auth_fail_param(dissector d, context* ctx) {
-    /* This IE contains either the SRES or the 4 most significant octets of the RES */
-    d.add_item(4, &hf_gsma_dtap_res, enc::na);
-    return 4;
-}
 } // namespace mm_authentication_failure

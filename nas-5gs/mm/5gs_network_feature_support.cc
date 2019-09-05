@@ -1,8 +1,6 @@
 #include "../dissect_mm_msg.hh"
 
-namespace{
-const true_false_string tfs_supported_not_supported = {"Supported", "Not supported"};
-
+namespace mm {
 const value_string nas_5gs_nw_feat_sup_emf_values[] = {
     {0x0, "Emergency services fallback not supported"},
     {0x1, "Emergency services fallback supported in NR connected to 5GCN only"},
@@ -30,16 +28,14 @@ const field_meta hf_nw_feat_sup_mpsi_b7 = {
     0x80,
 };
 
-/*
- * 9.11.3.5    5GS network feature support
- */
+/* 9.11.3.5    5GS network feature support */
 const field_meta hf_nw_feat_sup_ims_iwk_n26_b6 = {
     "Interworking without N26",
     "nas_5gs.nw_feat_sup.iwk_n26",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
-    &tfs_supported_not_supported,
+    &nas::tfs_supported_not_supported,
     nullptr,
     0x40,
 };

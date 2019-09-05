@@ -165,17 +165,8 @@ int mm::registration_accept(dissector d, context* ctx) {
 
     return len;
 }
-namespace mm_reg_accept {
+namespace mm {
 
-/*  5GS registration result    9.11.3.6    M    LV 2 */
-int dissect_reg_res(dissector d, context* ctx = nullptr);
-
-const element_meta reg_res = {
-    0xff,
-    "5GS registration result",
-    dissect_reg_res,
-    nullptr,
-};
 
 // 5G-GUTI    5GS mobile identity 9.11.3.4
 int dissect_guti_5gs_mobile_id(dissector d, context* ctx = nullptr);
@@ -208,33 +199,6 @@ const element_meta pdu_ses_react_res_err_c = {
     nullptr,
 };
 
-// LADN information   9.11.3.30
-int dissect_ladn_inf(dissector d, context* ctx = nullptr);
-
-const element_meta ladn_inf = {
-    0x79,
-    "LADN information",
-    dissect_ladn_inf,
-    nullptr,
-};
-
-//  MICO indication    9.11.3.31
-int dissect_mico_ind(dissector d, context* ctx = nullptr);
-
-extern const element_meta mico_ind = {
-    0xb0,
-    "MICO indication",
-    dissect_mico_ind,
-    nullptr,
-};
-
-// Network slicing indication  9.11.3.36
-extern const element_meta nw_slicing_ind = {
-    0x90,
-    "Network slicing indication",
-    dissect_nw_slicing_ind,
-    nullptr,
-};
 
 //  Service area list   9.11.3.49
 const element_meta sal = {
@@ -294,16 +258,6 @@ const element_meta emerg_num_list_7a = {
     nullptr,
 };
 
-// SOR transparent container   9.11.3.51
-int dissect_sor_trans_cont(dissector d, context* ctx = nullptr);
-
-// SOR transparent container   9.11.3.51
-const element_meta sor_trans_cont = {
-    0x73,
-    "SOR transparent container",
-    dissect_sor_trans_cont,
-    nullptr,
-};
 
 // EAP message  9.11.2.2
 int dissect_eap_message(dissector d, context* ctx = nullptr);
@@ -331,7 +285,7 @@ const element_meta nssai_inclusion_mode = {
 int dissect_operator_defined_acd(dissector d, context* ctx = nullptr);
 
 //  Operator-defined access category definitions 9.11.3.38
-const element_meta operator_defined_acd = {
+const element_meta mm::operator_defined_acd = {
     0x76,
     "Operator-defined access category definitions",
     dissect_operator_defined_acd,
@@ -364,7 +318,7 @@ const field_meta hf_gsm_a_n3en_ind = {
 };
 
 // 9.11.3.58	Non-3GPP NW provided policies
-int dissect_n3gpp_nw_provided_policies(dissector d, context*ctx) {
+int mm::dissect_n3gpp_nw_provided_policies(dissector d, context* ctx) {
     // See subclause 10.5.5.37 in 3GPP TS 24.008
     d.add_item(1, &hf_gsm_a_n3en_ind, enc::be);
 
@@ -373,7 +327,7 @@ int dissect_n3gpp_nw_provided_policies(dissector d, context*ctx) {
 }
 
 // Non - 3GPP NW policies Non - 3GPP NW provided policies 9.11.3.58
-const element_meta n3gpp_nw_provided_policies = {
+const element_meta mm::n3gpp_nw_provided_policies = {
     0xd0,
     "",
     dissect_n3gpp_nw_provided_policies,
@@ -391,33 +345,6 @@ const field_meta hf_reg_res_sms_allowed = {
     0x08,
 };
 
-/*
- * 9.11.3.6    5GS registration result
- */
-
-static const value_string nas_5gs_mm_reg_res_values[] = {
-    {0x1, "3GPP access"},
-    {0x2, "Non-3GPP access"},
-    {0x3, "3GPP access and non-3GPP access"},
-    {0, nullptr},};
-const field_meta hf_reg_res_res = {
-    "5GS registration result",
-    "nas_5gs.mm.reg_res.res",
-    ft::ft_uint8,
-    fd::base_dec,
-    nas_5gs_mm_reg_res_values,
-    nullptr,
-    nullptr,
-    0x07,
-};
-
-// 9.11.3.6    5GS registration result
-int dissect_reg_res(dissector d, context* ctx) {
-    /* 0 Spare 0 Spare 0 Spare 0 Spare SMS allowed 5GS registration result value */
-    d.add_item(1, &hf_reg_res_sms_allowed, enc::be);
-    d.add_item(1, &hf_reg_res_res, enc::be);
-    return 1;
-}
 
 // 5G-GUTI    5GS mobile identity 9.11.3.4
 int dissect_guti_5gs_mobile_id(dissector d, context* ctx) {
@@ -464,30 +391,6 @@ int dissect_plmn_list(dissector d, context* ctx) {
     return d.offset - start;
 }
 
-const true_false_string tfs_supported_not_supported = {"Supported", "Not supported"};
-
-
-
-
-/*  9.11.3.43    PDU session reactivation result error cause */
-int dissect_pdu_ses_react_res_err_c(dissector d, context* ctx) {
-    auto len = d.length;
-
-    /*Partial service area list*/
-    while(d.length>0){
-        d.add_item(1, hf_pdu_sess_id, enc::be);
-        d.step(1);
-        d.add_item(1, &hf_mm_cause, enc::be);
-        d.step(1);
-    }
-    return len;
-}
-
-/*  9.11.3.30    LADN information */
-int dissect_ladn_inf(dissector d, context* ctx) { return mm::dissect_ladn_inf(d, ctx); }
-
-//  MICO indication    9.11.3.31
-int dissect_mico_ind(dissector d, context* ctx) { return mm::dissect_mico_ind(d, ctx); }
 
 // T3512 value    GPRS timer 3     9.11.2.25
 int dissect_t3512_gprs_timer_3(dissector d, context* ctx) {

@@ -58,18 +58,8 @@ int mm::service_req(dissector d, context* ctx) {
 
     return len;
 }
-namespace mm_service_req {
+namespace mm {
 
-// NAS key set identifier 9.11.3.32
-int dissect_key_set_id(dissector d, context* ctx);
-
-// NAS key set identifier 9.11.3.32
-const element_meta key_set_id = {
-    0xff,
-    "NAS key set identifier - ngKSI",
-    dissect_key_set_id,
-    nullptr,
-};
 
 // Service type 9.11.3.50
 int dissect_mm_service_type(dissector d, context* ctx);
@@ -113,10 +103,6 @@ const element_meta allowed_pdu_ses_status = {
     nullptr,
 };
 
-// *   9.11.3.32    NAS key set identifier
-int dissect_key_set_id(dissector d, context* ctx) {
-    return dissect_nas_ksi(d, ctx);
-}
 
 /* *     9.11.3.50    Service type page.396 */
 int dissect_mm_service_type(dissector d, context*ctx){

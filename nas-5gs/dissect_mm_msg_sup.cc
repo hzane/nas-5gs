@@ -24,26 +24,6 @@ const field_meta mm::hf_sms_requested = {
     0x01,
 };
 
-/* 9.11.3.7    5GS registration type */
-
-extern const val_string mm::values_registration_type[] = {
-    {0x1, "initial registration"},
-    {0x2, "mobility registration updating"},
-    {0x3, "periodic registration updating"},
-    {0x4, "emergency registration"},
-    {0x7, "reserved"},
-    {0, nullptr},
-};
-const field_meta mm::hf_5gs_reg_type = {
-        "5GS registration type",
-        "nas_5gs.mm.5gs_reg_type",
-        ft::ft_uint8,
-        fd::base_dec,
-        values_registration_type,
-        nullptr,
-        nullptr,
-        0x07,
-};
 
 extern const true_false_string mm::tfs_mm_tsc = {
     "Mapped security context (for KSIASME)",
@@ -333,10 +313,6 @@ const field_meta mm::hfm_mm_s1_mode_b0 = {
     0x01,
 };
 
-const true_false_string mm::tfs_supported_not_supported = {
-    "Supported",
-    "Not supported",
-};
 const field_meta mm::hfm_mm_ho_attach_b1 = {
     "HO attach",
     "nas_5gs.mm.ho_attach_b1",
@@ -360,10 +336,6 @@ const field_meta mm::hfm_mm_lpp_cap_b2 = {
 };
 
 
-const true_false_string mm::tfs_odd_even = {
-    "Odd number of identity digits",
-    "Even number of identity digits",
-};
 const field_meta mm::hfm_mm_odd_even = {
     "Odd/even indication",
     "nas_5gs.mm.odd_even",
@@ -993,21 +965,6 @@ extern const field_meta mm::hf_mm_length = {
     0x0,
 };
 
-//  9.11.3.46    Rejected NSSAI
-extern const element_meta mm::rej_nssai = {
-    0x11,
-    "Rejected NSSAI",
-    dissect_rejected_nssai,
-    nullptr,
-};
-
-// Configured NSSAI    NSSAI 9.11.3.37
-extern const element_meta mm::configured_nssai = {
-    0x31,
-    "Configured NSSAI",
-    dissect_configured_nssai,
-    nullptr,
-};
 
 // PDU session reactivation result   9.11.3.42
 extern const element_meta mm::pdu_ses_react_res = {
@@ -1025,35 +982,6 @@ extern const element_meta mm::pdu_ses_status = {
     nullptr,
 };
 
-// 9.11.3.4
-extern const element_meta mm::mobile_id = {
-    0xff,
-    "Mobile identity",
-    dissect_mobile_id,
-    nullptr,
-};
-
-extern const field_meta mm::hf_mm_type_id = {
-    "Type of identity",
-    "nas_5gs.mm.type_id",
-    ft::ft_uint8,
-    fd::base_dec,
-    (mm_type_id_values),
-    nullptr,
-    nullptr,
-    0x07,
-};
-
-extern const field_meta mm::hf_mm_odd_even = {
-    "Odd/even indication",
-    "nas_5gs.mm.odd_even",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &tfs_odd_even,
-    nullptr,
-    0x08,
-};
 /*
  *   9.11.3.40    Payload container type
  */

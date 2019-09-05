@@ -378,9 +378,6 @@
     <ClCompile Include="mm\plmn_list.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="mm\registration_result.cc">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="mm\rejected_nssai.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -498,6 +495,9 @@
     <ClCompile Include="sm\sm_pdu_dn_request_container.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="mm\5gs_registration_result.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="config.hh">
@@ -573,6 +573,27 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="common\common.hh">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="mm\5gs_registration.hh">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="mm\mm_field_meta.hh">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="mm\mm_element_meta.hh">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="mm\mm_dissects.hh">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sm\sm_dissects.hh">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sm\sm_element_meta.hh">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sm\sm_field_meta.hh">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

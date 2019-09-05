@@ -84,7 +84,7 @@ int mm::sec_mode_cmd(dissector d, context* ctx) {
     return len;
 }
 
-namespace mm_sec_mode_cmd {
+namespace mm {
 int dissect_sec_algo(dissector d, context* ctx);
 int dissect_replayed_ue_sec_cap(dissector d, context* ctx);
 int dissect_imeisv_req(dissector d, context* ctx);
@@ -188,7 +188,7 @@ int dissect_sec_algo(dissector d, context* ctx) {
     d.add_bits(flags);
     return 1;
 }
-const true_false_string tfs_supported_not_supported = {"Supported", "Not supported"};
+
 const field_meta hf_mm_5g_ea0 = {
     "5G-EA0",
     "nas_5gs.mm.5g_ea0",
