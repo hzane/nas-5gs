@@ -6,3 +6,4 @@ struct val_string {
     const char* text;
 };
 
+using v_string = val_string;

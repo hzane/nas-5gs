@@ -4,7 +4,7 @@
 /*
  * 8.2.27 Security mode reject
  */
-int mm::sec_mode_rej(dissector d, context* ctx) {
+int mm::dissect_sec_mode_rej(dissector d, context* ctx) {
     const auto  len = d.length;
     use_context uc(ctx, "security-mode-reject", d);
 

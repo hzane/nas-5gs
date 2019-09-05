@@ -7,35 +7,35 @@ using namespace cmn;
 using namespace sm;
 
 extern const message_meta sm::msgs[] = {
-    {0xc1, "PDU session establishment request", pdu_ses_est_req, nullptr},
-    {0xc2, "PDU session establishment accept", pdu_ses_est_acc, nullptr},
-    {0xc3, "PDU session establishment reject", pdu_ses_est_rej, nullptr},
+    {0xc1, "PDU session establishment request", dissect_pdu_ses_est_req, nullptr},
+    {0xc2, "PDU session establishment accept", dissect_pdu_ses_est_acc, nullptr},
+    {0xc3, "PDU session establishment reject", dissect_pdu_ses_est_rej, nullptr},
 
     {0xc4, "Not used in current version", no_dissect, nullptr},
-    {0xc5, "PDU session authentication command", pdu_ses_auth_cmd, nullptr},
+    {0xc5, "PDU session authentication command", dissect_pdu_ses_auth_cmd, nullptr},
 
-    {0xc6, "PDU session authentication complete", pdu_ses_auth_comp, nullptr},
+    {0xc6, "PDU session authentication complete", dissect_pdu_ses_auth_comp, nullptr},
     {0xc7, "PDU session authentication result", no_dissect, nullptr},
     {0xc8, "Not used in current version", no_dissect, nullptr},
 
-    {0xc9, "PDU session modification request", pdu_ses_mod_req, nullptr},
-    {0xca, "PDU session modification reject", pdu_ses_mod_rej, nullptr},
-    {0xcb, "PDU session modification command", pdu_ses_mod_cmd, nullptr},
-    {0xcc, "PDU session modification complete", pdu_ses_mod_comp, nullptr},
-    {0xcd, "PDU session modification command reject", pdu_ses_mod_com_rej, nullptr},
+    {0xc9, "PDU session modification request", dissect_pdu_ses_mod_req, nullptr},
+    {0xca, "PDU session modification reject", dissect_pdu_ses_mod_rej, nullptr},
+    {0xcb, "PDU session modification command", dissect_pdu_ses_mod_cmd, nullptr},
+    {0xcc, "PDU session modification complete", dissect_pdu_ses_mod_comp, nullptr},
+    {0xcd, "PDU session modification command reject", dissect_pdu_ses_mod_com_rej, nullptr},
 
     {0xce, "Not used in current version", no_dissect, nullptr},
     {0xcf, "Not used in current version", no_dissect, nullptr},
     {0xd0, "Not used in current version", no_dissect, nullptr},
 
-    {0xd1, "PDU session release request", pdu_ses_rel_req, nullptr},
-    {0xd2, "PDU session release reject", pdu_ses_rel_rej, nullptr},
-    {0xd3, "PDU session release command", pdu_ses_rel_cmd, nullptr},
-    {0xd4, "PDU session release complete", pdu_ses_rel_comp, nullptr},
+    {0xd1, "PDU session release request", dissect_pdu_ses_rel_req, nullptr},
+    {0xd2, "PDU session release reject", dissect_pdu_ses_rel_rej, nullptr},
+    {0xd3, "PDU session release command", dissect_pdu_ses_rel_cmd, nullptr},
+    {0xd4, "PDU session release complete", dissect_pdu_ses_rel_comp, nullptr},
 
     {0xd5, "Not used in current version", no_dissect, nullptr},
 
-    {0xd6, "5GSM status", sm_status, nullptr},
+    {0xd6, "5GSM status", dissect_sm_status, nullptr},
     {0, nullptr, nullptr, nullptr},
 };
 
@@ -325,7 +325,7 @@ const field_meta sm::hf_sm_dqr = {
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
-    (&tfs_nas_5gs_sm_dqr),
+    (&tfs_sm_dqr),
     nullptr,
     0x10,
 };

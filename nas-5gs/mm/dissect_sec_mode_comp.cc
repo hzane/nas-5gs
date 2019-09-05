@@ -4,7 +4,7 @@
 /*
  * 8.2.26 Security mode complete
  */
-int mm::sec_mode_comp(dissector d, context* ctx) {
+int mm::dissect_sec_mode_comp(dissector d, context* ctx) {
     auto        len = d.length;
     use_context uc(ctx, "security-mode-complete", d);
 

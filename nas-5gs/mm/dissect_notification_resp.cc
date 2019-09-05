@@ -4,7 +4,7 @@
 /*
  * 8.2.24 Notification response
  */
-int mm::notification_resp(dissector d, context* ctx) {
+int mm::dissect_notification_resp(dissector d, context* ctx) {
     auto        len = d.length;
     use_context uc(ctx, "notification-response", d);
 

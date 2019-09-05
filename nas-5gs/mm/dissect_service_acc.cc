@@ -11,7 +11,7 @@ using namespace nas;
 using namespace mm;
 
 /*  8.2.17 Service accept */
-int mm::service_acc(dissector d, context* ctx) {
+int mm::dissect_service_acc(dissector d, context* ctx) {
     auto        len = d.length;
     use_context uc(ctx, "service-accept", d);
     using namespace mm_service_acc;

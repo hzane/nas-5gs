@@ -34,7 +34,7 @@ const field_meta mm::hf_tsc = {
     "Type of security context flag (TSC)",
     "nas_5gs.mm.tsc",
     ft::ft_boolean,
-    8,
+    fd::base_dec,
     nullptr,
     &tfs_mm_tsc,
     nullptr,
@@ -854,10 +854,10 @@ const field_meta mm::hf_element = {
 };
 
 extern const message_meta mm::msgs[] = {
-    {0x41, "Registration request", registration_req, nullptr},
-    {0x42, "Registration accept", registration_accept, nullptr},
-    {0x43, "Registration complete", registration_complete, nullptr},
-    {0x44, "Registration reject", registration_rej, nullptr},
+    {0x41, "Registration request", dissect_registration_req, nullptr},
+    {0x42, "Registration accept", dissect_registration_accept, nullptr},
+    {0x43, "Registration complete", dissect_registration_complete, nullptr},
+    {0x44, "Registration reject", dissect_registration_rej, nullptr},
     {0x45, "Deregistration request (UE originating)", dissect_reg_req_ue_orig, nullptr},
     {0x46, "Deregistration accept (UE originating)", nullptr, nullptr},
     {0x47,
@@ -870,9 +870,9 @@ extern const message_meta mm::msgs[] = {
     {0x4a, "Not used in current version", no_dissect, nullptr},
     {0x4b, "Not used in current version", no_dissect, nullptr},
 
-    {0x4c, "Service request", service_req, nullptr},
-    {0x4d, "Service reject", service_rej, nullptr},
-    {0x4e, "Service accept", service_acc, nullptr},
+    {0x4c, "Service request", dissect_service_req, nullptr},
+    {0x4d, "Service reject", dissect_service_rej, nullptr},
+    {0x4e, "Service accept", dissect_service_acc, nullptr},
 
     {0x4f, "Not used in current version", no_dissect, nullptr},
     {0x50, "Not used in current version", no_dissect, nullptr},
@@ -880,29 +880,29 @@ extern const message_meta mm::msgs[] = {
     {0x52, "Not used in current version", no_dissect, nullptr},
     {0x53, "Not used in current version", no_dissect, nullptr},
 
-    {0x54, "Configuration update command", conf_upd_cmd, nullptr},
-    {0x55, "Configuration update complete", conf_update_comp, nullptr},
+    {0x54, "Configuration update command", dissect_conf_upd_cmd, nullptr},
+    {0x55, "Configuration update complete", dissect_conf_update_comp, nullptr},
     {0x56, "Authentication request", authentication_req, nullptr},
     {0x57, "Authentication response", authentication_resp, nullptr},
     {0x58, "Authentication reject", authentication_rej, nullptr},
     {0x59, "Authentication failure", authentication_failure, nullptr},
 
     {0x5a, "Authentication result", authentication_result, nullptr},
-    {0x5b, "Identity request", id_req, nullptr},
-    {0x5c, "Identity response", id_resp, nullptr},
-    {0x5d, "Security mode command", sec_mode_cmd, nullptr},
-    {0x5e, "Security mode complete", sec_mode_comp, nullptr},
-    {0x5f, "Security mode reject", sec_mode_rej, nullptr},
+    {0x5b, "Identity request", dissect_id_req, nullptr},
+    {0x5c, "Identity response", dissect_id_resp, nullptr},
+    {0x5d, "Security mode command", dissect_sec_mode_cmd, nullptr},
+    {0x5e, "Security mode complete", dissect_sec_mode_comp, nullptr},
+    {0x5f, "Security mode reject", dissect_sec_mode_rej, nullptr},
 
     {0x60, "Not used in current version", no_dissect, nullptr},
     {0x61, "Not used in current version", no_dissect, nullptr},
     {0x62, "Not used in current version", no_dissect, nullptr},
     {0x63, "Not used in current version", no_dissect, nullptr},
-    {0x64, "5GMM status", mm_status, nullptr},
-    {0x65, "Notification", notification, nullptr},
-    {0x66, "Notification response", notification_resp, nullptr},
-    {0x67, "UL NAS transport", ul_nas_transp, nullptr},
-    {0x68, "DL NAS transport", dl_nas_transp, nullptr},
+    {0x64, "5GMM status", dissect_mm_status, nullptr},
+    {0x65, "Notification", dissect_notification, nullptr},
+    {0x66, "Notification response", dissect_notification_resp, nullptr},
+    {0x67, "UL NAS transport", dissect_ul_nas_transp, nullptr},
+    {0x68, "DL NAS transport", dissect_dl_nas_transp, nullptr},
     {0, nullptr, nullptr, nullptr},
 };
 #if 0
@@ -1061,7 +1061,7 @@ extern const field_meta mm::hfm_nas_eps_tsc = {
     nullptr,
     &tfs_eps_tsc,
     nullptr,
-    0x0,
+    0x08,
 };
 const field_meta* mm::hf_nas_eps_tsc = &hfm_nas_eps_tsc;
 

@@ -3,7 +3,7 @@
 /*
  * 8.2.29 5GMM status
  */
-int mm::mm_status(dissector d, context* ctx) {
+int mm::dissect_mm_status(dissector d, context* ctx) {
     const auto        len = d.length;
     use_context uc(ctx, "5gmm-status", d);
 

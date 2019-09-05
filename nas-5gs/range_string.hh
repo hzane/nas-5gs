@@ -7,3 +7,4 @@ struct range_string {
     uint32_t    val_max;
     const char* text;
 };
+using r_string = range_string;

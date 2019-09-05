@@ -15,7 +15,7 @@ using namespace mm;
 using namespace mm_ul_nas_transp;
 
 /* 8.2.10    UL NAS transport */
-int mm::ul_nas_transp(dissector d, context* ctx) {
+int mm::dissect_ul_nas_transp(dissector d, context* ctx) {
     auto        len = d.length;
     use_context uc(ctx, "ul-nas-transport", d);
     /* Direction: UE to network */

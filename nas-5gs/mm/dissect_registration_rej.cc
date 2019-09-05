@@ -14,7 +14,7 @@ using namespace nas;
 using namespace mm_reg_rej;
 
 /*  8.2.9 Registration reject */
-int mm::registration_rej(dissector d, context* ctx) {
+int mm::dissect_registration_rej(dissector d, context* ctx) {
     auto        len = d.length;
     use_context uc(ctx, "registration-reject", d);
 

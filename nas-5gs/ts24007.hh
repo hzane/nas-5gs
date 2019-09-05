@@ -73,12 +73,13 @@ int dissect_elem_lv_e(const field_meta*   type_meta,
                              dissector           d,
                              context*            ctx) ;
 
-//  * Value (V) element dissector
+//  Value (V) element dissector
 int dissect_opt_elem_v(const field_meta*   type_meta,
                        const element_meta* val_meta,
                        dissector           d,
                        context*            ctx);
 
+// should use val_meta->fnc directly
 int dissect_elem_v(const field_meta*   type_meta,
                           const element_meta* val_meta,
                           dissector           d,
@@ -96,7 +97,7 @@ int dissect_elem_tv_short(const field_meta*   type_meta,
                                  dissector           d,
                                  context*            ctx) ;
 
-// * Type Value (TV) element dissector
+// Type Value (TV) element dissector
 int dissect_opt_elem_tv(const field_meta* type_meta,
                         const element_meta*,
                         dissector d,
@@ -107,7 +108,7 @@ int dissect_elem_tv(const field_meta*   type_meta,
                            dissector           d,
                            context*            ctx) ;
 
-// * Type Length Value (TLV) element dissector
+// Type Length Value (TLV) element dissector
 int dissect_opt_elem_tlv(const field_meta*   type_meta,
                          const element_meta* val_meta,
                          dissector           d,
@@ -157,4 +158,4 @@ inline int dissect_elem_tlv_e(const field_meta*   type_meta,
     return dissect_elem_mandatory(type_meta, val_meta, d, dissect_opt_elem_tlv_e, ctx);
 };
 
-int add_generic_msg_elem_body(dissector d, context* ctx);
+int dissect_msg_unknown_body(dissector d, context* ctx);

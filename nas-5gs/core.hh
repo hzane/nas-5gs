@@ -1,14 +1,9 @@
 #pragma once
-#include <cstdarg>
-#include <string>
-#include <vector>
 #include "config.hh"
-#include "field_meta.hh"
-#include "packet_info.hh"
-#include "proto.hh"
-#include "range_string.hh"
-#include "tree_meta.hh"
 #include "tvbuff.hh"
+#include "field_meta.hh"
+#include "proto.hh"
+#include "tree_meta.hh"
 
 namespace em_severity {
 __declspec(selectany) extern const int comment = 0;

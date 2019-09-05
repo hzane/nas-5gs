@@ -15,7 +15,7 @@ using namespace mm;
 /*
  * 8.2.16 Service request page.317
  */
-int mm::service_req(dissector d, context* ctx) {
+int mm::dissect_service_req(dissector d, context* ctx) {
     auto        len = d.length;
     use_context uc(ctx, "service-request", d);
 

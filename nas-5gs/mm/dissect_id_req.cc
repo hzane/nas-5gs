@@ -10,7 +10,7 @@ using namespace mm;
 /*
  * 8.2.21 Identity request
  */
-int mm::id_req(dissector d, context* ctx) {
+int mm::dissect_id_req(dissector d, context* ctx) {
     const auto        len = d.length;
     use_context uc(ctx, "identity-request", d);
 

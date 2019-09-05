@@ -8,7 +8,7 @@ using namespace sm;
 using namespace pdu_ses;
 
 /* * 8.3.14 PDU session release command */
-int sm::pdu_ses_rel_cmd(dissector d, context* ctx) {
+int sm::dissect_pdu_ses_rel_cmd(dissector d, context* ctx) {
     auto        len = d.length;
     use_context uc(ctx, "pdu-session-release-command", d);
 

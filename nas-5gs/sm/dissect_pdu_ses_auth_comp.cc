@@ -5,7 +5,7 @@
 /*
  * 8.3.5 PDU session authentication complete
  */
-int sm::pdu_ses_auth_comp(dissector d, context* ctx) {
+int sm::dissect_pdu_ses_auth_comp(dissector d, context* ctx) {
     use_context uc(ctx, "pdu-session-authentication-complete", d);
     auto        len = d.length;
 

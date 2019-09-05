@@ -3,12 +3,11 @@
 #include "../ts24007.hh"
 
 /*
- * 8.3.15 PDU session release complete
+ * 8.3.12 PDU session release request
  */
-int sm::pdu_ses_rel_comp(dissector d, context* ctx) {
+int sm::dissect_pdu_ses_rel_req(dissector d, context* ctx) {
     auto        len = d.length;
-    use_context uc(ctx, "pdu-session-release-complete", d);
-
+    use_context uc(ctx, "pdu-session-release-request", d);
     /* Direction: UE to network */
     d.pinfo->dir = pi_dir::ul;
 
@@ -17,7 +16,7 @@ int sm::pdu_ses_rel_comp(dissector d, context* ctx) {
     auto consumed = dissect_opt_elem_tv(nullptr, &sm_cause, d, ctx);
     d.step(consumed);
 
-    /*7B    Extended protocol configuration options  9.11.4.6 O TLV-E    4 - 65538*/
+    /* 7B    Extended protocol configuration options   9.11.4.6    O    TLV - E    4 - 65538*/
     // ELEM_OPT_TLV_E(0x7B, , DE_ESM_EXT_PCO, NULL);
     consumed = dissect_opt_elem_tlv_e(nullptr, &ext_pco, d, ctx);
     d.step(consumed);

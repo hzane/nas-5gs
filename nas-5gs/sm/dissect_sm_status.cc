@@ -5,7 +5,7 @@
 /*
  * 8.3.16 5GSM status
  */
-int sm::sm_status(dissector d, context* ctx) {
+int sm::dissect_sm_status(dissector d, context* ctx) {
     auto        len = d.length;
     use_context uc(ctx, "5gsm-status", d);
 

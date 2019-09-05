@@ -11,7 +11,7 @@ using namespace sm;
 using namespace sm_pdu_ses_mod;
 
 /* 8.3.9 PDU session modification command */
-int sm::pdu_ses_mod_cmd(dissector d, context* ctx) {
+int sm::dissect_pdu_ses_mod_cmd(dissector d, context* ctx) {
     auto        len = d.length;
     use_context uc(ctx, "pdu-session-modification-command", d);
 

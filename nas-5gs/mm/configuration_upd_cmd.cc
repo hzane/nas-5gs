@@ -25,7 +25,7 @@ using namespace mm;
 using namespace nas;
 
 /* 8.2.19 Configuration update command */
-int mm::conf_upd_cmd(dissector d, context* ctx) {
+int mm::dissect_conf_upd_cmd(dissector d, context* ctx) {
     auto        len = d.length;
     use_context uc(ctx, "configuration-update-command", d);
 

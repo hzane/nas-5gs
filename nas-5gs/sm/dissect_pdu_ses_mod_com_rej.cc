@@ -5,7 +5,7 @@
 /*
  * 8.3.11 PDU session modification command reject
  */
-int sm::pdu_ses_mod_com_rej(dissector d, context* ctx) {
+int sm::dissect_pdu_ses_mod_com_rej(dissector d, context* ctx) {
     auto        len = d.length;
     use_context uc(ctx, "pdu-session-modification-command-reject", d);
 

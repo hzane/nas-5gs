@@ -8,7 +8,7 @@ struct tvbuff { // NOLINT: typo
 
     tvbuff(const uint8_t *data, int len) : data(data), length(len) {}
 
-    uint16_t ntohs(int offset) {
+    uint16_t ntohs(int offset) const {
         return (offset + 2) <= length ? n2uint16(data + offset) : 0;
     };
     uint8_t uint8(int offset) const { return offset < length ? data[offset] : 0; }

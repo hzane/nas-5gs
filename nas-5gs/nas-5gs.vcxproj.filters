@@ -42,15 +42,6 @@
     <ClCompile Include="formats.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="mm\registration_complete.cc">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="mm\registration_rej.cc">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="mm\notification_resp.cc">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="mm\authentication_failure.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -69,88 +60,10 @@
     <ClCompile Include="mm\de_reg_req_ue_orig.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="mm\dl_nas_transp.cc">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="mm\id_req.cc">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="mm\id_req_result.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="mm\id_resp.cc">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="mm\mm_status.cc">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="mm\notification.cc">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="mm\sec_mode_cmd.cc">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="mm\sec_mode_comp.cc">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="mm\sec_mode_rej.cc">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="mm\service_acc.cc">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="mm\service_rej.cc">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="mm\service_req.cc">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="mm\ul_nas_transp.cc">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="sm\pdu_ses_auth_cmd.cc">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="sm\pdu_ses_auth_comp.cc">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="sm\pdu_ses_est_acc.cc">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="sm\pdu_ses_est_rej.cc">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="sm\pdu_ses_est_req.cc">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="sm\pdu_ses_mod_cmd.cc">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="sm\pdu_ses_mod_com_rej.cc">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="sm\pdu_ses_mod_comp.cc">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="sm\pdu_ses_mod_rej.cc">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="sm\pdu_ses_mod_req.cc">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="sm\pdu_ses_rel_cmd.cc">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="sm\pdu_ses_rel_comp.cc">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="sm\pdu_ses_rel_rej.cc">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="sm\pdu_ses_rel_req.cc">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="sm\sm_status.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="mm\registration_req_i.cc">
@@ -496,6 +409,93 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="mm\5gs_registration_result.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sm\dissect_pdu_ses_est_acc.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sm\dissect_pdu_ses_est_rej.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sm\dissect_pdu_ses_auth_cmd.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sm\dissect_pdu_ses_auth_comp.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sm\dissect_pdu_ses_mod_req.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sm\dissect_pdu_ses_mod_rej.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sm\dissect_pdu_ses_mod_cmd.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sm\dissect_pdu_ses_mod_comp.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sm\dissect_pdu_ses_mod_com_rej.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sm\dissect_pdu_ses_rel_req.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sm\dissect_pdu_ses_rel_rej.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sm\dissect_pdu_ses_rel_cmd.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sm\dissect_pdu_ses_rel_comp.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sm\dissect_sm_status.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\dissect_registration_complete.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\dissect_registration_rej.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\dissect_service_req.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\dissect_service_rej.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\dissect_service_acc.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\dissect_id_req.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\dissect_id_resp.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\dissect_sec_mode_cmd.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\dissect_sec_mode_comp.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\dissect_sec_mode_rej.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\dissect_mm_status.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\dissect_notification.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\dissect_notification_resp.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\dissect_ul_nas_transp.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\dissect_dl_nas_transp.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

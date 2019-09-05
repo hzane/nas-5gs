@@ -51,7 +51,7 @@ struct proto_node { // NOLINT: special-member-functions
 };
 
 inline void print_node(std::ostream& out, proto_node* node, int indent = 0) {
-    auto prefix = std::string(size_t(indent*4), char(' '));
+    const auto prefix = std::string(size_t(indent*4), char(' '));
     out << prefix << node->name;
     if (!node->text.empty()){
         out << " : " << node->text;

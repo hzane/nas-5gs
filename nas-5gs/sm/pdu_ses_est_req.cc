@@ -18,7 +18,7 @@ using namespace sm_pdu_ses_est;
 /*
  * 8.3.1 PDU session establishment request
  */
-int sm::pdu_ses_est_req(dissector d, context* ctx) {
+int sm::dissect_pdu_ses_est_req(dissector d, context* ctx) {
     const auto        len = d.length;
     use_context uc(ctx, "pdu-session-establishment-request", d);
 

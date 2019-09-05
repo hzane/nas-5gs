@@ -117,7 +117,7 @@ int dissect_opt_elem_lv(const field_meta *,
     l->set_uint(parm_len, enc::be, nullptr);
 
     if (parm_len == 0) return 1;
-    auto fnc = val_meta->fnc ? val_meta->fnc : add_generic_msg_elem_body;
+    auto fnc = val_meta->fnc ? val_meta->fnc : dissect_msg_unknown_body;
 
     d.offset      = d.offset + 1;
     d.length      = parm_len;
@@ -154,7 +154,7 @@ int dissect_opt_elem_lv_e(const field_meta *,
 
     use_tree ut(d, subtree);
 
-    auto fnc      = val_meta->fnc ? val_meta->fnc : add_generic_msg_elem_body;
+    auto fnc      = val_meta->fnc ? val_meta->fnc : dissect_msg_unknown_body;
     auto consumed = fnc(d.use_elem(get_elem_data(e)), ctx);
     d.step(consumed);
 
@@ -291,7 +291,7 @@ int dissect_opt_elem_tlv(const field_meta *,
     d.offset      = d.offset + 2;
     d.length      = parm_len;
     d.tree        = subtree;
-    auto fnc      = val_meta->fnc ? val_meta->fnc : add_generic_msg_elem_body;
+    auto fnc      = val_meta->fnc ? val_meta->fnc : dissect_msg_unknown_body;
 
     auto consumed = fnc(d.use_elem(get_elem_data(e)), ctx);
     d.step(consumed);
@@ -346,7 +346,7 @@ int dissect_opt_elem_telv(const field_meta *,
     d.offset      = d.offset + 1 + lengt_length;
     d.length      = parm_len;
     d.tree        = subtree;
-    auto fnc      = val_meta->fnc ? val_meta->fnc : add_generic_msg_elem_body;
+    auto fnc      = val_meta->fnc ? val_meta->fnc : dissect_msg_unknown_body;
     auto consumed = fnc(d.use_elem(get_elem_data(e)), ctx);
 
     set_elem_length(e, consumed);
@@ -388,7 +388,7 @@ int dissect_opt_elem_tlv_e(const field_meta *,
     d.tree        = subtree;
     d.offset      = d.offset + 1 + 2;
     d.length      = parm_len;
-    auto fnc = val_meta->fnc ? val_meta->fnc : add_generic_msg_elem_body;
+    auto fnc = val_meta->fnc ? val_meta->fnc : dissect_msg_unknown_body;
     auto consumed = fnc(d.use_elem(get_elem_data(e)), ctx);
 
     set_elem_length(e, consumed);
@@ -444,7 +444,7 @@ static field_meta const hfm_gsm_a_common_elem_id_f0 = {
 };
 const field_meta *hf_gsm_a_common_elem_id_f0 = &hfm_gsm_a_common_elem_id_f0;
 
-int add_generic_msg_elem_body(dissector d, context *ctx) {
+int dissect_msg_unknown_body(dissector d, context *ctx) {
     d.tree->add_item(d.pinfo, d.tvb, d.offset, d.length, nas::hf_msg_elem, enc::na);
     return d.length;
 }

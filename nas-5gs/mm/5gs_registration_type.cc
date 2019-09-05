@@ -163,7 +163,7 @@ const element_meta mm::update_type = {
 
 
 /* * 8.2.6 Registration request */
-int mm::registration_req(dissector d, context* ctx) {
+int mm::dissect_registration_req(dissector d, context* ctx) {
     auto len = d.length;
 
     d.pinfo->dir = pi_dir::ul;

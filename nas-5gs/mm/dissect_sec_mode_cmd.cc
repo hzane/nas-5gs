@@ -17,7 +17,7 @@ using namespace mm_sec_mode_cmd;
 /*
  * 8.2.25 Security mode command
  */
-int mm::sec_mode_cmd(dissector d, context* ctx) {
+int mm::dissect_sec_mode_cmd(dissector d, context* ctx) {
     const auto len = d.length;
     /* Direction: network to UE */
     d.pinfo->dir = pi_dir::dl;

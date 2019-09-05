@@ -2,7 +2,7 @@
 #include "../ts24007.hh"
 
 /* 8.2.8 Registration complete */
-int mm::registration_complete(dissector d, context* ctx) {
+int mm::dissect_registration_complete(dissector d, context* ctx) {
     up_link(d.pinfo);
 
     const auto  len = d.length;

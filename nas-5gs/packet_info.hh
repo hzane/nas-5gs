@@ -1,8 +1,5 @@
 #pragma once
 #include "config.hh"
-#include "tvbuff.hh"
-#include <map>
-#include <memory>
 
 struct tvbuff;
 struct packet_info;

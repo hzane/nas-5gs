@@ -8,7 +8,7 @@ extern const element_meta sm::requested_qos_rules = {
 
 };
 /*  9.11.4.13    QoS rules */
-const true_false_string sm::tfs_nas_5gs_sm_dqr = {
+const true_false_string sm::tfs_sm_dqr = {
     "The QoS rule is the default QoS rule",
     "The QoS rule is not the default QoS rule",
 };

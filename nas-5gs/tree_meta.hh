@@ -9,7 +9,7 @@ struct tree_meta {
     string pretty()const;
 };
 
-inline string tree_meta::pretty()const{
+inline string tree_meta::pretty() const {
     if (alias) return string(alias);
     string ret(name);
     std::transform(ret.begin(), ret.end(), ret.begin(), [](char c)->char{

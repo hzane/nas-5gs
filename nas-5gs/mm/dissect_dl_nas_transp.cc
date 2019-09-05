@@ -16,7 +16,7 @@ using namespace mm;
 /*
  * 8.2.11 DL NAS transport
  */
-int mm::dl_nas_transp(dissector d, context* ctx) {
+int mm::dissect_dl_nas_transp(dissector d, context* ctx) {
     const auto        len = d.length;
     use_context uc(ctx, "dl-nas-transport", d);
 

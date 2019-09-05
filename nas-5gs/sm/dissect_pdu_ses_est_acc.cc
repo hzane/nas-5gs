@@ -15,7 +15,7 @@ using namespace nas;
 using namespace sm;
 
 /* 8.3.2 PDU session establishment accept */
-int sm::pdu_ses_est_acc(dissector d, context* ctx) {
+int sm::dissect_pdu_ses_est_acc(dissector d, context* ctx) {
     use_context uc(ctx, "pdu-session-establishment-accept", d);
     auto        len = d.length;
 

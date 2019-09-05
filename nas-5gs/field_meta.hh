@@ -9,6 +9,7 @@ struct true_false_string {
     const char* true_string;
     const char* false_string;
 };
+using tf_string    = true_false_string;
 using value_string = val_string;
 
 
@@ -46,7 +47,9 @@ __declspec(selectany) extern const uint32_t ft_char       = 22;
 inline bool is_integer(uint32_t t){return t&ft_integer;}
 inline bool is_unsigned(uint32_t t){ return is_integer(t) && !(t&ft_signed);}
 inline bool is_signed(uint32_t t){ return is_integer(t) && (t&ft_signed);}
-inline uint32_t integer_size(uint32_t t){
+
+// clang-format off
+inline uint32_t integer_size(const uint32_t t) {
     return (t==ft_uint8||t==ft_int8) ? 1u
                                      : (t==ft_uint16||t==ft_int16)  ? 2u
                                      : (t==ft_uint24||t==ft_int24)           ? 3u
@@ -54,6 +57,8 @@ inline uint32_t integer_size(uint32_t t){
                                      : (t==ft_uint48||t==ft_int48)           ? 6u
                                      : (t==ft_uint64||t==ft_int64)           ? 8u: 0;
 }
+// clang-format on
+
 } // namespace ft
 
 namespace fd {
@@ -98,7 +103,7 @@ struct field_meta {
     uint32_t                 ftype;   /* field_type::*/
     uint32_t                 display; /* one of base_ */
     const val_string*        val_strings;
-    const true_false_string* tf_strings;
+    const tf_string*         tf_strings;
     const range_string*      range_strings;
     uint64_t                 bitmask; /* bitmask of interesting bits */
 

@@ -3,7 +3,7 @@
 #include "../ts24007.hh"
 
 /* * 8.3.10 PDU session modification complete */
-int sm::pdu_ses_mod_comp(dissector d, context* ctx) {
+int sm::dissect_pdu_ses_mod_comp(dissector d, context* ctx) {
     auto        len = d.length;
     use_context uc(ctx, "pdu-session-modification-complete", d);
 

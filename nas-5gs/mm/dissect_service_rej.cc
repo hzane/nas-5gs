@@ -10,7 +10,7 @@ using namespace nas;
 /*
  * 8.2.18 Service reject
  */
-int mm::service_rej(dissector d, context* ctx) {
+int mm::dissect_service_rej(dissector d, context* ctx) {
     auto        len = d.length;
     use_context uc(ctx, "service-reject", d);
 

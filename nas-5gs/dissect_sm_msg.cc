@@ -12,7 +12,7 @@ using namespace sm;
 /*
  * 8.3.6 PDU session authentication result
  */
-int sm::pdu_ses_auth_res(dissector d, context* ctx) {
+int sm::dissect_pdu_ses_auth_res(dissector d, context* ctx) {
     auto start = d.offset;
     /* Direction: network to UE */
     d.pinfo->dir = pi_dir::dl;

@@ -1,3 +1,4 @@
+#pragma once
 #include "../core.hh"
 
 namespace mm{
@@ -213,4 +214,18 @@ extern const element_meta emerg_num_list_7a;
 extern const element_meta operator_defined_acd;
 extern const element_meta guti_5gs_mobile_id;
 extern const element_meta sor_trans_cont;
+extern const element_meta nas_ksi;
+extern const element_meta nas_msg_cont;
+extern const element_meta abba;
+extern const element_meta eps_bearer_ctx_status;
+
+//  5GMM capability  9.11.3.1
+extern const element_meta mm_cap;
+
+// 9.11.3.40
+extern const element_meta pld_cont_type;
+extern const element_meta allowed_nssai;
+extern const element_meta ta_id_list;
+extern const element_meta rej_nssai;
+extern const element_meta pdu_ses_status;
 } // namespace
