@@ -1,4 +1,5 @@
 #include "../dissect_mm_msg.hh"
+
 namespace{
 const true_false_string tfs_sgc_7 = {
     "service gap control supported",

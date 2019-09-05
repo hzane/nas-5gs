@@ -39,9 +39,6 @@
     <ClCompile Include="mm\registration_req.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="mm\registration_accept.cc">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="formats.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -189,9 +186,6 @@
     <ClCompile Include="gsm.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="e212_mcc_mnc.cc">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="sm\pdu_ses.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -247,6 +241,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="mm\5gs_identity_type.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="common\e212_mcc_mnc.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\registration_accept.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
