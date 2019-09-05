@@ -279,7 +279,7 @@ const field_meta nas::hf_service_request_msg_id = {
 const element_meta nas::eap_msg = {
     0x78,
     "EAP message",
-    dissect_eap_msg,
+    cmn::dissect_eap_msg,
     nullptr,
 };
 

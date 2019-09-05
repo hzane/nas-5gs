@@ -41,7 +41,6 @@ int dissect_sm_status(dissector d, context* ctx);
 
 int dissect_sm_cause(dissector d, context* ctx);
 int dissect_ext_pco(dissector d, context* ctx);
-int dissect_eap_msg(dissector d, context* ctx);
 int dissect_authorized_qos_rules(dissector d, context* ctx);
 int dissect_qos_rules(dissector d, context* ctx);
 int dissect_mapped_eps_b_cont(dissector d, context* ctx);

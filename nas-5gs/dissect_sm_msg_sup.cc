@@ -59,7 +59,7 @@ const element_meta sm::ext_pco = {
 const element_meta sm::eap_msg = {
     0x78,
     "EAP message",
-    dissect_eap_msg,
+    cmn::dissect_eap_msg,
     nullptr,
 };
 
