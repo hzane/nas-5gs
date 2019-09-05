@@ -246,7 +246,256 @@
     <ClCompile Include="common\e212_mcc_mnc.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="mm\registration_accept.cc">
+    <ClCompile Include="mm\5gs_network_feature_support.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\5gs_registration_accept.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\5gs_registration_type.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\5gs_tracking_area_identity.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\5gs_update_type.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\abba.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\access_type.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\additional_5g_security_infomation.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\allowed_pdu_session_status.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\authentication_failure_parameter.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\authentication_parameter_autn.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\authentication_parameter_rand.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\authentication_response_parameter.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\configuration_update_indication.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\daylight_saving_time.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\deregistration_type.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\emergency_number_list.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\eps_bearer_context_status.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\eps_nas_message_container.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\eps_nas_security_algorithms.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\extended_drx_parameters.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\extended_emergency_number_list.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\imeisv_request.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\ladn_indication.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\ladn_information.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\ma_pdu_session_information.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\mico_indication.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\mobile_station_classmark2.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\nas_key_set_identifier.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\nas_message_container.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\nas_security_algorithms.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\network_name.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\network_slicing_indication.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\non_3gpp_nw_provided_policies.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\nssai.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\nssai_inclusion_mode.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\operator_defined_acccess_category_definitions.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\payload_container.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\payload_container_type.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\pdu_session_identity2.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\pdu_session_reactivation_result.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\pdu_session_reactivation_result_error_cause.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\pdu_session_status.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\plmn_list.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\registration_result.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\rejected_nssai.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\request_type.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\s1_ue_network_capability.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\service_area_list.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\service_type.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\sms_indication.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\sor_transparent_container.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\supported_codec_list.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\time_zone.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\time_zone_time.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\ue_parameters_update_transparent_container.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\ue_security_capability.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\ue_status.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\ue_usage_setting.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\uplink_data_status.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\use_status.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sm\pdu_address.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sm\5gsm_capability.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sm\5gsm_cause.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sm\5gsm_congestion_reattempt_indicator.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sm\5gsm_network_feature_support.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sm\allowed_scc_mode.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sm\alwayson_pdu_session_indication.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sm\alwayson_pdu_session_requested.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sm\atsss_container.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sm\control_plane_only_indication.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sm\extended_protocol_configuration_options.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sm\integrity_protection_maximum_data_rate.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sm\mapped_eps_bearer_contexts.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sm\maximum_number_of_supported_packet_filters.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sm\pdu_session_type.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sm\qos_flow_descriptions.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sm\qos_rules.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sm\reattempt_indicator.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sm\scc_mode.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sm\serving_plmn_rate_control.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sm\session_ambr.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sm\session-tmbr.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sm\sm_pdu_dn_request_container.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

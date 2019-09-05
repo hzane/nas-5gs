@@ -77,6 +77,7 @@ int dissect_mobile_id_5gstmsi(dissector d, context* ctx); // 4, 5G-S-TMSI
 int dissect_mobile_id_imeisv(dissector d, context* ctx);  // 5, IMEISV
 int dissect_mobile_id_mac(dissector d, context* ctx);     // 6, MAC address
 int dissect_5gs_id_type(dissector d, context* ctx);
+int dissect_nw_feat_sup(dissector d, context* ctx);
 
 extern const message_meta      msgs[];
 extern const true_false_string tfs_requested_not_requested;
@@ -84,6 +85,7 @@ extern const true_false_string tfs_sal_al_t;
 extern const true_false_string tfs_odd_even;
 extern const true_false_string tfs_eps_tsc;
 
+extern const element_meta nw_feat_sup;
 extern const element_meta allowed_nssai;
 extern const element_meta ta_id_list;
 extern const element_meta rej_nssai;
