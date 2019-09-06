@@ -10,7 +10,7 @@ int mm::dissect_registration_accept(dissector d, context* ctx) {
     const use_context uc(ctx, "registration-accept", d, 12);
 
     /*      5GS registration result    9.11.3.6    M    LV 2*/
-    auto consumed = dissect_elem_lv(nullptr, &reg_res, d, ctx);
+    auto consumed = dissect_elem_lv(nullptr, &registration_result, d, ctx);
     d.step(consumed);
 
     /*77    5G-GUTI    5GS mobile identity 9.11.3.4    O    TLV-E    14 */

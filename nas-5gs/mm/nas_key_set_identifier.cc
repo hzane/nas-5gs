@@ -1,14 +1,6 @@
 #include "../dissect_mm_msg.hh"
 
 
-// NAS key set identifier 9.11.3.32
-const element_meta mm::key_set_id = {
-    0xff,
-    "NAS key set identifier - ngKSI",
-    dissect_nas_ksi,
-    nullptr,
-};
-
 // 9.11.3.32	NAS key set identifier
 int mm::dissect_nas_ksi(dissector d, context* ctx) {
     use_context uc(ctx, "NAS key set identifier", d, -1);
@@ -50,3 +42,24 @@ const field_meta mm::hf_nas_key_set_id = {
     nullptr,
     0x07,
 };
+
+// only spare half octet
+const field_meta mm::hf_ngksi_nas_ksi = {
+    "NAS key set identifier - ngKSI",
+    "nas_5gs.mm.ngksi",
+    ft::ft_uint8,
+    fd::base_dec,
+    nullptr,
+    nullptr,
+    nullptr,
+    0xF0,
+};
+
+// NAS key set identifier 9.11.3.32
+extern const element_meta mm::nas_ksi = {
+    0xff,
+    "NAS key set identifier - ngKSI",
+    dissect_nas_ksi,
+    nullptr,
+};
+

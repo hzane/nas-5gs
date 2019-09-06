@@ -2,7 +2,7 @@
 
 
 /*40    Uplink data status    Uplink data status 9.11.3.57    O    TLV    4-34 */
-int mm::dissect_ul_data_status(dissector d, context* ctx) {
+int mm::dissect_uplink_data_status(dissector d, context* ctx) {
     const use_context        uc(ctx, "uplink-data-status", d, -1);
 
     static const field_meta* psi_0_7_flags[] = {
@@ -37,3 +37,12 @@ int mm::dissect_ul_data_status(dissector d, context* ctx) {
 
     return 2;
 }
+
+
+// Uplink data status  9.11.3.57
+const element_meta mm::uplink_data_status = {
+    0x40,
+    "Uplink data status",
+    dissect_uplink_data_status,
+    nullptr,
+};

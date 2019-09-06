@@ -2,18 +2,19 @@
 #include "../ts24007.hh"
 
 /* 9.11.3.7    5GS registration type */
-int mm::dissect_reg_req_type(dissector d, context* ctx) {
+int mm::dissect_registration_request_type(dissector d, context* ctx) {
     const use_context uc(ctx, "5gs-registration-type", d, -1);
 
     const field_meta* flags[] = {
         &hf_mm_for,
-        &hf_mm_reg_type,
+        &hf_5gs_reg_type,
         nullptr,
     };
     d.add_bits(flags);
     return 1;
 }
 
+// 9.11.3.7	5GS registration type
 extern const val_string mm::values_registration_type[] = {
     {0x1, "initial registration"},
     {0x2, "mobility registration updating"},
@@ -24,7 +25,7 @@ extern const val_string mm::values_registration_type[] = {
 };
 const field_meta mm::hf_5gs_reg_type = {
     "5GS registration type",
-    "nas_5gs.mm.5gs_reg_type",
+    "nas_5gs.mm.registration.type",
     ft::ft_uint8,
     fd::base_dec,
     values_registration_type,
@@ -36,21 +37,10 @@ const field_meta mm::hf_5gs_reg_type = {
 const element_meta mm::registration_request_type = {
     0xff,
     "5GS registration type",
-    dissect_reg_req_type,
+    dissect_registration_request_type,
     nullptr,
 };
 
-// only spare half octet
-const field_meta mm::hf_ngksi_nas_ksi = {
-    "NAS key set identifier - ngKSI",
-    "nas_5gs.mm.ngksi",
-    ft::ft_uint8,
-    fd::base_dec,
-    nullptr,
-    nullptr,
-    nullptr,
-    0xF0,
-};
 
 const element_meta mm::nc_native_nas_ksi = {
     0xc0,
@@ -69,7 +59,7 @@ const element_meta mm::ue_sec_cap = {
 /*2F    Requested NSSAI    NSSAI 9.11.3.37    O    TLV    4-74*/
 const element_meta mm::requested_nssai = {
     0x2f,
-    "Requested NSSAI",
+    "NSSAI - Requested",
     mm::dissect_requested_nssai,
     nullptr,
 };
@@ -85,14 +75,6 @@ const element_meta mm::s1_ue_net_cap = {
     0x17,
     "S1 UE network capability",
     dissect_s1_ue_net_cap,
-    nullptr,
-};
-
-
-const element_meta mm::ul_data_status = {
-    0x40,
-    "Uplink data status",
-    dissect_ul_data_status,
     nullptr,
 };
 
@@ -113,21 +95,37 @@ const element_meta mm::aguti_mobile_id = {
 };
 
 
-const element_meta mm::allow_pdu_ses_sts = {
+// Allowed PDU session status
+const element_meta mm::allowed_pdu_ses_status = {
     0x25,
     "Allowed PDU session status",
-    dissect_pdu_ses_status,
+    dissect_allowed_pdu_ses_status,
     nullptr,
 };
 
-
-const element_meta mm::ue_usage_set = {
+const element_meta mm::ue_usage_setting = {
     0x18,
     "UE's usage setting",
     dissect_usage_set,
     nullptr,
 };
 
+// UE's usage setting    UE's usage setting         9.11.3.55
+static true_false_string tfs_nas_5gs_mm_ue_usage_setting = {
+    "Data centric",
+    "Voice centric",
+};
+
+const field_meta mm::hf_nas_5gs_mm_ue_usage_setting = {
+    "UE's usage setting",
+    "nas_5gs.mm.ue_usage_setting",
+    ft::ft_boolean,
+    fd::base_dec,
+    nullptr,
+    &tfs_nas_5gs_mm_ue_usage_setting,
+    nullptr,
+    0x01,
+};
 
 const element_meta mm::requested_drx_param = {
     0x51,
@@ -136,7 +134,7 @@ const element_meta mm::requested_drx_param = {
     nullptr,
 };
 
-const element_meta mm::eps_nas_msg_cont = {
+const element_meta mm::eps_nas_msg_container = {
     0x70,
     "EPS NAS message container",
     dissect_eps_nas_msg_cont,

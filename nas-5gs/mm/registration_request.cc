@@ -56,7 +56,7 @@ int mm::dissect_registration_req(dissector d, context* ctx) {
 
     /*40    Uplink data status  9.11.3.57    O    TLV    4-34 */
     // ELEM_OPT_TLV(0x40, , DE_NAS_5GS_MM_UL_DATA_STATUS, NULL);
-    consumed = dissect_opt_elem_tlv(nullptr, &ul_data_status, d, ctx);
+    consumed = dissect_opt_elem_tlv(nullptr, &uplink_data_status, d, ctx);
     d.step(consumed);
 
     /*50    PDU session status  9.11.3.44    O    TLV    4-34 */
@@ -81,12 +81,12 @@ int mm::dissect_registration_req(dissector d, context* ctx) {
 
     /*25    Allowed PDU session status    9.11.3.13  O    TLV    4 - 34 */
     // ELEM_OPT_TLV(0x25, , DE_NAS_5GS_MM_ALLOW_PDU_SES_STS, NULL);
-    consumed = dissect_opt_elem_tlv(nullptr, &allow_pdu_ses_sts, d, ctx);
+    consumed = dissect_opt_elem_tlv(nullptr, &allowed_pdu_ses_status, d, ctx);
     d.step(consumed);
 
     /*18    UE's usage setting    9.11.3.55    O    TLV    3 */
     // ELEM_OPT_TLV(0x18, , DE_NAS_5GS_MM_UE_USAGE_SET, NULL);
-    consumed = dissect_opt_elem_tlv(nullptr, &ue_usage_set, d, ctx);
+    consumed = dissect_opt_elem_tlv(nullptr, &ue_usage_setting, d, ctx);
     d.step(consumed);
 
     /* 51    Requested DRX parameters    5GS DRX parameters 9.11.3.2A    O    TLV    3 */
@@ -96,7 +96,7 @@ int mm::dissect_registration_req(dissector d, context* ctx) {
 
     /* 70    EPS NAS message container  9.11.3.24    O    TLV-E 4-n */
     // ELEM_OPT_TLV_E(0x70, , DE_NAS_5GS_MM_EPS_NAS_MSG_CONT, NULL);
-    consumed = dissect_opt_elem_tlv_e(nullptr, &eps_nas_msg_cont, d, ctx);
+    consumed = dissect_opt_elem_tlv_e(nullptr, &eps_nas_msg_container, d, ctx);
     d.step(consumed);
 
     /* 74    LADN indication  9.11.3.29    O    TLV-E    3-811 */
@@ -1215,23 +1215,6 @@ const true_false_string tfs_nas_5gs_mm_s1_mod = { // NOLINT
     "UE is not in EMM-REGISTERED state",
 };
 
-
-// UE's usage setting    UE's usage setting         9.11.3.55
-static true_false_string tfs_nas_5gs_mm_ue_usage_setting = {
-    "Data centric",
-    "Voice centric",
-};
-
-const field_meta mm::hf_nas_5gs_mm_ue_usage_setting = {
-    "UE's usage setting",
-    "nas_5gs.mm.ue_usage_setting",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &tfs_nas_5gs_mm_ue_usage_setting,
-    nullptr,
-    0x01,
-};
 
 
 /* 9.11.3.9A    5GS update type */

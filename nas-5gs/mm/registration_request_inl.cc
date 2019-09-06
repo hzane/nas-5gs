@@ -22,16 +22,6 @@ static field_meta hfm_registration_req_flags = {
     0x0F,
 };
 
-// 9.11.3.7	5GS registration type
-const value_string nas_5gs_registration_type_values[] = {
-    {0x1, "initial registration"},
-    {0x2, "mobility registration updating"},
-    {0x3, "periodic registration updating"},
-    {0x4, "emergency registration"},
-    {0x7, "reserved"},
-    {0, nullptr},
-};
-
 true_false_string nas_5gs_for_tfs = {
     "Follow-on request pending",
     "No follow-on request pending",
@@ -44,16 +34,7 @@ const field_meta hf_mm_for = {
     nullptr, (&nas_5gs_for_tfs),nullptr,
     0x08,
 };
-const field_meta hf_mm_reg_type = {
-    "5GS registration type",
-    "nas_5gs.mm.5gs_reg_type",
-    ft::ft_uint8,
-    fd::base_dec,
-    (nas_5gs_registration_type_values),
-    nullptr,
-    nullptr,
-    0x07,
-};
+
 
 const field_meta* hf_reg_req_flags = &hfm_registration_req_flags;
 

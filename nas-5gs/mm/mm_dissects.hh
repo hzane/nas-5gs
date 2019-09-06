@@ -37,7 +37,6 @@ int dissect_req_type(dissector d, context* ctx);
 
 int dissect_last_v_tai(dissector d, context* ctx); //  9.11.3.8
 int dissect_s1_ue_net_cap(dissector d, context* ctx);
-int dissect_ul_data_status(dissector d, context* ctx);
 
 int dissect_ue_status(dissector d, context* ctx ); // 9.11.3.56
 
@@ -129,9 +128,9 @@ int dissect_mobile_id_mac(dissector d, context* ctx);     // 6, MAC address
 int dissect_5gs_id_type(dissector d, context* ctx);
 int dissect_nw_feat_sup(dissector d, context* ctx);
 /*  5GS registration result    9.11.3.6    M    LV 2 */
-int dissect_reg_res(dissector d, context* ctx = nullptr);
+int dissect_registration_result(dissector d, context* ctx = nullptr);
 
-int dissect_reg_req_type(dissector d, context* ctx);
+int dissect_registration_request_type(dissector d, context* ctx);
 //  5GMM capability  9.11.3.1
 int dissect_mm_cap(dissector d, context* ctx);
 

@@ -11,7 +11,7 @@ int mm::dissect_service_req(dissector d, context* ctx) {
     up_link(d.pinfo);
 
     /* ngKSI     NAS key set identifier 9.11.3.32    M    V    1/2 */
-    dissect_elem_v(nullptr, &key_set_id, d, ctx);
+    dissect_elem_v(nullptr, &nas_ksi, d, ctx);
 
     // Service type 9.11.3.50 M V 1 / 2
     dissect_elem_v(nullptr, &mm_service_type, d, ctx);
@@ -60,28 +60,6 @@ const element_meta s_tmsi = {
     0xff,
     "5GS mobile identity - 5G-S-TMSI",
     dissect_s_tmsi,
-    nullptr,
-};
-
-// Uplink data status  9.11.3.57
-int dissect_uplink_data_status(dissector d, context* ctx);
-
-// Uplink data status  9.11.3.57
-const element_meta uplink_data_status = {
-    0x40,
-    "Uplink data status",
-    dissect_uplink_data_status,
-    nullptr,
-};
-
-// Allowed PDU session status
-int dissect_allowed_pdu_ses_status(dissector d, context* ctx);
-
-// Allowed PDU session status
-const element_meta allowed_pdu_ses_status = {
-    0x25,
-    "Allowed PDU session status",
-    dissect_allowed_pdu_ses_status,
     nullptr,
 };
 
@@ -237,44 +215,6 @@ const field_meta hf_ul_data_sts_psi_8_b0  = {
     0x01,
 };
 
-//  * 9.11.3.57    Uplink data status
-int dissect_uplink_data_status(dissector d, context* ctx) {
-
-    static const field_meta* psi_0_7_flags[] = {
-        &hf_ul_data_sts_psi_7_b7,
-        &hf_ul_data_sts_psi_6_b6,
-        &hf_ul_data_sts_psi_5_b5,
-        &hf_ul_data_sts_psi_4_b4,
-        &hf_ul_data_sts_psi_3_b3,
-        &hf_ul_data_sts_psi_2_b2,
-        &hf_ul_data_sts_psi_1_b1,
-        &hf_ul_data_sts_psi_0_b0,
-        nullptr,
-    };
-
-    static const field_meta* psi_8_15_flags[] = {
-        &hf_ul_data_sts_psi_15_b7,
-        &hf_ul_data_sts_psi_14_b6,
-        &hf_ul_data_sts_psi_13_b5,
-        &hf_ul_data_sts_psi_12_b4,
-        &hf_ul_data_sts_psi_11_b3,
-        &hf_ul_data_sts_psi_10_b2,
-        &hf_ul_data_sts_psi_9_b1,
-        &hf_ul_data_sts_psi_8_b0,
-        nullptr,
-    };
-
-    d.add_bits(psi_0_7_flags);
-    d.step(1);
-
-    d.add_bits(psi_8_15_flags);
-    d.step(1);
-
-    d.extraneous_data_check(0);
-
-    return 2;
-
-}
 /*
  *  9.11.3.13    Allowed PDU session status
  */
