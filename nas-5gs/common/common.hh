@@ -4,7 +4,7 @@
 namespace cmn{
 /* 9.11.2.2    EAP message RFC2284 RFC3748 */
 extern const field_meta hf_eap;
-
+extern const element_meta eap_msg;
 /* 9.11.2.2    EAP message RFC2284 RFC3748 */
 int dissect_eap_msg(dissector d, context* ctx);
 

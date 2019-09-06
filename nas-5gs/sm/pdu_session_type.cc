@@ -58,3 +58,34 @@ int sm::dissect_pdu_ses_type(dissector d, context* ctx) {
 
     return 1;
 }
+
+const val_string pdu_session_id_values[] = {
+    {0x00, "No PDU session identity assigned"},
+    {0x01, "Reserved"},
+    {0x02, "Reserved"},
+    {0x03, "Reserved"},
+    {0x04, "Reserved"},
+    {0x05, "PDU session identity value 5"},
+    {0x06, "PDU session identity value 6"},
+    {0x07, "PDU session identity value 7"},
+    {0x08, "PDU session identity value 8"},
+    {0x09, "PDU session identity value 9"},
+    {0x0a, "PDU session identity value 10"},
+    {0x0b, "PDU session identity value 11"},
+    {0x0c, "PDU session identity value 12"},
+    {0x0d, "PDU session identity value 13"},
+    {0x0e, "PDU session identity value 14"},
+    {0x0f, "PDU session identity value 15"},
+    {0, nullptr},
+};
+const field_meta hfm_pdu_session_id = {
+    "PDU session identity",
+    "nas_5gs.pdu_session_id",
+    ft::ft_uint8,
+    fd::base_dec,
+    pdu_session_id_values,
+    nullptr,
+    nullptr,
+    0x0,
+};
+const field_meta* nas::hf_pdu_sess_id = &hfm_pdu_session_id;

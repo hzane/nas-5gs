@@ -3,16 +3,6 @@
 #include <string>
 #include <vector>
 
-#if !defined _MSC_VER
-#define MUST_USE_RESULT __attribute__((warn_unused_result))
-#define NO_DISCARD [[nodiscard]]
-#define NO_RETURN [[noreturn]]
-#else
-#define MUST_USE_RESULT
-#define NO_DISCARD [[nodiscard]]
-#define NO_RETURN
-#endif
-
 #if _MSC_VER < 1920
 #define nullptr 0
 #endif
@@ -64,9 +54,9 @@ struct dissector {
         length -= consumed;
         return *this;
     }
-    proto_node*    add_item(int len, const field_meta* fm, uint32_t e = enc::be);
-    proto_node*    add_item(int len, const char* format, ...);
-    void           add_bits(const field_meta* metas[]);
+    proto_node*    add_item(int len, const field_meta* fm, uint32_t e = enc::be) const;
+    proto_node*    add_item(int len, const char* format, ...) const;
+    void           add_bits(const field_meta* metas[]) const;
     void           extraneous_data_check(int max_len, context* ctx = nullptr) const;
     const uint8_t* safe_ptr() const;
     int            safe_length(int len) const;

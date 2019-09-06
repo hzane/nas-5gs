@@ -38,3 +38,11 @@ int sm::dissect_ext_pco(dissector d, context* ctx) {
 
     return uc.length;
 }
+
+// Extended protocol configuration options  9.11.4.6
+const element_meta sm::ext_pco = {
+    0x7B,
+    "Extended protocol configuration options",
+    dissect_ext_pco,
+    nullptr,
+};

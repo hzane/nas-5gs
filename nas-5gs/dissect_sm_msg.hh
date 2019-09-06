@@ -12,7 +12,6 @@ struct context;
 namespace sm {
 __declspec(selectany) extern const dissect_fnc_t no_dissect = nullptr;
 
-extern const true_false_string tfs_allowed_not_allowed;
 extern const true_false_string tfs_sm_dqr ;
 extern const message_meta msgs[];
 
@@ -39,4 +38,10 @@ extern const value_string sm_int_prot_max_data_rate_values[] ;
 
 /* 9.11.4.16    SSC mode */
 extern const value_string sc_mode_values[] ;
+
+__declspec(selectany) extern const true_false_string tfs_allowed_not_allowed = {
+    "Allowed",
+    "Not Allowed",
+};
+
 } // namespace sm

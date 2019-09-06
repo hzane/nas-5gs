@@ -8,7 +8,7 @@ using namespace cmn;
 using namespace nas;
 
 int dissect_nas5g(dissector d, context* ctx){
-    auto epd = d.uint8();
+    const auto epd = d.uint8();
     if (epd == EPD::SM5G) return dissect_nas5g_plain(d, ctx);
 
     // Security header type (octet 1)
@@ -20,31 +20,31 @@ int dissect_nas5g(dissector d, context* ctx){
 }
 
 int dissect_nas5g_security_protected(dissector d, context* ctx){
-    auto        subtree = d.add_item(7, "Security protected NAS 5GS message");
+    const auto        subtree = d.add_item(7, "Security protected NAS 5GS message");
     use_tree    ut(d, subtree);
-    use_context uc(ctx, subtree->name.c_str(), d, 0);
+    const use_context uc(ctx, subtree->name.c_str(), d, 0);
 
     /* Extended protocol discriminator  octet 1 */
-    d.add_item(1, hf_epd, enc::be);
+    auto i = d.add_item(1, hf_epd, enc::be);
     d.step(1);
 
     /* Security header type associated with a spare half octet    octet 2 */
-    d.add_item(1, hf_sec_header_type, enc::be);
-    d.add_item(1, hf_spare_half_octet, enc::be);
+    i = d.add_item(1, hf_sec_header_type, enc::be);
+    i = d.add_item(1, hf_spare_half_octet, enc::be);
     d.step(1);
 
     /* Message authentication code octet 3 - 6 */
     store_msg_auth_code(ctx, d.uint32());
-    d.add_item(4, hf_msg_auth_code, enc::be);
+    i = d.add_item(4, hf_msg_auth_code, enc::be);
     d.step(4);
 
     /* Sequence number    octet 7 */
-    d.add_item(1, hf_seq_no, enc::be);
+    i = d.add_item(1, hf_seq_no, enc::be);
     d.step(1);
 
     // TODO: decrypt the body
     // This should work when the NAS ciphering algorithm is NULL (128-EEA0)
-    auto consumed = dissect_nas5g_plain(d, ctx);
+    const auto consumed = dissect_nas5g_plain(d, ctx);
     d.step(consumed);
 
     return uc.length;
@@ -52,12 +52,10 @@ int dissect_nas5g_security_protected(dissector d, context* ctx){
 
 int dissect_nas5g_plain(dissector d, context* ctx) {
     /* Plain NAS 5GS Message */
-    // auto        subtree = d.add_item(-1, "Plain NAS 5GS Message");
-    // use_tree    ut(d, subtree);
-    // use_context uc(ctx, subtree->name.c_str(), d, 0);
+    const use_context uc(ctx, "Plain NAS 5GS Message", d, 0);
 
     /* Extended protocol discriminator  octet 1 */
-    auto epd = d.uint8();
+    const auto epd = d.uint8();
 
     if (epd == EPD::MM5G) {
         return dissect_mm_msg(d, ctx);
@@ -70,57 +68,57 @@ int dissect_nas5g_plain(dissector d, context* ctx) {
 }
 
 static int dissect_sm_msg(dissector d, context* ctx) {
-    auto        subtree = d.add_item(-1, "5GS Session Management Message");
+    const auto        subtree = d.add_item(-1, "5GS Session Management Message");
     use_tree    ut(d, subtree);
-    use_context uc(ctx, subtree->name.c_str(), d, 0);
+    const use_context uc(ctx, subtree->name.c_str(), d, 0);
 
     /* Extended protocol discriminator  octet 1 */
-    d.add_item(1, hf_epd, enc::be);
+    auto i = d.add_item(1, hf_epd, enc::be);
     d.step(1);
 
     /* PDU session ID	PDU session identity 9.4	M	V	1     */
-    d.add_item(1, hf_pdu_sess_id, enc::be);
+    i = d.add_item(1, hf_pdu_sess_id, enc::be);
     d.step(1);
 
     /* PTI	Procedure transaction identity 9.6	M	V	1     */
-    d.add_item(1, hf_proc_trans_id, enc::be);
+    i = d.add_item(1, hf_proc_trans_id, enc::be);
     d.step(1);
 
     /* Message type 9.7	M	V	1*/
-    uint8_t iei = d.uint8(); // offset == 2
-    d.add_item(1, hf_sm_msg_type, enc::be);
+    const uint8_t iei = d.uint8(); // offset == 2
+    i = d.add_item(1, hf_sm_msg_type, enc::be);
     d.step(1);
 
-    auto meta  = find_dissector(iei, sm::msgs);
-    auto consumed = (meta && meta->fnc) ? meta->fnc(d, ctx) : 0;
+    const auto meta  = find_dissector(iei, sm::msgs);
+    const auto consumed = (meta && meta->fnc) ? meta->fnc(d, ctx) : 0;
     d.step(consumed);
 
     return uc.length;
 }
 
 static int dissect_mm_msg(dissector d, context* ctx) {
-    auto        subtree = d.add_item(-1, "5GS Mobility Management Message");
+    const auto        subtree = d.add_item(-1, "5GS Mobility Management Message");
     use_tree    ut(d, subtree);
-    use_context uc(ctx, subtree->name.c_str(), d, 0);
+    const use_context uc(ctx, subtree->name.c_str(), d, 0);
 
     /* Extended protocol discriminator 9.2 octet 1 */
     auto epd = d.uint8();
-    d.add_item(1, hf_epd, enc::be);
+    auto i = d.add_item(1, hf_epd, enc::be);
     d.step(1);
 
     /*Security header type 9.3	M	V	1/2 */
-    d.add_item(1, hf_sec_header_type, enc::be);
+    i = d.add_item(1, hf_sec_header_type, enc::be);
     /*Spare half octet	Spare half octet 9.5	M	V	1/2*/
-    d.add_item(1, hf_spare_half_octet, enc::be);
+    i = d.add_item(1, hf_spare_half_octet, enc::be);
     d.step(1);
 
     /* Authentication request message identity	Message type 9.7	M	V	1*/
-    uint8_t iei = d.uint8();
-    d.add_item(1, hf_mm_msg_type, enc::be);
+    const uint8_t iei = d.uint8();
+    i = d.add_item(1, hf_mm_msg_type, enc::be);
     d.step(1);
 
-    auto meta = find_dissector(iei, mm::msgs);
-    auto consumed = (meta && meta->fnc) ? meta->fnc(d, ctx) : 0;
+    const auto meta = find_dissector(iei, mm::msgs);
+    const auto consumed = (meta && meta->fnc) ? meta->fnc(d, ctx) : 0;
     d.step(consumed);
 
     return uc.length;

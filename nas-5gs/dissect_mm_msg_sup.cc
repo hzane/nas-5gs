@@ -7,7 +7,6 @@ extern const true_false_string mm::tfs_requested_not_requested = {
     "Requested",
     "Not Requested",
 };
-/* * 9.11.3.9A    5GS update type*/
 
 const true_false_string mm::tfs_sms_requested = {
     "SMS over NAS supported",
@@ -41,29 +40,6 @@ const field_meta mm::hf_tsc = {
     0x08,
 };
 
-/* NAS key set identifier (octet 1) Bits 3  2   1 */
-extern const val_string mm::nas_eps_emm_nas_ksi_values[] = {
-    {0, ""},
-    {1, ""},
-    {2, ""},
-    {3, ""},
-    {4, ""},
-    {5, ""},
-    {6, ""},
-    {7, "No key is available"},
-    {0, nullptr},
-};
-
-const field_meta mm::hf_nas_key_set_id = {
-    "NAS key set identifier",
-    "nas_5gs.mm.nas_key_set_id",
-    ft::ft_uint8,
-    fd::base_dec,
-    nas_eps_emm_nas_ksi_values,
-    nullptr,
-    nullptr,
-    0x07,
-};
 
 const field_meta mm::hf_tsc_h1 = {
     "Type of security context flag (TSC)",
@@ -143,11 +119,6 @@ const field_meta hfm_mm_mapped_conf_ssd = { // NOLINT
     0x0,
 };
 
-/* *   9.11.3.19    Daylight saving time */
-
-/* See subclause 10.5.3.12 in 3GPP TS 24.008 */
-
-/* *   9.11.3.20    De-registration type */
 
 const true_false_string mm_switch_off_tfs = {
     "Switch off",
@@ -186,7 +157,7 @@ extern const val_string mm_acc_type_vals[] = {
     {0, nullptr},
 };
 
-const field_meta hfm_mm_acc_type = { // NOLINT: unused-const-variable
+const field_meta hfm_mm_acc_type = { 
     "Access type",
     "nas_5gs.mm.acc_type",
     ft::ft_uint8,
@@ -196,8 +167,6 @@ const field_meta hfm_mm_acc_type = { // NOLINT: unused-const-variable
     nullptr,
     0x03,
 };
-
-/* *   9.11.3.31    MICO indication */
 
 const true_false_string tfs_raai = {
     "all PLMN registration area allocated",

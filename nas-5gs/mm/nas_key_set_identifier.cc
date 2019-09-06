@@ -26,3 +26,27 @@ int mm::dissect_nas_ksi(dissector d, context* ctx) {
     return 1;
 }
 
+
+/* NAS key set identifier (octet 1) Bits 3  2   1 */
+extern const val_string mm::nas_eps_emm_nas_ksi_values[] = {
+    {0, ""},
+    {1, ""},
+    {2, ""},
+    {3, ""},
+    {4, ""},
+    {5, ""},
+    {6, ""},
+    {7, "No key is available"},
+    {0, nullptr},
+};
+
+const field_meta mm::hf_nas_key_set_id = {
+    "NAS key set identifier",
+    "nas_5gs.mm.nas_key_set_id",
+    ft::ft_uint8,
+    fd::base_dec,
+    nas_eps_emm_nas_ksi_values,
+    nullptr,
+    nullptr,
+    0x07,
+};

@@ -24,3 +24,32 @@ int sm::dissect_int_prot_max_data_rate(dissector d, context* ctx) {
 
     return 2;
 }
+
+
+// * 9.11.4.7 Integrity protection maximum data rate
+extern const value_string sm::sm_int_prot_max_data_rate_values[] = {
+    {0x0, "64 kbps"},
+    {0xff, "Full data rate"},
+    {0, nullptr},
+};
+
+const field_meta sm::hf_sm_int_prot_max_data_rate_ul = {
+    "Integrity protection maximum data rate for uplink",
+    "nas_5gs.sm.int_prot_max_data_rate_ul",
+    ft::ft_uint8,
+    fd::base_dec,
+    (sm_int_prot_max_data_rate_values),
+    nullptr,
+    nullptr,
+    0x0,
+};
+const field_meta sm::hf_sm_int_prot_max_data_rate_dl = {
+    "Integrity protection maximum data rate for downlink",
+    "nas_5gs.sm.int_prot_max_data_rate_dl",
+    ft::ft_uint8,
+    fd::base_dec,
+    (sm_int_prot_max_data_rate_values),
+    nullptr,
+    nullptr,
+    0x0,
+};

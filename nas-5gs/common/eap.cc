@@ -16,8 +16,17 @@ const field_meta cmn::hf_eap = {
 int cmn::dissect_eap_msg(dissector d, context* ctx) {
     use_context uc(ctx, "EAP", d, 0);
     /* EAP message as specified in IETF RFC 3748 */
-    d.add_item(d.length, &hf_eap, enc::na);
+    auto i = d.add_item(d.length, &hf_eap, enc::na);
+    unused(i);
     d.step(d.length);
 
     return uc.length;
 }
+
+// EAP message 9.11.2.2
+const element_meta cmn::eap_msg = {
+    0x78,
+    "EAP message",
+    cmn::dissect_eap_msg,
+    nullptr,
+};

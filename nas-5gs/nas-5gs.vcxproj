@@ -170,7 +170,6 @@
     <ClCompile Include="dissect_nas5g.cc" />
     <ClCompile Include="dissect_nas5g_sup.cc" />
     <ClCompile Include="dissect_sm_msg.cc" />
-    <ClCompile Include="dissect_sm_msg_sup.cc" />
     <ClCompile Include="common\e212_mcc_mnc.cc" />
     <ClCompile Include="field_meta.cc" />
     <ClCompile Include="formats.cc" />

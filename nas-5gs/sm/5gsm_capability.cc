@@ -23,3 +23,11 @@ int sm::dissect_sm_cap(dissector d, context* ctx) {
 
     return 1;
 }
+
+// 5GSM capability 9.11.4.1
+const element_meta sm::sm_cap = {
+    0x28,
+    "5GSM capability",
+    dissect_sm_cap,
+    nullptr,
+};

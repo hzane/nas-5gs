@@ -270,3 +270,83 @@ extern const value_string nas_5gs_rule_operation_code_values[] = {
     {0x7, "Reserved"},
     {0, nullptr},
 };
+
+// Authorized QoS rules QoS rules 9.11.4.13
+const element_meta sm::authorized_qos_rules = {
+    0x7A,
+    "Authorized QoS rules",
+    dissect_authorized_qos_rules,
+    nullptr,
+};
+
+
+extern const value_string sm::rule_operation_code_values[] = {
+    {0x0, "Reserved"},
+    {0x1, "Create new QoS rule"},
+    {0x2, "Delete existing QoS rule"},
+    {0x3, "Modify existing QoS rule and add packet filters"},
+    {0x4, "Modify existing QoS rule and replace packet filters"},
+    {0x5, "Modify existing QoS rule and delete packet filters"},
+    {0x6, "Modify existing QoS rule without modifying packet filters"},
+    {0x7, "Reserved"},
+    {0, nullptr},
+};
+
+
+extern const value_string sm::rule_param_cont[] = {
+    {0x0, "Reserved"},
+    {0x01, "5QI 1"},
+    {0x02, "5QI 2"},
+    {0x03, "5QI 3"},
+    {0x04, "5QI 4"},
+    {0x05, "5QI 5"},
+    {0x06, "5QI 6"},
+    {0x07, "5QI 7"},
+    {0x08, "5QI 8"},
+    {0x09, "5QI 9"},
+    {0, nullptr},
+};
+
+const field_meta sm::hf_sm_rop = {
+    "Rule operation code",
+    "nas_5gs.sm.rop",
+    ft::ft_uint8,
+    fd::base_dec,
+    (rule_operation_code_values),
+    nullptr,
+    nullptr,
+    0xe0,
+};
+const field_meta sm::hf_sm_nof_pkt_filters = {
+    "Number of packet filters",
+    "nas_5gs.sm.nof_pkt_filters",
+    ft::ft_uint8,
+    fd::base_dec,
+    nullptr,
+    nullptr,
+    nullptr,
+    0x0f,
+};
+
+const field_meta sm::hf_sm_qos_rule_id = {
+    "QoS rule identifier",
+    "nas_5gs.sm.qos_rule_id",
+    ft::ft_uint8,
+    fd::base_dec,
+    nullptr,
+    nullptr,
+    nullptr,
+    0x0,
+};
+
+
+const field_meta sm::hf_sm_qos_rule_precedence = {
+    "QoS rule precedence",
+    "nas_5gs.sm.qos_rule_precedence",
+    ft::ft_uint8,
+    fd::base_dec,
+    nullptr,
+    nullptr,
+    nullptr,
+    0x0,
+};

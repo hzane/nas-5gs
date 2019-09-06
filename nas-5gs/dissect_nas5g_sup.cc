@@ -156,36 +156,6 @@ field_meta hfm_sm_message_type = {
 };
 const field_meta* nas::hf_sm_msg_type = &hfm_sm_message_type;
 
-const val_string pdu_session_id_values[] = {
-    {0x00, "No PDU session identity assigned"},
-    {0x01, "Reserved"},
-    {0x02, "Reserved"},
-    {0x03, "Reserved"},
-    {0x04, "Reserved"},
-    {0x05, "PDU session identity value 5"},
-    {0x06, "PDU session identity value 6"},
-    {0x07, "PDU session identity value 7"},
-    {0x08, "PDU session identity value 8"},
-    {0x09, "PDU session identity value 9"},
-    {0x0a, "PDU session identity value 10"},
-    {0x0b, "PDU session identity value 11"},
-    {0x0c, "PDU session identity value 12"},
-    {0x0d, "PDU session identity value 13"},
-    {0x0e, "PDU session identity value 14"},
-    {0x0f, "PDU session identity value 15"},
-    {0, nullptr},
-};
-const field_meta hfm_pdu_session_id = {
-    "PDU session identity",
-    "nas_5gs.pdu_session_id",
-    ft::ft_uint8,
-    fd::base_dec,
-    pdu_session_id_values,
-    nullptr,
-    nullptr,
-    0x0,
-};
-const field_meta* nas::hf_pdu_sess_id = &hfm_pdu_session_id;
 
 field_meta hfm_proc_trans_id = {
     "Procedure transaction identity",
@@ -362,11 +332,6 @@ const field_meta nas::hf_spare_b1 = {
     nullptr,
     nullptr,
     0x02,
-};
-
-const true_false_string nas::tfs_allowed_not_allowed = {
-    "Allowed",
-    "Not Allowed",
 };
 
 

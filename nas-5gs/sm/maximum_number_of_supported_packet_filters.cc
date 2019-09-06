@@ -29,10 +29,18 @@ const field_meta hf_max_supported_packet_filters_c = {
 int sm::dissect_max_num_sup_kpt_flt(dissector d, context* ctx) {
     const use_context uc(ctx, "max-nof-supported-packet-filters", d, -1);
 
-    d.add_item(1, &hf_max_supported_packet_filters, enc::be);
+    auto i = d.add_item(1, &hf_max_supported_packet_filters, enc::be);
     d.step(1);
-    d.add_item(1, &hf_max_supported_packet_filters_c, enc::be);
+    i = d.add_item(1, &hf_max_supported_packet_filters_c, enc::be);
     d.step(1);
 
     return 2;
 }
+
+// Maximum number of suuported packet filter 9.11.4.9
+const element_meta sm::max_num_sup_kpt_flt = {
+    0x55,
+    "Maximum number of suuported packet filter",
+    dissect_max_num_sup_kpt_flt,
+    nullptr,
+};

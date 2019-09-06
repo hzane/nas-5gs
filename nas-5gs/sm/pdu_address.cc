@@ -67,3 +67,14 @@ int sm::dissect_pdu_address(dissector d, context* ctx) {
     }
     return uc.length;
 }
+
+const field_meta sm::hf_pdu_addr_ipv4 = {
+    "PDU address information",
+    "nas_5gs.sm.pdu_addr_inf_ipv4",
+    ft::ft_uint32, // FT_IPv4,
+    fd::ipv4,
+    nullptr,
+    nullptr,
+    nullptr,
+    0x0,
+};

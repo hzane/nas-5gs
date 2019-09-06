@@ -97,3 +97,131 @@ int sm::dissect_mapped_eps_b_cont(dissector d, context* ctx) {
     }
     return uc.length;
 }
+
+
+// Mapped EPS  bearer contexts     9.11.4.5
+const element_meta sm::mapped_eps_b_cont = {
+    0x75,
+    "Mapped EPS bearer contexts",
+    dissect_mapped_eps_b_cont,
+    nullptr,
+};
+
+
+/* 9.11.4.8 Mapped EPS bearer contexts */
+extern const value_string sm::sm_mapd_eps_b_cont_opt_code_values[] = {
+    {0x0, "Reserved"},
+    {0x01, "Create new EPS bearer"},
+    {0x02, "Delete existing EPS bearer"},
+    {0x03, "Modify existing EPS bearer"},
+    {0, nullptr},
+};
+
+extern const value_string sm::sm_mapd_eps_b_cont_deb_values[] = {
+    {0x0, "the EPS bearer is not the default EPS bearer."},
+    {0x01, "the EPS bearer is the default EPS bearer"},
+    {0, nullptr},
+};
+
+extern const value_string sm::sm_mapd_eps_b_cont_e_values[] = {
+    {0x0, "parameters list is not included"},
+    {0x01, "parameters list is included"},
+    {0, nullptr},
+};
+
+extern const value_string sm::sm_mapd_eps_b_cont_E_Modify_values[] = {
+    {0x0, "previously provided parameters list extension"},
+    {0x01, "previously provided parameters list replacement"},
+    {0, nullptr},
+};
+
+extern const value_string sm::sm_mapd_eps_b_cont_param_id_values[] = {
+    {0x01, "Mapped EPS QoS parameters"},
+    {0x02, "Mapped extended EPS QoS parameters"},
+    {0x03, "Traffic flow template"},
+    {0x04, "APN-AMBR"},
+    {0x05, "extended APN-AMBR"},
+    {0, nullptr},
+};
+
+const field_meta sm::hf_sm_mapd_eps_b_cont_opt_code = {
+    "Operation code",
+    "nas_5gs.sm.mapd_eps_b_cont_opt_code",
+    ft::ft_uint8,
+    fd::base_dec,
+    sm_mapd_eps_b_cont_opt_code_values,
+    nullptr,
+    nullptr,
+    0xc0,
+};
+const field_meta sm::hf_sm_mapd_eps_b_cont_deb = {
+    "DEB bit",
+    "nas_5gs.sm.mapd_eps_b_cont_DEB",
+    ft::ft_uint8,
+    fd::base_dec,
+    sm_mapd_eps_b_cont_deb_values,
+    nullptr,
+    nullptr,
+    0x20,
+};
+const field_meta sm::hf_sm_mapd_eps_b_cont_e = {
+    "E bit",
+    "nas_5gs.sm.mapd_eps_b_cont_E",
+    ft::ft_uint8,
+    fd::base_dec,
+    sm_mapd_eps_b_cont_e_values,
+    nullptr,
+    nullptr,
+    0x10,
+};
+const field_meta sm::hf_sm_mapd_eps_b_cont_num_eps_parms = {
+    "Number of EPS parameters",
+    "nas_5gs.sm.mapd_eps_b_cont_num_eps_parms",
+    ft::ft_uint8,
+    fd::base_dec,
+    nullptr,
+    nullptr,
+    nullptr,
+    0x0f,
+};
+const field_meta sm::hf_sm_mapd_eps_b_cont_e_mod = {
+    "E bit",
+    "nas_5gs.sm.mapd_eps_b_cont_E_mod",
+    ft::ft_uint8,
+    fd::base_dec,
+    sm_mapd_eps_b_cont_E_Modify_values,
+    nullptr,
+    nullptr,
+    0x10,
+};
+
+const field_meta sm::hf_sm_mapd_eps_b_cont_id = {
+    "EPS bearer identity",
+    "nas_5gs.sm.mapd_eps_b_cont_id",
+    ft::ft_uint8,
+    fd::base_dec,
+    nullptr,
+    nullptr,
+    nullptr,
+    0xf0,
+};
+const field_meta sm::hf_sm_mapd_eps_b_cont_num_eps_param_id = {
+    "EPS parameter identity",
+    "nas_5gs.sm.mapd_eps_b_cont_param_id",
+    ft::ft_uint8,
+    fd::base_dec,
+    sm_mapd_eps_b_cont_param_id_values,
+    nullptr,
+    nullptr,
+    0x0,
+};
+const field_meta sm::hf_sm_mapd_eps_b_cont_eps_param_cont = {
+    "EPS parameter contents",
+    "nas_5gs.sm.mapd_eps_b_cont_eps_param_cont",
+    ft::ft_bytes,
+    fd::base_none,
+    nullptr,
+    nullptr,
+    nullptr,
+    0x0,
+};

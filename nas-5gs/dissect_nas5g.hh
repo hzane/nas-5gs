@@ -13,9 +13,6 @@ const message_meta* find_dissector(uint8_t iei, const message_meta* meta);
 
 namespace nas {
 
-extern const true_false_string tfs_allowed_not_allowed;
-// extern const true_false_string tfs_follow_on_req;
-
 extern const element_meta t3348_gprs_timer3;
 extern const element_meta eap_msg;
 extern const field_meta*  hf_msg_elem;
@@ -43,5 +40,10 @@ extern const field_meta   hf_service_request_msg_id;
 __declspec(selectany) extern const true_false_string tfs_supported_not_supported = {
     "Supported",
     "Not supported",
+};
+
+__declspec(selectany) extern const true_false_string tfs_allowed_not_allowed = {
+    "Allowed",
+    "Not Allowed",
 };
 } // namespace nas
