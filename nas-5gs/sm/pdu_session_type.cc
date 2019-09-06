@@ -1,5 +1,6 @@
 #include "../dissect_sm_msg.hh"
 #include "../ts24007.hh"
+#include "../common.hh"
 
 /*  8.3.6 PDU session authentication result */
 int sm::dissect_pdu_ses_auth_res(dissector d, context* ctx) {
@@ -10,7 +11,7 @@ int sm::dissect_pdu_ses_auth_res(dissector d, context* ctx) {
 
     /*EAP message    EAP message 9.11.2.2    M    LV-E    6-1502 */
     // ELEM_MAND_LV_E(,  DE_NAS_5GS_CMN_EAP_MESSAGE,  );
-    auto consumed = dissect_elem_lv_e(nullptr, &eap_msg, d, ctx);
+    auto consumed = dissect_elem_lv_e(nullptr, &cmn::eap_msg, d, ctx);
     d.step(consumed);
 
     /*7B    Extended protocol configuration options    Extended protocol configuration
@@ -23,9 +24,17 @@ int sm::dissect_pdu_ses_auth_res(dissector d, context* ctx) {
 }
 
 // Selected PDU session type    PDU session type 9.11.4.11
-extern const element_meta sm::pdu_ses_type = {
+extern const element_meta sm::selected_pdu_ses_type = {
     0x90,
     "Selected PDU session type",
+    dissect_pdu_ses_type,
+    nullptr,
+};
+
+// PDU session type    PDU session type 9.11.4.11
+extern const element_meta sm::pdu_ses_type = {
+    0x90,
+    "PDU session type",
     dissect_pdu_ses_type,
     nullptr,
 };

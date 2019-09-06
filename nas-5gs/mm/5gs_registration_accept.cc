@@ -8,6 +8,8 @@ using namespace nas;
 /* 8.2.7    Registration accept */
 int mm::dissect_registration_accept(dissector d, context* ctx) {    
     const use_context uc(ctx, "registration-accept", d, 12);
+    // network to UE
+    down_link(d.pinfo);
 
     /*      5GS registration result    9.11.3.6    M    LV 2*/
     auto consumed = dissect_elem_lv(nullptr, &reg_res, d, ctx);
@@ -103,9 +105,9 @@ int mm::dissect_registration_accept(dissector d, context* ctx) {
     consumed = dissect_opt_elem_tlv(nullptr, &emerg_num_list, d, ctx);
     d.step(consumed);
 
-    /*7A    Extended emergency number list  9.11.3.26  O    TLV    TBD*/
+    /*7A    Extended emergency number list  9.11.3.26  O    TLVE    TBD*/
     // ELEM_OPT_TLV(0x7A, , DE_EMM_EXT_EMERG_NUM_LIST, NULL);
-    consumed = dissect_opt_elem_tlv(nullptr, &emerg_num_list_7a, d, ctx);
+    consumed = dissect_opt_elem_tlv_e(nullptr, &emerg_num_list_7a, d, ctx);
     d.step(consumed);
 
     /*73    SOR transparent container   9.11.3.51    O    TLV-E 20-2048 */
@@ -134,7 +136,7 @@ int mm::dissect_registration_accept(dissector d, context* ctx) {
     d.step(consumed);
 
     // D - Non - 3GPP NW policies Non - 3GPP NW provided policies 9.11.3.58 O TV 1
-    consumed = dissect_opt_elem_tv(nullptr, &n3gpp_nw_provided_policies, d, ctx);
+    consumed = dissect_opt_elem_tv_short(nullptr, &n3gpp_nw_provided_policies, d, ctx);
     d.step(consumed);
 
     // 60	EPS bearer context status    9.11.3.59 O TLV 4

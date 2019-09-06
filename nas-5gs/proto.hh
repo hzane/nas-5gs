@@ -2,9 +2,7 @@
 #include <iostream>
 #include <list>
 #include <string>
-#include <vector>
 #include "config.hh"
-#include "packet_info.hh"
 
 struct proto_node { // NOLINT: special-member-functions
     void set_length(int len);
@@ -50,16 +48,5 @@ struct proto_node { // NOLINT: special-member-functions
     proto_node()= default;;
 };
 
-inline void print_node(std::ostream& out, proto_node* node, int indent = 0) {
-    const auto prefix = std::string(size_t(indent*4), char(' '));
-    out << prefix << node->name;
-    if (!node->text.empty()){
-        out << " : " << node->text;
-    }
-    out << std::endl;
 
-    for (auto n : node->children){
-        print_node(out, n, indent + 1);
-    }
-}
-
+void print_node(std::ostream& out, const proto_node* node, int indent = 0);

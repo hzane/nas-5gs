@@ -54,7 +54,7 @@ const field_meta mm::hf_ngksi_nas_ksi = {
 
 const element_meta mm::nc_native_nas_ksi = {
     0xc0,
-    "Non-current native NAS KSI",
+    "NAS key set identifier - Non-current native NAS KSI",
     mm::dissect_nas_ksi,
     nullptr,
 };
@@ -80,8 +80,6 @@ const element_meta mm::last_v_tai = {
     dissect_last_v_tai,
     nullptr,
 };
-
-// int dissect_s1_ue_net_cap(dissector d, context* ctx);
 
 const element_meta mm::s1_ue_net_cap = {
     0x17,

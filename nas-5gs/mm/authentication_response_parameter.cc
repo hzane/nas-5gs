@@ -14,7 +14,7 @@ int mm::dissect_auth_resp_param(dissector d, context* ctx) {
 }
 
 // 9.11.3.17
-extern const element_meta mm::auth_resp_par = {
+extern const element_meta mm::auth_resp_param = {
     0x2d,
     "Authentication response parameter",
     dissect_auth_resp_param,

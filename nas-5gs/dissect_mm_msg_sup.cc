@@ -1055,7 +1055,7 @@ extern const element_meta mm::nas_ksi = {
 };
 
 // NAS message container 9.11.3.33
-extern const element_meta mm::nas_msg_cont = {
+extern const element_meta mm::nas_msg_container = {
     0x71,
     "NAS message container",
     dissect_nas_msg_cont,

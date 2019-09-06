@@ -27,7 +27,7 @@ const val_string nas_5gs_sc_mode_values[] = {
 
 // Selected SSC mode    SSC mode 9.11.4.16
 extern const field_meta sm::hfm_sel_sc_mode = {
-    "Selected SSC mode",
+    "SSC mode - Selected",
     "nas_5gs.sm.sel_sc_mode",
     ft::ft_uint8,
     fd::base_dec,

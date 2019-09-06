@@ -38,7 +38,7 @@ int sm::dissect_max_num_sup_kpt_flt(dissector d, context* ctx) {
 }
 
 // Maximum number of suuported packet filter 9.11.4.9
-const element_meta sm::max_num_sup_kpt_flt = {
+const element_meta sm::max_of_supported_pkt_filter = {
     0x55,
     "Maximum number of suuported packet filter",
     dissect_max_num_sup_kpt_flt,

@@ -137,4 +137,5 @@ int dissect_mm_cap(dissector d, context* ctx);
 
 int dissect_updp(dissector d, context* ctx);
 int dissect_auth_fail_param(dissector d, context* ctx);
+int dissect_security_protected_5gs_nas_msg(dissector d, context* ctx);
 } // namespace mm

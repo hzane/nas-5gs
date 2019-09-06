@@ -1,5 +1,5 @@
 #pragma once
-#include "common/common.hh"
+#include "common.hh"
 #include "dissect_nas5g.hh"
 #include "mm/mm_dissects.hh"  // NOLINT
 #include "mm/mm_element_meta.hh"

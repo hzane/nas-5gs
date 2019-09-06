@@ -1,5 +1,5 @@
 #include "../dissect_mm_msg.hh"
-#include "../common/common.hh"
+#include "../common.hh"
 
 using namespace cmn;
 

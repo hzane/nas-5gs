@@ -1,6 +1,5 @@
 #include "dissect_nas5g.hh"
-#include "common/common.hh"
-#include "gsm.hh"
+#include "common.hh"
 
 using namespace cmn;
 using namespace nas;
@@ -88,7 +87,7 @@ const field_meta* nas::hf_sec_header_type = &hfm_security_header_type;
 field_meta hfm_msg_auth_code = {
     "Message authentication code",
     "nas_5gs.msg_auth_code",
-    ft::ft_uint32,
+    ft::ft_bytes,
     fd::base_hex,
     nullptr,
     nullptr,
@@ -242,15 +241,6 @@ const field_meta nas::hf_service_request_msg_id = {
     nullptr,
     nullptr,
     0x0,
-};
-
-// EAP message  9.11.2.2
-// as specified in IETF RFC 3748
-const element_meta nas::eap_msg = {
-    0x78,
-    "EAP message",
-    cmn::dissect_eap_msg,
-    nullptr,
 };
 
 // GPRS timer 39.11.2.4

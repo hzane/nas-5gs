@@ -35,7 +35,7 @@ int dissect_eps_param(dissector d, int i, context* ctx) {
 }
 
 // Mapped EPS  bearer contexts     9.11.4.8
-int sm::dissect_mapped_eps_b_cont(dissector d, context* ctx) {
+int sm::dissect_mapped_eps_bearer_ctx(dissector d, context* ctx) {
     const use_context uc(ctx, "mapped-eps-bearer-contexts", d, 0);
     
     static const field_meta* mapd_eps_b_cont_flags[] = {
@@ -100,10 +100,10 @@ int sm::dissect_mapped_eps_b_cont(dissector d, context* ctx) {
 
 
 // Mapped EPS  bearer contexts     9.11.4.5
-const element_meta sm::mapped_eps_b_cont = {
+const element_meta sm::mapped_eps_bearer_ctx = {
     0x75,
     "Mapped EPS bearer contexts",
-    dissect_mapped_eps_b_cont,
+    dissect_mapped_eps_bearer_ctx,
     nullptr,
 };
 

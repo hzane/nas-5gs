@@ -77,7 +77,7 @@ int dissect_opt_elem_t(const field_meta *,
                        dissector           d,
                        context *           ctx) {
     unused(ctx);
-    auto e = (opt_elem*)d.data;
+    const auto e = static_cast< opt_elem* >(d.data);
     set_elem_presence(e, false);
 
     if (d.length <= 0) return 0;
@@ -102,7 +102,7 @@ int dissect_opt_elem_lv(const field_meta *,
                         const element_meta *val_meta,
                         dissector           d,
                         context *           ctx) {
-    auto e = (opt_elem*)d.data;
+    auto e = static_cast< opt_elem* >(d.data);
     set_elem_presence(e,false);
 
     if (d.length <= 0) return 0;
@@ -116,6 +116,7 @@ int dissect_opt_elem_lv(const field_meta *,
 
     auto l = d.add_item(1, hf_gsm_a_length, enc::be);   
     d.step(1);
+    unused(l);
 
     if (parm_len == 0) return 1;
     const auto fnc = val_meta->fnc ? val_meta->fnc : dissect_msg_unknown_body;
@@ -133,7 +134,7 @@ int dissect_opt_elem_lv_e(const field_meta *,
                           const element_meta *val_meta,
                           dissector           d,
                           context *           ctx) {
-    auto e = (opt_elem*)d.data;
+    auto e = static_cast< opt_elem* >(d.data);
     set_elem_presence(e, false);
 
     if (d.length <= 0) return 0;
@@ -145,7 +146,8 @@ int dissect_opt_elem_lv_e(const field_meta *,
     const auto subtree = d.add_item(2 + parm_len, val_meta->name);
     use_tree ut(d, subtree);
 
-    auto item = d.add_item(2, hf_gsm_e_length, enc::be);    
+    auto item = d.add_item(2, hf_gsm_e_length, enc::be);
+    unused(item);
     d.step(2);
     
     const auto fnc      = val_meta->fnc ? val_meta->fnc : dissect_msg_unknown_body;
@@ -165,7 +167,7 @@ int dissect_opt_elem_v(const field_meta *,
                        const element_meta *val_meta,
                        dissector           d,
                        context *           ctx) {
-    auto e = (opt_elem*)d.data;
+    auto e = static_cast< opt_elem* >(d.data);
     set_elem_presence(e, false);
 
     if (d.length <= 0) return 0;
@@ -194,7 +196,7 @@ int dissect_opt_elem_tv_short(const field_meta *,
                               const element_meta *val_meta,
                               dissector           d,
                               context *           ctx) {
-    auto e = (opt_elem*)d.data;
+    const auto e = static_cast< opt_elem* >(d.data);
     set_elem_presence(e, false);
 
     if (d.length <= 0) return 0;
@@ -209,7 +211,7 @@ int dissect_opt_elem_tv_short(const field_meta *,
     const use_tree ut(d, subtree);
     
     const auto consumed = val_meta->fnc(d.use_elem(get_elem_data(e)), ctx);
-    // subtree->set_length(consumed);
+    unused(consumed);
 
     return 1;
 }
@@ -225,7 +227,7 @@ int dissect_opt_elem_tv(const field_meta *,
                         const element_meta *val_meta,
                         dissector           d,
                         context *           ctx) {
-    auto e = (opt_elem*)d.data;
+    const auto e = static_cast< opt_elem* >(d.data);
     set_elem_presence(e, false);
 
     if (d.length <= 0) return 0;
@@ -270,6 +272,7 @@ int dissect_opt_elem_tlv(const field_meta *,
     const use_tree ut(d, subtree);
 
     auto t = d.add_item(1, hf_gsm_a_length, enc::be);
+    unused(t);
     d.step(1);
 
     if (parm_len == 0) return 2;
@@ -323,7 +326,7 @@ int dissect_opt_elem_telv(const field_meta *,
 
     auto item = d.add_item(lengt_length, hf_gsm_e_length, enc::none);
     d.step(lengt_length);
-    // item->set_uint(parm_len, enc::be, nullptr);
+    unused(item);
 
     if (parm_len == 0) return 1 + lengt_length;
 
@@ -346,7 +349,7 @@ int dissect_opt_elem_tlv_e(const field_meta *,
                            const element_meta *val_meta,
                            dissector           d,
                            context *           ctx) {
-    auto e = (opt_elem*)d.data;
+    auto e = static_cast< opt_elem* >(d.data);
     if (d.length<= 0) return 0;
 
     const auto iei = d.tvb->uint8(d.offset);
@@ -363,7 +366,7 @@ int dissect_opt_elem_tlv_e(const field_meta *,
 
     auto item = d.add_item(2, hf_gsm_e_length, enc::be);
     d.step(2);
-    // item->set_uint(parm_len, enc::be, nullptr);
+    unused(item);
 
     if (parm_len == 0) return 1 + 2;
 

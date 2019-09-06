@@ -1,4 +1,4 @@
-#include "common.hh"
+#include "../common.hh"
 
 namespace {
 const true_false_string tfs_nas_5gs_mm_s1_mod = {

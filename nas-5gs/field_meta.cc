@@ -11,15 +11,15 @@ string field_meta::format(const uint8_t*p , int length, uint32_t enc) const {
         if (bitmask)
             v = (v & bitmask);
 
-        auto tf = this->tf_strings ? tf_strings : &true_false;
+        const auto tf = this->tf_strings ? tf_strings : &true_false;
         return v ? tf->true_string : tf->false_string;
     }
     if (ftype == ft::ft_char) {
-        return formats("%c", (char)*p);
+        return formats("%c", static_cast< char >(*p));
     }
 
-    switch (display){
-        case fd::base_string: return string((const char*)p, length);
+    switch (display) {
+        case fd::base_string: return string(reinterpret_cast< const char* >(p), length);
         case fd::base_bin: return format_bit(p, length, " ");
         case fd::base_hex: return format_hex(p, length, " ");
         case fd::sep_colon: return format_hex(p, length, ";");
@@ -41,6 +41,10 @@ string field_meta::format(const uint8_t*p , int length, uint32_t enc) const {
             return mcc_aux(p, length);
         case fd::mnc:
             return mnc_aux(p, length);
+        case fd::ext_length:
+            return formats("%d", ext_length(p));
+        default:
+            return formats("data %d bytes", length);
     }
 
     return string();
@@ -52,18 +56,18 @@ string field_meta::format(uint64_t v) const {
     if (ftype == ft::none || ftype == ft::protocol) return string();
 
     if (ftype == ft::ft_boolean) {
-        auto tf = this->tf_strings ? tf_strings : &true_false;
+        const auto tf = this->tf_strings ? tf_strings : &true_false;
         return v ? tf->true_string : tf->false_string;
     }
     if (tf_strings){
         return v ? tf_strings->true_string: tf_strings->false_string;
     }
     if (ftype == ft::ft_char) {
-        return formats("%c", (char)v);
+        return formats("%c", static_cast< char >(v));
     }
 
     if (val_strings && display == fd::base_bit) {
-        auto flags = find_bits_string(val_strings, (uint32_t) v);
+        const auto flags = find_bits_string(val_strings, static_cast< uint32_t >(v));
         return join(flags, " | ");
     }
 
@@ -77,10 +81,10 @@ string field_meta::format(uint64_t v) const {
         return formats("%s (%#x)", s, uint32_t(v));
     }
     if (display == fd::timer3 || display == fd::timer){
-        return gprs_timer3_format((uint8_t)v);
+        return gprs_timer3_format(uint8_t(v));
     }
     if (display == fd::timer2){
-        return gprs_timer2_format((uint8_t)v);
+        return gprs_timer2_format(uint8_t(v));
     }
 
     return format_int(v, ftype, display);

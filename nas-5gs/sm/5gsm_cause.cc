@@ -11,6 +11,14 @@ int sm::dissect_sm_cause(dissector d, context* ctx) {
     return 1;
 }
 
+// 5GSM cause 9.11.4.2
+const element_meta sm::sm_cause = {
+    0x59,
+    "5GSM cause",
+    dissect_sm_cause,
+    nullptr,
+};
+
 /* * 9.11.4.2    5GSM cause */
 extern const value_string sm::sm_cause_values[] = {
     {0x1a, "Insufficient resources"},

@@ -14,7 +14,6 @@ const message_meta* find_dissector(uint8_t iei, const message_meta* meta);
 namespace nas {
 
 extern const element_meta t3348_gprs_timer3;
-extern const element_meta eap_msg;
 extern const field_meta*  hf_msg_elem;
 extern const field_meta*  hf_spare_half_octet;
 extern const field_meta*  hf_epd;

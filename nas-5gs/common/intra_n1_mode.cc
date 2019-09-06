@@ -1,4 +1,4 @@
-#include "common.hh"
+#include "../common.hh"
 
 namespace {
 const field_meta hf_msg_auth_code = {

@@ -2,7 +2,6 @@
 #include "core.hh"
 #include "dissect_mm_msg.hh"
 #include "dissect_sm_msg.hh"
-#include "ts24007.hh"
 
 using namespace cmn;
 using namespace nas;
@@ -24,21 +23,23 @@ int dissect_nas5g_security_protected(dissector d, context* ctx){
     use_tree    ut(d, subtree);
     const use_context uc(ctx, subtree->name.c_str(), d, 0);
 
-    /* Extended protocol discriminator  octet 1 */
+    /* 9.2 Extended protocol discriminator  octet 1 */
     auto i = d.add_item(1, hf_epd, enc::be);
     d.step(1);
+    unused(i);
 
-    /* Security header type associated with a spare half octet    octet 2 */
+    /* 9.3 Security header type associated    1/2 */
     i = d.add_item(1, hf_sec_header_type, enc::be);
+    // 9.5 Spare half octet 1/2
     i = d.add_item(1, hf_spare_half_octet, enc::be);
     d.step(1);
 
-    /* Message authentication code octet 3 - 6 */
+    /* 9.8 Message authentication code octet 3 - 6 */
     store_msg_auth_code(ctx, d.uint32());
     i = d.add_item(4, hf_msg_auth_code, enc::be);
     d.step(4);
 
-    /* Sequence number    octet 7 */
+    /* 9.10 Sequence number    octet 7 */
     i = d.add_item(1, hf_seq_no, enc::be);
     d.step(1);
 
@@ -75,6 +76,7 @@ static int dissect_sm_msg(dissector d, context* ctx) {
     /* Extended protocol discriminator  octet 1 */
     auto i = d.add_item(1, hf_epd, enc::be);
     d.step(1);
+    unused(i);
 
     /* PDU session ID	PDU session identity 9.4	M	V	1     */
     i = d.add_item(1, hf_pdu_sess_id, enc::be);
@@ -102,9 +104,9 @@ static int dissect_mm_msg(dissector d, context* ctx) {
     const use_context uc(ctx, subtree->name.c_str(), d, 0);
 
     /* Extended protocol discriminator 9.2 octet 1 */
-    auto epd = d.uint8();
     auto i = d.add_item(1, hf_epd, enc::be);
     d.step(1);
+    unused(i);
 
     /*Security header type 9.3	M	V	1/2 */
     i = d.add_item(1, hf_sec_header_type, enc::be);

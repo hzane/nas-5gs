@@ -1,4 +1,4 @@
-#include "common.hh"
+#include "../common.hh"
 
 const field_meta cmn::hf_eap = {
     "EAP",
@@ -24,9 +24,11 @@ int cmn::dissect_eap_msg(dissector d, context* ctx) {
 }
 
 // EAP message 9.11.2.2
+// as specified in IETF RFC 3748
 const element_meta cmn::eap_msg = {
     0x78,
     "EAP message",
     cmn::dissect_eap_msg,
     nullptr,
 };
+

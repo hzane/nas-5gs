@@ -248,7 +248,7 @@ int sm::dissect_authorized_qos_rules(dissector d, context* ctx) {
 
 extern const element_meta sm::requested_qos_rules = {
     0x7A,
-    "Requested QoS rules",
+    "QoS rules - Requested QoS rules",
     dissect_requested_qos_rules,
     nullptr,
 
@@ -257,6 +257,17 @@ extern const element_meta sm::requested_qos_rules = {
 const true_false_string sm::tfs_sm_dqr = {
     "The QoS rule is the default QoS rule",
     "The QoS rule is not the default QoS rule",
+};
+
+const field_meta sm::hf_sm_dqr = {     
+    "DQR",
+    "nas_5gs.sm.dqr",
+    ft::ft_boolean,
+    fd::base_dec,
+    nullptr,
+    &tfs_sm_dqr,
+    nullptr,
+    0x10,
 };
 
 extern const value_string nas_5gs_rule_operation_code_values[] = {
@@ -274,7 +285,7 @@ extern const value_string nas_5gs_rule_operation_code_values[] = {
 // Authorized QoS rules QoS rules 9.11.4.13
 const element_meta sm::authorized_qos_rules = {
     0x7A,
-    "Authorized QoS rules",
+    "QoS rules - Authorized QoS rules",
     dissect_authorized_qos_rules,
     nullptr,
 };

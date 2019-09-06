@@ -1,12 +1,11 @@
 #include "proto.hh"
 #include <bitset>
 #include <cstdarg>
-#include <vector>
 #include "core.hh"
 #include "tvbuff.hh"
 #include "field_meta.hh"
 
-void proto_node::set_length(int len) { this->length = len;}
+void proto_node::set_length(int len) { length = len; }
 
 std::string print_text(const field_meta* meta,
                        const uint8_t*    data,
@@ -29,8 +28,7 @@ proto_item* proto_node::add_item(packet_info*      ,
     item->enc    = encoding;
     children.push_back(item);
 
-    //TODO:
-    if (field){
+    if (field && field->name) {
         item->name = field->name;
     }
     if (encoding == enc::na || encoding == enc::none) return item;
@@ -102,7 +100,7 @@ proto_item* proto_node::add_expert(packet_info* ,
 
     va_list args;
     va_start(args, format);
-    item->name = vformat(format, args);
+    item->name = "expert:" + vformat(format, args);
     va_end(args);
 
     children.push_back(item);
@@ -140,8 +138,8 @@ std::string print_text(const field_meta* meta,
                        const uint8_t*    data,
                        int               len,
                        uint32_t          enc) {
-    if (meta == nullptr){
-        return format_hex(data, len, " ");
+    if (meta == nullptr) {
+        return formats("%d bytes", len);
     }
     if (ft::is_integer(meta->ftype)){
         return meta->format(n2_uint(data, len));
@@ -152,8 +150,22 @@ std::string print_text(const field_meta* meta,
 
 std::string print_text(const field_meta* meta, uint64_t v) {
     if (meta == nullptr) {
-        return formats("%ud", v);
+        return formats("%ud(%#x) value", v, v);
     }
 
     return meta->format(v);
+}
+
+void print_node(std::ostream& out, const proto_node* node, int indent ) {
+    const auto prefix = std::string(size_t(indent * 2), char(' '));
+    out << prefix << node->name << " " << node->offset << "-" << node->length;
+
+    if (!node->text.empty()) {
+        out << " : " << node->text;
+    }
+    out << std::endl;
+
+    for (auto n : node->children) {
+        print_node(out, n, indent + 1);
+    }
 }
