@@ -24,7 +24,6 @@ extern const true_false_string tfs_sms_requested;
 
 
 extern const val_string mm_pld_cont_type_values[];
-extern const val_string mm_type_id_values[];
 extern const val_string values_cause[];
 extern const val_string mm_sal_t_li_values[];
 extern const val_string nas_eps_emm_nas_ksi_values[];
@@ -35,6 +34,7 @@ extern const val_string mm_type_of_enc_algo_vals[];
 extern const val_string mm_type_of_ip_algo_vals[];
 extern const val_string mm_req_type_vals[];
 extern const val_string mm_serv_type_vals[];
+extern const val_string identity_type_values[];
 
 __declspec(selectany) extern const true_false_string tfs_supported_not_supported = {
     "Supported",

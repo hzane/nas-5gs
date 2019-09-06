@@ -236,6 +236,7 @@ string mnc_aux(const uint8_t* d, int length = 3);
 
 // BCD number
 string bcd_string(const uint8_t*d, int length);
+string   imei_string(const uint8_t* d, int length); // 0xf0 terminated if even
 
 uint64_t uintmap(uint64_t f, uint64_t mask);
 

@@ -261,6 +261,20 @@ string bcd_string(const uint8_t*d, int length){
     return ret;
 }
 
+string imei_string(const uint8_t*d, int length){
+    if (length <= 0 || !d) return string();
+    string ret={};
+
+    ret.push_back(digits_bcd[(d[0] & 0xf0u) >> 4]);
+    for (auto i = 1; i < length; ++i) {
+        ret.push_back(digits_bcd[d[i] & 0x0fu]);
+        if (i!=length-1||(d[i]&0xf0u)!=0xf0u){
+            ret.push_back(digits_bcd[(d[i] & 0xf0u) >> 4u]);
+        }
+    }
+    return ret;
+}
+
 void extraneous_data_check(int offset, int len, int maxlen, context*ctx){
     if (len<0){
         diag("underflow %s %d:%d\n", paths(ctx).c_str(), offset, len);
