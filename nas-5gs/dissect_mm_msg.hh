@@ -5,8 +5,6 @@
 #include "mm/mm_element_meta.hh"
 #include "mm/mm_field_meta.hh"
 
-/* 9.7  Message type */
-
 /* 5GS mobility management messages */
 namespace mm {
 __declspec(selectany) extern const dissect_fnc_t no_dissect = nullptr;

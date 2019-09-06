@@ -12,11 +12,14 @@ extern const element_meta mm::mm_cause = {
 int mm::dissect_mm_cause(dissector d, context* ctx) {
     const use_context uc(ctx, "5gmm-cause", d, -1);
 
-    d.tree->add_item(d.pinfo, d.tvb, d.offset, 1, &hf_mm_cause, enc::be);
+    auto i = d.add_item(1, &hf_mm_cause, enc::be);
+    d.step(1);
+
+    unused(i);
     return 1;
 }
 
-namespace{
+namespace mm {
 /* * 9.11.3.2 5GMM cause */
 extern const val_string mm_cause_values[] = {
     {0x03, "Illegal UE"},

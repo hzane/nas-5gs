@@ -1,9 +1,13 @@
 #include "../dissect_mm_msg.hh"
 
+namespace mm {
+extern const field_meta hf_5gsr_vcc;
+extern const field_meta hf_5gup_ciot;
+} // namespace mm
 
 /* 9.11.3.1     5GMM capability*/
 int mm::dissect_mm_cap(dissector d, context* ctx) {
-    use_context uc(ctx, "5gmm-capability", d, -1);
+    const use_context uc(ctx, "5gmm-capability", d, 12);
 
     static const field_meta* flags[] = {
         &hf_sgc_7,
@@ -19,10 +23,41 @@ int mm::dissect_mm_cap(dissector d, context* ctx) {
     d.add_bits(flags);
     d.step(1);
 
+    if (d.length>0) {
+        static const field_meta* o4flags[] = {
+            &hf_5gsr_vcc,
+            &hf_5gup_ciot,
+            nullptr,
+        };
+        d.add_bits(o4flags);
+        d.step(1);
+    }
+    // 5-15 octets is spare
     return 1;
 }
 
 namespace mm {
+const field_meta        hf_5gsr_vcc = {
+    "5G-SRVCC from NG-RAN to UTRAN (5GSRVCC) capability",
+    "nas_5gs.mm.cap.5gsrvcc",
+    ft::ft_boolean,
+    fd::base_dec,
+    nullptr,
+    &tfs_supported_not_supported,
+    nullptr,
+    0,
+};
+const field_meta        hf_5gup_ciot = {
+    "User plane CIoT 5GS optimization (5G-UP CIoT) ",
+    "nas_5gs.mm.cap.5gup.ciot",
+    ft::ft_boolean,
+    fd::base_dec,
+    nullptr,
+    &tfs_supported_not_supported,
+    nullptr,
+    0,
+};
+
 const true_false_string tfs_sgc_7 = {
     "service gap control supported",
     "service gap control not supported",
@@ -148,7 +183,7 @@ const field_meta hf_s1_mode_b0 = {
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
-    (&tfs_s1_mode_0),
+    &tfs_s1_mode_0,
     nullptr,
     0x01,
 };

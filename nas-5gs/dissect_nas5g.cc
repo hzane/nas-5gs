@@ -8,10 +8,10 @@ using namespace nas;
 
 int dissect_nas5g(dissector d, context* ctx){
     const auto epd = d.uint8();
-    if (epd == EPD::SM5G) return dissect_nas5g_plain(d, ctx);
+    if (epd == epd::SM5G) return dissect_nas5g_plain(d, ctx);
 
     // Security header type (octet 1)
-    auto security_type = d.tvb->uint8(d.offset + 1) & 0x0fu;
+    const auto security_type = d.tvb->uint8(d.offset + 1) & 0x0fu;
     if (security_type == 0) { // Plain 5GS NAS message, not security protected
         return dissect_nas5g_plain(d, ctx);
     }
@@ -36,11 +36,11 @@ int dissect_nas5g_security_protected(dissector d, context* ctx){
 
     /* 9.8 Message authentication code octet 3 - 6 */
     store_msg_auth_code(ctx, d.uint32());
-    i = d.add_item(4, hf_msg_auth_code, enc::be);
+    i = d.add_item(4, nas::hf_msg_auth_code, enc::be);
     d.step(4);
 
     /* 9.10 Sequence number    octet 7 */
-    i = d.add_item(1, hf_seq_no, enc::be);
+    i = d.add_item(1, nas::hf_seq_no, enc::be);
     d.step(1);
 
     // TODO: decrypt the body
@@ -58,10 +58,10 @@ int dissect_nas5g_plain(dissector d, context* ctx) {
     /* Extended protocol discriminator  octet 1 */
     const auto epd = d.uint8();
 
-    if (epd == EPD::MM5G) {
+    if (epd == epd::MM5G) {
         return dissect_mm_msg(d, ctx);
     }
-    if (epd == EPD::SM5G) {
+    if (epd == epd::SM5G) {
         return dissect_sm_msg(d, ctx);
     }
     diag("unknown epd %d\n", epd);

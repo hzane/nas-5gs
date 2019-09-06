@@ -66,9 +66,6 @@
     <ClCompile Include="gsm.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="common\additional_inf.cc">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="common\dnn.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -84,16 +81,7 @@
     <ClCompile Include="common\gprs_timer3.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="common\intra_n1_mode.cc">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="common\n1_mode_s1_mode.cc">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="common\s_nssai.cc">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="common\s1_mode_n1_mode.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="common\mcc_mnc.cc">
@@ -493,6 +481,18 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="mm\5gmm_status.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="common\additional_information.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="common\intra_n1_mode_nas_container.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="common\n1_mode_s1_mode_nas_container.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="common\s1_mode_n1_mode_nas_container.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

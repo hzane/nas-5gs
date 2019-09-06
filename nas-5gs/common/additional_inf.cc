@@ -9,9 +9,11 @@ extern const element_meta cmn::additional_inf = {
 };
 
 
-// Additional information  9.11.2.1
+// Additional information  9.11.2.1 value
 int cmn::dissect_additional_inf(dissector d, context* ctx) {
+    const use_context uc(ctx, "additional-information", d, -1);
     // The coding of the additional information value is dependent on the LCS application.
-    diag("no dissect for %s\n", paths(ctx).c_str());
+    diag("no dissect for %s\n", paths(ctx).c_str());    
+
     return d.length;
 }

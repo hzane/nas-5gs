@@ -77,7 +77,7 @@ int dissect_opt_elem_t(const field_meta *,
                        dissector           d,
                        context *           ctx) {
     unused(ctx);
-    const auto e = static_cast< opt_elem* >(d.data);
+    const auto e = static_cast< optional_element_intra* >(d.data);
     set_elem_presence(e, false);
 
     if (d.length <= 0) return 0;
@@ -102,7 +102,7 @@ int dissect_opt_elem_lv(const field_meta *,
                         const element_meta *val_meta,
                         dissector           d,
                         context *           ctx) {
-    auto e = static_cast< opt_elem* >(d.data);
+    auto e = static_cast< optional_element_intra* >(d.data);
     set_elem_presence(e,false);
 
     if (d.length <= 0) return 0;
@@ -134,7 +134,7 @@ int dissect_opt_elem_lv_e(const field_meta *,
                           const element_meta *val_meta,
                           dissector           d,
                           context *           ctx) {
-    auto e = static_cast< opt_elem* >(d.data);
+    auto e = static_cast< optional_element_intra* >(d.data);
     set_elem_presence(e, false);
 
     if (d.length <= 0) return 0;
@@ -167,7 +167,7 @@ int dissect_opt_elem_v(const field_meta *,
                        const element_meta *val_meta,
                        dissector           d,
                        context *           ctx) {
-    auto e = static_cast< opt_elem* >(d.data);
+    auto e = static_cast< optional_element_intra* >(d.data);
     set_elem_presence(e, false);
 
     if (d.length <= 0) return 0;
@@ -196,7 +196,7 @@ int dissect_opt_elem_tv_short(const field_meta *,
                               const element_meta *val_meta,
                               dissector           d,
                               context *           ctx) {
-    const auto e = static_cast< opt_elem* >(d.data);
+    const auto e = static_cast< optional_element_intra* >(d.data);
     set_elem_presence(e, false);
 
     if (d.length <= 0) return 0;
@@ -227,7 +227,7 @@ int dissect_opt_elem_tv(const field_meta *,
                         const element_meta *val_meta,
                         dissector           d,
                         context *           ctx) {
-    const auto e = static_cast< opt_elem* >(d.data);
+    const auto e = static_cast< optional_element_intra* >(d.data);
     set_elem_presence(e, false);
 
     if (d.length <= 0) return 0;
@@ -254,7 +254,7 @@ int dissect_opt_elem_tlv(const field_meta *,
                          const element_meta *val_meta,
                          dissector           d,
                          context *           ctx) {
-    auto e = (opt_elem*)d.data;
+    auto e = (optional_element_intra*)d.data;
     set_elem_presence(e, false);
 
     if (d.length <= 0) return 0;
@@ -298,7 +298,7 @@ int dissect_opt_elem_telv(const field_meta *,
                           const element_meta *val_meta,
                           dissector           d,
                           context *           ctx) {
-    auto e = (opt_elem *) d.data;
+    auto e = (optional_element_intra *) d.data;
     set_elem_presence(e, false);
 
     if (d.length <= 0) return 0;
@@ -349,7 +349,7 @@ int dissect_opt_elem_tlv_e(const field_meta *,
                            const element_meta *val_meta,
                            dissector           d,
                            context *           ctx) {
-    auto e = static_cast< opt_elem* >(d.data);
+    auto e = static_cast< optional_element_intra* >(d.data);
     if (d.length<= 0) return 0;
 
     const auto iei = d.tvb->uint8(d.offset);

@@ -45,7 +45,7 @@ __declspec(selectany) extern const protocol_meta nas_5gs_module = {
 };
 
 // Extended protocol discriminator
-namespace EPD {
+namespace epd {
 __declspec(selectany) extern const uint8_t MM5G = 0x7e; // TGPP_PD_5GMM
 __declspec(selectany) extern const uint8_t SM5G = 0x2e; // TGPP_PD_5GSM
 } // namespace EPD

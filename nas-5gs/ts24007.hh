@@ -1,33 +1,37 @@
 #pragma once
 #include "core.hh"
 
-struct opt_elem {
-    bool*    presence;
-    uint8_t* t;
-    int*     length;
-    void*    elem;
+struct optional_element_intra {
+    bool*    presence = nullptr;
+    uint8_t* t        = nullptr;
+    int*     length   = nullptr;
+    void*    elem     = nullptr;
 };
 
 template < typename elem_t >
-struct opt_element {
-    bool    presence;
-    uint8_t t;
-    int     length;
-    elem_t  elem;
+struct optional_element {
+    bool    presence = false;
+    uint8_t t        = 0xffu;
+    int     length   = 0;
+    elem_t  elem     = {};
 
-    opt_elem to_internal() { return opt_elem{&presence, &t, &length, &elem}; }
+    optional_element_intra to_internal() {
+        return optional_element_intra{&presence, &t, &length, &elem};
+    }
 };
 
-inline void set_elem_presence(opt_elem*self, bool presence){
+inline void set_elem_presence(optional_element_intra*self, bool presence){
     if (self&&self->presence)*self->presence = presence;
 }
-inline void set_elem_length(opt_elem*self, int len){
+inline void set_elem_length(optional_element_intra*self, int len){
     if (self && self->length)*self->length = len;
 }
-inline void set_elem_type(opt_elem*self, uint8_t t){
+inline void set_elem_type(optional_element_intra*self, uint8_t t){
     if (self && self->t) *self->t = t;
 }
-inline void* get_elem_data(opt_elem* self) { return self ? self->elem : nullptr; }
+inline void* get_elem_data(optional_element_intra* self) {
+    return self ? self->elem : nullptr;
+}
 
 typedef int (*tlv_fnc_t)(const field_meta*   type_meta,
                          const element_meta* val_meta,

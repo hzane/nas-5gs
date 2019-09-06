@@ -16,7 +16,6 @@ int cmn::dissect_dnn(dissector d, context* ctx) {
     const use_context uc(ctx, "DNN", d, 0);
 
     /* A DNN value field contains an APN as defined in 3GPP TS 23.003 */
-    // auto str = bstrn_string(d.safe_ptr(), d.safe_length(-1));
 
     /* Highlight bytes including the first length byte */
     auto item = d.add_item(d.length, &hf_dnn, enc::be);

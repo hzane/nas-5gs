@@ -171,7 +171,7 @@ const field_meta* nas::hf_proc_trans_id = &hfm_proc_trans_id;
 /* 9.7  Message type */
 
 /* 5GS mobility management messages */
-const val_string values_mm_message_type[] = {
+const val_string mm_message_type_values[] = {
     {0x41, "Registration request"},
     {0x42, "Registration accept"},
     {0x43, "Registration complete"},
@@ -225,7 +225,7 @@ const field_meta hfm_mm_msg_type = {
     "nas_5gs.mm.message_type",
     ft::ft_uint8,
     fd::base_hex,
-    values_mm_message_type,
+    mm_message_type_values,
     nullptr,
     nullptr,
     0x0,
@@ -237,7 +237,7 @@ const field_meta nas::hf_service_request_msg_id = {
     "nas_5gs.mm.message_type",
     ft::ft_uint8,
     fd::base_hex,
-    values_mm_message_type,
+    mm_message_type_values,
     nullptr,
     nullptr,
     0x0,

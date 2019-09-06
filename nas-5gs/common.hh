@@ -46,3 +46,14 @@ int dissect_intra_n1_mode_container(dissector d, context* ctx);
 int dissect_s_nssai(dissector d, context* ctx);
 extern const element_meta s_nssai;
 }
+
+namespace cmn {
+extern const field_meta hf_msg_auth_code;
+extern const field_meta hf_seq_no;
+extern const field_meta hf_int_prot_algo_type;
+extern const field_meta hf_ciphering_algo_type;
+extern const field_meta hf_ksi_5g;
+extern const field_meta hf_tsc;
+extern const field_meta hf_kacf;
+extern const field_meta hf_ncc;
+} // namespace cmn

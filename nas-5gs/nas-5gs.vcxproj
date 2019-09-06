@@ -152,16 +152,16 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="charsets.cc" />
-    <ClCompile Include="common\additional_inf.cc" />
+    <ClCompile Include="common\additional_information.cc" />
     <ClCompile Include="common\dnn.cc" />
     <ClCompile Include="common\eap.cc" />
     <ClCompile Include="common\gprs_timer.cc" />
     <ClCompile Include="common\gprs_timer2.cc" />
     <ClCompile Include="common\gprs_timer3.cc" />
-    <ClCompile Include="common\intra_n1_mode.cc" />
+    <ClCompile Include="common\intra_n1_mode_nas_container.cc" />
     <ClCompile Include="common\mcc_mnc.cc" />
-    <ClCompile Include="common\n1_mode_s1_mode.cc" />
-    <ClCompile Include="common\s1_mode_n1_mode.cc" />
+    <ClCompile Include="common\n1_mode_s1_mode_nas_container.cc" />
+    <ClCompile Include="common\s1_mode_n1_mode_nas_container.cc" />
     <ClCompile Include="common\s_nssai.cc" />
     <ClCompile Include="core.cc" />
     <ClCompile Include="dissector.cc" />

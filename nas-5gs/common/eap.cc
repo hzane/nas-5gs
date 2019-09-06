@@ -14,7 +14,8 @@ const field_meta cmn::hf_eap = {
 // RFC2284 RFC3748
 /* 9.11.2.2    EAP message*/
 int cmn::dissect_eap_msg(dissector d, context* ctx) {
-    use_context uc(ctx, "EAP", d, 0);
+    const use_context uc(ctx, "EAP", d, 0);
+
     /* EAP message as specified in IETF RFC 3748 */
     auto i = d.add_item(d.length, &hf_eap, enc::na);
     unused(i);
