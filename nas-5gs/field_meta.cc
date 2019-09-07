@@ -45,6 +45,10 @@ string field_meta::format(const uint8_t*p , int length, uint32_t enc) const {
             return mcc_aux(p, length);
         case fd::mnc:
             return mnc_aux(p, length);
+        case fd::time:
+            return time_string(p);
+        case fd::timezone:
+            return timezone_string(p);
         case fd::ext_length:
             return formats("%d", ext_length(p));
         default:
