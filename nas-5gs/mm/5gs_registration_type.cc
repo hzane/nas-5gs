@@ -95,14 +95,6 @@ const element_meta mm::aguti_mobile_id = {
 };
 
 
-// Allowed PDU session status
-const element_meta mm::allowed_pdu_ses_status = {
-    0x25,
-    "Allowed PDU session status",
-    dissect_allowed_pdu_ses_status,
-    nullptr,
-};
-
 const element_meta mm::ue_usage_setting = {
     0x18,
     "UE's usage setting",

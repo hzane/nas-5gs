@@ -35,7 +35,7 @@ int mm::dissect_sec_mode_cmd(dissector d, context* ctx) {
 
     /*57 Selected EPS NAS security algorithms EPS NAS security algorithms 9.11.3.25  O TV 2 */
     // ELEM_OPT_TV(0x57, , DE_EMM_NAS_SEC_ALGS, " - Selected EPS NAS security algorithms");
-    consumed = dissect_opt_elem_tv(nullptr, &selected_eps_sec_algo, d, ctx);
+    consumed = dissect_opt_elem_tv(nullptr, &selected_eps_security_algo, d, ctx);
     d.step(consumed);
 
     /*36    Additional 5G security information  9.11.3.12    O    TLV    3 */
@@ -61,17 +61,6 @@ int mm::dissect_sec_mode_cmd(dissector d, context* ctx) {
     return uc.length;
 }
 
-int mm::dissect_sec_algo(dissector d, context* ctx) {
-    const use_context uc(ctx, "sec-algo", d, -1);
-
-    static const field_meta* flags[] = {
-        &hf_sec_algo_enc,
-        &hf_sec_algo_ip,
-        nullptr,
-    };
-    d.add_bits(flags);
-    return 1;
-}
 
 namespace mm {
 extern const element_meta sec_algo = {
@@ -92,16 +81,11 @@ extern const element_meta imeisv_req = {
     dissect_imeisv_req,
     nullptr,
 };
-extern const element_meta selected_eps_sec_algo = {
-    0x57,
-    "EPS NAS security algorigthms - Selected EPS NAS security algorithms",
-    dissect_selected_eps_sec_algo,
-    nullptr,
-};
+
 extern const element_meta a_sec_info = {
     0x36,
     "Additional 5G security information",
-    dissect_a_sec_info,
+    dissect_additional_security_info,
     nullptr,
 };
 
@@ -112,18 +96,6 @@ extern const element_meta replayed_s1_ue_sec_cap = {
     nullptr,
 };
 
-
-/* 9.11.3.34    NAS security algorithms */
-const value_string nas_5gs_mm_type_of_ip_algo_vals[] = {
-    {0x0, "5G-IA0 (null integrity protection algorithm)"},
-    {0x1, "128-5G-IA1"},
-    {0x2, "128-5G-IA2"},
-    {0x3, "128-5G-IA3"},
-    {0x4, "5G-IA4"},
-    {0x5, "5G-IA5"},
-    {0x6, "5G-IA6"},
-    {0x7, "5G-IA7"},
-    {0, nullptr},};
 
 const value_string nas_5gs_mm_type_of_enc_algo_vals[] = {
     {0x0, "5G-EA0 (null ciphering algorithm)"},
@@ -146,16 +118,6 @@ const field_meta hf_sec_algo_enc = {
     nullptr,
     nullptr,
     0xf0,
-};
-const field_meta hf_sec_algo_ip = {
-    "Type of integrity protection algorithm",
-    "nas_5gs.mm.nas_sec_algo_ip",
-    ft::ft_uint8,
-    fd::base_dec,
-    nas_5gs_mm_type_of_ip_algo_vals,
-    nullptr,
-    nullptr,
-    0x0f,
 };
 
 const field_meta hf_mm_5g_ea0 = {

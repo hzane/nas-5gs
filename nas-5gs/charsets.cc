@@ -82,7 +82,7 @@ static const uint16_t gsm_default_alphabet[0x80] = {
     'x',   'y',   'z',   0xe4, 0xf6,  0xf1, 0xfc,  0xe0};
 
 static uint32_t GSM2UNICHAR(uint8_t c) {
-    if (c < _countof(gsm_default_alphabet)) return gsm_default_alphabet[c];
+    if (c < std::size(gsm_default_alphabet)) return gsm_default_alphabet[c];
 
     return UNREP;
 }

@@ -197,10 +197,6 @@ int mm::dissect_mobile_id_imeisv(dissector d, context* ctx) {
     return dissect_mobile_id_imei(d, ctx);
 }
 
-const true_false_string mm::tfs_odd_even = {
-    "Odd number of identity digits",
-    "Even number of identity digits",
-};
 extern const field_meta mm::hf_mm_odd_even = {
     "Odd/even indication",
     "nas_5gs.mm.odd_even",

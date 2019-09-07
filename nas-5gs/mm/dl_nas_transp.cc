@@ -28,7 +28,7 @@ int mm::dissect_dl_nas_transp(dissector d, context* ctx) {
 
     /*12    PDU session ID    PDU session identity 2 9.11.3.41    C    TV    2 */
     // ELEM_OPT_TV( 0x12, , DE_NAS_5GS_MM_PDU_SES_ID_2, " - PDU session ID");
-    consumed = dissect_opt_elem_tv(nullptr, &pdu_ses_id, d, ctx);
+    consumed = dissect_opt_elem_tv(nullptr, &pdu_session_id, d, ctx);
     d.step(consumed);
 
     /*24    Additional information 9.11.2.1    O    TLV 3-n*/

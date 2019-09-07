@@ -12,7 +12,12 @@ __declspec(selectany) extern const dissect_fnc_t no_dissect = nullptr;
 extern const message_meta      msgs[];
 extern const true_false_string tfs_requested_not_requested;
 extern const true_false_string tfs_sal_al_t;
-extern const true_false_string tfs_odd_even;
+
+__declspec(selectany) extern const true_false_string tfs_odd_even = {
+    "Odd number of identity digits",
+    "Even number of identity digits",
+};
+
 extern const true_false_string tfs_eps_tsc;
 
 extern const true_false_string tfs_nas_5gs_mm_n1_mod;
@@ -27,7 +32,6 @@ extern const val_string mm_pld_cont_type_values[];
 extern const val_string values_cause[];
 extern const val_string mm_sal_t_li_values[];
 extern const val_string nas_eps_emm_nas_ksi_values[];
-extern const val_string values_pld_cont_type[];
 /* 9.11.3.7    5GS registration type */
 extern const val_string values_registration_type[];
 extern const val_string mm_type_of_enc_algo_vals[];
@@ -39,5 +43,10 @@ extern const val_string identity_type_values[];
 __declspec(selectany) extern const true_false_string tfs_supported_not_supported = {
     "Supported",
     "Not supported",
+};
+
+__declspec(selectany) extern const true_false_string tfs_requested_or_not = {
+    "Requested",
+    "Not Requested",
 };
 } // namespace mm

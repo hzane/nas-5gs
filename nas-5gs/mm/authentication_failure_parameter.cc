@@ -7,9 +7,10 @@ int mm::dissect_auth_fail_param(dissector d, context* ctx) {
     const use_context uc(ctx, "auth-failure-param", d, -1);
 
     /* This IE contains either the SRES or the 4 most significant octets of the RES */
-    d.add_item(4, &hf_gsma_dtap_res, enc::na);
+    auto i = d.add_item(4, &hf_gsma_dtap_res, enc::na);
     d.step(4);
 
+    unused(i);
     return 4;
 }
 
@@ -22,7 +23,7 @@ extern const element_meta mm::auth_fail_param = {
 
 const field_meta mm::hf_gsma_dtap_res = {
     "SRES value",
-    "gsm_a.dtap.sres",
+    "gsm.dtap.sres.result",
     ft::ft_bytes,
     fd::base_none,
     nullptr,

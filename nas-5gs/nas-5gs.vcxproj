@@ -199,7 +199,10 @@
     <ClCompile Include="mm\authentication_result.cc" />
     <ClCompile Include="mm\configuration_update_cmpl.cc" />
     <ClCompile Include="mm\configuration_update_indication.cc" />
-    <ClCompile Include="mm\configuration_update_cmd.cc" />
+    <ClCompile Include="mm\configuration_update_cmd.cc">
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
     <ClCompile Include="mm\daylight_saving_time.cc" />
     <ClCompile Include="mm\deregistration_type.cc" />
     <ClCompile Include="mm\deregistration_accept_ue_origin.cc" />
@@ -262,11 +265,12 @@
     <ClCompile Include="mm\supported_codec_list.cc" />
     <ClCompile Include="mm\time_zone.cc" />
     <ClCompile Include="mm\time_zone_time.cc" />
+    <ClCompile Include="mm\tracking_area_identity_list.cc" />
     <ClCompile Include="mm\ue_parameters_update_transparent_container.cc" />
     <ClCompile Include="mm\ue_security_capability.cc" />
     <ClCompile Include="mm\ue_status.cc" />
     <ClCompile Include="mm\ue_usage_setting.cc" />
-    <ClCompile Include="mm\ul_nas_transp.cc" />
+    <ClCompile Include="mm\uplink_nas_transport.cc" />
     <ClCompile Include="mm\uplink_data_status.cc" />
     <ClCompile Include="mm\use_status.cc" />
     <ClCompile Include="nas-5gs.cc" />
