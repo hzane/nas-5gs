@@ -11,9 +11,9 @@ int mm::dissect_pdu_ses_id(dissector d, context* ctx) {
     return 1;
 }
 
-namespace mm {
 
-const val_string pdu_session_id_values[] = {
+
+static const val_string pdu_session_id_values[] = {
     {0x00, "No PDU session identity assigned"},
     {0x01, "Reserved"},
     {0x02, "Reserved"},
@@ -33,7 +33,7 @@ const val_string pdu_session_id_values[] = {
     {0, nullptr},
 };
 
-const field_meta hf_pdu_session_id = {
+const field_meta mm::hf_pdu_session_id = {
     "PDU session identity 2",
     "nas_5gs.mm.pdu.session.id",
     ft::ft_uint8,
@@ -43,7 +43,6 @@ const field_meta hf_pdu_session_id = {
     nullptr,
     0x0,
 };
-}
 
 // PDU session ID 2 9.11.3.41
 extern const element_meta mm::pdu_session_id = {

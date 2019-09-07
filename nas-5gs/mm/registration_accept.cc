@@ -60,7 +60,7 @@ int mm::dissect_registration_accept(dissector d, context* ctx) {
 
     /*72    PDU session reactivation result error cause 9.11.3.43  O TLV-E  5-515*/
     // ELEM_OPT_TLV_E(0x72, , DE_NAS_5GS_MM_PDU_SES_REACT_RES_ERR_C, NULL);
-    consumed = dissect_opt_elem_tlv_e(nullptr, &pdu_ses_react_res_err_c, d, ctx);
+    consumed = dissect_opt_elem_tlv_e(nullptr, &pdu_session_reactive_result_error_cause, d, ctx);
     d.step(consumed);
 
     /*79    LADN information   9.11.3.30    O    TLV-E    11-1579*/
@@ -151,70 +151,38 @@ int mm::dissect_registration_accept(dissector d, context* ctx) {
 }
 namespace mm {
 
-const element_meta guti_5gs_mobile_id = {
-    0x77,
-    "5GS mobile identity - 5G-GUTI",
-    dissect_mobile_id,
-    nullptr,
-};
 
-/*4A    Equivalent PLMNs    PLMN list     9.11.3.45    O    TLV    5-47*/
-int dissect_plmn_list(dissector d, context* ctx = nullptr);
-
-const element_meta plmn_list = {
-    0x4a,
-    "Equivalent PLMNs",
-    dissect_plmn_list,
-    nullptr,
-};
-
-
-/* 9.11.3.43    PDU session reactivation result error cause */
-int dissect_pdu_ses_react_res_err_c(dissector d, context* ctx = nullptr);
-
-const element_meta pdu_ses_react_res_err_c = {
-    0x72,
-    "PDU session reactivation result error cause",
-    dissect_pdu_ses_react_res_err_c,
-    nullptr,
-};
 
 
 //  Service area list   9.11.3.49
 const element_meta sal = {
     0x27,
     "Service area list",
-    dissect_sal,
+    dissect_service_area_list,
     nullptr,
 };
 
-// T3512 value    GPRS timer 3     9.11.2.25
-int dissect_t3512_gprs_timer_3(dissector d, context* ctx = nullptr);
 
 const element_meta t3512_gprs_timer_3 = {
     0x5E,
     "GPRS timer 3 - T3512 value",
-    dissect_t3512_gprs_timer_3,
+    dissect_gprs_timer3,
     nullptr,
 };
 
-// Non-3GPP de-registration timer value  GPRS timer 2 9.11.2.4
-int dissect_de_reg_timer_gprs_timer2(dissector d, context* ctx = nullptr);
 
 const element_meta de_reg_timer_gprs_timer2 = {
     0x5D,
     "GPRS timer 2 - Non-3GPP de-registration timer value",
-    dissect_de_reg_timer_gprs_timer2,
+    dissect_gprs_timer2,
     nullptr,
 };
 
-// T3502 value    GPRS timer 2     9.11.2.4
-int dissect_t3502_gprs_timer_2(dissector d, context* ctx = nullptr);
 
 const element_meta t3502_gprs_timer_2 = {
     0x16,
     "GPRS timer 2 - T3502 value",
-    dissect_t3502_gprs_timer_2,
+    dissect_gprs_timer2,
     nullptr,
 };
 
@@ -278,14 +246,6 @@ const field_meta hf_gsm_a_n3en_ind = {
 };
 
 
-// Non - 3GPP NW policies Non - 3GPP NW provided policies 9.11.3.58
-const element_meta mm::n3gpp_nw_provided_policies = {
-    0xd0,
-    "",
-    dissect_n3gpp_nw_provided_policies,
-    nullptr,
-};
-
 const field_meta hf_reg_res_sms_allowed = {
     "SMS over NAS",
     "nas_5gs.mm.reg_res.sms_all",
@@ -297,11 +257,6 @@ const field_meta hf_reg_res_sms_allowed = {
     0x08,
 };
 
-
-// 5G-GUTI    5GS mobile identity 9.11.3.4
-int dissect_guti_5gs_mobile_id(dissector d, context* ctx) {
-    return dissect_mobile_id(d, ctx);
-}
 
 const field_meta hf_mobile_country_code = {
     "Mobile Country Code (MCC)",
@@ -324,40 +279,7 @@ const field_meta hf_mobile_network_code = {
     0x0,
 };
 
-/*  [3] 10.5.1.13 PLMN list GSM-A */
-/*4A    Equivalent PLMNs    PLMN list     9.11.3.45    O    TLV    5-47*/
-int dissect_plmn_list(dissector d, context* ctx) {
-    const auto start = d.offset;
-    auto num = 1;
 
-    while(d.length>=3){
-        auto     subtree = d.add_item(3, "PLMN[%u]", num);
-        use_tree ut(d, subtree);
-
-        d.add_item(3, &hf_mobile_country_code, enc::na);
-        d.add_item(3, &hf_mobile_network_code, enc::na);
-
-        d.step(3);
-        num++;
-    }
-    return d.offset - start;
-}
-
-
-// T3512 value    GPRS timer 3     9.11.2.25
-int dissect_t3512_gprs_timer_3(dissector d, context* ctx) {
-    return dissect_gprs_timer3(d, ctx);
-}
-
-// Non-3GPP de-registration timer value  GPRS timer 2 9.11.2.4
-int dissect_de_reg_timer_gprs_timer2(dissector d, context* ctx) {
-    return dissect_gprs_timer2(d, ctx);
-}
-
-// T3502 value    GPRS timer 2     9.11.2.4
-int dissect_t3502_gprs_timer_2(dissector d, context* ctx) {
-    return dissect_gprs_timer2(d, ctx);
-}
 
 /* 9.9.3.37a Extended Emergency Number List TS24.301*/
 static true_false_string tfs_eenlv_value = {
@@ -724,38 +646,6 @@ const field_meta hf_sor_sec_pkt = {
 int dissect_eap_message(dissector d, context* ctx) {
     diag("eap message specified in rfc 3748\n");
     return d.length;
-}
-
-/* 9.11.3.37A   NSSAI inclusion mode */
-static const value_string nas_5gs_mm_nssai_inc_mode_vals[] = {
-    {0x00, "A"},
-    {0x01, "B"},
-    {0x02, "C"},
-    {0x03, "D"},
-    {0, nullptr},
-};
-const field_meta hf_nssai_inc_mode = {
-    "NSSAI inclusion mode",
-    "nas_5gs.mm.nssai_inc_mode",
-    ft::ft_uint8,
-    fd::base_dec,
-    nas_5gs_mm_nssai_inc_mode_vals,
-    nullptr,
-    nullptr,
-    0x03,
-};
-
-// 9.11.3.37A NSSAI inclusion mode page.381
-// a type 1 information element
-int dissect_nssai_inclusion_mode(dissector d, context* ctx) {
-    static const field_meta* flags[] = {
-        &hf_spare_b3,
-        &hf_spare_b2,
-        &hf_nssai_inc_mode,
-        nullptr,
-    };
-    d.add_bits(flags);
-    return 1;
 }
 
 const field_meta hf_mm_precedence = {

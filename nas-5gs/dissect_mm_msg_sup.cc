@@ -294,34 +294,6 @@ const field_meta mm::hfm_mm_req_type = {
     0x0f,
 };
 
-/* *     9.11.3.50    Service type page.396 */
-
-/* Used inline as H1 (Upper nibble)*/
-const val_string mm::mm_serv_type_vals[] = {
-    {0x00, "Signalling"},
-    {0x01, "Data"},
-    {0x02, "Mobile terminated services"},
-    {0x03, "Emergency services"},
-    {0x04, "Emergency services fallback"},
-    {0x05, "High priority access"},
-    {0x06, "elevated signalling"},
-    {0x07, R"(unused; shall be interpreted as "signalling", if received by the network)"},
-    {0x08, "unused; shall be interpreted as \"signalling\", if received by the network"},
-    {0x09, "unused; shall be interpreted as \"data\", if received by the network"},
-    {0x0a, "unused; shall be interpreted as \"data\", if received by the network"},
-    {0x0b, "unused; shall be interpreted as \"data\", if received by the network"},
-    {0, nullptr},
-};
-const field_meta mm::hfm_mm_serv_type = {
-    "Service type",
-    "nas_5gs.mm.serv_type",
-    ft::ft_uint8,
-    fd::base_dec,
-    mm_serv_type_vals,
-    nullptr,
-    nullptr,
-    0xF0,
-};
 
 const field_meta mm::hfm_mm_5g_ea0 = {
     "5G-EA0",
@@ -863,7 +835,7 @@ extern const field_meta mm::hf_mm_length = {
 extern const element_meta mm::pdu_ses_react_res = {
     0x26,
     "PDU session reactivation result",
-    dissect_pdu_ses_react_res,
+    dissect_pdu_session_reactive_result,
     nullptr,
 };
 

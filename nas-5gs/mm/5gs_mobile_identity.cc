@@ -3,6 +3,14 @@
 
 using namespace cmn;
 
+const element_meta mm::guti_5gs_mobile_id = {
+    0x77,
+    "5GS mobile identity - 5G-GUTI",
+    dissect_mobile_id,
+    nullptr,
+};
+
+
 // 9.11.3.4 5GS mobile identity
 int mm::dissect_mobile_id(dissector d, context* ctx) {
     const use_context uc(ctx, "mobile-id", d, 0);

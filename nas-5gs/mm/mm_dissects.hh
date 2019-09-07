@@ -10,28 +10,27 @@ int dissect_de_reg_type(dissector d, context* ctx);
 int dissect_key_set_id(dissector d, context* ctx);
 int dissect_conf_upd_ind(dissector d, context* ctx);
 int dissect_guti(dissector d, context* ctx);
-int dissect_sal(dissector d, context* ctx);
+int dissect_service_area_list(dissector d, context* ctx);
 int dissect_time_zone_time(dissector d, context* ctx);
 int dissect_day_saving_time(dissector d, context* ctx);
 int dissect_mico_ind(dissector d, context* ctx);
 int dissect_full_name_network(dissector d, context* ctx);
 int dissect_short_name_network(dissector d, context* ctx);
 int dissect_local_time_zone(dissector d, context* ctx);
-int dissect_op_def_acc_cat_def(dissector d, context* ctx);
-int dissect_sms_ind(dissector d, context* ctx);
-int dissect_t3502_gprs_timer_2(dissector d, context* ctx);
+int dissect_operator_defined_access_category_definitions(dissector d, context* ctx);
+int dissect_sms_indication(dissector d, context* ctx);
 int dissect_sec_algo(dissector d, context* ctx);
 int dissect_replayed_ue_sec_cap(dissector d, context* ctx);
 int dissect_imeisv_req(dissector d, context* ctx);
 int dissect_selected_eps_security_algo(dissector d, context* ctx);
 int dissect_additional_security_info(dissector d, context* ctx);
 int dissect_reported_s1_ue_sec_cap(dissector d, context* ctx);
-int dissect_mm_service_type(dissector d, context* ctx);
+int dissect_service_type(dissector d, context* ctx);
 int dissect_uplink_data_status(dissector d, context* ctx);
 int dissect_allowed_pdu_ses_status(dissector d, context* ctx);
 int dissect_pdu_ses_id(dissector d, context* ctx);
 int dissect_additional_inf(dissector d, context* ctx);
-int dissect_pld_cont_type(dissector d, context* ctx); // 9.11.3.40
+int dissect_payload_container_type(dissector d, context* ctx); // 9.11.3.40
 int dissect_pld_cont(dissector d, context* ctx);      // 9.11.3.39
 int dissect_req_type(dissector d, context* ctx);
 
@@ -53,7 +52,7 @@ int dissect_ladn_ind(dissector d, context* ctx );
 int dissect_update_type(dissector d, context* ctx );
 
 /* 9.11.3.54    UE security capability*/
-int dissect_use_sec_cap(dissector d, context* ctx);
+int dissect_ue_security_capability(dissector d, context* ctx);
 
 int dissect_n3gpp_nw_provided_policies(dissector d, context* ctx);
 
@@ -100,9 +99,9 @@ int dissect_rejected_nssai(dissector d, context* ctx);
 
 int dissect_configured_nssai(dissector d, context* ctx);
 
-int dissect_pdu_ses_react_res(dissector d, context* ctx = nullptr);
+int dissect_pdu_session_reactive_result(dissector d, context* ctx );
 
-int dissect_pdu_ses_status(dissector d, context* ctx = nullptr); /* 9.11.3.44*/
+int dissect_pdu_ses_status(dissector d, context* ctx); /* 9.11.3.44*/
 int dissect_mm_cause(dissector d, context* ctx);                 // 5GMM cause   9.11.3.2
 int dissect_drx_param(dissector d, context* ctx);
 
@@ -135,12 +134,20 @@ int dissect_registration_request_type(dissector d, context* ctx);
 int dissect_mm_cap(dissector d, context* ctx);
 
 int dissect_updp(dissector d, context* ctx);
-int dissect_auth_fail_param(dissector d, context* ctx);
 int dissect_security_protected_5gs_nas_msg(dissector d, context* ctx);
 
 int dissect_emerg_num_list(dissector d, context* ctx);
 
 // Extended emergency number list  9.11.3.26
 int dissect_emerg_num_list_7a(dissector d, context* ctx );
+int dissect_nssai_inclusion_mode(dissector d, context* ctx);
+int dissect_optional_ie(dissector d, context* ctx);
+int dissect_pld_cont_entry(dissector d, context* ctx);
 
+/*4A    Equivalent PLMNs    PLMN list     9.11.3.45    O    TLV    5-47*/
+int dissect_plmn_list(dissector d, context* ctx );
+
+int dissect_guti_5gs_mobile_id(dissector d, context* ctx);
+
+int dissect_ue_parameters_update_transparent_container(dissector d, context* ctx);
 } // namespace mm

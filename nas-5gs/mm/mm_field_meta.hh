@@ -348,7 +348,7 @@ extern const field_meta  hf_allow_pdu_ses_sts_psi_12_b4;
 extern const field_meta  hf_allow_pdu_ses_sts_psi_13_b5;
 extern const field_meta  hf_allow_pdu_ses_sts_psi_14_b6;
 extern const field_meta  hf_allow_pdu_ses_sts_psi_15_b7;
-extern const field_meta  hf_req_type;
+extern const field_meta  hf_request_type;
 extern const field_meta  hf_pdu_session_id;
 
 extern const field_meta hfm_nas_5gs_mm_conf_upd_ind_red_b1;
@@ -429,4 +429,18 @@ extern const field_meta* hf_nas_eps_nas_ksi;
 extern const field_meta  hf_mm_length;
 extern const field_meta  hf_mm_sst;
 extern const field_meta  hf_sst;
+
+extern const field_meta hf_psac;
+extern const field_meta hf_access_cat_n;
+extern const field_meta hf_criteria_length;
+extern const field_meta hf_criteria;
+extern const field_meta hf_standardize_access_cat;
+extern const field_meta hf_rej_nssai_cause;
+extern const field_meta hf_pld_cont_entry_nie;
+extern const field_meta hf_pld_cont_entry_contents;
+extern const field_meta hf_upu_data_type;
+extern const field_meta hf_ack;
+extern const field_meta hf_reregistration;
+extern const field_meta hf_pld_optional_ie;
+extern const field_meta hf_upu_mac_i;
 } // namespace mm

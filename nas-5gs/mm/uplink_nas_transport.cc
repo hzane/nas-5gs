@@ -18,7 +18,7 @@ int mm::dissect_ul_nas_transp(dissector d, context* ctx) {
 
     /* Payload container type   9.11.3.40    M    V    1/2 */
     // ELEM_MAND_V(,  DE_NAS_5GS_MM_PLD_CONT_TYPE,);
-    auto consumed = dissect_elem_v(nullptr, &pld_cont_type, d, ctx);
+    auto consumed = dissect_elem_v(nullptr, &payload_container_type, d, ctx);
 
     /*Spare half octet  9.5    M    V    1/2*/
     d.tree->add_item(d.pinfo, d.tvb, d.offset, 1, hf_spare_half_octet, enc::be);
@@ -41,7 +41,7 @@ int mm::dissect_ul_nas_transp(dissector d, context* ctx) {
 
     /*8-    Request type  9.11.3.47    O    TV    1 */
     //    ELEM_OPT_TV_SHORT(0x80, , DE_NAS_5GS_MM_REQ_TYPE, NULL);
-    consumed = dissect_opt_elem_tv_short(nullptr, &req_type, d, ctx);
+    consumed = dissect_opt_elem_tv_short(nullptr, &request_type, d, ctx);
     d.step(consumed);
 
     /*22    S-NSSAI   9.11.2.8    O    TLV    3-10 */

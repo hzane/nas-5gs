@@ -267,9 +267,6 @@
     <ClCompile Include="mm\ue_parameters_update_transparent_container.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="mm\ue_security_capability.cc">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="mm\ue_status.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -496,6 +493,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="mm\tracking_area_identity_list.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\s1_ue_security_capability.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

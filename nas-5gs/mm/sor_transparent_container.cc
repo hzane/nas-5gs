@@ -64,31 +64,31 @@ int mm::dissect_sor_trans_cont(dissector d, context* ctx) {
         nullptr,
     };
     auto i         = 1;
-    auto oct       = d.tvb->uint8(d.offset);
-    auto data_type = oct & 0x01;
+    const auto oct       = d.tvb->uint8(d.offset);
+    const auto data_type = oct & 0x01u;
 
     if (data_type == 0) {
         /* SOR header    octet 4*/
         d.add_bits(flags_dt0);
         d.step(1);
 
-        auto list_type = (oct & 0x4) >> 2;
+        const auto list_type = (oct & 0x4u) >> 2u;
         /* SOR-MAC-IAUSF    octet 5-20 */
-        d.add_item(16, &hf_sor_mac_iausf, enc::na);
+        (void) d.add_item(16, &hf_sor_mac_iausf, enc::na);
         d.step(16);
 
         /* CounterSOR    octet 21-22 */
-        d.add_item(2, &hf_counter_sor, enc::be);
+        (void) d.add_item(2, &hf_counter_sor, enc::be);
         d.step(2);
 
         if (list_type == 0) {
             /* Secured packet    octet 23* - 2048* */
-            d.add_item(d.length, &hf_sor_sec_pkt, enc::na);
+            (void) d.add_item(d.length, &hf_sor_sec_pkt, enc::na);
             d.step(d.length);
         } else {
             /* PLMN ID and access technology list    octet 23*-102* */
             while (d.length > 0) {
-                auto     subtree = d.add_item(-1, "List item %u", i);
+                const auto subtree = d.add_item(-1, "List item %u", i);
                 use_tree ut(d, subtree);
                 /* The PLMN ID and access technology list consists of PLMN ID and access
                  * technology identifier and are coded as specified in 3GPP TS 31.102 [22]
@@ -98,7 +98,7 @@ int mm::dissect_sor_trans_cont(dissector d, context* ctx) {
                  * - according to TS 24.008 [9].
                  */
                 /* PLMN ID 1    octet 23*- 25* */
-                auto consumed = dissect_e212_mcc_mnc(d, ctx);
+                const auto consumed = dissect_e212_mcc_mnc(d, ctx);
                 d.step(consumed);
 
                 /* access technology identifier 1    octet 26*- 27* */
@@ -116,7 +116,7 @@ int mm::dissect_sor_trans_cont(dissector d, context* ctx) {
         d.add_bits(flags_dt1);
         d.step(1);
         /* SOR-MAC-IUE    octet 5 - 20*/
-        d.add_item(16, &hf_sor_mac_iue, enc::na);
+        (void) d.add_item(16, &hf_sor_mac_iue, enc::na);
         d.step(16);
     }
     

@@ -1,18 +1,16 @@
 #include "../dissect_mm_msg.hh"
 
-// int dissect_pld_cont_type(dissector d, context* ctx = nullptr);
-
 // Payload container type   9.11.3.40
-const element_meta mm::pld_cont_type = {
+const element_meta mm::payload_container_type = {
     0x80,
     "Payload container type",
-    mm::dissect_pld_cont_type,
+    mm::dissect_payload_container_type,
     nullptr,
 };
 
 
 // Payload container type   9.11.3.40
-int mm::dissect_pld_cont_type(dissector d, context* ctx) {
+int mm::dissect_payload_container_type(dissector d, context* ctx) {
     const use_context uc(ctx, "payload-container-type", d, -1);
 
     const auto oct = d.tvb->uint8(d.offset) & 0x0fu;
@@ -22,7 +20,6 @@ int mm::dissect_pld_cont_type(dissector d, context* ctx) {
     unused(i);
     return 1;
 }
-// Payload container type   9.11.3.40
 
 
 /*  9.11.3.40    Payload container type */
@@ -40,7 +37,7 @@ extern const value_string mm::mm_pld_cont_type_values[] = {
 /*  9.11.3.40    Payload container type */
 extern const field_meta mm::hf_payload_container_type = {
     "Payload container type",
-    "nas_5gs.mm.pld_cont_type",
+    "nas_5gs.mm.payload.type",
     ft::ft_uint8,
     fd::base_dec,
     mm_pld_cont_type_values,

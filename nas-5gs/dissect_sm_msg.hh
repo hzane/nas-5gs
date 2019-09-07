@@ -40,7 +40,7 @@ extern const value_string sm_int_prot_max_data_rate_values[] ;
 /* 9.11.4.16    SSC mode */
 extern const value_string sc_mode_values[] ;
 
-__declspec(selectany) extern const true_false_string tfs_allowed_not_allowed = {
+inline extern const true_false_string tfs_allowed_not_allowed = {
     "Allowed",
     "Not Allowed",
 };

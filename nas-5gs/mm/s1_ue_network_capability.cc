@@ -6,6 +6,8 @@ using namespace nas;
 // 9.11.3.48 S1 UE network capability page.391
 // See subclause 9.9.3.34 in 3GPP TS 24.301 [15].
 int mm::dissect_s1_ue_net_cap(dissector d, context* ctx) {
+    const use_context        uc(ctx, "s1-ue-network-capablility", d, 0);
+
     static const field_meta* oct3_flags[] = {
         &hf_nas_eps_emm_eea0,
         &hf_nas_eps_emm_128eea1,
@@ -89,8 +91,6 @@ int mm::dissect_s1_ue_net_cap(dissector d, context* ctx) {
         &hf_nas_eps_multiple_drb_cap,
         nullptr,
     };
-    auto len = d.length;
-
     /* EPS encryption algorithms supported (octet 3) */
     /* EEA0    128-EEA1    128-EEA2    128-EEA3    EEA4    EEA5    EEA6    EEA7 */
     d.add_bits(oct3_flags);
@@ -124,7 +124,7 @@ int mm::dissect_s1_ue_net_cap(dissector d, context* ctx) {
     d.add_bits(oct7_flags);
     d.step(1);
 
-    if (d.length <= 0) return len;
+    if (d.length <= 0) return uc.length;
 
     /* Octet 8
      * ePCO    HC-CP CIoT    ERw/oPDN    S1-U data    UP CIoT    CP CIoT    Prose-relay
@@ -133,7 +133,7 @@ int mm::dissect_s1_ue_net_cap(dissector d, context* ctx) {
     d.add_bits(oct8_flags);
     d.step(1);
 
-    if (d.length <= 0) return len;
+    if (d.length <= 0) return uc.length;
 
     /* Octet 9
      * 0 Spare    SGC    N1mode    DCNR    CP backoff    RestrictEC    V2X PC5 multipleDRB
@@ -143,10 +143,11 @@ int mm::dissect_s1_ue_net_cap(dissector d, context* ctx) {
     d.step(1);
 
     while (d.length >= 0) {
-        d.add_item(1, &hf_nas_eps_spare_bits, enc::be);
+        (void) d.add_item(1, &hf_nas_eps_spare_bits, enc::be);
         d.step(1);
     }
-    return len;
+
+    return uc.length;
 }
 // 9.11.3.48A S1 UE security capability page.391
 // See subclause 9.9.3.36 in 3GPP TS 24.301 [15].

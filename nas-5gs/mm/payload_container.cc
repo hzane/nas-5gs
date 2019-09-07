@@ -8,12 +8,7 @@ const element_meta mm::pld_cont = {
     nullptr,
 };
 
-extern const field_meta hf_pld_cont_entry_nie;
-extern const field_meta hf_pld_cont_entry_contents;
-
-int dissect_optional_ie(dissector d, context* ctx);
-
-int dissect_pld_cont_entry(dissector d, context* ctx) {
+int mm::dissect_pld_cont_entry(dissector d, context* ctx) {
     using namespace mm;
     const use_context uc(ctx, "pld-content-entry", d, -1);
 
@@ -145,7 +140,7 @@ int mm::dissect_updp(dissector d, context* ctx) {
 
 using namespace mm;
 
-const field_meta hf_pld_cont_entry_nie = {
+const field_meta mm::hf_pld_cont_entry_nie = {
     "Number of optional IEs",
     "nas_5gs.mm.pld_cont.n_optional_ies",
     ft::ft_uint8,
@@ -155,7 +150,7 @@ const field_meta hf_pld_cont_entry_nie = {
     nullptr,
     0xf0u,
 };
-const field_meta hf_pld_cont_entry_contents = {
+const field_meta mm::hf_pld_cont_entry_contents = {
     "Payload container entry contents",
     "nas_5gs.mm.pld_cont.pcec",
     ft::ft_bytes,
@@ -165,7 +160,7 @@ const field_meta hf_pld_cont_entry_contents = {
     nullptr,
     0x0,
 };
-const field_meta hf_pld_optional_ie = {
+const field_meta mm::hf_pld_optional_ie = {
     "Optional IE",
     "nas_5gs.mm.pld_cont.optional_ie",
     ft::ft_bytes,
@@ -219,7 +214,7 @@ const field_meta hf_pld_optional_ie_value = {
     0x0,
 };
 
-int dissect_optional_ie(dissector d, context* ctx) {
+int mm::dissect_optional_ie(dissector d, context* ctx) {
     const use_context uc(ctx, "optional-ie", d, -1);
 
     const auto subtree = d.add_item(-1, &hf_pld_optional_ie, enc::na);

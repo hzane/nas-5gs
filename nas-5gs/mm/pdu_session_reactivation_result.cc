@@ -182,7 +182,7 @@ const field_meta hf_nas_5gs_pdu_ses_rect_res_psi_8_b0 = {
 };
 
 // PDU session reactivation result   9.11.3.42
-int mm::dissect_pdu_ses_react_res(dissector d, context* ctx) {
+int mm::dissect_pdu_session_reactive_result(dissector d, context* ctx) {
     const use_context uc(ctx, "pdu-session-reactivation-result", d, 30);
 
     static const field_meta* psi_0_7_flags[] = {

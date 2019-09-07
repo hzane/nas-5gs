@@ -36,6 +36,7 @@ extern const value_string mcc_mnc_codes[];
  * +---------------+---------------+
  *
  */
+
 /*
  * Return MCC MNC in a packet scope allocated string that can be used in labels.
  * Little Endian encoded

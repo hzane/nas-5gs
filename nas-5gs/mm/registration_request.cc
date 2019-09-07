@@ -106,7 +106,7 @@ int mm::dissect_registration_req(dissector d, context* ctx) {
 
     /* 8-    Payload container type  9.11.3.40    O    TV    1 */
     // ELEM_OPT_TV_SHORT(0x80, , DE_NAS_5GS_MM_PLD_CONT_TYPE, NULL);
-    consumed = dissect_opt_elem_tv_short(nullptr, &pld_cont_type, d, ctx);
+    consumed = dissect_opt_elem_tv_short(nullptr, &payload_container_type, d, ctx);
     d.step(consumed);
 
     /* 7B    Payload container  9.11.3.39    O    TLV-E    4-65538 */

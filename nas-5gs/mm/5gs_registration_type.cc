@@ -52,7 +52,7 @@ const element_meta mm::nc_native_nas_ksi = {
 const element_meta mm::ue_sec_cap = {
     0x2e,
     "UE security capability",
-    dissect_use_sec_cap,
+    dissect_ue_security_capability,
     nullptr,
 };
 

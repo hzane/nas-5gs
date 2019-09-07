@@ -90,7 +90,7 @@ int mm::dissect_conf_upd_cmd(dissector d, context* ctx) {
 
     /* 76 Operator-defined access category definitions   9.11.3.38   O   TLV-E  3-n */
     // ELEM_OPT_TLV_E(0x76, , DE_NAS_5GS_MM_OP_DEF_ACC_CAT_DEF, NULL);
-    consumed = dissect_opt_elem_tlv_e(nullptr, &op_def_acc_cat_def, d, ctx);
+    consumed = dissect_opt_elem_tlv_e(nullptr, &operator_defined_access_category_defs, d, ctx);
     d.step(consumed);
 
     /* F-    SMS indication    SMS indication 9.10.3.50A    O    TV    1 */
@@ -118,41 +118,16 @@ extern const element_meta guti = {
 extern const element_meta service_area_list = {
     0x70,
     "Service area list",
-    dissect_sal,
+    dissect_service_area_list,
     nullptr,
 
 };
 
-extern const element_meta local_time_zone = {
-    0x46,
-    "Local time zone",
-    dissect_local_time_zone,
-    nullptr,
-
-};
-
-// 9.11.3.53
-extern const element_meta u_time_zone_time = {
-    0x47,
-    "Time zone and time - Universal time and local time zone",
-    dissect_time_zone_time,
-    nullptr,
-
-};
-
-
-extern const element_meta op_def_acc_cat_def = {
-    0x76,
-    "Operator-defined access category definitions",
-    dissect_op_def_acc_cat_def,
-    nullptr,
-
-};
 
 extern const element_meta sms_ind = {
     0xF0,
     "SMS indication",
-    dissect_sms_ind,
+    dissect_sms_indication,
     nullptr,
 
 };
@@ -181,52 +156,7 @@ const field_meta hf_conf_upd_ind_ack_b0 = {
 
 int dissect_guti(dissector d, context* ctx) { return dissect_mobile_id(d, ctx); }
 
-string abs_time_str(tm t) {
-    const char* ts = asctime(&t);
-    return ts ? string(ts) : string();
-}
-/* [3] 10.5.3.9 Time Zone and Time */
-int dissect_time_zone_time(dissector d, context* ctx) {
-    // auto len = d.length;
-    tm   t   = {0, 0, 0, 0, 0, 0, 0, 0, -1};
 
-    auto oct = static_cast< int >(d.tvb->uint8(d.offset));
-    t.tm_year = (oct & 0x0f) * 10 + ((oct & 0xf0) >> 4) * 100;
-
-    oct = d.tvb->uint8(d.offset + 1);
-    t.tm_mon = (oct & 0x0f) * 10 + ((oct & 0xf0) >> 4) - 1;
-
-    oct = d.tvb->uint8(d.offset + 2);
-    t.tm_mday = (oct & 0x0f) * 10 + ((oct & 0xf0) >> 4);
-
-    oct = d.tvb->uint8(d.offset + 3);
-    t.tm_hour = (oct & 0x0f) * 10 + ((oct & 0xf0) >> 4);
-
-    oct       = d.tvb->uint8(d.offset + 4);
-    t.tm_min= (oct & 0x0f) * 10 + ((oct & 0xf0) >> 4);
-
-    oct       = d.tvb->uint8(d.offset + 5);
-    t.tm_sec = (oct & 0x0f) * 10 + ((oct & 0xf0) >> 4);
-
-    d.tree->add_subtree(d.pinfo, d.tvb, d.offset, 6, abs_time_str(t).c_str());
-    d.step(6);
-
-    oct = d.tvb->uint8(d.offset);
-    const auto sign = (oct & 0x08) ? '-' : '+';
-    oct       = (oct >> 4) + (oct & 0x07) * 10;
-    d.tree->add_subtree(d.pinfo,
-                        d.tvb,
-                        d.offset,
-                        1,
-                        "GMT %c %d hours %d minutes",
-                        sign,
-                        oct / 4,
-                        oct % 4 * 15);
-    d.step(1);
-
-    /* no length check possible */
-    return 7;
-}
 
 /*
  * [3] 10.5.3.12 Daylight Saving Time
@@ -366,146 +296,4 @@ int dissect_local_time_zone(dissector d, context* ctx) {
 }
 
 
-const field_meta hf_precedence = {
-    "Precedence",
-    "nas_5gs.mm.precedence",
-    ft::ft_uint8,
-    fd::base_dec,
-    nullptr,
-    nullptr,
-    nullptr,
-    0x0,
-};
-
-// Operator-defined access category number
-const field_meta hf_access_cat_n = {
-    "Operator-defined access category number",
-    "nas_5gs.mm.conf.update.operator.access.category.number",
-    ft::ft_uint8,
-    fd::base_dec,
-    nullptr,
-    nullptr,
-    nullptr,
-    0x1f,
-};
-const tf_string  tfs_standardized_category_field = {
-    "Standardized access category field is included",
-    "Standardized access category field is not included",
-};
-
-const field_meta hf_psac = {
-    "Presence of standardized access category (PSAC)",
-    "nas_5gs.mm.conf.update.operator.access.category.psac",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &tfs_standardized_category_field,
-    nullptr,
-    0x80,
-};
-const field_meta hf_criteria_length = {
-    "Length",
-    "nas_5gs.mm.conf.update.operator.access.criteria.length",
-    ft::ft_uint8,
-    fd::base_dec,
-    nullptr,
-    nullptr,
-    nullptr,
-    0,
-};
-
-const field_meta hf_criteria= {
-    "Criteria",
-    "nas_5gs.mm.conf.update.operator.access.criteria",
-    ft::ft_bytes,
-    fd::base_none,
-    nullptr,
-    nullptr,
-    nullptr,
-    0,
-};
-
-const field_meta hf_standardize_access_cat = {
-    "Standardized access category",
-    "nas_5gs.mm.conf.update.operator.access.category.type",
-    ft::ft_uint8,
-    fd::base_hex,
-    nullptr,
-    nullptr,
-    nullptr,
-    0x1f,
-};
-
-/*  9.11.3.38    Operator-defined access category definitions */
-int dissect_op_def_acc_cat_def(dissector d, context* ctx) {
-    const use_context uc(ctx, "operator-defined-access-category-definitions", d, 0);
-
-    auto i   = 1;
-    while (d.length > 0) {
-        const auto length  = static_cast< int >(d.tvb->uint8(d.offset));
-        auto       sd      = d.slice(length + 1);
-        const auto subtree = d.add_item(
-            length + 1, "Operator-defined access category definition  %u", i++);
-        use_tree ut(sd, subtree);
-        use_context suc(ctx, "operator-defined-access-category-definition", sd, 0);
-
-        auto n = sd.add_item(1, &hf_mm_length, enc::be);
-        sd.step(1);
-
-        /* Precedence value */
-        n = sd.add_item(1, &hf_precedence, enc::be);
-        sd.step(1);
-
-        /* PSAC    0 Spare    0 Spare    Operator-defined access category number */
-        auto psac = (sd.uint8() & 0x80u) ;
-        n = sd.add_item(1, &hf_access_cat_n, enc::be);
-        n = sd.add_item(1, &hf_psac, enc::be);
-        sd.step(1);
-
-        /* Length of criteria */
-        const auto cl = static_cast< int >(sd.uint8());
-        n = sd.add_item(1, &hf_criteria_length, enc::be);
-        sd.step(1);
-
-        /* Criteria */
-        n = sd.add_item(cl, &hf_criteria, enc::na);
-
-        /* Spare Spare Spare    Standardized access category a* */
-        if (psac) {
-            n = sd.add_item(1, &hf_standardize_access_cat, enc::be);
-            sd.step(1);
-        }
-
-        d.step(length+1);
-
-        unused(n);
-    }
-    return uc.length;
-}
-namespace {
-    static const true_false_string tfs_allowed_or_not = {
-        "Allowed",
-        "Not Allowed",
-    };
-}
-const field_meta hf_sms_indic_sai = {
-    "SMS over NAS",
-    "nas_5gs.mm.ms_indic.sai",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &tfs_allowed_or_not,
-    nullptr,
-    0x01,
-};
-
-/*
- *   9.11.3.50A    SMS indication
- */
-int dissect_sms_ind(dissector d, context* ctx) {
-    d.add_item(1, &hf_sms_indic_sai, enc::be);
-    return 1;
-}
-
-
-} // namespace
+} 

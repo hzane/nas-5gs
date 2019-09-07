@@ -23,7 +23,7 @@ int mm::dissect_service_acc(dissector d, context* ctx) {
 
     /*72 PDU session reactivation result error cause 9.11.3.43    O    TLV-E    5-515 */
     // ELEM_OPT_TLV_E(  0x72, , DE_NAS_5GS_MM_PDU_SES_REACT_RES_ERR_C, NULL);
-    consumed = dissect_opt_elem_tlv_e(nullptr, &pdu_ses_react_res_error_c, d, ctx);
+    consumed = dissect_opt_elem_tlv_e(nullptr, &pdu_session_reactive_result_error_cause, d, ctx);
     d.step(consumed);
 
 

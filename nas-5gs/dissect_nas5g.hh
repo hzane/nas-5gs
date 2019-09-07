@@ -25,23 +25,99 @@ extern const field_meta*  hf_msg_auth_code;
 extern const field_meta   hf_pdu_ipv4_mask;
 extern const field_meta   hf_pid_next_hd;
 extern const field_meta   hf_single_port_type;
-extern const field_meta   hf_spare_b7;
-extern const field_meta   hf_spare_b6;
-extern const field_meta   hf_spare_b5;
-extern const field_meta   hf_spare_b4;
-extern const field_meta   hf_spare_b3;
-extern const field_meta   hf_spare_b2;
-extern const field_meta   hf_spare_b1;
 extern const field_meta*  hf_seq_no;
 extern const field_meta*  hf_proc_trans_id;
 extern const field_meta   hf_service_request_msg_id;
 
-__declspec(selectany) extern const true_false_string tfs_supported_not_supported = {
+inline extern const field_meta hf_spare_b7 = {
+    "Spare",
+    "nas_5gs.spare_b7",
+    ft::ft_uint8,
+    fd::base_dec,
+    nullptr,
+    nullptr,
+    nullptr,
+    0x80,
+};
+inline __declspec(selectany) extern const field_meta hf_spare_b6 = {
+    "Spare",
+    "nas_5gs.spare_b6",
+    ft::ft_uint8,
+    fd::base_dec,
+    nullptr,
+    nullptr,
+    nullptr,
+    0x40,
+};
+inline __declspec(selectany) extern const field_meta hf_spare_b5 = {
+    "Spare",
+    "nas_5gs.spare_b5",
+    ft::ft_uint8,
+    fd::base_dec,
+    nullptr,
+    nullptr,
+    nullptr,
+    0x20,
+};
+inline __declspec(selectany) extern const field_meta hf_spare_b4 = {
+    "Spare",
+    "nas_5gs.spare_b4",
+    ft::ft_uint8,
+    fd::base_dec,
+    nullptr,
+    nullptr,
+    nullptr,
+    0x10,
+};
+inline __declspec(selectany) extern const field_meta hf_spare_b3 = {
+    "Spare",
+    "nas_5gs.spare_b3",
+    ft::ft_uint8,
+    fd::base_dec,
+    nullptr,
+    nullptr,
+    nullptr,
+    0x08,
+};
+inline __declspec(selectany) extern const field_meta hf_spare_b2 = {
+    "Spare",
+    "nas_5gs.spare_b2",
+    ft::ft_uint8,
+    fd::base_dec,
+    nullptr,
+    nullptr,
+    nullptr,
+    0x04,
+};
+
+inline __declspec(selectany) extern const field_meta hf_spare_b1 = {
+    "Spare",
+    "nas_5gs.spare_b1",
+    ft::ft_uint8,
+    fd::base_dec,
+    nullptr,
+    nullptr,
+    nullptr,
+    0x02,
+};
+
+inline __declspec(selectany) extern const field_meta hf_spare_b0 = {
+    "Spare",
+    "nas_5gs.spare.b0",
+    ft::ft_uint8,
+    fd::base_dec,
+    nullptr,
+    nullptr,
+    nullptr,
+    0x01,
+};
+
+inline __declspec(selectany) extern const true_false_string tfs_supported_not_supported = {
     "Supported",
     "Not supported",
 };
 
-__declspec(selectany) extern const true_false_string tfs_allowed_not_allowed = {
+inline extern const true_false_string tfs_allowed_not_allowed = {
     "Allowed",
     "Not Allowed",
 };

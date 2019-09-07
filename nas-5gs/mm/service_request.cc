@@ -14,7 +14,7 @@ int mm::dissect_service_req(dissector d, context* ctx) {
     dissect_elem_v(nullptr, &nas_ksi, d, ctx);
 
     // Service type 9.11.3.50 M V 1 / 2
-    dissect_elem_v(nullptr, &mm_service_type, d, ctx);
+    dissect_elem_v(nullptr, &service_type, d, ctx);
     d.step(1);
 
     /* 5G-S-TMSI    5GS mobile identity 9.11.3.4    M    LV    9 */
@@ -46,13 +46,6 @@ int mm::dissect_service_req(dissector d, context* ctx) {
 }
 namespace mm {
 
-// Service type 9.11.3.50
-const element_meta mm_service_type = {
-    0xff,
-    "Service type",
-    dissect_mm_service_type,
-    nullptr,
-};
 
 // 9.11.3.50
 int                dissect_s_tmsi(dissector d, context* ctx);
@@ -63,13 +56,6 @@ const element_meta s_tmsi = {
     nullptr,
 };
 
-
-/* *     9.11.3.50    Service type page.396 */
-int dissect_mm_service_type(dissector d, context*ctx){
-    d.add_item(1, &hfm_mm_serv_type, enc::be);
-    d.step(1);
-    return 1;
-}
 
 // 5GS mobile identity 9.11.3.4
 // 5G-S-TMSI

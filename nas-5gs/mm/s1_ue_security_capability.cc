@@ -1,7 +1,7 @@
 #include "../dissect_mm_msg.hh"
 
 /* 9.11.3.54    UE security capability*/
-int mm::dissect_use_sec_cap(dissector d, context* ctx) {
+int mm::dissect_ue_security_capability(dissector d, context* ctx) {
     const use_context uc(ctx, "ue-security-capability", d, 4);
 
     static const field_meta* oct3_flags[] = {
