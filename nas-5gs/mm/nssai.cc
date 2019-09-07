@@ -21,11 +21,9 @@ extern const element_meta mm::configured_nssai = {
 
 const val_string ref_nssai_cause_values[] = {
     {0, "S-NSSAI not available in the current PLMN"},
-    {
-        1,
-        "S-NSSAI not available in the current registration area All other values are "
-        "reserved.",
-    },
+    {1,
+     "S-NSSAI not available in the current registration area All other values are "
+     "reserved."},
     {0, nullptr},
 };
 const field_meta hf_rej_nssai_cause = {
@@ -48,15 +46,17 @@ int mm::dissect_rejected_nssai(dissector d, context* ctx) {
         const auto subtree = d.add_item(2, "Rejected S-NSSAI %u", i++);
         use_tree   ut(d, subtree);
 
-        auto len = int(d.uint8() >> 4u);
-        d.add_item(1, &hf_rej_nssai_cause, enc::be);
+        const auto len = int(d.uint8() >> 4u);
+        auto n = d.add_item(1, &hf_rej_nssai_cause, enc::be);
         d.step(1);
 
-        d.add_item(1, &hf_sst, enc::be);
+        n = d.add_item(1, &hf_sst, enc::be);
         d.step(1);
         if (len == 1) continue; // len == 1 || len == 4
 
-        d.add_item(3, &hf_sd, enc::be);
+        n = d.add_item(3, &hf_sd, enc::be);
+
+        unused(n);
         d.step(3);
     }
     return uc.length;
@@ -75,11 +75,13 @@ int mm::dissect_configured_nssai(dissector d, context* ctx) {
         use_tree   ut(d, subtree);
 
         const int length = static_cast< int >(d.tvb->uint8(d.offset));
-        d.add_item(1, &hf_mm_length, enc::be);
+        auto n = d.add_item(1, &hf_mm_length, enc::be);
         d.step(1);
 
         const auto consumed = cmn::dissect_s_nssai(d.slice(length), ctx);
         d.step(consumed);
+
+        unused(n);
     }
     return uc.length;
 }
@@ -96,18 +98,18 @@ int mm::dissect_allowed_nssai(dissector d, context* ctx) {
 
     auto i = 1;
     while (d.length > 0) {
-        const auto subtree = d.add_item(-1, "S-NSSAI %u", i);
+        const auto subtree = d.add_item(-1, "S-NSSAI %u", i++);
         use_tree   ut(d, subtree);
 
-        auto l    = d.uint8();
-        auto item = d.add_item(1, &hf_mm_length, enc::be);
+        const auto l    = d.uint8();
+        auto       item = d.add_item(1, &hf_mm_length, enc::be);
         d.step(1);
 
         const auto consumed = dissect_s_nssai(d.slice(l), ctx);
         d.step(consumed);
         d.tree->set_length(consumed + 1);
 
-        ++i;
+        unused(item);
     }
     return uc.length;
 }
@@ -122,13 +124,15 @@ int mm::dissect_requested_nssai(dissector d, context* ctx) {
         use_tree ut(d, subtree);
 
         const auto length = static_cast< int >(d.tvb->uint8(d.offset));
-        d.add_item(1, &hf_mm_length, enc::be);
+        auto n = d.add_item(1, &hf_mm_length, enc::be);
         d.step(1);
 
         // 9.11.2.8
         const auto consumed = dissect_s_nssai(d.slice(length), ctx);
         d.step(consumed);
         subtree->set_length(length + 1);
+
+        unused(n);
     }
     return uc.length;
 }

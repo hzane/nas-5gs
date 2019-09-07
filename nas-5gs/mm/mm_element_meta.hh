@@ -65,7 +65,7 @@ extern const element_meta access_type;
 extern const element_meta sec_algo;
 extern const element_meta replayed_ue_sec_cap;
 extern const element_meta imeisv_req;
-extern const element_meta selected_eps_sec_algo;
+extern const element_meta selected_eps_security_algo;
 extern const element_meta a_sec_info;
 extern const element_meta replayed_s1_ue_sec_cap;
 extern const element_meta pdu_ses_react_res;

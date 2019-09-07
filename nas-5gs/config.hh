@@ -7,11 +7,7 @@
 #define nullptr 0
 #endif
 
-#if _MSC_VER > 1900
 template <typename... Args> inline void unused(Args&&...) {}
-#else
-#define unused(...) (void)
-#endif
 
 struct tvbuff;
 

@@ -52,6 +52,7 @@ const true_false_string tfs_changed_not_changed = {
     "Changed",
     "Not Changed",
 };
+
 const field_meta        hf_nssci                = {
     "Network slicing subscription change indication (NSSCI)",
     "nas_5gs.mm.nssci",

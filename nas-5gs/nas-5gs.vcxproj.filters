@@ -423,9 +423,6 @@
     <ClCompile Include="mm\registration_reject.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="mm\ul_nas_transp.cc">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="mm\dl_nas_transp.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -493,6 +490,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="common\s1_mode_n1_mode_nas_container.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\uplink_nas_transport.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\tracking_area_identity_list.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

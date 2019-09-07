@@ -218,26 +218,6 @@ const element_meta t3502_gprs_timer_2 = {
     nullptr,
 };
 
-// Emergency number list  9.11.3.23
-int dissect_emerg_num_list(dissector d, context* ctx = nullptr);
-
-const element_meta emerg_num_list = {
-    0x34,
-    "Emergency number list",
-    dissect_emerg_num_list,
-    nullptr,
-};
-
-// Extended emergency number list  9.11.3.26
-int dissect_emerg_num_list_7a(dissector d, context* ctx = nullptr);
-
-const element_meta emerg_num_list_7a = {
-    0x7A,
-    "Extended emergency number list",
-    dissect_emerg_num_list_7a,
-    nullptr,
-};
-
 
 // EAP message  9.11.2.2
 int dissect_eap_message(dissector d, context* ctx = nullptr);
@@ -454,43 +434,7 @@ const field_meta hf_gsma_emergency_bcd_num = {
     nullptr,
     0,
 };
-// Emergency number list  9.11.3.23
-int dissect_emerg_num_list(dissector d, context* ctx) {
-    // See subclause 10.5.3.13 in 3GPP TS 24.008 [12].
-    static const field_meta* flags[] = {
-        &hf_gsma_svc_cat_b0,
-        &hf_gsma_svc_cat_b1,
-        &hf_gsma_svc_cat_b2,
-        &hf_gsma_svc_cat_b3,
-        &hf_gsma_svc_cat_b4,
-        nullptr,
-    };
-    const auto len = d.length;
 
-    while(d.length>0){
-        /* Length of 1st Emergency Number information note 1) octet 3
-         * NOTE 1: The length contains the number of octets used to encode the
-         * Emergency Service Category Value and the Number digits.
-         */
-        auto elen = d.uint8();
-        auto subtree = d.add_item(elen+1, &hf_gsma_eni, enc::be);
-        use_tree ut(d, subtree);
-
-        d.add_item(1, &hf_gsma_eni_length, enc::be);
-        d.step(1);
-
-        /* 0 0 0 Emergency Service Category Value (see Table 10.5.135d/3GPP TS 24.008
-         * Table 10.5.135d/3GPP TS 24.008: Service Category information element
-         */
-        d.add_bits(flags);
-        d.step(1);
-        --elen;
-        d.add_item(elen, &hf_gsma_emergency_bcd_num, enc::be);
-
-        d.step(elen);
-    }
-    return len;
-}
 
 const field_meta hf_ext_emerge_num_list_eenlv = {
     "Extended Emergency Number List Validity",
@@ -541,43 +485,7 @@ const field_meta hf_emm_emerg_num_list_sub_svc_field = {
     nullptr,
     0x0,
 };
-// Extended emergency number list  9.11.3.26
-int dissect_emerg_num_list_7a(dissector d, context* ctx) {
-    // See subclause 9.9.3.37A in 3GPP TS 24.301 [15].
 
-    auto len = d.length;
-    d.add_item(1, &hf_ext_emerge_num_list_eenlv, enc::be);
-    d.step(1);
-
-    auto i = 1;
-    while (d.length > 0) {
-        const auto     start   = d.offset;
-        auto     subtree = d.add_item(-1, "Extended emergency number #%u", i++);
-        use_tree ut(d, subtree);
-
-        auto length = static_cast< int >(d.uint8());
-        d.add_item(1, &hf_ext_emerge_num_len, enc::be);
-        d.step(1);
-
-        if (length>0){
-            d.add_item(length, &hf_emerge_num, enc::be);
-            d.step(length);
-        }
-
-        length = d.uint8();
-        d.add_item(1, &hf_ext_emerge_sub_serv_field_len, enc::be);
-        d.step(1);
-
-        if (length>0){
-            d.add_item(length, &hf_emm_emerg_num_list_sub_svc_field, enc::be);
-            // auto nchars = (len << 3) / 7;
-            // auto str = ts_23_038_7bits_string(d.safe_ptr(), 0, nchars);
-            d.step(length);
-        }
-        subtree->set_length(d.offset - start);
-    }
-    return len;
-}
 
 /* 9.11.3.51    SOR transparent container */
 const true_false_string tfs_nas_5gs_list_type = {

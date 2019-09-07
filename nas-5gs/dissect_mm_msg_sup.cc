@@ -150,58 +150,6 @@ const field_meta hfm_mm_re_reg_req = { // NOLINT
     0x04,
 };
 
-extern const val_string mm_acc_type_vals[] = {
-    {0x1, "3GPP access"},
-    {0x2, "Non-3GPP access"},
-    {0x3, "3GPP access and non-3GPP access"},
-    {0, nullptr},
-};
-
-const field_meta hfm_mm_acc_type = { 
-    "Access type",
-    "nas_5gs.mm.acc_type",
-    ft::ft_uint8,
-    fd::base_dec,
-    mm_acc_type_vals,
-    nullptr,
-    nullptr,
-    0x03,
-};
-
-const true_false_string tfs_raai = {
-    "all PLMN registration area allocated",
-    "all PLMN registration area not allocated",
-};
-
-const field_meta mm::hfm_mm_raai_b0 = {
-    "Registration Area Allocation Indication (RAAI)",
-    "nas_5gs.mm.raai_b0",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &tfs_raai,
-    nullptr,
-    0x01,
-};
-const field_meta* mm::hf_mm_raai_b0 = &hfm_mm_raai_b0;
-
-// In the network to UE and the UE to network direction:
-const true_false_string tfs_sprti        = {
-    "strictly periodic registration timer supported",
-    "strictly periodic registration timer not supported",
-};
-
-// In the network to UE and the UE to network direction:
-const field_meta mm::hf_mm_sprti= {
-    "Strictly Periodic Registration Timer Indication (SPRTI)",
-    "nas_5gs.mm.sprti",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &tfs_sprti,
-    nullptr,
-    0x02,
-};
 
 const field_meta mm::hfm_mm_conf_upd_ind_ack_b0 = {
     "Acknowledgement",
@@ -247,29 +195,6 @@ const field_meta mm::hfm_mm_nas_sec_algo_enc = {
     0xf0,
 };
 
-/* *   9.11.3.34    NAS security algorithms */
-
-extern const val_string mm::mm_type_of_ip_algo_vals[] = {
-    {0x0, "5G-IA0 (null integrity protection algorithm)"},
-    {0x1, "128-5G-IA1"},
-    {0x2, "128-5G-IA2"},
-    {0x3, "128-5G-IA3"},
-    {0x4, "5G-IA4"},
-    {0x5, "5G-IA5"},
-    {0x6, "5G-IA6"},
-    {0x7, "5G-IA7"},
-    {0, nullptr},
-};
-const field_meta mm::hfm_mm_nas_sec_algo_ip = {
-    "Type of integrity protection algorithm",
-    "nas_5gs.mm.nas_sec_algo_ip",
-    ft::ft_uint8,
-    fd::base_dec,
-    mm_type_of_ip_algo_vals,
-    nullptr,
-    nullptr,
-    0x0f,
-};
 
 const field_meta mm::hfm_mm_s1_mode_b0 = {
     "S1 mode",
@@ -349,7 +274,6 @@ const field_meta mm::hfm_mm_pld_cont = {
 };
 
 /* *     9.11.3.47    Request type */
-
 const val_string mm::mm_req_type_vals[] = {
     {0x01, "Initial request"},
     {0x02, "Existing PDU session"},
@@ -1061,24 +985,6 @@ extern const element_meta mm::eps_bearer_ctx_status = {
     "EPS bearer context status",
     dissect_eps_bearer_context_status,
     nullptr,
-};
-
-extern const element_meta mm::abba = {
-    0x38,
-    "ABBA",
-    dissect_abba,
-    nullptr,
-};
-
-const field_meta mm::hf_abba = {
-    "ABBA Contents",
-    "nas_5gs.mm.abba_contents",
-    ft::ft_uint16,
-    fd::base_hex,
-    nullptr,
-    nullptr,
-    nullptr,
-    0x00,
 };
 
 const field_meta mm::hf_sd = {

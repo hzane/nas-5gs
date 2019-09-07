@@ -23,8 +23,8 @@ int dissect_t3502_gprs_timer_2(dissector d, context* ctx);
 int dissect_sec_algo(dissector d, context* ctx);
 int dissect_replayed_ue_sec_cap(dissector d, context* ctx);
 int dissect_imeisv_req(dissector d, context* ctx);
-int dissect_selected_eps_sec_algo(dissector d, context* ctx);
-int dissect_a_sec_info(dissector d, context* ctx);
+int dissect_selected_eps_security_algo(dissector d, context* ctx);
+int dissect_additional_security_info(dissector d, context* ctx);
 int dissect_reported_s1_ue_sec_cap(dissector d, context* ctx);
 int dissect_mm_service_type(dissector d, context* ctx);
 int dissect_uplink_data_status(dissector d, context* ctx);
@@ -137,4 +137,10 @@ int dissect_mm_cap(dissector d, context* ctx);
 int dissect_updp(dissector d, context* ctx);
 int dissect_auth_fail_param(dissector d, context* ctx);
 int dissect_security_protected_5gs_nas_msg(dissector d, context* ctx);
+
+int dissect_emerg_num_list(dissector d, context* ctx);
+
+// Extended emergency number list  9.11.3.26
+int dissect_emerg_num_list_7a(dissector d, context* ctx );
+
 } // namespace mm
