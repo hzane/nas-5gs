@@ -32,7 +32,6 @@ extern const val_string mm_pld_cont_type_values[];
 extern const val_string values_cause[];
 extern const val_string mm_sal_t_li_values[];
 extern const val_string nas_eps_emm_nas_ksi_values[];
-extern const val_string values_pld_cont_type[];
 /* 9.11.3.7    5GS registration type */
 extern const val_string values_registration_type[];
 extern const val_string mm_type_of_enc_algo_vals[];

@@ -58,7 +58,7 @@ extern const element_meta configured_nssai ;
 extern const element_meta de_reg_type;
 extern const element_meta mobile_id;
 extern const element_meta t3346_gprs_timer2;
-extern const element_meta pdu_ses_id;
+extern const element_meta pdu_session_id;
 extern const element_meta backoff_gprs_timer3;
 extern const element_meta plmn_list;
 extern const element_meta access_type;

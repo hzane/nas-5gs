@@ -1,8 +1,24 @@
 #include "../dissect_mm_msg.hh"
 
 
+/*0	indicates establishment of user-plane resources of the PDU session
+ *was not requested in the Uplink data status IE
+ *or establishment of user-plane resources of the PDU session
+ *was not allowed in the Allowed PDU session status IE
+ *or establishment of user-plane resource of the PDU session is successful.
+ *1	indicates either establishment of user-plane resources of the PDU session
+ *was requested in the Uplink data status IE
+ *but establishment of user-plane resource of the PDU session is not successful
+ *or indicates establishment of user-plane resources of the PDU session
+ *was allowed in the Allowed PDU session status IE but establishment of
+ *user-plane resource of the PDU session is either not performed or not successful.
+ */
+
 //  *   9.11.3.42    PDU session reactivation result
-const true_false_string tfs_nas_5gs_pdu_ses_rect_res_psi     = {"1", "0"};
+const true_false_string tfs_nas_5gs_pdu_ses_rect_res_psi = {
+    "1",
+    "0",
+};
 const field_meta        hf_nas_5gs_pdu_ses_rect_res_psi_7_b7 = {
     "PSI(7)",
     "nas_5gs.pdu_ses_rect_res_psi_3_b7",

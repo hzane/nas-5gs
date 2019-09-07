@@ -875,66 +875,6 @@ extern const element_meta mm::pdu_ses_status = {
     nullptr,
 };
 
-/*
- *   9.11.3.40    Payload container type
- */
-extern const value_string mm::mm_pld_cont_type_values[] = {
-    {0x01, "N1 SM information"},
-    {0x02, "SMS"},
-    {0x03, "LTE Positioning Protocol (LPP) message container"},
-    {0x04, "SOR transparent container"},
-    {0x05, "UE policy container"},
-    {0x06, "UE parameters update transparent container"},
-    {0x0f, "Multiple payloads"},
-    {0, nullptr},
-};
-/*
- *   9.11.3.40    Payload container type
- */
-extern const field_meta mm::hf_plt_cont_type = {
-    "Payload container type",
-    "nas_5gs.mm.pld_cont_type",
-    ft::ft_uint8,
-    fd::base_dec,
-    mm_pld_cont_type_values,
-    nullptr,
-    nullptr,
-    0x0f,
-};
-
-extern const field_meta mm::hf_pld_cont = {
-    "Payload container type",
-    "nas_5gs.mm.pld_cont_type",
-    ft::ft_uint8,
-    fd::base_dec,
-    mm_pld_cont_type_values,
-    nullptr,
-    nullptr,
-    0x0f,
-};
-
-/* *   9.11.3.40    Payload container type */
-extern const val_string mm::values_pld_cont_type[] = {
-    {0x01, "N1 SM information"},
-    {0x02, "SMS"},
-    {0x03, "LTE Positioning Protocol (LPP) message container"},
-    {0x04, "SOR transparent container"},
-    {0x05, "UE policy container"},
-    {0x06, "UE parameters update transparent container"},
-    {0x0f, "Multiple payloads"},
-    {0, nullptr},
-};
-
-extern const field_meta mm::hf_pld_cont_type = {
-    "Payload container type",
-    "nas_5gs.mm.pld_cont_type",
-    ft::ft_uint8,
-    fd::base_dec,
-    values_pld_cont_type,
-    nullptr,
-    nullptr,
-    0x0f,
-};
 
 /*
  * 9.9.3.21 NAS key set identifier

@@ -1,15 +1,13 @@
 #include "../dissect_mm_msg.hh"
 
 // Payload container  9.11.3.39
-// int dissect_pld_cont(dissector d, context* ctx = nullptr);
-
-// Payload container  9.11.3.39
 const element_meta mm::pld_cont = {
     0x7B,
     "Payload container",
     dissect_pld_cont,
     nullptr,
 };
+
 extern const field_meta hf_pld_cont_entry_nie;
 extern const field_meta hf_pld_cont_entry_contents;
 
@@ -17,14 +15,14 @@ int dissect_optional_ie(dissector d, context* ctx);
 
 int dissect_pld_cont_entry(dissector d, context* ctx) {
     using namespace mm;
-    // const use_context uc(ctx, "pld-content-entry", d, -1);
+    const use_context uc(ctx, "pld-content-entry", d, -1);
 
     const auto len = static_cast< int >(d.ntohs());
 
-    d.add_item(1, &hf_pld_cont_type, enc::be);
+    auto i = d.add_item(1, &hf_payload_container_type, enc::be);
 
     auto nie = (d.uint8() & 0xf0u) >> 4;
-    d.add_item(1, &hf_pld_cont_entry_nie, enc::be);
+    i = d.add_item(1, &hf_pld_cont_entry_nie, enc::be);
     d.step(1);
 
     while (nie > 0) {
@@ -33,7 +31,7 @@ int dissect_pld_cont_entry(dissector d, context* ctx) {
 
         --nie;
     }
-    d.add_item(d.length, &hf_pld_cont_entry_contents, enc::na);
+    i = d.add_item(d.length, &hf_pld_cont_entry_contents, enc::na);
     return len;
 }
 
@@ -50,7 +48,8 @@ int mm::dissect_pld_cont(dissector d, context* ctx) {
     } break;
     case 2: {
         // SMS
-        d.add_item(d.length, &hf_pld_cont, enc::na);
+        auto i = d.add_item(d.length, &hf_payload_container_type, enc::na);
+        unused(i);
         /*
         If the payload container type is set to "SMS", the payload container contents
         contain an SMS message (i.e. CP-DATA, CP-ACK or CP-ERROR) as defined in
@@ -74,7 +73,8 @@ int mm::dissect_pld_cont(dissector d, context* ctx) {
     } break;
     case 3: {
         // LPP
-        d.add_item(d.length, &hf_pld_cont, enc::na);
+        auto i = d.add_item(d.length, &hf_payload_container_type, enc::na);
+        unused(i);
     } break;
     case 5: {
         /* UE policy container */
@@ -112,8 +112,10 @@ int mm::dissect_pld_cont(dissector d, context* ctx) {
         according to figure 9.11.3.39.2, with each payload container entry is coded
         according to figure 9.11.3.39.3 and figure 9.11.3.39.4.*/
     }
-    default:
-        d.add_item(d.length, &hf_pld_cont, enc::na);
+    default: {
+        auto i = d.add_item(d.length, &hf_payload_container_type, enc::na);
+        unused(i);
+    }
     }
 
     return uc.length;
@@ -130,13 +132,14 @@ int mm::dissect_updp(dissector d, context* ctx) {
      * 3GPP TS 24.007
      * XXX Only 5GSM ?
      */
-    d.add_item(1, nas::hf_proc_trans_id, enc::be);
+    auto i = d.add_item(1, nas::hf_proc_trans_id, enc::be);
     d.step(1);
 
     /* Message type IE*/
-    d.add_item(d.length, &hf_element, enc::be);
+    i = d.add_item(d.length, &hf_element, enc::be);
     d.step(d.length);
 
+    unused(i);
     return uc.length;
 }
 
@@ -222,15 +225,16 @@ int dissect_optional_ie(dissector d, context* ctx) {
     const auto subtree = d.add_item(-1, &hf_pld_optional_ie, enc::na);
     use_tree   ut(d, subtree);
 
-    d.add_item(1, &hf_pld_optional_ie_type, enc::be);
+    auto i = d.add_item(1, &hf_pld_optional_ie_type, enc::be);
     d.step(1);
 
-    auto len = (int) d.uint8();
-    d.add_item(1, &hf_pld_optional_ie_length, enc::be);
+    const auto len = static_cast< int >(d.uint8());
+    i = d.add_item(1, &hf_pld_optional_ie_length, enc::be);
     d.step(1);
 
-    d.add_item(len, &hf_pld_optional_ie_value, enc::na);
+    i = d.add_item(len, &hf_pld_optional_ie_value, enc::na);
     subtree->set_length(d.offset - uc.offset);
 
+    unused(i);
     return d.offset - uc.offset;
 }
