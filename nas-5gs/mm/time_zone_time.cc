@@ -21,7 +21,7 @@ extern const element_meta mm::u_time_zone_time = {
 
 /* [3] 10.5.3.9 Time Zone and Time */
 // TODO: add display type
-int dissect_time_zone_time(dissector d, context* ctx) {
+int mm::dissect_time_zone_time(dissector d, context* ctx) {
     const use_context uc(ctx, "time-zone-time", d, -1);
 
     (void) d.add_item( 6, time_string(d.safe_ptr()).c_str());
