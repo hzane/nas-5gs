@@ -1,6 +1,8 @@
 #include "core.hh"
 #include <cstdio>
 #include <vector>
+#include <ctime>
+#include <cstdarg>
 
 #if _WIN32
 #include <windows.h>
@@ -294,4 +296,37 @@ int ext_length(const uint8_t* d) {
     /* length in 2 octets */
     if ((msb & 0x80u) == 0) return (int(msb) << 8) + int(d[1]);
     return int(msb & 0x7fu);
+}
+
+string time_string(const uint8_t*d){
+    tm t = {0, 0, 0, 0, 0, 0, 0, 0, -1};
+
+    int o = int(d[0]);
+    t.tm_year = ((o & 0xf0) >> 4) * 100 + (o & 0x0f) * 10;
+
+    o = d[1];
+    t.tm_mon = (o & 0x0f) * 10 + ((o & 0xf0) >> 4) - 1;
+
+    o = d[2];
+    t.tm_mday = (o & 0x0f) * 10 + ((o & 0xf0) >> 4);
+
+    o = d[3];
+    t.tm_hour = (o & 0x0f) * 10 + ((o & 0xf0) >> 4);
+
+    o = d[4];
+    t.tm_min = (o & 0x0f) * 10 + ((o & 0xf0) >> 4);
+
+    o= d[5];
+    t.tm_sec = (o & 0x0f) * 10 + ((o & 0xf0) >> 4);
+
+    const char* ts = asctime(&t);
+    return ts ? string(ts) : string();
+}
+
+string timezone_string(const uint8_t*d){
+    auto sign     = (d[0] & 0x08u) ? '-' : '+';
+    auto quarters = (d[0] >> 4u) + (d[0] & 0x07u) * 10;
+    auto h        = quarters / 4;
+    quarters      = quarters % 4 * 15;
+    return formats("GMT %c %d hours %d minutes", sign, h, quarters);
 }

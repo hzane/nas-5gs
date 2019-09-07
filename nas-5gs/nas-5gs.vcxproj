@@ -165,7 +165,10 @@
     <ClCompile Include="common\n1_mode_s1_mode_nas_container.cc" />
     <ClCompile Include="common\s1_mode_n1_mode_nas_container.cc" />
     <ClCompile Include="common\s_nssai.cc" />
-    <ClCompile Include="core.cc" />
+    <ClCompile Include="core.cc">
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
     <ClCompile Include="dissector.cc" />
     <ClCompile Include="dissect_mm_msg.cc" />
     <ClCompile Include="dissect_mm_msg_sup.cc" />
