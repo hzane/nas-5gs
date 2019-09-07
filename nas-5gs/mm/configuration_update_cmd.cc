@@ -344,7 +344,7 @@ const field_meta hf_text_string = {
  * [3] 10.5.3.8 Time Zone */
 int dissect_local_time_zone(dissector d, context* ctx) {
     const use_context uc(ctx, "local-time-zone", d, -1);
-    
+
     /* 3GPP TS 23.040 version 6.6.0 Release 6
      * 9.2.3.11 TP-Service-Centre-Time-Stamp (TP-SCTS)
      * :
@@ -508,4 +508,4 @@ int dissect_sms_ind(dissector d, context* ctx) {
 }
 
 
-} // namespace 
+} // namespace
