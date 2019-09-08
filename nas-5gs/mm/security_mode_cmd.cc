@@ -5,7 +5,7 @@ using namespace nas;
 using namespace mm;
 
 /* 8.2.25 Security mode command  */
-int mm::dissect_sec_mode_cmd(dissector d, context* ctx) {
+int mm::dissect_security_mode_cmd(dissector d, context* ctx) {
     const use_context uc(ctx, "security-mode-cmd", d, 0);
     
     /* Direction: network to UE */
@@ -66,7 +66,7 @@ namespace mm {
 extern const element_meta sec_algo = {
     0xff,
     "Selected NAS security algorithms",
-    dissect_sec_algo,
+    dissect_security_algo,
     nullptr,
 };
 extern const element_meta replayed_ue_sec_cap = {

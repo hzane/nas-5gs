@@ -5,7 +5,7 @@ using namespace nas;
 using namespace mm;
 
 /* 8.2.16 Service request page.317 */
-int mm::dissect_service_req(dissector d, context* ctx) {    
+int mm::dissect_service_request(dissector d, context* ctx) {    
     const use_context uc(ctx, "service-request", d, 0);
     // UE to network
     up_link(d.pinfo);

@@ -3,12 +3,12 @@
 const element_meta mm::pdu_session_reactive_result_error_cause = {
     0x72,
     "PDU session reactivation result error cause",
-    dissect_pdu_ses_react_res_err_c,
+    dissect_pdu_session_reactive_result_error_cause,
     nullptr,
 };
 
 //  9.11.3.43    PDU session reactivation result error cause
-int mm::dissect_pdu_ses_react_res_err_c(dissector d, context* ctx) {
+int mm::dissect_pdu_session_reactive_result_error_cause(dissector d, context* ctx) {
     const use_context uc(ctx, "pdu-session-reactivation-result-error", d, 0);
     
     /*Partial service area list*/

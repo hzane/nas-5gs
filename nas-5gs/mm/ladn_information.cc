@@ -41,7 +41,7 @@ int mm::dissect_ladn_inf(dissector d, context* ctx) {
         d.step(consumed);
 
         length   = d.tvb->uint8(d.offset);
-        consumed = dissect_ta_id_list(d.slice(length), ctx);
+        consumed = dissect_tracking_area_id_list(d.slice(length), ctx);
         d.step(consumed);
         subtree->set_length(d.offset - start);
 

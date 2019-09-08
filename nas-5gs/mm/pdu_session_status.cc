@@ -172,7 +172,7 @@ const field_meta hf_nas_5gs_pdu_ses_sts_psi_8_b0 = {
 } // namespace mm
 
 // PDU session status   9.11.3.44
-int mm::dissect_pdu_ses_status(dissector d, context* ctx) {
+int mm::dissect_pdu_session_status(dissector d, context* ctx) {
     const use_context uc(ctx, "pdu-session-status", d, 30);
 
     static const field_meta* psi_0_7_flags[] = {

@@ -92,7 +92,7 @@ __declspec(selectany) extern const uint32_t sep_space = 23u;
 __declspec(selectany) extern const uint32_t bstrn     = 24u;
 __declspec(selectany) extern const uint32_t ext_length = 25u;
 __declspec(selectany) extern const uint32_t imei       = 26u;
-__declspec(selectany) extern const uint32_t time       = 28u;
+__declspec(selectany) extern const uint32_t gmt       = 28u;
 __declspec(selectany) extern const uint32_t timezone   = 27u;
 
 inline uint32_t get(uint32_t d) { return d & 0xff; }

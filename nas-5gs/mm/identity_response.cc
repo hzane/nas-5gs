@@ -2,7 +2,7 @@
 #include "../ts24007.hh"
 
 /* 8.2.22 Identity response  */
-int mm::dissect_id_resp(dissector d, context* ctx) {    
+int mm::dissect_identity_resp(dissector d, context* ctx) {    
     const use_context uc(ctx, "identity-response", d, 0);
     // UE to AMF
     up_link(d.pinfo);

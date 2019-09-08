@@ -3,7 +3,7 @@
 using namespace nas;
 
 // 9.11.3.55
-int mm::dissect_usage_set(dissector d, context* ctx) {
+int mm::dissect_usage_setting(dissector d, context* ctx) {
     const use_context        uc(ctx, "ue-usage-setting", d, -1);
 
     static const field_meta* flags[] = {

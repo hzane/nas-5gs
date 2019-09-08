@@ -4,7 +4,7 @@
 using namespace nas;
 
 /* 9.11.3.18    Configuration update indication */
-int mm::dissect_conf_upd_ind(dissector d, context* ctx) {
+int mm::dissect_config_update_ind(dissector d, context* ctx) {
     static const field_meta* flags[] = {
         &hf_spare_b3,
         &hf_spare_b2,
@@ -19,6 +19,6 @@ int mm::dissect_conf_upd_ind(dissector d, context* ctx) {
 extern const element_meta mm::conf_upd_ind = {
     0xD0,
     "Configuration update indication",
-    dissect_conf_upd_ind,
+    dissect_config_update_ind,
     nullptr,
 };

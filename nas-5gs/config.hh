@@ -233,8 +233,8 @@ string mnc_aux(const uint8_t* d, int length = 3);
 // BCD number
 string bcd_string(const uint8_t*d, int length);
 string   imei_string(const uint8_t* d, int length); // 0xf0 terminated if even
-string   time_string(const uint8_t* d);
-string   timezone_string(const uint8_t* d);
+string gmt_string(const uint8_t* d, int length);
+string   utcz_string(const uint8_t* d);
 
 uint64_t uintmap(uint64_t f, uint64_t mask);
 

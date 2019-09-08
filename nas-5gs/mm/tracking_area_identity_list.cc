@@ -4,7 +4,7 @@ using namespace cmn;
 
 
 // 9.11.3.9	5GS tracking area identity list
-int mm::dissect_ta_id_list(dissector d, context* ctx) {
+int mm::dissect_tracking_area_id_list(dissector d, context* ctx) {
     const use_context uc(ctx, "5gs-tai-list", d, 0);
 
     static const field_meta* flags[] = {

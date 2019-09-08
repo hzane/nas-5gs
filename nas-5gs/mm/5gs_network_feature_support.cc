@@ -2,7 +2,7 @@
 
 
 /* 9.11.3.5     5GS network feature support*/
-int mm::dissect_nw_feat_sup(dissector d, context* ctx) {
+int mm::dissect_nw_feature_support(dissector d, context* ctx) {
     const use_context uc(ctx, "5gs-network-feature-support", d, 1);
 
     static const field_meta* flags[] = {
@@ -251,6 +251,6 @@ const field_meta hf_nwfs_b7 = {
 const element_meta mm::nw_feat_sup = {
     0x21,
     "5GS network feature support",
-    dissect_nw_feat_sup,
+    dissect_nw_feature_support,
     nullptr,
 };

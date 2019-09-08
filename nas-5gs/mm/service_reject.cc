@@ -5,7 +5,7 @@
 using namespace nas;
 
 /* 8.2.18 Service reject */
-int mm::dissect_service_rej(dissector d, context* ctx) {
+int mm::dissect_service_reject(dissector d, context* ctx) {
     const use_context uc(ctx, "service-reject", d, 3);
     // network to UE
     down_link(d.pinfo);

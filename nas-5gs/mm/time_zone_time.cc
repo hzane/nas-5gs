@@ -24,21 +24,8 @@ extern const element_meta mm::u_time_zone_time = {
 int mm::dissect_time_zone_time(dissector d, context* ctx) {
     const use_context uc(ctx, "time-zone-time", d, -1);
 
-    (void) d.add_item( 6, time_string(d.safe_ptr()).c_str());
-    d.step(6);
-
-    auto       oct  = d.tvb->uint8(d.offset);
-    const auto sign = (oct & 0x08) ? '-' : '+';
-    oct             = (oct >> 4) + (oct & 0x07) * 10;
-    d.tree->add_subtree(d.pinfo,
-                        d.tvb,
-                        d.offset,
-                        1,
-                        "GMT %c %d hours %d minutes",
-                        sign,
-                        oct / 4,
-                        oct % 4 * 15);
-    d.step(1);
+    (void) d.add_item(6, gmt_string(d.safe_ptr(), d.safe_length(7)).c_str());
+    d.step(7);
 
     /* no length check possible */
     return 7;

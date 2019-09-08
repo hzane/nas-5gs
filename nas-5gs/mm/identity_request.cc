@@ -5,7 +5,7 @@ using namespace nas;
 using namespace mm;
 
 /*8.2.21 Identity request */
-int mm::dissect_id_req(dissector d, context* ctx) {    
+int mm::dissect_identity_request(dissector d, context* ctx) {    
     use_context uc(ctx, "identity-request", d, -1);
     // AMF to UE
     down_link(d.pinfo);

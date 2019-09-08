@@ -1,4 +1,3 @@
-#include <ctime>
 #include "../dissect_mm_msg.hh"
 #include "../gsm.hh"
 #include "../ts24007.hh"
@@ -8,7 +7,7 @@ using namespace mm;
 using namespace nas;
 
 /* 8.2.19 Configuration update command */
-int mm::dissect_conf_upd_cmd(dissector d, context* ctx) {
+int mm::dissect_config_update_cmd(dissector d, context* ctx) {
     use_context uc(ctx, "configuration-update-command", d, 3);
     // network to UE
     down_link(d.pinfo);
@@ -20,7 +19,7 @@ int mm::dissect_conf_upd_cmd(dissector d, context* ctx) {
 
     /*77    5G-GUTI    5GS mobile identity     9.11.3.4    O    TLV    TBD*/
     // ELEM_OPT_TLV_E(0x77, , DE_NAS_5GS_MM_5GS_MOBILE_ID, NULL);
-    consumed = dissect_opt_elem_tlv_e(nullptr, &guti, d, ctx);
+    consumed = dissect_opt_elem_tlv_e(nullptr, &guti_mobile_id, d, ctx);
     d.step(consumed);
 
     /*54    TAI list    Tracking area identity list     9.11.3.9    O    TLV    8-98*/
@@ -105,16 +104,6 @@ int mm::dissect_conf_upd_cmd(dissector d, context* ctx) {
 
 namespace mm {
 
-
-extern const element_meta guti = {
-    0x77,
-    "5GS mobile identity - 5G-GUTI",
-    dissect_guti,
-    nullptr,
-};
-
-
-
 extern const element_meta service_area_list = {
     0x70,
     "Service area list",
@@ -152,10 +141,6 @@ const field_meta hf_conf_upd_ind_ack_b0 = {
     nullptr,
     0x01,
 };
-
-
-int dissect_guti(dissector d, context* ctx) { return dissect_mobile_id(d, ctx); }
-
 
 
 /*

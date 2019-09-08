@@ -2,7 +2,7 @@
 #include "../ts24007.hh"
 
 /*  8.2.27 Security mode reject */
-int mm::dissect_sec_mode_rej(dissector d, context* ctx) {    
+int mm::dissect_security_mode_reject(dissector d, context* ctx) {    
     use_context uc(ctx, "security-mode-reject", d, -1);
     // UE to network
     up_link(d.pinfo);

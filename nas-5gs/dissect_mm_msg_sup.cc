@@ -735,9 +735,9 @@ extern const message_meta mm::msgs[] = {
     {0x4a, "Not used in current version", no_dissect, nullptr},
     {0x4b, "Not used in current version", no_dissect, nullptr},
 
-    {0x4c, "Service request", dissect_service_req, nullptr},
-    {0x4d, "Service reject", dissect_service_rej, nullptr},
-    {0x4e, "Service accept", dissect_service_acc, nullptr},
+    {0x4c, "Service request", dissect_service_request, nullptr},
+    {0x4d, "Service reject", dissect_service_reject, nullptr},
+    {0x4e, "Service accept", dissect_service_accept, nullptr},
 
     {0x4f, "Not used in current version", no_dissect, nullptr},
     {0x50, "Not used in current version", no_dissect, nullptr},
@@ -745,19 +745,19 @@ extern const message_meta mm::msgs[] = {
     {0x52, "Not used in current version", no_dissect, nullptr},
     {0x53, "Not used in current version", no_dissect, nullptr},
 
-    {0x54, "Configuration update command", dissect_conf_upd_cmd, nullptr},
-    {0x55, "Configuration update complete", dissect_conf_update_comp, nullptr},
-    {0x56, "Authentication request", authentication_req, nullptr},
+    {0x54, "Configuration update command", dissect_config_update_cmd, nullptr},
+    {0x55, "Configuration update complete", dissect_config_update_cmpl, nullptr},
+    {0x56, "Authentication request", authentication_request, nullptr},
     {0x57, "Authentication response", authentication_resp, nullptr},
-    {0x58, "Authentication reject", authentication_rej, nullptr},
+    {0x58, "Authentication reject", authentication_reject, nullptr},
     {0x59, "Authentication failure", authentication_failure, nullptr},
 
     {0x5a, "Authentication result", authentication_result, nullptr},
-    {0x5b, "Identity request", dissect_id_req, nullptr},
-    {0x5c, "Identity response", dissect_id_resp, nullptr},
-    {0x5d, "Security mode command", dissect_sec_mode_cmd, nullptr},
-    {0x5e, "Security mode complete", dissect_sec_mode_comp, nullptr},
-    {0x5f, "Security mode reject", dissect_sec_mode_rej, nullptr},
+    {0x5b, "Identity request", dissect_identity_request, nullptr},
+    {0x5c, "Identity response", dissect_identity_resp, nullptr},
+    {0x5d, "Security mode command", dissect_security_mode_cmd, nullptr},
+    {0x5e, "Security mode complete", dissect_security_mode_cmpl, nullptr},
+    {0x5f, "Security mode reject", dissect_security_mode_reject, nullptr},
 
     {0x60, "Not used in current version", no_dissect, nullptr},
     {0x61, "Not used in current version", no_dissect, nullptr},
@@ -815,7 +815,7 @@ extern const element_meta mm::allowed_nssai = {
 extern const element_meta mm::ta_id_list = {
     0x54,
     "5GS tracking area identity list - TAI list",
-    dissect_ta_id_list,
+    dissect_tracking_area_id_list,
     nullptr,
 };
 
@@ -843,7 +843,7 @@ extern const element_meta mm::pdu_ses_react_res = {
 extern const element_meta mm::pdu_ses_status = {
     0x50,
     "PDU session status",
-    dissect_pdu_ses_status,
+    dissect_pdu_session_status,
     nullptr,
 };
 
@@ -887,7 +887,7 @@ const field_meta* mm::hf_nas_eps_nas_ksi = &hfm_nas_eps_nas_ksi;
 extern const element_meta mm::nas_msg_container = {
     0x71,
     "NAS message container",
-    dissect_nas_msg_cont,
+    dissect_nas_msg_container,
     nullptr,
 };
 

@@ -1,7 +1,7 @@
 #include "../dissect_mm_msg.hh"
 
 // 9.11.3.47 Request type page.390
-int mm::dissect_req_type(dissector d, context* ctx) {
+int mm::dissect_request_type(dissector d, context* ctx) {
     const use_context uc(ctx, "request-type", d, -1);
 
     (void) d.add_item(1, &hf_request_type, enc::be);
@@ -15,7 +15,7 @@ int mm::dissect_req_type(dissector d, context* ctx) {
 extern const element_meta mm::request_type = {
     0x80,
     "Request type",
-    dissect_req_type,
+    dissect_request_type,
     nullptr,
 };
 

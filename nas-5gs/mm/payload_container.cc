@@ -4,11 +4,11 @@
 const element_meta mm::pld_cont = {
     0x7B,
     "Payload container",
-    dissect_pld_cont,
+    dissect_payload_container,
     nullptr,
 };
 
-int mm::dissect_pld_cont_entry(dissector d, context* ctx) {
+int mm::dissect_pld_container_entry(dissector d, context* ctx) {
     using namespace mm;
     const use_context uc(ctx, "pld-content-entry", d, -1);
 
@@ -31,7 +31,7 @@ int mm::dissect_pld_cont_entry(dissector d, context* ctx) {
 }
 
 /*  9.11.3.39    Payload container */
-int mm::dissect_pld_cont(dissector d, context* ctx) {
+int mm::dissect_payload_container(dissector d, context* ctx) {
     const use_context uc(ctx, "pld-content", d, 0);
 
     const auto typi = retrive_payload_content_type(ctx) & 0x0fu;
@@ -96,7 +96,7 @@ int mm::dissect_pld_cont(dissector d, context* ctx) {
         auto nentries = d.uint8();
         d.step(1);
         while (nentries > 0) {
-            const auto consumed = dissect_pld_cont_entry(d, ctx);
+            const auto consumed = dissect_pld_container_entry(d, ctx);
             d.step(consumed);
             --nentries;
         }

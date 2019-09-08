@@ -3,7 +3,7 @@
 using namespace nas;
 
 // PDU session ID 2 9.11.3.41
-int mm::dissect_pdu_ses_id(dissector d, context* ctx) {
+int mm::dissect_pdu_session_id(dissector d, context* ctx) {
     const use_context uc(ctx, "pdu-session-identity2", d, -1);
 
     // identity value as defined in 3GPP TS 24.007 [11]
@@ -48,7 +48,7 @@ const field_meta mm::hf_pdu_session_id = {
 extern const element_meta mm::pdu_session_id = {
     0x12,
     "PDU session identity 2 - PDU session ID",
-    dissect_pdu_ses_id,
+    dissect_pdu_session_id,
     nullptr,
 };
 
@@ -57,6 +57,6 @@ extern const element_meta mm::pdu_session_id = {
 extern const element_meta mm::old_pdu_ses_id = {
     0x59,
     "Old PDU session ID",
-    dissect_pdu_ses_id,
+    dissect_pdu_session_id,
     nullptr,
 };

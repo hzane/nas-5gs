@@ -9,7 +9,7 @@ const element_meta mm::imeisv_mobile_id = {
 };
 
 /*  8.2.26 Security mode complete */
-int mm::dissect_sec_mode_comp(dissector d, context* ctx) {
+int mm::dissect_security_mode_cmpl(dissector d, context* ctx) {
     const use_context uc(ctx, "security-mode-complete", d, 0);
     // UE to network
     up_link(d.pinfo);

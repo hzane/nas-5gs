@@ -98,7 +98,7 @@ const element_meta mm::aguti_mobile_id = {
 const element_meta mm::ue_usage_setting = {
     0x18,
     "UE's usage setting",
-    dissect_usage_set,
+    dissect_usage_setting,
     nullptr,
 };
 
@@ -129,7 +129,7 @@ const element_meta mm::requested_drx_param = {
 const element_meta mm::eps_nas_msg_container = {
     0x70,
     "EPS NAS message container",
-    dissect_eps_nas_msg_cont,
+    dissect_eps_nas_msg_container,
     nullptr,
 };
 

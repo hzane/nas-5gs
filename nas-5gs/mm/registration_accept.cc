@@ -15,7 +15,7 @@ int mm::dissect_registration_accept(dissector d, context* ctx) {
 
     /*77    5G-GUTI    5GS mobile identity 9.11.3.4    O    TLV-E    14 */
     // ELEM_OPT_TLV_E(0x77, , DE_NAS_5GS_MM_5GS_MOBILE_ID, " - 5G-GUTI");
-    consumed = dissect_opt_elem_tlv_e(nullptr, &guti_5gs_mobile_id, d, ctx);
+    consumed = dissect_opt_elem_tlv_e(nullptr, &guti_mobile_id, d, ctx);
     d.step(consumed);
 
     /*4A    Equivalent PLMNs    PLMN list     9.11.3.45    O    TLV    5-47*/

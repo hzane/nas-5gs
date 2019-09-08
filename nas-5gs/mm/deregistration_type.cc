@@ -2,7 +2,7 @@
 
 
 /* De-registration type    De-registration type     9.11.3.20   M   V   1 */
-int mm::dissect_de_reg_type(dissector d, context* ctx) {
+int mm::dissect_deregistration_type(dissector d, context* ctx) {
     const use_context uc(ctx, "de-registration-type", d, -1);
 
     /* Switch off   Re-registration required    Access type */
@@ -19,7 +19,7 @@ int mm::dissect_de_reg_type(dissector d, context* ctx) {
 const element_meta mm::de_reg_type = {
     0xff,
     "De-registration type",
-    dissect_de_reg_type,
+    dissect_deregistration_type,
     nullptr,
 };
 

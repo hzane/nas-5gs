@@ -5,7 +5,7 @@
 using namespace nas;
 
 /* 8.2.1.1    Authentication request */
-int mm::authentication_req(dissector d, context* ctx) {    
+int mm::authentication_request(dissector d, context* ctx) {    
     const use_context uc(ctx, "authentication-request", d, 0);
     // network to UE
     down_link(d.pinfo);
@@ -47,14 +47,14 @@ namespace mm {
 extern const element_meta auth_parm_rand = {
     0x21,
     "Authentication parameter RAND - 5G authentication challenge",
-    dissect_auth_parm_rand,
+    dissect_auth_parameter_rand,
     nullptr,
 };
 
 extern const element_meta auth_parm_autn = {
     0x20,
     "Authentication parameter AUTN - 5G authentication challenge",
-    dissect_auth_parm_autn,
+    dissect_auth_parameter_autn,
     nullptr,
 };
 

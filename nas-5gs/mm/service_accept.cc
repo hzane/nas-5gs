@@ -5,7 +5,7 @@ using namespace nas;
 using namespace mm;
 
 /*  8.2.17 Service accept */
-int mm::dissect_service_acc(dissector d, context* ctx) {    
+int mm::dissect_service_accept(dissector d, context* ctx) {    
     const use_context uc(ctx, "service-accept", d, 3);
     // network to UE
     down_link(d.pinfo);

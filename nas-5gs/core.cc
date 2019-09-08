@@ -298,7 +298,9 @@ int ext_length(const uint8_t* d) {
     return int(msb & 0x7fu);
 }
 
-string time_string(const uint8_t*d){
+string gmt_string(const uint8_t*d, int length){
+    if (length < 7) return string();
+
     tm t = {0, 0, 0, 0, 0, 0, 0, 0, -1};
 
     int o = int(d[0]);
@@ -320,10 +322,16 @@ string time_string(const uint8_t*d){
     t.tm_sec = (o & 0x0f) * 10 + ((o & 0xf0) >> 4);
 
     const char* ts = asctime(&t);
-    return ts ? string(ts) : string();
+
+    auto sign     = (d[6] & 0x08u) ? '-' : '+';
+    auto quarters = (d[6] >> 4u) + (d[6] & 0x07u) * 10;
+    auto h        = quarters / 4;
+    quarters      = quarters % 4 * 15;
+    return ts ? formats("%s GMT %c %d hours %d minutes", ts, sign, h, quarters)
+              : string();
 }
 
-string timezone_string(const uint8_t*d){
+string utcz_string(const uint8_t*d){
     auto sign     = (d[0] & 0x08u) ? '-' : '+';
     auto quarters = (d[0] >> 4u) + (d[0] & 0x07u) * 10;
     auto h        = quarters / 4;

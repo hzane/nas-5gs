@@ -6,7 +6,7 @@ extern const field_meta hf_5gup_ciot;
 } // namespace mm
 
 /* 9.11.3.1     5GMM capability*/
-int mm::dissect_mm_cap(dissector d, context* ctx) {
+int mm::dissect_mm_capability(dissector d, context* ctx) {
     const use_context uc(ctx, "5gmm-capability", d, 12);
 
     static const field_meta* flags[] = {
@@ -193,7 +193,7 @@ const field_meta hf_s1_mode_b0 = {
 const element_meta mm::mm_cap = {
     0x10,
     "5GMM capability",
-    dissect_mm_cap,
+    dissect_mm_capability,
     nullptr,
 };
 
