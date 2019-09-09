@@ -1,30 +1,20 @@
 #include "../dissect_sm_msg.hh"
 
 // 9.11.4.14    Session-AMBR
-int sm::dissect_ses_ambr(dissector d, context* ctx) {
+int sm::dissect_session_ambr(dissector d, context* ctx) {
     const use_context uc(ctx, "session-ambr", d, 0);
     
-    /* Unit for Session-AMBR for downlink */
-    auto unit = (int) d.uint8();
-    d.add_item(1, &hf_sm_ses_ambr_dl_unit, enc::be);
-    d.step(1);
-
-    // const char* unit_str = "";
+    /* Unit for Session-AMBR for downlink octet 3*/
     /* Session-AMBR for downlink (octets 4 and 5) */
-    auto ambr_val = static_cast< uint32_t >(d.ntohs());
 
-    auto item = d.add_item(2, &hf_sm_ses_ambr_dl, enc::none);
-    item->set_string(ambr_string(ambr_val, unit));
-    d.step(2);
+    // d.add_item(1, &hf_sm_ses_ambr_dl_unit, enc::be);
+    // auto ambr_val = static_cast< uint32_t >(d.ntohs());
 
-    unit = static_cast< int >(d.uint8());
-    item = d.add_item(1, &hf_sm_ses_ambr_ul_unit, enc::be);
-    d.step(1);
+    (void) d.add_item(3, &hf_sm_ses_ambr_dl, enc::be);
+    d.step(3);
 
-    ambr_val = static_cast< uint32_t >(d.ntohs());
-    item     = d.add_item(2, &hf_sm_ses_ambr_ul, enc::none);
-    item->set_string(ambr_string(ambr_val, unit));
-    d.step(2);
+    (void) d.add_item(3, &hf_sm_ses_ambr_ul, enc::be);
+    d.step(3);
 
     return uc.length;
 }
@@ -33,10 +23,9 @@ int sm::dissect_ses_ambr(dissector d, context* ctx) {
 const element_meta sm::ses_ambr = {
     0x2A,
     "Session AMBR",
-    dissect_ses_ambr,
+    dissect_session_ambr,
     nullptr,
 };
-
 
 
 //  *      9.11.4.14    Session-AMBR
@@ -80,6 +69,7 @@ const field_meta sm::hf_sm_ses_ambr_dl_unit = {
     nullptr,
     0x0,
 };
+
 const field_meta sm::hf_sm_ses_ambr_ul_unit = {
     "Unit for Session-AMBR for uplink",
     "nas_5gs.sm.unit_for_session_ambr_ul",
@@ -90,21 +80,23 @@ const field_meta sm::hf_sm_ses_ambr_ul_unit = {
     nullptr,
     0x0,
 };
+
 const field_meta sm::hf_sm_ses_ambr_dl = {
     "Session-AMBR for downlink",
     "nas_5gs.sm.session_ambr_dl",
-    ft::ft_uint16,
-    fd::base_dec,
+    ft::ft_bytes,
+    fd::ambr,
     nullptr,
     nullptr,
     nullptr,
     0x0,
 };
+
 const field_meta sm::hf_sm_ses_ambr_ul = {
     "Session-AMBR for uplink",
     "nas_5gs.sm.session_ambr_ul",
-    ft::ft_uint16,
-    fd::base_dec,
+    ft::ft_bytes,
+    fd::ambr,
     nullptr,
     nullptr,
     nullptr,

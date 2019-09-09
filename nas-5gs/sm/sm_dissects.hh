@@ -43,7 +43,7 @@ int dissect_mapped_eps_bearer_ctx(dissector d, context* ctx);
 
 int dissect_sm_cap(dissector d, context* ctx);
 int dissect_max_num_sup_kpt_flt(dissector d, context* ctx);
-int dissect_ses_ambr(dissector d, context* ctx);
+int dissect_session_ambr(dissector d, context* ctx);
 int dissect_always_on_pdu_ses_ind(dissector d, context* ctx);
 int dissect_int_prot_max_data_rate(dissector d, context* ctx);
 int dissect_allowed_ssc_mode(dissector d, context* ctx);
