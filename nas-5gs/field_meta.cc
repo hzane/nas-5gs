@@ -37,8 +37,10 @@ string field_meta::format(const uint8_t*p , int length, uint32_t enc) const {
             return bits7_string(p, length);
         case fd::ipv4:
             return formats("%ud.%ud.%ud.%ud", p[0], p[1], p[2], p[3]);
+        case fd::link_local_address:
+            return ipv6_link_local_string(p, length);
         case fd::ipv6:
-            return format_hex(p, length, ":");
+            return ipv6_string(p, length);
         case fd::mac:
             return format_hex(p, length, ":");
         case fd::mcc:
@@ -49,6 +51,8 @@ string field_meta::format(const uint8_t*p , int length, uint32_t enc) const {
             return gmt_string(p, length);
         case fd::timezone:
             return utcz_string(p);
+        case fd::ambr:
+            return ambr_string(p, length);
         case fd::ext_length:
             return formats("%d", ext_length(p));
         default:

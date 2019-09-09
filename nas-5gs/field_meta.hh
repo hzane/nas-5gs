@@ -73,7 +73,7 @@ __declspec(selectany) extern const uint32_t base_bit     = 7; // show as bit set
 __declspec(selectany) extern const uint32_t base_string  = 8;
 __declspec(selectany) extern const uint32_t bits7        = 9u; // bits7 ascii string
 __declspec(selectany) extern const uint32_t ipv4         = 10u; // xxx.xxx.xxx.xxx
-__declspec(selectany) extern const uint32_t ipv6         = 11u; // xxx.xxx.xxx.xxx
+__declspec(selectany) extern const uint32_t ipv6         = 11u; // xxxx:x:xx:xxx
 __declspec(selectany) extern const uint32_t timer3       = 12u; // gprs timer
 __declspec(selectany) extern const uint32_t timer2       = 13u; // gprs timer
 __declspec(selectany) extern const uint32_t timer        = 14u; // gprs timer
@@ -92,8 +92,10 @@ __declspec(selectany) extern const uint32_t sep_space = 23u;
 __declspec(selectany) extern const uint32_t bstrn     = 24u;
 __declspec(selectany) extern const uint32_t ext_length = 25u;
 __declspec(selectany) extern const uint32_t imei       = 26u;
-__declspec(selectany) extern const uint32_t gmt       = 28u;
 __declspec(selectany) extern const uint32_t timezone   = 27u;
+__declspec(selectany) extern const uint32_t gmt        = 28u;
+__declspec(selectany) extern const uint32_t ambr       = 29u;
+__declspec(selectany) extern const uint32_t link_local_address = 30u;
 
 inline uint32_t get(uint32_t d) { return d & 0xff; }
 
