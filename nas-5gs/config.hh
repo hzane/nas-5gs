@@ -66,7 +66,7 @@ struct dissector {
 struct use_tree { // NOLINT: special-member-functions
     dissector&  d;
     proto_node* prev;
-    use_tree(dissector& d, proto_node* p) : d(d), prev(p) { d.tree = p; }
+    use_tree(dissector& d, proto_node* p) : d(d), prev(d.tree) { d.tree = p; }
     ~use_tree() { d.tree = prev; }
 };
 
