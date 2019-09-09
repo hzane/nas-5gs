@@ -150,7 +150,7 @@ const field_meta hf_segregation = {
 };
 // Authorized QoS rules QoS rules 9.11.4.13
 int sm::dissect_qos_rules(dissector d, context* ctx) {
-    use_context              uc(ctx, "authorized-qos-rules", d);
+    const use_context uc(ctx, "authorized-qos-rules", d);
 
     static const field_meta* pkt_flt_flags[] = {
         &hf_sm_rop,
@@ -207,6 +207,7 @@ int sm::dissect_qos_rules(dissector d, context* ctx) {
         for (auto j = 1; j <= n_filters; j++) {
             const auto     st2 = d.add_item(-1, "Packet filter %u", j);
             use_tree ut2(d, st2);
+            auto           start = d.offset;
             if (rop == 5) {
                 /* modify existing QoS rule and delete packet filters */
                 /* 0    0    0    0    Packet filter identifier x*/
@@ -216,6 +217,7 @@ int sm::dissect_qos_rules(dissector d, context* ctx) {
                 const auto consumed = dissect_packet_filters(d, rop, ctx);
                 d.step(consumed);
             }
+            st2->set_length(d.offset - start);
         }
         /* QoS rule precedence (octet z+1)
          * For the "delete existing QoS rule" operation, the QoS rule precedence value
