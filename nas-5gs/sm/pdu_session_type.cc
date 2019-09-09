@@ -27,7 +27,7 @@ int sm::dissect_pdu_ses_auth_res(dissector d, context* ctx) {
 extern const element_meta sm::selected_pdu_ses_type = {
     0x90,
     "Selected PDU session type",
-    dissect_pdu_ses_type,
+    dissect_pdu_session_type,
     nullptr,
 };
 
@@ -35,7 +35,7 @@ extern const element_meta sm::selected_pdu_ses_type = {
 extern const element_meta sm::pdu_ses_type = {
     0x90,
     "PDU session type",
-    dissect_pdu_ses_type,
+    dissect_pdu_session_type,
     nullptr,
 };
 
@@ -59,7 +59,7 @@ const field_meta sm::hf_sm_pdu_ses_type = {
 };
 
 // Selected PDU session type    PDU session type 9.11.4.11
-int sm::dissect_pdu_ses_type(dissector d, context* ctx) {
+int sm::dissect_pdu_session_type(dissector d, context* ctx) {
     const use_context uc(ctx, "selected-pdu-session-type", d, -1);
 
     (void) d.add_item(1, &hf_sm_pdu_ses_type, enc::be);

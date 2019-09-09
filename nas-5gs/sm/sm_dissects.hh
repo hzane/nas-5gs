@@ -8,7 +8,7 @@ int dissect_always_on_pdu_ses_req(dissector d, context* ctx);
 int dissect_requested_qos_rules(dissector d, context* ctx);
 
 // Selected PDU session type    PDU session type 9.11.4.11
-int dissect_pdu_ses_type(dissector d, context* ctx);
+int dissect_pdu_session_type(dissector d, context* ctx);
 
 int dissect_pdu_address(dissector d, context* ctx);
 
