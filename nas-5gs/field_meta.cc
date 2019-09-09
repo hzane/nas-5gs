@@ -59,8 +59,6 @@ string field_meta::format(const uint8_t*p , int length, uint32_t enc) const {
 }
 
 string field_meta::format(uint64_t v) const {
-    if (bitmask) v = v & bitmask; // todo: shift right ws_ctz
-
     if (ftype == ft::none || ftype == ft::protocol) return string();
 
     if (ftype == ft::ft_boolean) {
@@ -93,6 +91,9 @@ string field_meta::format(uint64_t v) const {
     }
     if (display == fd::timer2){
         return gprs_timer2_format(uint8_t(v));
+    }
+    if (display == fd::base_bin) {
+        return format_int_bit_mask(ftype, v, bitmask, nullptr);
     }
 
     return format_int(v, ftype, display);
