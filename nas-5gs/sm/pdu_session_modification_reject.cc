@@ -10,8 +10,8 @@ int sm::dissect_pdu_ses_modification_rej(dissector d, context* ctx) {
     down_link(d.pinfo);    
 
     /* 5GSM cause 9.11.4.2    M    V    1 */
-    auto consumed = dissect_elem_v(nullptr, &sm_cause, d, ctx);
-    d.step(consumed);
+    auto consumed = dissect_sm_cause(d, ctx);
+    d.step(1);
 
     /*37    Back-off timer value    GPRS timer 3 9.11.2.5    O    TLV    3 */
     // ELEM_OPT_TLV(0x37, , DE_GPRS_TIMER_3, " - Back-off timer value");

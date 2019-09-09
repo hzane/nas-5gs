@@ -17,10 +17,10 @@ int sm::dissect_pdu_ses_establishment_accept(dissector d, context* ctx) {
 
     /* Selected PDU session type    PDU session type 9.11.4.11    M    V    1/2 H0*/
     // ELEM_MAND_V( DE_NAS_5GS_SM_PDU_SESSION_TYPE,);
-    dissect_elem_v(nullptr, &selected_pdu_ses_type, d, ctx);
+    dissect_pdu_ses_type(d, ctx);
 
     /* Selected SSC mode    SSC mode 9.11.4.16    M    V    1/2 H1*/
-    d.tree->add_item(d.pinfo, d.tvb, d.offset, 1, hf_sel_sc_mode, enc::be);
+    (void) d.add_item(1, hf_sel_sc_mode, enc::be);
     d.step(1);
 
     /* Authorized QoS rules QoS rules 9.11.4.13 M LV-E 2-65537  DE_NAS_5GS_SM_QOS_RULES*/

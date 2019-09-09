@@ -62,7 +62,7 @@ const field_meta sm::hf_sm_pdu_ses_type = {
 int sm::dissect_pdu_ses_type(dissector d, context* ctx) {
     const use_context uc(ctx, "selected-pdu-session-type", d, -1);
 
-    d.add_item(1, &hf_sm_pdu_ses_type, enc::be);
+    (void) d.add_item(1, &hf_sm_pdu_ses_type, enc::be);
     d.step(1);
 
     return 1;

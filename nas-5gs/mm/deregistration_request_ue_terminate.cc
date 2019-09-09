@@ -11,8 +11,8 @@ int mm::dissect_dereg_req_ue_term(dissector d, context* ctx) {
     // network to UE
     down_link(d.pinfo);
 
-    /* De-registration type    De-registration type 9.11.3.20   M   V   1 */
-    auto consumed = dissect_elem_v(nullptr, &de_reg_type, d, ctx);
+    /* De-registration type    De-registration type 9.11.3.20   M   V   1 */    
+    auto consumed = dissect_deregistration_type(d, ctx);
     d.step(consumed);
 
     /* Spare half octet    Spare half octet 9.5    M    V    1/2 */

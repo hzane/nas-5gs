@@ -11,8 +11,8 @@ int mm::dissect_service_reject(dissector d, context* ctx) {
     down_link(d.pinfo);
 
     /* 5GMM cause  9.11.3.2  M   V   1 */
-    /*    ELEM_MAND_V(,DE_NAS_5GS_MM_5GMM_CAUSE, );*/
-    auto consumed = dissect_elem_v(nullptr, &mm_cause, d, ctx);
+    /*    ELEM_MAND_V(,DE_NAS_5GS_MM_5GMM_CAUSE, );*/    
+    auto consumed = dissect_mm_cause(d, ctx);
     d.step(consumed);
 
     /*50  PDU session status 9.11.3.44    O    TLV    4 - 34*/

@@ -9,7 +9,7 @@ int mm::authentication_failure(dissector d, context* ctx) {
     up_link(d.pinfo);
 
     /* 5GMM cause   5GMM cause     9.11.3.2  M   V   1 */
-    auto consumed = dissect_elem_v(nullptr, &mm_cause, d, ctx);
+    auto consumed = dissect_mm_cause(d, ctx);
     d.step(consumed);
 
     /* 30    Authentication failure parameter   9.11.3.14    O    TLV    16 */

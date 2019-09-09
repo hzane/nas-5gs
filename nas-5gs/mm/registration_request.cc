@@ -15,16 +15,14 @@ int mm::dissect_registration_req(dissector d, context* ctx) {
     up_link(d.pinfo);
     // get private data
 
-    /*   5GS registration type  9.11.3.7    M    V    1/2  H0*/
-    auto consumed = dissect_elem_v(nullptr, &registration_request_type, d, ctx);
+    /*   5GS registration type  9.11.3.7    M    V    1/2  H0*/    
+    (void) dissect_registration_request_type(d, ctx);
     /*    ngKSI    NAS key set identifier 9.11.3.32    M    V    1/2 H1*/
-    auto i = d.add_item(1, &hf_ngksi_nas_ksi, enc::be);
+    (void) d.add_item(1, &hf_ngksi_nas_ksi, enc::be);
     d.step(1);
-    unused(i);
-    unused(consumed);
 
     /* 5GS mobile identity 9.11.3.4    M    LV-E    6-n*/
-    consumed = dissect_elem_lv_e(nullptr, &mobile_id, d, ctx);
+    auto consumed = dissect_elem_lv_e(nullptr, &mobile_id, d, ctx);
     d.step(consumed);
 
     /*C-    Non-current native NAS KSI    NAS key set identifier 9.11.3.32    O    TV 1*/

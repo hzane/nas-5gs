@@ -15,11 +15,11 @@ int sm::dissect_int_prot_max_data_rate(dissector d, context* ctx) {
     const use_context uc(ctx, "integrity-protection-max-data-rate", d, -1);
 
     /* Maximum data rate per UE for user-plane integrity protection for uplink */
-    d.add_item(1, &hf_sm_int_prot_max_data_rate_ul, enc::be);
+    (void) d.add_item(1, &hf_sm_int_prot_max_data_rate_ul, enc::be);
     d.step(1);
 
     /* Maximum data rate per UE for user-plane integrity protection for downlink */
-    d.add_item(1, &hf_sm_int_prot_max_data_rate_dl, enc::be);
+    (void) d.add_item(1, &hf_sm_int_prot_max_data_rate_dl, enc::be);
     d.step(1);
 
     return 2;

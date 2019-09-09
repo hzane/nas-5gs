@@ -16,7 +16,7 @@ int sm::dissect_pdu_ses_establishment_rej(dissector d, context* ctx) {
 
     /*  5GSM cause 9.11.4.2    M    V    1 */
     // ELEM_MAND_V(,DE_NAS_5GS_SM_5GSM_CAUSE, " - ESM cause",);
-    auto consumed = dissect_elem_v(nullptr, &sm_cause, d, ctx);
+    auto consumed = dissect_sm_cause(d, ctx);
     d.step(consumed);
 
     /*37    Back-off timer value    GPRS timer 3 9.11.2.5    O    TLV    3 */
