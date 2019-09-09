@@ -298,6 +298,16 @@ int ext_length(const uint8_t* d) {
     return int(msb & 0x7fu);
 }
 
+string asc_time(const tm* t) {
+#if defined(_WIN32) || defined(_WIN64)
+    char buf[128] = {0};
+    auto e = asctime_s(buf, std::size(buf), t);
+    return !e ? string(buf) : string();
+#else
+    auto x = asctime(t);
+    return x ? string(x) : string();
+#endif
+}
 string gmt_string(const uint8_t*d, int length){
     if (length < 7) return string();
 
@@ -321,14 +331,14 @@ string gmt_string(const uint8_t*d, int length){
     o= d[5];
     t.tm_sec = (o & 0x0f) * 10 + ((o & 0xf0) >> 4);
 
-    const char* ts = asctime(&t);
+    auto ts = asc_time(&t);
+    if (ts.empty()) return ts;
 
     auto sign     = (d[6] & 0x08u) ? '-' : '+';
     auto quarters = (d[6] >> 4u) + (d[6] & 0x07u) * 10;
     auto h        = quarters / 4;
     quarters      = quarters % 4 * 15;
-    return ts ? formats("%s GMT %c %d hours %d minutes", ts, sign, h, quarters)
-              : string();
+    return formats("%s GMT %c %d hours %d minutes", ts.c_str(), sign, h, quarters);
 }
 
 string utcz_string(const uint8_t*d){
