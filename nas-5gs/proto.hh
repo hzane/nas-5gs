@@ -45,7 +45,11 @@ struct proto_node { // NOLINT: special-member-functions
     uint8_t                  unit        = 0;
 
     virtual ~proto_node();
-    proto_node()= default;;
+    proto_node()= default;
+    proto_node(const uint8_t*    buffer,
+               int               offset,
+               int               length,
+               const field_meta* m = nullptr);
 };
 
 
