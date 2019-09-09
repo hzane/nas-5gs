@@ -76,7 +76,7 @@ struct context {
     uint32_t                   msg_auth_code        = 0;
     uint8_t                    payload_content_type = 0;
     std::vector< std::string > paths                = {};
-    std::string                path() const;
+    [[nodiscard]] std::string  path() const;
 };
 
 struct use_context { // NOLINT: special-member-functions
@@ -190,6 +190,14 @@ string format_hex(const uint8_t* data,
                   const char*    lf  = "\n");
 
 string format_bit(const uint8_t* data, int len, const char* sep = " ");
+
+string format_bits(const uint8_t* data, int bits, const char* sep = nullptr);
+
+string format_int_bit_mask(uint32_t    ftype,
+                           uint64_t    v,
+                           uint64_t    mask,
+                           const char* sep = nullptr);
+
 string format_int(uint64_t v, uint32_t ftype, uint32_t display);
 string format_int_hex(uint64_t v, uint32_t ftype);
 string format_int_dec(uint64_t v, uint32_t ftype);
