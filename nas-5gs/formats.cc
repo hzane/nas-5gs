@@ -243,7 +243,7 @@ string format_hex(const uint8_t* data, int len, const char* sep, const char* lf)
         ss << setw(2) << uint32_t(data[i]) << sep;
 
         if (i % 8 == 7) ss << sep;
-        if (i % 16 == 15) ss << lf;
+        if (i % 16 == 15 && i != len - 1) ss << lf;
     }
 
     return ss.str();

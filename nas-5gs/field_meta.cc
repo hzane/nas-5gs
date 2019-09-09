@@ -55,6 +55,7 @@ string field_meta::format(const uint8_t*p , int length, uint32_t enc) const {
         case fd::ext_length:
             return formats("%d", ext_length(p));
         case fd::timer:
+            return gprs_timer_string(p, length);
         case fd::timer3:
             return gprs_timer3_string(p, length);
         case fd::timer2:
@@ -93,7 +94,11 @@ string field_meta::format(uint64_t v) const {
         const auto s = find_r_string(range_strings, uint32_t(v));
         return formats("%s (%#x)", s, uint32_t(v));
     }
-    if (display == fd::timer3 || display == fd::timer){
+    if(display == fd::timer) {
+        auto v8 = static_cast< uint8_t >(v);
+        return gprs_timer_string(&v8, 1);
+    }
+    if (display == fd::timer3) {
         return gprs_timer3_format(uint8_t(v));
     }
     if (display == fd::timer2){
