@@ -32,17 +32,17 @@ struct proto_node { // NOLINT: special-member-functions
                             const char*  format,
                             ...);
 
-    std::list< proto_node* > children = {};
-    std::string              name     = {};
-    std::string              text     = {};
-    uint64_t                 val      = 0;
-    uint32_t                 enc      = enc::na; // enc::na
-    const field_meta*        meta     = nullptr;
-    const uint8_t*           data     = nullptr;
-    int                      length   = 0;
-    int                      offset   = 0;
-    uint8_t                  spare    = 0;
-    uint8_t                  unit     = 0;
+    std::list< proto_node* > children    = {};
+    std::string              name        = {};
+    std::string              text        = {};
+    uint64_t                 val         = 0;
+    uint32_t                 enc         = enc::na; // enc::na
+    const field_meta*        meta        = nullptr;
+    const uint8_t*           data        = nullptr;
+    int                      length      = 0;
+    int                      offset      = 0;
+    uint8_t                  unused_bits = 0;
+    uint8_t                  unit        = 0;
 
     virtual ~proto_node();
     proto_node()= default;;

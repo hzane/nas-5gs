@@ -33,13 +33,15 @@ proto_item* proto_node::add_item(packet_info*      ,
     }
     if (encoding == enc::na || encoding == enc::none) return item;
 
-    if (meta && ft::is_integer(meta->ftype)) {
-        val = n2_uint(item->data, len);
-        if(meta->bitmask){
-            val = (val&meta->bitmask)>>ws_ctz(meta->bitmask);
+    if (field && ft::is_integer(field->ftype)) {
+        auto v = n2_uint(item->data, len);
+        if(field->bitmask){
+            v = (v & field->bitmask) >> ws_ctz(field->bitmask);
         }
-    }
-    item->text = print_text(field, item->data, len, encoding);
+        item->val = v;
+        item->text = print_text(field, v);
+    }else
+        item->text = print_text(field, item->data, len, encoding);
 
     return item;
 }
@@ -142,7 +144,12 @@ std::string print_text(const field_meta* meta,
         return formats("%d bytes", len);
     }
     if (ft::is_integer(meta->ftype)){
-        return meta->format(n2_uint(data, len));
+        auto v = n2_uint(data, len);
+        if (meta->bitmask) {
+            v = v & meta->bitmask;
+            v = v >> ws_ctz(meta->bitmask);
+        }
+        return meta->format(v);
     }
     return meta->format(data, len, enc);
 }
@@ -156,15 +163,16 @@ std::string print_text(const field_meta* meta, uint64_t v) {
     return meta->format(v);
 }
 
-void print_node(std::ostream& out, const proto_node* node, int indent ) {
-    const auto prefix = std::string(size_t(indent * 2), char(' '));
-    out << prefix << node->name << " " << node->offset << "-" << node->length;
+void print_node(std::ostream& out, const proto_node* node, int indent) {
+    if (!node->name.empty() && !node->text.empty()) {
+        const auto prefix = std::string(size_t(indent) + indent, char(' '));
+        out << prefix << node->name << " " << node->offset << "-" << node->length;
 
-    if (!node->text.empty()) {
-        out << " : " << node->text;
+        if (!node->text.empty()) {
+            out << " : " << node->text;
+        }
+        out << std::endl;        
     }
-    out << std::endl;
-
     for (auto n : node->children) {
         print_node(out, n, indent + 1);
     }
