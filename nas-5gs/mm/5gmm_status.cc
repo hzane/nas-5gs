@@ -8,7 +8,7 @@ int mm::dissect_mm_status(dissector d, context* ctx) {
     /* Direction: both*/
 
     /* 5GMM cause 9.11.3.2    M    V    1 */
-    const auto consumed = dissect_mm_cause(d, ctx);
+    (void) dissect_mm_cause(d, ctx);
     d.step(1);
     
     return 1;

@@ -8,8 +8,8 @@ int mm::dissect_security_mode_reject(dissector d, context* ctx) {
     up_link(d.pinfo);
 
     /* 5GMM cause 9.11.3.2    M    V    1 */
-    const auto consumed = dissect_mm_cause(d, ctx);
-    d.step(consumed);
+    (void) dissect_mm_cause(d, ctx);
+    d.step(1);
 
     return 1;
 }
