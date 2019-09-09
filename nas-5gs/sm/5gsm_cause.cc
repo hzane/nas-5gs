@@ -4,7 +4,7 @@
 int sm::dissect_sm_cause(dissector d, context* ctx) {
     const use_context uc(ctx, "5gsm-cause", d, -1);
 
-    auto i = d.add_item(1, &hf_sm_cause, enc::be);
+    auto i = d.tree->set_item(1, &hf_sm_cause, enc::be);
     unused(i);
     d.step(1);
 
