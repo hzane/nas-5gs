@@ -61,14 +61,14 @@ int dissect_nas5g_plain(dissector d, context* ctx) {
 
     if (epd == epd::MM5G) {
         consumed= dissect_mm_msg(d, ctx);
-    }
-    if (epd == epd::SM5G) {
+    }else     if (epd == epd::SM5G) {
         consumed = dissect_sm_msg(d, ctx);
+    }else {
+        diag("unknown epd %d\n", epd);
     }
     d.step(consumed);
-    diag("unknown epd %d\n", epd);
 
-    return d.length;
+    return uc.length;
 }
 
 static int dissect_sm_msg(dissector d, context* ctx) {
