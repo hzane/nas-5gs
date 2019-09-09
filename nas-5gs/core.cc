@@ -20,7 +20,8 @@ void diag(const char* format, ...) {
     va_list cp;
     va_copy(cp, args);
 
-    std::vector< char > buf(1 + std::vsnprintf(nullptr, 0, format, args));
+    std::vector< char > buf(
+        1 + static_cast< size_t >(std::vsnprintf(nullptr, 0, format, args)));
     va_end(args);
 
 
@@ -221,7 +222,7 @@ string mcc_aux(const uint8_t* d, int length) {
     mcc[2] = d2asc(d[1] & 0x0fu);
     mcc[3] = '\0';
 
-    return string((const char*) mcc);
+    return string(static_cast< const char* >(mcc));
 }
 
 string mnc_aux(const uint8_t* d, int length) {
@@ -238,7 +239,7 @@ string mnc_aux(const uint8_t* d, int length) {
         mnc[2] = '\0';
     else mnc[3] = '\0';
 
-    return string((const char*) mnc);
+    return string(static_cast< const char* >(mnc));
 }
 
 namespace{
@@ -250,8 +251,8 @@ string bcd_string(const uint8_t*d, int length){
     if (length<=0 || !d) return string();
 
     string ret = {};
-    for(int i =0; i < length; i++){
-        auto a   = d[i] & 0x0fu;
+    for(auto i =0; i < length; i++){
+        const auto a   = d[i] & 0x0fu;
         ret.push_back(digits_bcd[a]);
 
         auto b   = (d[i] & 0xf0u) >> 4;
@@ -342,9 +343,9 @@ string gmt_string(const uint8_t*d, int length){
 }
 
 string utcz_string(const uint8_t*d){
-    auto sign     = (d[0] & 0x08u) ? '-' : '+';
+    const auto sign     = (d[0] & 0x08u) ? '-' : '+';
     auto quarters = (d[0] >> 4u) + (d[0] & 0x07u) * 10;
-    auto h        = quarters / 4;
+    const auto h        = quarters / 4;
     quarters      = quarters % 4 * 15;
     return formats("GMT %c %d hours %d minutes", sign, h, quarters);
 }
