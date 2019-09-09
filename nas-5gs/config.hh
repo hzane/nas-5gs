@@ -225,12 +225,15 @@ int ms_ctz(uint64_t mask);
 
 uint32_t get_ext_ambr_unit(uint32_t unit, const char** unit_str);
 
+string ambr_string(const uint8_t* d, int length);
 string ambr_string(uint32_t val, uint32_t unit);
 
 string bstrn_string(const uint8_t* d, int len);
 
 string gprs_timer3_format(uint8_t oct);
 string gprs_timer2_format(uint8_t oct);
+string ipv6_string(const uint8_t*d, int length);
+string ipv6_link_local_string(const uint8_t* d, int length);
 
 uint32_t mcc_mnc3(const uint8_t*d, uint32_t*mcc, uint32_t *mnc); // return mcc*1000+mnc
 

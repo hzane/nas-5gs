@@ -31,7 +31,7 @@ int dissect_nas5g_security_protected(dissector d, context* ctx){
     /* 9.3 Security header type associated    1/2 */
     i = d.add_item(1, hf_sec_header_type, enc::be);
     // 9.5 Spare half octet 1/2
-    // i = d.add_item(1, hf_spare_half_octet, enc::be);
+
     d.step(1);
 
     /* 9.8 Message authentication code octet 3 - 6 */
@@ -72,9 +72,10 @@ int dissect_nas5g_plain(dissector d, context* ctx) {
 }
 
 static int dissect_sm_msg(dissector d, context* ctx) {
-    const auto        subtree = d.add_item(-1, "5GS Session Management Message");
+    const use_context uc(ctx, "session-management-message", d, 0);
+
+    const auto        subtree = d.add_item(d.length, "5GS Session Management Message");
     use_tree    ut(d, subtree);
-    const use_context uc(ctx, subtree->name.c_str(), d, 0);
 
     /* Extended protocol discriminator  octet 1 */
     auto i = d.add_item(1, hf_epd, enc::be);
@@ -90,7 +91,7 @@ static int dissect_sm_msg(dissector d, context* ctx) {
     d.step(1);
 
     /* Message type 9.7	M	V	1*/
-    const uint8_t iei = d.uint8(); // offset == 2
+    const auto iei = d.uint8(); // offset == 2
     i = d.add_item(1, hf_sm_msg_type, enc::be);
     d.step(1);
 
@@ -104,23 +105,22 @@ static int dissect_sm_msg(dissector d, context* ctx) {
 static int dissect_mm_msg(dissector d, context* ctx) {
     const use_context uc(ctx, "mobile-management-message", d, 0);
 
-    const auto        subtree = d.add_item(-1, "5GS Mobility Management Message");
+    const auto subtree = d.add_item(d.length, "5GS Mobility Management Message");
     use_tree    ut(d, subtree);
 
     /* Extended protocol discriminator 9.2 octet 1 */
-    auto i = d.add_item(1, hf_epd, enc::be);
-    d.step(1);
-    unused(i);
+    (void) d.add_item(1, hf_epd, enc::be);
+    d.step(1);    
 
     /*Security header type 9.3	M	V	1/2 */
-    i = d.add_item(1, hf_sec_header_type, enc::be);
+    (void) d.add_item(1, hf_sec_header_type, enc::be);
+
     /*Spare half octet	Spare half octet 9.5	M	V	1/2*/
-    // i = d.add_item(1, hf_spare_half_octet, enc::be);
     d.step(1);
 
     /* Authentication request message identity	Message type 9.7	M	V	1*/
     const auto iei = d.uint8();
-    i = d.add_item(1, hf_mm_msg_type, enc::be);
+    (void) d.add_item(1, hf_mm_msg_type, enc::be);
     d.step(1);
 
     const auto meta = find_dissector(iei, mm::msgs);

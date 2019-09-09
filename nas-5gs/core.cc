@@ -3,6 +3,7 @@
 #include <vector>
 #include <ctime>
 #include <cstdarg>
+#include <sstream>
 
 #if _WIN32
 #include <windows.h>
@@ -51,6 +52,27 @@ string bits7_string(const uint8_t* data, int len){
     return string(d.begin(), d.end());
 }
 
+string   ipv6_link_local_string(const uint8_t* data, int len) {
+    if (!data || !len) return string();
+    
+    std::stringstream ss;
+    ss << "fe80:";
+    for (auto i = 0; i < len; i++) {
+        ss << ":" << std::hex << data[i];
+    }
+    return ss.str();
+}
+
+string ipv6_string(const uint8_t* d, int len) {
+    if (!d || !len) return string();
+    std::stringstream ss;
+    ss << d[0];
+    for (auto i = 1; i<len; i++) {
+        ss << ":" << std::hex << d[i];
+    }
+    return ss.str();
+}
+
 uint32_t get_ext_ambr_unit(uint32_t unit, const char** unit_str) {
     uint32_t mult = 1;
 
@@ -80,6 +102,13 @@ uint32_t get_ext_ambr_unit(uint32_t unit, const char** unit_str) {
         *unit_str = "Pbps";
     }
     return mult;
+}
+
+string ambr_string(const uint8_t*d, int length) {
+    if (!d || length <= 0) return string();
+    auto unit = uint32_t(d[0]);
+    auto val  = n2uint16(d + 1);    
+    return ambr_string(val, unit);
 }
 
 string ambr_string(uint32_t val, uint32_t unit){
