@@ -1,7 +1,8 @@
 #include <bitset>
+#include <cinttypes>
 #include <cstdarg>
-#include <sstream>
 #include <iomanip>
+#include <sstream>
 #include <vector>
 #include "config.hh"
 #include "field_meta.hh"
@@ -12,24 +13,91 @@ using namespace std;
 string format_int_hex(uint64_t v, uint32_t ftype) {
     auto t   = ftype & 0x07u;
     auto fmt = "%#0x";
-    if (t == ft::ft_int8 || t == ft::ft_uint8) fmt = "%#02x";
-    if (t == ft::ft_int16 || t == ft::ft_uint16) fmt = "%#04x";
-    if (t == ft::ft_int24 || t == ft::ft_uint24) fmt = "%#06x";
-    if (t == ft::ft_int32 || t == ft::ft_uint32) fmt = "%#08x";
-    if (t == ft::ft_int64 || t == ft::ft_uint64) fmt = "%#016llx";
+    if (t == ft::ft_nibble) fmt = "%1X";
+    if (t == ft::ft_int8 || t == ft::ft_uint8) fmt = "%#04x";
+    if (t == ft::ft_int16 || t == ft::ft_uint16) fmt = "%#06x";
+    if (t == ft::ft_int24 || t == ft::ft_uint24) fmt = "%#08x";
+    if (t == ft::ft_int32 || t == ft::ft_uint32) fmt = "%#010x";
+    if (t == ft::ft_int64 || t == ft::ft_uint64) fmt = "%#018llx";
     return formats(fmt, v);
 }
-std::string format_int_dec(uint64_t v, uint32_t ftype) {
-    auto t   = ftype & 0x07u;
-    auto fmt = "%ud";
-    if (t == ft::ft_int16 || t == ft::ft_int8 || t == ft::ft_int24 || t == ft::ft_int32)
-        fmt = "%d";
-    if (t == ft::ft_int64) fmt = "%lld";
-    if (t == ft::ft_uint64) fmt = "%ulld";
-    auto ret = formats(fmt, v);
 
-    for (int pos = (int) ret.size() - 3; pos > 0; pos -= 3) {
-        ret.insert((size_t) pos, ",");
+inline int16_t int8to16(uint64_t v) {
+    const auto v8   = uint8_t(v);
+    const auto sign = v8 & 0x80u;
+    if (sign) {
+        const auto x = int16_t(~v8 & 0x7fu + 1);
+        return -x;
+    }
+    return int16_t(v8);
+}
+
+inline int32_t int24to32(uint64_t v) {
+    const auto v24  = uint32_t(v);
+    const auto sign = v24 & 0xff'800000u;
+    if (sign) {
+        auto x = ~v24 & 0x00'7fffffu + 1;
+        return int32_t(x);
+    }
+    return int32_t(v24);
+}
+inline int64_t int48to64(uint64_t v) {
+    const auto sign = v & 0xffff8000'00000000u;
+    if (sign) {
+        auto x = ~v & 0x00007fff'ffffffffu + 1;
+        return int64_t(x);
+    }
+    return int64_t(v);
+}
+std::string format_int_dec(uint64_t v, uint32_t ftype) {
+    string ret = {};
+    auto   t   = ftype & 0x07u;
+    auto   fmt = "%ud";
+
+    switch (t) {
+    case ft::ft_int8:
+        ret = formats("%hhd (%#04hhx)", int8to16(v), uint8_t(v));
+        break;
+    case ft::ft_int16:
+        ret = formats("%hd (%#06hx)", int16_t(v), uint16_t(v));
+        break;
+    case ft::ft_int24:
+        ret = formats("%d (%#08x)", int24to32(v), uint32_t(v));
+        break;
+    case ft::ft_int32:
+        ret = formats("%d (%#010x)", int32_t(v), uint32_t(v));
+        break;
+    case ft::ft_int48:
+        ret = formats("%lld (%#014x)", int48to64(v), v);
+        break;
+    case ft::ft_int64:
+        ret = formats("%lld (%#018llx)", int64_t(v), uint64_t(v));
+        break;
+    case ft::ft_uint8:
+        ret = formats("%hhu (%#04hhx)", uint16_t(v), uint16_t(v));
+        break;
+    case ft::ft_uint16:
+        ret = formats("%hd (%#06hx)", uint16_t(v), uint16_t(v));
+        break;
+    case ft::ft_uint24:
+        ret = formats("%d (%#08x)", uint32_t(v), uint32_t(v));
+        break;
+    case ft::ft_uint32:
+        ret = formats("%d (%#010x)", uint32_t(v), uint32_t(v));
+        break;
+    case ft::ft_uint48:
+        ret = formats("%lld (%#014x)", v, v);
+        break;
+    case ft::ft_uint64:
+        ret = formats("%lld (%#018llx)", v, v);
+        break;
+    default:
+        ret = formats("%d (%#x)", v);
+        break;
+    }
+
+    for (auto pos = ret.size() - 3; pos > 0; pos -= 3) {
+        ret.insert(pos, ",");
     }
     return ret;
 }
@@ -58,7 +126,39 @@ std::vector< std::string > find_bits_string(const val_string* strings, uint32_t 
     }
     return ret;
 }
-
+string format_int_bit_mask(uint32_t ftype, uint64_t v, uint64_t mask, const char* ) {
+    size_t cnt = 0;
+    if (mask) {
+        v = (v & mask) >> ws_ctz(mask);
+        cnt = ws_ctz(~(mask >> ws_ctz(mask)));
+    }
+    stringstream ss;
+    switch (ftype) {
+    case ft::ft_int64:
+    case ft::ft_uint64:
+        ss << bitset< 8 >((v & 0xff00'0000'0000'0000u) >> 40) ;
+    case ft::ft_int48:
+    case ft::ft_uint48:
+        ss << bitset< 8 >((v & 0xff00'0000'0000u) >> 40) ;
+    case ft::ft_int32:
+    case ft::ft_uint32:
+        ss << bitset< 8 >((v & 0xff00'0000u) >> 24) ;
+    case ft::ft_int24:
+    case ft::ft_uint24:
+        ss << bitset< 8 >((v & 0xff'0000u) >> 16) ;
+    case ft::ft_int16:
+    case ft::ft_uint16:
+        ss << bitset< 8 >((v & 0xff00u) >> 8u) ;
+    case ft::ft_int8:
+    case ft::ft_uint8:
+        ss << bitset< 8 >(v & 0xffu) ;
+    default:
+        break;
+    }
+    auto ret = ss.str();
+    if (cnt) ret = ret.substr(0, cnt);
+    return ret;
+}
 string format_bit(const uint8_t* data, int len, const char* sep) {
     stringstream ss;
     for (auto i = 0; i < len; i++) {
@@ -68,6 +168,22 @@ string format_bit(const uint8_t* data, int len, const char* sep) {
 
     return ss.str();
 }
+
+string      format_bits(const uint8_t* data, int bits, const char* sep) {
+    const auto clen = bits / 8;
+    const auto blen = bits % 8;
+    auto ret    = format_bit(data, clen, sep);
+    if (!blen) return ret;
+
+    if (sep != nullptr) ret = ret + sep;
+
+    const auto last = data[clen];
+    for (auto i = 7; i > 8 - blen; i--) {
+        ret.push_back((last & (1u << i)) ? '1' : '0');
+    }
+    return ret;
+}
+
 std::string vformat(const char* format, va_list args) {
     using namespace std;
 
@@ -107,10 +223,10 @@ std::string format_int(uint64_t v, uint32_t ftype, uint32_t display) {
 }
 
 // without prefix and seperator
-string format_bcd(const uint8_t*data, int len){
+string format_bcd(const uint8_t* data, int len) {
     stringstream ss;
-    ss<<hex<<setfill('0');
-    for(auto i = 0; i < len; i++){
+    ss << hex << setfill('0');
+    for (auto i = 0; i < len; i++) {
         ss << setw(2) << uint32_t(data[i]);
     }
     return ss.str();
@@ -126,8 +242,8 @@ string format_hex(const uint8_t* data, int len, const char* sep, const char* lf)
     for (auto i = 0; i < len; i++) {
         ss << setw(2) << uint32_t(data[i]) << sep;
 
-        if (i % 8 == 7)             ss << sep;
-        if (i % 16 == 15)             ss << lf;
+        if (i % 8 == 7) ss << sep;
+        if (i % 16 == 15) ss << lf;
     }
 
     return ss.str();
@@ -135,9 +251,10 @@ string format_hex(const uint8_t* data, int len, const char* sep, const char* lf)
 
 static inline int ws_ctz32(uint32_t x) {
     /* From http://graphics.stanford.edu/~seander/bithacks.html#ZerosOnRightMultLookup */
-    static const uint8_t table[32] = {0,  1,  28, 2,  29, 14, 24, 3,  30, 22, 20,
-                                      15, 25, 17, 4,  8,  31, 27, 13, 23, 21, 19,
-                                      16, 7,  26, 12, 18, 6,  11, 5,  10, 9,};
+    static const uint8_t table[32] = {
+        0,  1,  28, 2,  29, 14, 24, 3, 30, 22, 20, 15, 25, 17, 4,  8,
+        31, 27, 13, 23, 21, 19, 16, 7, 26, 12, 18, 6,  11, 5,  10, 9,
+    };
 
     return table[((uint32_t)((x & (uint32_t)(0u - x)) * 0x077CB531U)) >> 27u];
 }
