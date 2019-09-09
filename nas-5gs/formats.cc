@@ -58,43 +58,43 @@ std::string format_int_dec(uint64_t v, uint32_t ftype) {
 
     switch (t) {
     case ft::ft_int8:
-        ret = formats("%hhd (%#04hhx)", int8to16(v), uint8_t(v));
+        ret = formats("%hhd (0x%02hhx)", int8to16(v), uint8_t(v));
         break;
     case ft::ft_int16:
-        ret = formats("%hd (%#06hx)", int16_t(v), uint16_t(v));
+        ret = formats("%hd (0x%04hx)", int16_t(v), uint16_t(v));
         break;
     case ft::ft_int24:
-        ret = formats("%d (%#08x)", int24to32(v), uint32_t(v));
+        ret = formats("%d (0x%06x)", int24to32(v), uint32_t(v));
         break;
     case ft::ft_int32:
-        ret = formats("%d (%#010x)", int32_t(v), uint32_t(v));
+        ret = formats("%d (0x%08x)", int32_t(v), uint32_t(v));
         break;
     case ft::ft_int48:
-        ret = formats("%lld (%#014x)", int48to64(v), v);
+        ret = formats("%lld (0x%012x)", int48to64(v), v);
         break;
     case ft::ft_int64:
-        ret = formats("%lld (%#018llx)", int64_t(v), uint64_t(v));
+        ret = formats("%lld (0x%016llx)", int64_t(v), uint64_t(v));
         break;
     case ft::ft_uint8:
-        ret = formats("%hhu (%#04hhx)", uint16_t(v), uint16_t(v));
+        ret = formats("%hhu (0x%02hhx)", uint16_t(v), uint16_t(v));
         break;
     case ft::ft_uint16:
-        ret = formats("%hd (%#06hx)", uint16_t(v), uint16_t(v));
+        ret = formats("%hd (0x%04hx)", uint16_t(v), uint16_t(v));
         break;
     case ft::ft_uint24:
-        ret = formats("%d (%#08x)", uint32_t(v), uint32_t(v));
+        ret = formats("%d (0x%06x)", uint32_t(v), uint32_t(v));
         break;
     case ft::ft_uint32:
-        ret = formats("%d (%#010x)", uint32_t(v), uint32_t(v));
+        ret = formats("%d (0x%08x)", uint32_t(v), uint32_t(v));
         break;
     case ft::ft_uint48:
-        ret = formats("%lld (%#014x)", v, v);
+        ret = formats("%lld (0x%012x)", v, v);
         break;
     case ft::ft_uint64:
-        ret = formats("%lld (%#018llx)", v, v);
+        ret = formats("%lld (0x%016llx)", v, v);
         break;
     default:
-        ret = formats("%d (%#x)", v, v);
+        ret = formats("%d (0x%x)", v, v);
         break;
     }
     if (lc) (void) setlocale(LC_NUMERIC, lc);
@@ -217,8 +217,8 @@ string join(const vector< string >& strs, const char* sep) {
     return ss.str();
 }
 std::string format_int(uint64_t v, uint32_t ftype, uint32_t display) {
-    if ((display & 0x07u) == fd::base_dec) return format_int_dec(v, ftype);
-    if ((display & 0x07u) == fd::base_hex) return format_int_hex(v, ftype);
+    if (display == fd::base_dec) return format_int_dec(v, ftype);
+    if (display == fd::base_hex) return format_int_hex(v, ftype);
     return formats("%d", v);
 }
 
