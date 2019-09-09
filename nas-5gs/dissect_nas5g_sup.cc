@@ -14,7 +14,7 @@ const field_meta hfm_spare_half_octet = {
     nullptr,
     0xf0,
 };
-const field_meta* nas::hf_spare_half_octet = &hfm_spare_half_octet;
+const field_meta* nas::hf_spare_half_octet_invisible = &hfm_spare_half_octet;
 
 const field_meta hfm_msg_elements = {
     "Message Elements",

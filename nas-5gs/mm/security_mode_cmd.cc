@@ -20,7 +20,7 @@ int mm::dissect_security_mode_cmd(dissector d, context* ctx) {
     consumed = dissect_elem_v(nullptr, &nas_ksi, d, ctx);
 
     /* Spare half octet    Spare half octet     9.5    M    V    1/2 */
-    d.tree->add_item(d.pinfo, d.tvb, d.offset, 1, hf_spare_half_octet, enc::be);
+    // d.tree->add_item(d.pinfo, d.tvb, d.offset, 1, hf_spare_half_octet, enc::be);
     d.step(consumed);
 
     /* Replayed UE security capabilities    UE security capability   9.11.3.54  M  LV   3-5*/

@@ -14,8 +14,8 @@ int mm::authentication_result(dissector d, context* ctx) {
     auto consumed = dissect_elem_v(nullptr, &nas_ksi, d, ctx);
 
     /*Spare half octet    Spare half octet 9.5    M    V    1/2  H1 */
-    auto i = d.add_item(1, hf_spare_half_octet, enc::be);
-    unused(i);
+    // auto i = d.add_item(1, hf_spare_half_octet, enc::be);
+    
     d.step(1);
 
     /* EAP message  9.11.2.2    M    LV-E    7-1503 */

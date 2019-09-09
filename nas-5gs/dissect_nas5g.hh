@@ -15,7 +15,7 @@ namespace nas {
 
 extern const element_meta t3348_gprs_timer3;
 extern const field_meta*  hf_msg_elem;
-extern const field_meta*  hf_spare_half_octet;
+extern const field_meta*  hf_spare_half_octet_invisible;
 extern const field_meta*  hf_epd;
 extern const field_meta*  hf_pdu_sess_id;
 extern const field_meta*  hf_mm_msg_type;
