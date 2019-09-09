@@ -11,9 +11,8 @@ int mm::authentication_request(dissector d, context* ctx) {
     down_link(d.pinfo);
 
     /* Spare half octet    Spare half octet     9.5    M    V    1/2 H1 */
-    auto i = d.add_item(1, hf_spare_half_octet, enc::be);
-    unused(i);
-
+    // auto i = d.add_item(1, hf_spare_half_octet, enc::be);
+    
     /*ngKSI     NAS key set identifier 9.11.3.32    M    V    1/2  */
     // ELEM_MAND_V(DE_NAS_5GS_MM_NAS_KEY_SET_ID, " - ngKSI",);
     dissect_elem_v(nullptr, &nas_ksi, d, ctx);
@@ -27,13 +26,13 @@ int mm::authentication_request(dissector d, context* ctx) {
     /*21    Authentication parameter RAND (5G authentication challenge)    Authentication
      * parameter RAND     9.11.3.16    O    TV    17*/
     // ELEM_OPT_TV(0x21, , DE_AUTH_PARAM_RAND, " - 5G authentication challenge");
-    consumed = dissect_opt_elem_tv(nullptr, &auth_parm_rand, d, ctx);
+    consumed = dissect_opt_elem_tv(nullptr, &auth_param_rand, d, ctx);
     d.step(consumed);
 
     /*20    Authentication parameter AUTN (5G authentication challenge)    Authentication
      * parameter AUTN     9.11.3.15    O    TLV    18*/
     // ELEM_OPT_TLV(0x20, , DE_AUTH_PARAM_AUTN, " - 5G authentication challenge");
-    consumed = dissect_opt_elem_tlv(nullptr, &auth_parm_autn, d, ctx);
+    consumed = dissect_opt_elem_tlv(nullptr, &auth_param_autn, d, ctx);
     d.step(consumed);
 
     /*78  EAP message 9.11.2.2    O    TLV-E    7-1503 */
@@ -44,14 +43,14 @@ int mm::authentication_request(dissector d, context* ctx) {
 }
 namespace mm {
 
-extern const element_meta auth_parm_rand = {
+extern const element_meta auth_param_rand = {
     0x21,
     "Authentication parameter RAND - 5G authentication challenge",
     dissect_auth_parameter_rand,
     nullptr,
 };
 
-extern const element_meta auth_parm_autn = {
+extern const element_meta auth_param_autn = {
     0x20,
     "Authentication parameter AUTN - 5G authentication challenge",
     dissect_auth_parameter_autn,
