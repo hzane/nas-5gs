@@ -50,8 +50,10 @@ inline int64_t int48to64(uint64_t v) {
     return int64_t(v);
 }
 std::string format_int_dec(uint64_t v, uint32_t ftype) {
+    auto   lc  = setlocale(LC_NUMERIC, "");
+
     string ret = {};
-    auto   t   = ftype & 0x07u;
+    auto   t   = ftype & 0xffu;
     auto   fmt = "%ud";
 
     switch (t) {
@@ -92,13 +94,11 @@ std::string format_int_dec(uint64_t v, uint32_t ftype) {
         ret = formats("%lld (%#018llx)", v, v);
         break;
     default:
-        ret = formats("%d (%#x)", v);
+        ret = formats("%d (%#x)", v, v);
         break;
     }
+    if (lc) (void) setlocale(LC_NUMERIC, lc);
 
-    for (auto pos = ret.size() - 3; pos > 0; pos -= 3) {
-        ret.insert(pos, ",");
-    }
     return ret;
 }
 
