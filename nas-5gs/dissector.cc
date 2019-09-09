@@ -7,9 +7,8 @@
 // struct dissector defined in config.hh
 
 void dissector::add_bits(const field_meta* metas[]) const {
-    for (auto meta = *metas; meta != nullptr; meta++) {
-        auto i = add_item(1, meta, enc::be); // NOLINT
-        unused(i);
+    for (auto meta = metas; *meta != nullptr; meta++) {
+        (void) add_item(1, *meta, enc::be); // NOLINT        
     }
 }
 proto_node* dissector::add_item(int len, const field_meta* meta, uint32_t enc) const {
