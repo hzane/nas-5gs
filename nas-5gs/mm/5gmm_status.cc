@@ -6,10 +6,9 @@ int mm::dissect_mm_status(dissector d, context* ctx) {
     const use_context uc(ctx, "5gmm-status", d, -1);
 
     /* Direction: both*/
-    // both_link(d.pinfo);
 
     /* 5GMM cause 9.11.3.2    M    V    1 */
-    const auto consumed = dissect_elem_v(nullptr, &mm_cause, d, ctx);
+    const auto consumed = dissect_mm_cause(d, ctx);
     d.step(1);
     
     return 1;
