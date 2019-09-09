@@ -106,14 +106,14 @@ uint32_t get_ext_ambr_unit(uint32_t unit, const char** unit_str) {
 
 string ambr_string(const uint8_t*d, int length) {
     if (!d || length <= 0) return string();
-    auto unit = uint32_t(d[0]);
-    auto val  = n2uint16(d + 1);    
+    const auto unit = uint32_t(d[0]);
+    const auto val  = n2uint16(d + 1);    
     return ambr_string(val, unit);
 }
 
 string ambr_string(uint32_t val, uint32_t unit){
-    const char* unit_str = "";
-    auto multi = get_ext_ambr_unit(unit, &unit_str);
+    auto       unit_str = "";
+    const auto multi = get_ext_ambr_unit(unit, &unit_str);
     return formats("%u %s (%u)", val * multi, unit_str, val);
 }
 
@@ -122,13 +122,35 @@ string bstrn_string(const uint8_t*d, int len){
     if (!d || !len) return string();
 
     string str(d, d + len);
-    size_t i = 0;
-    while (i < str.size()) {
-        auto next = str[i];
-        str[i]    = '.';
-        i         = i + next + 1;
+    
+    for (size_t i = 0; i < str.size();) {
+        const auto next = str[i];
+        str[i]          = '.';
+        i               = i + next + 1;
     }
     return str;
+}
+
+string gprs_timer_string(const uint8_t*d, int len) {
+    if (!d || len <= 0) return string();
+
+    const auto  val   = static_cast< uint32_t >(d[0]) & 0x1fu;
+    const auto  unitf = static_cast< int >(d[0] >> 5u);
+    auto        unit  = "min";
+    uint32_t    mul   = 1;
+
+    if (unitf == 0) {
+        unit = "sec";
+        mul  = 2;
+    } else if (unitf == 1) {
+        unit = "min";
+    } else if (unitf == 2) {
+        unit = "min";
+        mul  = 6;
+    } else if (unitf == 7) {
+        unit = "deactivated";
+    }
+    return formats("%u %s (%u)", val * mul, unit, val);
 }
 
 string gprs_timer2_string(const uint8_t*d, int len) {
@@ -176,7 +198,7 @@ string gprs_timer3_format(uint8_t oct) {
     default:
         break;
     }
-    return formats("GPRS Timer : %u %s (%u)", val * mul, unit, val);
+    return formats("%u %s (%u)", val * mul, unit, val);
 }
 
 /* * 3GPP TS 24.008 g10 10.5.7.4 */
@@ -197,11 +219,11 @@ string gprs_timer2_format(uint8_t oct) {
         mul  = 6;
         break;
     case 7:
-        break; // timer is deactivated
+        unit = "timer is deactivated";
     default:
         break;
     }
-    return formats("GPRS Timer : %u %s (%u)", val * mul, unit, val);
+    return formats("%u %s (%u)", val * mul, unit, val);
 }
 
 // assure: iei != 0
@@ -374,17 +396,17 @@ string gmt_string(const uint8_t*d, int length){
     auto ts = asc_time(&t);
     if (ts.empty()) return ts;
 
-    auto sign     = (d[6] & 0x08u) ? '-' : '+';
-    auto quarters = (d[6] >> 4u) + (d[6] & 0x07u) * 10;
-    auto h        = quarters / 4;
-    quarters      = quarters % 4 * 15;
+    const auto sign     = (d[6] & 0x08u) ? '-' : '+';
+    auto       quarters = (d[6] >> 4u) + (d[6] & 0x07u) * 10;
+    const auto h        = quarters / 4;
+    quarters            = quarters % 4 * 15;
     return formats("%s GMT %c %d hours %d minutes", ts.c_str(), sign, h, quarters);
 }
 
 string utcz_string(const uint8_t*d){
     const auto sign     = (d[0] & 0x08u) ? '-' : '+';
-    auto quarters = (d[0] >> 4u) + (d[0] & 0x07u) * 10;
+    auto       quarters = (d[0] >> 4u) + (d[0] & 0x07u) * 10;
     const auto h        = quarters / 4;
-    quarters      = quarters % 4 * 15;
+    quarters            = quarters % 4 * 15;
     return formats("GMT %c %d hours %d minutes", sign, h, quarters);
 }
