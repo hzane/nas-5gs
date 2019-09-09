@@ -94,7 +94,7 @@ extern const value_string sm::sm_pkt_flt_dir_values[] = {
     {0x03, "Bidirectional"},
     {0, nullptr},
 };
-
+#if 0
 const field_meta sm::hf_sm_length = {
     "Length",
     "nas_5gs.sm.length",
@@ -105,6 +105,8 @@ const field_meta sm::hf_sm_length = {
     nullptr,
     0x0,
 };
+#endif
+
 const field_meta sm::hf_sm_pkt_flt_id = {
     "Packet filter identifier",
     "nas_5gs.sm.pkt_flt_id",
@@ -125,6 +127,7 @@ const field_meta sm::hf_sm_pkt_flt_dir = {
     nullptr,
     0x30,
 };
+#if 0
 const field_meta sm::hf_sm_pf_len = {
     "Length",
     "nas_5gs.sm.pf_len",
@@ -135,6 +138,8 @@ const field_meta sm::hf_sm_pf_len = {
     nullptr,
     0x0,
 };
+#endif
+
 const field_meta sm::hf_sm_pf_type = {
     "Packet filter component type",
     "nas_5gs.sm.pf_type",

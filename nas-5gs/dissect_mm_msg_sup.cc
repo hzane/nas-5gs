@@ -240,7 +240,7 @@ const field_meta mm::hfm_mm_odd_even = {
     nullptr,
     0x08,
 };
-
+#if 0
 const field_meta mm::hfm_mm_length = {
     "Length",
     "nas_5gs.mm.length",
@@ -251,6 +251,7 @@ const field_meta mm::hfm_mm_length = {
     nullptr,
     0x0,
 };
+#endif
 
 const field_meta mm::hfm_mm_abba = {
     "ABBA Contents",
@@ -818,7 +819,7 @@ extern const element_meta mm::ta_id_list = {
     dissect_tracking_area_id_list,
     nullptr,
 };
-
+#if 0
 extern const field_meta mm::hf_mm_length = {
     "Length",
     "nas_5gs.mm.length",
@@ -829,7 +830,7 @@ extern const field_meta mm::hf_mm_length = {
     nullptr,
     0x0,
 };
-
+#endif
 
 // PDU session reactivation result   9.11.3.42
 extern const element_meta mm::pdu_ses_react_res = {
