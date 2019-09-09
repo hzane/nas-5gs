@@ -12,8 +12,8 @@ int mm::dissect_identity_request(dissector d, context* ctx) {
 
     /* Identity type    5GS identity type 9.11.3.3    M    V    1/2 */
     const auto consumed = dissect_5gs_id_type(d, ctx);
+
     /* Spare half octet    Spare half octet 9.5    M    V    1/2 */
-    // (void) d.add_item(1, hf_spare_half_octet, enc::be);
     
     d.step(1);
     

@@ -14,7 +14,7 @@ int mm::dissect_notification(dissector d, context* ctx) {
     d.step(consumed);
 
     /* Spare half octet    Spare half octet 9.5    M    V    1/2  */
-    // auto i = d.add_item(1, hf_spare_half_octet, enc::be);
+
     d.step(1);
     
     return 1;

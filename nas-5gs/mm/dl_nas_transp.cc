@@ -18,8 +18,8 @@ int mm::dissect_dl_nas_transp(dissector d, context* ctx) {
 
     /*Payload container type    Payload container type     9.11.3.40    M    V    1/2 H0*/
     (void) dissect_payload_container_type(d, ctx);
+
     /*Spare half octet    Spare half octet    9.5    M    V    1/2 H1*/
-    // d.tree->add_item(d.pinfo, d.tvb, d.offset, 1, hf_spare_half_octet, enc::be);
     d.step(1);
 
     /* Payload container     9.11.3.39    M    LV-E    3-65537*/

@@ -11,7 +11,6 @@ int mm::authentication_request(dissector d, context* ctx) {
     down_link(d.pinfo);
 
     /* Spare half octet    Spare half octet     9.5    M    V    1/2 H1 */
-    // auto i = d.add_item(1, hf_spare_half_octet, enc::be);
     
     /*ngKSI     NAS key set identifier 9.11.3.32    M    V    1/2  */
     // ELEM_MAND_V(DE_NAS_5GS_MM_NAS_KEY_SET_ID, " - ngKSI",);
