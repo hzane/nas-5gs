@@ -95,7 +95,7 @@ int dissect_opt_elem_t(const field_meta *,
 }
 
 
-extern const field_meta *hf_gsm_a_length;
+// extern const field_meta *hf_gsm_a_length;
 
 /* * Length Value (LV) element dissector */
 int dissect_opt_elem_lv(const field_meta *,
@@ -114,9 +114,8 @@ int dissect_opt_elem_lv(const field_meta *,
     const auto subtree = d.add_item(1 + parm_len, val_meta->name);
     const use_tree ut(d, subtree);
 
-    auto l = d.add_item(1, hf_gsm_a_length, enc::be);   
-    d.step(1);
-    unused(l);
+    // auto l = d.add_item(1, hf_gsm_a_length, enc::be);   
+    d.step(1); 
 
     if (parm_len == 0) return 1;
     const auto fnc = val_meta->fnc ? val_meta->fnc : dissect_msg_unknown_body;
@@ -127,7 +126,7 @@ int dissect_opt_elem_lv(const field_meta *,
     return parm_len + 1;
 }
 
-const extern field_meta *hf_gsm_e_length;
+// const extern field_meta *hf_gsm_e_length;
 
 /* Length Value Extended(LV-E) element dissector */
 int dissect_opt_elem_lv_e(const field_meta *,
@@ -146,8 +145,7 @@ int dissect_opt_elem_lv_e(const field_meta *,
     const auto subtree = d.add_item(2 + parm_len, val_meta->name);
     use_tree ut(d, subtree);
 
-    auto item = d.add_item(2, hf_gsm_e_length, enc::be);
-    unused(item);
+    // (void) d.add_item(2, hf_gsm_e_length, enc::be);    
     d.step(2);
     
     const auto fnc      = val_meta->fnc ? val_meta->fnc : dissect_msg_unknown_body;
@@ -271,8 +269,7 @@ int dissect_opt_elem_tlv(const field_meta *,
     d.step(1);
     const use_tree ut(d, subtree);
 
-    auto t = d.add_item(1, hf_gsm_a_length, enc::be);
-    unused(t);
+    // auto t = d.add_item(1, hf_gsm_a_length, enc::be);    
     d.step(1);
 
     if (parm_len == 0) return 2;
@@ -326,9 +323,9 @@ int dissect_opt_elem_telv(const field_meta *,
     const use_tree   ut(d, subtree);
     d.step(1);
 
-    auto item = d.add_item(lengt_length, hf_gsm_e_length, enc::none);
+    // (void) d.add_item(lengt_length, hf_gsm_e_length, enc::none);
     d.step(lengt_length);
-    unused(item);
+   
 
     if (parm_len == 0) return 1 + lengt_length;
 
@@ -366,9 +363,8 @@ int dissect_opt_elem_tlv_e(const field_meta *,
     const use_tree ut(d, subtree);
     d.step(1);
 
-    auto item = d.add_item(2, hf_gsm_e_length, enc::be);
+    // (void) d.add_item(2, hf_gsm_e_length, enc::be);
     d.step(2);
-    unused(item);
 
     if (parm_len == 0) return 1 + 2;
 
@@ -379,7 +375,7 @@ int dissect_opt_elem_tlv_e(const field_meta *,
 
     return 1 + 2 + consumed;
 }
-
+#if 0
 static field_meta const hfm_gsm_a_length = {
     "Length",
     "gsm_a.length",
@@ -391,6 +387,7 @@ static field_meta const hfm_gsm_a_length = {
     0x0,
 };
 const field_meta *hf_gsm_a_length = &hfm_gsm_a_length;
+#endif
 
 static field_meta hfm_gsm_a_element_value = {
     "Element Value",
@@ -404,9 +401,10 @@ static field_meta hfm_gsm_a_element_value = {
 };
 const field_meta *hf_gsm_a_element_value = &hfm_gsm_a_element_value;
 
+#if 0
 static field_meta const hfm_gsm_e_length = {
     "Length",
-    "gsm_a.length2",
+    "gsm.length",
     ft::ft_bytes,
     fd::ext_length,
     nullptr,
@@ -415,6 +413,7 @@ static field_meta const hfm_gsm_e_length = {
     0x0,
 };
 const field_meta *hf_gsm_e_length = &hfm_gsm_e_length;
+#endif
 
 const field_meta hfm_gsm_a_common_elem_id_f0 = {
     "Element ID",
