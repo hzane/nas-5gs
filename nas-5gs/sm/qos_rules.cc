@@ -151,35 +151,36 @@ const field_meta hf_segregation = {
 // Authorized QoS rules QoS rules 9.11.4.13
 int sm::dissect_qos_rules(dissector d, context* ctx) {
     use_context              uc(ctx, "authorized-qos-rules", d);
-    auto                     len             = d.length;
+
     static const field_meta* pkt_flt_flags[] = {
         &hf_sm_rop,
         &hf_sm_dqr,
         &hf_sm_nof_pkt_filters,
         nullptr,
     };
+
     auto i = 1;
-    while (d.offset > 0) {
+    while (d.length > 0) {
         /* QoS Rule */
-        auto     subtree = d.add_item(-1, "QoS rule %u", i);
+        auto     subtree = d.add_item(-1, "QoS rule %u", i++);
         use_tree ut(d, subtree);
 
         /* QoS rule identifier Octet 4*/
-        auto rule_id = d.tvb->uint8(d.offset);
-        d.add_item(1, &hf_sm_qos_rule_id, enc::be);
+        auto rule_id = d.uint8();
+        (void) d.add_item(1, &hf_sm_qos_rule_id, enc::be);
         d.step(1);
 
         /* Length of QoS rule Octet 5 - 6*/
-        auto length = (int) d.tvb->ntohs(d.offset);
-        d.add_item(2, &hf_sm_length, enc::be);
+        const auto length = static_cast< int >(d.ntohs());
+        (void) d.add_item(2, &hf_sm_length, enc::be);
         d.step(2);
 
         subtree->set_length(length + 3);
 
         /* Rule operation code    DQR bit    Number of packet filters */
-        auto n_filters = d.tvb->uint8(d.offset);
-        auto rop       = n_filters >> 5u;
-        n_filters      = n_filters & 0x0fu;
+        auto n_filters = d.uint8();
+        const auto rop       = n_filters >> 5u;
+        n_filters            = n_filters & 0x0fu;
         d.add_bits(pkt_flt_flags);
         d.step(1);
 
@@ -202,18 +203,17 @@ int sm::dissect_qos_rules(dissector d, context* ctx) {
                 continue;
             }
         }
-        /* Packet filter list */
-        auto j = 1;
-        while (n_filters > 0) {
-            auto     subtree = d.add_item(-1, "Packet filter %u", j);
-            use_tree ut(d, subtree);
+        /* Packet filter list */        
+        for (auto j = 1; j <= n_filters; j++) {
+            const auto     st2 = d.add_item(-1, "Packet filter %u", j);
+            use_tree ut2(d, st2);
             if (rop == 5) {
                 /* modify existing QoS rule and delete packet filters */
                 /* 0    0    0    0    Packet filter identifier x*/
-                d.add_item(1, &hf_sm_pkt_flt_id, enc::be);
+                (void) d.add_item(1, &hf_sm_pkt_flt_id, enc::be);
                 d.step(1);
             } else {
-                auto consumed = dissect_packet_filters(d, rop, ctx);
+                const auto consumed = dissect_packet_filters(d, rop, ctx);
                 d.step(consumed);
             }
         }
@@ -223,7 +223,7 @@ int sm::dissect_qos_rules(dissector d, context* ctx) {
          * QoS rule precedence value field shall be included.
          */
         if (rop != 2) { /* Delete existing QoS rule */
-            d.add_item(1, &hf_sm_qos_rule_precedence, enc::be);
+            (void) d.add_item(1, &hf_sm_qos_rule_precedence, enc::be);
             d.step(1);
         }
         /* QoS flow identifier (QFI) (bits 6 to 1 of octet z+2)
@@ -232,13 +232,13 @@ int sm::dissect_qos_rules(dissector d, context* ctx) {
          * QoS flow identifier value field shall be included.
          */
         /* Segregation bit (bit 7 of octet z+2) */
-        d.add_item(1, &hf_sm_qfi, enc::be);
-        d.add_item(1, &hf_segregation, enc::be);
+        (void) d.add_item(1, &hf_sm_qfi, enc::be);
+        (void) d.add_item(1, &hf_segregation, enc::be);
         d.step(1);
 
-        ++i;
     } // while(d.offset)
-    return len;
+
+    return uc.length;
 }
 
 // Authorized QoS rules QoS rules 9.11.4.13
