@@ -187,7 +187,7 @@ inline uint64_t n2_uint(const uint8_t* data, int len) {
 string format_hex(const uint8_t* data,
                   int            len,
                   const char*    sep = " ",
-                  const char*    lf  = "\n");
+                  const char*    lf  = nullptr);
 
 string format_bit(const uint8_t* data, int len, const char* sep = " ");
 
@@ -235,6 +235,7 @@ string gprs_timer2_format(uint8_t oct);
 
 string gprs_timer2_string(const uint8_t*d, int len);
 string gprs_timer3_string(const uint8_t* d, int len);
+string gprs_timer_string(const uint8_t* d, int len);
 
 string ipv6_string(const uint8_t*d, int length);
 string ipv6_link_local_string(const uint8_t* d, int length);
