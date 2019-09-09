@@ -28,33 +28,30 @@ int mm::dissect_full_name_network(dissector d, context* ctx) {
     const use_context uc(ctx, "network-name", d, 0);
     
     const auto oct = d.tvb->uint8(d.offset);
-    auto i = d.add_item(1, &hf_a_extension, enc::be);
+    (void) d.add_item(1, &hf_a_extension, enc::be);
     const auto code_scheme = (oct & 0x70u) >> 4u;
-    i = d.add_item(1, &hf_coding_scheme, enc::be);
-    i = d.add_item(1, &hf_add_ci, enc::be);
+    (void) d.add_item(1, &hf_coding_scheme, enc::be);
+    (void) d.add_item(1, &hf_add_ci, enc::be);
 
     //const auto num_spare_bits = oct & 0x07u;
 
-    i = d.add_item(1, &hf_number_of_spare_bits, enc::be);
+    (void) d.add_item(1, &hf_number_of_spare_bits, enc::be);
     d.step(1);
 
     if (uc.length <= 1) return uc.length;
 
     if (code_scheme == 0) {
-        auto item = d.add_item(d.length, &hf_text_string, enc::none);
+        (void) d.add_item(d.length, &hf_text_string, enc::none);
         d.step(d.length);
         // 3GPP TS 23.038 7 bits        alphabet
-        // auto str = ts_23_038_7bits_string(d.safe_ptr(), 0, num_text_bits / 7);
-        // item->set_string(string(str.begin(), str.end()));        
     }
     if (code_scheme == 1) {
-        i = d.add_item(d.length, &hf_text_string, enc::be);
+        (void) d.add_item(d.length, &hf_text_string, enc::be);
         d.step(d.length);
     }
     if (code_scheme != 0 && code_scheme !=1 ) {
         diag("invalid code scheme %d\n", code_scheme);        
     }
 
-    unused(i);
     return uc.length;
 }

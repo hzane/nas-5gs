@@ -198,8 +198,6 @@ const element_meta eap_message = {
     nullptr,
 };
 
-// NSSAI inclusion mode  9.11.3.37A
-int dissect_nssai_inclusion_mode(dissector d, context* ctx = nullptr);
 
 // NSSAI inclusion mode  9.11.3.37A
 const element_meta nssai_inclusion_mode = {
@@ -210,10 +208,10 @@ const element_meta nssai_inclusion_mode = {
 };
 
 //  Operator-defined access category definitions 9.11.3.38
-int dissect_operator_defined_acd(dissector d, context* ctx = nullptr);
+int dissect_operator_defined_acd(dissector d, context* ctx );
 
 //  Operator-defined access category definitions 9.11.3.38
-const element_meta mm::operator_defined_acd = {
+extern const element_meta operator_defined_acd = {
     0x76,
     "Operator-defined access category definitions",
     dissect_operator_defined_acd,
@@ -427,7 +425,7 @@ const true_false_string tfs_nas_5gs_sor_data_type = {
 };
 
 
-const field_meta hf_sor_hdr0_ack = {
+const field_meta hf_sor_hdr0_ack = { // NOLINT
     "Acknowledgement (ACK)",
     "nas_5gs.sor_hdr0.ack",
     ft::ft_boolean,

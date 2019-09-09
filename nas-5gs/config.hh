@@ -31,10 +31,10 @@ using ustring    = std::vector< uint8_t >;
 extern void diag(const char* format, ...);
 
 namespace enc {
-__declspec(selectany) extern const uint32_t na   = 0;
-__declspec(selectany) extern const uint32_t be   = 1; // big endian
-__declspec(selectany) extern const uint32_t le   = 2; // little endian
-__declspec(selectany) extern const uint32_t none = 4; // host order
+inline __declspec(selectany) extern const uint32_t na   = 0;
+inline __declspec(selectany) extern const uint32_t be   = 1; // big endian
+inline __declspec(selectany) extern const uint32_t le   = 2; // little endian
+inline __declspec(selectany) extern const uint32_t none = 4; // host order
 } // namespace enc
 
 struct dissector {
@@ -50,17 +50,17 @@ struct dissector {
         length -= consumed;
         return *this;
     }
-    proto_node*    add_item(int len, const field_meta* fm, uint32_t e = enc::be) const;
-    proto_node*    add_item(int len, const char* format, ...) const;
-    void           add_bits(const field_meta* metas[]) const;
-    void           extraneous_data_check(int max_len, context* ctx = nullptr) const;
-    const uint8_t* safe_ptr() const;
-    int            safe_length(int len) const;
-    dissector      slice(int len) const;
-    dissector      use_elem(void* elem) const;
-    uint8_t        uint8() const;
-    uint16_t       ntohs() const;
-    uint32_t       uint32() const;
+    proto_node* add_item(int len, const field_meta* fm, uint32_t e = enc::be) const;
+    proto_node* add_item(int len, const char* format, ...) const;
+    void        add_bits(const field_meta* metas[]) const;
+    void        extraneous_data_check(int max_len, context* ctx = nullptr) const;
+    auto        safe_ptr() const -> const uint8_t*;
+    auto        safe_length(int len) const -> int;
+    auto        slice(int len) const -> dissector;
+    auto        use_elem(void* elem) const -> dissector;
+    auto        uint8() const -> uint8_t;
+    auto        ntohs() const -> uint16_t;
+    auto        uint32() const -> uint32_t;
 };
 
 struct use_tree { // NOLINT: special-member-functions

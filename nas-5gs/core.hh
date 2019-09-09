@@ -7,11 +7,11 @@
 #include "packet_info.hh"
 
 namespace em_severity {
-__declspec(selectany) extern const int comment = 0;
-__declspec(selectany) extern const int chat    = 1;
-__declspec(selectany) extern const int note    = 2;
-__declspec(selectany) extern const int warn    = 3;
-__declspec(selectany) extern const int error   = 4;
+inline const int comment = 0;
+inline const int chat    = 1;
+inline const int note    = 2;
+inline const int warn    = 3;
+inline const int error   = 4;
 } // namespace em_severity
 
 struct expert_meta : field_meta {
@@ -21,12 +21,12 @@ struct expert_meta : field_meta {
 };
 
 namespace tree_metas { // tree_metas
-__declspec(selectany) extern const tree_meta ett_none     = {"-", nullptr};
-__declspec(selectany) extern const tree_meta ett_protocol = {};
-__declspec(selectany) extern const tree_meta ett_message  = {};
-__declspec(selectany) extern const tree_meta ett_element  = {"Element", nullptr};
-__declspec(selectany) extern const tree_meta ett_expert   = {"Expert", nullptr};
-__declspec(selectany) extern const tree_meta ett_any      = {};
+inline const tree_meta ett_none     = {"-", nullptr};
+inline const tree_meta ett_protocol = {};
+inline const tree_meta ett_message  = {};
+inline const tree_meta ett_element  = {"Element", nullptr};
+inline const tree_meta ett_expert   = {"Expert", nullptr};
+inline const tree_meta ett_any      = {};
 } // namespace tree_metas
 
 struct protocol_meta {
@@ -38,7 +38,7 @@ struct protocol_meta {
 // protocol dissect entry
 extern int dissect_nas5g(dissector, context*);
 
-__declspec(selectany) extern const protocol_meta nas_5gs_module = {
+inline const protocol_meta nas_5gs_module = {
     "NAS-5GS",
     "Non-Access-Stratum 5GS (NAS)PDU",
     dissect_nas5g,
@@ -46,8 +46,8 @@ __declspec(selectany) extern const protocol_meta nas_5gs_module = {
 
 // Extended protocol discriminator
 namespace epd {
-__declspec(selectany) extern const uint8_t MM5G = 0x7e; // TGPP_PD_5GMM
-__declspec(selectany) extern const uint8_t SM5G = 0x2e; // TGPP_PD_5GSM
+inline const uint8_t MM5G = 0x7e; // TGPP_PD_5GMM
+inline const uint8_t SM5G = 0x2e; // TGPP_PD_5GSM
 } // namespace EPD
 
 typedef dissect_fnc_t dissect_msg_fnc_t;

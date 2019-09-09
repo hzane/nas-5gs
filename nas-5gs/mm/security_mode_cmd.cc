@@ -378,6 +378,7 @@ const field_meta hf_mm_eia7 = {
     ,nullptr,&tfs_supported_not_supported,nullptr,
     0x01,
 };
+#if 0
 const field_meta hf_spare_b3 = {
     "Spare",
     "nas_5gs.spare_b3",
@@ -394,6 +395,7 @@ const field_meta hf_spare_b2 = {
     nullptr,nullptr,nullptr,
     0x04,
 };
+#endif
 const field_meta hf_mm_rinmr = {
     "Retransmission of initial NAS message request(RINMR)",
     "nas_5gs.mm.rinmr",

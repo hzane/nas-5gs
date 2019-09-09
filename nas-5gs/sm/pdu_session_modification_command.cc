@@ -56,9 +56,6 @@ int sm::dissect_pdu_ses_modification_cmd(dissector d, context* ctx) {
 }
 namespace sm {
 
-
-
-
 const value_string nas_5gs_sm_pf_type_values[] = {
     {0x01, "Match-all type"},
     {0x10, "IPv4 remote address type"},
@@ -83,7 +80,7 @@ const value_string nas_5gs_sm_pf_type_values[] = {
     {0, nullptr},
 };
 
-static const value_string nas_5gs_sm_pkt_flt_dir_values[] = {
+const value_string nas_5gs_sm_pkt_flt_dir_values[] = {
     {0x00, "Reserved"},
     {0x01, "Downlink only"},
     {0x02, "Uplink only"},
@@ -91,7 +88,7 @@ static const value_string nas_5gs_sm_pkt_flt_dir_values[] = {
     {0, nullptr},
 };
 
-static const value_string nas_5gs_rule_param_cont[] = {
+const value_string nas_5gs_rule_param_cont[] = {
     {0x0, "Reserved"},
     {0x01, "5QI 1"},
     {0x02, "5QI 2"},
@@ -104,6 +101,7 @@ static const value_string nas_5gs_rule_param_cont[] = {
     {0x09, "5QI 9"},
     {0, nullptr},
 };
+
 int dissect_requested_qos_rules(dissector d, context* ctx) {
     return dissect_qos_rules(d, ctx);
 }

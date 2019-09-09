@@ -18,14 +18,14 @@ int mm::dissect_ul_nas_transp(dissector d, context* ctx) {
 
     /* Payload container type   9.11.3.40    M    V    1/2 */
     // ELEM_MAND_V(,  DE_NAS_5GS_MM_PLD_CONT_TYPE,);
-    auto consumed = dissect_payload_container_type(d, ctx);
+    (void) dissect_payload_container_type(d, ctx);
 
     /*Spare half octet  9.5    M    V    1/2*/
     d.step(1);
 
     /* Payload container  9.11.3.39    M    LV-E    3-65537*/
     // ELEM_MAND_LV_E(, DE_NAS_5GS_MM_PLD_CONT,);
-    consumed = dissect_elem_lv_e(nullptr, &pld_cont, d, ctx);
+    auto consumed = dissect_elem_lv_e(nullptr, &pld_cont, d, ctx);
     d.step(consumed);
 
     /*12 PDU session ID 2 9.11.3.41    C    TV    2 */

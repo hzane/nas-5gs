@@ -11,8 +11,8 @@ int mm::dissect_nw_slicing_ind(dissector d, context* ctx) {
     const use_context uc(ctx, "nw-slicing-indication", d, -1);
 
     static const field_meta* flags[] = {
-        &hf_spare_b3,
-        &hf_spare_b2,
+        // &hf_spare_b3,
+        // &hf_spare_b2,
         &hf_dcni,
         &hf_nssci,
         nullptr,

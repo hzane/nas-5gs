@@ -3,7 +3,6 @@
 #include <vector>
 #include <fstream>
 #include <filesystem>
-#include "../def.hh"
 
 namespace fs = std::filesystem;
 using namespace std;

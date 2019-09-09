@@ -17,10 +17,10 @@ int mm::dissect_sor_trans_cont(dissector d, context* ctx) {
     
     /* Layout differs depending on SOR data type*/
     static const field_meta* flags_dt0[] = {
-        &hf_spare_b7,
-        &hf_spare_b6,
-        &hf_spare_b5,
-        &hf_spare_b4,
+//        &hf_spare_b7,
+//        &hf_spare_b6,
+//        &hf_spare_b5,
+//        &hf_spare_b4,
         &hf_sor_hdr0_ack,
         &hf_sor_hdr0_list_type,
         &hf_sor_hdr0_list_ind,
@@ -29,13 +29,13 @@ int mm::dissect_sor_trans_cont(dissector d, context* ctx) {
     };
 
     static const field_meta* flags_dt1[] = {
-        &hf_spare_b7,
-        &hf_spare_b6,
-        &hf_spare_b5,
-        &hf_spare_b4,
-        &hf_spare_b3,
-        &hf_spare_b2,
-        &hf_spare_b1,
+//        &hf_spare_b7,
+//        &hf_spare_b6,
+//        &hf_spare_b5,
+//        &hf_spare_b4,
+//        &hf_spare_b3,
+//        &hf_spare_b2,
+//        &hf_spare_b1,
         &hf_sor_hdr0_sor_data_type,
         nullptr,
     };

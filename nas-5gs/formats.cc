@@ -50,11 +50,10 @@ inline int64_t int48to64(uint64_t v) {
     return int64_t(v);
 }
 std::string format_int_dec(uint64_t v, uint32_t ftype) {
-    auto   lc  = setlocale(LC_NUMERIC, "");
+    const auto lc = setlocale(LC_NUMERIC, "");
 
-    string ret = {};
-    auto   t   = ftype & 0xffu;
-    auto   fmt = "%ud";
+    const auto t = ftype & 0xffu;
+    string     ret;
 
     switch (t) {
     case ft::ft_int8:

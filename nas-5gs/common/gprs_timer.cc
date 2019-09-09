@@ -3,6 +3,7 @@
 // 3GPP TS 24.008 g10
 namespace{
 /* [9] 10.5.7.3 GPRS Timer */
+#if 0
 const value_string gsm_a_gm_gprs_timer_unit_vals[] = {
     {0x00, "value is incremented in multiples of 2 seconds"},
     {0x01, "value is incremented in multiples of 1 minute"},
@@ -10,6 +11,7 @@ const value_string gsm_a_gm_gprs_timer_unit_vals[] = {
     {0x07, "value indicates that the timer is deactivated"},
     {0, nullptr},
 };
+#endif
 const field_meta hf_gprs_timer = {
     "GPRS Timer",
     "gsm_a.gm.gmm.gprs_timer",
@@ -20,6 +22,7 @@ const field_meta hf_gprs_timer = {
     nullptr,
     0x0,
 };
+#if 0
 const field_meta hf_gprs_timer_unit = {
     "Unit",
     "gsm_a.gm.gmm.gprs_timer_unit",
@@ -40,6 +43,7 @@ const field_meta hf_gprs_timer_value = {
     nullptr,
     0x1f,
 };
+#endif
 }
 
 int cmn::dissect_gprs_timer(dissector d, context *ctx) {

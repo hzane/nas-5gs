@@ -13,7 +13,7 @@ int mm::dissect_update_type(dissector d, context* ctx) {
     const use_context        uc(ctx, "5gs-update-type", d, -1);
 
     static const field_meta* flags[] = {
-        &nas::hf_spare_b3,
+        // &nas::hf_spare_b3,
         &hf_pnb_ciot,
         &hf_ng_ran_rcu,
         &hf_sms_requested,

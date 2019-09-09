@@ -33,9 +33,9 @@ int dissect_packet_filter(dissector d, int pf_type, context* ctx) {
          * component value field shall be encoded as defined for
          * "IPv4 remote address type"
          */
-        d.add_item(4, &hf_pdu_addr_ipv4, enc::be);
+        (void) d.add_item(4, &hf_pdu_addr_ipv4, enc::be);
         d.step(4);
-        d.add_item(4, &nas::hf_pdu_ipv4_mask, enc::be);
+        (void) d.add_item(4, &nas::hf_pdu_ipv4_mask, enc::be);
         d.step(4);
         len = 8;
     } break;
@@ -48,12 +48,12 @@ int dissect_packet_filter(dissector d, int pf_type, context* ctx) {
         d.step(1);
     } break;
     case 48: { // Protocol identifier/Next header type
-        d.add_item(1, &nas::hf_pid_next_hd, enc::be);
+        (void) d.add_item(1, &nas::hf_pid_next_hd, enc::be);
         d.step(1);
         len = 1;
     } break;
     case 64: { /* Single local port type */
-        d.add_item(2, &nas::hf_single_port_type, enc::be);
+        (void) d.add_item(2, &nas::hf_single_port_type, enc::be);
         d.step(2);
         len = 2;
     } break;
@@ -66,7 +66,7 @@ int dissect_packet_filter(dissector d, int pf_type, context* ctx) {
     case 80: { /* Single remote port type */
     };
     case 0x41: { // Local port range type
-        d.add_item(2, &nas::hf_single_port_type, enc::be);
+        (void) d.add_item(2, &nas::hf_single_port_type, enc::be);
         d.step(2);
         len = 2;
     }; break;
@@ -167,7 +167,6 @@ int sm::dissect_qos_rules(dissector d, context* ctx) {
         use_tree ut(d, subtree);
 
         /* QoS rule identifier Octet 4*/
-        auto rule_id = d.uint8();
         (void) d.add_item(1, &hf_sm_qos_rule_id, enc::be);
         d.step(1);
 

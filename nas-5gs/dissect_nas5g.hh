@@ -28,7 +28,7 @@ extern const field_meta   hf_single_port_type;
 extern const field_meta*  hf_seq_no;
 extern const field_meta*  hf_proc_trans_id;
 extern const field_meta   hf_service_request_msg_id;
-
+#if 0
 inline extern const field_meta hf_spare_b7 = {
     "Spare",
     "nas_5gs.spare_b7",
@@ -111,6 +111,7 @@ inline __declspec(selectany) extern const field_meta hf_spare_b0 = {
     nullptr,
     0x01,
 };
+#endif
 
 inline __declspec(selectany) extern const true_false_string tfs_supported_not_supported = {
     "Supported",

@@ -67,13 +67,12 @@ int mm::dissect_mobile_id(dissector d, context* ctx) {
 int mm::dissect_mobile_id_mac(dissector d, context* ctx) {
     const use_context uc(ctx, "mobile-id-mac", d, 0);
 
-    auto i = d.add_item(1, &hf_mm_type_id, enc::be);    
+    (void) d.add_item(1, &hf_mm_type_id, enc::be);    
     d.step(1);
 
-    i = d.add_item(6, &hf_mac_address, enc::be);
+    (void) d.add_item(6, &hf_mac_address, enc::be);
     d.step(6);
-
-    unused(i);
+    
     return 7;
 }
 
@@ -90,18 +89,18 @@ int mm::dissect_mobile_id_noid(dissector d, context* ctx) {
 int mm::dissect_mobile_id_5gstmsi(dissector d, context* ctx) {
     const use_context uc(ctx, "mobile-id-5gs-tmis", d, 0);
 
-    auto i = d.add_item(1, &hf_mm_type_id, enc::be);    
+    (void) d.add_item(1, &hf_mm_type_id, enc::be);    
     d.step(1);
 
     /* AMF Set ID */
-    i = d.add_item(2, &hf_amf_set_id, enc::be);
+    (void) d.add_item(2, &hf_amf_set_id, enc::be);
     d.step(1);
 
     /* AMF Pointer AMF */
-    i = d.add_item(1, &hf_amf_pointer, enc::be);
+    (void) d.add_item(1, &hf_amf_pointer, enc::be);
     d.step(1);
 
-    i = d.add_item(4, &hf_5g_tmsi, enc::be);
+    (void) d.add_item(4, &hf_5g_tmsi, enc::be);
     d.step(4);
 
     return 7;
@@ -124,30 +123,29 @@ int mm::dissect_mobile_id_suci(dissector d, context* ctx) {
         d.step(consumed);
 
         /* Routing indicator octet 8-9 */
-        auto i = d.add_item(2, &hf_mm_routing_ind, enc::na);
+        (void) d.add_item(2, &hf_mm_routing_ind, enc::na);
         d.step(2);
 
         /* Protection scheme id octet 10 */
         const auto scheme_id = d.uint8() & 0x0fu;
-        i = d.add_item(1, &hf_mm_prot_scheme_id, enc::be);
+        (void) d.add_item(1, &hf_mm_prot_scheme_id, enc::be);
         d.step(1);
 
         /* Home network public key identifier octet 11 */
-        i = d.add_item(1, &hf_mm_pki, enc::be);
+        (void) d.add_item(1, &hf_mm_pki, enc::be);
         d.step(1);
 
         /* Scheme output octet 12-x */
         if (scheme_id == 0) {
             // Null scheme
-            i = d.add_item(d.length, &hf_mm_supi_null_scheme, enc::be);
+            (void) d.add_item(d.length, &hf_mm_supi_null_scheme, enc::be);
         } else {
-            i = d.add_item(d.length, &hf_mm_scheme_output, enc::na);
+            (void) d.add_item(d.length, &hf_mm_scheme_output, enc::na);
         }
         d.step(d.length);
     } else if (supi_fmt == 1) {
         // nai, network specific identifier
-        auto i = d.add_item(d.length, &hf_nas_5gs_mm_suci_nai, enc::be);
-        unused(i);
+        (void) d.add_item(d.length, &hf_nas_5gs_mm_suci_nai, enc::be);        
     } else {
         diag("unknown supi format %d\n", supi_fmt);
     }
@@ -158,7 +156,7 @@ int mm::dissect_mobile_id_suci(dissector d, context* ctx) {
 int mm::dissect_mobile_id_5gguti(dissector d, context* ctx) {
     const use_context uc(ctx, "mobile-id-5g-guti", d, 0);
 
-    auto i = d.add_item(1, &hf_mm_type_id, enc::be);
+    (void) d.add_item(1, &hf_mm_type_id, enc::be);
     d.step(1);
 
     /* MCC digit 2    MCC digit 1
@@ -168,18 +166,18 @@ int mm::dissect_mobile_id_5gguti(dissector d, context* ctx) {
     d.step(consumed);
 
     /* AMF Region ID octet 7 */
-    i = d.add_item(1, &hf_amf_region_id, enc::be);
+    (void) d.add_item(1, &hf_amf_region_id, enc::be);
     d.step(1);
 
     /* AMF Set ID octet 8-9 10bits */
-    i = d.add_item(2, &hf_amf_set_id, enc::be);
+    (void) d.add_item(2, &hf_amf_set_id, enc::be);
     d.step(1);
 
     /* AMF AMF Pointer*/    
-    i = d.add_item(1, &hf_amf_pointer, enc::be);
+    (void) d.add_item(1, &hf_amf_pointer, enc::be);
     d.step(1);
 
-    i = d.add_item(4, &hf_5g_tmsi, enc::be);
+    (void) d.add_item(4, &hf_5g_tmsi, enc::be);
     d.step(4);
 
     return 11;
@@ -192,10 +190,9 @@ int mm::dissect_mobile_id_imei(dissector d, context* ctx) {
     d.add_bits(flags_odd_even_tid);
 
     // The format of the IMEI is described in 3GPP TS 23.003
-    auto item = d.add_item(d.length, &hf_nas_5gs_mm_imeisv, enc::be);
+    (void) d.add_item(d.length, &hf_nas_5gs_mm_imeisv, enc::be);
     d.step(d.length);
-
-    unused(item);
+    
     return uc.length;
 }
 
@@ -224,7 +221,7 @@ const element_meta mm::mobile_id = {
 };
 
 /* * 9.11.3.4    5GS mobile identity */
-const field_meta mm::hf_mm_type_id = {
+const field_meta mm::hf_mm_type_id = {  // NOLINT
     "Type of identity",
     "nas_5gs.mm.type_id",
     ft::ft_uint8,
@@ -298,6 +295,7 @@ const field_meta hf_nas_5gs_mm_imei = {
     nullptr,
     0,
 };
+#if 0
 const field_meta hf_spare_b3 = {
     "Spare",
     "nas_5gs.spare.b3",
@@ -308,10 +306,11 @@ const field_meta hf_spare_b3 = {
     nullptr,
     0x08,
 };
+#endif
 const field_meta* flags_supi_fmt_tid[] = {
     &hf_spare_b7,
     &hf_nas_5gs_mm_supi_fmt,
-    &hf_spare_b3,
+    // &hf_spare_b3,
     &hf_mm_type_id,
     nullptr,
 };

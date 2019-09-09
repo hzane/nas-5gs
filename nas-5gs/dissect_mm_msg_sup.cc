@@ -3,11 +3,6 @@
 using namespace mm;
 using namespace nas;
 
-extern const true_false_string mm::tfs_requested_not_requested = {
-    "Requested",
-    "Not Requested",
-};
-
 const true_false_string mm::tfs_sms_requested = {
     "SMS over NAS supported",
     "SMS over NAS not supported",
@@ -872,7 +867,7 @@ extern const field_meta mm::hfm_nas_eps_tsc = {
 const field_meta* mm::hf_nas_eps_tsc = &hfm_nas_eps_tsc;
 
 
-extern const field_meta mm::hfm_nas_eps_nas_ksi = {
+extern const field_meta mm::hfm_nas_eps_nas_ksi = { // NOLINT
     "NAS key set identifier",
     "nas_eps.emm.nas_key_set_id",
     ft::ft_uint8,

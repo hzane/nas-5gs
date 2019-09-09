@@ -14,10 +14,10 @@ int mm::dissect_pld_container_entry(dissector d, context* ctx) {
 
     const auto len = static_cast< int >(d.ntohs());
 
-    auto i = d.add_item(1, &hf_payload_container_type, enc::be);
+    (void) d.add_item(1, &hf_payload_container_type, enc::be);
 
     auto nie = (d.uint8() & 0xf0u) >> 4;
-    i = d.add_item(1, &hf_pld_cont_entry_nie, enc::be);
+    (void) d.add_item(1, &hf_pld_cont_entry_nie, enc::be);
     d.step(1);
 
     while (nie > 0) {
@@ -26,7 +26,7 @@ int mm::dissect_pld_container_entry(dissector d, context* ctx) {
 
         --nie;
     }
-    i = d.add_item(d.length, &hf_pld_cont_entry_contents, enc::na);
+    (void) d.add_item(d.length, &hf_pld_cont_entry_contents, enc::na);
     return len;
 }
 
@@ -127,14 +127,13 @@ int mm::dissect_updp(dissector d, context* ctx) {
      * 3GPP TS 24.007
      * XXX Only 5GSM ?
      */
-    auto i = d.add_item(1, nas::hf_proc_trans_id, enc::be);
+    (void) d.add_item(1, nas::hf_proc_trans_id, enc::be);
     d.step(1);
 
     /* Message type IE*/
-    i = d.add_item(d.length, &hf_element, enc::be);
+    (void) d.add_item(d.length, &hf_element, enc::be);
     d.step(d.length);
-
-    unused(i);
+    
     return uc.length;
 }
 
@@ -220,16 +219,15 @@ int mm::dissect_optional_ie(dissector d, context* ctx) {
     const auto subtree = d.add_item(-1, &hf_pld_optional_ie, enc::na);
     use_tree   ut(d, subtree);
 
-    auto i = d.add_item(1, &hf_pld_optional_ie_type, enc::be);
+    (void) d.add_item(1, &hf_pld_optional_ie_type, enc::be);
     d.step(1);
 
     const auto len = static_cast< int >(d.uint8());
-    i = d.add_item(1, &hf_pld_optional_ie_length, enc::be);
+    (void) d.add_item(1, &hf_pld_optional_ie_length, enc::be);
     d.step(1);
 
-    i = d.add_item(len, &hf_pld_optional_ie_value, enc::na);
+    (void) d.add_item(len, &hf_pld_optional_ie_value, enc::na);
     subtree->set_length(d.offset - uc.offset);
-
-    unused(i);
+    
     return d.offset - uc.offset;
 }

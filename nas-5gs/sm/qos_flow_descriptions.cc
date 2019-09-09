@@ -119,15 +119,15 @@ int sm::dissect_authorized_qos_flow_des(dissector d, context* ctx) {
     auto i = 1;
     while (d.length > 0) {
         /* QoS fow description */
-        auto     subtree = d.add_item(-1, "QoS flow description %u", i);
-        use_tree ut(d, subtree);
+        const auto subtree = d.add_item(-1, "QoS flow description %u", i++);
+        use_tree   ut(d, subtree);
 
         /* 0 0 QFI */
-        d.add_item(1, &hf_sm_qfi, enc::be);
+        (void) d.add_item(1, &hf_sm_qfi, enc::be);
         d.step(1);
 
         /* Operation code */
-        d.add_item(1, &hf_sm_qos_des_flow_opt_code, enc::be);
+        (void) d.add_item(1, &hf_sm_qos_des_flow_opt_code, enc::be);
         d.step(1);
 
         /* 0 Spare    E    Number of parameters */
@@ -137,13 +137,11 @@ int sm::dissect_authorized_qos_flow_des(dissector d, context* ctx) {
 
         auto j = 1;
         while (num_param > 0) {
-            auto consumed = dissect_qos_param(d, j, ctx);
+            const auto consumed = dissect_qos_param(d, j, ctx);
             d.step(consumed);
             ++j;
             --num_param;
         }
-
-        i++;
     }
     return d.offset - uc.offset;
 }
