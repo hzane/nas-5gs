@@ -164,14 +164,14 @@ std::string print_text(const field_meta* meta, uint64_t v) {
 }
 
 void print_node(std::ostream& out, const proto_node* node, int indent) {
-    if (!node->name.empty() && !node->text.empty()) {
+    if (!node->name.empty()) {
         const auto prefix = std::string(size_t(indent) + indent, char(' '));
-        out << prefix << node->name << " " << node->offset << "-" << node->length;
+        out << prefix << node->name ;
 
         if (!node->text.empty()) {
             out << " : " << node->text;
         }
-        out << std::endl;        
+        out << " [" << node->offset << "-" << node->length << "]" << std::endl;        
     }
     for (auto n : node->children) {
         print_node(out, n, indent + 1);

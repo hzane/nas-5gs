@@ -13,8 +13,8 @@ int mm::dissect_service_request(dissector d, context* ctx) {
     /* ngKSI     NAS key set identifier 9.11.3.32    M    V    1/2 */
     dissect_elem_v(nullptr, &nas_ksi, d, ctx);
 
-    // Service type 9.11.3.50 M V 1 / 2
-    dissect_elem_v(nullptr, &service_type, d, ctx);
+    // Service type 9.11.3.50 M V 1 / 2    
+    (void) dissect_service_type(d, ctx);
     d.step(1);
 
     /* 5G-S-TMSI    5GS mobile identity 9.11.3.4    M    LV    9 */
