@@ -191,7 +191,7 @@ int mm::dissect_reported_s1_ue_sec_cap(dissector d, context* ctx) {
     };
 
     static const field_meta* oct6_flags[] = {
-        &hf_spare_b7,
+//        &hf_spare_b7,
         &hf_emm_uia1,
         &hf_emm_uia2,
         &hf_emm_uia3,
@@ -203,7 +203,7 @@ int mm::dissect_reported_s1_ue_sec_cap(dissector d, context* ctx) {
     };
 
     static const field_meta* oct7_flags[] = {
-        &hf_spare_b7,
+//        &hf_spare_b7,
         &hf_emm_gea1,
         &hf_emm_gea2,
         &hf_emm_gea3,

@@ -41,7 +41,7 @@ int sm::dissect_mapped_eps_bearer_ctx(dissector d, context* ctx) {
     
     static const field_meta* mapd_eps_b_cont_flags[] = {
         &hf_sm_mapd_eps_b_cont_opt_code,
-        &hf_spare_b5,
+//        &hf_spare_b5,
         &hf_sm_mapd_eps_b_cont_e,
         &hf_sm_mapd_eps_b_cont_num_eps_parms,
         nullptr,
@@ -49,7 +49,7 @@ int sm::dissect_mapped_eps_bearer_ctx(dissector d, context* ctx) {
 
     static const field_meta* mapd_eps_b_cont_flags_modify[] = {
         &hf_sm_mapd_eps_b_cont_opt_code,
-        &hf_spare_b5,
+//        &hf_spare_b5,
         &hf_sm_mapd_eps_b_cont_e_mod,
         &hf_sm_mapd_eps_b_cont_num_eps_parms,
         nullptr,
