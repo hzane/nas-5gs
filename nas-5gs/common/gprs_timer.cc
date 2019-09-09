@@ -14,7 +14,7 @@ const field_meta hf_gprs_timer = {
     "GPRS Timer",
     "gsm_a.gm.gmm.gprs_timer",
     ft::ft_uint8,
-    fd::base_hex,
+    fd::timer,
     nullptr,
     nullptr,
     nullptr,
@@ -43,29 +43,9 @@ const field_meta hf_gprs_timer_value = {
 }
 
 int cmn::dissect_gprs_timer(dissector d, context *ctx) {
-    auto        oct     = d.uint8();
-    auto        val     = (uint32_t) oct & 0x1fu;
-    auto        mulf    = oct >> 5u;
-    const char *unit    = "min";
-    uint32_t    mul     = 1;
+    const use_context uc(ctx, "gprs-timer", d, -1);
 
-    if (mulf == 0) {
-        unit = "sec";
-        mul  = 2;
-    } else if (mulf == 1) {
-        unit = "min";
-    } else if (mulf == 2) {
-        unit = "min";
-        mul  = 6;
-    } else if (mulf == 7) {
-        unit = "deactivated";
-    }
-
-    auto        subtree = d.add_item(1, "GPRS Timer: %u %s", val * mul, unit);
-    use_tree    ut(d, subtree);
-    use_context uc(ctx, "GPRS Timer", d, -1);
-    d.add_item(1, &hf_gprs_timer_unit, enc::be);
-    d.add_item(1, &hf_gprs_timer_value, enc::be);
+    d.tree->set_item(1, &hf_gprs_timer, enc::be);
     d.step(1);
 
     /* no length check possible */
