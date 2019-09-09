@@ -20,11 +20,7 @@ proto_item* proto_node::add_item(packet_info*      ,
                                  int               len,
                                  const field_meta* field,
                                  uint32_t          encoding) {
-    auto item = new proto_node();
-    item->meta = field;
-    item->data = buf->data+ start;
-    item->offset = start;
-    item->length = len;
+    auto item    = new proto_node(buf->data, start, len, field);
     item->enc    = encoding;
     children.push_back(item);
 
@@ -96,9 +92,7 @@ proto_item* proto_node::add_expert(packet_info* ,
                                    const char*  format,
                                    ...) {
     using namespace std;
-    auto item    = new proto_tree();
-    item->data   = buf->data + start;
-    item->length = len;
+    auto item    = new proto_tree(buf->data, start, len, nullptr);
 
     va_list args;
     va_start(args, format);
@@ -116,9 +110,7 @@ proto_tree* proto_node::add_subtree(packet_info* ,
                                     const char*  format,
                                     ...) {
     using namespace std;
-    auto item    = new proto_tree();
-    item->data   = buf->data + start;
-    item->length = len;
+    auto item    = new proto_tree(buf->data, start, len, nullptr);
 
     va_list args;
     va_start(args, format);
@@ -135,6 +127,9 @@ proto_node::~proto_node() {
     }
     children.clear();
 }
+
+proto_node::proto_node(const uint8_t* buffer, int offset, int length, const field_meta* m)
+    : meta(m), data(buffer + offset), length(length), offset(offset) {}
 
 std::string print_text(const field_meta* meta,
                        const uint8_t*    data,
