@@ -9,21 +9,81 @@ using namespace cmn;
 using namespace sm;
 
 extern const message_meta sm::msgs[] = {
-    {0xc1, "PDU session establishment request", dissect_pdu_ses_establishment_req, nullptr},
-    {0xc2, "PDU session establishment accept", dissect_pdu_ses_establishment_accept, nullptr},
-    {0xc3, "PDU session establishment reject", dissect_pdu_ses_establishment_rej, nullptr},
+    {
+        0xc1,
+        "PDU session establishment request",
+        dissect_pdu_ses_establishment_req,
+        nullptr,
+    },
+    {
+        0xc2,
+        "PDU session establishment accept",
+        dissect_pdu_ses_establishment_accept,
+        nullptr,
+    },
+    {
+        0xc3,
+        "PDU session establishment reject",
+        dissect_pdu_ses_establishment_rej,
+        nullptr,
+    },
 
-    {0xc4, "Not used in current version", no_dissect, nullptr},
-    {0xc5, "PDU session authentication command", dissect_pdu_ses_authentication_cmd, nullptr},
+    {
+        0xc4,
+        "Not used in current version",
+        no_dissect,
+        nullptr,
+    },
+    {
+        0xc5,
+        "PDU session authentication command",
+        dissect_pdu_ses_authentication_cmd,
+        nullptr,
+    },
 
-    {0xc6, "PDU session authentication complete", dissect_pdu_ses_authentication_cmpl, nullptr},
-    {0xc7, "PDU session authentication result", no_dissect, nullptr},
-    {0xc8, "Not used in current version", no_dissect, nullptr},
+    {
+        0xc6,
+        "PDU session authentication complete",
+        dissect_pdu_ses_authentication_cmpl,
+        nullptr,
+    },
+    {
+        0xc7,
+        "PDU session authentication result",
+        no_dissect,
+        nullptr,
+    },
+    {
+        0xc8,
+        "Not used in current version",
+        no_dissect,
+        nullptr,
+    },
 
-    {0xc9, "PDU session modification request", dissect_pdu_ses_modification_req, nullptr},
-    {0xca, "PDU session modification reject", dissect_pdu_ses_modification_rej, nullptr},
-    {0xcb, "PDU session modification command", dissect_pdu_ses_modification_cmd, nullptr},
-    {0xcc, "PDU session modification complete", dissect_pdu_ses_modification_cmpl, nullptr},
+    {
+        0xc9,
+        "PDU session modification request",
+        dissect_pdu_ses_modification_req,
+        nullptr,
+    },
+    {
+        0xca,
+        "PDU session modification reject",
+        dissect_pdu_ses_modification_rej,
+        nullptr,
+    },
+    {
+        0xcb,
+        "PDU session modification command",
+        dissect_pdu_ses_modification_cmd,
+        nullptr,
+    },
+    {
+        0xcc,
+        "PDU session modification complete",
+        dissect_pdu_ses_modification_cmpl,
+        nullptr,
+    },
     {
         0xcd,
         "PDU session modification command reject",
@@ -31,18 +91,63 @@ extern const message_meta sm::msgs[] = {
         nullptr,
     },
 
-    {0xce, "Not used in current version", no_dissect, nullptr},
-    {0xcf, "Not used in current version", no_dissect, nullptr},
-    {0xd0, "Not used in current version", no_dissect, nullptr},
+    {
+        0xce,
+        "Not used in current version",
+        no_dissect,
+        nullptr,
+    },
+    {
+        0xcf,
+        "Not used in current version",
+        no_dissect,
+        nullptr,
+    },
+    {
+        0xd0,
+        "Not used in current version",
+        no_dissect,
+        nullptr,
+    },
 
-    {0xd1, "PDU session release request", dissect_pdu_ses_release_req, nullptr},
-    {0xd2, "PDU session release reject", dissect_pdu_ses_release_rej, nullptr},
-    {0xd3, "PDU session release command", dissect_pdu_ses_release_cmd, nullptr},
-    {0xd4, "PDU session release complete", dissect_pdu_ses_release_cmpl, nullptr},
+    {
+        0xd1,
+        "PDU session release request",
+        dissect_pdu_ses_release_req,
+        nullptr,
+    },
+    {
+        0xd2,
+        "PDU session release reject",
+        dissect_pdu_ses_release_rej,
+        nullptr,
+    },
+    {
+        0xd3,
+        "PDU session release command",
+        dissect_pdu_ses_release_cmd,
+        nullptr,
+    },
+    {
+        0xd4,
+        "PDU session release complete",
+        dissect_pdu_ses_release_cmpl,
+        nullptr,
+    },
 
-    {0xd5, "Not used in current version", no_dissect, nullptr},
+    {
+        0xd5,
+        "Not used in current version",
+        no_dissect,
+        nullptr,
+    },
 
-    {0xd6, "5GSM status", dissect_sm_status, nullptr},
+    {
+        0xd6,
+        "5GSM status",
+        dissect_sm_status,
+        nullptr,
+    },
     {0, nullptr, nullptr, nullptr},
 };
 
