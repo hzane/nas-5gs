@@ -172,7 +172,7 @@ int mm::dissect_mobile_id_5gguti(dissector d, context* ctx) {
     d.step(1);
 
     /* AMF Set ID octet 8-9 10bits */
-    i = d.add_item(1, &hf_amf_set_id, enc::be);
+    i = d.add_item(2, &hf_amf_set_id, enc::be);
     d.step(1);
 
     /* AMF AMF Pointer*/    
