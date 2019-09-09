@@ -14,7 +14,7 @@ std::string print_text(const field_meta* meta,
 
 std::string print_text(const field_meta* meta, uint64_t v);
 
-proto_item* proto_node::add_item(packet_info*      ,
+proto_item* proto_node::add_item(packet_info*      pinfo,
                                  tvbuff*           buf,
                                  int               start,
                                  int               len,
@@ -27,19 +27,27 @@ proto_item* proto_node::add_item(packet_info*      ,
     if (field && field->name) {
         item->name = field->name;
     }
-    if (encoding == enc::na || encoding == enc::none) return item;
-
-    if (field && ft::is_integer(field->ftype)) {
-        auto v = n2_uint(item->data, len);
-        if(field->bitmask){
-            v = (v & field->bitmask) >> ws_ctz(field->bitmask);
-        }
-        item->val = v;
-        item->text = print_text(field, v);
-    }else
-        item->text = print_text(field, item->data, len, encoding);
+    item->set_item(len, field, encoding);
 
     return item;
+}
+
+proto_item* proto_node::set_item(int len, const field_meta* field, uint32_t encoding) {
+    enc = encoding;
+
+    if (encoding == enc::na || encoding == enc::none) return this;
+
+    if (field && ft::is_integer(field->ftype)) {
+        auto v = n2_uint(data, len);
+        if (field->bitmask) {
+            v = (v & field->bitmask) >> ws_ctz(field->bitmask);
+        }
+        val  = v;
+        text = print_text(field, v);
+    } else
+        text = print_text(field, data, len, encoding);
+
+    return this;
 }
 
 // don't apply bitmask to v

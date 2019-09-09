@@ -13,6 +13,10 @@ struct proto_node { // NOLINT: special-member-functions
                          const field_meta* field,
                          uint32_t          encoding);
 
+    proto_item* set_item(int len,
+                         const field_meta* field,
+                         uint32_t          encoding);
+
     proto_item* set_uint(uint64_t val, uint32_t enc, const char* format, ...);
     proto_item* set_int(int64_t v, uint32_t enc, const char* format, ...);
 

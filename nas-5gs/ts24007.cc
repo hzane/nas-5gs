@@ -13,7 +13,7 @@ int dissect_elem_mandatory(const field_meta*   type_meta,
         d.step(consumed);
     }
     if (consumed <= 0) {
-        diag("Missing Mandatory element %s, rest of dissection is suspect %s, %s\n",
+        diag("Missing Mandatory element %s, rest of dissection is suspect %s\n",
              paths(ctx).c_str(), val_meta->name);
         consumed = 0;
     }
@@ -254,7 +254,7 @@ int dissect_opt_elem_tlv(const field_meta *,
                          const element_meta *val_meta,
                          dissector           d,
                          context *           ctx) {
-    auto e = (optional_element_intra*)d.data;
+    auto e = static_cast< optional_element_intra* >(d.data);
     set_elem_presence(e, false);
 
     if (d.length <= 0) return 0;
@@ -285,6 +285,8 @@ int dissect_opt_elem_tlv(const field_meta *,
 
     return parm_len + 2;
 }
+
+
 
 /*
  * Type Extendable Length Value (TELV) element dissector

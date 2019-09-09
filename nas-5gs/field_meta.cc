@@ -1,4 +1,3 @@
-#include <bitset>
 #include "field_meta.hh"
 #include "tvbuff.hh"
 
@@ -36,7 +35,7 @@ string field_meta::format(const uint8_t*p , int length, uint32_t enc) const {
         case fd::bits7:
             return bits7_string(p, length);
         case fd::ipv4:
-            return formats("%ud.%ud.%ud.%ud", p[0], p[1], p[2], p[3]);
+            return formats("%u.%u.%u.%u", p[0], p[1], p[2], p[3]);
         case fd::link_local_address:
             return ipv6_link_local_string(p, length);
         case fd::ipv6:
@@ -55,11 +54,15 @@ string field_meta::format(const uint8_t*p , int length, uint32_t enc) const {
             return ambr_string(p, length);
         case fd::ext_length:
             return formats("%d", ext_length(p));
+        case fd::timer:
+        case fd::timer3:
+            return gprs_timer3_string(p, length);
+        case fd::timer2:
+            return gprs_timer2_string(p, length);
         default:
             return formats("data %d bytes", length);
     }
 
-    return string();
 }
 
 string field_meta::format(uint64_t v) const {
@@ -87,7 +90,7 @@ string field_meta::format(uint64_t v) const {
     }
 
     if (range_strings){
-        auto s = find_r_string(range_strings, uint32_t(v));
+        const auto s = find_r_string(range_strings, uint32_t(v));
         return formats("%s (%#x)", s, uint32_t(v));
     }
     if (display == fd::timer3 || display == fd::timer){

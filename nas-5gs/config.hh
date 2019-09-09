@@ -232,6 +232,10 @@ string bstrn_string(const uint8_t* d, int len);
 
 string gprs_timer3_format(uint8_t oct);
 string gprs_timer2_format(uint8_t oct);
+
+string gprs_timer2_string(const uint8_t*d, int len);
+string gprs_timer3_string(const uint8_t* d, int len);
+
 string ipv6_string(const uint8_t*d, int length);
 string ipv6_link_local_string(const uint8_t* d, int length);
 
@@ -242,10 +246,10 @@ string mcc_aux(const uint8_t* d, int length = 3);
 string mnc_aux(const uint8_t* d, int length = 3);
 
 // BCD number
-string bcd_string(const uint8_t*d, int length);
-string   imei_string(const uint8_t* d, int length); // 0xf0 terminated if even
+string bcd_string(const uint8_t* d, int length);
+string imei_string(const uint8_t* d, int length); // 0xf0 terminated if even
 string gmt_string(const uint8_t* d, int length);
-string   utcz_string(const uint8_t* d);
+string utcz_string(const uint8_t* d);
 
 uint64_t uintmap(uint64_t f, uint64_t mask);
 

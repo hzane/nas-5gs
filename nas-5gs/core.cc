@@ -131,6 +131,16 @@ string bstrn_string(const uint8_t*d, int len){
     return str;
 }
 
+string gprs_timer2_string(const uint8_t*d, int len) {
+    if (!d || !len) return string();
+    return gprs_timer2_format(d[0]);
+}
+
+string gprs_timer3_string(const uint8_t*d, int len) {
+    if (!d || !len) return string();
+    return gprs_timer3_format(d[0]);
+}
+
 /* * 3GPP TS 24.008 g10 10.5.7.4a */
 string gprs_timer3_format(uint8_t oct) {
     auto        uf   = oct >> 5u;
