@@ -21,36 +21,34 @@ int mm::dissect_operator_defined_access_category_definitions(dissector d, contex
         use_tree    ut(sd, subtree);
         use_context suc(ctx, "operator-defined-access-category-definition", sd, 0);
 
-        auto n = sd.add_item(1, &hf_mm_length, enc::be);
+        // auto n = sd.add_item(1, &hf_mm_length, enc::be);
         sd.step(1);
 
         /* Precedence value */
-        n = sd.add_item(1, &hf_precedence, enc::be);
+        (void) sd.add_item(1, &hf_precedence, enc::be);
         sd.step(1);
 
         /* PSAC    0 Spare    0 Spare    Operator-defined access category number */
         const auto psac = (sd.uint8() & 0x80u);
-        n         = sd.add_item(1, &hf_access_cat_n, enc::be);
-        n         = sd.add_item(1, &hf_psac, enc::be);
+        (void) sd.add_item(1, &hf_access_cat_n, enc::be);
+        (void) sd.add_item(1, &hf_psac, enc::be);
         sd.step(1);
 
         /* Length of criteria */
         const auto cl = static_cast< int >(sd.uint8());
-        n             = sd.add_item(1, &hf_criteria_length, enc::be);
+        // n             = sd.add_item(1, &hf_criteria_length, enc::be);
         sd.step(1);
 
         /* Criteria */
-        n = sd.add_item(cl, &hf_criteria, enc::na);
+        (void) sd.add_item(cl, &hf_criteria, enc::na);
 
         /* Spare Spare Spare    Standardized access category a* */
         if (psac) {
-            n = sd.add_item(1, &hf_standardize_access_cat, enc::be);
+            (void) sd.add_item(1, &hf_standardize_access_cat, enc::be);
             sd.step(1);
         }
 
         d.step(length + 1);
-
-        unused(n);
     }
     return uc.length;
 }
@@ -93,6 +91,7 @@ const field_meta mm::hf_precedence = {
     0x0,
 };
 
+#if 0
 const field_meta mm::hf_criteria_length = {
     "Length",
     "nas_5gs.mm.conf.update.operator.access.criteria.length",
@@ -103,6 +102,7 @@ const field_meta mm::hf_criteria_length = {
     nullptr,
     0,
 };
+#endif
 
 const field_meta mm::hf_criteria = {
     "Criteria",

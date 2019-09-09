@@ -149,6 +149,7 @@ const field_meta hf_sm_param_id = {
     nullptr,
     0x0,
 };
+#if 0
 const field_meta hf_sm_param_len = {
     "Length",
     "nas_5gs.sm.param_len",
@@ -159,6 +160,8 @@ const field_meta hf_sm_param_len = {
     nullptr,
     0x0,
 };
+#endif
+
 const field_meta hf_sm_pal_cont = {
     "Parameters content",
     "nas_5gs.sm.pal_cont",

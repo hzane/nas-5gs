@@ -403,13 +403,13 @@ extern const field_meta  hf_abba;
 extern const field_meta  hfm_mm_conf_upd_ind_ack_b0;
 extern const field_meta  hfm_nas_eps_nas_ksi;
 extern const field_meta* hf_nas_eps_nas_ksi;
-extern const field_meta  hf_mm_length;
+// extern const field_meta  hf_mm_length;
 extern const field_meta  hf_mm_sst;
 extern const field_meta  hf_sst;
 
 extern const field_meta hf_psac;
 extern const field_meta hf_access_cat_n;
-extern const field_meta hf_criteria_length;
+// extern const field_meta hf_criteria_length;
 extern const field_meta hf_criteria;
 extern const field_meta hf_standardize_access_cat;
 extern const field_meta hf_rej_nssai_cause;

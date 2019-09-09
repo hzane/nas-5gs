@@ -5,18 +5,19 @@ using namespace nas;
 
 /* 9.11.4.8 Mapped EPS bearer contexts */
 int dissect_eps_param(dissector d, int i, context* ctx) {
-    auto     start   = d.offset;
+    const use_context uc(ctx, "mapped-eps-bearer-contexts", d, 0);
+
     auto     subtree = d.add_item(-1, "EPS parameter %u", i);
     use_tree ut(d, subtree);
 
     /* EPS parameter identifier */
-    uint32_t param_id = (uint32_t) d.uint8();
-    d.add_item(1, &hf_sm_mapd_eps_b_cont_num_eps_param_id, enc::be);
+    const auto param_id = static_cast< uint32_t >(d.uint8());
+    (void) d.add_item(1, &hf_sm_mapd_eps_b_cont_num_eps_param_id, enc::be);
     d.step(1);
 
     /*length of the EPS parameter contents field */
-    int length = (int) d.uint8();
-    d.add_item(1, &hf_sm_length, enc::be);
+    const auto length = static_cast< int >(d.uint8());
+    // (void) d.add_item(1, &hf_sm_length, enc::be);
     d.step(1);
 
     subtree->set_length(length + 2);
@@ -28,10 +29,10 @@ int dissect_eps_param(dissector d, int i, context* ctx) {
     case 4: /* 04H (APN-AMBR) */
     case 5: /* 05H (extended APN-AMBR). */
     default:
-        d.add_item(length, &hf_sm_mapd_eps_b_cont_eps_param_cont, enc::be);
+        (void) d.add_item(length, &hf_sm_mapd_eps_b_cont_eps_param_cont, enc::be);
         d.step(length);
     }
-    return d.offset - start;
+    return d.offset - uc.offset;
 }
 
 // Mapped EPS  bearer contexts     9.11.4.8
@@ -61,21 +62,21 @@ int sm::dissect_mapped_eps_bearer_ctx(dissector d, context* ctx) {
         use_tree ut(d, subtree);
 
         /* EPS bearer identity */
-        d.add_item(1, &hf_sm_mapd_eps_b_cont_id, enc::be);
+        (void) d.add_item(1, &hf_sm_mapd_eps_b_cont_id, enc::be);
         d.step(1);
 
         /* Length of Mapped EPS bearer context*/
-        int length = (int) d.ntohs();
-        d.add_item(2, &hf_sm_length, enc::be);
+        const auto length = static_cast< int >(d.ntohs());
+        // (void) d.add_item(2, &hf_sm_length, enc::be);
         d.step(2);
 
         subtree->set_length(length + 3);
         /*     8   7      6    5   4  3  2  1          */
         /* operation code | spare |  E | number of EPS params     */
 
-        auto nep      = d.tvb->uint8(d.offset);
-        auto opt_code = (nep & 0xc0u) >> 6u;
-        nep           = nep & 0x0f;
+        auto       nep      = d.tvb->uint8(d.offset);
+        const auto opt_code = (nep & 0xc0u) >> 6u;
+        nep                 = nep & 0x0f;
 
         /* operation code = 3 Modify existing EPS bearer */
         if (opt_code == 3) {

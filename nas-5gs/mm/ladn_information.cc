@@ -26,7 +26,7 @@ int mm::dissect_ladn_inf(dissector d, context* ctx) {
          * as specified in subclause 9.11.2.1A starting with the second octet
          */
         auto length = static_cast< int >(d.tvb->uint8(d.offset));
-        auto n = d.add_item(1, &hf_mm_length, enc::be);
+        // auto n = d.add_item(1, &hf_mm_length, enc::be);
         d.step(1);
 
         /* 5GS tracking area identity list (octet m+1 to octet a):
@@ -37,15 +37,14 @@ int mm::dissect_ladn_inf(dissector d, context* ctx) {
         auto consumed = dissect_dnn(d.slice(length), ctx);
         d.step(consumed);
 
-        n = d.add_item(1, &hf_mm_length, enc::be);
-        d.step(consumed);
+        // (void) d.add_item(1, &hf_mm_length, enc::be);
+        length   = d.uint8();
+        d.step(1);
 
-        length   = d.tvb->uint8(d.offset);
         consumed = dissect_tracking_area_id_list(d.slice(length), ctx);
         d.step(consumed);
         subtree->set_length(d.offset - start);
-
-        unused(n);
+        
     }
 
     return uc.length;

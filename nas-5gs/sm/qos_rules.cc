@@ -92,18 +92,19 @@ int dissect_packet_filter(dissector d, int pf_type, context* ctx) {
 // or "modify existing QoS rule and add packet filters" or "modify existing QoS rule and
 // replace all packet filters"
 int dissect_packet_filters(dissector d, int rop, context* ctx) {
-    auto start = d.offset;
+    const use_context uc(ctx, "packet-filters", d, -1);
+
     /* "create new QoS rule", or "modify existing QoS rule and add packet
      * filters" or "modify existing QoS rule and replace packet filters"
      */
     /* 0    0    Packet filter direction 1    Packet filter identifier 1*/
-    d.add_item(1, &hf_sm_pkt_flt_dir, enc::be);
-    d.add_item(1, &hf_sm_pkt_flt_id, enc::be);
+    (void) d.add_item(1, &hf_sm_pkt_flt_dir, enc::be);
+    (void) d.add_item(1, &hf_sm_pkt_flt_id, enc::be);
     d.step(1);
 
     /* Length of packet filter contents */
     auto pfclen = static_cast< int >(d.uint8());
-    d.add_item(1, &hf_sm_pf_len, enc::be);
+    // (void) d.add_item(1, &hf_sm_pf_len, enc::be);
     d.step(1);
 
     d.step(pfclen);
@@ -112,27 +113,27 @@ int dissect_packet_filters(dissector d, int rop, context* ctx) {
     auto k = 1;
     /* Packet filter contents */
     while (pfclen > 0) {
-        auto     start   = d.offset;
-        auto     subtree = d.add_item(-1, "Packet filter component %u", k);
-        use_tree ut(d, subtree);
+        const auto start   = d.offset;
+        auto       subtree = d.add_item(-1, "Packet filter component %u", k);
+        use_tree   ut(d, subtree);
         /* Each packet filter component shall be encoded as a sequence of a
          * one octet packet filter component type identifier and a fixed
          * length packet filter component value field. The packet filter
          * component type identifier shall be transmitted first.
          */
-        auto pf_type = d.uint8();
-        d.add_item(1, &hf_sm_pf_type, enc::be);
+        const auto pf_type = d.uint8();
+        (void) d.add_item(1, &hf_sm_pf_type, enc::be);
         d.step(1);
         /* Packet filter length contains the length of component type and
          * content */
-        auto consumed = dissect_packet_filter(d.slice(pfclen - 1), pf_type, ctx);
+        const auto consumed = dissect_packet_filter(d.slice(pfclen - 1), pf_type, ctx);
         d.step(consumed);
         subtree->set_length(d.offset - start);
 
         ++k;
     } // while(fclen)
 
-    return d.offset - start;
+    return d.offset - uc.offset;
 }
 const true_false_string tfs_segregation = {
     "Segregation requested",
@@ -172,7 +173,7 @@ int sm::dissect_qos_rules(dissector d, context* ctx) {
 
         /* Length of QoS rule Octet 5 - 6*/
         const auto length = static_cast< int >(d.ntohs());
-        (void) d.add_item(2, &hf_sm_length, enc::be);
+        // (void) d.add_item(2, &hf_sm_length, enc::be);
         d.step(2);
 
         subtree->set_length(length + 3);
