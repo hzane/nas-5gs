@@ -1,5 +1,5 @@
 #include "../dissect_mm_msg.hh"
-#include "../ts24007.hh"
+#include "../ber.hh"
 
 
 /*  8.2.12 De-registration request (UE originating de-registration)  */

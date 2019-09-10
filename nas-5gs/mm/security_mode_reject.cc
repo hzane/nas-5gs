@@ -1,5 +1,5 @@
 #include "../dissect_mm_msg.hh"
-#include "../ts24007.hh"
+#include "../ber.hh"
 
 /*  8.2.27 Security mode reject */
 int mm::dissect_security_mode_reject(dissector d, context* ctx) {    

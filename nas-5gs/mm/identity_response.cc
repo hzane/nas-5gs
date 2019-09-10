@@ -1,5 +1,5 @@
 #include "../dissect_mm_msg.hh"
-#include "../ts24007.hh"
+#include "../ber.hh"
 
 /* 8.2.22 Identity response  */
 int mm::dissect_identity_resp(dissector d, context* ctx) {    

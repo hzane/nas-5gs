@@ -1,5 +1,5 @@
 #include "../dissect_mm_msg.hh"
-#include "../ts24007.hh"
+#include "../ber.hh"
 
 /* 8.2.20 Configuration update complete */
 int mm::dissect_config_update_cmpl(dissector d, context* ctx) {    

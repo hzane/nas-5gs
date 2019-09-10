@@ -1,5 +1,5 @@
 #include "../dissect_mm_msg.hh"
-#include "../ts24007.hh"
+#include "../ber.hh"
 
 using namespace nas;
 using namespace mm;
@@ -29,7 +29,7 @@ int mm::dissect_security_mode_cmd(dissector d, context* ctx) {
 
     /*E-    IMEISV request    IMEISV request     9.11.3.28    O    TV    1*/
     // ELEM_OPT_TV_SHORT(0xE0, , DE_EMM_IMEISV_REQ, NULL);
-    consumed = dissect_elem_tv_short(nullptr, &imeisv_req, d, ctx);
+    consumed = dissect_opt_elem_tv_short(nullptr, &imeisv_req, d, ctx);
     d.step(consumed);
 
     /*57 Selected EPS NAS security algorithms EPS NAS security algorithms 9.11.3.25  O TV 2 */
