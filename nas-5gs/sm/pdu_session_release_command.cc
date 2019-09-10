@@ -1,6 +1,6 @@
 #include "../dissect_nas5g.hh"
 #include "../dissect_sm_msg.hh"
-#include "../ts24007.hh"
+#include "../ber.hh"
 #include "../common.hh"
 #include "../packet_info.hh"
 

@@ -325,7 +325,7 @@
     <ClCompile Include="sm\session_ambr.cc" />
     <ClCompile Include="sm\sm_pdu_dn_request_container.cc" />
     <ClCompile Include="sm\5gsm_status.cc" />
-    <ClCompile Include="ts24007.cc" />
+    <ClCompile Include="ber.cc" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common.hh" />
@@ -351,7 +351,7 @@
     <ClInclude Include="sm\sm_element_meta.hh" />
     <ClInclude Include="sm\sm_field_meta.hh" />
     <ClInclude Include="tree_meta.hh" />
-    <ClInclude Include="ts24007.hh" />
+    <ClInclude Include="ber.hh" />
     <ClInclude Include="tvbuff.hh" />
     <ClInclude Include="val_string.hh" />
   </ItemGroup>

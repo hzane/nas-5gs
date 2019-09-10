@@ -11,10 +11,10 @@ int mm::dissect_n3gpp_nw_provided_policies(dissector d, context* ctx) {
     /* no length check possible */
     return 1;
 }
-// Non - 3GPP NW policies Non - 3GPP NW provided policies 9.11.3.58
+// Non-3GPP NW policies Non-3GPP NW provided policies 9.11.3.58
 const element_meta mm::n3gpp_nw_provided_policies = {
     0xd0,
-    "",
+    "Non-3GPP NW provided policies",
     dissect_n3gpp_nw_provided_policies,
     nullptr,
 };

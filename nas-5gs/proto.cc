@@ -92,22 +92,27 @@ proto_item* proto_node::set_string(const string &v) {
     return this;
 }
 
+const field_meta hf_expert = {
+    "Expert", "expert",
+    ft::ft_expert,
+    fd::base_none,
+    nullptr,
+    nullptr,
+    nullptr,
+    0,
+};
 
-proto_item* proto_node::add_expert(packet_info* ,
+proto_item* proto_node::add_expert(packet_info* pinfo,
                                    tvbuff*      buf,
                                    int          start,
                                    int          len,
                                    const char*  format,
                                    ...) {
-    using namespace std;
-    auto item    = new proto_tree(buf->data, start, len, nullptr);
-
+    auto item = add_item(pinfo, buf, start, len, &hf_expert, enc::na);
     va_list args;
     va_start(args, format);
-    item->name = "expert:" + vformat(format, args);
+    item->text = vformat(format, args);
     va_end(args);
-
-    children.push_back(item);
     return item;
 }
 

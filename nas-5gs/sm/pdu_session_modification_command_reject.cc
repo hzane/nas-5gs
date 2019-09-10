@@ -1,6 +1,6 @@
 #include "../dissect_sm_msg.hh"
 #include "../packet_info.hh"
-#include "../ts24007.hh"
+#include "../ber.hh"
 
 /* 8.3.11	PDU session modification command reject */
 int sm::dissect_pdu_session_modification_command_reject(dissector d, context* ctx) {

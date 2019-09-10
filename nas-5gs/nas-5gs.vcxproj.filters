@@ -30,9 +30,6 @@
     <ClCompile Include="dissect_sm_msg.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ts24007.cc">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="field_meta.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -498,6 +495,9 @@
     <ClCompile Include="mm\s1_ue_security_capability.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ber.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="config.hh">
@@ -522,9 +522,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="tree_meta.hh">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ts24007.hh">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="val_string.hh">
@@ -573,6 +570,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="common.hh">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ber.hh">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

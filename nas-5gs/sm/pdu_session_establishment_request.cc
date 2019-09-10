@@ -2,7 +2,7 @@
 #include "../dissect_nas5g.hh"
 #include "../dissect_sm_msg.hh"
 #include "../packet_info.hh"
-#include "../ts24007.hh"
+#include "../ber.hh"
 
 using namespace cmn;
 using namespace nas;

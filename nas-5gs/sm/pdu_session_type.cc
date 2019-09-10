@@ -1,5 +1,5 @@
 #include "../dissect_sm_msg.hh"
-#include "../ts24007.hh"
+#include "../ber.hh"
 #include "../common.hh"
 
 /*  8.3.6 PDU session authentication result */

@@ -1,6 +1,6 @@
 #include "../dissect_sm_msg.hh"
 #include "../packet_info.hh"
-#include "../ts24007.hh"
+#include "../ber.hh"
 
 /* 8.3.6	PDU session authentication result */
 int sm::dissect_pdu_session_authentication_result(dissector d, context* ctx) {

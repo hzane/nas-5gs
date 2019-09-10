@@ -1,6 +1,6 @@
 #include "../dissect_nas5g.hh"
 #include "../dissect_sm_msg.hh"
-#include "../ts24007.hh"
+#include "../ber.hh"
 #include "../packet_info.hh"
 
 /* 8.3.12 PDU session release request */

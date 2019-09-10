@@ -21,13 +21,13 @@ int mm::dissect_nas_ksi(dissector d, context* ctx) {
 
 /* NAS key set identifier (octet 1) Bits 3  2   1 */
 extern const val_string mm::nas_eps_emm_nas_ksi_values[] = {
-    {0, ""},
-    {1, ""},
-    {2, ""},
-    {3, ""},
-    {4, ""},
-    {5, ""},
-    {6, ""},
+    {0, "0"},
+    {1, "1"},
+    {2, "2"},
+    {3, "3"},
+    {4, "4"},
+    {5, "5"},
+    {6, "6"},
     {7, "No key is available"},
     {0, nullptr},
 };
