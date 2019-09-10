@@ -236,12 +236,16 @@ int dissect_opt_elem_tv(const field_meta *,
     set_elem_presence(e, true);
     set_elem_type(e, iei);
 
-    auto subtree = d.add_item(-1, val_meta->name);
-    const use_tree ut(d, subtree);
+    proto_node* subtree = nullptr;
+    if (val_meta->name) {
+        subtree = d.add_item(-1, val_meta->name);
+        const use_tree ut(d, subtree);        
+    }
     d.step(1);
   
     const auto consumed = val_meta->fnc(d.use_elem(get_elem_data(e)), ctx);
-    subtree->set_length(consumed + 1);
+
+    if(subtree) subtree->set_length(consumed + 1);
     set_elem_length(e, consumed);
 
     return consumed + 1;
