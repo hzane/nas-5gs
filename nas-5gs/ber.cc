@@ -28,58 +28,58 @@ int dissect_elem_mandatory(const field_meta*   type_meta,
     return consumed;
 }
 
-int dissect_elem_t(const field_meta*   type_meta,
+int dissect_t(const field_meta*   type_meta,
                           const element_meta* val_meta,
                           dissector           d,
                           context*            ctx) {
-    unused(dissect_elem_t);
-    return dissect_elem_mandatory(type_meta, val_meta, d, dissect_opt_elem_t, ctx);
+    unused(dissect_t);
+    return dissect_elem_mandatory(type_meta, val_meta, d, dissect_opt_t, ctx);
 }
 
 
-int dissect_elem_lv(const field_meta*   type_meta,
+int dissect_lv(const field_meta*   type_meta,
                            const element_meta* val_meta,
                            dissector           d,
                            context*            ctx) {
-    return dissect_elem_mandatory(type_meta, val_meta, d, dissect_opt_elem_lv, ctx);
+    return dissect_elem_mandatory(type_meta, val_meta, d, dissect_opt_lv, ctx);
 }
-int dissect_elem_lv_e(const field_meta*   type_meta,
+int dissect_lv_e(const field_meta*   type_meta,
                              const element_meta* val_meta,
                              dissector           d,
                              context*            ctx) {
-    return dissect_elem_mandatory(type_meta, val_meta, d, dissect_opt_elem_lv_e, ctx);
+    return dissect_elem_mandatory(type_meta, val_meta, d, dissect_opt_lv_e, ctx);
 }
-int dissect_elem_v(const field_meta*   type_meta,
+int dissect_v(const field_meta*   type_meta,
                           const element_meta* val_meta,
                           dissector           d,
                           context*            ctx) {
-    return dissect_elem_mandatory(type_meta, val_meta, d, dissect_opt_elem_v, ctx);
+    return dissect_elem_mandatory(type_meta, val_meta, d, dissect_opt_v, ctx);
 }
-int dissect_elem_tv_short(const field_meta*   type_meta,
+int dissect_tv_short(const field_meta*   type_meta,
                                  const element_meta* val_meta,
                                  dissector           d,
                                  context*            ctx) {
-    return dissect_elem_mandatory(type_meta, val_meta, d, dissect_opt_elem_tv_short, ctx);
+    return dissect_elem_mandatory(type_meta, val_meta, d, dissect_opt_tv_short, ctx);
 }
-int dissect_elem_tv(const field_meta*   type_meta,
+int dissect_tv(const field_meta*   type_meta,
                            const element_meta* val_meta,
                            dissector           d,
                            context*            ctx) {
-    unused(dissect_elem_tv);
-    return dissect_elem_mandatory(type_meta, val_meta, d, dissect_opt_elem_tv, ctx);
+    unused(dissect_tv);
+    return dissect_elem_mandatory(type_meta, val_meta, d, dissect_opt_tv, ctx);
 }
 
 
-int dissect_elem_tlv(const field_meta*   type_meta,
+int dissect_tlv(const field_meta*   type_meta,
                             const element_meta* val_meta,
                             dissector           d,
                             context*            ctx) {
-    unused(dissect_elem_tlv);
-    return dissect_elem_mandatory(type_meta, val_meta, d, dissect_opt_elem_tlv, ctx);
+    unused(dissect_tlv);
+    return dissect_elem_mandatory(type_meta, val_meta, d, dissect_opt_tlv, ctx);
 }
 
 /*  Type (T) element dissector */
-int dissect_opt_elem_t(const field_meta *,
+int dissect_opt_t(const field_meta *,
                        const element_meta *val_meta,
                        dissector           d,
                        context *           ctx) {
@@ -106,7 +106,7 @@ int dissect_opt_elem_t(const field_meta *,
 // extern const field_meta *hf_gsm_a_length;
 
 /* * Length Value (LV) element dissector */
-int dissect_opt_elem_lv(const field_meta *,
+int dissect_opt_lv(const field_meta *,
                         const element_meta *val_meta,
                         dissector           d,
                         context *           ctx) {
@@ -137,7 +137,7 @@ int dissect_opt_elem_lv(const field_meta *,
 // const extern field_meta *hf_gsm_e_length;
 
 /* Length Value Extended(LV-E) element dissector */
-int dissect_opt_elem_lv_e(const field_meta *,
+int dissect_opt_lv_e(const field_meta *,
                           const element_meta *val_meta,
                           dissector           d,
                           context *           ctx) {
@@ -169,7 +169,7 @@ int dissect_opt_elem_lv_e(const field_meta *,
  * Length cannot be used in these functions, big problem if a element dissector
  * is not defined for these.
  */
-int dissect_opt_elem_v(const field_meta *,
+int dissect_opt_v(const field_meta *,
                        const element_meta *val_meta,
                        dissector           d,
                        context *           ctx) {
@@ -198,7 +198,7 @@ int dissect_opt_elem_v(const field_meta *,
  * Length cannot be used in these functions, big problem if a element dissector
  * is not defined for these.
  */
-int dissect_opt_elem_tv_short(const field_meta *,
+int dissect_opt_tv_short(const field_meta *,
                               const element_meta *val_meta,
                               dissector           d,
                               context *           ctx) {
@@ -207,8 +207,8 @@ int dissect_opt_elem_tv_short(const field_meta *,
 
     if (d.length <= 0) return not_present_diag(0, val_meta, ctx);
 
-    const auto iei = d.tvb->uint8(d.offset) >> 4u;
-    if (iei != val_meta->type && val_meta->type != 0xffu)
+    const auto iei = d.tvb->uint8(d.offset) & 0xf0u;
+    if (iei != (val_meta->type & 0xf0u) && val_meta->type != 0xffu)
         return not_present_diag(0, val_meta, ctx);
 
     set_elem_presence(e, true);
@@ -230,7 +230,7 @@ int dissect_opt_elem_tv_short(const field_meta *,
  * Length cannot be used in these functions, big problem if a element dissector
  * is not defined for these.
  */
-int dissect_opt_elem_tv(const field_meta *,
+int dissect_opt_tv(const field_meta *,
                         const element_meta *val_meta,
                         dissector           d,
                         context *           ctx) {
@@ -262,7 +262,7 @@ int dissect_opt_elem_tv(const field_meta *,
 }
 
 /* Type Length Value (TLV) element dissector */
-int dissect_opt_elem_tlv(const field_meta *,
+int dissect_opt_tlv(const field_meta *,
                          const element_meta *val_meta,
                          dissector           d,
                          context *           ctx) {
@@ -308,7 +308,7 @@ int dissect_opt_elem_tlv(const field_meta *,
  * octet 2 0/1 ext  length
  * octet 2a length
  */
-int dissect_opt_elem_telv(const field_meta *,
+int dissect_opt_telv(const field_meta *,
                           const element_meta *val_meta,
                           dissector           d,
                           context *           ctx) {
@@ -360,7 +360,7 @@ int dissect_opt_elem_telv(const field_meta *,
  * one or more octets and a maximum of 65535 octets (type 6). This category is used in EPS
  * only.
  */
-int dissect_opt_elem_tlv_e(const field_meta *,
+int dissect_opt_tlv_e(const field_meta *,
                            const element_meta *val_meta,
                            dissector           d,
                            context *           ctx) {

@@ -36,6 +36,18 @@ int mm::dissect_mm_capability(dissector d, context* ctx) {
     return 1;
 }
 
+using mm_cause = uint8_t;
+struct mm_capability {
+    bool sgc;
+    bool hccp_ciot;
+    bool n3data;
+    bool cp_ciot;
+    bool restrict_ec;
+    bool lpp;
+    bool ho_attach;
+    bool s1_mode;
+};
+
 namespace mm {
 const field_meta        hf_5gsr_vcc = {
     "5G-SRVCC from NG-RAN to UTRAN (5GSRVCC) capability",

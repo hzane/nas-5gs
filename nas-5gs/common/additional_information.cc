@@ -30,3 +30,5 @@ int cmn::dissect_additional_inf(dissector d, context* ctx) {
 
     return d.length;
 }
+
+using additional_info = string;

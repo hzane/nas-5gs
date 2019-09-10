@@ -31,3 +31,5 @@ extern const element_meta cmn::dnn = {
     dissect_dnn,
     nullptr,
 };
+
+using dnn = string;

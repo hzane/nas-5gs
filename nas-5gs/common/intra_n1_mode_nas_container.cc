@@ -24,6 +24,18 @@ included in specific information elements within some RRC messages sent to the U
     return uc.length;
 }
 
+using authentication_code = string;
+
+struct intra_n1_mode_container {
+    authentication_code auth_code;
+    uint8_t             integrity_protected_algo_type;
+    uint8_t             ciphering_algo_type;
+    uint8_t             ksi;    
+    bool                tsc;
+    bool                kacf;
+    uint8_t             sequence_no;
+};
+
 namespace cmn {
 // NAS security algorithms information element (see subclause 9.11.3.34
 const field_meta hf_int_prot_algo_type = {

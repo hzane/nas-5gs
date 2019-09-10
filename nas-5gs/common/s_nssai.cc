@@ -83,3 +83,14 @@ int cmn::dissect_s_nssai(dissector d, context* ctx) {
     
     return uc.length;
 }
+
+using sd = string;
+struct s_nssai {
+    uint8_t sst;
+    sd      sd;
+    bool    sd_presence;
+    bool    mapped_configured_sst_presence;
+    bool    mapped_configured_sd_presence;
+    uint8_t mapped_configured_sst;
+    uint8_t mapped_configured_sd;
+};

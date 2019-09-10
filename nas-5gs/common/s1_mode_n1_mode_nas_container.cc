@@ -6,25 +6,33 @@ int cmn::dissect_s1_to_n1_mode_container(dissector d, context* ctx) {
 
     /*The value part of the Intra N1 mode NAS transparent container information element is
 included in specific information elements within some RRC messages sent to the UE.*/
-    auto i = d.add_item(4, &hf_msg_auth_code, enc::be);
+    (void) d.add_item(4, &hf_msg_auth_code, enc::be);
     d.step(4);
 
-    i = d.add_item(1, &hf_int_prot_algo_type, enc::be);
-    i = d.add_item(1, &hf_ciphering_algo_type, enc::be);
+    (void) d.add_item(1, &hf_int_prot_algo_type, enc::be);
+    (void) d.add_item(1, &hf_ciphering_algo_type, enc::be);
     d.step(1);
 
-    i = d.add_item(1, &hf_ksi_5g, enc::be);
-    i = d.add_item(1, &hf_tsc, enc::be);
-    i = d.add_item(1, &hf_ncc, enc::be);
+    (void) d.add_item(1, &hf_ksi_5g, enc::be);
+    (void) d.add_item(1, &hf_tsc, enc::be);
+    (void) d.add_item(1, &hf_ncc, enc::be);
     d.step(1);
-
-    unused(i);
-
+    
     // oct 9-10 is spare
     d.step(2);
 
     return uc.length;
 }
+
+using auth_code = string;
+struct s12n1_container {
+    auth_code auth_code;
+    uint8_t   integrity_protected_algo_type;
+    uint8_t   ciphering_algo_type;
+    uint8_t   ksi;
+    bool      tsc;
+    bool      ncc;
+};
 
 namespace cmn {
 const true_false_string tfs_nas_5gs_mm_s1_mod = {

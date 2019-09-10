@@ -256,13 +256,3 @@ const field_meta sm::hf_sm_pf_type = {
     0x0,
 };
 
-const field_meta sm::hf_sm_rqos_b0 = {
-    "Reflective QoS(RqoS)",
-    "nas_5gs.sm.rqos",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &nas::tfs_supported_not_supported,
-    nullptr,
-    0x01,
-};

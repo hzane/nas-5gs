@@ -8,7 +8,7 @@ int mm::authentication_reject(dissector d, context* ctx) {
     const use_context uc(ctx, "authentication-reject", d, 0);
 
     /* 78    EAP message  9.11.2.2    O    TLV-E    7-1503 */
-    const auto consumed = dissect_opt_elem_tlv_e(nullptr, &cmn::eap_msg, d, ctx);
+    const auto consumed = dissect_opt_tlv_e(nullptr, &cmn::eap_msg, d, ctx);
     d.step(consumed);
     
     return uc.length;

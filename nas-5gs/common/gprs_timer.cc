@@ -58,3 +58,8 @@ int cmn::dissect_gprs_timer_set(dissector d, context *ctx) {
 }
 
 
+struct gprs_timer {
+    int         val;
+    int         mul;
+    const char *unit;
+};

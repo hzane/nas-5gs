@@ -74,7 +74,7 @@ const element_meta mm::last_v_tai = {
 const element_meta mm::s1_ue_net_cap = {
     0x17,
     "S1 UE network capability",
-    dissect_s1_ue_net_cap,
+    dissect_s1_ue_net_capability,
     nullptr,
 };
 
