@@ -1,7 +1,7 @@
 #include "../dissect_mm_msg.hh"
 
 // Payload container  9.11.3.39
-const element_meta mm::pld_cont = {
+const element_meta mm::payload_container = {
     0x7B,
     "Payload container",
     dissect_payload_container,
@@ -39,12 +39,13 @@ int mm::dissect_payload_container(dissector d, context* ctx) {
     switch (typi) {
     case 1: {
         /* N1 SM information */
-        dissect_nas5g_plain(d, ctx);
+        const auto consumed = dissect_nas5g_plain(d, ctx);
+        d.step(consumed);
     } break;
     case 2: {
         // SMS
-        auto i = d.add_item(d.length, &hf_payload_container_type, enc::na);
-        unused(i);
+        (void) d.add_item(d.length, &hf_payload_container_type, enc::na);
+        d.step(d.length);
         /*
         If the payload container type is set to "SMS", the payload container contents
         contain an SMS message (i.e. CP-DATA, CP-ACK or CP-ERROR) as defined in
@@ -68,12 +69,13 @@ int mm::dissect_payload_container(dissector d, context* ctx) {
     } break;
     case 3: {
         // LPP
-        auto i = d.add_item(d.length, &hf_payload_container_type, enc::na);
-        unused(i);
+        (void) d.add_item(d.length, &hf_payload_container_type, enc::na);
+        d.step(d.length);
     } break;
     case 5: {
         /* UE policy container */
-        dissect_updp(d, ctx);
+        const auto consumed = dissect_updp(d, ctx);
+        d.step(consumed);
     } break;
     case 6: {
         // UE parameters update transparent container
@@ -108,8 +110,8 @@ int mm::dissect_payload_container(dissector d, context* ctx) {
         according to figure 9.11.3.39.3 and figure 9.11.3.39.4.*/
     }
     default: {
-        auto i = d.add_item(d.length, &hf_payload_container_type, enc::na);
-        unused(i);
+        (void) d.add_item(d.length, &hf_payload_container_type, enc::na);
+        d.step(d.length);
     }
     }
 
@@ -141,7 +143,7 @@ using namespace mm;
 
 const field_meta mm::hf_pld_cont_entry_nie = {
     "Number of optional IEs",
-    "nas_5gs.mm.pld_cont.n_optional_ies",
+    "nas_5gs.mm.payload_container.n_optional_ies",
     ft::ft_uint8,
     fd::base_dec,
     nullptr,
@@ -151,7 +153,7 @@ const field_meta mm::hf_pld_cont_entry_nie = {
 };
 const field_meta mm::hf_pld_cont_entry_contents = {
     "Payload container entry contents",
-    "nas_5gs.mm.pld_cont.pcec",
+    "nas_5gs.mm.payload_container.pcec",
     ft::ft_bytes,
     fd::base_none,
     nullptr,
@@ -161,7 +163,7 @@ const field_meta mm::hf_pld_cont_entry_contents = {
 };
 const field_meta mm::hf_pld_optional_ie = {
     "Optional IE",
-    "nas_5gs.mm.pld_cont.optional_ie",
+    "nas_5gs.mm.payload_container.optional_ie",
     ft::ft_bytes,
     fd::base_none,
     nullptr,
@@ -184,7 +186,7 @@ const value_string pld_optional_ie_type_values[] = {
 };
 const field_meta hf_pld_optional_ie_type = {
     "Type of Optional IE",
-    "nas_5gs.mm.pld_cont.optional_ie.type",
+    "nas_5gs.mm.payload_container.optional_ie.type",
     ft::ft_uint8,
     fd::base_hex,
     pld_optional_ie_type_values,
@@ -194,7 +196,7 @@ const field_meta hf_pld_optional_ie_type = {
 };
 const field_meta hf_pld_optional_ie_length = {
     "Length of Optional IE",
-    "nas_5gs.mm.pld_cont.optional_ie.length",
+    "nas_5gs.mm.payload_container.optional_ie.length",
     ft::ft_uint8,
     fd::base_dec,
     nullptr,
@@ -204,7 +206,7 @@ const field_meta hf_pld_optional_ie_length = {
 };
 const field_meta hf_pld_optional_ie_value = {
     "Value of Optional IE",
-    "nas_5gs.mm.pld_cont.optional_ie.value",
+    "nas_5gs.mm.payload_container.optional_ie.value",
     ft::ft_bytes,
     fd::base_none,
     nullptr,

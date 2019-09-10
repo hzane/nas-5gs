@@ -10,134 +10,134 @@ int mm::dissect_registration_accept(dissector d, context* ctx) {
     const use_context uc(ctx, "registration-accept", d, 12);
 
     /*      5GS registration result    9.11.3.6    M    LV 2*/
-    auto consumed = dissect_elem_lv(nullptr, &registration_result, d, ctx);
+    auto consumed = dissect_lv(nullptr, &registration_result, d, ctx);
     d.step(consumed);
 
     /*77    5G-GUTI    5GS mobile identity 9.11.3.4    O    TLV-E    14 */
     // ELEM_OPT_TLV_E(0x77, , DE_NAS_5GS_MM_5GS_MOBILE_ID, " - 5G-GUTI");
-    consumed = dissect_opt_elem_tlv_e(nullptr, &guti_mobile_id, d, ctx);
+    consumed = dissect_opt_tlv_e(nullptr, &guti_mobile_id, d, ctx);
     d.step(consumed);
 
     /*4A    Equivalent PLMNs    PLMN list     9.11.3.45    O    TLV    5-47*/
     // ELEM_OPT_TLV(0x4a, , DE_PLMN_LIST, " - Equivalent PLMNs");
-    consumed = dissect_opt_elem_tlv(nullptr, &plmn_list, d, ctx);
+    consumed = dissect_opt_tlv(nullptr, &plmn_list, d, ctx);
     d.step(consumed);
 
     /*54    TAI list    Tracking area identity list     9.11.3.9    O    TLV    8-98*/
     // ELEM_OPT_TLV(0x54, , DE_NAS_5GS_MM_5GS_TA_ID_LIST, NULL);
-    consumed = dissect_opt_elem_tlv(nullptr, &ta_id_list, d, ctx);
+    consumed = dissect_opt_tlv(nullptr, &ta_id_list, d, ctx);
     d.step(consumed);
 
     /*15    Allowed NSSAI    NSSAI     9.11.3.37    O    TLV    4-74*/
     // ELEM_OPT_TLV(0x15, , DE_NAS_5GS_MM_NSSAI, " - Allowed NSSAI");
-    consumed = dissect_opt_elem_tlv(nullptr, &allowed_nssai, d, ctx);
+    consumed = dissect_opt_tlv(nullptr, &allowed_nssai, d, ctx);
     d.step(consumed);
 
     /*11    Rejected NSSAI    Rejected NSSAI     9.11.3.46    O    TLV    4-42*/
     // ELEM_OPT_TLV(0x11, , DE_NAS_5GS_MM_REJ_NSSAI, NULL);
-    consumed = dissect_opt_elem_tlv(nullptr, &rej_nssai, d, ctx);
+    consumed = dissect_opt_tlv(nullptr, &rej_nssai, d, ctx);
     d.step(consumed);
 
     /*31    Configured NSSAI    NSSAI 9.11.3.37    O    TLV    4-146 */
     // ELEM_OPT_TLV(0x31, , DE_NAS_5GS_MM_NSSAI, " - Configured NSSAI");
-    consumed = dissect_opt_elem_tlv(nullptr, &configured_nssai, d, ctx);
+    consumed = dissect_opt_tlv(nullptr, &configured_nssai, d, ctx);
     d.step(consumed);
 
     /*21    5GS network feature support   9.11.3.5    O TLV 3-5 */
     // ELEM_OPT_TLV(0x21, , DE_NAS_5GS_MM_5GS_NW_FEAT_SUP, NULL);
-    consumed = dissect_opt_elem_tlv(nullptr, &nw_feature_support, d, ctx);
+    consumed = dissect_opt_tlv(nullptr, &nw_feature_support, d, ctx);
     d.step(consumed);
 
     /*50    PDU session status   9.10.3.44    O    TLV    */
     // ELEM_OPT_TLV(0x50, , DE_NAS_5GS_MM_PDU_SES_STATUS, NULL);
-    consumed = dissect_opt_elem_tlv(nullptr, &pdu_ses_status, d, ctx);
+    consumed = dissect_opt_tlv(nullptr, &pdu_ses_status, d, ctx);
     d.step(consumed);
 
     /*26    PDU session reactivation result   9.11.3.42    O    TLV    4-32*/
-    consumed = dissect_opt_elem_tlv(nullptr, &pdu_ses_react_res, d, ctx);
+    consumed = dissect_opt_tlv(nullptr, &pdu_ses_react_res, d, ctx);
     d.step(consumed);
 
     /*72    PDU session reactivation result error cause 9.11.3.43  O TLV-E  5-515*/
     // ELEM_OPT_TLV_E(0x72, , DE_NAS_5GS_MM_PDU_SES_REACT_RES_ERR_C, NULL);
-    consumed = dissect_opt_elem_tlv_e(nullptr, &pdu_session_reactive_result_error_cause, d, ctx);
+    consumed = dissect_opt_tlv_e(nullptr, &pdu_session_reactive_result_error_cause, d, ctx);
     d.step(consumed);
 
     /*79    LADN information   9.11.3.30    O    TLV-E    11-1579*/
     // ELEM_OPT_TLV_E(0x79, , DE_NAS_5GS_MM_LADN_INF, NULL);
-    consumed = dissect_opt_elem_tlv_e(nullptr, &ladn_inf, d, ctx);
+    consumed = dissect_opt_tlv_e(nullptr, &ladn_inf, d, ctx);
     d.step(consumed);
 
     /*B-    MICO indication    9.11.3.31    O    TV    1*/
     // ELEM_OPT_TV_SHORT(0xb0, , DE_NAS_5GS_MM_MICO_IND, NULL);
-    consumed = dissect_opt_elem_tv_short(nullptr, &mico_ind, d, ctx);
+    consumed = dissect_opt_tv_short(nullptr, &mico_ind, d, ctx);
     d.step(consumed);
 
     /* 9-  Network slicing indication  9.11.3.36  O  TV 1 */
     // ELEM_OPT_TV_SHORT(0x90, , DE_NAS_5GS_MM_NW_SLICING_IND, NULL);
-    consumed = dissect_opt_elem_tv_short(nullptr, &nw_slicing_ind, d, ctx);
+    consumed = dissect_opt_tv_short(nullptr, &nw_slicing_ind, d, ctx);
     d.step(consumed);
 
     /*27    Service area list   9.11.3.49    O    TLV    6-194*/
     // ELEM_OPT_TLV(0x27, , DE_NAS_5GS_MM_SAL, NULL);
-    consumed = dissect_opt_elem_tlv(nullptr, &sal, d, ctx);
+    consumed = dissect_opt_tlv(nullptr, &sal, d, ctx);
     d.step(consumed);
 
     /*5E    T3512 value    GPRS timer 3     9.11.2.25    O    TLV    3*/
     // ELEM_OPT_TLV(0x5E, , DE_GPRS_TIMER_3, " - T3512 value");
-    consumed = dissect_opt_elem_tlv(nullptr, &t3512_gprs_timer_3, d, ctx);
+    consumed = dissect_opt_tlv(nullptr, &t3512_gprs_timer_3, d, ctx);
     d.step(consumed);
 
     /*5D    Non-3GPP de-registration timer value  GPRS timer 2 9.11.2.4  O TLV 3*/
     // ELEM_OPT_TLV(0x5D, , DE_GPRS_TIMER_2, " - Non-3GPP de-registration timer value");
-    consumed = dissect_opt_elem_tlv(nullptr, &de_reg_timer_gprs_timer2, d, ctx);
+    consumed = dissect_opt_tlv(nullptr, &de_reg_timer_gprs_timer2, d, ctx);
     d.step(consumed);
 
     /*16    T3502 value    GPRS timer 2     9.11.2.4     O    TLV    3*/
     // ELEM_OPT_TLV(0x16, , DE_GPRS_TIMER_2, " - T3502 value");
-    consumed = dissect_opt_elem_tlv(nullptr, &t3502_gprs_timer_2, d, ctx);
+    consumed = dissect_opt_tlv(nullptr, &t3502_gprs_timer_2, d, ctx);
     d.step(consumed);
 
     /*34  Emergency number list  9.11.3.23 O   TLV  5-50*/
     // ELEM_OPT_TLV(0x34, , DE_EMERGENCY_NUM_LIST, NULL);
-    consumed = dissect_opt_elem_tlv(nullptr, &emerg_num_list, d, ctx);
+    consumed = dissect_opt_tlv(nullptr, &emerg_num_list, d, ctx);
     d.step(consumed);
 
     /*7A    Extended emergency number list  9.11.3.26  O    TLV-E    TBD*/
     // ELEM_OPT_TLV(0x7A, , DE_EMM_EXT_EMERG_NUM_LIST, NULL);
-    consumed = dissect_opt_elem_tlv_e(nullptr, &emerg_num_list_7a, d, ctx);
+    consumed = dissect_opt_tlv_e(nullptr, &emerg_num_list_7a, d, ctx);
     d.step(consumed);
 
     /*73    SOR transparent container   9.11.3.51    O    TLV-E 20-2048 */
     // ELEM_OPT_TLV_E(0x73, , DE_NAS_5GS_MM_SOR_TRASP_CONT, NULL);
-    consumed = dissect_opt_elem_tlv_e(nullptr, &sor_trans_cont, d, ctx);
+    consumed = dissect_opt_tlv_e(nullptr, &sor_trans_cont, d, ctx);
     d.step(consumed);
 
     /*78    EAP message  9.11.2.2    O    TLV-E    7-1503 */
     // ELEM_OPT_TLV_E(0x78, , DE_NAS_5GS_CMN_EAP_MESSAGE, NULL);
-    consumed = dissect_opt_elem_tlv_e(nullptr, &eap_message, d, ctx);
+    consumed = dissect_opt_tlv_e(nullptr, &eap_message, d, ctx);
     d.step(consumed);
 
     /* A-    NSSAI inclusion mode  9.11.3.37A    O    TV    1 */
     // ELEM_OPT_TV_SHORT(0xA0, , DE_NAS_5GS_MM_NSSAI_INC_MODE, NULL);
-    consumed = dissect_opt_elem_tv_short(nullptr, &nssai_inclusion_mode, d, ctx);
+    consumed = dissect_opt_tv_short(nullptr, &nssai_inclusion_mode, d, ctx);
     d.step(consumed);
 
     /* 76    Operator-defined access category definitions 9.11.3.38    O    TLV-E    3-n */
     // ELEM_OPT_TLV_E(0x76, , DE_NAS_5GS_MM_OP_DEF_ACC_CAT_DEF, NULL);
-    consumed = dissect_opt_elem_tlv_e(nullptr, &operator_defined_acd, d, ctx);
+    consumed = dissect_opt_tlv_e(nullptr, &operator_defined_acd, d, ctx);
     d.step(consumed);
 
     /* 51    Negotiated DRX parameters 9.11.3.2A    O    TLV    3 */
     // ELEM_OPT_TLV(0x51,,DE_NAS_5GS_MM_5GS_DRX_PARAM," -  Negotiated DRX parameters");
-    consumed = dissect_opt_elem_tlv(nullptr, &nego_drx_param, d, ctx);
+    consumed = dissect_opt_tlv(nullptr, &nego_drx_param, d, ctx);
     d.step(consumed);
 
     // D- Non-3GPP NW policies Non - 3GPP NW provided policies 9.11.3.58 O TV 1
-    consumed = dissect_opt_elem_tv_short(nullptr, &n3gpp_nw_provided_policies, d, ctx);
+    consumed = dissect_opt_tv_short(nullptr, &n3gpp_nw_provided_policies, d, ctx);
     d.step(consumed);
 
     // 60	EPS bearer context status    9.11.3.59 O TLV 4
-    consumed = dissect_opt_elem_tlv(nullptr, &eps_bearer_ctx_status, d, ctx);
+    consumed = dissect_opt_tlv(nullptr, &eps_bearer_ctx_status, d, ctx);
     d.step(consumed);
 
     // xx Negotiated extended DRX parameters Extended DRX parameters 9.11.3.60 O TLV 3
