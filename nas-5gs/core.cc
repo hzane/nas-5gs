@@ -54,7 +54,7 @@ string bits7_string(const uint8_t* data, int len){
 
 string   ipv6_link_local_string(const uint8_t* data, int len) {
     if (!data || !len) return string();
-    
+
     std::stringstream ss;
     ss << "fe80:";
     for (auto i = 0; i < len; i++) {
@@ -107,7 +107,7 @@ uint32_t get_ext_ambr_unit(uint32_t unit, const char** unit_str) {
 string ambr_string(const uint8_t*d, int length) {
     if (!d || length <= 0) return string();
     const auto unit = uint32_t(d[0]);
-    const auto val  = n2uint16(d + 1);    
+    const auto val  = n2uint16(d + 1);
     return ambr_string(val, unit);
 }
 
@@ -122,7 +122,7 @@ string bstrn_string(const uint8_t*d, int len){
     if (!d || !len) return string();
 
     string str(d, d + len);
-    
+
     for (size_t i = 0; i < str.size();) {
         const auto next = str[i];
         str[i]          = '.';
@@ -411,5 +411,16 @@ string utcz_string(const uint8_t*d){
     return formats("GMT %c %d hours %d minutes", sign, h, quarters);
 }
 
-
-
+string w2utf8(const wchar_t* s) {
+#if defined(_WIN32) || defined(_WIN64)
+    const auto sz  = wcslen(s);
+    const auto out = new char[sz * 4 + 1]; // large enough
+    (void) WideCharToMultiByte(
+        CP_UTF8, 0, s, -1, out, static_cast< int >(sz), nullptr, nullptr);
+    string ret(out);
+    delete[]out;
+    return ret;
+#else
+    return string();
+#endif
+}

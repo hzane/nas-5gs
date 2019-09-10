@@ -2,8 +2,10 @@
 #include "tvbuff.hh"
 
 string field_meta::format(const uint8_t*p , int length, uint32_t enc) const {
-    if (!p || length == 0) return string();
-    if (ftype == ft::none || ftype == ft::protocol) return string();
+    if (!p || length <= 0) return string();
+    if (ftype == ft::none || ftype == ft::protocol || ftype == ft::ft_struct ||
+        ftype == ft::ft_expert)
+        return string();
 
     if (ftype == ft::ft_boolean) {
         auto v  = *p;
@@ -43,9 +45,9 @@ string field_meta::format(const uint8_t*p , int length, uint32_t enc) const {
         case fd::mac:
             return format_hex(p, length, ":");
         case fd::mcc:
-            return mcc_aux(p, length);
+            return mcc_string(p, length);
         case fd::mnc:
-            return mnc_aux(p, length);
+            return mcc_mnc_string(p, length);
         case fd::gmt:
             return gmt_string(p, length);
         case fd::timezone:

@@ -44,6 +44,7 @@ inline extern const uint32_t ft_bytes  = 20;
 inline extern const uint32_t ft_char   = 22;
 inline extern const uint32_t ft_nibble = 23;
 inline extern const uint32_t ft_expert = 26;
+inline extern const uint32_t ft_struct = 27;
 
 inline bool is_unsigned(uint32_t t) { return (t & ft_unsigned); }
 inline bool is_signed(uint32_t t) { return (t & ft_signed); }
