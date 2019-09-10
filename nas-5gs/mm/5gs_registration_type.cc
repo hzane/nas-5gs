@@ -1,5 +1,5 @@
 #include "../dissect_mm_msg.hh"
-#include "../ts24007.hh"
+#include "../ber.hh"
 
 /* 9.11.3.7    5GS registration type */
 int mm::dissect_registration_request_type(dissector d, context* ctx) {

@@ -53,7 +53,7 @@ int dissect_nas5g_security_protected(dissector d, context* ctx){
 
 int dissect_nas5g_plain(dissector d, context* ctx) {
     /* Plain NAS 5GS Message */
-    const use_context uc(ctx, "Plain NAS 5GS Message", d, 0);
+    const use_context uc(ctx, "plain-nas-message", d, 0);
 
     /* Extended protocol discriminator  octet 1 */
     const auto epd = d.uint8();

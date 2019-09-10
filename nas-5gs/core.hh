@@ -62,3 +62,5 @@ struct message_meta {
 typedef message_meta element_meta;
 
 inline const char* safe_str(const char* v) { return (v && v[0] != '\n') ? v : ""; }
+
+string w2utf8(std::wstring const& w);
