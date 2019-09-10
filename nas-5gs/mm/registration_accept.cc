@@ -45,7 +45,7 @@ int mm::dissect_registration_accept(dissector d, context* ctx) {
 
     /*21    5GS network feature support   9.11.3.5    O TLV 3-5 */
     // ELEM_OPT_TLV(0x21, , DE_NAS_5GS_MM_5GS_NW_FEAT_SUP, NULL);
-    consumed = dissect_opt_elem_tlv(nullptr, &nw_feat_sup, d, ctx);
+    consumed = dissect_opt_elem_tlv(nullptr, &nw_feature_support, d, ctx);
     d.step(consumed);
 
     /*50    PDU session status   9.10.3.44    O    TLV    */
@@ -54,7 +54,6 @@ int mm::dissect_registration_accept(dissector d, context* ctx) {
     d.step(consumed);
 
     /*26    PDU session reactivation result   9.11.3.42    O    TLV    4-32*/
-    // ELEM_OPT_TLV(0x26, , DE_NAS_5GS_MM_PDU_SES_REACT_RES, NULL);
     consumed = dissect_opt_elem_tlv(nullptr, &pdu_ses_react_res, d, ctx);
     d.step(consumed);
 
@@ -103,9 +102,9 @@ int mm::dissect_registration_accept(dissector d, context* ctx) {
     consumed = dissect_opt_elem_tlv(nullptr, &emerg_num_list, d, ctx);
     d.step(consumed);
 
-    /*7A    Extended emergency number list  9.11.3.26  O    TLV    TBD*/
+    /*7A    Extended emergency number list  9.11.3.26  O    TLV-E    TBD*/
     // ELEM_OPT_TLV(0x7A, , DE_EMM_EXT_EMERG_NUM_LIST, NULL);
-    consumed = dissect_opt_elem_tlv(nullptr, &emerg_num_list_7a, d, ctx);
+    consumed = dissect_opt_elem_tlv_e(nullptr, &emerg_num_list_7a, d, ctx);
     d.step(consumed);
 
     /*73    SOR transparent container   9.11.3.51    O    TLV-E 20-2048 */
@@ -123,7 +122,7 @@ int mm::dissect_registration_accept(dissector d, context* ctx) {
     consumed = dissect_opt_elem_tv_short(nullptr, &nssai_inclusion_mode, d, ctx);
     d.step(consumed);
 
-    /* 76    Operator-defined access category definitions 9.11.3.38    O    TLV-E    3-TBD */
+    /* 76    Operator-defined access category definitions 9.11.3.38    O    TLV-E    3-n */
     // ELEM_OPT_TLV_E(0x76, , DE_NAS_5GS_MM_OP_DEF_ACC_CAT_DEF, NULL);
     consumed = dissect_opt_elem_tlv_e(nullptr, &operator_defined_acd, d, ctx);
     d.step(consumed);
@@ -133,8 +132,8 @@ int mm::dissect_registration_accept(dissector d, context* ctx) {
     consumed = dissect_opt_elem_tlv(nullptr, &nego_drx_param, d, ctx);
     d.step(consumed);
 
-    // D - Non - 3GPP NW policies Non - 3GPP NW provided policies 9.11.3.58 O TV 1
-    consumed = dissect_opt_elem_tv(nullptr, &n3gpp_nw_provided_policies, d, ctx);
+    // D- Non-3GPP NW policies Non - 3GPP NW provided policies 9.11.3.58 O TV 1
+    consumed = dissect_opt_elem_tv_short(nullptr, &n3gpp_nw_provided_policies, d, ctx);
     d.step(consumed);
 
     // 60	EPS bearer context status    9.11.3.59 O TLV 4
@@ -166,7 +165,7 @@ const element_meta sal = {
 const element_meta t3512_gprs_timer_3 = {
     0x5E,
     "GPRS timer 3 - T3512 value",
-    dissect_gprs_timer3,
+    dissect_gprs_timer3_set,
     nullptr,
 };
 
@@ -174,7 +173,7 @@ const element_meta t3512_gprs_timer_3 = {
 const element_meta de_reg_timer_gprs_timer2 = {
     0x5D,
     "GPRS timer 2 - Non-3GPP de-registration timer value",
-    dissect_gprs_timer2,
+    dissect_gprs_timer2_set,
     nullptr,
 };
 
@@ -182,7 +181,7 @@ const element_meta de_reg_timer_gprs_timer2 = {
 const element_meta t3502_gprs_timer_2 = {
     0x16,
     "GPRS timer 2 - T3502 value",
-    dissect_gprs_timer2,
+    dissect_gprs_timer2_set,
     nullptr,
 };
 

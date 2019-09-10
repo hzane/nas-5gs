@@ -27,11 +27,13 @@ int mm::dissect_nw_feature_support(dissector d, context* ctx) {
         &hf_nwfs_5gup_ciot_b6,
         nullptr,
     };
-    d.add_bits(oct4);
-    d.step(1);
+    // octet 4 may be non-exist
+    if (d.length > 0) {
+        d.add_bits(oct4);
+        d.step(1);        
+    }
 
     // oct 5 is optional
-
     return uc.length; // 1-3
 }
 
@@ -248,7 +250,7 @@ const field_meta hf_nwfs_b7 = {
 }
 
 // 5GS network feature support   9.11.3.5
-const element_meta mm::nw_feat_sup = {
+const element_meta mm::nw_feature_support = {
     0x21,
     "5GS network feature support",
     dissect_nw_feature_support,
