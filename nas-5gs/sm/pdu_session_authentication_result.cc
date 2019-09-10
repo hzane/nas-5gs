@@ -10,11 +10,11 @@ int sm::dissect_pdu_session_authentication_result(dissector d, context* ctx) {
     down_link(d.pinfo);
 
     /*78  EAP message 9.10.2.2    O    TLV-E    7 - 1503*/
-    auto consumed = dissect_opt_elem_tlv_e(nullptr, &cmn::eap_msg, d, ctx);
+    auto consumed = dissect_opt_tlv_e(nullptr, &cmn::eap_msg, d, ctx);
     d.step(consumed);
 
     /* 7B    Extended protocol configuration options  9.11.4.6 O TLV-E    4 - 65538*/
-    consumed = dissect_opt_elem_tlv_e(nullptr, &ext_pco, d, ctx);
+    consumed = dissect_opt_tlv_e(nullptr, &ext_pco, d, ctx);
     d.step(consumed);
 
     return uc.length;
