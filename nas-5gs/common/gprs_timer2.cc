@@ -14,7 +14,7 @@ static const value_string gsm_a_gm_gprs_timer_unit_vals[] = {
 #endif
 const field_meta hf_gprs_timer2 = {
     "GPRS Timer 2",
-    "gsm_a.gm.gmm.gprs_timer2",
+    "gsm.timer2",
     ft::ft_uint8,
     fd::timer2,
     nullptr,
@@ -25,7 +25,7 @@ const field_meta hf_gprs_timer2 = {
 #if 0
 const field_meta hf_gprs_timer2_unit = {
     "Unit",
-    "gsm_a.gm.gmm.gprs_timer2_unit",
+    "gsm.timer2.unit",
     ft::ft_uint8,
     fd::base_dec,
     gsm_a_gm_gprs_timer_unit_vals,
@@ -34,8 +34,8 @@ const field_meta hf_gprs_timer2_unit = {
     0xe0,
 };
 const field_meta hf_gprs_timer2_value = {
-    "Timer value",
-    "gsm_a.gm.gmm.gprs_timer2_value",
+    "Timer 2 value",
+    "gsm.timer2.value",
     ft::ft_uint8,
     fd::base_dec,
     nullptr,

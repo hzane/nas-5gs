@@ -61,27 +61,17 @@ int mm::dissect_mobile_id(dissector d, context* ctx) {
 
     return uc.length;
 }
-struct mobile_id_tmei {};
-struct mobile_id_tmsi{};
-struct mobile_id_imeisv {
-    
-};
-struct mobile_id {
-    
-};
-struct mobile_id_mac {
-    
-};
+
 // type_id = 6, MAC address
 int mm::dissect_mobile_id_mac(dissector d, context* ctx) {
     const use_context uc(ctx, "mobile-id-mac", d, 0);
 
-    (void) d.add_item(1, &hf_mm_type_id, enc::be);    
+    (void) d.add_item(1, &hf_mm_type_id, enc::be);
     d.step(1);
 
     (void) d.add_item(6, &hf_mac_address, enc::be);
     d.step(6);
-    
+
     return 7;
 }
 
@@ -98,7 +88,7 @@ int mm::dissect_mobile_id_noid(dissector d, context* ctx) {
 int mm::dissect_mobile_id_5gstmsi(dissector d, context* ctx) {
     const use_context uc(ctx, "mobile-id-5gs-tmis", d, 0);
 
-    (void) d.add_item(1, &hf_mm_type_id, enc::be);    
+    (void) d.add_item(1, &hf_mm_type_id, enc::be);
     d.step(1);
 
     /* AMF Set ID */
@@ -156,7 +146,7 @@ int mm::dissect_mobile_id_suci(dissector d, context* ctx) {
         d.step(d.length);
     } else if (supi_fmt == 1) {
         // nai, network specific identifier
-        (void) d.add_item(d.length, &hf_nas_5gs_mm_suci_nai, enc::be);        
+        (void) d.add_item(d.length, &hf_nas_5gs_mm_suci_nai, enc::be);
     } else {
         diag("unknown supi format %d\n", supi_fmt);
     }
@@ -184,7 +174,7 @@ int mm::dissect_mobile_id_5gguti(dissector d, context* ctx) {
     (void) d.add_item(2, &hf_amf_set_id, enc::be);
     d.step(1);
 
-    /* AMF AMF Pointer*/    
+    /* AMF AMF Pointer*/
     (void) d.add_item(1, &hf_amf_pointer, enc::be);
     d.step(1);
 
@@ -203,7 +193,7 @@ int mm::dissect_mobile_id_imei(dissector d, context* ctx) {
     // The format of the IMEI is described in 3GPP TS 23.003
     (void) d.add_item(d.length, &hf_nas_5gs_mm_imeisv, enc::be);
     d.step(d.length);
-    
+
     return uc.length;
 }
 

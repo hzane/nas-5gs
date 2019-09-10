@@ -57,7 +57,7 @@ const field_meta hf_mapped_conf_ssd = {
 /* 9.11.2.8    S-NSSAI */
 int cmn::dissect_s_nssai(dissector d, context* ctx) {
     const use_context uc(ctx, "s-nssai", d, 0);
-    
+
     /* SST    octet 3
      * This field contains the 8 bit SST value. The coding of the SST value part is
      * defined in 3GPP TS 23.003
@@ -80,17 +80,7 @@ int cmn::dissect_s_nssai(dissector d, context* ctx) {
     /* Mapped configured SD    octet 8 - octet 10* */
     (void) d.add_item(3, &hf_mapped_conf_ssd, enc::be);
     d.step(3);
-    
+
     return uc.length;
 }
 
-using sd = string;
-struct s_nssai {
-    uint8_t sst;
-    sd      sd;
-    bool    sd_presence;
-    bool    mapped_configured_sst_presence;
-    bool    mapped_configured_sd_presence;
-    uint8_t mapped_configured_sst;
-    uint8_t mapped_configured_sd;
-};

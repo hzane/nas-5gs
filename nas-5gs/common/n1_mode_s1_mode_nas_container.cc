@@ -4,7 +4,6 @@
 // 9.11.2.7 N1 mode to S1 mode NAS transparent container page.350
 int cmn::dissect_n1_to_s1_mode_container(dissector d, context* ctx) {
     const use_context uc(ctx, "n1-mode-to-s1-mode-transparent-container", d, 0);
-    // a type 3 information element with a length of 2 octets
     auto i = d.add_item(1, &hf_seq_no, enc::be);
     d.step(1);
 
@@ -13,9 +12,6 @@ int cmn::dissect_n1_to_s1_mode_container(dissector d, context* ctx) {
     return uc.length;
 }
 
-struct n12s1_container {
-    uint8_t sequence_no;
-};
 
 namespace cmn {
 /* *    9.11.3.56    UE status */

@@ -33,4 +33,3 @@ const element_meta cmn::eap_msg = {
     nullptr,
 };
 
-using eap = string;

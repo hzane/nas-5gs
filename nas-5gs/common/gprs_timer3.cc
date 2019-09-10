@@ -16,7 +16,7 @@ static const value_string gsm_a_gm_gprs_timer3_unit_vals[] = {
 #endif
 const field_meta hf_gprs_timer3 = {
     "GPRS Timer 3",
-    "gsm_a.gm.gmm.gprs_timer3",
+    "gsm.timer3",
     ft::ft_uint8,
     fd::timer3,
     nullptr,

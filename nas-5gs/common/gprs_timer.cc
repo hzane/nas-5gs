@@ -22,28 +22,7 @@ const field_meta hf_gprs_timer = {
     nullptr,
     0x0,
 };
-#if 0
-const field_meta hf_gprs_timer_unit = {
-    "Unit",
-    "gsm_a.gm.gmm.gprs_timer_unit",
-    ft::ft_uint8,
-    fd::base_dec,
-    (gsm_a_gm_gprs_timer_unit_vals),
-    nullptr,
-    nullptr,
-    0xe0,
-};
-const field_meta hf_gprs_timer_value = {
-    "Timer value",
-    "gsm_a.gm.gmm.gprs_timer_value",
-    ft::ft_uint8,
-    fd::base_dec,
-    nullptr,
-    nullptr,
-    nullptr,
-    0x1f,
-};
-#endif
+
 }
 
 // can only be used in opt_elem_tlv
@@ -56,10 +35,3 @@ int cmn::dissect_gprs_timer_set(dissector d, context *ctx) {
     /* no length check possible */
     return 1;
 }
-
-
-struct gprs_timer {
-    int         val;
-    int         mul;
-    const char *unit;
-};

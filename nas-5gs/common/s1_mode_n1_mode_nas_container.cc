@@ -17,22 +17,13 @@ included in specific information elements within some RRC messages sent to the U
     (void) d.add_item(1, &hf_tsc, enc::be);
     (void) d.add_item(1, &hf_ncc, enc::be);
     d.step(1);
-    
+
     // oct 9-10 is spare
     d.step(2);
 
     return uc.length;
 }
 
-using auth_code = string;
-struct s12n1_container {
-    auth_code auth_code;
-    uint8_t   integrity_protected_algo_type;
-    uint8_t   ciphering_algo_type;
-    uint8_t   ksi;
-    bool      tsc;
-    bool      ncc;
-};
 
 namespace cmn {
 const true_false_string tfs_nas_5gs_mm_s1_mod = {

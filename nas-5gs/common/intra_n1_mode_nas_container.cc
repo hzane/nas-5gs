@@ -10,31 +10,19 @@ included in specific information elements within some RRC messages sent to the U
     auto i = d.add_item(4, &hf_msg_auth_code, enc::be);
     d.step(4);
 
-    i = d.add_item(1, &hf_int_prot_algo_type, enc::be);
-    i = d.add_item(1, &hf_ciphering_algo_type, enc::be);
+    (void) d.add_item(1, &hf_int_prot_algo_type, enc::be);
+    (void) d.add_item(1, &hf_ciphering_algo_type, enc::be);
     d.step(1);
 
-    i = d.add_item(1, &hf_ksi_5g, enc::be);
-    i = d.add_item(1, &hf_tsc, enc::be);
-    i = d.add_item(1, &hf_kacf, enc::be);
+    (void) d.add_item(1, &hf_ksi_5g, enc::be);
+    (void) d.add_item(1, &hf_tsc, enc::be);
+    (void) d.add_item(1, &hf_kacf, enc::be);
     d.step(1);
 
-    i = d.add_item(1, &hf_seq_no, enc::be);
-    unused(i);
+    (void) d.add_item(1, &hf_seq_no, enc::be);
+
     return uc.length;
 }
-
-using authentication_code = string;
-
-struct intra_n1_mode_container {
-    authentication_code auth_code;
-    uint8_t             integrity_protected_algo_type;
-    uint8_t             ciphering_algo_type;
-    uint8_t             ksi;    
-    bool                tsc;
-    bool                kacf;
-    uint8_t             sequence_no;
-};
 
 namespace cmn {
 // NAS security algorithms information element (see subclause 9.11.3.34
@@ -102,4 +90,4 @@ const field_meta hf_seq_no              = {
     nullptr,
     0,
 };
-} 
+}

@@ -11,7 +11,6 @@ int mm::dissect_5gs_id_type(dissector d, context* ctx) {
     unused(i);
     return 1;
 }
-using identity_type = uint8_t;
 
 /*5GS mobile identity     5GS mobile identity 9.11.3.4    */
 const val_string mm::identity_type_values[] = {
