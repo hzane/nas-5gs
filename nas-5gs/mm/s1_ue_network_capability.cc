@@ -5,7 +5,7 @@ using namespace nas;
 
 // 9.11.3.48 S1 UE network capability page.391
 // See subclause 9.9.3.34 in 3GPP TS 24.301 [15].
-int mm::dissect_s1_ue_net_cap(dissector d, context* ctx) {
+int mm::dissect_s1_ue_net_capability(dissector d, context* ctx) {
     const use_context        uc(ctx, "s1-ue-network-capablility", d, 0);
 
     static const field_meta* oct3_flags[] = {
@@ -142,7 +142,7 @@ int mm::dissect_s1_ue_net_cap(dissector d, context* ctx) {
     d.add_bits(oct9_flags);
     d.step(1);
 
-    while (d.length >= 0) {
+    while (d.length > 0) {
         (void) d.add_item(1, &hf_nas_eps_spare_bits, enc::be);
         d.step(1);
     }
