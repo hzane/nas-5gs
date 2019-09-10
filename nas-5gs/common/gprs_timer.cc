@@ -46,10 +46,11 @@ const field_meta hf_gprs_timer_value = {
 #endif
 }
 
-int cmn::dissect_gprs_timer(dissector d, context *ctx) {
+// can only be used in opt_elem_tlv
+int cmn::dissect_gprs_timer_set(dissector d, context *ctx) {
     const use_context uc(ctx, "gprs-timer", d, -1);
 
-    d.tree->set_item(1, &hf_gprs_timer, enc::be);
+    (void) d.tree->set_item(1, &hf_gprs_timer, enc::be);
     d.step(1);
 
     /* no length check possible */

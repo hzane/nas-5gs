@@ -247,7 +247,7 @@ const field_meta nas::hf_service_request_msg_id = {
 const element_meta nas::t3348_gprs_timer3{
     0xff,
     "GPRS timer3 - T4448 value",
-    dissect_gprs_timer3,
+    dissect_gprs_timer3_set,
     nullptr,
 };
 

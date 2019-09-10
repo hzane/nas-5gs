@@ -54,7 +54,7 @@ int mm::dissect_dl_nas_transp(dissector d, context* ctx) {
 extern const element_meta mm::backoff_gprs_timer3 = {
     0x37,
     "GPRS timer 3 - Back-off timer",
-    dissect_gprs_timer3,
+    dissect_gprs_timer3_set,
     nullptr,
 };
 

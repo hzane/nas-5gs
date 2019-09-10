@@ -33,6 +33,6 @@ int mm::dissect_dereg_req_ue_term(dissector d, context* ctx) {
 extern const element_meta mm::t3346_gprs_timer2 = {
     0x5f,
     "GPRS timer 2 - T3346 value",
-    dissect_gprs_timer2,
+    dissect_gprs_timer2_set,
     nullptr,
 };

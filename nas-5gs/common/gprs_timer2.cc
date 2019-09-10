@@ -47,9 +47,10 @@ const field_meta hf_gprs_timer2_value = {
 } // namespace mm
 
 /* * 3GPP TS 24.008 g10 10.5.7.4 */
-int cmn::dissect_gprs_timer2(dissector d, context *ctx) {
+// can only be used in opt_elem_tlv
+int cmn::dissect_gprs_timer2_set(dissector d, context *ctx) {
 
-    d.tree->set_item(1, &hf_gprs_timer2, enc::be);
+    (void) d.tree->set_item(1, &hf_gprs_timer2, enc::be);
     d.step(1);
 
     return 1;

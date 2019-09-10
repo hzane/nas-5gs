@@ -156,7 +156,7 @@ extern const message_meta sm::msgs[] = {
 const element_meta sm::backoff_gprs_timer3 = {
     0x37,
     "GPRS timer 3 - Back-off timer value",
-    dissect_gprs_timer3,
+    dissect_gprs_timer3_set,
     nullptr,
 };
 
@@ -164,7 +164,7 @@ const element_meta sm::backoff_gprs_timer3 = {
 const element_meta sm::rq_gprs_timer = {
     0x56,
     "GPRS timer- RQ timer time",
-    dissect_gprs_timer,
+    dissect_gprs_timer_set,
     nullptr,
 };
 

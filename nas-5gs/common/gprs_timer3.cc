@@ -27,7 +27,8 @@ const field_meta hf_gprs_timer3 = {
 } // namespace
 
 /*  [10] 10.5.7.4a */
-int cmn::dissect_gprs_timer3(dissector d, context *ctx) {
+// can only be used in opt_elem_tlv
+int cmn::dissect_gprs_timer3_set(dissector d, context *ctx) {
     use_context uc(ctx, "gprs-timer-3", d, -1);
 
     (void) d.tree->set_item(1, &hf_gprs_timer3, enc::be);
