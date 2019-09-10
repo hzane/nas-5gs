@@ -1,7 +1,14 @@
-#include "ts24007.hh"
+#include "ber.hh"
 #include "dissect_nas5g.hh"
 #include "field_meta.hh"
 
+inline int not_present_diag(int length, const element_meta* meta, context* ctx) {
+    if (!meta || !meta->name) return length;
+    if (length<=0) {
+        diag("%s not present at %s\n", meta->name, paths(ctx).c_str());
+    }
+    return length;
+}
 int dissect_elem_mandatory(const field_meta*   type_meta,
                                   const element_meta* val_meta,
                                   dissector           d,
@@ -76,14 +83,15 @@ int dissect_opt_elem_t(const field_meta *,
                        const element_meta *val_meta,
                        dissector           d,
                        context *           ctx) {
-    unused(ctx);
+    (void) ctx;
     const auto e = static_cast< optional_element_intra* >(d.data);
     set_elem_presence(e, false);
 
-    if (d.length <= 0) return 0;
+    if (d.length <= 0) return not_present_diag(0, val_meta, ctx);
 
     const auto iei = d.uint8();
-    if (iei != val_meta->type && val_meta->type != 0xffu) return 0;
+    if (iei != val_meta->type && val_meta->type != 0xffu)
+        return not_present_diag(0, val_meta, ctx);
 
     set_elem_presence(e, true);
     set_elem_type(e, iei);
@@ -105,7 +113,7 @@ int dissect_opt_elem_lv(const field_meta *,
     auto e = static_cast< optional_element_intra* >(d.data);
     set_elem_presence(e,false);
 
-    if (d.length <= 0) return 0;
+    if (d.length <= 0) return not_present_diag(0, val_meta, ctx);
     set_elem_presence(e, true);
 
     const auto parm_len = static_cast< int >(d.uint8());
@@ -136,7 +144,7 @@ int dissect_opt_elem_lv_e(const field_meta *,
     auto e = static_cast< optional_element_intra* >(d.data);
     set_elem_presence(e, false);
 
-    if (d.length <= 0) return 0;
+    if (d.length <= 0) return not_present_diag(0, val_meta, ctx);
 
     const auto parm_len = d.ntohs();
     set_elem_presence(e, true);
@@ -168,7 +176,7 @@ int dissect_opt_elem_v(const field_meta *,
     auto e = static_cast< optional_element_intra* >(d.data);
     set_elem_presence(e, false);
 
-    if (d.length <= 0) return 0;
+    if (d.length <= 0) return not_present_diag(0, val_meta, ctx);
 
     auto subtree = d.add_item(-1, val_meta->name);
     use_tree ut(d, subtree);
@@ -197,10 +205,11 @@ int dissect_opt_elem_tv_short(const field_meta *,
     const auto e = static_cast< optional_element_intra* >(d.data);
     set_elem_presence(e, false);
 
-    if (d.length <= 0) return 0;
+    if (d.length <= 0) return not_present_diag(0, val_meta, ctx);
 
     const auto iei = d.tvb->uint8(d.offset) >> 4u;
-    if (iei != val_meta->type && val_meta->type != 0xffu) return 0;
+    if (iei != val_meta->type && val_meta->type != 0xffu)
+        return not_present_diag(0, val_meta, ctx);
 
     set_elem_presence(e, true);
     set_elem_type(e, iei);
@@ -228,10 +237,11 @@ int dissect_opt_elem_tv(const field_meta *,
     const auto e = static_cast< optional_element_intra* >(d.data);
     set_elem_presence(e, false);
 
-    if (d.length <= 0) return 0;
+    if (d.length <= 0) return not_present_diag(0, val_meta, ctx);
 
     const auto iei = d.uint8();
-    if (iei != val_meta->type && val_meta->type != 0xffu) return 0;
+    if (iei != val_meta->type && val_meta->type != 0xffu)
+        return not_present_diag(0, val_meta, ctx);
 
     set_elem_presence(e, true);
     set_elem_type(e, iei);
@@ -256,13 +266,14 @@ int dissect_opt_elem_tlv(const field_meta *,
                          const element_meta *val_meta,
                          dissector           d,
                          context *           ctx) {
-    auto e = static_cast< optional_element_intra* >(d.data);
+    const auto e = static_cast< optional_element_intra* >(d.data);
     set_elem_presence(e, false);
 
-    if (d.length <= 0) return 0;
+    if (d.length <= 0) return not_present_diag(0, val_meta, ctx);
 
     const auto iei = d.uint8();
-    if (iei != val_meta->type && val_meta->type != 0xffu) return 0;
+    if (iei != val_meta->type && val_meta->type != 0xffu)
+        return not_present_diag(0, val_meta, ctx);
 
     set_elem_presence(e, true);
     set_elem_type(e, iei);
@@ -301,13 +312,14 @@ int dissect_opt_elem_telv(const field_meta *,
                           const element_meta *val_meta,
                           dissector           d,
                           context *           ctx) {
-    auto e = (optional_element_intra *) d.data;
+    auto e = static_cast< optional_element_intra * >(d.data);
     set_elem_presence(e, false);
 
-    if (d.length <= 0) return 0;
+    if (d.length <= 0) return not_present_diag(0, val_meta, ctx);
 
-    auto iei = d.tvb->uint8(d.offset);
-    if (iei != val_meta->type && val_meta->type != 0xffu) return 0;
+    const auto iei = d.tvb->uint8(d.offset);
+    if (iei != val_meta->type && val_meta->type != 0xffu)
+        return not_present_diag(0, val_meta, ctx);
 
     set_elem_presence(e, true);
     set_elem_type(e, iei);
@@ -353,10 +365,11 @@ int dissect_opt_elem_tlv_e(const field_meta *,
                            dissector           d,
                            context *           ctx) {
     auto e = static_cast< optional_element_intra* >(d.data);
-    if (d.length<= 0) return 0;
+    if (d.length <= 0) return not_present_diag(0, val_meta, ctx);
 
     const auto iei = d.tvb->uint8(d.offset);
-    if (iei != val_meta->type && val_meta->type != 0xffu) return 0;
+    if (iei != val_meta->type && val_meta->type != 0xffu)
+        return not_present_diag(0, val_meta, ctx);
 
     set_elem_presence(e, true);
     set_elem_type(e, iei);
