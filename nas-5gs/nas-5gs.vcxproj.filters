@@ -498,6 +498,9 @@
     <ClCompile Include="ber.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="e212.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="config.hh">

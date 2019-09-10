@@ -180,6 +180,7 @@
     <ClCompile Include="dissect_nas5g_sup.cc" />
     <ClCompile Include="dissect_sm_msg.cc" />
     <ClCompile Include="common\e212_mcc_mnc.cc" />
+    <ClCompile Include="e212.cc" />
     <ClCompile Include="field_meta.cc" />
     <ClCompile Include="formats.cc" />
     <ClCompile Include="gsm.cc" />
