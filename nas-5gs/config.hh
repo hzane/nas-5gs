@@ -31,10 +31,10 @@ using ustring    = std::vector< uint8_t >;
 extern void diag(const char* format, ...);
 
 namespace enc {
-inline __declspec(selectany) extern const uint32_t na   = 0;
-inline __declspec(selectany) extern const uint32_t be   = 1; // big endian
-inline __declspec(selectany) extern const uint32_t le   = 2; // little endian
-inline __declspec(selectany) extern const uint32_t none = 4; // host order
+inline const uint32_t na   = 0;
+inline const uint32_t be   = 1; // big endian
+inline const uint32_t le   = 2; // little endian
+inline const uint32_t none = 4; // host order
 } // namespace enc
 
 struct dissector {
@@ -63,7 +63,7 @@ struct dissector {
     auto        uint32() const -> uint32_t;
 };
 
-struct use_tree { // NOLINT: special-member-functions
+struct use_tree { // NOLINT: special;-member-functions
     dissector&  d;
     proto_node* prev;
     use_tree(dissector& d, proto_node* p) : d(d), prev(d.tree) { d.tree = p; }

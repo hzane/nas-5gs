@@ -25,6 +25,15 @@ proto_node *dissector::add_item(int len, const char*format, ...) const {
 
 void dissector::extraneous_data_check(int maxlen, context* ctx)const {
     if (maxlen < 0) return;
+    if (length < 0 || length > maxlen)
+        tree->add_expert(pinfo,
+                         tvb,
+                         offset,
+                         length,
+                         "extra %d bytes at %d under %s",
+                         length - maxlen,
+                         offset,
+                         tree->name.c_str());
     if (length < 0) {
         diag("underflow at %s %d:%d\n", paths(ctx).c_str(), offset, length);
     }

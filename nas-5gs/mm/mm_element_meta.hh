@@ -5,7 +5,7 @@ namespace mm{
 extern const element_meta mm_cap;
 extern const element_meta mm_cause;
 extern const element_meta id_type ;
-extern const element_meta nw_feat_sup ;
+extern const element_meta nw_feature_support ;
 extern const element_meta nw_slicing_ind;
 extern const element_meta eps_nas_msg_container;
 extern const element_meta ue_status;
