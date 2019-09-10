@@ -23,27 +23,27 @@ int mm::dissect_dl_nas_transp(dissector d, context* ctx) {
     d.step(1);
 
     /* Payload container     9.11.3.39    M    LV-E    3-65537*/
-    auto consumed = dissect_elem_lv_e(nullptr, &pld_cont, d, ctx);
+    auto consumed = dissect_lv_e(nullptr, &payload_container, d, ctx);
     d.step(consumed);
 
     /*12    PDU session ID    PDU session identity 2 9.11.3.41    C    TV    2 */
     // ELEM_OPT_TV( 0x12, , DE_NAS_5GS_MM_PDU_SES_ID_2, " - PDU session ID");
-    consumed = dissect_opt_elem_tv(nullptr, &pdu_session_id, d, ctx);
+    consumed = dissect_opt_tv(nullptr, &pdu_session_id, d, ctx);
     d.step(consumed);
 
     /*24    Additional information 9.11.2.1    O    TLV 3-n*/
     // ELEM_OPT_TLV(0x24, , DE_NAS_5GS_CMN_ADD_INF, NULL);
-    consumed = dissect_opt_elem_tlv(nullptr, &additional_inf, d, ctx);
+    consumed = dissect_opt_tlv(nullptr, &additional_inf, d, ctx);
     d.step(consumed);
 
     /*58    5GMM cause  9.11.3.2    O    TV    2 */
     // ELEM_OPT_TV(0x58, , DE_NAS_5GS_MM_5GMM_CAUSE, NULL);
-    consumed = dissect_opt_elem_tv(nullptr, &mm_cause, d, ctx);
+    consumed = dissect_opt_tv(nullptr, &mm_cause, d, ctx);
     d.step(consumed);
 
     /*37    Back-off timer value    GPRS timer 3 9.11.2.5    O    TLV    3 */
     // ELEM_OPT_TLV(0x37, , DE_GPRS_TIMER_3, " - Back-off timer value");
-    consumed = dissect_opt_elem_tlv(nullptr, &backoff_gprs_timer3, d, ctx);
+    consumed = dissect_opt_tlv(nullptr, &backoff_gprs_timer3, d, ctx);
     d.step(consumed);
     
     return uc.length;

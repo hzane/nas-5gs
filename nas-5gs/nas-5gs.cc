@@ -27,7 +27,7 @@ void dissect(const fs::path& entry) {
 
 int main() { // NOLINT: exception-escape
     const auto entry =
-        fs::path(L"f:/nas-data/nas-0-00032349-11-7e-00-5d-01-04-02-f0.bin");
+        fs::path(L"f:/nas-data\\nas-1-00032348-18-7e-00-5c-00-0d-01-64.bin");
     dissect(entry);
 
     const string root = "f:/nas-data";

@@ -31,3 +31,17 @@ const element_meta sm::sm_cap = {
     dissect_sm_cap,
     nullptr,
 };
+const field_meta sm::hf_sm_rqos_b0 = {
+    "Reflective QoS(RqoS)",
+    "nas_5gs.sm.rqos",
+    ft::ft_boolean,
+    fd::base_dec,
+    nullptr,
+    &nas::tfs_supported_not_supported,
+    nullptr,
+    0x01,
+};
+
+struct sm_capability {
+    bool reflactive_qos;
+};

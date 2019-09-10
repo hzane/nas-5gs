@@ -61,8 +61,17 @@ int mm::dissect_mobile_id(dissector d, context* ctx) {
 
     return uc.length;
 }
-
-
+struct mobile_id_tmei {};
+struct mobile_id_tmsi{};
+struct mobile_id_imeisv {
+    
+};
+struct mobile_id {
+    
+};
+struct mobile_id_mac {
+    
+};
 // type_id = 6, MAC address
 int mm::dissect_mobile_id_mac(dissector d, context* ctx) {
     const use_context uc(ctx, "mobile-id-mac", d, 0);
@@ -108,6 +117,8 @@ int mm::dissect_mobile_id_5gstmsi(dissector d, context* ctx) {
 
 // type_id = 1, SUCI
 int mm::dissect_mobile_id_suci(dissector d, context* ctx) {
+    const use_context uc(ctx, "mobile-id-suci", d, 0);
+
     const auto oct = d.uint8();
 
     d.add_bits(flags_supi_fmt_tid);
@@ -149,7 +160,7 @@ int mm::dissect_mobile_id_suci(dissector d, context* ctx) {
     } else {
         diag("unknown supi format %d\n", supi_fmt);
     }
-    return d.length;
+    return uc.length;
 }
 
 // type_id = 2, 5G-GUTI
@@ -233,16 +244,6 @@ const field_meta mm::hf_mm_type_id = {  // NOLINT
 };
 
 namespace mm {
-const field_meta hf_spare_b7 = {
-    "Spare",
-    "nas_5gs.spare_b7",
-    ft::ft_uint8,
-    fd::base_dec,
-    nullptr,
-    nullptr,
-    nullptr,
-    0x80,
-};
 
 const field_meta* flags_odd_even_tid[] = {
     &hf_mm_odd_even,
@@ -308,7 +309,7 @@ const field_meta hf_spare_b3 = {
 };
 #endif
 const field_meta* flags_supi_fmt_tid[] = {
-    &hf_spare_b7,
+    // &hf_spare_b7,
     &hf_nas_5gs_mm_supi_fmt,
     // &hf_spare_b3,
     &hf_mm_type_id,

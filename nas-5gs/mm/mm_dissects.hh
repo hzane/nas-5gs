@@ -32,7 +32,7 @@ int dissect_payload_container(dissector d, context* ctx);      // 9.11.3.39
 int dissect_request_type(dissector d, context* ctx);
 
 int dissect_last_v_tai(dissector d, context* ctx); //  9.11.3.8
-int dissect_s1_ue_net_cap(dissector d, context* ctx);
+int dissect_s1_ue_net_capability(dissector d, context* ctx);
 
 int dissect_ue_status(dissector d, context* ctx ); // 9.11.3.56
 

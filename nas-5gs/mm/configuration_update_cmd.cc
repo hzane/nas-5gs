@@ -14,87 +14,87 @@ int mm::dissect_config_update_cmd(dissector d, context* ctx) {
 
     /*D-    Configuration update indication 9.11.3.18 O    TV    1 */
     // ELEM_OPT_TV_SHORT(0xD0, , DE_NAS_5GS_MM_CONF_UPD_IND, NULL);
-    auto consumed = dissect_opt_elem_tv_short(nullptr, &conf_upd_ind, d, ctx);
+    auto consumed = dissect_opt_tv_short(nullptr, &conf_upd_ind, d, ctx);
     d.step(consumed);
 
     /*77    5G-GUTI    5GS mobile identity     9.11.3.4    O    TLV    TBD*/
     // ELEM_OPT_TLV_E(0x77, , DE_NAS_5GS_MM_5GS_MOBILE_ID, NULL);
-    consumed = dissect_opt_elem_tlv_e(nullptr, &guti_mobile_id, d, ctx);
+    consumed = dissect_opt_tlv_e(nullptr, &guti_mobile_id, d, ctx);
     d.step(consumed);
 
     /*54    TAI list    Tracking area identity list     9.11.3.9    O    TLV    8-98*/
     // ELEM_OPT_TLV(0x54, NAS_5GS_PDU_TYPE_MM, DE_NAS_5GS_MM_5GS_TA_ID_LIST, NULL);
-    consumed = dissect_opt_elem_tlv(nullptr, &ta_id_list, d, ctx);
+    consumed = dissect_opt_tlv(nullptr, &ta_id_list, d, ctx);
     d.step(consumed);
 
     /*15    Allowed NSSAI    NSSAI     9.11.3.37    O    TLV    4-74*/
     // ELEM_OPT_TLV(0x15, , DE_NAS_5GS_MM_NSSAI, " - Allowed NSSAI");
-    consumed = dissect_opt_elem_tlv(nullptr, &allowed_nssai, d, ctx);
+    consumed = dissect_opt_tlv(nullptr, &allowed_nssai, d, ctx);
     d.step(consumed);
 
     /*27    Service area list    9.11.3.49    O    TLV    6-194 */
     // ELEM_OPT_TLV(0x70, , DE_NAS_5GS_MM_SAL, NULL);
-    consumed = dissect_opt_elem_tlv(nullptr, &service_area_list, d, ctx);
+    consumed = dissect_opt_tlv(nullptr, &service_area_list, d, ctx);
     d.step(consumed);
 
     /*43  Full name for network   Network name    9.11.3.35   O   TLV    3-n*/
     // ELEM_OPT_TLV(0x43, , DE_NETWORK_NAME, " - Full name for network");
-    consumed = dissect_opt_elem_tlv(nullptr, &full_name_network, d, ctx);
+    consumed = dissect_opt_tlv(nullptr, &full_name_network, d, ctx);
     d.step(consumed);
 
     /*45    Short name for network    Network name     9.11.3.35    O    TLV    3-n*/
     // ELEM_OPT_TLV(0x45, , DE_NETWORK_NAME, " - Short Name");
-    consumed = dissect_opt_elem_tlv(nullptr, &short_name_network, d, ctx);
+    consumed = dissect_opt_tlv(nullptr, &short_name_network, d, ctx);
     d.step(consumed);
 
     /*46    Local time zone    Time zone     9.11.3.52    O    TV    2*/
     // ELEM_OPT_TV(0x46, , DE_TIME_ZONE, " - Local");
-    consumed = dissect_opt_elem_tv(nullptr, &local_time_zone, d, ctx);
+    consumed = dissect_opt_tv(nullptr, &local_time_zone, d, ctx);
     d.step(consumed);
 
     /*47  Universal time and local time zone  Time zone and time  9.11.3.53  O TV  8*/
     /*ELEM_OPT_TV(0x47,,DE_TIME_ZONE_TIME," - Universal Time and Local Time Zone");*/
-    consumed = dissect_opt_elem_tv(nullptr, &u_time_zone_time, d, ctx);
+    consumed = dissect_opt_tv(nullptr, &u_time_zone_time, d, ctx);
     d.step(consumed);
 
     /*49 Network daylight saving time Daylight saving time 9.11.3.19 O TLV 3*/
     // ELEM_OPT_TLV(0x49, , DE_DAY_SAVING_TIME, NULL);
-    consumed = dissect_opt_elem_tlv(nullptr, &day_saving_time, d, ctx);
+    consumed = dissect_opt_tlv(nullptr, &day_saving_time, d, ctx);
     d.step(consumed);
 
     /*79    LADN information 9.11.3.30    O    TLV-E    11-1579*/
     // ELEM_OPT_TLV_E(0x79, , DE_NAS_5GS_MM_LADN_INF, NULL);
-    consumed = dissect_opt_elem_tlv_e(nullptr, &ladn_inf, d, ctx);
+    consumed = dissect_opt_tlv_e(nullptr, &ladn_inf, d, ctx);
     d.step(consumed);
 
     /*B-    MICO indication  9.11.3.31    O    TV    1*/
     // ELEM_OPT_TV_SHORT(0xB0, , DE_NAS_5GS_MM_MICO_IND, NULL);
-    consumed = dissect_opt_elem_tv_short(nullptr, &mico_ind, d, ctx);
+    consumed = dissect_opt_tv_short(nullptr, &mico_ind, d, ctx);
     d.step(consumed);
 
     // 9-	Network slicing indication	 9.11.3.36 O TV 1
     // ELEM_OPT_TV_SHORT(0x90, , DE_NAS_5GS_MM_NW_SLICING_IND, NULL);
-    consumed = dissect_opt_elem_tv_short(nullptr, &nw_slicing_ind, d, ctx);
+    consumed = dissect_opt_tv_short(nullptr, &nw_slicing_ind, d, ctx);
     d.step(consumed);
 
     /*31    Configured NSSAI    NSSAI     9.11.3.37    O    TLV    4-74*/
     // ELEM_OPT_TLV(0x31, , DE_NAS_5GS_MM_NSSAI, " - Configured NSSAI");
-    consumed = dissect_opt_elem_tlv(nullptr, &configured_nssai, d, ctx);
+    consumed = dissect_opt_tlv(nullptr, &configured_nssai, d, ctx);
     d.step(consumed);
 
     /*11    Rejected NSSAI   9.11.3.46   O   TLV   4-42*/
     // ELEM_OPT_TLV(0x11, NAS_5GS_PDU_TYPE_MM, DE_NAS_5GS_MM_REJ_NSSAI, NULL);
-    consumed = dissect_opt_elem_tlv(nullptr, &rej_nssai, d, ctx);
+    consumed = dissect_opt_tlv(nullptr, &rej_nssai, d, ctx);
     d.step(consumed);
 
     /* 76 Operator-defined access category definitions   9.11.3.38   O   TLV-E  3-n */
     // ELEM_OPT_TLV_E(0x76, , DE_NAS_5GS_MM_OP_DEF_ACC_CAT_DEF, NULL);
-    consumed = dissect_opt_elem_tlv_e(nullptr, &operator_defined_access_category_defs, d, ctx);
+    consumed = dissect_opt_tlv_e(nullptr, &operator_defined_access_category_defs, d, ctx);
     d.step(consumed);
 
     /* F-    SMS indication    SMS indication 9.10.3.50A    O    TV    1 */
     // ELEM_OPT_TV_SHORT(0xF0, NAS_5GS_PDU_TYPE_MM, DE_NAS_5GS_MM_SMS_IND, NULL);
-    consumed = dissect_opt_elem_tv_short(nullptr, &sms_ind, d, ctx);
+    consumed = dissect_opt_tv_short(nullptr, &sms_ind, d, ctx);
     d.step(consumed);
 
     // Tbd	T3447 value	GPRS timer 3    9.11.2.5 O TLV 3

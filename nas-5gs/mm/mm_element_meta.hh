@@ -11,7 +11,7 @@ extern const element_meta eps_nas_msg_container;
 extern const element_meta ue_status;
 extern const element_meta last_v_tai;
 extern const element_meta nc_native_nas_ksi;
-extern const element_meta pld_cont;
+extern const element_meta payload_container;
 extern const element_meta ladn_ind;
 extern const element_meta ue_sec_cap;
 extern const element_meta s1_ue_net_cap;
