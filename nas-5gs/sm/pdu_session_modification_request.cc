@@ -14,43 +14,43 @@ int sm::dissect_pdu_ses_modification_req(dissector d, context* ctx) {
     up_link(d.pinfo);    
 
     /* 28 5GSM capability 9.11.4.1    O    TLV    3-15 */
-    auto consumed = dissect_opt_elem_tlv(nullptr, &sm_cap, d, ctx);
+    auto consumed = dissect_opt_tlv(nullptr, &sm_cap, d, ctx);
     d.step(consumed);
 
     /* 59 5GSM cause 9.11.4.2    O    TV    2 */
-    consumed = dissect_opt_elem_tv(nullptr, &sm_cause, d, ctx);
+    consumed = dissect_opt_tv(nullptr, &sm_cause, d, ctx);
     d.step(consumed);
 
     /*55    Maximum number of suuported packet filter 9.11.4.9    O    TV    3*/
-    consumed = dissect_opt_elem_tv(nullptr, &max_of_supported_pkt_filter, d, ctx);
+    consumed = dissect_opt_tv(nullptr, &max_of_supported_pkt_filter, d, ctx);
     d.step(consumed);
 
     /* B-    Always-on PDU session requested  9.11.4.4 O    TV    1 */
-    consumed = dissect_opt_elem_tv_short(nullptr, &alwayson_pdu_session_req, d, ctx);
+    consumed = dissect_opt_tv_short(nullptr, &alwayson_pdu_session_req, d, ctx);
     d.step(consumed);
 
     /* 13    Integrity protection maximum data rate   9.11.4.7    O    TV    3 */
-    consumed = dissect_opt_elem_tv(nullptr, &int_prot_max_data_rate, d, ctx);
+    consumed = dissect_opt_tv(nullptr, &int_prot_max_data_rate, d, ctx);
     d.step(consumed);
 
     /*7A    Requested QoS rules    QoS rules 9.11.4.13    O    TLV-E    3-65538 */
     // ELEM_OPT_TLV_E(0x7A, , DE_NAS_5GS_SM_QOS_RULES, " - Requested QoS rules");
-    consumed = dissect_opt_elem_tlv_e(nullptr, &requested_qos_rules, d, ctx);
+    consumed = dissect_opt_tlv_e(nullptr, &requested_qos_rules, d, ctx);
     d.step(consumed);
 
     /* 79    Requested QoS flow descriptions    QoS flow descriptions 9.11.4.12    O
      * TLV-E    5-65538 */
     // ELEM_OPT_TLV_E(  0x79, , DE_NAS_5GS_SM_QOS_FLOW_DES, " - Requested");
-    consumed = dissect_opt_elem_tlv_e(nullptr, &requested_qos_flow_des, d, ctx);
+    consumed = dissect_opt_tlv_e(nullptr, &requested_qos_flow_des, d, ctx);
     d.step(consumed);
 
     /* 75  Mapped EPS bearer contexts 9.11.4.8    O TLV-E    7-65538 */
     // ELEM_OPT_TLV_E(0x75, , DE_NAS_5GS_SM_MAPPED_EPS_B_CONT, NULL);
-    consumed = dissect_opt_elem_tlv_e(nullptr, &mapped_eps_bearer_ctx, d, ctx);
+    consumed = dissect_opt_tlv_e(nullptr, &mapped_eps_bearer_ctx, d, ctx);
     d.step(consumed);
 
     /* 7B Extended protocol configuration options  9.11.4.6 O TLV-E    4-65538*/
-    consumed = dissect_opt_elem_tlv_e(nullptr, &ext_pco, d, ctx);
+    consumed = dissect_opt_tlv_e(nullptr, &ext_pco, d, ctx);
     d.step(consumed);
 
     // It is possible for UEs compliant with earlier versions of this specification
