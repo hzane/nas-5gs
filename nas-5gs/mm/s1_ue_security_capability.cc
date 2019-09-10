@@ -62,7 +62,7 @@ int mm::dissect_ue_security_capability(dissector d, context* ctx) {
     d.add_bits(oct4_flags);
     d.step(1);
 
-    if (d.length < -0) {
+    if (d.length <= 0) {
         return 2;
     }
 
