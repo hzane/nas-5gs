@@ -3,7 +3,7 @@
 // 9.11.3.2	5GMM cause
 extern const element_meta mm::mm_cause = {
     0x58,
-    "5GMM cause",
+    nullptr,
     dissect_mm_cause,
     nullptr,
 };
