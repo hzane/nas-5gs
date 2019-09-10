@@ -2,8 +2,19 @@
 #include <cstdint>
 #include <vector>
 
-#pragma pack(push ,1)
+template<typename field>
+struct field_v{
+    const field_meta* meta     = nullptr;
+    bool              presence = false;
+    int               length   = 0;
+    field             field    = {};
+};
 
+using additional_info = vector< uint8_t >;
 
-#pragma pack(pop)
+using dnn = string;
 
+struct mcc_mnc {
+    mcc v_string;
+    mnc v_string;
+};

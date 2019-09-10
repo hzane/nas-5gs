@@ -243,8 +243,8 @@ string ipv6_link_local_string(const uint8_t* d, int length);
 uint32_t mcc_mnc3(const uint8_t*d, uint32_t*mcc, uint32_t *mnc); // return mcc*1000+mnc
 
 //  [3] 10.5.1.13 PLMN list TS24.008
-string mcc_aux(const uint8_t* d, int length = 3);
-string mnc_aux(const uint8_t* d, int length = 3);
+string mcc_string(const uint8_t* d, int length = 3);
+string mcc_mnc_string(const uint8_t* d, int length = 3);
 
 // BCD number
 string bcd_string(const uint8_t* d, int length);
@@ -255,3 +255,5 @@ string utcz_string(const uint8_t* d);
 uint64_t uintmap(uint64_t f, uint64_t mask);
 
 int ext_length(const uint8_t* d);
+
+string w2utf8(const wchar_t*str);
