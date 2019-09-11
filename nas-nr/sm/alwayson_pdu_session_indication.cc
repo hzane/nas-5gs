@@ -31,6 +31,6 @@ int sm::dissect_always_on_pdu_ses_ind(dissector d, context* ctx) {
 const element_meta sm::alwayson_pdu_ses_ind = {
     0x80,
     "Always-on PDU session indication",
-    dissect_always_on_pdu_ses_ind,
+    sm::dissect_always_on_pdu_ses_ind,
     nullptr,
 };

@@ -1,5 +1,9 @@
 #include "../dissect_mm_msg.hh"
 
+using namespace cmn;
+using namespace nas;
+using namespace mm;
+
 //  9.11.3.46    Rejected NSSAI
 extern const element_meta mm::rejected_nssai = {
     0x11,

@@ -1,5 +1,9 @@
 #include "../dissect_mm_msg.hh"
 
+using namespace cmn;
+using namespace nas;
+using namespace mm;
+
 // SOR transparent container   9.11.3.51
 const element_meta mm::sor_trans_cont = {
     0x73,

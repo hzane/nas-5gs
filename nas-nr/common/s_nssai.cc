@@ -4,7 +4,7 @@
 extern const element_meta cmn::s_nssai = {
     0x22,
     "S-NSSAI",
-    dissect_s_nssai,
+    cmn::dissect_s_nssai,
     nullptr,
 };
 

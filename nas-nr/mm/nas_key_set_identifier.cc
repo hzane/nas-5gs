@@ -1,5 +1,8 @@
 #include "../dissect_mm_msg.hh"
 
+using namespace cmn;
+using namespace nas;
+using namespace mm;
 
 // 9.11.3.32	NAS key set identifier
 int mm::dissect_nas_ksi(dissector d, context* ctx) {

@@ -1,5 +1,8 @@
 #include "../dissect_mm_msg.hh"
 
+using namespace cmn;
+using namespace nas;
+using namespace mm;
 
 // 9.11.3.53
 extern const element_meta mm::timezone_time= {

@@ -4,7 +4,7 @@
 extern const element_meta sm::requested_qos_flow_des = {
     0x79,
     "QoS flow descriptions - Requested",
-    dissect_authorized_qos_flow_des,
+    sm::dissect_authorized_qos_flow_des,
     nullptr,
 };
 
@@ -12,7 +12,7 @@ extern const element_meta sm::requested_qos_flow_des = {
 extern const element_meta sm::authorized_qos_flow_desc = {
     0x79,
     "QoS flow descriptions - Authorized",
-    dissect_authorized_qos_flow_des,
+    sm::dissect_authorized_qos_flow_des,
     nullptr,
 };
 

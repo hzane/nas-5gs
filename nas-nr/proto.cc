@@ -52,48 +52,6 @@ proto_item* proto_node::set_item(int len, const field_meta* field, uint32_t enco
     return this;
 }
 
-// don't apply bitmask to v
-proto_item* proto_node::set_uint(uint64_t v, uint32_t encode, const char* format, ...) {
-    using namespace std;
-
-    if (encode != enc::none) enc = encode;
-    val = v;
-
-    va_list args;
-    va_start(args, format);
-    if (format)
-        text = vformat(format, args);
-    else
-        text = print_text(meta, v);
-    va_end(args);
-    return this;
-}
-
-proto_item* proto_node::set_int(int64_t v, uint32_t encode, const char* format, ...) {
-    using namespace std;
-
-    if (encode != enc::none) enc = encode;
-    val = v;
-
-    va_list args;
-    va_start(args, format);
-    if (format)
-        text = vformat(format, args);
-    else
-        text = print_text(meta, v);
-    va_end(args);
-
-
-    return this;
-}
-
-proto_item* proto_node::set_string(const string &v) {
-    enc = enc::be;
-
-    text = v;
-    return this;
-}
-
 const field_meta hf_expert = {
     "Expert", "expert",
     ft::ft_expert,

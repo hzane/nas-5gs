@@ -1,4 +1,8 @@
 #include "../dissect_mm_msg.hh"
+
+using namespace cmn;
+using namespace mm;
+
 // Allowed PDU session status
 const element_meta mm::allowed_pdu_ses_status = {
     0x25,

@@ -27,7 +27,7 @@ int sm::dissect_pdu_ses_auth_res(dissector d, context* ctx) {
 extern const element_meta sm::selected_pdu_ses_type = {
     0x90,
     "Selected PDU session type",
-    dissect_pdu_session_type,
+    sm::dissect_pdu_session_type,
     nullptr,
 };
 
@@ -35,7 +35,7 @@ extern const element_meta sm::selected_pdu_ses_type = {
 extern const element_meta sm::pdu_ses_type = {
     0x90,
     "PDU session type",
-    dissect_pdu_session_type,
+    sm::dissect_pdu_session_type,
     nullptr,
 };
 
@@ -52,7 +52,7 @@ const field_meta sm::hf_sm_pdu_ses_type = {
     "nas_5gs.sm.pdu_ses_type",
     ft::ft_uint8,
     fd::base_dec,
-    (nas_5gs_sm_pdu_ses_type_vals),
+    nas_5gs_sm_pdu_ses_type_vals,
     nullptr,
     nullptr,
     0x0f,

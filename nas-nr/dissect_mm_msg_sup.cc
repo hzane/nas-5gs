@@ -208,7 +208,7 @@ const field_meta mm::hfm_mm_ho_attach_b1 = {
     ft::ft_boolean,
     8,
     nullptr,
-    &tfs_supported_not_supported,
+    &nas::tfs_supported_not_supported,
     nullptr,
     0x02,
 };

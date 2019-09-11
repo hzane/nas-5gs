@@ -1,5 +1,9 @@
 #include "../dissect_mm_msg.hh"
 
+using namespace cmn;
+using namespace nas;
+using namespace mm;
+
 // Emergency number list  9.11.3.23
 int mm::dissect_emerg_num_list(dissector d, context* ctx) {
     const use_context uc(ctx, "emergency-number-list", d, 0);

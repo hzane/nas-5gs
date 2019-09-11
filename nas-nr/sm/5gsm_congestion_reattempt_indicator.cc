@@ -4,7 +4,7 @@
 const element_meta sm::sm_congestion_reattempt = {
     0x61u,
     "5GSM congestion re-attempt indicator",
-    dissect_sm_congestion_reattempt,
+    sm::dissect_sm_congestion_reattempt,
     nullptr,
 };
 

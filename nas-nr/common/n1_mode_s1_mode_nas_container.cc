@@ -46,7 +46,7 @@ const field_meta cmn::hf_mm_n1_mode_reg_b1 = {
     ft::ft_boolean,
     8,
     nullptr,
-    &tfs_nas_5gs_mm_n1_mod,
+    &cmn::tfs_nas_5gs_mm_n1_mod,
     nullptr,
     0x02,
 

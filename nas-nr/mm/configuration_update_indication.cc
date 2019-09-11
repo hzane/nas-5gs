@@ -1,6 +1,7 @@
 #include "../dissect_mm_msg.hh"
 
-
+using namespace cmn;
+using namespace mm;
 using namespace nas;
 
 /* 9.11.3.18    Configuration update indication */

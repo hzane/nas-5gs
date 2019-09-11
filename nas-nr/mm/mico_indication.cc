@@ -1,5 +1,9 @@
 #include "../dissect_mm_msg.hh"
 
+using namespace cmn;
+using namespace nas;
+using namespace mm;
+
 extern const element_meta mm::mico_indication = {
     0xb0,
     "MICO indication",

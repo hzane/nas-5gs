@@ -1,5 +1,7 @@
 #include "../dissect_mm_msg.hh"
 
+using namespace cmn;
+using namespace mm;
 
 /* 9.11.3.5     5GS network feature support*/
 int mm::dissect_nw_feature_support(dissector d, context* ctx) {

@@ -90,7 +90,7 @@ int sm::dissect_ext_pco(dissector d, context* ctx) {
 const element_meta sm::ext_pco = {
     0x7B,
     "Extended protocol configuration options",
-    dissect_ext_pco,
+    sm::dissect_ext_pco,
     nullptr,
 };
 

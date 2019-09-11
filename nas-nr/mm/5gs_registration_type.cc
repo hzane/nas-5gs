@@ -1,6 +1,9 @@
 #include "../dissect_mm_msg.hh"
 #include "../ber.hh"
 
+using namespace cmn;
+using namespace mm;
+
 /* 9.11.3.7    5GS registration type */
 int mm::dissect_registration_request_type(dissector d, context* ctx) {
     const use_context uc(ctx, "5gs-registration-type", d, -1);

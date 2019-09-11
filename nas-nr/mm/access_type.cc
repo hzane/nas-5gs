@@ -1,5 +1,8 @@
 #include "../dissect_mm_msg.hh"
 
+using namespace cmn;
+using namespace mm;
+
 /*  9.11.3.11    Access type */
 int mm::dissect_access_type(dissector d, context* ctx) {
     const use_context uc(ctx, "access-type", d, -1);

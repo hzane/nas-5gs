@@ -1,6 +1,8 @@
 #include "../dissect_mm_msg.hh"
 
+using namespace cmn;
 using namespace nas;
+using namespace mm;
 
 // PDU session ID 2 9.11.3.41
 int mm::dissect_pdu_session_id(dissector d, context* ctx) {

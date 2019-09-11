@@ -1,6 +1,8 @@
 #include "../dissect_mm_msg.hh"
 
 using namespace cmn;
+using namespace nas;
+using namespace mm;
 
 // LADN information   9.11.3.30
 const element_meta mm::ladn_information = {

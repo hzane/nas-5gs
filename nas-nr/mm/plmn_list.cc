@@ -1,5 +1,9 @@
 #include "../dissect_mm_msg.hh"
 
+using namespace cmn;
+using namespace nas;
+using namespace mm;
+
 const element_meta mm::plmn_list = {
     0x4a,
     "Equivalent PLMNs",

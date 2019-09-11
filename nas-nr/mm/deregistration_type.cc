@@ -1,5 +1,7 @@
 #include "../dissect_mm_msg.hh"
 
+using namespace cmn;
+using namespace mm;
 
 /* De-registration type    De-registration type     9.11.3.20   M   V   1 */
 int mm::dissect_deregistration_type(dissector d, context* ctx) {

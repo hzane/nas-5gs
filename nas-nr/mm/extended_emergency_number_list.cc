@@ -1,5 +1,9 @@
 #include "../dissect_mm_msg.hh"
 
+using namespace cmn;
+using namespace nas;
+using namespace mm;
+
 const element_meta mm::ext_emerge_num_list = {
     0x7A,
     "Extended emergency number list",

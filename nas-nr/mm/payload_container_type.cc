@@ -1,5 +1,9 @@
 #include "../dissect_mm_msg.hh"
 
+using namespace cmn;
+using namespace nas;
+using namespace mm;
+
 // Payload container type   9.11.3.40
 const element_meta mm::payload_container_type = {
     0x80,

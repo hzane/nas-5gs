@@ -42,11 +42,12 @@ extern const val_string mm_req_type_vals[];
 extern const val_string mm_serv_type_vals[];
 extern const val_string identity_type_values[];
 
+#if 0
 inline __declspec(selectany) extern const true_false_string tfs_supported_not_supported = {
     "Supported",
     "Not supported",
 };
-
+#endif
 inline __declspec(selectany) extern const true_false_string tfs_requested_or_not = {
     "Requested",
     "Not Requested",

@@ -1,5 +1,9 @@
 #include "../dissect_mm_msg.hh"
 
+using namespace cmn;
+using namespace nas;
+using namespace mm;
+
 // See subclause 10.5.3.5a in 3GPP TS 24.008 [12].
 extern const element_meta mm::full_name_network = {
     0x43,

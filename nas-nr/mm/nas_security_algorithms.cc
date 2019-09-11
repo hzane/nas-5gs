@@ -1,5 +1,9 @@
 #include "../dissect_mm_msg.hh"
 
+using namespace cmn;
+using namespace nas;
+using namespace mm;
+
 /* *   9.11.3.34    NAS security algorithms */
 int mm::dissect_security_algo(dissector d, context* ctx) {
     const use_context uc(ctx, "sec-algo", d, -1);

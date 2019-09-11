@@ -5,7 +5,7 @@
 extern const element_meta sm::int_prot_max_data_rate = {
     0x13,
     "Integrity protection maximum data rate",
-    dissect_int_prot_max_data_rate,
+    sm::dissect_int_prot_max_data_rate,
     nullptr,
 
 };
@@ -38,7 +38,7 @@ const field_meta sm::hf_sm_int_prot_max_data_rate_ul = {
     "nas_5gs.sm.int_prot_max_data_rate_ul",
     ft::ft_uint8,
     fd::base_dec,
-    (sm_int_prot_max_data_rate_values),
+    sm::sm_int_prot_max_data_rate_values,
     nullptr,
     nullptr,
     0x0,
@@ -48,7 +48,7 @@ const field_meta sm::hf_sm_int_prot_max_data_rate_dl = {
     "nas_5gs.sm.int_prot_max_data_rate_dl",
     ft::ft_uint8,
     fd::base_dec,
-    (sm_int_prot_max_data_rate_values),
+    sm::sm_int_prot_max_data_rate_values,
     nullptr,
     nullptr,
     0x0,

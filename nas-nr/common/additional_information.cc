@@ -4,7 +4,7 @@
 extern const element_meta cmn::additional_inf = {
     0x24,
     "Additional information",
-    dissect_additional_inf,
+    cmn::dissect_additional_inf,
     nullptr,
 };
 

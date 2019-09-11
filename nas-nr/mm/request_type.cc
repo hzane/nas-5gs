@@ -1,5 +1,9 @@
 #include "../dissect_mm_msg.hh"
 
+using namespace cmn;
+using namespace nas;
+using namespace mm;
+
 // 9.11.3.47 Request type page.390
 int mm::dissect_request_type(dissector d, context* ctx) {
     const use_context uc(ctx, "request-type", d, -1);

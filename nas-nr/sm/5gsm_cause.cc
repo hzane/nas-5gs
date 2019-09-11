@@ -14,7 +14,7 @@ int sm::dissect_sm_cause(dissector d, context* ctx) {
 const element_meta sm::sm_cause = {
     0x59,
     nullptr,
-    dissect_sm_cause,
+    sm::dissect_sm_cause,
     nullptr,
 };
 
@@ -61,7 +61,7 @@ const field_meta sm::hf_sm_cause = {
     "nas_5gs.sm.5gsm_cause",
     ft::ft_uint8,
     fd::base_dec,
-    (sm_cause_values),
+    sm::sm_cause_values,
     nullptr,
     nullptr,
     0x0,

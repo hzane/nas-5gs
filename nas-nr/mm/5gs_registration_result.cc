@@ -1,6 +1,7 @@
 #include "../dissect_mm_msg.hh"
 
-
+using namespace cmn;
+using namespace mm;
 // 9.11.3.6    5GS registration result
 int mm::dissect_registration_result(dissector d, context* ctx) {
     use_context uc(ctx, "5gs-registration-result", d, -1);

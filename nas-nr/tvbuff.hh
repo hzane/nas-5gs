@@ -7,10 +7,10 @@ struct tvbuff { // NOLINT: typo
 
     tvbuff(const uint8_t *data, int len) : data(data), length(len) {}
 
-    [[nodiscard]] uint16_t ntohs(int offset) const;;
-    [[nodiscard]] uint8_t uint8(int offset) const;
+    uint16_t ntohs(int offset) const;;
+    uint8_t uint8(int offset) const;
 
-    [[nodiscard]] int remain(int offset) const;
+    int remain(int offset) const;
 };
 
 inline uint16_t tvbuff::ntohs(int offset) const {

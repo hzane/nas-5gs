@@ -4,7 +4,7 @@
 extern const element_meta sm::alwayson_pdu_session_req = {
     0xB0,
     "Always-on PDU session requested",
-    dissect_always_on_pdu_ses_req,
+    sm::dissect_always_on_pdu_ses_req,
     nullptr,
 };
 

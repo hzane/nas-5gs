@@ -4,7 +4,7 @@
 const element_meta sm::sm_pdu_dn_req_cont = {
     0x39u,
     "PDU DN request container",
-    dissect_pdu_dn_req_cont,
+    sm::dissect_pdu_dn_req_cont,
     nullptr,
 };
 const field_meta hf_dn_spec_id = {

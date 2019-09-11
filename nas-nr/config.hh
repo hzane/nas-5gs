@@ -3,10 +3,6 @@
 #include <string>
 #include <vector>
 
-#if _MSC_VER < 1920
-#define nullptr 0
-#endif
-
 template <typename... Args> inline void unused(Args&&...) {}
 
 struct tvbuff;
@@ -76,7 +72,7 @@ struct context {
     uint32_t                   msg_auth_code        = 0;
     uint8_t                    payload_content_type = 0;
     std::vector< std::string > paths                = {};
-    [[nodiscard]] std::string  path() const;
+    std::string  path() const;
 };
 
 struct use_context { // NOLINT: special-member-functions

@@ -1,10 +1,14 @@
 #include "../dissect_mm_msg.hh"
 
+using namespace cmn;
+using namespace nas;
+using namespace mm;
+
 // 9.11.3.2	5GMM cause
 extern const element_meta mm::mm_cause = {
     0x58,
     nullptr,
-    dissect_mm_cause,
+    mm::dissect_mm_cause,
     nullptr,
 };
 

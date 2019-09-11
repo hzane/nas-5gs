@@ -43,6 +43,6 @@ int mm::dissect_uplink_data_status(dissector d, context* ctx) {
 const element_meta mm::uplink_data_status = {
     0x40,
     "Uplink data status",
-    dissect_uplink_data_status,
+    mm::dissect_uplink_data_status,
     nullptr,
 };

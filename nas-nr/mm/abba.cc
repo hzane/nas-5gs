@@ -1,5 +1,9 @@
 #include "../dissect_mm_msg.hh"
 
+using namespace cmn;
+using namespace mm;
+
+
 /* 9.11.3.10    ABBA */
 int mm::dissect_abba_set(dissector d, context* ctx) {
     // indicate set of security features defined for 5GS as described in 3GPP TS 33.501

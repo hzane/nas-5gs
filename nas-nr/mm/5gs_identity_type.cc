@@ -1,5 +1,7 @@
 #include "../dissect_mm_msg.hh"
 
+using namespace nas;
+using namespace mm;
 
 /* * 9.11.3.3 5GS identity type */
 int mm::dissect_identity_type(dissector d, context* ctx) {

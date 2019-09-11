@@ -6,7 +6,7 @@ struct tree_meta {
     const char* name;
     const char* alias;
 
-    [[nodiscard]] string pretty()const;
+    string pretty()const;
 };
 
 inline string tree_meta::pretty() const {

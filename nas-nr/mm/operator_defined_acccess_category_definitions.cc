@@ -1,5 +1,9 @@
 #include "../dissect_mm_msg.hh"
 
+using namespace cmn;
+using namespace nas;
+using namespace mm;
+
 extern const element_meta mm::operator_defined_access_category_defs = {
     0x76,
     "Operator-defined access category definitions",

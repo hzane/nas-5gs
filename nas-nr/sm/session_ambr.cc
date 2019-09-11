@@ -23,7 +23,7 @@ int sm::dissect_session_ambr(dissector d, context* ctx) {
 const element_meta sm::ses_ambr = {
     0x2A,
     "Session AMBR",
-    dissect_session_ambr,
+    sm::dissect_session_ambr,
     nullptr,
 };
 
@@ -64,7 +64,7 @@ const field_meta sm::hf_sm_ses_ambr_dl_unit = {
     "nas_5gs.sm.unit_for_session_ambr_dl",
     ft::ft_uint8,
     fd::base_dec,
-    sm_unit_for_session_ambr_values,
+    sm::sm_unit_for_session_ambr_values,
     nullptr,
     nullptr,
     0x0,
@@ -75,7 +75,7 @@ const field_meta sm::hf_sm_ses_ambr_ul_unit = {
     "nas_5gs.sm.unit_for_session_ambr_ul",
     ft::ft_uint8,
     fd::base_dec,
-    (sm_unit_for_session_ambr_values),
+    sm::sm_unit_for_session_ambr_values,
     nullptr,
     nullptr,
     0x0,

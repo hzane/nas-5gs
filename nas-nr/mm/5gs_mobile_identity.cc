@@ -2,6 +2,7 @@
 #include "../common.hh"
 
 using namespace cmn;
+using namespace mm;
 
 const element_meta mm::guti_mobile_id = {
     0x77,

@@ -113,7 +113,7 @@ inline __declspec(selectany) extern const field_meta hf_spare_b0 = {
 };
 #endif
 
-inline __declspec(selectany) extern const true_false_string tfs_supported_not_supported = {
+inline extern const true_false_string tfs_supported_not_supported = {
     "Supported",
     "Not supported",
 };

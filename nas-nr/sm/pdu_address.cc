@@ -5,7 +5,7 @@
 extern const element_meta sm::pdu_address = {
     0x29,
     "PDU address",
-    dissect_pdu_address,
+    sm::dissect_pdu_address,
     nullptr,
 };
 

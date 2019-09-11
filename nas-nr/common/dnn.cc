@@ -28,7 +28,7 @@ int cmn::dissect_dnn(dissector d, context* ctx) {
 extern const element_meta cmn::dnn = {
     0x25,
     "DNN",
-    dissect_dnn,
+    cmn::dissect_dnn,
     nullptr,
 };
 

@@ -1,5 +1,8 @@
 #include "../dissect_mm_msg.hh"
 
+using namespace cmn;
+using namespace nas;
+using namespace mm;
 
 // 9.11.3.58	Non-3GPP NW provided policies
 int mm::dissect_n3gpp_nw_provided_policies(dissector d, context* ctx) {

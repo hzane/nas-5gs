@@ -1,5 +1,8 @@
 #include "../dissect_mm_msg.hh"
 
+using namespace cmn;
+using namespace nas;
+
 namespace mm {
 extern const field_meta hf_5gsr_vcc;
 extern const field_meta hf_5gup_ciot;
@@ -194,7 +197,7 @@ const field_meta hf_s1_mode_b0 = {
 const element_meta mm::mm_cap = {
     0x10,
     "5GMM capability",
-    dissect_mm_capability,
+    mm::dissect_mm_capability,
     nullptr,
 };
 

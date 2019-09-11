@@ -1,5 +1,9 @@
 #include "../dissect_mm_msg.hh"
 
+using namespace cmn;
+using namespace nas;
+using namespace mm;
+
 // Payload container  9.11.3.39
 const element_meta mm::payload_container = {
     0x7B,

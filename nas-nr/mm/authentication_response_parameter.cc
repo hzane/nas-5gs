@@ -1,5 +1,8 @@
 #include "../dissect_mm_msg.hh"
 
+using namespace cmn;
+using namespace mm;
+
 /* 9.11.3.17	Authentication response parameter */
 int mm::dissect_auth_resp_param(dissector d, context* ctx) {
     const use_context uc(ctx, "auth-response-param", d, -1);

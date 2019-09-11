@@ -13,7 +13,7 @@ int sm::dissect_ssc_mode(dissector d, context* ctx) {
 extern const element_meta sm::ssc_mode = {
     0xa0,
     "SSC mode",
-    dissect_ssc_mode,
+    sm::dissect_ssc_mode,
     nullptr,
 };
 
@@ -41,7 +41,7 @@ const field_meta* sm::hf_sel_sc_mode = &sm::hfm_sel_sc_mode;
 const element_meta sm::allowed_ssc_mode = {
     0xf0,
     "Allowed SSC mode",
-    dissect_allowed_ssc_mode,
+    sm::dissect_allowed_ssc_mode,
     nullptr,
 };
 
@@ -90,7 +90,7 @@ const field_meta sm::hf_sm_sc_mode = {
     "nas_5gs.sm.sc_mode",
     ft::ft_uint8,
     fd::base_dec,
-    (sc_mode_values),
+    sm::sc_mode_values,
     nullptr,
     nullptr,
     0x0f,

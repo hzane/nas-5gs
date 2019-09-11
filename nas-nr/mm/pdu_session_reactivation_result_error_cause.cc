@@ -1,5 +1,9 @@
 #include "../dissect_mm_msg.hh"
 
+using namespace cmn;
+using namespace nas;
+using namespace mm;
+
 const element_meta mm::pdu_session_reactive_result_error_cause = {
     0x72,
     "PDU session reactivation result error cause",
