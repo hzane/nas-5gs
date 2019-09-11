@@ -5,50 +5,50 @@ int mm::dissect_ue_security_capability(dissector d, context* ctx) {
     const use_context uc(ctx, "ue-security-capability", d, 4);
 
     static const field_meta* oct3_flags[] = {
-        &hf_nas_5gs_mm_5g_ea0,
-        &hf_nas_5gs_mm_5g_ea1, // 128-
-        &hf_nas_5gs_mm_5g_ea2, // 128-
-        &hf_nas_5gs_mm_5g_ea3, // 128-
-        &hf_nas_5gs_mm_5g_ea4,
-        &hf_nas_5gs_mm_5g_ea5,
-        &hf_nas_5gs_mm_5g_ea6,
-        &hf_nas_5gs_mm_5g_ea7,
+        &hf_ea0,
+        &hf_ea1, // 128-
+        &hf_ea2, // 128-
+        &hf_ea3, // 128-
+        &hf_mm_5g_ea4,
+        &hf_mm_5g_ea5,
+        &hf_mm_5g_ea6,
+        &hf_mm_5g_ea7,
         nullptr,
     };
 
     static const field_meta* oct4_flags[] = {
-        &hf_nas_5gs_mm_5g_ia0,
-        &hf_nas_5gs_mm_5g_ia1, // 128-
-        &hf_nas_5gs_mm_5g_ia2, // 128-
-        &hf_nas_5gs_mm_5g_ia3, // 128-
-        &hf_nas_5gs_mm_5g_ia4,
-        &hf_nas_5gs_mm_5g_ia5,
-        &hf_nas_5gs_mm_5g_ia6,
-        &hf_nas_5gs_mm_5g_ia7,
+        &hf_mm_5g_ia0,
+        &hf_mm_128_5g_ia1,     // 128-
+        &hf_mm_128_5g_ia2, // 128-
+        &hf_mm_128_5g_ia3, // 128-
+        &hf_mm_5g_ia4,
+        &hf_mm_5g_ia5,
+        &hf_mm_5g_ia6,
+        &hf_mm_5g_ia7,
         nullptr,
     };
 
     static const field_meta* oct5_flags[] = {
-        &hf_nas_5gs_mm_eea0,
-        &hf_nas_5gs_mm_eea1, // 128-
-        &hf_nas_5gs_mm_eea2, // 128-
-        &hf_nas_5gs_mm_eea3, // 128-
-        &hf_nas_5gs_mm_eea4,
-        &hf_nas_5gs_mm_eea5,
-        &hf_nas_5gs_mm_eea6,
-        &hf_nas_5gs_mm_eea7,
+        &hf_mm_eea0,
+        &hf_mm_128eea1, // 128-
+        &hf_mm_128eea2, // 128-
+        &hf_mm_eea3, // 128-
+        &hf_mm_eea4,
+        &hf_mm_eea5,
+        &hf_mm_eea6,
+        &hf_mm_eea7,
         nullptr,
     };
 
     static const field_meta* oct6_flags[] = {
-        &hf_nas_5gs_mm_eia0,
-        &hf_nas_5gs_mm_eia1, // 128-
-        &hf_nas_5gs_mm_eia2, // 128-
-        &hf_nas_5gs_mm_eia3, // 128-
-        &hf_nas_5gs_mm_eia4,
-        &hf_nas_5gs_mm_eia5,
-        &hf_nas_5gs_mm_eia6,
-        &hf_nas_5gs_mm_eia7,
+        &hf_mm_eia0,
+        &hf_mm_128eia1, // 128-
+        &hf_mm_128eia2, // 128-
+        &hf_mm_eia3, // 128-
+        &hf_mm_eia4,
+        &hf_mm_eia5,
+        &hf_mm_eia6,
+        &hf_mm_eia7,
         nullptr,
     };
 
@@ -86,7 +86,7 @@ int mm::dissect_replayed_ue_sec_cap(dissector d, context* ctx) {
     const use_context uc(ctx, "ue-security-capability", d, 0);    
 
     static const field_meta* oct3_flags[] = {
-        &hf_mm_5g_ea0,
+        &hf_ea0,
         &hf_mm_128_5g_ea1,
         &hf_mm_128_5g_ea2,
         &hf_mm_128_5g_ea3,

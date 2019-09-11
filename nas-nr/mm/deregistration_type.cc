@@ -9,7 +9,7 @@ int mm::dissect_deregistration_type(dissector d, context* ctx) {
 
     /* Switch off   Re-registration required    Access type */
     auto i = d.add_item(1, &hf_switch_off, enc::be);
-    i = d.add_item(1, &hf_re_reg_req, enc::be);
+    i = d.add_item(1, &hf_reregistration_request, enc::be);
     i = d.add_item(1, &hf_acc_type, enc::be);
     d.step(1);
 
@@ -46,7 +46,7 @@ const field_meta mm::hf_switch_off = {
     nullptr,
     0x08,
 };
-const field_meta mm::hf_re_reg_req = {
+const field_meta mm::hf_reregistration_request = {
     "Re-registration required",
     "nas.nr.mm.re_reg_req",
     ft::ft_boolean,

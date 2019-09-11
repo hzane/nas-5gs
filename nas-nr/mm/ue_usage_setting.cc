@@ -10,7 +10,7 @@ int mm::dissect_usage_setting(dissector d, context* ctx) {
 //        &hf_spare_b3,
 //        &hf_spare_b2,
 //        &hf_spare_b1,
-        &hf_nas_5gs_mm_ue_usage_setting,
+        &hf_ue_usage_setting,
         nullptr,
     };
     d.add_bits(flags);

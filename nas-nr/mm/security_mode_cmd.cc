@@ -119,14 +119,6 @@ const field_meta hf_sec_algo_enc = {
     0xf0,
 };
 
-const field_meta hf_mm_5g_ea0 = {
-    "5G-EA0",
-    "nas.nr.mm.5g_ea0",
-    ft::ft_boolean,
-    fd::base_dec
-    ,nullptr,&tfs_supported_not_supported,nullptr,
-    0x80,
-};
 const field_meta hf_mm_128_5g_ea1 = {
     "128-5G-EA1",
     "nas.nr.mm.128_5g_ea1",
@@ -244,8 +236,10 @@ const field_meta hf_mm_5g_ia7 = {
     "5G-IA7",
     "nas.nr.mm.5g_ia7",
     ft::ft_boolean,
-    fd::base_dec
-    ,nullptr,&tfs_supported_not_supported,nullptr,
+    fd::base_dec,
+    nullptr,
+    &tfs_supported_not_supported,
+    nullptr,
     0x01,
 };
 
@@ -253,8 +247,10 @@ const field_meta hf_mm_eea0 = {
     "EEA0",
     "nas.nr.mm.eea0",
     ft::ft_boolean,
-    fd::base_dec
-    ,nullptr,&tfs_supported_not_supported,nullptr,
+    fd::base_dec,
+    nullptr,
+    &tfs_supported_not_supported,
+    nullptr,
     0x80,
 };
 const field_meta hf_mm_128eea1 = {

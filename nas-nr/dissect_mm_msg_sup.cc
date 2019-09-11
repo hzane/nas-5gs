@@ -70,17 +70,6 @@ const field_meta mm::hf_nas_key_set_id_h1 = {
     0x70,
 };
 
-const field_meta mm::hf_mm_sst = {
-    "Slice/service type (SST)",
-    "nas.nr.mm.sst",
-    ft::ft_uint8,
-    fd::base_dec,
-    nullptr,
-    nullptr,
-    nullptr,
-    0x0,
-};
-
 const field_meta hfm_mm_sd = { // NOLINT
     "Slice differentiator (SD)",
     "nas.nr.mm.mm_sd",
@@ -145,28 +134,6 @@ const field_meta hfm_mm_re_reg_req = { // NOLINT
     0x04,
 };
 
-
-const field_meta mm::hfm_mm_conf_upd_ind_ack_b0 = {
-    "Acknowledgement",
-    "nas.nr.mm.conf_upd_ind.ack",
-    ft::ft_boolean,
-    8,
-    nullptr,
-    &tfs_requested_not_requested,
-    nullptr,
-    0x01,
-};
-
-const field_meta mm::hfm_nas_5gs_mm_conf_upd_ind_red_b1 = {
-    "Registration",
-    "nas.nr.mm.conf_upd_ind.red",
-    ft::ft_boolean,
-    8,
-    nullptr,
-    &tfs_requested_not_requested,
-    nullptr,
-    0x02,
-};
 
 extern const val_string mm::mm_type_of_enc_algo_vals[] = {
     {0x0, "5G-EA0 (null ciphering algorithm)"},
@@ -290,17 +257,6 @@ const field_meta mm::hfm_mm_req_type = {
     0x0f,
 };
 
-
-const field_meta mm::hfm_mm_5g_ea0 = {
-    "5G-EA0",
-    "nas.nr.mm.5g_ea0",
-    ft::ft_boolean,
-    8,
-    nullptr,
-    &tfs_supported_not_supported,
-    nullptr,
-    0x80,
-};
 
 const field_meta mm::hfm_mm_128_5g_ea1 = {
     "128-5G-EA1",
@@ -434,129 +390,7 @@ const field_meta mm::hfm_mm_5g_ia4 = {
     0x08,
 };
 
-const field_meta mm::hfm_nas_5gs_mm_5g_ia5 = {
-    "5G-IA5",
-    "nas.nr.mm.5g_ia5",
-    ft::ft_boolean,
-    8,
-    nullptr,
-    &tfs_supported_not_supported,
-    nullptr,
-    0x04,
-};
 
-const field_meta mm::hfm_nas_5gs_mm_5g_ia6 = {
-    "5G-IA6",
-    "nas.nr.mm.5g_ia6",
-    ft::ft_boolean,
-    8,
-    nullptr,
-    &tfs_supported_not_supported,
-    nullptr,
-    0x02,
-};
-
-const field_meta mm::hfm_nas_5gs_mm_5g_ia7 = {
-    "5G-IA7",
-    "nas.nr.mm.5g_ia7",
-    ft::ft_boolean,
-    8,
-    nullptr,
-    &tfs_supported_not_supported,
-    nullptr,
-    0x01,
-};
-
-const field_meta mm::hfm_nas_5gs_mm_eea0 = {
-    "EEA0",
-    "nas.nr.mm.eea0",
-    ft::ft_boolean,
-    8,
-    nullptr,
-    &tfs_supported_not_supported,
-    nullptr,
-    0x80,
-};
-
-const field_meta mm::hfm_nas_5gs_mm_128eea1 = {
-    "128-EEA1",
-    "nas.nr.mm.128eea1",
-    ft::ft_boolean,
-    8,
-    nullptr,
-    &tfs_supported_not_supported,
-    nullptr,
-    0x40,
-
-};
-
-const field_meta mm::hfm_nas_5gs_mm_128eea2 = {
-    "128-EEA2",
-    "nas.nr.mm.128eea2",
-    ft::ft_boolean,
-    8,
-    nullptr,
-    &tfs_supported_not_supported,
-    nullptr,
-    0x20,
-};
-
-const field_meta mm::hfm_nas_5gs_mm_eea3 = {
-    "128-EEA3",
-    "nas.nr.mm.eea3",
-    ft::ft_boolean,
-    8,
-    nullptr,
-    &tfs_supported_not_supported,
-    nullptr,
-    0x10,
-
-};
-
-const field_meta mm::hfm_nas_5gs_mm_eea4 = {
-    "EEA4",
-    "nas.nr.mm.eea4",
-    ft::ft_boolean,
-    8,
-    nullptr,
-    &tfs_supported_not_supported,
-    nullptr,
-    0x08,
-};
-
-const field_meta mm::hfm_nas_5gs_mm_eea5 = {
-    "EEA5",
-    "nas.nr.mm.eea5",
-    ft::ft_boolean,
-    8,
-    nullptr,
-    &tfs_supported_not_supported,
-    nullptr,
-    0x04,
-
-};
-const field_meta mm::hfm_nas_5gs_mm_eea6 = {
-    "EEA6",
-    "nas.nr.mm.eea6",
-    ft::ft_boolean,
-    8,
-    nullptr,
-    &tfs_supported_not_supported,
-    nullptr,
-    0x02,
-
-};
-const field_meta mm::hfm_nas_5gs_mm_eea7 = {
-    "EEA7",
-    "nas.nr.mm.eea7",
-    ft::ft_boolean,
-    8,
-    nullptr,
-    &tfs_supported_not_supported,
-    nullptr,
-    0x01,
-
-};
 const field_meta mm::hfm_nas_5gs_mm_eia0 = {
     "EIA0",
     "nas.nr.mm.eia0",
@@ -568,27 +402,7 @@ const field_meta mm::hfm_nas_5gs_mm_eia0 = {
     0x80,
 
 };
-const field_meta mm::hfm_nas_5gs_mm_128eia1 = {
-    "128-EIA1",
-    "nas.nr.mm.128eia1",
-    ft::ft_boolean,
-    8,
-    nullptr,
-    &tfs_supported_not_supported,
-    nullptr,
-    0x40,
 
-};
-const field_meta mm::hfm_nas_5gs_mm_128eia2 = {
-    "128-EIA2",
-    "nas.nr.mm.128eia2",
-    ft::ft_boolean,
-    8,
-    nullptr,
-    &tfs_supported_not_supported,
-    nullptr,
-    0x20,
-};
 const field_meta mm::hfm_nas_5gs_mm_eia3 = {
     "128-EIA3",
     "nas.nr.mm.eia3",
@@ -854,7 +668,7 @@ extern const true_false_string mm::tfs_eps_tsc = {
     "Mapped security context (for KSIsgsn)",
     "Native security context (for KSIasme)",
 };
-extern const field_meta mm::hfm_nas_eps_tsc = {
+extern const field_meta mm::hf_nas_eps_tsc = {
     "Type of security context flag (TSC)",
     "nas_eps.emm.tsc",
     ft::ft_boolean,
@@ -864,7 +678,6 @@ extern const field_meta mm::hfm_nas_eps_tsc = {
     nullptr,
     0x08,
 };
-const field_meta* mm::hf_nas_eps_tsc = &hfm_nas_eps_tsc;
 
 
 extern const field_meta mm::hfm_nas_eps_nas_ksi = { // NOLINT

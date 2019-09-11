@@ -9,8 +9,8 @@ int mm::dissect_service_area_list(dissector d, context* ctx) {
     const use_context        uc(ctx, "service-area-list", d, 0);
 
     static const field_meta* flags[] = {
-        &hf_sal_al_t,
-        &hf_sal_t_li,
+        &hf_sal_allowed_type,
+        &hf_sal_list_type,
         &hf_sal_num_e,
         nullptr,
     };
@@ -91,7 +91,7 @@ const true_false_string tfs_tai_or_not = {
     "TAIs in the list are in the allowed area",
 };
 
-const field_meta mm::hf_sal_al_t = {
+const field_meta mm::hf_sal_allowed_type= {
     "Allowed type",
     "nas.nr.mm.sal_al_t",
     ft::ft_boolean,
@@ -101,7 +101,7 @@ const field_meta mm::hf_sal_al_t = {
     nullptr,
     0x80,
 };
-const field_meta mm::hf_sal_t_li = {
+const field_meta mm::hf_sal_list_type = {
     "Type of list",
     "nas.nr.mm.sal_t_li",
     ft::ft_uint8,

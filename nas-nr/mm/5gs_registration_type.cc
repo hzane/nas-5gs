@@ -10,7 +10,7 @@ int mm::dissect_registration_request_type(dissector d, context* ctx) {
 
     const field_meta* flags[] = {
         &hf_mm_for,
-        &hf_5gs_reg_type,
+        &hf_registration_type,
         nullptr,
     };
     d.add_bits(flags);
@@ -26,7 +26,7 @@ extern const val_string mm::values_registration_type[] = {
     {0x7, "reserved"},
     {0, nullptr},
 };
-const field_meta mm::hf_5gs_reg_type = {
+const field_meta mm::hf_registration_type = {
     "5GS registration type",
     "nas.nr.mm.registration.type",
     ft::ft_uint8,
@@ -111,7 +111,7 @@ static true_false_string tfs_nas_5gs_mm_ue_usage_setting = {
     "Voice centric",
 };
 
-const field_meta mm::hf_nas_5gs_mm_ue_usage_setting = {
+const field_meta mm::hf_ue_usage_setting = {
     "UE's usage setting",
     "nas.nr.mm.ue_usage_setting",
     ft::ft_boolean,

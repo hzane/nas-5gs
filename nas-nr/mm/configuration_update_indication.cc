@@ -11,7 +11,7 @@ int mm::dissect_config_update_ind(dissector d, context* ctx) {
     static const field_meta* flags[] = {
         // &hf_spare_b3,
         // &hf_spare_b2,
-        &hf_conf_upd_ind_red_b1,
+        &hf_conf_upd_ind_reg_b1,
         &hf_conf_upd_ind_ack_b0,
         nullptr,
     };
