@@ -10,7 +10,7 @@ extern const element_meta cmn::additional_inf = {
 
 const field_meta hf_additional_inf = {
     "Additional information",
-    "nas_5gs.cmn.additional_info",
+    "nas.nr.cmn.additional_info",
     ft::ft_bytes,
     fd::base_none,
     nullptr,

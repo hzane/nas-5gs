@@ -2,7 +2,7 @@
 
 const field_meta cmn::hf_dnn = {
     "DNN",
-    "nas_5gs.cmn.dnn",
+    "nas.nr.cmn.dnn",
     ft::ft_bytes,
     fd::bstrn,
     nullptr,

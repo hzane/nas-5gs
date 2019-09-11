@@ -122,8 +122,8 @@ int dissect_opt_lv(const field_meta *,
     const auto subtree = d.add_item(1 + parm_len, val_meta->name);
     const use_tree ut(d, subtree);
 
-    // auto l = d.add_item(1, hf_gsm_a_length, enc::be);   
-    d.step(1); 
+    // auto l = d.add_item(1, hf_gsm_a_length, enc::be);
+    d.step(1);
 
     if (parm_len == 0) return 1;
     const auto fnc = val_meta->fnc ? val_meta->fnc : dissect_msg_unknown_body;
@@ -153,9 +153,9 @@ int dissect_opt_lv_e(const field_meta *,
     const auto subtree = d.add_item(2 + parm_len, val_meta->name);
     use_tree ut(d, subtree);
 
-    // (void) d.add_item(2, hf_gsm_e_length, enc::be);    
+    // (void) d.add_item(2, hf_gsm_e_length, enc::be);
     d.step(2);
-    
+
     const auto fnc      = val_meta->fnc ? val_meta->fnc : dissect_msg_unknown_body;
     const auto consumed = fnc(d.slice(parm_len).use_elem(get_elem_data(e)), ctx);
     d.step(consumed);
@@ -180,7 +180,7 @@ int dissect_opt_v(const field_meta *,
 
     auto subtree = d.add_item(-1, val_meta->name);
     use_tree ut(d, subtree);
-    
+
     const auto consumed = val_meta->fnc(d, ctx);
     subtree->set_length(consumed);
 
@@ -216,7 +216,7 @@ int dissect_opt_tv_short(const field_meta *,
 
     const auto subtree = d.add_item(1, val_meta->name);
     const use_tree ut(d, subtree);
-    
+
     const auto consumed = val_meta->fnc(d.use_elem(get_elem_data(e)), ctx);
     unused(consumed);
 
@@ -249,10 +249,10 @@ int dissect_opt_tv(const field_meta *,
     proto_node* subtree = nullptr;
     if (val_meta->name) {
         subtree = d.add_item(-1, val_meta->name);
-        const use_tree ut(d, subtree);        
+        const use_tree ut(d, subtree);
     }
     d.step(1);
-  
+
     const auto consumed = val_meta->fnc(d.use_elem(get_elem_data(e)), ctx);
 
     if(subtree) subtree->set_length(consumed + 1);
@@ -277,14 +277,14 @@ int dissect_opt_tlv(const field_meta *,
 
     set_elem_presence(e, true);
     set_elem_type(e, iei);
-    
+
     const auto parm_len = d.tvb->uint8(d.offset + 1);
 
     const auto subtree = d.add_item(parm_len + 1 + 1, val_meta->name);
     d.step(1);
     const use_tree ut(d, subtree);
 
-    // auto t = d.add_item(1, hf_gsm_a_length, enc::be);    
+    // auto t = d.add_item(1, hf_gsm_a_length, enc::be);
     d.step(1);
 
     if (parm_len == 0) return 2;
@@ -341,7 +341,7 @@ int dissect_opt_telv(const field_meta *,
 
     // (void) d.add_item(lengt_length, hf_gsm_e_length, enc::none);
     d.step(lengt_length);
-   
+
 
     if (parm_len == 0) return 1 + lengt_length;
 
@@ -423,7 +423,7 @@ static field_meta const hfm_gsm_e_length = {
     "Length",
     "gsm.length",
     ft::ft_bytes,
-    fd::ext_length,
+    fd::extl,
     nullptr,
     nullptr,
     nullptr,

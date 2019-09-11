@@ -13,7 +13,7 @@ static const val_string nas_5gs_mm_reg_req_vals[] = {
 };
 static field_meta hfm_registration_req_flags = {
     "Message type",
-    "nas_5gs.sm.message_type",
+    "nas.nr.sm.message_type",
     ft::ft_uint8,
     fd::base_hex,
     nas_5gs_mm_reg_req_vals,
@@ -28,7 +28,7 @@ true_false_string nas_5gs_for_tfs = {
 };
 const field_meta hf_mm_for = {
     "Follow-On Request bit (FOR)",
-    "nas_5gs.mm.for",
+    "nas.nr.mm.for",
     ft::ft_boolean,
     fd::base_dec,
     nullptr, (&nas_5gs_for_tfs),nullptr,
@@ -63,6 +63,6 @@ static const val_string nas_5gs_mm_registration_req_elem[] = {
     {0, nullptr},
 };
 
-} // namespace 
+} // namespace
 
 

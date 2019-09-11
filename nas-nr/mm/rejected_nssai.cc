@@ -48,7 +48,7 @@ static const val_string ref_nssai_cause_values[] = {
 
 const field_meta mm::hf_rej_nssai_cause = {
     "Cause",
-    "nas_5gs.mm.cause",
+    "nas.nr.mm.cause",
     ft::ft_uint8,
     fd::base_dec,
     ref_nssai_cause_values,

@@ -38,7 +38,7 @@ static const true_false_string nas_5gs_mm_re_reg_req_tfs = {
 
 const field_meta mm::hf_switch_off = {
     "Switch off",
-    "nas_5gs.mm.switch_off",
+    "nas.nr.mm.switch_off",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -48,7 +48,7 @@ const field_meta mm::hf_switch_off = {
 };
 const field_meta mm::hf_re_reg_req = {
     "Re-registration required",
-    "nas_5gs.mm.re_reg_req",
+    "nas.nr.mm.re_reg_req",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,

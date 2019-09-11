@@ -26,7 +26,7 @@ const tf_string  tfs_upu_data_type = {
 };
 const field_meta mm::hf_upu_data_type = {
     "UPU data type",
-    "nas_5gs.mm.ue.parameters.update.data.type",
+    "nas.nr.mm.ue.parameters.update.data.type",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -42,7 +42,7 @@ const tf_string tfs_ack = {
 
 const field_meta mm::hf_ack = {
     "ACK",
-    "nas_5gs.mm.ue.parameters.update.ack",
+    "nas.nr.mm.ue.parameters.update.ack",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -55,7 +55,7 @@ const tf_string  tfs_reregistration               = {
 };
 const field_meta mm::hf_reregistration                = {
     "Re-registration (REG)",
-    "nas_5gs.mm.ue.parameters.rereg",
+    "nas.nr.mm.ue.parameters.rereg",
     ft::ft_boolean, fd::base_dec,
     nullptr,
     &tfs_reregistration,
@@ -65,7 +65,7 @@ const field_meta mm::hf_reregistration                = {
 // UPU-MAC-IAUSF, UPU-MAC-IUE and CounterUPU are coded as specified in 3GPP TS 33.501 [24]
 const field_meta mm::hf_upu_mac_i = {
     "UPU-MAC-I",
-    "nas_5gs.upu",
+    "nas.nr.upu",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -81,7 +81,7 @@ extern const val_string ue_param_update_data_set_type_values[] = {
 
 const field_meta hf_ue_param_update_data_set_type = {
     "UE parameters update data set type",
-    "nas_5gs.mm.ue.parameters.update.data.set.type",
+    "nas.nr.mm.ue.parameters.update.data.set.type",
     ft::ft_uint8,
     fd::base_dec,
     ue_param_update_data_set_type_values,

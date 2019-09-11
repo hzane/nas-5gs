@@ -6,7 +6,7 @@ using namespace nas;
 
 const field_meta hfm_spare_half_octet = {
     "Spare Half Octet",
-    "nas_5gs.spare_half_octet",
+    "nas.nr.spare_half_octet",
     ft::ft_uint8,
     fd::base_dec,
     nullptr,
@@ -18,7 +18,7 @@ const field_meta* nas::hf_spare_half_octet_invisible = &hfm_spare_half_octet;
 
 const field_meta hfm_msg_elements = {
     "Message Elements",
-    "nas_5gs.message_elements",
+    "nas.nr.message_elements",
     ft::ft_bytes,
     fd::base_none,
     nullptr,
@@ -53,7 +53,7 @@ extern const val_string epd_values[] = {
 
 const field_meta hfm_epd = {
     "Extended protocol discriminator",
-    "nas_5gs.epd",
+    "nas.nr.epd",
     ft::ft_uint8,
     fd::base_dec,
     epd_values,
@@ -74,7 +74,7 @@ const val_string security_header_type_values[] = {
 
 field_meta hfm_security_header_type = {
     "Security header type",
-    "nas_5gs.security_header_type",
+    "nas.nr.security_header_type",
     ft::ft_uint8,
     fd::base_dec,
     security_header_type_values,
@@ -86,7 +86,7 @@ const field_meta* nas::hf_sec_header_type = &hfm_security_header_type;
 
 field_meta hfm_msg_auth_code = {
     "Message authentication code",
-    "nas_5gs.msg_auth_code",
+    "nas.nr.msg_auth_code",
     ft::ft_bytes,
     fd::base_hex,
     nullptr,
@@ -98,7 +98,7 @@ const field_meta* nas::hf_msg_auth_code = &hfm_msg_auth_code;
 
 field_meta hfm_seq_no = {
     "Sequence number",
-    "nas_5gs.seq_no",
+    "nas.nr.seq_no",
     ft::ft_uint8,
     fd::base_dec,
     nullptr,
@@ -145,7 +145,7 @@ const val_string sm_message_type_values[] = {
 
 field_meta hfm_sm_message_type = {
     "Message type",
-    "nas_5gs.sm.message_type",
+    "nas.nr.sm.message_type",
     ft::ft_uint8,
     fd::base_hex,
     sm_message_type_values,
@@ -158,7 +158,7 @@ const field_meta* nas::hf_sm_msg_type = &hfm_sm_message_type;
 
 field_meta hfm_proc_trans_id = {
     "Procedure transaction identity",
-    "nas_5gs.proc_trans_id",
+    "nas.nr.proc_trans_id",
     ft::ft_uint8,
     fd::base_dec,
     nullptr,
@@ -222,7 +222,7 @@ const val_string mm_message_type_values[] = {
 };
 const field_meta hfm_mm_msg_type = {
     "Message type",
-    "nas_5gs.mm.message_type",
+    "nas.nr.mm.message_type",
     ft::ft_uint8,
     fd::base_hex,
     mm_message_type_values,
@@ -234,7 +234,7 @@ const field_meta* nas::hf_mm_msg_type = &hfm_mm_msg_type;
 
 const field_meta nas::hf_service_request_msg_id = {
     "Service request message identity",
-    "nas_5gs.mm.message_type",
+    "nas.nr.mm.message_type",
     ft::ft_uint8,
     fd::base_hex,
     mm_message_type_values,
@@ -254,7 +254,7 @@ const element_meta nas::t3348_gprs_timer3{
 
 const field_meta nas::hf_pdu_ipv4_mask = {
     "IPv4 address mask",
-    "nas_5gs.ipv4_address_mask",
+    "nas.nr.ipv4_address_mask",
     ft::ft_uint32,
     fd::ipv4,
     nullptr,
@@ -264,7 +264,7 @@ const field_meta nas::hf_pdu_ipv4_mask = {
 };
 const field_meta nas::hf_pid_next_hd = {
     "Protocol identifier/Next header type",
-    "nas_5gs.protocol_identifier_or_next_hd",
+    "nas.nr.protocol_identifier_or_next_hd",
     ft::ft_uint8,
     fd::base_dec,
     nullptr,
@@ -274,7 +274,7 @@ const field_meta nas::hf_pid_next_hd = {
 };
 const field_meta nas::hf_single_port_type = {
     "Port number",
-    "nas_5gs.port_type",
+    "nas.nr.port_type",
     ft::ft_uint16,
     fd::base_dec,
     nullptr,

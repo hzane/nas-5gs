@@ -7,7 +7,7 @@ using namespace cmn;
 // 9.11.3.49    Service area list page.391
 int mm::dissect_service_area_list(dissector d, context* ctx) {
     const use_context        uc(ctx, "service-area-list", d, 0);
-    
+
     static const field_meta* flags[] = {
         &hf_sal_al_t,
         &hf_sal_t_li,
@@ -93,7 +93,7 @@ const true_false_string tfs_tai_or_not = {
 
 const field_meta mm::hf_sal_al_t = {
     "Allowed type",
-    "nas_5gs.mm.sal_al_t",
+    "nas.nr.mm.sal_al_t",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -103,7 +103,7 @@ const field_meta mm::hf_sal_al_t = {
 };
 const field_meta mm::hf_sal_t_li = {
     "Type of list",
-    "nas_5gs.mm.sal_t_li",
+    "nas.nr.mm.sal_t_li",
     ft::ft_uint8,
     fd::base_dec,
     nas_5gs_mm_sal_t_li_values,

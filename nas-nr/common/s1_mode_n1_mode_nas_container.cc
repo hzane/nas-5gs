@@ -33,7 +33,7 @@ const true_false_string tfs_nas_5gs_mm_s1_mod = {
 
 const field_meta hf_msg_auth_code = {
     "Message authentication code",
-    "nas_5gs.cmn.mac",
+    "nas.nr.cmn.mac",
     ft::ft_uint32,
     fd::base_hex,
     nullptr,
@@ -58,7 +58,7 @@ const field_meta hf_ncc= {
 
 const field_meta cmn::hf_mm_s1_mode_reg_b0 = {
     "S1 mode reg",
-    "nas_5gs.mm.s1_mode_reg_b0",
+    "nas.nr.mm.s1_mode_reg_b0",
     ft::ft_boolean,
     8,
     nullptr,

@@ -41,7 +41,7 @@ extern const value_string mm::mm_pld_cont_type_values[] = {
 /*  9.11.3.40    Payload container type */
 extern const field_meta mm::hf_payload_container_type = {
     "Payload container type",
-    "nas_5gs.mm.payload.type",
+    "nas.nr.mm.payload.type",
     ft::ft_uint8,
     fd::base_dec,
     mm_pld_cont_type_values,

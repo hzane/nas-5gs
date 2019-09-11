@@ -202,7 +202,7 @@ extern const value_string sm::sm_pkt_flt_dir_values[] = {
 #if 0
 const field_meta sm::hf_sm_length = {
     "Length",
-    "nas_5gs.sm.length",
+    "nas.nr.sm.length",
     ft::ft_uint16,
     fd::base_dec,
     nullptr,
@@ -214,7 +214,7 @@ const field_meta sm::hf_sm_length = {
 
 const field_meta sm::hf_sm_pkt_flt_id = {
     "Packet filter identifier",
-    "nas_5gs.sm.pkt_flt_id",
+    "nas.nr.sm.pkt_flt_id",
     ft::ft_uint8,
     fd::base_dec,
     nullptr,
@@ -224,7 +224,7 @@ const field_meta sm::hf_sm_pkt_flt_id = {
 };
 const field_meta sm::hf_sm_pkt_flt_dir = {
     "Packet filter direction",
-    "nas_5gs.sm.pkt_flt_dir",
+    "nas.nr.sm.pkt_flt_dir",
     ft::ft_uint8,
     fd::base_dec,
     (sm_pkt_flt_dir_values),
@@ -235,7 +235,7 @@ const field_meta sm::hf_sm_pkt_flt_dir = {
 #if 0
 const field_meta sm::hf_sm_pf_len = {
     "Length",
-    "nas_5gs.sm.pf_len",
+    "nas.nr.sm.pf_len",
     ft::ft_uint8,
     fd::base_dec,
     nullptr,
@@ -247,7 +247,7 @@ const field_meta sm::hf_sm_pf_len = {
 
 const field_meta sm::hf_sm_pf_type = {
     "Packet filter component type",
-    "nas_5gs.sm.pf_type",
+    "nas.nr.sm.pf_type",
     ft::ft_uint8,
     fd::base_dec,
     (sm_pf_type_values),

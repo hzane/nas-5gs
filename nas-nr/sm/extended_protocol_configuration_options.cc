@@ -3,7 +3,7 @@
 
 const field_meta hf_gsma_sm_ext = {
     "Extension",
-    "nas_5gs.gsm.sm.ext",
+    "nas.nr.gsm.sm.ext",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -13,7 +13,7 @@ const field_meta hf_gsma_sm_ext = {
 };
 const field_meta hf_gsma_conf_prot = {
     "Configuration Protocol",
-    "nas_5gs.gsm.sm.configuration_protocol",
+    "nas.nr.gsm.sm.configuration_protocol",
     ft::ft_uint8,
     fd::base_dec,
     nullptr,
@@ -63,7 +63,7 @@ extern const value_string ppp_vals[];
 
 const field_meta hf_proto_id = {
     "Protocol ID",
-    "nas_5gs.protocol.id",
+    "nas.nr.protocol.id",
     ft::ft_uint16,
     fd::base_dec,
     nullptr,
@@ -76,7 +76,7 @@ const field_meta hf_proto_id = {
 int sm::dissect_ext_pco(dissector d, context* ctx) {
     const use_context uc(ctx, "extended-protocol-conf-options", d, -1);
 
-    // See subclause 10.5.6.3A in 3GPP TS 24.008    
+    // See subclause 10.5.6.3A in 3GPP TS 24.008
 
     /* 1 ext 0 0 0 0 Spare  Configuration protocol */
     (void) d.add_item(1, &hf_gsma_sm_ext, enc::be);

@@ -82,7 +82,7 @@ int mm::dissect_mobile_id_noid(dissector d, context* ctx) {
 
     d.add_bits(flags_odd_even_tid);
     d.step(1);
-    
+
     return 1;
 }
 
@@ -141,14 +141,14 @@ int mm::dissect_mobile_id_suci(dissector d, context* ctx) {
             (void) d.add_item(d.length, &hf_msin, enc::be);
         else
             (void) d.add_item(d.length, &hf_mm_scheme_output, enc::na);
-        
+
         d.step(d.length);
     }
     if (supi_fmt == 1) {
         // nai, network specific identifier
         (void) d.add_item(d.length, &hf_nas_5gs_mm_suci_nai, enc::be);
         d.step(d.length);
-    } 
+    }
     return uc.length;
 }
 
@@ -200,7 +200,7 @@ int mm::dissect_mobile_id_imeisv(dissector d, context* ctx) {
 
 extern const field_meta mm::hf_mm_odd_even = {
     "Odd/even indication",
-    "nas_5gs.mm.odd_even",
+    "nas.nr.mm.odd_even",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -220,7 +220,7 @@ const element_meta mm::mobile_id = {
 /* * 9.11.3.4    5GS mobile identity */
 const field_meta mm::hf_mm_type_id = {  // NOLINT
     "Type of identity",
-    "nas_5gs.mm.type_id",
+    "nas.nr.mm.type_id",
     ft::ft_uint8,
     fd::base_dec,
     identity_type_values,
@@ -238,7 +238,7 @@ const field_meta* flags_odd_even_tid[] = {
 };
 const field_meta hf_mac_address = {
     "MAC address",
-    "nas_5gs.mac",
+    "nas.nr.mac",
     ft::ft_bytes,
     fd::sep_colon,
     nullptr,
@@ -253,7 +253,7 @@ const val_string nas_5gs_mm_supi_fmt_vals[] = {
 };
 const field_meta hf_nas_5gs_mm_supi_fmt = {
     "SUPI format",
-    "nas_5gs.mm.suci.supi_fmt",
+    "nas.nr.mm.suci.supi_fmt",
     ft::ft_uint8,
     fd::base_dec,
     (nas_5gs_mm_supi_fmt_vals),
@@ -264,7 +264,7 @@ const field_meta hf_nas_5gs_mm_supi_fmt = {
 
 const field_meta hf_nas_5gs_mm_suci_nai = {
     "NAI",
-    "nas_5gs.mm.suci.nai",
+    "nas.nr.mm.suci.nai",
     ft::ft_bytes,
     fd::base_string,
     nullptr,
@@ -274,7 +274,7 @@ const field_meta hf_nas_5gs_mm_suci_nai = {
 };
 const field_meta hf_nas_5gs_mm_imei = {
     "IMEI",
-    "nas_5gs.mm.imei",
+    "nas.nr.mm.imei",
     ft::ft_bytes,
     fd::base_hex,
     nullptr,
@@ -285,7 +285,7 @@ const field_meta hf_nas_5gs_mm_imei = {
 #if 0
 const field_meta hf_spare_b3 = {
     "Spare",
-    "nas_5gs.spare.b3",
+    "nas.nr.spare.b3",
     ft::ft_uint8,
     fd::base_dec,
     nullptr,
@@ -303,7 +303,7 @@ const field_meta* flags_supi_fmt_tid[] = {
 };
 const field_meta hf_nas_5gs_mm_imeisv = {
     "IMEISV",
-    "nas_5gs.mm.mid.imeisv",
+    "nas.nr.mm.mid.imeisv",
     ft::ft_bytes,
     fd::imei,
     nullptr,
@@ -314,7 +314,7 @@ const field_meta hf_nas_5gs_mm_imeisv = {
 
 const field_meta hf_amf_set_id = {
     "AMF Set ID",
-    "nas_5gs.mm.mid.amf",
+    "nas.nr.mm.mid.amf",
     ft::ft_uint16,
     fd::base_dec,
     nullptr,
@@ -325,7 +325,7 @@ const field_meta hf_amf_set_id = {
 
 const field_meta hf_amf_pointer = {
     "AMF Pointer",
-    "nas_5gs.mm.mid.amf.pointer",
+    "nas.nr.mm.mid.amf.pointer",
     ft::ft_uint8,
     fd::base_dec,
     nullptr,
@@ -337,7 +337,7 @@ const field_meta hf_amf_pointer = {
 
 const field_meta hf_5g_tmsi = {
     "5G-TMSI",
-    "nas_5gs.5g_tmsi",
+    "nas.nr.5g_tmsi",
     ft::ft_bytes,
     fd::base_hex,
     nullptr,
@@ -348,7 +348,7 @@ const field_meta hf_5g_tmsi = {
 
 const field_meta hf_routing_indication = {
     "Routing indicator",
-    "nas_5gs.mm.mid.suci.routing",
+    "nas.nr.mm.mid.suci.routing",
     ft::ft_bytes,
     fd::bcd,
     nullptr,
@@ -366,7 +366,7 @@ static const value_string nas_5gs_mm_prot_scheme_id_vals[] = {
 
 const field_meta hf_protection_scheme_id = {
     "Protection scheme Id",
-    "nas_5gs.mm.suci.scheme_id",
+    "nas.nr.mm.suci.scheme_id",
     ft::ft_uint8,
     fd::base_dec,
     (nas_5gs_mm_prot_scheme_id_vals),
@@ -376,7 +376,7 @@ const field_meta hf_protection_scheme_id = {
 };
 const field_meta hf_public_key_identifier = {
     "Home network public key identifier",
-    "nas_5gs.mm.suci.pki",
+    "nas.nr.mm.suci.pki",
     ft::ft_uint8,
     fd::base_dec,
     nullptr,
@@ -387,7 +387,7 @@ const field_meta hf_public_key_identifier = {
 
 const field_meta hf_msin = {
     "Scheme output - MSIN",
-    "nas_5gs.mm.suci.imsi.null_scheme.msin",
+    "nas.nr.mm.suci.imsi.null_scheme.msin",
     ft::ft_bytes,
     fd::bcd,
     nullptr,
@@ -398,7 +398,7 @@ const field_meta hf_msin = {
 
 const field_meta hf_mm_scheme_output = {
     "Scheme output - Network specific identifier",
-    "nas_5gs.mm.mid.suci.scheme.nsid",
+    "nas.nr.mm.mid.suci.scheme.nsid",
     ft::ft_bytes,
     fd::base_none,
     nullptr,
@@ -409,7 +409,7 @@ const field_meta hf_mm_scheme_output = {
 
 const field_meta hf_amf_region_id = {
     "AMF Region ID",
-    "nas_5gs.mm.mid.amf.region",
+    "nas.nr.mm.mid.amf.region",
     ft::ft_uint8,
     fd::base_dec,
     nullptr,

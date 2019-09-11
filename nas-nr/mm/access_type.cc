@@ -31,7 +31,7 @@ static const value_string access_type_vals[] = {
 
 const field_meta mm::hf_acc_type = {
     "Access type",
-    "nas_5gs.mm.access.type",
+    "nas.nr.mm.access.type",
     ft::ft_uint8,
     fd::base_dec,
     access_type_vals,

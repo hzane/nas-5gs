@@ -42,7 +42,7 @@ const field_meta hf_n1_to_s1_mode = {
 
 const field_meta cmn::hf_mm_n1_mode_reg_b1 = {
     "N1 mode reg",
-    "nas_5gs.mm.n1_mode_reg_b1",
+    "nas.nr.mm.n1_mode_reg_b1",
     ft::ft_boolean,
     8,
     nullptr,

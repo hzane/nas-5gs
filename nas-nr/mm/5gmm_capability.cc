@@ -43,7 +43,7 @@ int mm::dissect_mm_capability(dissector d, context* ctx) {
 namespace mm {
 const field_meta        hf_5gsr_vcc = {
     "5G-SRVCC from NG-RAN to UTRAN (5GSRVCC) capability",
-    "nas_5gs.mm.cap.5gsrvcc",
+    "nas.nr.mm.cap.5gsrvcc",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -53,7 +53,7 @@ const field_meta        hf_5gsr_vcc = {
 };
 const field_meta        hf_5gup_ciot = {
     "User plane CIoT 5GS optimization (5G-UP CIoT) ",
-    "nas_5gs.mm.cap.5gup.ciot",
+    "nas.nr.mm.cap.5gup.ciot",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -69,7 +69,7 @@ const true_false_string tfs_sgc_7 = {
 
 const field_meta hf_sgc_7 = {
     "Service gap control SGC",
-    "nas_5gs.mm.sgc",
+    "nas.nr.mm.sgc",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -83,7 +83,7 @@ const true_false_string tfs_hccp_ciot_6 = {
 };
 const field_meta hf_hccp_ciot_6 = {
     "Header compression for control plane CIoT 5GS optimization (5G-HC-CP-CIoT)",
-    "nas_5gs.mm.5g_hc_cp_ciot",
+    "nas.nr.mm.5g_hc_cp_ciot",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -99,7 +99,7 @@ const true_false_string tfs_n3data_5 = {
 
 const field_meta hf_n3data_5 = {
     "N3 data transfer",
-    "nas_5gs.mm.n3data",
+    "nas.nr.mm.n3data",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -115,7 +115,7 @@ const true_false_string tfs_5gcp_ciot_4 = {
 
 const field_meta hf_5gcp_ciot_4 = {
     "Control plane CIoT 5GS optimization (5G-CP CIoT)",
-    "nas_5gs.mm.5g_cp_ciot",
+    "nas.nr.mm.5g_cp_ciot",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -131,7 +131,7 @@ const true_false_string tfs_restrict_ec_3 = {
 
 const field_meta hf_restrict_ec_3 = {
     "Restriction on use of enhanced coverage support (RestrictEC)",
-    "nas_5gs.mm.restrict_ec",
+    "nas.nr.mm.restrict_ec",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -147,7 +147,7 @@ const true_false_string tfs_lpp_2 = {
 
 const field_meta hf_lpp_b2 = {
     "LTE Positioning Protocol (LPP) capability",
-    "nas_5gs.mm.lpp_cap_b2",
+    "nas.nr.mm.lpp_cap_b2",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -167,7 +167,7 @@ const true_false_string tfs_ho_attach_1 = {
 
 const field_meta hf_ho_attach_b1 = {
     "HO attach",
-    "nas_5gs.mm.ho_attach_b1",
+    "nas.nr.mm.ho_attach_b1",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -183,7 +183,7 @@ const true_false_string tfs_s1_mode_0 = {
 
 const field_meta hf_s1_mode_b0 = {
     "S1 mode",
-    "nas_5gs.mm.s1_mode_b0",
+    "nas.nr.mm.s1_mode_b0",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,

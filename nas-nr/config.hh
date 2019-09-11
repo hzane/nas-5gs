@@ -162,6 +162,8 @@ inline uint64_t n2uint64(const uint8_t* data) {
 };
 
 inline uint64_t n2_uint(const uint8_t* data, int len) {
+    if (!len || !data) return 0;
+
     switch (len) {
     case 1:
         return n2uint8(data);

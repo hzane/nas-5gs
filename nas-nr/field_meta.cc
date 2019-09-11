@@ -1,12 +1,20 @@
 #include "field_meta.hh"
 #include "tvbuff.hh"
 
-string field_meta::format(const uint8_t* p, int length, uint32_t /*enc*/) const {
+string field_meta::format(const uint8_t* p, int length, uint32_t enc) const {
 
     if (!p || length <= 0) return string();
-    if (ftype == ft::none || ftype == ft::protocol || ftype == ft::ft_struct ||
-        ftype == ft::ft_expert)
+    if (enc == enc::na || enc::none) {
         return string();
+    }
+    if (ft::is_integer(ftype)) {
+        auto v = n2_uint(p, length);
+        return format(v);
+    }
+    if (ftype == ft::none) return string();
+    if (ftype == ft::protocol || ftype == ft::ft_struct || ftype == ft::ft_expert)
+        return string();
+    if (display == fd::base_none) return string();
 
     if (ftype == ft::ft_boolean) {
         auto v  = *p;
@@ -16,9 +24,6 @@ string field_meta::format(const uint8_t* p, int length, uint32_t /*enc*/) const 
         const auto tf = this->tf_strings ? tf_strings : &true_false;
         return formats("%s (%d)", v ? tf->true_string : tf->false_string, v ? 1 : 0);
     }
-    if (ftype == ft::ft_char) {
-        return formats("%c", static_cast< char >(*p));
-    }
 
     switch (display) {
         case fd::base_string: return string(reinterpret_cast< const char* >(p), length);
@@ -27,6 +32,8 @@ string field_meta::format(const uint8_t* p, int length, uint32_t /*enc*/) const 
         case fd::sep_colon: return format_hex(p, length, ";");
         case fd::sep_dash: return format_hex(p, length, "-");
         case fd::sep_dot: return format_hex(p, length, ".");
+        case fd::base_char:
+            return formats("%c", static_cast< char >(*p));
         case fd::imei:
             return imei_string(p, length);
         case fd::bcd:
@@ -55,7 +62,7 @@ string field_meta::format(const uint8_t* p, int length, uint32_t /*enc*/) const 
             return timezone_string(p);
         case fd::ambr:
             return ambr_string(p, length);
-        case fd::ext_length:
+        case fd::extl:
             return formats("%d", ext_length(p));
         case fd::timer:
             return gprs_timer_string(p, length);
@@ -71,6 +78,7 @@ string field_meta::format(const uint8_t* p, int length, uint32_t /*enc*/) const 
 
 string field_meta::format(uint64_t v) const {
     if (ftype == ft::none || ftype == ft::protocol) return string();
+    if (display == fd::base_none) return string();
 
     if (ftype == ft::ft_boolean || tf_strings) {
         const auto tf = this->tf_strings ? tf_strings : &true_false;
@@ -78,7 +86,7 @@ string field_meta::format(uint64_t v) const {
             "%s (%d)", v ? tf->true_string : tf->false_string, v ? 1 : 0);
     }
 
-    if (ftype == ft::ft_char) {
+    if (display == fd::base_char) {
         return formats("%c", static_cast< char >(v));
     }
 
@@ -96,18 +104,29 @@ string field_meta::format(uint64_t v) const {
         const auto s = find_r_string(range_strings, uint32_t(v));
         return formats("%s (%#x)", s, uint32_t(v));
     }
+
     if(display == fd::timer) {
         auto v8 = static_cast< uint8_t >(v);
         return gprs_timer_string(&v8, 1);
     }
+
     if (display == fd::timer3) {
         return gprs_timer3_format(uint8_t(v));
     }
+
     if (display == fd::timer2){
         return gprs_timer2_format(uint8_t(v));
     }
+
     if (display == fd::base_bin) {
         return format_int_bit_mask(ftype, v, bitmask, nullptr);
+    }
+
+    if (display == fd::right) {
+        return formats("%1x", (v & 0x0fu));
+    }
+    if (display == fd::left) {
+        return formats("%1x", (v & 0xf0u) >> 4u);
     }
 
     return format_int(v, ftype, display);

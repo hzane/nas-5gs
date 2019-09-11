@@ -41,7 +41,7 @@ const val_string mm::mm_serv_type_vals[] = {
 };
 const field_meta mm::hfm_mm_serv_type = {
     "Service type",
-    "nas_5gs.mm.service.type",
+    "nas.nr.mm.service.type",
     ft::ft_uint8,
     fd::base_dec,
     mm_serv_type_vals,

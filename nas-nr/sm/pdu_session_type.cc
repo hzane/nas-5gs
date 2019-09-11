@@ -5,9 +5,9 @@
 /*  8.3.6 PDU session authentication result */
 int sm::dissect_pdu_ses_auth_res(dissector d, context* ctx) {
     const use_context uc(ctx, "pdu-session-auth-result", d, 0);
-    
+
     /* Direction: network to UE */
-    down_link(d.pinfo);    
+    down_link(d.pinfo);
 
     /*EAP message    EAP message 9.11.2.2    M    LV-E    6-1502 */
     // ELEM_MAND_LV_E(,  DE_NAS_5GS_CMN_EAP_MESSAGE,  );
@@ -19,7 +19,7 @@ int sm::dissect_pdu_ses_auth_res(dissector d, context* ctx) {
     // ELEM_OPT_TLV_E(0x7B, NAS_PDU_TYPE_ESM, DE_ESM_EXT_PCO, NULL);
     consumed = dissect_opt_tlv_e(nullptr, &ext_pco, d, ctx);
     d.step(consumed);
-    
+
     return d.offset - uc.offset;
 }
 
@@ -49,7 +49,7 @@ const value_string nas_5gs_sm_pdu_ses_type_vals[] = {
 
 const field_meta sm::hf_sm_pdu_ses_type = {
     "PDU session type",
-    "nas_5gs.sm.pdu_ses_type",
+    "nas.nr.sm.pdu_ses_type",
     ft::ft_uint8,
     fd::base_dec,
     nas_5gs_sm_pdu_ses_type_vals,
@@ -89,7 +89,7 @@ const val_string pdu_session_id_values[] = {
 };
 const field_meta hfm_pdu_session_id = {
     "PDU session identity",
-    "nas_5gs.pdu_session_id",
+    "nas.nr.pdu_session_id",
     ft::ft_uint8,
     fd::base_dec,
     pdu_session_id_values,

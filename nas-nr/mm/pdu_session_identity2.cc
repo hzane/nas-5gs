@@ -37,7 +37,7 @@ static const val_string pdu_session_id_values[] = {
 
 const field_meta mm::hf_pdu_session_id = {
     "PDU session identity 2",
-    "nas_5gs.mm.pdu.session.id",
+    "nas.nr.mm.pdu.session.id",
     ft::ft_uint8,
     fd::base_dec,
     pdu_session_id_values,

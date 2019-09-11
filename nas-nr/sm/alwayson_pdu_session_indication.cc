@@ -6,7 +6,7 @@ const true_false_string tfs_pdu_always_on_ses_id_apsi = {
 
 const field_meta hf_pdu_always_on_ses_ind = {
     "Always-on PDU session indication",
-    "nas_5gs.sm.pdu.ses_id",
+    "nas.nr.sm.pdu.ses_id",
     ft::ft_uint8,
     fd::base_dec,
     nullptr,

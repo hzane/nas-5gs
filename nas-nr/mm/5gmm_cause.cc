@@ -18,7 +18,7 @@ int mm::dissect_mm_cause(dissector d, context* ctx) {
 
     (void) d.add_item(1, &hf_mm_cause, enc::be);
     d.step(1);
-    
+
     return 1;
 }
 
@@ -67,7 +67,7 @@ extern const val_string mm_cause_values[] = {
 // 5GMM cause   9.11.3.2
 const field_meta mm::hf_mm_cause = {
     "5GMM cause",
-    "nas_5gs.mm.5gmm_cause",
+    "nas.nr.mm.5gmm_cause",
     ft::ft_uint8,
     fd::base_dec,
     mm_cause_values,

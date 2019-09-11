@@ -13,7 +13,7 @@ using namespace std;
 string format_int_hex(uint64_t v, uint32_t ftype) {
     auto t   = ftype & 0x07u;
     auto fmt = "%#0x";
-    if (t == ft::ft_nibble) fmt = "%1X";
+
     if (t == ft::ft_int8 || t == ft::ft_uint8) fmt = "%#04x";
     if (t == ft::ft_int16 || t == ft::ft_uint16) fmt = "%#06x";
     if (t == ft::ft_int24 || t == ft::ft_uint24) fmt = "%#08x";
@@ -125,6 +125,7 @@ std::vector< std::string > find_bits_string(const val_string* strings, uint32_t 
     }
     return ret;
 }
+
 string format_int_bit_mask(uint32_t ftype, uint64_t v, uint64_t mask, const char* ) {
     size_t cnt = 0;
     if (mask) {
@@ -135,7 +136,7 @@ string format_int_bit_mask(uint32_t ftype, uint64_t v, uint64_t mask, const char
     switch (ftype) {
     case ft::ft_int64:
     case ft::ft_uint64:
-        ss << bitset< 8 >((v & 0xff00'0000'0000'0000u) >> 40) ;
+        ss << bitset< 8 >((v & 0xff00'0000'0000'0000u) >> 56) ;
     case ft::ft_int48:
     case ft::ft_uint48:
         ss << bitset< 8 >((v & 0xff00'0000'0000u) >> 40) ;
@@ -158,6 +159,7 @@ string format_int_bit_mask(uint32_t ftype, uint64_t v, uint64_t mask, const char
     if (cnt) ret = ret.substr(0, cnt);
     return ret;
 }
+
 string format_bit(const uint8_t* data, int len, const char* sep) {
     stringstream ss;
     for (auto i = 0; i < len; i++) {
@@ -215,6 +217,7 @@ string join(const vector< string >& strs, const char* sep) {
     }
     return ss.str();
 }
+
 std::string format_int(uint64_t v, uint32_t ftype, uint32_t display) {
     if (display == fd::base_dec) return format_int_dec(v, ftype);
     if (display == fd::base_hex) return format_int_hex(v, ftype);
@@ -267,10 +270,4 @@ int ws_ctz(uint64_t x) {
     else
         return ws_ctz32(lo);
 }
-#if 0
-int ms_ctz(uint64_t x) {
-    unsigned long idx    = 0;
-    _BitScanForward64(&idx, x); // assert(x != 0)
-    return (int)idx;
-}
-#endif
+

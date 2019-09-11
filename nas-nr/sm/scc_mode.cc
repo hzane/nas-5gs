@@ -28,7 +28,7 @@ const val_string nas_5gs_sc_mode_values[] = {
 // Selected SSC mode    SSC mode 9.11.4.16
 extern const field_meta sm::hfm_sel_sc_mode = {
     "SSC mode - Selected",
-    "nas_5gs.sm.sel_sc_mode",
+    "nas.nr.sm.sel_sc_mode",
     ft::ft_uint8,
     fd::base_dec,
     nas_5gs_sc_mode_values,
@@ -48,7 +48,7 @@ const element_meta sm::allowed_ssc_mode = {
 
 const field_meta sm::hf_sm_all_ssc_mode_b2 = {
     "SSC mode 3",
-    "nas_5gs.sm.all_ssc_mode_b2",
+    "nas.nr.sm.all_ssc_mode_b2",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -58,7 +58,7 @@ const field_meta sm::hf_sm_all_ssc_mode_b2 = {
 };
 const field_meta sm::hf_sm_all_ssc_mode_b1 = {
     "SSC mode 2",
-    "nas_5gs.sm.all_ssc_mode_b1",
+    "nas.nr.sm.all_ssc_mode_b1",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -68,7 +68,7 @@ const field_meta sm::hf_sm_all_ssc_mode_b1 = {
 };
 const field_meta sm::hf_sm_all_ssc_mode_b0 = {
     "SSC mode 1",
-    "nas_5gs.sm.all_ssc_mode_b0",
+    "nas.nr.sm.all_ssc_mode_b0",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -87,7 +87,7 @@ extern const value_string sm::sc_mode_values[] = {
 
 const field_meta sm::hf_sm_sc_mode = {
     "SSC mode",
-    "nas_5gs.sm.sc_mode",
+    "nas.nr.sm.sc_mode",
     ft::ft_uint8,
     fd::base_dec,
     sm::sc_mode_values,

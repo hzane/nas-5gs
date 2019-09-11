@@ -31,7 +31,7 @@ extern const field_meta   hf_service_request_msg_id;
 #if 0
 inline extern const field_meta hf_spare_b7 = {
     "Spare",
-    "nas_5gs.spare_b7",
+    "nas.nr.spare_b7",
     ft::ft_uint8,
     fd::base_dec,
     nullptr,
@@ -41,7 +41,7 @@ inline extern const field_meta hf_spare_b7 = {
 };
 inline __declspec(selectany) extern const field_meta hf_spare_b6 = {
     "Spare",
-    "nas_5gs.spare_b6",
+    "nas.nr.spare_b6",
     ft::ft_uint8,
     fd::base_dec,
     nullptr,
@@ -51,7 +51,7 @@ inline __declspec(selectany) extern const field_meta hf_spare_b6 = {
 };
 inline __declspec(selectany) extern const field_meta hf_spare_b5 = {
     "Spare",
-    "nas_5gs.spare_b5",
+    "nas.nr.spare_b5",
     ft::ft_uint8,
     fd::base_dec,
     nullptr,
@@ -61,7 +61,7 @@ inline __declspec(selectany) extern const field_meta hf_spare_b5 = {
 };
 inline __declspec(selectany) extern const field_meta hf_spare_b4 = {
     "Spare",
-    "nas_5gs.spare_b4",
+    "nas.nr.spare_b4",
     ft::ft_uint8,
     fd::base_dec,
     nullptr,
@@ -71,7 +71,7 @@ inline __declspec(selectany) extern const field_meta hf_spare_b4 = {
 };
 inline __declspec(selectany) extern const field_meta hf_spare_b3 = {
     "Spare",
-    "nas_5gs.spare_b3",
+    "nas.nr.spare_b3",
     ft::ft_uint8,
     fd::base_dec,
     nullptr,
@@ -81,7 +81,7 @@ inline __declspec(selectany) extern const field_meta hf_spare_b3 = {
 };
 inline __declspec(selectany) extern const field_meta hf_spare_b2 = {
     "Spare",
-    "nas_5gs.spare_b2",
+    "nas.nr.spare_b2",
     ft::ft_uint8,
     fd::base_dec,
     nullptr,
@@ -92,7 +92,7 @@ inline __declspec(selectany) extern const field_meta hf_spare_b2 = {
 
 inline __declspec(selectany) extern const field_meta hf_spare_b1 = {
     "Spare",
-    "nas_5gs.spare_b1",
+    "nas.nr.spare_b1",
     ft::ft_uint8,
     fd::base_dec,
     nullptr,
@@ -103,7 +103,7 @@ inline __declspec(selectany) extern const field_meta hf_spare_b1 = {
 
 inline __declspec(selectany) extern const field_meta hf_spare_b0 = {
     "Spare",
-    "nas_5gs.spare.b0",
+    "nas.nr.spare.b0",
     ft::ft_uint8,
     fd::base_dec,
     nullptr,

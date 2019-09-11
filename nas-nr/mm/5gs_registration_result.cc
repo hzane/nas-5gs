@@ -26,7 +26,7 @@ const value_string nas_5gs_mm_reg_res_values[] = {
 };
 const field_meta hf_registration_result = {
     "5GS registration result",
-    "nas_5gs.mm.registration.result",
+    "nas.nr.mm.registration.result",
     ft::ft_uint8,
     fd::base_dec,
     nas_5gs_mm_reg_res_values,

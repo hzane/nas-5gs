@@ -14,7 +14,7 @@ extern const element_meta mm::timezone_time= {
 };
 const field_meta hf_timezone_time = {
     "Time Zone and Time",
-    "nas_5gs.time",
+    "nas.nr.time",
     ft::ft_bytes,
     fd::timezone_time,
     nullptr,

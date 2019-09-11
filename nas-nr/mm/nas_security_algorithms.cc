@@ -32,7 +32,7 @@ extern const val_string mm::mm_type_of_ip_algo_vals[] = {
 
 const field_meta mm::hf_sec_algo_ip = {
     "Type of integrity protection algorithm",
-    "nas_5gs.mm.nas_sec_algo_ip",
+    "nas.nr.mm.nas_sec_algo_ip",
     ft::ft_uint8,
     fd::base_dec,
     mm_type_of_ip_algo_vals,

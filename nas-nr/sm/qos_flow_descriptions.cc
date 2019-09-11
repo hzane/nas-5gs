@@ -18,7 +18,7 @@ extern const element_meta sm::authorized_qos_flow_desc = {
 
 const field_meta sm::hf_sm_qfi = {
     "Qos flow identifier",
-    "nas_5gs.sm.qfi",
+    "nas.nr.sm.qfi",
     ft::ft_uint8,
     fd::base_dec,
     nullptr,
@@ -39,10 +39,10 @@ const value_string nas_5gs_sm_qos_des_flow_opt_code_vals[] = {
 
 const field_meta sm::hf_sm_qos_des_flow_opt_code = {
     "Operation code",
-    "nas_5gs.sm.hf_nas_5gs_sm_qos_des_flow_opt_code",
+    "nas.nr.sm.hf_nas.nr_sm_qos_des_flow_opt_code",
     ft::ft_uint8,
     fd::base_dec,
-    (nas_5gs_sm_qos_des_flow_opt_code_vals),
+    nas_5gs_sm_qos_des_flow_opt_code_vals,
     nullptr,
     nullptr,
     0xe0,
@@ -83,7 +83,7 @@ int sm::dissect_qos_param(dissector d, int j, context* ctx) {
     case 0x03: /* 03H (GFBR downlink); 05H (MFBR downlink);*/
     case 0x05: {
         /* Unit for Session-AMBR for uplink */
-        /* Session-AMBR for downlink*/        
+        /* Session-AMBR for downlink*/
         (void) d.add_item(3, &hf_sm_ses_ambr_dl, enc::be);
         d.step(3);
     } break;
@@ -108,7 +108,7 @@ int sm::dissect_qos_param(dissector d, int j, context* ctx) {
 
 // Authorized QoS flow descriptions     QoS flow descriptions 9.11.4.12
 int sm::dissect_authorized_qos_flow_des(dissector d, context* ctx) {
-    const use_context uc(ctx, "authorized-qos-flow-desc", d, 0);   
+    const use_context uc(ctx, "authorized-qos-flow-desc", d, 0);
 
     static const field_meta* param_flags[] = {
         &hf_sm_e,

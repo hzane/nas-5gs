@@ -65,7 +65,7 @@ const field_meta hf_e212_mcc = {
 
 const field_meta hf_e212_mnc = {
     "MNC",
-    "nas_5gs.cmn.mnc",
+    "nas.nr.cmn.mnc",
     ft::ft_bytes,
     fd::mnc,
     nullptr,

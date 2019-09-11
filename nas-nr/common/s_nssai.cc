@@ -11,7 +11,7 @@ extern const element_meta cmn::s_nssai = {
 namespace {
 const field_meta hf_sst = {
     "Slice/service type (SST)",
-    "nas_5gs.mm.sst",
+    "nas.nr.mm.sst",
     ft::ft_uint8,
     fd::base_dec,
     nullptr,
@@ -22,7 +22,7 @@ const field_meta hf_sst = {
 
 const field_meta hf_sd = {
     "Slice differentiator (SD)",
-    "nas_5gs.mm.mm_sd",
+    "nas.nr.mm.mm_sd",
     ft::ft_uint24,
     fd::base_dec,
     nullptr,
@@ -33,7 +33,7 @@ const field_meta hf_sd = {
 
 const field_meta hf_mapped_conf_sst = {
     "Mapped configured SST",
-    "nas_5gs.mm.mapped_conf_sst",
+    "nas.nr.mm.mapped_conf_sst",
     ft::ft_uint8,
     fd::base_dec,
     nullptr,
@@ -44,7 +44,7 @@ const field_meta hf_mapped_conf_sst = {
 
 const field_meta hf_mapped_conf_ssd = {
     "Mapped configured SD",
-    "nas_5gs.mm.mapped_conf_ssd",
+    "nas.nr.mm.mapped_conf_ssd",
     ft::ft_uint24,
     fd::base_dec,
     nullptr,

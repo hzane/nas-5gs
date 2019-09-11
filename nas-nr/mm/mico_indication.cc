@@ -14,7 +14,7 @@ extern const element_meta mm::mico_indication = {
 
 /*  9.11.3.31    MICO indication */
 int mm::dissect_mico_ind(dissector d, context* ctx) {
-    const use_context uc(ctx, "mico-indication", d, -1);    
+    const use_context uc(ctx, "mico-indication", d, -1);
 
     auto i = d.add_item(1, hf_mm_raai_b0, enc::be);
 
@@ -33,7 +33,7 @@ const true_false_string tfs_raai = {
 
 const field_meta mm::hfm_mm_raai_b0 = {
     "Registration Area Allocation Indication (RAAI)",
-    "nas_5gs.mm.raai_b0",
+    "nas.nr.mm.raai_b0",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -52,7 +52,7 @@ const true_false_string tfs_sprti = {
 // In the network to UE and the UE to network direction:
 const field_meta mm::hf_mm_sprti = {
     "Strictly Periodic Registration Timer Indication (SPRTI)",
-    "nas_5gs.mm.sprti",
+    "nas.nr.mm.sprti",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,

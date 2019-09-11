@@ -33,7 +33,7 @@ const element_meta sm::sm_cap = {
 };
 const field_meta sm::hf_sm_rqos_b0 = {
     "Reflective QoS(RqoS)",
-    "nas_5gs.sm.rqos",
+    "nas.nr.sm.rqos",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,

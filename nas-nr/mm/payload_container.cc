@@ -139,7 +139,7 @@ int mm::dissect_updp(dissector d, context* ctx) {
     /* Message type IE*/
     (void) d.add_item(d.length, &hf_element, enc::be);
     d.step(d.length);
-    
+
     return uc.length;
 }
 
@@ -147,7 +147,7 @@ using namespace mm;
 
 const field_meta mm::hf_pld_cont_entry_nie = {
     "Number of optional IEs",
-    "nas_5gs.mm.payload_container.n_optional_ies",
+    "nas.nr.mm.payload_container.n_optional_ies",
     ft::ft_uint8,
     fd::base_dec,
     nullptr,
@@ -157,7 +157,7 @@ const field_meta mm::hf_pld_cont_entry_nie = {
 };
 const field_meta mm::hf_pld_cont_entry_contents = {
     "Payload container entry contents",
-    "nas_5gs.mm.payload_container.pcec",
+    "nas.nr.mm.payload_container.pcec",
     ft::ft_bytes,
     fd::base_none,
     nullptr,
@@ -167,7 +167,7 @@ const field_meta mm::hf_pld_cont_entry_contents = {
 };
 const field_meta mm::hf_pld_optional_ie = {
     "Optional IE",
-    "nas_5gs.mm.payload_container.optional_ie",
+    "nas.nr.mm.payload_container.optional_ie",
     ft::ft_bytes,
     fd::base_none,
     nullptr,
@@ -190,7 +190,7 @@ const value_string pld_optional_ie_type_values[] = {
 };
 const field_meta hf_pld_optional_ie_type = {
     "Type of Optional IE",
-    "nas_5gs.mm.payload_container.optional_ie.type",
+    "nas.nr.mm.payload_container.optional_ie.type",
     ft::ft_uint8,
     fd::base_hex,
     pld_optional_ie_type_values,
@@ -200,7 +200,7 @@ const field_meta hf_pld_optional_ie_type = {
 };
 const field_meta hf_pld_optional_ie_length = {
     "Length of Optional IE",
-    "nas_5gs.mm.payload_container.optional_ie.length",
+    "nas.nr.mm.payload_container.optional_ie.length",
     ft::ft_uint8,
     fd::base_dec,
     nullptr,
@@ -210,7 +210,7 @@ const field_meta hf_pld_optional_ie_length = {
 };
 const field_meta hf_pld_optional_ie_value = {
     "Value of Optional IE",
-    "nas_5gs.mm.payload_container.optional_ie.value",
+    "nas.nr.mm.payload_container.optional_ie.value",
     ft::ft_bytes,
     fd::base_none,
     nullptr,
@@ -234,6 +234,6 @@ int mm::dissect_optional_ie(dissector d, context* ctx) {
 
     (void) d.add_item(len, &hf_pld_optional_ie_value, enc::na);
     subtree->set_length(d.offset - uc.offset);
-    
+
     return d.offset - uc.offset;
 }

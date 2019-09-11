@@ -6,7 +6,7 @@ using namespace mm;
 using namespace nas;
 
 /* 8.2.7    Registration accept */
-int mm::dissect_registration_accept(dissector d, context* ctx) {    
+int mm::dissect_registration_accept(dissector d, context* ctx) {
     const use_context uc(ctx, "registration-accept", d, 12);
 
     /*      5GS registration result    9.11.3.6    M    LV 2*/
@@ -144,7 +144,7 @@ int mm::dissect_registration_accept(dissector d, context* ctx) {
     // tbdT3447 value GPRS timer 3 9.11.2.5 O TLV 3
     // XX T3448 value GPRS timer 3 9.11.2.4 O TLV 3
     // TBD T3324 value GPRS timer 3 9.11.2.5 O TLV 3
-   
+
 
     return uc.length;
 }
@@ -245,7 +245,7 @@ const field_meta hf_gsm_a_n3en_ind = {
 
 const field_meta hf_reg_res_sms_allowed = {
     "SMS over NAS",
-    "nas_5gs.mm.reg_res.sms_all",
+    "nas.nr.mm.reg_res.sms_all",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -426,7 +426,7 @@ const true_false_string tfs_nas_5gs_sor_data_type = {
 
 const field_meta hf_sor_hdr0_ack = { // NOLINT
     "Acknowledgement (ACK)",
-    "nas_5gs.sor_hdr0.ack",
+    "nas.nr.sor_hdr0.ack",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -436,7 +436,7 @@ const field_meta hf_sor_hdr0_ack = { // NOLINT
 };
 const field_meta hf_sor_hdr0_list_type = {
     "List type",
-    "nas_5gs.sor_hdr0.list_type",
+    "nas.nr.sor_hdr0.list_type",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -446,7 +446,7 @@ const field_meta hf_sor_hdr0_list_type = {
 };
 const field_meta hf_sor_hdr0_list_ind = {
     "List indication",
-    "nas_5gs.sor_hdr0.list_ind",
+    "nas.nr.sor_hdr0.list_ind",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -456,7 +456,7 @@ const field_meta hf_sor_hdr0_list_ind = {
 };
 const field_meta hf_sor_hdr0_sor_data_type = {
     "SOR data type",
-    "nas_5gs.sor.sor_data_type",
+    "nas.nr.sor.sor_data_type",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -467,7 +467,7 @@ const field_meta hf_sor_hdr0_sor_data_type = {
 const true_false_string tfs_selected_not_selected = {"Selected", "Not Selected"};
 const field_meta hf_acces_tech_o1_b7 = {
     "Access technology UTRAN",
-    "nas_5gs.cces_tech_o1_b7.utran",
+    "nas.nr.cces_tech_o1_b7.utran",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -477,7 +477,7 @@ const field_meta hf_acces_tech_o1_b7 = {
 };
 const field_meta hf_acces_tech_o1_b6 = {
     "Access technology E-UTRAN",
-    "nas_5gs.cces_tech_o1_b6.e_utran",
+    "nas.nr.cces_tech_o1_b6.e_utran",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -487,7 +487,7 @@ const field_meta hf_acces_tech_o1_b6 = {
 };
 const field_meta hf_acces_tech_o1_b5 = {
     "Access technology E-UTRAN in WB-S1 mode",
-    "nas_5gs.cces_tech_o1_b5.e_utran_in_wb_s1_mode",
+    "nas.nr.cces_tech_o1_b5.e_utran_in_wb_s1_mode",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -497,7 +497,7 @@ const field_meta hf_acces_tech_o1_b5 = {
 };
 const field_meta hf_acces_tech_o1_b4 = {
     "Access technology E-UTRAN in NB-S1 mode",
-    "nas_5gs.cces_tech_o1_b4.e_utran_in_nb_s1_mode",
+    "nas.nr.cces_tech_o1_b4.e_utran_in_nb_s1_mode",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -507,7 +507,7 @@ const field_meta hf_acces_tech_o1_b4 = {
 };
 const field_meta hf_acces_tech_o1_b3 = {
     "Access technology NG-RAN",
-    "nas_5gs.cces_tech_o1_b3.ng_ran",
+    "nas.nr.cces_tech_o1_b3.ng_ran",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -518,7 +518,7 @@ const field_meta hf_acces_tech_o1_b3 = {
 
 const field_meta hf_acces_tech_o2_b7 = {
     "Access technology GSM",
-    "nas_5gs.cces_tech_o2_b7.gsm",
+    "nas.nr.cces_tech_o2_b7.gsm",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -528,7 +528,7 @@ const field_meta hf_acces_tech_o2_b7 = {
 };
 const field_meta hf_acces_tech_o2_b6 = {
     "Access technology GSM COMPACT",
-    "nas_5gs.cces_tech_o2_b6.gsm_compact",
+    "nas.nr.cces_tech_o2_b6.gsm_compact",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -538,7 +538,7 @@ const field_meta hf_acces_tech_o2_b6 = {
 };
 const field_meta hf_acces_tech_o2_b5 = {
     "Access technology CDMA2000 HRPD",
-    "nas_5gs.cces_tech_o2_b5.cdma2000_hrpd",
+    "nas.nr.cces_tech_o2_b5.cdma2000_hrpd",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -548,7 +548,7 @@ const field_meta hf_acces_tech_o2_b5 = {
 };
 const field_meta hf_acces_tech_o2_b4 = {
     "Access technology CDMA2000 1xRTT",
-    "nas_5gs.cces_tech_o2_b4.cdma2000_1x_rtt",
+    "nas.nr.cces_tech_o2_b4.cdma2000_1x_rtt",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -558,7 +558,7 @@ const field_meta hf_acces_tech_o2_b4 = {
 };
 const field_meta hf_acces_tech_o2_b3 = {
     "Access technology EC-GSM-IoT",
-    "nas_5gs.cces_tech_o2_b3.ec_gsm_iot",
+    "nas.nr.cces_tech_o2_b3.ec_gsm_iot",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -579,7 +579,7 @@ const field_meta hf_acces_tech_o2_b2 = {
 
 const field_meta hf_rfu_b2 = {
     "Reserved for Future Use(RFU)",
-    "nas_5gs.rfu.b2",
+    "nas.nr.rfu.b2",
     ft::ft_uint8,
     fd::base_dec,
     nullptr,nullptr,nullptr,
@@ -587,7 +587,7 @@ const field_meta hf_rfu_b2 = {
 };
 const field_meta hf_rfu_b1 = {
     "Reserved for Future Use(RFU)",
-    "nas_5gs.rfu.b1",
+    "nas.nr.rfu.b1",
     ft::ft_uint8,
     fd::base_dec,
     nullptr,nullptr,nullptr,
@@ -595,7 +595,7 @@ const field_meta hf_rfu_b1 = {
 };
 const field_meta hf_rfu_b0 = {
     "Reserved for Future Use(RFU)",
-    "nas_5gs.rfu.b0",
+    "nas.nr.rfu.b0",
     ft::ft_uint8,
     fd::base_dec,
     nullptr,nullptr,nullptr,
@@ -603,7 +603,7 @@ const field_meta hf_rfu_b0 = {
 };
 const field_meta hf_sor_mac_iue = {
     "SOR-MAC-IUE",
-    "nas_5gs.mm.sor_mac_iue",
+    "nas.nr.mm.sor_mac_iue",
     ft::ft_bytes,
     fd::base_none,
     nullptr,
@@ -613,7 +613,7 @@ const field_meta hf_sor_mac_iue = {
 };
 const field_meta hf_sor_mac_iausf = {
     "SOR-MAC-IAUSF",
-    "nas_5gs.mm.sor_mac_iausf",
+    "nas.nr.mm.sor_mac_iausf",
     ft::ft_bytes,
     fd::base_none,
     nullptr,nullptr,nullptr,
@@ -622,7 +622,7 @@ const field_meta hf_sor_mac_iausf = {
 
 const field_meta hf_counter_sor = {
     "CounterSOR",
-    "nas_5gs.mm.counter_sor",
+    "nas.nr.mm.counter_sor",
     ft::ft_uint16,
     fd::base_dec,
     nullptr,nullptr,nullptr,
@@ -630,7 +630,7 @@ const field_meta hf_counter_sor = {
 };
 const field_meta hf_sor_sec_pkt = {
     "Secured packet",
-    "nas_5gs.mm.sor_sec_pkt",
+    "nas.nr.mm.sor_sec_pkt",
     ft::ft_bytes,
     fd::base_none,
     nullptr,nullptr,nullptr,
@@ -649,7 +649,7 @@ int dissect_eap_message(dissector d, context* ctx) {
 
 const field_meta hf_mm_precedence = {
     "Precedence",
-    "nas_5gs.mm.precedence",
+    "nas.nr.mm.precedence",
     ft::ft_uint8,
     fd::base_dec,
     nullptr,
@@ -659,7 +659,7 @@ const field_meta hf_mm_precedence = {
 };
 const field_meta hf_mm_op_defined_acd_oct6 = {
     "Operator-defined access category number",
-    "nas_5gs.mm.opd_acc_cat",
+    "nas.nr.mm.opd_acc_cat",
     ft::ft_uint8,
     fd::base_dec,
     nullptr,
@@ -674,7 +674,7 @@ const true_false_string tfs_mm_opd_acc_psac = {
 
 const field_meta hf_mm_op_defined_acd_psac = { // NOLINT
     "Presence of standardized access category (PSAC)",
-    "nas_5gs.mm.opd_acc_psac",
+    "nas.nr.mm.opd_acc_psac",
     ft::ft_uint8,
     fd::base_dec,
     nullptr,
@@ -721,7 +721,7 @@ int dissect_operator_defined_acd(dissector d, context* ctx) {
             diag("operator-defined access category definitions has oct-a %d", d.length);
         }
 
-        subtree->set_length(length + 1); 
+        subtree->set_length(length + 1);
         d.step(length);
     }
     return uc.length;

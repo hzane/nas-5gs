@@ -9,7 +9,7 @@ int mm::dissect_identity_type(dissector d, context* ctx) {
 
     (void) d.add_item(1, &hf_id_type, enc::be);
     d.step(1);
-    
+
     return 1;
 }
 
@@ -29,7 +29,7 @@ const val_string mm::identity_type_values[] = {
 /* 9.11.3.3 5GS identity type */
 const field_meta mm::hf_id_type = {
     "Type of identity",
-    "nas_5gs.mm.type_id",
+    "nas.nr.mm.type_id",
     ft::ft_uint8,
     fd::base_dec,
     identity_type_values,

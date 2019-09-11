@@ -32,7 +32,7 @@ int mm::dissect_nw_feature_support(dissector d, context* ctx) {
     // octet 4 may be non-exist
     if (d.length > 0) {
         d.add_bits(oct4);
-        d.step(1);        
+        d.step(1);
     }
 
     // oct 5 is optional
@@ -61,7 +61,7 @@ const true_false_string tfs_nas_5gs_nw_feat_sup_mpsi = {
 };
 const field_meta hf_nw_feat_sup_mpsi_b7 = {
     "MPS indicator (MPSI)",
-    "nas_5gs.nw_feat_sup.mpsi",
+    "nas.nr.nw_feat_sup.mpsi",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -78,7 +78,7 @@ static const tf_string tfs_iwi = {
 /* 9.11.3.5    5GS network feature support */
 const field_meta hf_nw_feat_sup_ims_iwk_n26_b6 = {
     "Interworking without N26",
-    "nas_5gs.nw_feat_sup.iwk_n26",
+    "nas.nr.nw_feat_sup.iwk_n26",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -88,7 +88,7 @@ const field_meta hf_nw_feat_sup_ims_iwk_n26_b6 = {
 };
 const field_meta hf_nw_feat_sup_ims_emf_b5b4 = {
     "Emergency service fallback indicator (EMF)",
-    "nas_5gs.nw.feature.ims.emf",
+    "nas.nr.nw.feature.ims.emf",
     ft::ft_uint8,
     fd::base_dec,
     nas_5gs_nw_feat_sup_emf_values,
@@ -112,7 +112,7 @@ const value_string nas_5gs_nw_feat_sup_emc_values[] = {
 };
 const field_meta hf_nw_feat_sup_ims_emc_b3b2 = {
     "Emergency service support indicator (EMC)",
-    "nas_5gs.nf.feature.ims.emc",
+    "nas.nr.nf.feature.ims.emc",
     ft::ft_uint8,
     fd::base_dec,
     nas_5gs_nw_feat_sup_emc_values,
@@ -130,7 +130,7 @@ const value_string nas_5gs_nw_feat_sup_ims_vops_values[] = {
 };
 const field_meta hf_nw_feat_sup_ims_vops_b1b0 = {
     "IMS voice over PS session indicator (IMS VoPS)",
-    "nas_5gs.mm.nw.feature.ims.vops",
+    "nas.nr.mm.nw.feature.ims.vops",
     ft::ft_uint8,
     fd::base_dec,
     nas_5gs_nw_feat_sup_ims_vops_values,
@@ -170,7 +170,7 @@ const true_false_string tfs_nwfs_b6 = {
 
 const field_meta hf_nwfs_emcn3_b0 = {
     "Emergency service support for non-3GPP access indicator (EMCN3)",
-    "nas_5gs.nw_feat_sup.emcn3",
+    "nas.nr.nw_feat_sup.emcn3",
     ft::ft_uint8,
     fd::base_dec,
     nullptr,
@@ -180,7 +180,7 @@ const field_meta hf_nwfs_emcn3_b0 = {
 };
 const field_meta hf_nwfs_mcsi_b1 = {
     "MCS indicator (MCSI)",
-    "nas_5gs.mm.nw.feature.mcs",
+    "nas.nr.mm.nw.feature.mcs",
     ft::ft_uint8,
     fd::base_dec,
     nullptr,
@@ -190,7 +190,7 @@ const field_meta hf_nwfs_mcsi_b1 = {
 };
 const field_meta hf_nwfs_restrict_ec_b2 = {
     "Restriction on enhanced coverage (RestrictEC)",
-    "nas_5gs.nw.feeature.restrict.ec",
+    "nas.nr.nw.feeature.restrict.ec",
     ft::ft_uint8,
     fd::base_dec,
     nullptr,
@@ -200,7 +200,7 @@ const field_meta hf_nwfs_restrict_ec_b2 = {
 };
 const field_meta hf_nwfs_5gcp_ciot_b3 = {
     "Control plane CIoT 5GS optimization (5G-CP CIoT)",
-    "nas_5gs.mm.nw.feature.ciot.cp",
+    "nas.nr.mm.nw.feature.ciot.cp",
     ft::ft_uint8,
     fd::base_dec,
     nullptr,
@@ -210,7 +210,7 @@ const field_meta hf_nwfs_5gcp_ciot_b3 = {
 };
 const field_meta hf_nwfs_n3data_b4 = {
     "N3 data transfer (N3 data)",
-    "nas_5gs.mm.nw.feature.n3data",
+    "nas.nr.mm.nw.feature.n3data",
     ft::ft_uint8,
     fd::base_dec,
     nullptr,
@@ -220,7 +220,7 @@ const field_meta hf_nwfs_n3data_b4 = {
 };
 const field_meta hf_nwfs_5ghc_cp_ciot_b5 = {
     "Header compression for control plane CIoT 5GS optimization (5G-HC-CP CIoT)",
-    "nas_5gs.mm.nw.feature.hc.cp.ciot",
+    "nas.nr.mm.nw.feature.hc.cp.ciot",
     ft::ft_uint8,
     fd::base_dec,
     nullptr,
@@ -230,7 +230,7 @@ const field_meta hf_nwfs_5ghc_cp_ciot_b5 = {
 };
 const field_meta hf_nwfs_5gup_ciot_b6 = {
     "User plane CIoT 5GS optimization (5G-UP CIoT)",
-    "nas_5gs.mm.nw.feature.up.ciot",
+    "nas.nr.mm.nw.feature.up.ciot",
     ft::ft_uint8,
     fd::base_dec,
     nullptr,
@@ -240,7 +240,7 @@ const field_meta hf_nwfs_5gup_ciot_b6 = {
 };
 const field_meta hf_nwfs_b7 = {
     "spare",
-    "nas_5gs.spare.b7",
+    "nas.nr.spare.b7",
     ft::ft_uint8,
     fd::base_dec,
     nullptr,

@@ -12,7 +12,7 @@ int mm::dissect_abba_set(dissector d, context* ctx) {
 
     d.tree->set_item(d.length, &hf_abba, enc::be);
     d.step(d.length);
-    
+
     return uc.length;
     /*NOTE 1:	If the UE receives the ABBA IE with a length that is set to a value of 2
      *and with a value of 0000H, the UE shall use the length and the contents of
@@ -32,7 +32,7 @@ extern const element_meta mm::abba = {
 
 const field_meta mm::hf_abba = {
     "ABBA Contents",
-    "nas_5gs.mm.abba.contents",
+    "nas.nr.mm.abba.contents",
     ft::ft_bytes,
     fd::base_hex,
     nullptr,

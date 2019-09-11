@@ -38,7 +38,7 @@ static const value_string nas_5gs_mm_req_type_vals[] = {
 
 const field_meta mm::hf_request_type = {
     "Request type",
-    "nas_5gs.mm.request.type",
+    "nas.nr.mm.request.type",
     ft::ft_uint8,
     fd::base_dec,
     nas_5gs_mm_req_type_vals,

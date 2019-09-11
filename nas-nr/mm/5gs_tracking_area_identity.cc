@@ -49,7 +49,7 @@ extern const value_string nas_5gs_mm_tal_num_e[] = {
 };
 const field_meta mm::hf_tal_t_li = {
     "Type of list",
-    "nas_5gs.mm.tal_t_li",
+    "nas.nr.mm.tal_t_li",
     ft::ft_uint8,
     fd::base_dec,
     nas_5gs_mm_tal_t_li_values,
@@ -59,17 +59,17 @@ const field_meta mm::hf_tal_t_li = {
 };
 const field_meta mm::hf_tal_num_e = {
     "Number of elements",
-    "nas_5gs.mm.tal_num_e",
+    "nas.nr.mm.tal_num_e",
     ft::ft_uint8,
     fd::base_dec,
-    (nas_5gs_mm_tal_num_e),
+    nas_5gs_mm_tal_num_e,
     nullptr,
     nullptr,
     0x1f,
 };
 const field_meta mm::hf_tac = {
     "TAC",
-    "nas_5gs.tac",
+    "nas.nr.tac",
     ft::ft_uint24,
     fd::base_hex,
     nullptr,

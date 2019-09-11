@@ -14,7 +14,7 @@ const tf_string tfs_apsr = {
 };
 
 const field_meta hf_apsr = {
-    "APSR","nas_5gs.sm.apsr",
+    "APSR","nas.nr.sm.apsr",
     ft::ft_boolean, fd::base_dec,
     nullptr,
     &tfs_apsr,
@@ -25,7 +25,7 @@ const field_meta hf_apsr = {
 // 9.11.4.4 Always-on PDU session requested
 int sm::dissect_always_on_pdu_ses_req(dissector d, context* ctx) {
     const use_context uc(ctx, "alwayson-pdu-session-requested", d, -1);
-    
+
     d.add_item(1, &hf_apsr, enc::be);
     d.step(1);
 

@@ -6,7 +6,7 @@ using namespace sm;
 
 const field_meta hf_max_supported_packet_filters = {
     "Maximum number of supported packet filters",
-    "nas_5gs.max_n_supported_filters",
+    "nas.nr.max_n_supported_filters",
     ft::ft_uint8,
     fd::base_hex,
     nullptr,
@@ -16,7 +16,7 @@ const field_meta hf_max_supported_packet_filters = {
 };
 const field_meta hf_max_supported_packet_filters_c = {
     "Maximum number of supported packet filters(continued)",
-    "nas_5gs.max_n_supported_filters",
+    "nas.nr.max_n_supported_filters",
     ft::ft_uint8,
     fd::base_hex,
     nullptr,

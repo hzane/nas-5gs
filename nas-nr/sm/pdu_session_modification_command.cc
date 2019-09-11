@@ -7,11 +7,11 @@ using namespace nas;
 using namespace sm;
 
 /* 8.3.9 PDU session modification command */
-int sm::dissect_pdu_ses_modification_cmd(dissector d, context* ctx) {    
+int sm::dissect_pdu_ses_modification_cmd(dissector d, context* ctx) {
     const use_context uc(ctx, "pdu-session-modification-command", d, 8);
 
     /* Direction: network to UE */
-    down_link(d.pinfo);    
+    down_link(d.pinfo);
 
     /* 59 5GSM cause 9.11.4.2    O    TV    2*/
     // ELEM_OPT_TV(0x59, , DE_NAS_5GS_SM_5GSM_CAUSE, NULL);
@@ -50,7 +50,7 @@ int sm::dissect_pdu_ses_modification_cmd(dissector d, context* ctx) {
     d.step(consumed);
 
     /*xx Session-TMBR    9.11.4.19	O	TLV	8    */
-   
+
 
     return uc.length;
 }
@@ -108,7 +108,7 @@ int dissect_requested_qos_rules(dissector d, context* ctx) {
 
 const field_meta hf_sm_e = {
     "E bit",
-    "nas_5gs.sm.e",
+    "nas.nr.sm.e",
     ft::ft_uint8,
     fd::base_dec,
     nullptr,
@@ -118,7 +118,7 @@ const field_meta hf_sm_e = {
 };
 const field_meta hf_sm_nof_params = {
     "Number of parameters",
-    "nas_5gs.sm.nof_params",
+    "nas.nr.sm.nof_params",
     ft::ft_uint8,
     fd::base_dec,
     nullptr,
@@ -139,7 +139,7 @@ static const value_string nas_5gs_sm_param_id_values[] = {
 };
 const field_meta hf_sm_param_id = {
     "Parameter identifier",
-    "nas_5gs.sm.param_id",
+    "nas.nr.sm.param_id",
     ft::ft_uint8,
     fd::base_dec,
     nas_5gs_sm_param_id_values,
@@ -150,7 +150,7 @@ const field_meta hf_sm_param_id = {
 #if 0
 const field_meta hf_sm_param_len = {
     "Length",
-    "nas_5gs.sm.param_len",
+    "nas.nr.sm.param_len",
     ft::ft_uint8,
     fd::base_dec,
     nullptr,
@@ -162,7 +162,7 @@ const field_meta hf_sm_param_len = {
 
 const field_meta hf_sm_pal_cont = {
     "Parameters content",
-    "nas_5gs.sm.pal_cont",
+    "nas.nr.sm.pal_cont",
     ft::ft_uint8,
     fd::base_dec,
     nas_5gs_rule_param_cont,
@@ -172,7 +172,7 @@ const field_meta hf_sm_pal_cont = {
 };
 const field_meta hf_averaging_wind = {
     "Average Window",
-    "nas_5gs.sm.qos.param",
+    "nas.nr.sm.qos.param",
     ft::ft_uint16,
     fd::base_bin,
     nullptr,
@@ -182,7 +182,7 @@ const field_meta hf_averaging_wind = {
 };
 const field_meta hf_eps_bearer_identity = {
     "EPS bearer identity",
-    "nas_5gs.sm.qos.eps.bearid",
+    "nas.nr.sm.qos.eps.bearid",
     ft::ft_uint8,
     fd::base_hex,
     nullptr,

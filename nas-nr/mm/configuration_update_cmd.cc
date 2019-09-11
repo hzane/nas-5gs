@@ -107,7 +107,7 @@ extern const element_meta sms_ind = {
 
 const field_meta hf_conf_upd_ind_red_b1 = {
     "Registration",
-    "nas_5gs.mm.configure_update_indication.red",
+    "nas.nr.mm.configure_update_indication.red",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -117,7 +117,7 @@ const field_meta hf_conf_upd_ind_red_b1 = {
 };
 const field_meta hf_conf_upd_ind_ack_b0 = {
     "Acknowledgement",
-    "nas_5gs.mm.configure_update_indication.ack",
+    "nas.nr.mm.configure_update_indication.ack",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -241,4 +241,4 @@ const field_meta hf_text_string = {
 
 
 
-} 
+}

@@ -37,7 +37,7 @@ extern const val_string mm::nas_eps_emm_nas_ksi_values[] = {
 
 const field_meta mm::hf_nas_key_set_id = {
     "NAS key set identifier",
-    "nas_5gs.mm.nas_key_set_id",
+    "nas.nr.mm.nas_key_set_id",
     ft::ft_uint8,
     fd::base_dec,
     nas_eps_emm_nas_ksi_values,
@@ -49,7 +49,7 @@ const field_meta mm::hf_nas_key_set_id = {
 // only spare half octet
 const field_meta mm::hf_ngksi_nas_ksi = {
     "NAS key set identifier - ngKSI",
-    "nas_5gs.mm.ngksi",
+    "nas.nr.mm.ngksi",
     ft::ft_uint8,
     fd::base_dec,
     nullptr,

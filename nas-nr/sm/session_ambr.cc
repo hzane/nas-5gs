@@ -3,7 +3,7 @@
 // 9.11.4.14    Session-AMBR
 int sm::dissect_session_ambr(dissector d, context* ctx) {
     const use_context uc(ctx, "session-ambr", d, 0);
-    
+
     /* Unit for Session-AMBR for downlink octet 3*/
     /* Session-AMBR for downlink (octets 4 and 5) */
 
@@ -61,7 +61,7 @@ extern const value_string sm::sm_unit_for_session_ambr_values[] = {
 
 const field_meta sm::hf_sm_ses_ambr_dl_unit = {
     "Unit for Session-AMBR for downlink",
-    "nas_5gs.sm.unit_for_session_ambr_dl",
+    "nas.nr.sm.unit_for_session_ambr_dl",
     ft::ft_uint8,
     fd::base_dec,
     sm::sm_unit_for_session_ambr_values,
@@ -72,7 +72,7 @@ const field_meta sm::hf_sm_ses_ambr_dl_unit = {
 
 const field_meta sm::hf_sm_ses_ambr_ul_unit = {
     "Unit for Session-AMBR for uplink",
-    "nas_5gs.sm.unit_for_session_ambr_ul",
+    "nas.nr.sm.unit_for_session_ambr_ul",
     ft::ft_uint8,
     fd::base_dec,
     sm::sm_unit_for_session_ambr_values,
@@ -83,7 +83,7 @@ const field_meta sm::hf_sm_ses_ambr_ul_unit = {
 
 const field_meta sm::hf_sm_ses_ambr_dl = {
     "Session-AMBR for downlink",
-    "nas_5gs.sm.session_ambr_dl",
+    "nas.nr.sm.session_ambr_dl",
     ft::ft_bytes,
     fd::ambr,
     nullptr,
@@ -94,7 +94,7 @@ const field_meta sm::hf_sm_ses_ambr_dl = {
 
 const field_meta sm::hf_sm_ses_ambr_ul = {
     "Session-AMBR for uplink",
-    "nas_5gs.sm.session_ambr_ul",
+    "nas.nr.sm.session_ambr_ul",
     ft::ft_bytes,
     fd::ambr,
     nullptr,

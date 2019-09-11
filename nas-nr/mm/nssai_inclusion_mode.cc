@@ -13,7 +13,7 @@ int mm::dissect_nssai_inclusion_mode(dissector d, context* ctx) {
         nullptr,
     };
     d.add_bits(flags);
-    
+
     return 1;
 }
 
@@ -27,7 +27,7 @@ static const value_string nas_5gs_mm_nssai_inc_mode_vals[] = {
 };
 const field_meta mm::hf_nssai_inc_mode = {
     "NSSAI inclusion mode",
-    "nas_5gs.mm.nssai_inc_mode",
+    "nas.nr.mm.nssai_inc_mode",
     ft::ft_uint8,
     fd::base_dec,
     nas_5gs_mm_nssai_inc_mode_vals,

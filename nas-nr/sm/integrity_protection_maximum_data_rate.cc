@@ -35,7 +35,7 @@ extern const value_string sm::sm_int_prot_max_data_rate_values[] = {
 
 const field_meta sm::hf_sm_int_prot_max_data_rate_ul = {
     "Integrity protection maximum data rate for uplink",
-    "nas_5gs.sm.int_prot_max_data_rate_ul",
+    "nas.nr.sm.int_prot_max_data_rate_ul",
     ft::ft_uint8,
     fd::base_dec,
     sm::sm_int_prot_max_data_rate_values,
@@ -45,7 +45,7 @@ const field_meta sm::hf_sm_int_prot_max_data_rate_ul = {
 };
 const field_meta sm::hf_sm_int_prot_max_data_rate_dl = {
     "Integrity protection maximum data rate for downlink",
-    "nas_5gs.sm.int_prot_max_data_rate_dl",
+    "nas.nr.sm.int_prot_max_data_rate_dl",
     ft::ft_uint8,
     fd::base_dec,
     sm::sm_int_prot_max_data_rate_values,

@@ -2,7 +2,7 @@
 
 const field_meta cmn::hf_eap = {
     "EAP",
-    "nas_5gs.eap",
+    "nas.nr.eap",
     ft::ft_bytes,
     fd::base_none,
     nullptr,

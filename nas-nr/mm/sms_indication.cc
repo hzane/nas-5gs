@@ -17,7 +17,7 @@ static const tf_string tfs_sms_sai = {
 
 const field_meta mm::hf_sms_indic_sai = {
     "SMS over NAS",
-    "nas_5gs.mm.sms.indication.sai",
+    "nas.nr.mm.sms.indication.sai",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,

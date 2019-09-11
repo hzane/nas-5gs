@@ -7,7 +7,7 @@ int mm::dissect_drx_param(dissector d, context* ctx) {
 
     (void) d.add_item(1, &hf_drx_param, enc::be);
     d.step(1);
-    
+
     return 1;
 }
 
@@ -22,7 +22,7 @@ const value_string nas_5gs_mm_drx_vals[] = {
 };
 const field_meta mm::hf_drx_param = {
     "DRX value",
-    "nas_5gs.mm.drx_value",
+    "nas.nr.mm.drx_value",
     ft::ft_uint8,
     fd::base_dec,
     nas_5gs_mm_drx_vals,

@@ -39,7 +39,7 @@ const true_false_string nas_5gs_mm_dcni_tfs = {
 
 const field_meta hf_dcni = {
     "Default configured NSSAI indication (DCNI)",
-    "nas_5gs.mm.dcni",
+    "nas.nr.mm.dcni",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -55,7 +55,7 @@ const true_false_string tfs_changed_not_changed = {
 
 const field_meta        hf_nssci                = {
     "Network slicing subscription change indication (NSSCI)",
-    "nas_5gs.mm.nssci",
+    "nas.nr.mm.nssci",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,

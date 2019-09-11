@@ -11,7 +11,7 @@ extern const element_meta sm::pdu_address = {
 
 const field_meta sm::hf_pdu_addr_ipv6 = {
     "PDU address information",
-    "nas_5gs.sm.pdu_addr_inf_ipv6",
+    "nas.nr.sm.pdu_addr_inf_ipv6",
     ft::ft_bytes,
     fd::ipv6,
     nullptr,
@@ -23,7 +23,7 @@ const field_meta sm::hf_pdu_addr_ipv6 = {
 // PDU address 9.11.4.10 15 octets
 int sm::dissect_pdu_address(dissector d, context* ctx) {
     const use_context uc(ctx, "pdu-address", d, 8);
-    
+
     const auto val  = static_cast< uint32_t >(d.tvb->uint8(d.offset));
     (void) d.add_item(1, &hf_sm_pdu_ses_type, enc::be);
     d.step(1);
@@ -60,7 +60,7 @@ int sm::dissect_pdu_address(dissector d, context* ctx) {
 
 const field_meta sm::hf_pdu_addr_ipv4 = {
     "PDU address information",
-    "nas_5gs.sm.pdu_addr_inf_ipv4",
+    "nas.nr.sm.pdu_addr_inf_ipv4",
     ft::ft_bytes, // FT_IPv4,
     fd::ipv4,
     nullptr,

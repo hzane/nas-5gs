@@ -28,7 +28,7 @@ extern const val_string mm::values_registration_type[] = {
 };
 const field_meta mm::hf_5gs_reg_type = {
     "5GS registration type",
-    "nas_5gs.mm.registration.type",
+    "nas.nr.mm.registration.type",
     ft::ft_uint8,
     fd::base_dec,
     values_registration_type,
@@ -113,7 +113,7 @@ static true_false_string tfs_nas_5gs_mm_ue_usage_setting = {
 
 const field_meta mm::hf_nas_5gs_mm_ue_usage_setting = {
     "UE's usage setting",
-    "nas_5gs.mm.ue_usage_setting",
+    "nas.nr.mm.ue_usage_setting",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,

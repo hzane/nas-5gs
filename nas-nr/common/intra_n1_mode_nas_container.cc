@@ -28,7 +28,7 @@ namespace cmn {
 // NAS security algorithms information element (see subclause 9.11.3.34
 const field_meta hf_int_prot_algo_type = {
     "Type of integrity protection algorithm",
-    "nas_5gs.cmn.int_prot_algo",
+    "nas.nr.cmn.int_prot_algo",
     ft::ft_uint8,
     fd::base_dec,
     nullptr,
@@ -39,7 +39,7 @@ const field_meta hf_int_prot_algo_type = {
 
 const field_meta hf_tsc                = {
     "TSC",
-    "nas_5gs.cmn.tsc",
+    "nas.nr.cmn.tsc",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -63,7 +63,7 @@ const field_meta hf_kacf               = {
 };
 const field_meta hf_ksi_5g             = {
     "Key set identifier in 5G",
-    "nas_5gs.cmn.ksi",
+    "nas.nr.cmn.ksi",
     ft::ft_uint8,
     fd::base_dec,
     nullptr,
@@ -73,7 +73,7 @@ const field_meta hf_ksi_5g             = {
 };
 const field_meta hf_ciphering_algo_type = {
     "Type of ciphering algorithm",
-    "nas_5gs.cmn.ciphering.algo",
+    "nas.nr.cmn.ciphering.algo",
     ft::ft_uint8,
     fd::base_dec,
     nullptr,

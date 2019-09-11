@@ -143,7 +143,7 @@ const true_false_string tfs_segregation = {
 };
 const field_meta hf_segregation = {
     "Segregation",
-    "nas_5gs.sm.qos_rule.segregation",
+    "nas.nr.sm.qos_rule.segregation",
     ft::ft_uint8,
     fd::base_dec,
     nullptr,
@@ -205,7 +205,7 @@ int sm::dissect_qos_rules(dissector d, context* ctx) {
                 continue;
             }
         }
-        /* Packet filter list */        
+        /* Packet filter list */
         for (auto j = 1; j <= n_filters; j++) {
             const auto     st2 = d.add_item(-1, "Packet filter %u", j);
             use_tree ut2(d, st2);
@@ -263,9 +263,9 @@ const true_false_string sm::tfs_sm_dqr = {
     "The QoS rule is not the default QoS rule",
 };
 
-const field_meta sm::hf_sm_dqr = {     
+const field_meta sm::hf_sm_dqr = {
     "DQR",
-    "nas_5gs.sm.dqr",
+    "nas.nr.sm.dqr",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -324,7 +324,7 @@ extern const value_string sm::rule_param_cont[] = {
 
 const field_meta sm::hf_sm_rop = {
     "Rule operation code",
-    "nas_5gs.sm.rop",
+    "nas.nr.sm.rop",
     ft::ft_uint8,
     fd::base_dec,
     (rule_operation_code_values),
@@ -334,7 +334,7 @@ const field_meta sm::hf_sm_rop = {
 };
 const field_meta sm::hf_sm_nof_pkt_filters = {
     "Number of packet filters",
-    "nas_5gs.sm.nof_pkt_filters",
+    "nas.nr.sm.nof_pkt_filters",
     ft::ft_uint8,
     fd::base_dec,
     nullptr,
@@ -345,7 +345,7 @@ const field_meta sm::hf_sm_nof_pkt_filters = {
 
 const field_meta sm::hf_sm_qos_rule_id = {
     "QoS rule identifier",
-    "nas_5gs.sm.qos_rule_id",
+    "nas.nr.sm.qos_rule_id",
     ft::ft_uint8,
     fd::base_dec,
     nullptr,
@@ -357,7 +357,7 @@ const field_meta sm::hf_sm_qos_rule_id = {
 
 const field_meta sm::hf_sm_qos_rule_precedence = {
     "QoS rule precedence",
-    "nas_5gs.sm.qos_rule_precedence",
+    "nas.nr.sm.qos_rule_precedence",
     ft::ft_uint8,
     fd::base_dec,
     nullptr,

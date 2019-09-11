@@ -9,7 +9,7 @@ const element_meta sm::sm_pdu_dn_req_cont = {
 };
 const field_meta hf_dn_spec_id = {
     "DN-specific identity",
-    "nas_5gs.sm.dnreq.dnspec.id",
+    "nas.nr.sm.dnreq.dnspec.id",
     ft::ft_bytes,
     fd::base_string,
     nullptr,

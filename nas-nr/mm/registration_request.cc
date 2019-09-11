@@ -15,7 +15,7 @@ int mm::dissect_registration_req(dissector d, context* ctx) {
     up_link(d.pinfo);
     // get private data
 
-    /*   5GS registration type  9.11.3.7    M    V    1/2  H0*/    
+    /*   5GS registration type  9.11.3.7    M    V    1/2  H0*/
     (void) dissect_registration_request_type(d, ctx);
     /*    ngKSI    NAS key set identifier 9.11.3.32    M    V    1/2 H1*/
     (void) d.add_item(1, &hf_ngksi_nas_ksi, enc::be);
@@ -149,7 +149,7 @@ const true_false_string tfs_supp_or_not = {
 
 const field_meta hf_nas_5gs_mm_5g_ea0 = {
     "5G-EA0",
-    "nas_5gs.mm.5g_ea0",
+    "nas.nr.mm.5g_ea0",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -159,7 +159,7 @@ const field_meta hf_nas_5gs_mm_5g_ea0 = {
 };
 const field_meta hf_nas_5gs_mm_5g_ea1 = {
     "128-5G-EA1",
-    "nas_5gs.mm.128_5g_ea1",
+    "nas.nr.mm.128_5g_ea1",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -169,7 +169,7 @@ const field_meta hf_nas_5gs_mm_5g_ea1 = {
 };
 const field_meta hf_nas_5gs_mm_5g_ea2 = {
     "128-5G-EA2",
-    "nas_5gs.mm.128_5g_ea2",
+    "nas.nr.mm.128_5g_ea2",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -179,7 +179,7 @@ const field_meta hf_nas_5gs_mm_5g_ea2 = {
 };
 const field_meta hf_nas_5gs_mm_5g_ea3 = {
     "128-5G-EA3",
-    "nas_5gs.mm.128_5g_ea3",
+    "nas.nr.mm.128_5g_ea3",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -189,7 +189,7 @@ const field_meta hf_nas_5gs_mm_5g_ea3 = {
 };
 const field_meta hf_nas_5gs_mm_5g_ea4 = {
     "5G-EA4",
-    "nas_5gs.mm.5g_ea4",
+    "nas.nr.mm.5g_ea4",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -199,7 +199,7 @@ const field_meta hf_nas_5gs_mm_5g_ea4 = {
 };
 const field_meta hf_nas_5gs_mm_5g_ea5 = {
     "5G-EA5",
-    "nas_5gs.mm.5g_ea5",
+    "nas.nr.mm.5g_ea5",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -209,7 +209,7 @@ const field_meta hf_nas_5gs_mm_5g_ea5 = {
 };
 const field_meta hf_nas_5gs_mm_5g_ea6 = {
     "5G-EA6",
-    "nas_5gs.mm.5g_ea6",
+    "nas.nr.mm.5g_ea6",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -219,7 +219,7 @@ const field_meta hf_nas_5gs_mm_5g_ea6 = {
 };
 const field_meta hf_nas_5gs_mm_5g_ea7 = {
     "5G-EA7",
-    "nas_5gs.mm.5g_ea7",
+    "nas.nr.mm.5g_ea7",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -230,7 +230,7 @@ const field_meta hf_nas_5gs_mm_5g_ea7 = {
 
 const field_meta hf_nas_5gs_mm_5g_ia0 = {
     "5G-IA0",
-    "nas_5gs.mm.ia0",
+    "nas.nr.mm.ia0",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -240,7 +240,7 @@ const field_meta hf_nas_5gs_mm_5g_ia0 = {
 };
 const field_meta hf_nas_5gs_mm_5g_ia1 = {
     "128-5G-IA1",
-    "nas_5gs.mm.5g_128_ia1",
+    "nas.nr.mm.5g_128_ia1",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -250,7 +250,7 @@ const field_meta hf_nas_5gs_mm_5g_ia1 = {
 };
 const field_meta hf_nas_5gs_mm_5g_ia2 = {
     "128-5G-IA2",
-    "nas_5gs.mm.5g_128_ia2",
+    "nas.nr.mm.5g_128_ia2",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -260,7 +260,7 @@ const field_meta hf_nas_5gs_mm_5g_ia2 = {
 };
 const field_meta hf_nas_5gs_mm_5g_ia3 = {
     "128-5G-IA3",
-    "nas_5gs.mm.5g_128_ia4",
+    "nas.nr.mm.5g_128_ia4",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -270,7 +270,7 @@ const field_meta hf_nas_5gs_mm_5g_ia3 = {
 };
 const field_meta hf_nas_5gs_mm_5g_ia4 = {
     "5G-IA4",
-    "nas_5gs.mm.5g_128_ia4",
+    "nas.nr.mm.5g_128_ia4",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -280,7 +280,7 @@ const field_meta hf_nas_5gs_mm_5g_ia4 = {
 };
 const field_meta hf_nas_5gs_mm_5g_ia5 = {
     "5G-IA5",
-    "nas_5gs.mm.5g_ia5",
+    "nas.nr.mm.5g_ia5",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -290,7 +290,7 @@ const field_meta hf_nas_5gs_mm_5g_ia5 = {
 };
 const field_meta hf_nas_5gs_mm_5g_ia6 = {
     "5G-IA6",
-    "nas_5gs.mm.5g_ia6",
+    "nas.nr.mm.5g_ia6",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -300,7 +300,7 @@ const field_meta hf_nas_5gs_mm_5g_ia6 = {
 };
 const field_meta hf_nas_5gs_mm_5g_ia7 = {
     "5G-IA7",
-    "nas_5gs.mm.5g_ia7",
+    "nas.nr.mm.5g_ia7",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -311,7 +311,7 @@ const field_meta hf_nas_5gs_mm_5g_ia7 = {
 
 const field_meta hf_nas_5gs_mm_eea0 = {
     "EEA0",
-    "nas_5gs.mm.eea0",
+    "nas.nr.mm.eea0",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -321,7 +321,7 @@ const field_meta hf_nas_5gs_mm_eea0 = {
 };
 const field_meta hf_nas_5gs_mm_eea1 = {
     "128-EEA1",
-    "nas_5gs.mm.128eea1",
+    "nas.nr.mm.128eea1",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -331,7 +331,7 @@ const field_meta hf_nas_5gs_mm_eea1 = {
 };
 const field_meta hf_nas_5gs_mm_eea2 = {
     "128-EEA2",
-    "nas_5gs.mm.128eea2",
+    "nas.nr.mm.128eea2",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -341,7 +341,7 @@ const field_meta hf_nas_5gs_mm_eea2 = {
 };
 const field_meta hf_nas_5gs_mm_eea3 = {
     "128-EEA3",
-    "nas_5gs.mm.eea3",
+    "nas.nr.mm.eea3",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -351,7 +351,7 @@ const field_meta hf_nas_5gs_mm_eea3 = {
 };
 const field_meta hf_nas_5gs_mm_eea4 = {
     "EEA4",
-    "nas_5gs.mm.eea4",
+    "nas.nr.mm.eea4",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -361,7 +361,7 @@ const field_meta hf_nas_5gs_mm_eea4 = {
 };
 const field_meta hf_nas_5gs_mm_eea5 = {
     "EEA5",
-    "nas_5gs.mm.eea5",
+    "nas.nr.mm.eea5",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -371,7 +371,7 @@ const field_meta hf_nas_5gs_mm_eea5 = {
 };
 const field_meta hf_nas_5gs_mm_eea6 = {
     "EEA6",
-    "nas_5gs.mm.eea6",
+    "nas.nr.mm.eea6",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -381,7 +381,7 @@ const field_meta hf_nas_5gs_mm_eea6 = {
 };
 const field_meta hf_nas_5gs_mm_eea7 = {
     "EEA7",
-    "nas_5gs.mm.eea7",
+    "nas.nr.mm.eea7",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -392,7 +392,7 @@ const field_meta hf_nas_5gs_mm_eea7 = {
 
 const field_meta hf_nas_5gs_mm_eia0 = {
     "EIA0",
-    "nas_5gs.mm.eia0",
+    "nas.nr.mm.eia0",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -402,7 +402,7 @@ const field_meta hf_nas_5gs_mm_eia0 = {
 };
 const field_meta hf_nas_5gs_mm_eia1 = {
     "128-EIA1",
-    "nas_5gs.mm.128eia1",
+    "nas.nr.mm.128eia1",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -412,7 +412,7 @@ const field_meta hf_nas_5gs_mm_eia1 = {
 };
 const field_meta hf_nas_5gs_mm_eia2 = {
     "128-EIA2",
-    "nas_5gs.mm.128eia2",
+    "nas.nr.mm.128eia2",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -422,7 +422,7 @@ const field_meta hf_nas_5gs_mm_eia2 = {
 };
 const field_meta hf_nas_5gs_mm_eia3 = {
     "128-EIA3",
-    "nas_5gs.mm.eia3",
+    "nas.nr.mm.eia3",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -432,7 +432,7 @@ const field_meta hf_nas_5gs_mm_eia3 = {
 };
 const field_meta hf_nas_5gs_mm_eia4 = {
     "EIA4",
-    "nas_5gs.mm.eia4",
+    "nas.nr.mm.eia4",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -442,7 +442,7 @@ const field_meta hf_nas_5gs_mm_eia4 = {
 };
 const field_meta hf_nas_5gs_mm_eia5 = {
     "EIA5",
-    "nas_5gs.mm.eia5",
+    "nas.nr.mm.eia5",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -452,7 +452,7 @@ const field_meta hf_nas_5gs_mm_eia5 = {
 };
 const field_meta hf_nas_5gs_mm_eia6 = {
     "EIA6",
-    "nas_5gs.mm.eia6",
+    "nas.nr.mm.eia6",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -462,7 +462,7 @@ const field_meta hf_nas_5gs_mm_eia6 = {
 };
 const field_meta hf_nas_5gs_mm_eia7 = {
     "EIA7",
-    "nas_5gs.mm.eia7",
+    "nas.nr.mm.eia7",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -1072,7 +1072,7 @@ const true_false_string tfs_nas_5gs_ul_data_sts_psi = {
 };
 const field_meta mm::hf_nas_5gs_ul_data_sts_psi_7_b7 = {
     "PSI(7)",
-    "nas_5gs.ul_data_sts_psi_7_b7",
+    "nas.nr.ul_data_sts_psi_7_b7",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,&tfs_nas_5gs_ul_data_sts_psi,nullptr,
@@ -1080,7 +1080,7 @@ const field_meta mm::hf_nas_5gs_ul_data_sts_psi_7_b7 = {
 };
 const field_meta mm::hf_nas_5gs_ul_data_sts_psi_6_b6 = {
     "PSI(6)",
-    "nas_5gs.ul_data_sts_psi_6_b6",
+    "nas.nr.ul_data_sts_psi_6_b6",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,&tfs_nas_5gs_ul_data_sts_psi,nullptr,
@@ -1088,7 +1088,7 @@ const field_meta mm::hf_nas_5gs_ul_data_sts_psi_6_b6 = {
 };
 const field_meta mm::hf_nas_5gs_ul_data_sts_psi_5_b5 = {
     "PSI(5)",
-    "nas_5gs.ul_data_sts_psi_5_b5",
+    "nas.nr.ul_data_sts_psi_5_b5",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,&tfs_nas_5gs_ul_data_sts_psi,nullptr,
@@ -1096,7 +1096,7 @@ const field_meta mm::hf_nas_5gs_ul_data_sts_psi_5_b5 = {
 };
 const field_meta mm::hf_nas_5gs_ul_data_sts_psi_4_b4 = {
     "PSI(4)",
-    "nas_5gs.ul_data_sts_psi_4_b4",
+    "nas.nr.ul_data_sts_psi_4_b4",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,&tfs_nas_5gs_ul_data_sts_psi,nullptr,
@@ -1104,7 +1104,7 @@ const field_meta mm::hf_nas_5gs_ul_data_sts_psi_4_b4 = {
 };
 const field_meta mm::hf_nas_5gs_ul_data_sts_psi_3_b3 = {
     "PSI(3)",
-    "nas_5gs.ul_data_sts_psi_3_b3",
+    "nas.nr.ul_data_sts_psi_3_b3",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,&tfs_nas_5gs_ul_data_sts_psi,nullptr,
@@ -1112,7 +1112,7 @@ const field_meta mm::hf_nas_5gs_ul_data_sts_psi_3_b3 = {
 };
 const field_meta mm::hf_nas_5gs_ul_data_sts_psi_2_b2 = {
     "PSI(2)",
-    "nas_5gs.ul_data_sts_psi_2_b2",
+    "nas.nr.ul_data_sts_psi_2_b2",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,&tfs_nas_5gs_ul_data_sts_psi,nullptr,
@@ -1120,7 +1120,7 @@ const field_meta mm::hf_nas_5gs_ul_data_sts_psi_2_b2 = {
 };
 const field_meta mm::hf_nas_5gs_ul_data_sts_psi_1_b1 = {
     "PSI(1)",
-    "nas_5gs.ul_data_sts_psi_1_b1",
+    "nas.nr.ul_data_sts_psi_1_b1",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,&tfs_nas_5gs_ul_data_sts_psi,nullptr,
@@ -1128,7 +1128,7 @@ const field_meta mm::hf_nas_5gs_ul_data_sts_psi_1_b1 = {
 };
 const field_meta mm::hf_nas_5gs_ul_data_sts_psi_0_b0 = {
     "Spare",
-    "nas_5gs.ul_data_sts_psi_0_b0",
+    "nas.nr.ul_data_sts_psi_0_b0",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -1139,7 +1139,7 @@ const field_meta mm::hf_nas_5gs_ul_data_sts_psi_0_b0 = {
 
 const field_meta mm::hf_nas_5gs_ul_data_sts_psi_15_b7 = {
     "PSI(15)",
-    "nas_5gs.ul_data_sts_psi_15_b7",
+    "nas.nr.ul_data_sts_psi_15_b7",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,&tfs_nas_5gs_ul_data_sts_psi,nullptr,
@@ -1147,7 +1147,7 @@ const field_meta mm::hf_nas_5gs_ul_data_sts_psi_15_b7 = {
 };
 const field_meta mm::hf_nas_5gs_ul_data_sts_psi_14_b6 = {
     "PSI(14)",
-    "nas_5gs.ul_data_sts_psi_14_b6",
+    "nas.nr.ul_data_sts_psi_14_b6",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,&tfs_nas_5gs_ul_data_sts_psi,nullptr,
@@ -1155,7 +1155,7 @@ const field_meta mm::hf_nas_5gs_ul_data_sts_psi_14_b6 = {
 };
 const field_meta mm::hf_nas_5gs_ul_data_sts_psi_13_b5 = {
     "PSI(13)",
-    "nas_5gs.ul_data_sts_psi_13_b5",
+    "nas.nr.ul_data_sts_psi_13_b5",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,&tfs_nas_5gs_ul_data_sts_psi,nullptr,
@@ -1163,7 +1163,7 @@ const field_meta mm::hf_nas_5gs_ul_data_sts_psi_13_b5 = {
 };
 const field_meta mm::hf_nas_5gs_ul_data_sts_psi_12_b4 = {
     "PSI(12)",
-    "nas_5gs.ul_data_sts_psi_12_b4",
+    "nas.nr.ul_data_sts_psi_12_b4",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,&tfs_nas_5gs_ul_data_sts_psi,nullptr,
@@ -1171,7 +1171,7 @@ const field_meta mm::hf_nas_5gs_ul_data_sts_psi_12_b4 = {
 };
 const field_meta mm::hf_nas_5gs_ul_data_sts_psi_11_b3 = {
     "PSI(11)",
-    "nas_5gs.ul_data_sts_psi_11_b3",
+    "nas.nr.ul_data_sts_psi_11_b3",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,&tfs_nas_5gs_ul_data_sts_psi,nullptr,
@@ -1179,7 +1179,7 @@ const field_meta mm::hf_nas_5gs_ul_data_sts_psi_11_b3 = {
 };
 const field_meta mm::hf_nas_5gs_ul_data_sts_psi_10_b2 = {
     "PSI(10)",
-    "nas_5gs.ul_data_sts_psi_10_b2",
+    "nas.nr.ul_data_sts_psi_10_b2",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,&tfs_nas_5gs_ul_data_sts_psi,nullptr,
@@ -1187,7 +1187,7 @@ const field_meta mm::hf_nas_5gs_ul_data_sts_psi_10_b2 = {
 };
 const field_meta mm::hf_nas_5gs_ul_data_sts_psi_9_b1 = {
     "PSI(9)",
-    "nas_5gs.ul_data_sts_psi_9_b1",
+    "nas.nr.ul_data_sts_psi_9_b1",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,&tfs_nas_5gs_ul_data_sts_psi,nullptr,
@@ -1195,7 +1195,7 @@ const field_meta mm::hf_nas_5gs_ul_data_sts_psi_9_b1 = {
 };
 const field_meta mm::hf_nas_5gs_ul_data_sts_psi_8_b0 = {
     "PSI(8)",
-    "nas_5gs.ul_data_sts_psi_8_b0",
+    "nas.nr.ul_data_sts_psi_8_b0",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,&tfs_nas_5gs_ul_data_sts_psi,nullptr,
@@ -1223,7 +1223,7 @@ const true_false_string tfs_nas5gs_sms_requested = { // NOLINT
 const true_false_string tfs_needed_not_needed = {"Needed", "Not Needed"};
 const field_meta        mm::hf_ng_ran_rcu        = {
     "NG-RAN Radio Capability Update (NG-RAN-RCU)",
-    "nas_5gs.mm.ng_ran_rcu",
+    "nas.nr.mm.ng_ran_rcu",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -1240,7 +1240,7 @@ const val_string pnb_ciot_values[] = {
 };
 const field_meta mm::hf_pnb_ciot = {
     "",
-    "nas_5gs.mm.pnb_ciot",
+    "nas.nr.mm.pnb_ciot",
     ft::ft_uint8,
     fd::base_dec,
     pnb_ciot_values, nullptr, nullptr,0,

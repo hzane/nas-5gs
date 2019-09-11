@@ -60,7 +60,7 @@ int mm::dissect_operator_defined_access_category_definitions(dissector d, contex
 // Operator-defined access category number
 const field_meta mm::hf_access_cat_n = {
     "Operator-defined access category number",
-    "nas_5gs.mm.conf.update.operator.access.category.number",
+    "nas.nr.mm.conf.update.operator.access.category.number",
     ft::ft_uint8,
     fd::base_dec,
     nullptr,
@@ -75,7 +75,7 @@ const tf_string tfs_standardized_category_field = {
 
 const field_meta mm::hf_psac = {
     "Presence of standardized access category (PSAC)",
-    "nas_5gs.mm.conf.update.operator.access.category.psac",
+    "nas.nr.mm.conf.update.operator.access.category.psac",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -86,7 +86,7 @@ const field_meta mm::hf_psac = {
 
 const field_meta mm::hf_precedence = {
     "Precedence",
-    "nas_5gs.mm.precedence",
+    "nas.nr.mm.precedence",
     ft::ft_uint8,
     fd::base_dec,
     nullptr,
@@ -98,7 +98,7 @@ const field_meta mm::hf_precedence = {
 #if 0
 const field_meta mm::hf_criteria_length = {
     "Length",
-    "nas_5gs.mm.conf.update.operator.access.criteria.length",
+    "nas.nr.mm.conf.update.operator.access.criteria.length",
     ft::ft_uint8,
     fd::base_dec,
     nullptr,
@@ -110,7 +110,7 @@ const field_meta mm::hf_criteria_length = {
 
 const field_meta mm::hf_criteria = {
     "Criteria",
-    "nas_5gs.mm.conf.update.operator.access.criteria",
+    "nas.nr.mm.conf.update.operator.access.criteria",
     ft::ft_bytes,
     fd::base_none,
     nullptr,
@@ -121,7 +121,7 @@ const field_meta mm::hf_criteria = {
 
 const field_meta mm::hf_standardize_access_cat = {
     "Standardized access category",
-    "nas_5gs.mm.conf.update.operator.access.category.type",
+    "nas.nr.mm.conf.update.operator.access.category.type",
     ft::ft_uint8,
     fd::base_hex,
     nullptr,
