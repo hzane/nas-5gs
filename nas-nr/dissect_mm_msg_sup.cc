@@ -391,29 +391,6 @@ const field_meta mm::hfm_mm_5g_ia4 = {
 };
 
 
-const field_meta mm::hfm_nas_5gs_mm_eia0 = {
-    "EIA0",
-    "nas.nr.mm.eia0",
-    ft::ft_boolean,
-    8,
-    nullptr,
-    &tfs_supported_not_supported,
-    nullptr,
-    0x80,
-
-};
-
-const field_meta mm::hfm_nas_5gs_mm_eia3 = {
-    "128-EIA3",
-    "nas.nr.mm.eia3",
-    ft::ft_boolean,
-    8,
-    nullptr,
-    &tfs_supported_not_supported,
-    nullptr,
-    0x10,
-
-};
 const field_meta mm::hfm_nas_5gs_mm_eia4 = {
     "EIA4",
     "nas.nr.mm.eia4",
