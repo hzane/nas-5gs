@@ -1,0 +1,501 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="charsets.cc" />
+    <ClCompile Include="common\eap.cc" />
+    <ClCompile Include="common\gprs_timer.cc" />
+    <ClCompile Include="common\gprs_timer2.cc" />
+    <ClCompile Include="common\gprs_timer3.cc" />
+    <ClCompile Include="core.cc" />
+    <ClCompile Include="dissector.cc" />
+    <ClCompile Include="dissect_mm_msg.cc" />
+    <ClCompile Include="dissect_mm_msg_sup.cc" />
+    <ClCompile Include="dissect_nas5g.cc" />
+    <ClCompile Include="dissect_nas5g_sup.cc" />
+    <ClCompile Include="dissect_sm_msg.cc" />
+    <ClCompile Include="common\e212_mcc_mnc.cc" />
+    <ClCompile Include="e212.cc" />
+    <ClCompile Include="field_meta.cc" />
+    <ClCompile Include="formats.cc" />
+    <ClCompile Include="gsm.cc" />
+    <ClCompile Include="proto.cc" />
+    <ClCompile Include="ber.cc" />
+    <ClCompile Include="nas-nr-demo.cc" />
+    <ClCompile Include="mm\5gmm_capability.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\5gmm_cause.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\5gmm_status.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\5gs_identity_type.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\5gs_mobile_identity.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\5gs_network_feature_support.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\5gs_registration_result.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\5gs_registration_type.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\5gs_tracking_area_identity.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\5gs_update_type.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="sm\5gsm_capability.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="sm\5gsm_cause.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="sm\5gsm_congestion_reattempt_indicator.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="sm\5gsm_network_feature_support.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="sm\5gsm_status.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\abba.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\access_type.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\additional_5g_security_infomation.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="common\additional_information.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\allowed_pdu_session_status.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="sm\allowed_scc_mode.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="sm\alwayson_pdu_session_indication.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="sm\alwayson_pdu_session_requested.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="sm\atsss_container.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\authentication_failure.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\authentication_failure_parameter.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\authentication_parameter_autn.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\authentication_parameter_rand.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\authentication_reject.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\authentication_request.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\authentication_response.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\authentication_response_parameter.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\authentication_result.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\configuration_update_cmd.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\configuration_update_cmpl.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\configuration_update_indication.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="sm\control_plane_only_indication.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\daylight_saving_time.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\deregistration_accept_ue_origin.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\deregistration_accept_ue_terminate.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\deregistration_request_ue_origin.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\deregistration_request_ue_terminate.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\deregistration_type.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\dl_nas_transp.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="common\dnn.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\drx_parameters.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\emergency_number_list.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\eps_bearer_context_status.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\eps_nas_message_container.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\eps_nas_security_algorithms.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\extended_drx_parameters.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\extended_emergency_number_list.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="sm\extended_protocol_configuration_options.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\id_req_result.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\identity_request.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\identity_response.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\imeisv_request.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="sm\integrity_protection_maximum_data_rate.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="common\intra_n1_mode_nas_container.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\ladn_indication.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\ladn_information.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\ma_pdu_session_information.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="sm\mapped_eps_bearer_contexts.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="sm\maximum_number_of_supported_packet_filters.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="common\mcc_mnc.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\mico_indication.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\mobile_station_classmark2.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="common\n1_mode_s1_mode_nas_container.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\nas_key_set_identifier.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\nas_message_container.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\nas_security_algorithms.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\network_name.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\network_slicing_indication.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\non_3gpp_nw_provided_policies.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\notification.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\notification_response.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\nssai.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\nssai_inclusion_mode.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\operator_defined_acccess_category_definitions.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\payload_container.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\payload_container_type.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="sm\pdu_address.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="sm\pdu_session_authentication_command.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="sm\pdu_session_authentication_complete.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="sm\pdu_session_authentication_result.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="sm\pdu_session_establishment_accept.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="sm\pdu_session_establishment_reject.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="sm\pdu_session_establishment_request.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\pdu_session_identity2.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="sm\pdu_session_modification_command.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="sm\pdu_session_modification_command_reject.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="sm\pdu_session_modification_complete.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="sm\pdu_session_modification_reject.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="sm\pdu_session_modification_request.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\pdu_session_reactivation_result.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\pdu_session_reactivation_result_error_cause.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="sm\pdu_session_release_command.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="sm\pdu_session_release_complete.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="sm\pdu_session_release_reject.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="sm\pdu_session_release_request.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\pdu_session_status.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="sm\pdu_session_type.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\plmn_list.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="sm\qos_flow_descriptions.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="sm\qos_rules.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="sm\reattempt_indicator.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\registration_accept.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\registration_complete.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\registration_reject.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\registration_request.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\registration_request_inl.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\rejected_nssai.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\request_type.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="common\s_nssai.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="common\s1_mode_n1_mode_nas_container.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\s1_ue_network_capability.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\s1_ue_security_capability.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="sm\scc_mode.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\security_mode_cmd.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\security_mode_cmpl.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\security_mode_reject.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\security_protected_5gs_nas_message.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\service_accept.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\service_area_list.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\service_reject.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\service_request.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\service_type.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="sm\serving_plmn_rate_control.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="sm\session_ambr.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="sm\sm_pdu_dn_request_container.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\sms_indication.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\sor_transparent_container.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\supported_codec_list.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\timezone.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\timezone_time.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\tracking_area_identity_list.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\ue_parameters_update_transparent_container.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\ue_status.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\ue_usage_setting.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\uplink_data_status.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\uplink_nas_transport.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\use_status.cc">
+      <Filter>nas</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="common.hh" />
+    <ClInclude Include="config.hh" />
+    <ClInclude Include="core.hh" />
+    <ClInclude Include="dissect_mm_msg.hh" />
+    <ClInclude Include="dissect_nas5g.hh" />
+    <ClInclude Include="dissect_sm_msg.hh" />
+    <ClInclude Include="eps.hh" />
+    <ClInclude Include="expert_meta.hh" />
+    <ClInclude Include="field_meta.hh" />
+    <ClInclude Include="gsm.hh" />
+    <ClInclude Include="mm\mm_field_meta.hh" />
+    <ClInclude Include="proto.hh" />
+    <ClInclude Include="tree_meta.hh" />
+    <ClInclude Include="ber.hh" />
+    <ClInclude Include="tvbuff.hh" />
+    <ClInclude Include="val_string.hh" />
+    <ClInclude Include="mm\mm_dissects.hh">
+      <Filter>nas</Filter>
+    </ClInclude>
+    <ClInclude Include="mm\mm_element_meta.hh">
+      <Filter>nas</Filter>
+    </ClInclude>
+    <ClInclude Include="packet_info.hh">
+      <Filter>nas</Filter>
+    </ClInclude>
+    <ClInclude Include="range_string.hh">
+      <Filter>nas</Filter>
+    </ClInclude>
+    <ClInclude Include="mm\registration_req.hh">
+      <Filter>nas</Filter>
+    </ClInclude>
+    <ClInclude Include="sm\sm_dissects.hh">
+      <Filter>nas</Filter>
+    </ClInclude>
+    <ClInclude Include="sm\sm_element_meta.hh">
+      <Filter>nas</Filter>
+    </ClInclude>
+    <ClInclude Include="sm\sm_field_meta.hh">
+      <Filter>nas</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="sm">
+      <UniqueIdentifier>{942f26e5-12d9-474b-b938-f3e703cb2083}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="nas">
+      <UniqueIdentifier>{dcbe7aec-1cab-4bec-a96f-8cc62592826d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
