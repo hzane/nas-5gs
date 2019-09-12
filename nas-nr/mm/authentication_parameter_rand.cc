@@ -7,9 +7,7 @@ int mm::dissect_auth_parameter_rand(dissector d, context* ctx) {
 
     // See subclause 10.5.3.1 in 3GPP TS 24.008 [12].
     /* The RAND value is 16 octets long */
-    auto i = d.add_item(16, &hf_dtap_rand, enc::be);
+    (void) d.add_item(16, &hf_dtap_rand, enc::be);
 
-    /* no length check possible */
-    unused(i);
     return 16;
 }

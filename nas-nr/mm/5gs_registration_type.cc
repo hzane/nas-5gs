@@ -37,14 +37,6 @@ const field_meta mm::hf_registration_type = {
     0x07,
 };
 
-const element_meta mm::registration_request_type = {
-    0xff,
-    "5GS registration type",
-    dissect_registration_request_type,
-    nullptr,
-};
-
-
 const element_meta mm::nc_native_nas_ksi = {
     0xc0,
     "NAS key set identifier - Non-current native NAS KSI",

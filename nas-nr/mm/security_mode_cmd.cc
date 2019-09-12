@@ -12,23 +12,21 @@ int mm::dissect_security_mode_cmd(dissector d, context* ctx) {
     down_link(d.pinfo);
 
     /*Selected NAS security algorithms NAS security algorithms 9.11.3.34 M V 1  */
-    // ELEM_MAND_V(,DE_NAS_5GS_MM_NAS_SEC_ALGO, );
-    auto consumed = dissect_v(nullptr, &sec_algo, d, ctx);
-    d.step(consumed);
+    dissect_v(nullptr, &sec_algo, d, ctx);
+    d.step(1);
 
     /*ngKSI     NAS key set identifier 9.11.3.32    M    V    1/2  */
-    consumed = dissect_v(nullptr, &nas_ksi, d, ctx);
+    dissect_v(nullptr, &nas_ksi, d, ctx);
 
     /* Spare half octet    Spare half octet     9.5    M    V    1/2 */
-    d.step(consumed);
+    d.step(1);
 
     /* Replayed UE security capabilities    UE security capability   9.11.3.54  M  LV   3-5*/
     // ELEM_MAND_LV(,DE_NAS_5GS_MM_UE_SEC_CAP," - Replayed UE security capabilities",);
-    consumed = dissect_lv(nullptr, &replayed_ue_sec_cap, d, ctx);
+    auto consumed = dissect_lv(nullptr, &replayed_ue_sec_cap, d, ctx);
     d.step(consumed);
 
     /*E-    IMEISV request    IMEISV request     9.11.3.28    O    TV    1*/
-    // ELEM_OPT_TV_SHORT(0xE0, , DE_EMM_IMEISV_REQ, NULL);
     consumed = dissect_opt_tv_short(nullptr, &imeisv_req, d, ctx);
     d.step(consumed);
 
@@ -39,7 +37,7 @@ int mm::dissect_security_mode_cmd(dissector d, context* ctx) {
 
     /*36    Additional 5G security information  9.11.3.12    O    TLV    3 */
     // ELEM_OPT_TLV(0x36, , DE_NAS_5GS_MM_ADD_5G_SEC_INF, NULL);
-    consumed = dissect_opt_tlv(nullptr, &a_sec_info, d, ctx);
+    consumed = dissect_opt_tlv(nullptr, &additional_sec_info, d, ctx);
     d.step(consumed);
 
     /*78    EAP message  9.11.2.2    O    TLV-E    7*/
@@ -81,7 +79,7 @@ extern const element_meta imeisv_req = {
     nullptr,
 };
 
-extern const element_meta a_sec_info = {
+extern const element_meta additional_sec_info = {
     0x36,
     "Additional 5G security information",
     dissect_additional_security_info,

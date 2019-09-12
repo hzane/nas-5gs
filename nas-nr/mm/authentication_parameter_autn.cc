@@ -10,15 +10,14 @@ int mm::dissect_auth_parameter_autn(dissector d, context* ctx) {
     const auto subtree = d.add_item(d.length, &hf_dtap_autn, enc::na);
     use_tree   ut(d, subtree);
 
-    auto i = d.add_item(6, &hf_dtap_autn_sqn, enc::be);
+    (void) d.add_item(6, &hf_dtap_autn_sqn, enc::be);
     d.step(6);
 
-    i = d.add_item(2, &hf_dtap_autn_amf, enc::be);
+    (void) d.add_item(2, &hf_dtap_autn_amf, enc::be);
     d.step(2);
 
-    i = d.add_item(8, &hf_dtap_autn_mac, enc::be);
+    (void) d.add_item(8, &hf_dtap_autn_mac, enc::be);
     d.step(8);
 
-    unused(i);
     return uc.length;
 }

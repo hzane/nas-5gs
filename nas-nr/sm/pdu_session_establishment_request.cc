@@ -1,5 +1,3 @@
-#include "../common.hh"
-#include "../dissect_nas5g.hh"
 #include "../dissect_sm_msg.hh"
 #include "../packet_info.hh"
 #include "../ber.hh"

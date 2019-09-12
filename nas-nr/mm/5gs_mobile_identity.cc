@@ -18,46 +18,47 @@ int mm::dissect_mobile_id(dissector d, context* ctx) {
     const auto oct      = d.uint8();
     const auto type_id  = oct & 0x07u;
 
+    int consumed = 0;
     switch (type_id) {
-    case 0: {
+    case 0:
         // no identity
-        d.add_bits(flags_odd_even_tid);
-    } break;
-    case 1: {
+        consumed = dissect_mobile_id_noid(d, ctx);
+        d.step(consumed);
+        break;
+    case 1:
         // SUCI
-        const auto consumed = dissect_mobile_id_suci(d, ctx);
+        consumed = dissect_mobile_id_suci(d, ctx);
         d.step(consumed);
-    } break;
-    case 2: {
+        break;
+    case 2:
         // 5G-GUTI
-        const auto consumed = dissect_mobile_id_5gguti(d, ctx);
+        consumed = dissect_mobile_id_5gguti(d, ctx);
         d.step(consumed);
-    } break;
-    case 3: {
+        break;
+    case 3:
         // IMEI
         dissect_mobile_id_imei(d, ctx);
         d.step(d.length);
-    } break;
-    case 4: {
+        break;
+    case 4:
         // 5G-S-TMSI
-        const auto consumed = dissect_mobile_id_5gstmsi(d, ctx);
+        consumed = dissect_mobile_id_5gstmsi(d, ctx);
         d.step(consumed);
-    } break;
-    case 5: {
+        break;
+    case 5:
         // IMEISV
         dissect_mobile_id_imeisv(d, ctx);
         d.step(d.length);
-    } break;
-    case 6: {
+        break;
+    case 6:
         // MAC address
         dissect_mobile_id_mac(d, ctx);
         d.step(7);
-    } break;
-    default: {
-        auto i = d.add_item(d.length, &hf_mm_type_id, enc::be);
+        break;
+    default:
+        (void) d.add_item(d.length, &hf_identity_type, enc::be);
         diag("unknown mobile type id %d\n", type_id);
-        unused(i);
-    } break;
+        break;
     }
 
     return uc.length;
@@ -67,7 +68,7 @@ int mm::dissect_mobile_id(dissector d, context* ctx) {
 int mm::dissect_mobile_id_mac(dissector d, context* ctx) {
     const use_context uc(ctx, "mobile-id-mac", d, 0);
 
-    (void) d.add_item(1, &hf_mm_type_id, enc::be);
+    (void) d.add_item(1, &hf_identity_type, enc::be);
     d.step(1);
 
     (void) d.add_item(6, &hf_mac_address, enc::be);
@@ -90,7 +91,7 @@ int mm::dissect_mobile_id_noid(dissector d, context* ctx) {
 int mm::dissect_mobile_id_5gstmsi(dissector d, context* ctx) {
     const use_context uc(ctx, "mobile-id-5gs-tmis", d, 0);
 
-    (void) d.add_item(1, &hf_mm_type_id, enc::be);
+    (void) d.add_item(1, &hf_identity_type, enc::be);
     d.step(1);
 
     /* AMF Set ID */
@@ -117,7 +118,7 @@ int mm::dissect_mobile_id_suci(dissector d, context* ctx) {
     d.step(1);
 
     const auto supi_fmt = oct & 0x70;
-    if (supi_fmt == 0 || supi_fmt != 1) {
+    if (supi_fmt != 1) { // supi_fmt == 0
         // IMSI
         const auto consumed = dissect_e212_mcc_mnc(d, ctx);
         d.step(consumed);
@@ -156,7 +157,7 @@ int mm::dissect_mobile_id_suci(dissector d, context* ctx) {
 int mm::dissect_mobile_id_5gguti(dissector d, context* ctx) {
     const use_context uc(ctx, "mobile-id-5g-guti", d, 0);
 
-    (void) d.add_item(1, &hf_mm_type_id, enc::be);
+    (void) d.add_item(1, &hf_identity_type, enc::be);
     d.step(1);
 
     const auto consumed = dissect_e212_mcc_mnc(d, ctx);
@@ -187,7 +188,7 @@ int mm::dissect_mobile_id_imei(dissector d, context* ctx) {
     d.add_bits(flags_odd_even_tid);
 
     // The format of the IMEI is described in 3GPP TS 23.003
-    (void) d.add_item(d.length, &hf_imeisv, enc::be);
+    (void) d.add_item(d.length, &hf_imei, enc::be);
     d.step(d.length);
 
     return uc.length;
@@ -195,10 +196,18 @@ int mm::dissect_mobile_id_imei(dissector d, context* ctx) {
 
 // type_id = 5, IMEISV
 int mm::dissect_mobile_id_imeisv(dissector d, context* ctx) {
-    return dissect_mobile_id_imei(d, ctx);
+    const use_context uc(ctx, "mobile-id-imeisv", d, 0);
+
+    d.add_bits(flags_odd_even_tid);
+
+    // The format of the IMEISV is described in 3GPP TS 23.003
+    (void) d.add_item(d.length, &hf_imeisv, enc::be);
+    d.step(d.length);
+
+    return uc.length;
 }
 
-extern const field_meta mm::hf_mm_odd_even = {
+extern const field_meta mm::hf_odd_even_indication = {
     "Odd/even indication",
     "nas.nr.odd.even",
     ft::ft_boolean,
@@ -217,23 +226,11 @@ const element_meta mm::mobile_id = {
     nullptr,
 };
 
-/* * 9.11.3.4    5GS mobile identity */
-const field_meta mm::hf_mm_type_id = {  // NOLINT
-    "Type of identity",
-    "nas.nr.identity.type",
-    ft::ft_uint8,
-    fd::base_dec,
-    identity_type_values,
-    nullptr,
-    nullptr,
-    0x07,
-};
-
 namespace mm {
 
 const field_meta* flags_odd_even_tid[] = {
-    &hf_mm_odd_even,
-    &hf_mm_type_id,
+    &hf_odd_even_indication,
+    &hf_identity_type,
     nullptr,
 };
 const field_meta hf_mac_address = {
@@ -246,7 +243,7 @@ const field_meta hf_mac_address = {
     nullptr,
     0,
 };
-const val_string supi_fmt_vals[] = {
+const val_string supi_fmt_values[] = {
     {0x0, "IMSI"},
     {0x1, "Network Specific Identifier"},
     {0, nullptr},
@@ -256,7 +253,7 @@ const field_meta hf_supi_fmt = {
     "nas.nr.suci.supi.format",
     ft::ft_uint8,
     fd::base_dec,
-    supi_fmt_vals,
+    supi_fmt_values,
     nullptr,
     nullptr,
     0x70,
@@ -276,29 +273,18 @@ const field_meta hf_imei = {
     "IMEI",
     "nas.nr.imei",
     ft::ft_bytes,
-    fd::base_hex,
+    fd::imei,
     nullptr,
     nullptr,
     nullptr,
     0,
 };
-#if 0
-const field_meta hf_spare_b3 = {
-    "Spare",
-    "nas.nr.spare.b3",
-    ft::ft_uint8,
-    fd::base_dec,
-    nullptr,
-    nullptr,
-    nullptr,
-    0x08,
-};
-#endif
+
 const field_meta* flags_supi_fmt_tid[] = {
     // &hf_spare_b7,
     &hf_supi_fmt,
     // &hf_spare_b3,
-    &hf_mm_type_id,
+    &hf_identity_type,
     nullptr,
 };
 const field_meta hf_imeisv = {

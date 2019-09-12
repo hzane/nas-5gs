@@ -556,7 +556,7 @@ const field_meta hf_nas_eps_emm_h245_ash_cap = {
     nullptr,
     0x20,
 };
-const field_meta hf_nas_eps_emm_acc_csfb_cap = {
+const field_meta hf_access_class_control_csfb_cap = {
     "Access class control for CSFB",
     "nas_eps.emm.acc_csfb_cap",
     ft::ft_boolean,
@@ -568,7 +568,7 @@ const field_meta hf_nas_eps_emm_acc_csfb_cap = {
 };
 const field_meta hf_nas_eps_emm_lpp_cap = {
     "LTE Positioning Protocol",
-    "nas_eps.emm.lpp_cap",
+    "nas.mm.lpp.capability",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,

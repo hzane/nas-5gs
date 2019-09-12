@@ -99,7 +99,7 @@ int mm::dissect_registration_accept(dissector d, context* ctx) {
 
     /*34  Emergency number list  9.11.3.23 O   TLV  5-50*/
     // ELEM_OPT_TLV(0x34, , DE_EMERGENCY_NUM_LIST, NULL);
-    consumed = dissect_opt_tlv(nullptr, &emerg_num_list, d, ctx);
+    consumed = dissect_opt_tlv(nullptr, &emergency_num_list, d, ctx);
     d.step(consumed);
 
     /*7A    Extended emergency number list  9.11.3.26  O    TLV-E    TBD*/
@@ -284,7 +284,7 @@ static true_false_string tfs_eenlv_value = {
     "Valid in the country of the PLMN from which this IE is received",
 };
 
-const field_meta hf_gsma_eni = {
+const field_meta hf_emergency_number_info = {
     "Emergency Number Information",
     "gsm_a.dtap.emergency_number_information",
     ft::ft_uint32,
@@ -292,7 +292,7 @@ const field_meta hf_gsma_eni = {
     nullptr,nullptr,nullptr,
     0x0,
 };
-const field_meta hf_gsma_eni_length = {
+const field_meta hf_emergency_number_length = {
     "Emergency Number Info length",
     "gsm_a.dtap.emerg_num_info_length",
     ft::ft_uint8,
@@ -303,31 +303,31 @@ const field_meta hf_gsma_eni_length = {
     0x0,
 };
 
-const field_meta hf_gsma_svc_cat_b4 = {
+const field_meta hf_mountain_rescue = {
     "Mountain Rescue",
-    "gsm_a.dtap.serv_cat_b5",
+    "gsm.mountain.rescue",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,nullptr,nullptr,
     0x10,
 };
-const field_meta hf_gsma_svc_cat_b3 = {
+const field_meta hf_marine_guard = {
     "Marine Guard",
-    "gsm_a.dtap.serv_cat_b4",
+    "gsm.marine.guard",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,nullptr,nullptr,
     0x08,
 };
-const field_meta hf_gsma_svc_cat_b2 = {
+const field_meta hf_fire_brigade = {
     "Fire Brigade",
-    "gsm_a.dtap.serv_cat_b3",
+    "gsm.fire.brigade",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,nullptr,nullptr,
     0x04,
 };
-const field_meta hf_gsma_svc_cat_b1 = {
+const field_meta hf_ambulance = {
     "Ambulance",
     "gsm_a.dtap.serv_cat_b2",
     ft::ft_boolean,
@@ -335,15 +335,15 @@ const field_meta hf_gsma_svc_cat_b1 = {
     nullptr,nullptr,nullptr,
     0x02,
 };
-const field_meta hf_gsma_svc_cat_b0 = {
+const field_meta hf_police = {
     "Police",
-    "gsm_a.dtap.serv_cat_b1",
+    "gsm.police",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,nullptr,nullptr,
     0x01,
 };
-const field_meta hf_gsma_emergency_bcd_num = {
+const field_meta hf_emergency_bcd_num = {
     "Emergency BCD Number",
     "gsm_a.dtap.emergency_bcd_num",
     ft::ft_bytes,
@@ -355,9 +355,9 @@ const field_meta hf_gsma_emergency_bcd_num = {
 };
 
 
-const field_meta hf_ext_emerge_num_list_eenlv = {
+const field_meta hf_ext_emergency_number_list_validity = {
     "Extended Emergency Number List Validity",
-    "nas_eps.emm.ext_emerg_num_list.eenlv",
+    "nas.mm.emergency.validity",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -367,7 +367,7 @@ const field_meta hf_ext_emerge_num_list_eenlv = {
 };
 const field_meta hf_ext_emerge_num_len = {
     "Emergency number information length",
-    "nas_eps.emm.ext_emerg_num_list.emerg_num.len",
+    "nas.mm.emergency",
     ft::ft_uint8,
     fd::base_dec,
     nullptr,
@@ -377,7 +377,7 @@ const field_meta hf_ext_emerge_num_len = {
 };
 const field_meta hf_emerge_num = {
     "Emergency number",
-    "nas_eps.emm.ext_emerg_num_list.emerg_num",
+    "nas.mm.emergency",
     ft::ft_bytes,
     fd::bcd,
     nullptr,nullptr,nullptr,
@@ -394,7 +394,7 @@ const field_meta hf_ext_emerge_sub_serv_field_len = {
     nullptr,
     0x0,
 };
-const field_meta hf_emm_emerg_num_list_sub_svc_field = {
+const field_meta hf_sub_services_field = {
     "Sub-services field",
     "nas_eps.emm.ext_emerg_num_list.sub_serv_field",
     ft::ft_bytes,
@@ -426,7 +426,7 @@ const true_false_string tfs_nas_5gs_sor_data_type = {
 
 const field_meta hf_sor_hdr0_ack = { // NOLINT
     "Acknowledgement (ACK)",
-    "nas.nr.sor_hdr0.ack",
+    "nas.nr.sor.hdr..ack",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -436,7 +436,7 @@ const field_meta hf_sor_hdr0_ack = { // NOLINT
 };
 const field_meta hf_sor_hdr0_list_type = {
     "List type",
-    "nas.nr.sor_hdr0.list_type",
+    "nas.nr.sor.hdr.type",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -446,7 +446,7 @@ const field_meta hf_sor_hdr0_list_type = {
 };
 const field_meta hf_sor_hdr0_list_ind = {
     "List indication",
-    "nas.nr.sor_hdr0.list_ind",
+    "nas.nr.sor.hdr",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -456,7 +456,7 @@ const field_meta hf_sor_hdr0_list_ind = {
 };
 const field_meta hf_sor_hdr0_sor_data_type = {
     "SOR data type",
-    "nas.nr.sor.sor_data_type",
+    "nas.nr.sor.data",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -465,7 +465,7 @@ const field_meta hf_sor_hdr0_sor_data_type = {
     0x01,
 };
 const true_false_string tfs_selected_not_selected = {"Selected", "Not Selected"};
-const field_meta hf_acces_tech_o1_b7 = {
+const field_meta        hf_access_tech_utran      = {
     "Access technology UTRAN",
     "nas.nr.cces_tech_o1_b7.utran",
     ft::ft_boolean,
@@ -475,7 +475,7 @@ const field_meta hf_acces_tech_o1_b7 = {
     nullptr,
     0x80,
 };
-const field_meta hf_acces_tech_o1_b6 = {
+const field_meta hf_access_tech_e_utran = {
     "Access technology E-UTRAN",
     "nas.nr.cces_tech_o1_b6.e_utran",
     ft::ft_boolean,
@@ -485,7 +485,7 @@ const field_meta hf_acces_tech_o1_b6 = {
     nullptr,
     0x40,
 };
-const field_meta hf_acces_tech_o1_b5 = {
+const field_meta hf_access_tech_e_utran_wb = {
     "Access technology E-UTRAN in WB-S1 mode",
     "nas.nr.cces_tech_o1_b5.e_utran_in_wb_s1_mode",
     ft::ft_boolean,
@@ -495,7 +495,7 @@ const field_meta hf_acces_tech_o1_b5 = {
     nullptr,
     0x20,
 };
-const field_meta hf_acces_tech_o1_b4 = {
+const field_meta hf_access_tech_e_utran_nb = {
     "Access technology E-UTRAN in NB-S1 mode",
     "nas.nr.cces_tech_o1_b4.e_utran_in_nb_s1_mode",
     ft::ft_boolean,
@@ -667,21 +667,7 @@ const field_meta hf_mm_op_defined_acd_oct6 = {
     nullptr,
     0x1f,
 };
-const true_false_string tfs_mm_opd_acc_psac = {
-    "Standardized access category field is included",
-    "Standardized access category field is not included",
-};
 
-const field_meta hf_mm_op_defined_acd_psac = { // NOLINT
-    "Presence of standardized access category (PSAC)",
-    "nas.nr.mm.opd_acc_psac",
-    ft::ft_uint8,
-    fd::base_dec,
-    nullptr,
-    &tfs_mm_opd_acc_psac,
-    nullptr,
-    0x80,
-};
 const field_meta hf_mm_op_defined_acd_criteria = {};
 
 /* 9.11.3.38    Operator-defined access category definitions */

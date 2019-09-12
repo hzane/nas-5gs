@@ -1,7 +1,7 @@
 #include "../dissect_sm_msg.hh"
 #include "../range_string.hh"
 
-const field_meta hf_gsma_sm_ext = {
+const field_meta hf_gsm_sm_extension = {
     "Extension",
     "nas.nr.gsm.sm.ext",
     ft::ft_boolean,
@@ -11,7 +11,7 @@ const field_meta hf_gsma_sm_ext = {
     nullptr,
     0x80,
 };
-const field_meta hf_gsma_conf_prot = {
+const field_meta hf_gsm_configuration_protocol = {
     "Configuration Protocol",
     "nas.nr.gsm.sm.configuration_protocol",
     ft::ft_uint8,
@@ -21,45 +21,8 @@ const field_meta hf_gsma_conf_prot = {
     nullptr,
     0x7,
 };
-extern const value_string gsm_a_gm_link_dir_vals[] = {
-    {0 - 1u, "Unknown"},
-    {0x0, "MS to network"},
-    {0x1, "Network to MS"},
-    {0, nullptr},
-};
 
-extern const value_string gsm_a_gm_sel_bearer_ctrl_mode_vals[] = {
-    {1, "MS only"},
-    {2, "MS/NW"},
-    {0, nullptr},
-};
-
-extern const value_string gsm_a_gm_nbifom_mode_vals[] = {
-    {0, "UE-initiated"},
-    {1, "Network-initiated"},
-    {0, nullptr},
-};
-
-const true_false_string gsm_a_gm_apn_rate_ctrl_params_aer_value = {
-    "Additional exception reports at maximum rate reached are allowed",
-    "Additional exception reports at maximum rate reached are not allowed"};
-
-extern const value_string gsm_a_gm_apn_rate_ctrl_ul_time_unit_vals[] = {
-    {0, "Unrestricted"},
-    {1, "Minute"},
-    {2, "Hour"},
-    {3, "Day"},
-    {4, "Week"},
-    {0, nullptr},
-};
-
-extern const value_string gsm_a_gm_sm_pco_3gpp_data_off_ue_status_vals[] = {
-    {1, "Deactivated"},
-    {2, "Activated"},
-    {0, nullptr},
-};
-
-extern const value_string ppp_vals[];
+extern const value_string ppp_protocol_values[];
 
 const field_meta hf_proto_id = {
     "Protocol ID",
@@ -79,8 +42,8 @@ int sm::dissect_ext_pco(dissector d, context* ctx) {
     // See subclause 10.5.6.3A in 3GPP TS 24.008
 
     /* 1 ext 0 0 0 0 Spare  Configuration protocol */
-    (void) d.add_item(1, &hf_gsma_sm_ext, enc::be);
-    (void) d.add_item(1, &hf_gsma_conf_prot, enc::be);
+    (void) d.add_item(1, &hf_gsm_sm_extension, enc::be);
+    (void) d.add_item(1, &hf_gsm_configuration_protocol, enc::be);
     d.step(1);
 
     return uc.length;
@@ -95,7 +58,7 @@ const element_meta sm::ext_pco = {
 };
 
 // only part
-extern const value_string ppp_vals[] = {
+extern const value_string ppp_protocol_values[] = {
     {1, "Padding Protocol"},
     {3, "ROHC small-CID"},
     {5, "ROHC large-CID"},

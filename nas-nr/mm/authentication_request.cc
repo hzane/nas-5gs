@@ -18,7 +18,6 @@ int mm::authentication_request(dissector d, context* ctx) {
     d.step(1);
 
     /* ABBA    ABBA 9.11.3.10    M    LV    3-n */
-    // ELEM_MAND_LV(DE_NAS_5GS_MM_ABBA,);
     auto consumed = dissect_lv(nullptr, &abba, d, ctx);
     d.step(consumed);
 
@@ -59,7 +58,7 @@ extern const element_meta auth_param_autn = {
 
 extern const field_meta hf_dtap_rand = {
     "RAND value",
-    "gsm_a.dtap.rand",
+    "gsm.rand",
     ft::ft_bytes,
     fd::base_hex,
     nullptr,

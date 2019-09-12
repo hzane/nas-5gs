@@ -8,19 +8,11 @@ using namespace mm;
 int mm::dissect_service_type(dissector d, context* ctx) {
     const use_context uc(ctx, "service-type", d, -1);
 
-    (void) d.add_item(1, &hfm_mm_serv_type, enc::be);
+    (void) d.add_item(1, &hf_service_type, enc::be);
     d.step(1);
 
     return 1;
 }
-
-// Service type 9.11.3.50
-const element_meta mm::service_type = {
-    0xff,
-    "Service type",
-    dissect_service_type,
-    nullptr,
-};
 
 /* *     9.11.3.50    Service type page.396 */
 /* Used inline as H1 (Upper nibble)*/
@@ -39,7 +31,7 @@ const val_string mm::service_type_values[] = {
     {0x0b, "unused; shall be interpreted as \"data\", if received by the network"},
     {0, nullptr},
 };
-const field_meta mm::hfm_mm_serv_type = {
+const field_meta mm::hf_service_type = {
     "Service type",
     "nas.nr.mm.service.type",
     ft::ft_uint8,

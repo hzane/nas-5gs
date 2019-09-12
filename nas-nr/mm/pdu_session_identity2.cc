@@ -13,8 +13,6 @@ int mm::dissect_pdu_session_id(dissector d, context* ctx) {
     return 1;
 }
 
-
-
 static const val_string pdu_session_id_values[] = {
     {0x00, "No PDU session identity assigned"},
     {0x01, "Reserved"},

@@ -1,6 +1,5 @@
 #include "../dissect_sm_msg.hh"
 
-
 // PDU address 9.11.4.10
 extern const element_meta sm::pdu_address = {
     0x29,

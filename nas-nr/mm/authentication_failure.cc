@@ -13,7 +13,6 @@ int mm::authentication_failure(dissector d, context* ctx) {
     d.step(consumed);
 
     /* 30    Authentication failure parameter   9.11.3.14    O    TLV    16 */
-    // ELEM_OPT_TLV(0x30, , DE_AUTH_FAIL_PARAM, NULL);
     consumed = dissect_opt_tlv(nullptr, &auth_fail_param, d, ctx);
     d.step(consumed);
     

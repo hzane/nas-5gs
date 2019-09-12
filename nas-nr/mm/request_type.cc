@@ -14,7 +14,6 @@ int mm::dissect_request_type(dissector d, context* ctx) {
     return 1;
 }
 
-
 // Request type  9.11.3.47
 extern const element_meta mm::request_type = {
     0x80,
@@ -23,8 +22,8 @@ extern const element_meta mm::request_type = {
     nullptr,
 };
 
-/*  9.11.3.47    Request type */
-static const value_string nas_5gs_mm_req_type_vals[] = {
+/* *     9.11.3.47    Request type */
+const val_string request_type_values[] = {
     {0x01, "Initial request"},
     {0x02, "Existing PDU session"},
     {0x03, "Initial emergency request"},
@@ -33,15 +32,12 @@ static const value_string nas_5gs_mm_req_type_vals[] = {
     {0x07, "Reserved"},
     {0, nullptr},
 };
-
-
-
 const field_meta mm::hf_request_type = {
     "Request type",
     "nas.nr.mm.request.type",
     ft::ft_uint8,
     fd::base_dec,
-    request_type_values,
+    ::request_type_values,
     nullptr,
     nullptr,
     0x0f,

@@ -1,4 +1,3 @@
-#include "../dissect_nas5g.hh"
 #include "../dissect_sm_msg.hh"
 #include "../ber.hh"
 #include "../common.hh"
@@ -16,7 +15,6 @@ int sm::dissect_pdu_ses_establishment_accept(dissector d, context* ctx) {
     down_link(d.pinfo);
 
     /* Selected PDU session type    PDU session type 9.11.4.11    M    V    1/2 H0*/
-    // ELEM_MAND_V( DE_NAS_5GS_SM_PDU_SESSION_TYPE,);
     dissect_pdu_session_type(d, ctx);
 
     /* Selected SSC mode    SSC mode 9.11.4.16    M    V    1/2 H1*/
@@ -37,7 +35,6 @@ int sm::dissect_pdu_ses_establishment_accept(dissector d, context* ctx) {
     d.step(consumed);
 
     /*29  PDU address 9.11.4.10    O    TLV    7 */
-    // ELEM_OPT_TLV(0x29, , DE_NAS_5GS_SM_PDU_ADDRESS, );
     consumed = dissect_opt_tlv(nullptr, &pdu_address, d, ctx);
     d.step(consumed);
 
@@ -51,12 +48,10 @@ int sm::dissect_pdu_ses_establishment_accept(dissector d, context* ctx) {
     d.step(consumed);
 
     /* 8-    Always-on PDU session indication   9.11.4.3  O    TV    1 */
-    // ELEM_OPT_TV_SHORT(0x80, , DE_NAS_5GS_SM_ALWAYS_ON_PDU_SES_IND, );
     consumed = dissect_opt_tv_short(nullptr, &alwayson_pdu_ses_ind, d, ctx);
     d.step(consumed);
 
     /* 75    Mapped EPS bearer contexts  9.11.4.8    O  TLV-E    7-65538 */
-    // ELEM_OPT_TLV_E(0x75, , DE_NAS_5GS_SM_MAPPED_EPS_B_CONT, NULL);
     consumed = dissect_opt_tlv_e(nullptr, &mapped_eps_bearer_ctx, d, ctx);
     d.step(consumed);
 

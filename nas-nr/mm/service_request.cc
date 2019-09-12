@@ -46,9 +46,9 @@ int mm::dissect_service_request(dissector d, context* ctx) {
 }
 namespace mm {
 
-
 // 9.11.3.50
 int                dissect_s_tmsi(dissector d, context* ctx);
+
 const element_meta s_tmsi = {
     0xff,
     "5GS mobile identity - 5G-S-TMSI",

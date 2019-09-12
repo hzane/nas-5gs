@@ -28,7 +28,7 @@ int dissect_pdu_ses_modification_req(dissector d, context* ctx);
 int dissect_pdu_ses_modification_rej(dissector d, context* ctx);
 int dissect_pdu_ses_modification_cmd(dissector d, context* ctx);
 int dissect_pdu_ses_modification_cmpl(dissector d, context* ctx);
-int dissect_pdu_ses_auth_res(dissector d, context* ctx);
+int dissect_pdu_session_authentication_result2(dissector d, context* ctx);
 int dissect_pdu_ses_release_req(dissector d, context* ctx);
 int dissect_pdu_ses_release_rej(dissector d, context* ctx);
 int dissect_pdu_ses_release_cmd(dissector d, context* ctx);

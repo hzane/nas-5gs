@@ -8,12 +8,6 @@ int mm::dissect_ue_status(dissector d, context* ctx) {
     const use_context        uc(ctx, "ue-status", d, -1);
 
     static const field_meta* flags[] = {
-//        &hf_spare_b7,
-//        &hf_spare_b6,
-//        &hf_spare_b5,
-//        &hf_spare_b4,
-//        &hf_spare_b3,
-//        &hf_spare_b2,
         &hf_mm_n1_mode_reg_b1,
         &hf_mm_s1_mode_reg_b0,
         nullptr,

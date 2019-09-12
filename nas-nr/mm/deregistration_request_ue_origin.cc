@@ -3,7 +3,7 @@
 
 
 /*  8.2.12 De-registration request (UE originating de-registration)  */
-int mm::dissect_dereg_req_ue_orig(dissector d, context* ctx) {    
+int mm::dissect_deregistration_req_ue_orig(dissector d, context* ctx) {
     const use_context uc(ctx, "de-reg-ue-orig", d, 0);
     // UE to network
     up_link(d.pinfo);

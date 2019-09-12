@@ -6,7 +6,7 @@ using namespace mm;
 
 extern const element_meta mm::selected_eps_security_algo = {
     0x57,
-    "EPS NAS security algorigthms - Selected EPS NAS security algorithms",
+    "EPS NAS security algorithms - Selected EPS NAS security algorithms",
     dissect_selected_eps_security_algo,
     nullptr,
 };

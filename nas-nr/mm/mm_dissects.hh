@@ -63,8 +63,8 @@ int dissect_registration_req(dissector d, context* ctx);
 int dissect_registration_accept(dissector d, context* ctx);
 int dissect_registration_complete(dissector d, context* ctx);
 int dissect_registration_rej(dissector d, context* ctx);
-int dissect_dereg_req_ue_orig(dissector d, context* ctx);
-int dissect_dereg_req_ue_term(dissector d, context* ctx);
+int dissect_deregistration_req_ue_orig(dissector d, context* ctx);
+int dissect_deregistration_req_ue_term(dissector d, context* ctx);
 int dissect_service_request(dissector d, context* ctx);
 int dissect_service_reject(dissector d, context* ctx);
 int dissect_service_accept(dissector d, context* ctx);
@@ -133,7 +133,7 @@ int dissect_mm_capability(dissector d, context* ctx);
 int dissect_updp(dissector d, context* ctx);
 int dissect_security_protected_5gs_nas_msg(dissector d, context* ctx);
 
-int dissect_emerg_num_list(dissector d, context* ctx);
+int dissect_emergency_num_list(dissector d, context* ctx);
 
 // Extended emergency number list  9.11.3.26
 int dissect_ext_emerge_num_list(dissector d, context* ctx );
@@ -145,4 +145,6 @@ int dissect_pld_container_entry(dissector d, context* ctx);
 int dissect_plmn_list(dissector d, context* ctx );
 
 int dissect_ue_parameters_update_transparent_container(dissector d, context* ctx);
+int dissect_deregistration_accept_ue_orig(dissector d, context* ctx);
+int dissect_deregistration_accept_ue_term(dissector d, context* ctx);
 } // namespace mm

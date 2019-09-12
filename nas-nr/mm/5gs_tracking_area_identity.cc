@@ -7,21 +7,17 @@ using namespace cmn;
 int mm::dissect_last_v_tai(dissector d, context* ctx) {
     const use_context uc(ctx, "5gs-tracking area identity", d, -1);
 
-    /* MCC digit 2    MCC digit 1 Octet 2*/
-    /* MNC digit 3    MCC digit 3 Octet 3*/
-    /* MNC digit 2    MNC digit 1 Octet 4*/
     dissect_e212_mcc_mnc(d, ctx);
     d.step(3);
 
     /* TAC Octet 5 - 7 */
-    auto i = d.add_item(3, &hf_tac, enc::na);
+    (void) d.add_item(3, &hf_tac, enc::na);
 
-    unused(i);
     return 6;
 }
 
 /*  9.11.3.9     5GS tracking area identity list */
-extern const value_string nas_5gs_mm_tal_t_li_values[] = {
+extern const value_string tracking_area_identity_list_values[] = {
     {0x00, "list of TACs belonging to one PLMN, with non-consecutive TAC values"},
     {0x01, "list of TACs belonging to one PLMN, with consecutive TAC values"},
     {0x02, "list of TAIs belonging to different PLMNs"},
@@ -49,17 +45,17 @@ extern const value_string nas_5gs_mm_tal_num_e[] = {
 };
 const field_meta mm::hf_tal_t_li = {
     "Type of list",
-    "nas.nr.mm.tal_t_li",
+    "nas.nr.mm.tracking.area.type",
     ft::ft_uint8,
     fd::base_dec,
-    tac_list_values,
+    tracking_area_identity_list_values,
     nullptr,
     nullptr,
     0x60,
 };
 const field_meta mm::hf_tal_num_e = {
     "Number of elements",
-    "nas.nr.mm.tal_num_e",
+    "nas.nr.number",
     ft::ft_uint8,
     fd::base_dec,
     nas_5gs_mm_tal_num_e,

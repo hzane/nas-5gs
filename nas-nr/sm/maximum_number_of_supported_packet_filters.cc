@@ -3,7 +3,6 @@
 using namespace nas;
 using namespace sm;
 
-
 const field_meta hf_max_supported_packet_filters = {
     "Maximum number of supported packet filters",
     "nas.nr.max_n_supported_filters",
@@ -29,18 +28,18 @@ const field_meta hf_max_supported_packet_filters_c = {
 int sm::dissect_max_num_sup_kpt_flt(dissector d, context* ctx) {
     const use_context uc(ctx, "max-nof-supported-packet-filters", d, -1);
 
-    auto i = d.add_item(1, &hf_max_supported_packet_filters, enc::be);
+    (void) d.add_item(1, &hf_max_supported_packet_filters, enc::be);
     d.step(1);
-    i = d.add_item(1, &hf_max_supported_packet_filters_c, enc::be);
+    (void) d.add_item(1, &hf_max_supported_packet_filters_c, enc::be);
     d.step(1);
 
     return 2;
 }
 
-// Maximum number of suuported packet filter 9.11.4.9
+// Maximum number of supported packet filter 9.11.4.9
 const element_meta sm::max_of_supported_pkt_filter = {
     0x55,
-    "Maximum number of suuported packet filter",
+    "Maximum number of supported packet filter",
     dissect_max_num_sup_kpt_flt,
     nullptr,
 };

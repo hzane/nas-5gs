@@ -16,7 +16,7 @@ int mm::dissect_ext_emerge_num_list(dissector d, context* ctx) {
     // See subclause 9.9.3.37A in 3GPP TS 24.301 [15].
     const use_context uc(ctx, "extended-emergency-number-list", d, 0);
 
-    auto n = d.add_item(1, &hf_ext_emerge_num_list_eenlv, enc::be);
+    (void) d.add_item(1, &hf_ext_emergency_number_list_validity, enc::be);
     d.step(1);
 
     auto i = 1;
@@ -26,25 +26,24 @@ int mm::dissect_ext_emerge_num_list(dissector d, context* ctx) {
         use_tree   ut(d, subtree);
 
         auto length = static_cast< int >(d.uint8());
-        n           = d.add_item(1, &hf_ext_emerge_num_len, enc::be);
+        (void) d.add_item(1, &hf_ext_emerge_num_len, enc::be);
         d.step(1);
 
         if (length > 0) {
-            n = d.add_item(length, &hf_emerge_num, enc::be);
+            (void) d.add_item(length, &hf_emerge_num, enc::be);
             d.step(length);
         }
 
         length = d.uint8();
-        n      = d.add_item(1, &hf_ext_emerge_sub_serv_field_len, enc::be);
+        (void) d.add_item(1, &hf_ext_emerge_sub_serv_field_len, enc::be);
         d.step(1);
 
         if (length > 0) {
-            n = d.add_item(length, &hf_emm_emerg_num_list_sub_svc_field, enc::be);
+            (void) d.add_item(length, &hf_sub_services_field, enc::be);
             d.step(length);
         }
         subtree->set_length(d.offset - start);
     }
 
-    unused(i);
     return uc.length;
 }

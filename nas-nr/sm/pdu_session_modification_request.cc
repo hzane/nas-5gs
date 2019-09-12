@@ -1,4 +1,3 @@
-#include "../dissect_nas5g.hh"
 #include "../dissect_sm_msg.hh"
 #include "../ber.hh"
 #include "../packet_info.hh"
@@ -21,7 +20,7 @@ int sm::dissect_pdu_ses_modification_req(dissector d, context* ctx) {
     consumed = dissect_opt_tv(nullptr, &sm_cause, d, ctx);
     d.step(consumed);
 
-    /*55    Maximum number of suuported packet filter 9.11.4.9    O    TV    3*/
+    /*55    Maximum number of supported packet filter 9.11.4.9    O    TV    3*/
     consumed = dissect_opt_tv(nullptr, &max_of_supported_pkt_filter, d, ctx);
     d.step(consumed);
 

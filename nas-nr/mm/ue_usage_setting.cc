@@ -6,13 +6,18 @@ using namespace nas;
 int mm::dissect_usage_setting(dissector d, context* ctx) {
     const use_context        uc(ctx, "ue-usage-setting", d, -1);
 
-    static const field_meta* flags[] = {
-//        &hf_spare_b3,
-//        &hf_spare_b2,
-//        &hf_spare_b1,
-        &hf_ue_usage_setting,
-        nullptr,
-    };
-    d.add_bits(flags);
+    /*Spare 0
+    Spare	0
+    Spare	0
+    Spare	0
+    Spare	0
+    Spare	0
+    Spare	0
+    Spare	UE's usage setting
+    */
+
+    (void) d.add_item(1, &hf_ue_usage_setting, enc::be);
+    d.step(1);
+
     return 1;
 }

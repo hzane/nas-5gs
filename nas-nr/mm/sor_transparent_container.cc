@@ -45,10 +45,10 @@ int mm::dissect_sor_trans_cont(dissector d, context* ctx) {
     };
     /* 3GPP TS 31.102 [22] subclause 4.2.5 */
     static const field_meta* flags_acces_tech_1[] = {
-        &hf_acces_tech_o1_b7,
-        &hf_acces_tech_o1_b6,
-        &hf_acces_tech_o1_b5,
-        &hf_acces_tech_o1_b4,
+        &hf_access_tech_utran,
+        &hf_access_tech_e_utran,
+        &hf_access_tech_e_utran_wb,
+        &hf_access_tech_e_utran_nb,
         &hf_acces_tech_o1_b3,
         &hf_rfu_b2,
         &hf_rfu_b1,

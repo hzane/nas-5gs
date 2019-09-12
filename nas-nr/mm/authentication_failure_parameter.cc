@@ -3,13 +3,13 @@
 using namespace cmn;
 using namespace mm;
 
-// See subclause 10.5.3.2.2 in 3GPP TS 24.008 [12].
+// See sub-clause 10.5.3.2.2 in 3GPP TS 24.008 [12].
 // Authentication failure parameter
 int mm::dissect_auth_fail_param(dissector d, context* ctx) {
     const use_context uc(ctx, "auth-failure-param", d, -1);
 
     /* This IE contains either the SRES or the 4 most significant octets of the RES */
-    auto i = d.add_item(4, &hf_gsma_dtap_res, enc::na);
+    auto i = d.add_item(4, &hf_gsm_result, enc::na);
     d.step(4);
 
     unused(i);
@@ -23,9 +23,9 @@ extern const element_meta mm::auth_fail_param = {
     nullptr,
 };
 
-const field_meta mm::hf_gsma_dtap_res = {
+const field_meta mm::hf_gsm_result = {
     "SRES value",
-    "gsm.dtap.sres.result",
+    "gsm.sres.result",
     ft::ft_bytes,
     fd::base_none,
     nullptr,

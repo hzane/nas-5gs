@@ -13,13 +13,13 @@ int mm::dissect_mm_capability(dissector d, context* ctx) {
     const use_context uc(ctx, "5gmm-capability", d, 12);
 
     static const field_meta* flags[] = {
-        &hf_sgc_7,
-        &hf_hccp_ciot_6,
+        &hf_service_gap_control,
+        &hf_header_compression_for_ctrl_plane,
         &hf_n3data_5,
-        &hf_5gcp_ciot_4,
+        &hf_control_plane,
         &hf_restrict_ec_3,
-        &hf_lpp_b2,
-        &hf_ho_attach_b1,
+        &hf_lpp_capability,
+        &hf_handover_attach,
         &hf_s1_mode_b0,
         nullptr,
     };
@@ -67,7 +67,7 @@ const true_false_string tfs_sgc_7 = {
     "service gap control not supported",
 };
 
-const field_meta hf_sgc_7 = {
+const field_meta hf_service_gap_control = {
     "Service gap control SGC",
     "nas.nr.mm.sgc",
     ft::ft_boolean,
@@ -81,7 +81,7 @@ const true_false_string tfs_hccp_ciot_6 = {
     "Header compression for control plane CIoT 5GS optimization supported",
     "Header compression for control plane CIoT 5GS optimization not supported",
 };
-const field_meta hf_hccp_ciot_6 = {
+const field_meta hf_header_compression_for_ctrl_plane = {
     "Header compression for control plane CIoT 5GS optimization (5G-HC-CP-CIoT)",
     "nas.nr.mm.5g_hc_cp_ciot",
     ft::ft_boolean,
@@ -113,7 +113,7 @@ const true_false_string tfs_5gcp_ciot_4 = {
     "Header compression for control plane CIoT 5GS optimization not supported",
 };
 
-const field_meta hf_5gcp_ciot_4 = {
+const field_meta hf_control_plane = {
     "Control plane CIoT 5GS optimization (5G-CP CIoT)",
     "nas.nr.mm.5g_cp_ciot",
     ft::ft_boolean,
@@ -145,7 +145,7 @@ const true_false_string tfs_lpp_2 = {
     "LPP in N1 mode not supported",
 };
 
-const field_meta hf_lpp_b2 = {
+const field_meta hf_lpp_capability = {
     "LTE Positioning Protocol (LPP) capability",
     "nas.nr.mm.lpp_cap_b2",
     ft::ft_boolean,
@@ -165,7 +165,7 @@ const true_false_string tfs_ho_attach_1 = {
     R"(PDU session from N1 mode to S1 mode not supported)",
 };
 
-const field_meta hf_ho_attach_b1 = {
+const field_meta hf_handover_attach = {
     "HO attach",
     "nas.nr.mm.ho_attach_b1",
     ft::ft_boolean,

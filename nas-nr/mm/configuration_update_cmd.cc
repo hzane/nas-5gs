@@ -185,9 +185,9 @@ static const value_string gsm_a_dtap_coding_scheme_vals[] = {
 
 static const true_false_string gsm_a_extension_value = {"No Extension", "Extended"};
 
-const field_meta hf_a_extension = {
+const field_meta hf_extension = {
     "Extension",
-    "gsm_a.extension",
+    "gsm.extension",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,

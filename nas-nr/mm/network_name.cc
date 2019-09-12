@@ -32,7 +32,7 @@ int mm::dissect_full_name_network(dissector d, context* ctx) {
     const use_context uc(ctx, "network-name", d, 0);
     
     const auto oct = d.tvb->uint8(d.offset);
-    (void) d.add_item(1, &hf_a_extension, enc::be);
+    (void) d.add_item(1, &hf_extension, enc::be);
     const auto code_scheme = (oct & 0x70u) >> 4u;
     (void) d.add_item(1, &hf_coding_scheme, enc::be);
     (void) d.add_item(1, &hf_add_ci, enc::be);

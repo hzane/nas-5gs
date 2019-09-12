@@ -56,38 +56,6 @@ int sm::dissect_pdu_ses_modification_cmd(dissector d, context* ctx) {
 }
 namespace sm {
 
-const value_string nas_5gs_sm_pf_type_values[] = {
-    {0x01, "Match-all type"},
-    {0x10, "IPv4 remote address type"},
-    {0x11, "IPv4 local address type"},
-    {0x21, "IPv6 remote address/prefix length type"},
-    {0x23, "IPv6 local address/prefix length type"},
-    {0x30, "Protocol identifier/Next header type"},
-    {0x40, "Single local port type"},
-    {0x41, "Local port range type"},
-    {0x50, "Single remote port type"},
-    {0x51, "Remote port range type"},
-    {0x60, "Security parameter index type"},
-    {0x70, "Type of service/Traffic class type"},
-    {0x80, "Flow label type"},
-    {0x81, "Destination MAC address type"},
-    {0x82, "Source MAC address type"},
-    {0x83, "802.1Q C-TAG VID type"},
-    {0x84, "802.1Q S-TAG VID type"},
-    {0x85, "802.1Q C-TAG PCP/DEI type"},
-    {0x86, "802.1Q S-TAG PCP/DEI type"},
-    {0x87, "Ethertype type"},
-    {0, nullptr},
-};
-
-const value_string nas_5gs_sm_pkt_flt_dir_values[] = {
-    {0x00, "Reserved"},
-    {0x01, "Downlink only"},
-    {0x02, "Uplink only"},
-    {0x03, "Bidirectional"},
-    {0, nullptr},
-};
-
 const value_string nas_5gs_rule_param_cont[] = {
     {0x0, "Reserved"},
     {0x01, "5QI 1"},

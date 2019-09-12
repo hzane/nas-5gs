@@ -170,7 +170,7 @@ const true_false_string tfs_nwfs_b6 = {
 
 const field_meta hf_nwfs_emcn3_b0 = {
     "Emergency service support for non-3GPP access indicator (EMCN3)",
-    "nas.nr.nw_feat_sup.emcn3",
+    "nas.nr.network.feature.support.emcn3",
     ft::ft_uint8,
     fd::base_dec,
     nullptr,
@@ -190,7 +190,7 @@ const field_meta hf_nwfs_mcsi_b1 = {
 };
 const field_meta hf_nwfs_restrict_ec_b2 = {
     "Restriction on enhanced coverage (RestrictEC)",
-    "nas.nr.nw.feeature.restrict.ec",
+    "nas.nr.nw.feature.restrict.ec",
     ft::ft_uint8,
     fd::base_dec,
     nullptr,
@@ -238,17 +238,6 @@ const field_meta hf_nwfs_5gup_ciot_b6 = {
     nullptr,
     0x40,
 };
-const field_meta hf_nwfs_b7 = {
-    "spare",
-    "nas.nr.spare.b7",
-    ft::ft_uint8,
-    fd::base_dec,
-    nullptr,
-    nullptr,
-    nullptr,
-    0x80,
-};
-
 }
 
 // 5GS network feature support   9.11.3.5

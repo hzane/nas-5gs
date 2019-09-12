@@ -1,8 +1,6 @@
 #include "../dissect_mm_msg.hh"
-#include "../ber.hh"
 
 using namespace cmn;
-
 
 // 9.11.3.49    Service area list page.391
 int mm::dissect_service_area_list(dissector d, context* ctx) {

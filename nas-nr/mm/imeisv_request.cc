@@ -1,6 +1,5 @@
 #include "../dissect_mm_msg.hh"
 
-
 // IMEISV request     9.11.3.28
 int mm::dissect_imeisv_req(dissector d, context* ctx) {
     const use_context uc(ctx, "imeisv-request", d, -1);

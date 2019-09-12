@@ -17,15 +17,6 @@ int mm::dissect_deregistration_type(dissector d, context* ctx) {
     return 1;
 }
 
-// De-registration type   9.11.3.20
-const element_meta mm::de_reg_type = {
-    0xff,
-    "De-registration type",
-    dissect_deregistration_type,
-    nullptr,
-};
-
-
 /* 9.11.3.20    De-registration type */
 const true_false_string nas_5gs_mm_switch_off_tfs = {
     "Switch off",

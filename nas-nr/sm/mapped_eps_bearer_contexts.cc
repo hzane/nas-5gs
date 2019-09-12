@@ -157,7 +157,7 @@ const field_meta sm::hf_sm_mapd_eps_b_cont_opt_code = {
 };
 const field_meta sm::hf_sm_mapd_eps_b_cont_deb = {
     "DEB bit",
-    "nas.nr.sm.mapd_eps_b_cont_DEB",
+    "nas.nr.deb",
     ft::ft_uint8,
     fd::base_dec,
     deb_bit_values,
@@ -167,7 +167,7 @@ const field_meta sm::hf_sm_mapd_eps_b_cont_deb = {
 };
 const field_meta sm::hf_sm_mapd_eps_b_cont_e = {
     "E bit",
-    "nas.nr.sm.mapd_eps_b_cont_E",
+    "nas.nr.sm.e-bit",
     ft::ft_uint8,
     fd::base_dec,
     e_bit_values,
@@ -177,7 +177,7 @@ const field_meta sm::hf_sm_mapd_eps_b_cont_e = {
 };
 const field_meta sm::hf_sm_mapd_eps_b_cont_num_eps_parms = {
     "Number of EPS parameters",
-    "nas.nr.sm.mapd_eps_b_cont_num_eps_parms",
+    "nas.nr.eps.parameters",
     ft::ft_uint8,
     fd::base_dec,
     nullptr,
@@ -187,7 +187,7 @@ const field_meta sm::hf_sm_mapd_eps_b_cont_num_eps_parms = {
 };
 const field_meta sm::hf_sm_mapd_eps_b_cont_e_mod = {
     "E bit",
-    "nas.nr.sm.mapd_eps_b_cont_E_mod",
+    "nas.nr.sm.e-bit.modify",
     ft::ft_uint8,
     fd::base_dec,
     e_bit_modify_values,
@@ -198,7 +198,7 @@ const field_meta sm::hf_sm_mapd_eps_b_cont_e_mod = {
 
 const field_meta sm::hf_sm_mapd_eps_b_cont_id = {
     "EPS bearer identity",
-    "nas.nr.sm.mapd_eps_b_cont_id",
+    "nas.nr.sm.bearer.identity",
     ft::ft_uint8,
     fd::base_dec,
     nullptr,
@@ -208,7 +208,7 @@ const field_meta sm::hf_sm_mapd_eps_b_cont_id = {
 };
 const field_meta sm::hf_sm_mapd_eps_b_cont_num_eps_param_id = {
     "EPS parameter identity",
-    "nas.nr.sm.mapd_eps_b_cont_param_id",
+    "nas.nr.sm.eps.parameter",
     ft::ft_uint8,
     fd::base_dec,
     eps_parameter_identity_values,
@@ -218,7 +218,7 @@ const field_meta sm::hf_sm_mapd_eps_b_cont_num_eps_param_id = {
 };
 const field_meta sm::hf_sm_mapd_eps_b_cont_eps_param_cont = {
     "EPS parameter contents",
-    "nas.nr.sm.mapd_eps_b_cont_eps_param_cont",
+    "nas.nr.sm.eps.parameter",
     ft::ft_bytes,
     fd::base_none,
     nullptr,

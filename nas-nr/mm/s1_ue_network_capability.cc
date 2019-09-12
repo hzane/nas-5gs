@@ -60,7 +60,7 @@ int mm::dissect_s1_ue_net_capability(dissector d, context* ctx) {
         &hf_nas_eps_emm_prose_dd_cap,
         &hf_nas_eps_emm_prose_cap,
         &hf_nas_eps_emm_h245_ash_cap,
-        &hf_nas_eps_emm_acc_csfb_cap,
+        &hf_access_class_control_csfb_cap,
         &hf_nas_eps_emm_lpp_cap,
         &hf_nas_eps_emm_lcs_cap,
         &hf_nas_eps_emm_1xsrvcc_cap,
