@@ -26,7 +26,7 @@ int dissect_reported_s1_ue_sec_cap(dissector d, context* ctx);
 int dissect_service_type(dissector d, context* ctx);
 int dissect_uplink_data_status(dissector d, context* ctx);
 int dissect_allowed_pdu_ses_status(dissector d, context* ctx);
-int dissect_pdu_session_id(dissector d, context* ctx);
+int dissect_pdu_session_id_set(dissector d, context* ctx);
 int dissect_payload_container_type(dissector d, context* ctx); // 9.11.3.40
 int dissect_payload_container(dissector d, context* ctx);      // 9.11.3.39
 int dissect_request_type(dissector d, context* ctx);
