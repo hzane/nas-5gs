@@ -18,48 +18,34 @@ int mm::dissect_service_request(dissector d, context* ctx) {
     d.step(1);
 
     /* 5G-S-TMSI    5GS mobile identity 9.11.3.4    M    LV    9 */
-    /*ELEM_MAND_LV_E(,DE_NAS_5GS_MM_5GS_MOBILE_ID, );*/
     auto consumed = dissect_lv_e(nullptr, &s_tmsi, d, ctx);
     d.step(consumed);
 
     /*40 Uplink data status  9.11.3.57   O   TLV  4 - 34*/
-    // ELEM_OPT_TLV(0x40, , DE_NAS_5GS_MM_UL_DATA_STATUS, NULL);
     consumed = dissect_opt_tlv(nullptr, &uplink_data_status, d, ctx);
     d.step(consumed);
 
     /*50 PDU session status  9.11.3.44  O  TLV   4 - 34*/
-    // ELEM_OPT_TLV(0x50, , DE_NAS_5GS_MM_PDU_SES_STATUS, NULL);
     consumed = dissect_opt_tlv(nullptr, &pdu_ses_status, d, ctx);
     d.step(consumed);
 
     /*25 Allowed PDU session status  9.11.3.13  O    TLV    4 - 34*/
-    // ELEM_OPT_TLV(0x25, , DE_NAS_5GS_MM_ALLOW_PDU_SES_STS, NULL);
     consumed = dissect_opt_tlv(nullptr, &allowed_pdu_ses_status, d, ctx);
     d.step(consumed);
 
     /* 71  NAS message container 9.11.3.33    O    TLV-E    4-n */
-    // ELEM_OPT_TLV_E(0x71, , DE_NAS_5GS_MM_NAS_MSG_CONT, NULL);
     consumed = dissect_opt_tlv_e(nullptr, &nas_msg_container, d, ctx);
     d.step(consumed);
 
     return uc.length;
 }
 namespace mm {
-
-// 9.11.3.50
-int                dissect_s_tmsi(dissector d, context* ctx);
-
 const element_meta s_tmsi = {
     0xff,
     "5GS mobile identity - 5G-S-TMSI",
-    dissect_s_tmsi,
+    dissect_mobile_id,
     nullptr,
 };
-
-
-// 5GS mobile identity 9.11.3.4
-// 5G-S-TMSI
-int dissect_s_tmsi(dissector d, context* ctx) { return dissect_mobile_id(d, ctx); }
 
 /* 9.11.3.57    Uplink data status */
 const true_false_string tfs_ul_data_sts_psi = {
@@ -69,7 +55,7 @@ const true_false_string tfs_ul_data_sts_psi = {
 
 const field_meta hf_ul_data_sts_psi_7_b7 = {
     "PSI(7)",
-    "nas.nr.ul_data_sts_psi_7_b7",
+    "nas.nr.psi",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -79,7 +65,7 @@ const field_meta hf_ul_data_sts_psi_7_b7 = {
 };
 const field_meta hf_ul_data_sts_psi_6_b6 = {
     "PSI(6)",
-    "nas.nr.ul_data_sts_psi_6_b6",
+    "nas.nr.psi",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -89,7 +75,7 @@ const field_meta hf_ul_data_sts_psi_6_b6 = {
 };
 const field_meta hf_ul_data_sts_psi_5_b5 = {
     "PSI(5)",
-    "nas.nr.ul_data_sts_psi_5_b5",
+    "nas.nr.psi",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -99,7 +85,7 @@ const field_meta hf_ul_data_sts_psi_5_b5 = {
 };
 const field_meta hf_ul_data_sts_psi_4_b4 = {
     "PSI(4)",
-    "nas.nr.ul_data_sts_psi_4_b4",
+    "nas.nr.psi",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -109,7 +95,7 @@ const field_meta hf_ul_data_sts_psi_4_b4 = {
 };
 const field_meta hf_ul_data_sts_psi_3_b3 = {
     "PSI(3)",
-    "nas.nr.ul_data_sts_psi_3_b3",
+    "nas.nr.psi",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -119,7 +105,7 @@ const field_meta hf_ul_data_sts_psi_3_b3 = {
 };
 const field_meta hf_ul_data_sts_psi_2_b2 = {
     "PSI(2)",
-    "nas.nr.ul_data_sts_psi_2_b2",
+    "nas.nr.psi",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -129,7 +115,7 @@ const field_meta hf_ul_data_sts_psi_2_b2 = {
 };
 const field_meta hf_ul_data_sts_psi_1_b1 = {
     "PSI(1)",
-    "nas.nr.ul_data_sts_psi_1_b1",
+    "nas.nr.psi",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -139,7 +125,7 @@ const field_meta hf_ul_data_sts_psi_1_b1 = {
 };
 const field_meta hf_ul_data_sts_psi_0_b0 = {
     "Spare",
-    "nas.nr.ul_data_sts_psi_0_b0",
+    "nas.nr.psi",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -150,7 +136,7 @@ const field_meta hf_ul_data_sts_psi_0_b0 = {
 
 const field_meta hf_ul_data_sts_psi_15_b7 = {
     "PSI(15)",
-    "nas.nr.ul_data_sts_psi_15_b7",
+    "nas.nr.psi",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -160,7 +146,7 @@ const field_meta hf_ul_data_sts_psi_15_b7 = {
 };
 const field_meta hf_ul_data_sts_psi_14_b6 = {
     "PSI(14)",
-    "nas.nr.ul_data_sts_psi_14_b6",
+    "nas.nr.psi",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -170,7 +156,7 @@ const field_meta hf_ul_data_sts_psi_14_b6 = {
 };
 const field_meta hf_ul_data_sts_psi_13_b5 = {
     "PSI(13)",
-    "nas.nr.ul_data_sts_psi_13_b5",
+    "nas.nr.psi",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -180,7 +166,7 @@ const field_meta hf_ul_data_sts_psi_13_b5 = {
 };
 const field_meta hf_ul_data_sts_psi_12_b4 = {
     "PSI(12)",
-    "nas.nr.ul_data_sts_psi_12_b4",
+    "nas.nr.psi",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -190,7 +176,7 @@ const field_meta hf_ul_data_sts_psi_12_b4 = {
 };
 const field_meta hf_ul_data_sts_psi_11_b3 = {
     "PSI(11)",
-    "nas.nr.ul_data_sts_psi_11_b3",
+    "nas.nr.psi",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -200,7 +186,7 @@ const field_meta hf_ul_data_sts_psi_11_b3 = {
 };
 const field_meta hf_ul_data_sts_psi_10_b2 = {
     "PSI(10)",
-    "nas.nr.ul_data_sts_psi_10_b2",
+    "nas.nr.psi",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -210,7 +196,7 @@ const field_meta hf_ul_data_sts_psi_10_b2 = {
 };
 const field_meta hf_ul_data_sts_psi_9_b1  = {
     "PSI(9)",
-    "nas.nr.ul_data_sts_psi_9_b1",
+    "nas.nr.psi",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -220,7 +206,7 @@ const field_meta hf_ul_data_sts_psi_9_b1  = {
 };
 const field_meta hf_ul_data_sts_psi_8_b0  = {
     "PSI(8)",
-    "nas.nr.ul_data_sts_psi_8_b0",
+    "nas.nr.psi",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -228,6 +214,5 @@ const field_meta hf_ul_data_sts_psi_8_b0  = {
     nullptr,
     0x01,
 };
-
 
 }

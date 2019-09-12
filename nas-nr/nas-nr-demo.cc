@@ -41,7 +41,7 @@ int main() { // NOLINT: exception-escape
     nas_nr_message_free(rot);
 
     const auto en =
-        fs::path(L"f:/nas-data\\nas-1-00032348-18-7e-00-5c-00-0d-01-64.bin");
+        fs::path(L"f:/nas-data/nas-1-00032348-18-7e-00-5c-00-0d-01-64.bin");
     dissect(en);
 
     const string root = "f:/nas-data";
