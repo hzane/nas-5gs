@@ -7,16 +7,16 @@ string field_meta::format(const uint8_t* p, int length, uint32_t enc) const {
     if (enc == enc::na || enc == enc::none) {
         return string();
     }
-    if (ft::is_integer(ftype)) {
+    if (ft::is_integer(typi)) {
         auto v = n2_uint(p, length);
         return format(v);
     }
-    if (ftype == ft::none) return string();
-    if (ftype == ft::protocol || ftype == ft::ft_struct || ftype == ft::ft_expert)
+    if (typi == ft::none) return string();
+    if (typi == ft::protocol || typi == ft::ft_struct || typi == ft::ft_expert)
         return string();
     if (display == fd::base_none) return string();
 
-    if (ftype == ft::ft_boolean) {
+    if (typi == ft::ft_boolean) {
         auto v  = *p;
         if (bitmask)
             v = (v & bitmask);
@@ -77,10 +77,10 @@ string field_meta::format(const uint8_t* p, int length, uint32_t enc) const {
 }
 
 string field_meta::format(uint64_t v) const {
-    if (ftype == ft::none || ftype == ft::protocol) return string();
+    if (typi == ft::none || typi == ft::protocol) return string();
     if (display == fd::base_none) return string();
 
-    if (ftype == ft::ft_boolean || tf_strings) {
+    if (typi == ft::ft_boolean || tf_strings) {
         const auto tf = this->tf_strings ? tf_strings : &true_false;
         return formats(
             "%s (%d)", v ? tf->true_string : tf->false_string, v ? 1 : 0);
@@ -119,7 +119,7 @@ string field_meta::format(uint64_t v) const {
     }
 
     if (display == fd::base_bin) {
-        return format_int_bit_mask(ftype, v, bitmask, nullptr);
+        return format_int_bit_mask(typi, v, bitmask, nullptr);
     }
 
     if (display == fd::right) {
@@ -129,5 +129,6 @@ string field_meta::format(uint64_t v) const {
         return formats("%1x", (v & 0xf0u) >> 4u);
     }
 
-    return format_int(v, ftype, display);
+    return format_int(v, typi, display);
 }
+

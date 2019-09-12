@@ -11,6 +11,7 @@ struct nas_nr_message_imp final : nas_nr_message {
     int                 len     = 0;
     int                 start   = 0;
     int                 level   = 0;
+    const description*  meta    = nullptr;
     nas_nr_message_imp* child   = nullptr;
     nas_nr_message_imp* sibling = nullptr;
 
@@ -32,7 +33,7 @@ struct nas_nr_message_imp final : nas_nr_message {
     nas_nr_message_imp& operator=(const nas_nr_message_imp&) = delete;
 };
 
-const description* nas_nr_message_imp::desc() const { return nullptr; }
+const description* nas_nr_message_imp::desc() const { return meta; }
 
 const char* nas_nr_message_imp::value() const { return val.c_str(); }
 
@@ -68,6 +69,7 @@ nas_nr_message_imp* export_proto_node(proto_node const* node, int indent) {
     ret->len = node->length;
     ret->start = node->offset;
     ret->level = indent;
+    ret->meta  = node->meta;
 
     nas_nr_message_imp* next = nullptr;
     for (const auto n : node->children) {
@@ -95,4 +97,17 @@ int dissect_nas_nr(nas_nr_message * * root, const octet* data, int length) {
     }
 
     return ret;
+}
+
+char NASNRAPI *pretty_format(const description* m, const octet* data, int length) {
+    const auto fm   = static_cast< const field_meta* >(m); // NOLINT
+    if (!fm) return nullptr;
+
+    const auto  text = fm->format(data, length, enc::be);
+    return _strdup(text.c_str());
+}
+
+void NASNRAPI pretty_format_free(char* p) {
+    free(p);
+    return;
 }

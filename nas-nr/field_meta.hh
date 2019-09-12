@@ -1,14 +1,9 @@
 #pragma once
 
+#include <string>
 #include "config.hh"
 #include "val_string.hh"
-#include <string>
 
-
-struct true_false_string {
-    const char* true_string;
-    const char* false_string;
-};
 using tf_string    = true_false_string;
 using value_string = val_string;
 
@@ -91,16 +86,7 @@ inline uint32_t get(uint32_t d) { return d & 0xff; }
 
 using string = std::string;
 
-struct field_meta {
-    const char*              name;    /* full name of this field */
-    const char*              abbrev;  /* abbreviated name of this field */
-    uint32_t                 ftype;   /* field_type::*/
-    uint32_t                 display; /* one of base_ */
-    const val_string*        val_strings;
-    const tf_string*         tf_strings;
-    const range_string*      range_strings;
-    uint64_t                 bitmask; /* bitmask of interesting bits */
-
+struct field_meta : description {
     string format(const uint8_t* p, int len, uint32_t enc) const;
     [[nodiscard]] string format(uint64_t val) const;
 };

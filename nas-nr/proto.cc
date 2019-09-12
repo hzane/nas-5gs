@@ -26,8 +26,8 @@ proto_item* proto_node::add_item(packet_info*      pinfo,
     item->enc    = encoding;
     children.push_back(item);
 
-    if (field && field->name) {
-        item->name = field->name;
+    if (field && field->tag) {
+        item->name = field->tag;
     }
     item->set_item(len, field, encoding);
 
@@ -39,7 +39,7 @@ proto_item* proto_node::set_item(int len, const field_meta* field, uint32_t enco
 
     if (encoding == enc::na || encoding == enc::none) return this;
 
-    if (field && ft::is_integer(field->ftype)) {
+    if (field && ft::is_integer(field->typi)) {
         auto v = n2_uint(data, len);
         if (field->bitmask) {
             v = (v & field->bitmask) >> ws_ctz(field->bitmask);
@@ -111,7 +111,7 @@ std::string print_text(const field_meta* meta,
     if (meta == nullptr) {
         return formats("%d bytes", len);
     }
-    if (ft::is_integer(meta->ftype)){
+    if (ft::is_integer(meta->typi)){
         auto v = n2_uint(data, len);
         if (meta->bitmask) {
             v = v & meta->bitmask;

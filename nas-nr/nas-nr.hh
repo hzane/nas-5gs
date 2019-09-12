@@ -27,3 +27,6 @@ protected:    virtual ~nas_nr_message(){};                            // NOLINT
 void NASNRAPI nas_nr_message_free(nas_nr_message* p);
 
 int NASNRAPI dissect_nas_nr(nas_nr_message** root, const octet* data, int length);
+
+char NASNRAPI *pretty_format(const description* m, const octet* data, int length);
+void NASNRAPI pretty_format_free(char* p);

@@ -1,6 +1,6 @@
 #pragma once
-#include "config.hh"
 #include <algorithm>
+#include "config.hh"
 
 struct tree_meta {
     const char* name;
