@@ -5,3 +5,6 @@
 
 scc -S c++17 $1 |clang-format > ../tidy/$1
 echo ../tidy/$1
+
+# cp  *.vcxproj ../tidy/
+# cp CMakeLists.txt ../tidy/

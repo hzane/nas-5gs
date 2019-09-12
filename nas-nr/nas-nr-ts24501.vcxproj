@@ -208,7 +208,7 @@
     <ClCompile Include="dissect_nas5g.cc" />
     <ClCompile Include="dissect_nas5g_sup.cc" />
     <ClCompile Include="dissect_sm_msg.cc" />
-    <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="dllmain.cc" />
     <ClCompile Include="e212.cc" />
     <ClCompile Include="field_meta.cc" />
     <ClCompile Include="formats.cc" />

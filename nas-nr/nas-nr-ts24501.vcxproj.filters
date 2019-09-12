@@ -95,9 +95,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="dllmain.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="common\additional_information.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -582,6 +579,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="nas-nr.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="dllmain.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
