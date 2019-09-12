@@ -250,8 +250,8 @@ int dissect_opt_tv(const field_meta *,
     proto_node* subtree = nullptr;
     if (val_meta->name) {
         subtree = d.add_item(-1, val_meta->name);
-        const use_tree ut(d, subtree);
-    }
+        d.tree  = subtree;
+    }    
     d.step(1);
 
     const auto consumed = val_meta->fnc(d.use_elem(get_elem_data(e)), ctx);
