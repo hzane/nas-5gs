@@ -111,7 +111,6 @@ inline void store_msg_auth_code(context*ctx, uint32_t code){
     if (ctx) ctx->msg_auth_code = code;
 }
 inline uint32_t retrieve_msg_auth_code(context*ctx){
-    (void) retrieve_msg_auth_code;
     return ctx ? ctx->msg_auth_code : 0;
 }
 

@@ -2,7 +2,6 @@
 
 
 int cmn::dissect_s1_to_n1_mode_container(dissector d, context* ctx) {
-    (void) dissect_s1_to_n1_mode_container;
     const use_context uc(ctx, "s1-mode-to-n1-mode-transparent-container", d, 2);
 
     /*The value part of the Intra N1 mode NAS transparent container information element is

@@ -171,8 +171,6 @@ string format_bit(const uint8_t* data, int len, const char* sep) {
 }
 
 string      format_bits(const uint8_t* data, int bits, const char* sep) {
-    (void) format_bits;
-
     const auto clen = bits / 8;
     const auto blen = bits % 8;
     auto ret    = format_bit(data, clen, sep);

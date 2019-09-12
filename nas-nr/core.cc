@@ -229,7 +229,6 @@ inline char d2asc(uint8_t v) { return v < 9 ? digit_tbcd[v] : char(v + 55); }
 
 // Decode the MCC/MNC from 3 octets in 'octs'
 string mcc_aux(const uint8_t* d, int length) {
-    (void) mcc_aux;
     if (length < 3) return string();
 
     char mcc[4]={0};
@@ -254,7 +253,6 @@ string mcc_aux(const uint8_t* d, int length) {
  * +---------------+---------------+
  * */
 string mnc_aux(const uint8_t* d, int length) {
-    (void) mnc_aux;
     if (length < 3) return string();
 
     char mnc[4]={0};
@@ -365,7 +363,6 @@ string timezone_string(const uint8_t*d){
 }
 
 string w2utf8(const wchar_t* s) {
-    (void) w2utf8;
 #if defined(_WIN32) || defined(_WIN64)
     const auto sz  = wcslen(s);
     const auto out = new char[sz * 4 + 1]; // large enough

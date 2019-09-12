@@ -143,7 +143,6 @@ inline int dissect_telv(const field_meta*   type_meta,
                              const element_meta* val_meta,
                              dissector           d,
                              context*            ctx) {
-    (void) dissect_telv;
     return dissect_elem_mandatory(type_meta, val_meta, d, dissect_opt_telv, ctx);
 }
 

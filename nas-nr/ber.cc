@@ -60,7 +60,6 @@ int dissect_tv_short(const field_meta*   type_meta,
                                  const element_meta* val_meta,
                                  dissector           d,
                                  context*            ctx) {
-    (void) dissect_tv_short;
     return dissect_elem_mandatory(type_meta, val_meta, d, dissect_opt_tv_short, ctx);
 }
 int dissect_tv(const field_meta*   type_meta,
@@ -406,6 +405,5 @@ int dissect_tlv_e(const field_meta*   type_meta,
                   const element_meta* val_meta,
                   dissector           d,
                   context*            ctx) {
-    (void) dissect_tlv_e;
     return dissect_elem_mandatory(type_meta, val_meta, d, dissect_opt_tlv_e, ctx);
 }

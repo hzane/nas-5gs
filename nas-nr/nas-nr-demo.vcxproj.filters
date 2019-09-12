@@ -489,6 +489,7 @@
     <ClInclude Include="sm\sm_field_meta.hh">
       <Filter>nas</Filter>
     </ClInclude>
+    <ClInclude Include="description.hh" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="sm">

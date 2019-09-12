@@ -351,6 +351,7 @@
     <ClInclude Include="common.hh" />
     <ClInclude Include="config.hh" />
     <ClInclude Include="core.hh" />
+    <ClInclude Include="description.hh" />
     <ClInclude Include="dissect_mm_msg.hh" />
     <ClInclude Include="dissect_nas5g.hh" />
     <ClInclude Include="dissect_sm_msg.hh" />
