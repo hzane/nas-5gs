@@ -33,6 +33,7 @@ int mm::dissect_service_accept(dissector d, context* ctx) {
     d.step(consumed);
 
     // XX	T3448 value	GPRS timer 3  9.11.2.4 O TLV 3
+    (void)  t3348_gprs_timer3;
     // consumed = dissect_opt_tlv(nullptr, &t3348_gprs_timer3, d, ctx);
     // d.step(consumed);
 

@@ -3,6 +3,8 @@
 
 // 9.11.2.6 Intra N1 mode NAS transparent container page.349
 int cmn::dissect_intra_n1_mode_container(dissector d, context* ctx) {
+    (void) dissect_intra_n1_mode_container;
+
     use_context uc(ctx, "intra-n1-mode-nas-transparent-container", d, 0);
 
     /*The value part of the Intra N1 mode NAS transparent container information element is
@@ -71,12 +73,24 @@ const field_meta hf_ksi_5g             = {
     nullptr,
     0x07u,
 };
+
+const val_string enc_algo_type_values[] = {
+    {0x0, "5G-EA0 (null ciphering algorithm)"},
+    {0x1, "128-5G-EA1"},
+    {0x2, "128-5G-EA2"},
+    {0x3, "128-5G-EA3"},
+    {0x4, "5G-EA4"},
+    {0x5, "5G-EA5"},
+    {0x6, "5G-EA6"},
+    {0x7, "5G-EA7"},
+    {0, nullptr},
+};
 const field_meta hf_ciphering_algo_type = {
     "Type of ciphering algorithm",
     "nas.nr.cmn.ciphering.algo",
     ft::ft_uint8,
     fd::base_dec,
-    nullptr,
+    enc_algo_type_values,
     nullptr,
     nullptr,
     0xf0u,

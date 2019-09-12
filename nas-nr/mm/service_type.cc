@@ -24,7 +24,7 @@ const element_meta mm::service_type = {
 
 /* *     9.11.3.50    Service type page.396 */
 /* Used inline as H1 (Upper nibble)*/
-const val_string mm::mm_serv_type_vals[] = {
+const val_string mm::service_type_values[] = {
     {0x00, "Signalling"},
     {0x01, "Data"},
     {0x02, "Mobile terminated services"},
@@ -44,7 +44,7 @@ const field_meta mm::hfm_mm_serv_type = {
     "nas.nr.mm.service.type",
     ft::ft_uint8,
     fd::base_dec,
-    mm_serv_type_vals,
+    service_type_values,
     nullptr,
     nullptr,
     0xF0,

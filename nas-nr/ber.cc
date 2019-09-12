@@ -21,7 +21,8 @@ int dissect_elem_mandatory(const field_meta*   type_meta,
     }
     if (consumed <= 0) {
         diag("Missing Mandatory element %s, rest of dissection is suspect %s\n",
-             paths(ctx).c_str(), val_meta->name);
+             paths(ctx).c_str(), safe_str(val_meta->name));
+        d.tree->add_expert(d.pinfo, d.tvb, d.offset, d.length, "missing mandatory %s/%s", paths(ctx).c_str(), safe_str(val_meta->name));
         consumed = 0;
     }
 
@@ -59,6 +60,7 @@ int dissect_tv_short(const field_meta*   type_meta,
                                  const element_meta* val_meta,
                                  dissector           d,
                                  context*            ctx) {
+    (void) dissect_tv_short;
     return dissect_elem_mandatory(type_meta, val_meta, d, dissect_opt_tv_short, ctx);
 }
 int dissect_tv(const field_meta*   type_meta,
@@ -325,40 +327,39 @@ int dissect_opt_telv(const field_meta *,
     set_elem_type(e, iei);
 
     uint16_t parm_len     = d.tvb->uint8(d.offset + 1);
-    auto     lengt_length = 1;
+    auto     len_length = 1;
 
     if ((parm_len & 0x80u) == 0) {
         /* length in 2 octets */
         parm_len     = d.tvb->ntohs(d.offset + 1);
-        lengt_length = 2;
+        len_length = 2;
     } else {
         parm_len = parm_len & 0x7Fu;
     }
 
-    const auto subtree = d.add_item( parm_len + 1 + lengt_length, val_meta->name);
+    const auto subtree = d.add_item( parm_len + 1 + len_length, val_meta->name);
     const use_tree   ut(d, subtree);
     d.step(1);
 
-    // (void) d.add_item(lengt_length, hf_gsm_e_length, enc::none);
-    d.step(lengt_length);
+    // (void) d.add_item(len_length, hf_gsm_e_length, enc::none);
+    d.step(len_length);
 
 
-    if (parm_len == 0) return 1 + lengt_length;
+    if (parm_len == 0) return 1 + len_length;
 
     const auto fnc      = val_meta->fnc ? val_meta->fnc : dissect_msg_unknown_body;
     const auto consumed = fnc(d.slice(parm_len).use_elem(get_elem_data(e)), ctx);
 
     set_elem_length(e, consumed);
 
-    return 1 + lengt_length + consumed;
+    return 1 + len_length + consumed;
 }
 
 /*
  * Type Length Value Extended(TLV-E) element dissector
  * TS 24.007
  * information elements of format LV-E or TLV-E with value part consisting of zero,
- * one or more octets and a maximum of 65535 octets (type 6). This category is used in EPS
- * only.
+ * one or more octets and a maximum of 65535 octets (type 6).
  */
 int dissect_opt_tlv_e(const field_meta *,
                            const element_meta *val_meta,
@@ -392,61 +393,19 @@ int dissect_opt_tlv_e(const field_meta *,
 
     return 1 + 2 + consumed;
 }
-#if 0
-static field_meta const hfm_gsm_a_length = {
-    "Length",
-    "gsm_a.length",
-    ft::ft_uint8,
-    fd::base_dec,
-    nullptr,
-    nullptr,
-    nullptr,
-    0x0,
-};
-const field_meta *hf_gsm_a_length = &hfm_gsm_a_length;
-#endif
-
-static field_meta hfm_gsm_a_element_value = {
-    "Element Value",
-    "gsm_a.value",
-    ft::ft_uint8,
-    fd::base_hex,
-    nullptr,
-    nullptr,
-    nullptr,
-    0x0,
-};
-const field_meta *hf_gsm_a_element_value = &hfm_gsm_a_element_value;
-
-#if 0
-static field_meta const hfm_gsm_e_length = {
-    "Length",
-    "gsm.length",
-    ft::ft_bytes,
-    fd::extl,
-    nullptr,
-    nullptr,
-    nullptr,
-    0x0,
-};
-const field_meta *hf_gsm_e_length = &hfm_gsm_e_length;
-#endif
-
-const field_meta hfm_gsm_a_common_elem_id_f0 = {
-    "Element ID",
-    "gsm_a.common.elem_id",
-    ft::ft_uint8,
-    fd::base_hex,
-    nullptr,
-    nullptr,
-    nullptr,
-    0xf0,
-};
-const field_meta *hf_gsm_a_common_elem_id_f0 = &hfm_gsm_a_common_elem_id_f0;
 
 int dissect_msg_unknown_body(dissector d, context *ctx) {
     const use_context uc(ctx, "unknown message body", d, -1);
 
     d.tree->add_item(d.pinfo, d.tvb, d.offset, d.length, nas::hf_msg_elem, enc::na);
     return d.length;
+}
+
+
+int dissect_tlv_e(const field_meta*   type_meta,
+                  const element_meta* val_meta,
+                  dissector           d,
+                  context*            ctx) {
+    (void) dissect_tlv_e;
+    return dissect_elem_mandatory(type_meta, val_meta, d, dissect_opt_tlv_e, ctx);
 }

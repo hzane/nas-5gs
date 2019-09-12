@@ -1,4 +1,5 @@
 #pragma once
+#include "description.hh"
 
 #if defined(NASNRTS24501_EXPORTS)
 // NOLINTNEXTLINE
@@ -8,8 +9,6 @@
 #endif
 
 struct description;
-
-typedef unsigned char octet;
 
 // NOLINTNEXTLINE
 struct nas_nr_message {
@@ -27,13 +26,4 @@ protected:    virtual ~nas_nr_message(){};                            // NOLINT
 
 void NASNRAPI nas_nr_message_free(nas_nr_message* p);
 
-int NASNRAPI dissect_nas_nr(nas_nr_message * * root, const octet* data, int length);
-
-// NOLINTNEXTLINE
-struct description {
-    virtual const char* name() const                                = 0; // NOLINT
-    virtual const char* pretty(const octet* data, int length) const = 0; // NOLINT
-    virtual const char* alias() const                               = 0; // NOLINT
-protected:
-    virtual ~description(){}; // NOLINT
-};
+int NASNRAPI dissect_nas_nr(nas_nr_message** root, const octet* data, int length);

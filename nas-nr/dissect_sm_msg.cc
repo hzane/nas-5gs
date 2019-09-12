@@ -1,6 +1,5 @@
 #include "dissect_sm_msg.hh"
 #include "dissect_nas5g.hh"
-#include "ber.hh"
 #include "common.hh"
 
 /* 8.3 5GS session management messages */
@@ -168,7 +167,7 @@ const element_meta sm::rq_gprs_timer = {
     nullptr,
 };
 
-extern const value_string sm::sm_pf_type_values[] = {
+extern const value_string sm::packet_filter_component_type_values[] = {
     {0x01, "Match-all type"},
     {0x10, "IPv4 remote address type"},
     {0x11, "IPv4 local address type"},
@@ -192,7 +191,7 @@ extern const value_string sm::sm_pf_type_values[] = {
     {0, nullptr},
 };
 
-extern const value_string sm::sm_pkt_flt_dir_values[] = {
+extern const value_string sm::packet_filter_direction_values[] = {
     {0x00, "Reserved"},
     {0x01, "Downlink only"},
     {0x02, "Uplink only"},
@@ -227,7 +226,7 @@ const field_meta sm::hf_sm_pkt_flt_dir = {
     "nas.nr.sm.pkt_flt_dir",
     ft::ft_uint8,
     fd::base_dec,
-    (sm_pkt_flt_dir_values),
+    packet_filter_direction_values,
     nullptr,
     nullptr,
     0x30,
@@ -250,7 +249,7 @@ const field_meta sm::hf_sm_pf_type = {
     "nas.nr.sm.pf_type",
     ft::ft_uint8,
     fd::base_dec,
-    (sm_pf_type_values),
+    packet_filter_component_type_values,
     nullptr,
     nullptr,
     0x0,

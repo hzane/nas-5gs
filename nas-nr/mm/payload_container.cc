@@ -38,7 +38,7 @@ int mm::dissect_pld_container_entry(dissector d, context* ctx) {
 int mm::dissect_payload_container(dissector d, context* ctx) {
     const use_context uc(ctx, "pld-content", d, 0);
 
-    const auto typi = retrive_payload_content_type(ctx) & 0x0fu;
+    const auto typi = retrieve_payload_content_type(ctx) & 0x0fu;
 
     switch (typi) {
     case 1: {

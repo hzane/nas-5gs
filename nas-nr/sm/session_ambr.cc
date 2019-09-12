@@ -29,7 +29,7 @@ const element_meta sm::ses_ambr = {
 
 
 //  *      9.11.4.14    Session-AMBR
-extern const value_string sm::sm_unit_for_session_ambr_values[] = {
+extern const value_string sm::ambr_values[] = {
     {0x00, "value is not used"},
     {0x01, "value is incremented in multiples of 1 Kbps"},
     {0x02, "value is incremented in multiples of 4 Kbps"},
@@ -64,7 +64,7 @@ const field_meta sm::hf_sm_ses_ambr_dl_unit = {
     "nas.nr.sm.unit_for_session_ambr_dl",
     ft::ft_uint8,
     fd::base_dec,
-    sm::sm_unit_for_session_ambr_values,
+    sm::ambr_values,
     nullptr,
     nullptr,
     0x0,
@@ -75,7 +75,7 @@ const field_meta sm::hf_sm_ses_ambr_ul_unit = {
     "nas.nr.sm.unit_for_session_ambr_ul",
     ft::ft_uint8,
     fd::base_dec,
-    sm::sm_unit_for_session_ambr_values,
+    sm::ambr_values,
     nullptr,
     nullptr,
     0x0,

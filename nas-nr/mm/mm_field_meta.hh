@@ -321,7 +321,6 @@ extern const field_meta hf_tsc;
 extern const field_meta hf_sms_requested;
 extern const field_meta hf_sd;
 
-extern const field_meta hf_nas_key_set_id_h1;
 extern const field_meta hf_tsc_h1;
 extern const field_meta hf_nas_key_set_id;
 extern const field_meta hfm_mm_raai_b0;

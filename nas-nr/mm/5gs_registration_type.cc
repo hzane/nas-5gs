@@ -9,7 +9,7 @@ int mm::dissect_registration_request_type(dissector d, context* ctx) {
     const use_context uc(ctx, "5gs-registration-type", d, -1);
 
     const field_meta* flags[] = {
-        &hf_mm_for,
+        &hf_follow_on_req,
         &hf_registration_type,
         nullptr,
     };

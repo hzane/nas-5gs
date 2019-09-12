@@ -171,6 +171,8 @@ string format_bit(const uint8_t* data, int len, const char* sep) {
 }
 
 string      format_bits(const uint8_t* data, int bits, const char* sep) {
+    (void) format_bits;
+
     const auto clen = bits / 8;
     const auto blen = bits % 8;
     auto ret    = format_bit(data, clen, sep);
@@ -224,7 +226,7 @@ std::string format_int(uint64_t v, uint32_t ftype, uint32_t display) {
     return formats("%d", v);
 }
 
-// without prefix and seperator
+// without prefix and separator
 string format_bcd(const uint8_t* data, int len) {
     stringstream ss;
     ss << hex << setfill('0');
@@ -233,7 +235,7 @@ string format_bcd(const uint8_t* data, int len) {
     }
     return ss.str();
 }
-// FFFFFFFF FFFFFFFF   FFFFFFFF FFFFFFFF  ....
+
 string format_hex(const uint8_t* data, int len, const char* sep, const char* lf) {
     if (sep == nullptr) sep = "";
     if (lf == nullptr) lf = "";

@@ -16,9 +16,12 @@ struct optional_element {
     elem_t  elem     = {};
 
     optional_element_intra to_internal() {
+        (void) this->to_internal;
         return optional_element_intra{&presence, &t, &length, &elem};
     }
 };
+
+using opt_tv_short = optional_element<uint8_t>;
 
 inline void set_elem_presence(optional_element_intra*self, bool presence){
     if (self&&self->presence)*self->presence = presence;
@@ -140,8 +143,9 @@ inline int dissect_telv(const field_meta*   type_meta,
                              const element_meta* val_meta,
                              dissector           d,
                              context*            ctx) {
+    (void) dissect_telv;
     return dissect_elem_mandatory(type_meta, val_meta, d, dissect_opt_telv, ctx);
-};
+}
 
 /*
  * Type Length Value Extended(TLV-E) element dissector
@@ -155,11 +159,9 @@ int dissect_opt_tlv_e(const field_meta*   type_meta,
                            dissector           d,
                            context*            ctx);
 
-inline int dissect_tlv_e(const field_meta*   type_meta,
-                              const element_meta* val_meta,
-                              dissector           d,
-                              context*            ctx) {
-    return dissect_elem_mandatory(type_meta, val_meta, d, dissect_opt_tlv_e, ctx);
-};
+int dissect_tlv_e(const field_meta*   type_meta,
+                  const element_meta* val_meta,
+                  dissector           d,
+                  context*            ctx);
 
 int dissect_msg_unknown_body(dissector d, context* ctx);

@@ -258,7 +258,7 @@ extern const element_meta sm::requested_qos_rules = {
 
 };
 /*  9.11.4.13    QoS rules */
-const true_false_string sm::tfs_sm_dqr = {
+const true_false_string sm::tfs_sm_default_qos_rules = {
     "The QoS rule is the default QoS rule",
     "The QoS rule is not the default QoS rule",
 };
@@ -269,7 +269,7 @@ const field_meta sm::hf_sm_dqr = {
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
-    &tfs_sm_dqr,
+    &tfs_sm_default_qos_rules,
     nullptr,
     0x10,
 };
@@ -307,27 +307,12 @@ extern const value_string sm::rule_operation_code_values[] = {
     {0, nullptr},
 };
 
-
-extern const value_string sm::rule_param_cont[] = {
-    {0x0, "Reserved"},
-    {0x01, "5QI 1"},
-    {0x02, "5QI 2"},
-    {0x03, "5QI 3"},
-    {0x04, "5QI 4"},
-    {0x05, "5QI 5"},
-    {0x06, "5QI 6"},
-    {0x07, "5QI 7"},
-    {0x08, "5QI 8"},
-    {0x09, "5QI 9"},
-    {0, nullptr},
-};
-
 const field_meta sm::hf_sm_rop = {
     "Rule operation code",
     "nas.nr.sm.rop",
     ft::ft_uint8,
     fd::base_dec,
-    (rule_operation_code_values),
+    rule_operation_code_values,
     nullptr,
     nullptr,
     0xe0,

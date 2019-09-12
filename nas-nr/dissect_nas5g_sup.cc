@@ -4,18 +4,6 @@
 using namespace cmn;
 using namespace nas;
 
-const field_meta hfm_spare_half_octet = {
-    "Spare Half Octet",
-    "nas.nr.spare_half_octet",
-    ft::ft_uint8,
-    fd::base_dec,
-    nullptr,
-    nullptr,
-    nullptr,
-    0xf0,
-};
-const field_meta* nas::hf_spare_half_octet_invisible = &hfm_spare_half_octet;
-
 const field_meta hfm_msg_elements = {
     "Message Elements",
     "nas.nr.message_elements",
@@ -243,7 +231,7 @@ const field_meta nas::hf_service_request_msg_id = {
     0x0,
 };
 
-// GPRS timer 39.11.2.4
+// GPRS timer 3 9.11.2.4
 const element_meta nas::t3348_gprs_timer3{
     0xff,
     "GPRS timer3 - T4448 value",

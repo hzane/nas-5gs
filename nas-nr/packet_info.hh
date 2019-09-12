@@ -17,8 +17,8 @@ __declspec(selectany) extern const int both    = 3;
 struct packet_info {
     uint32_t presence_flags = 0; // some flags
     uint32_t num            = 0; // frame number
-    int64_t  abs_ts         = 0; //
-    int64_t  rel_ts         = 0; //
+    int64_t  abs_ts         = 0; // nano seconds
+    int64_t  rel_ts         = 0; // nano seconds
     int      dir            = 0; // direction
 };
 inline void up_link(packet_info*pinfo){

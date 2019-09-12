@@ -4,7 +4,7 @@
 string field_meta::format(const uint8_t* p, int length, uint32_t enc) const {
 
     if (!p || length <= 0) return string();
-    if (enc == enc::na || enc::none) {
+    if (enc == enc::na || enc == enc::none) {
         return string();
     }
     if (ft::is_integer(ftype)) {

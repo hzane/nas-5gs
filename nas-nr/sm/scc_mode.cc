@@ -78,7 +78,7 @@ const field_meta sm::hf_sm_all_ssc_mode_b0 = {
 };
 
 /*  9.11.4.16    SSC mode */
-extern const value_string sm::sc_mode_values[] = {
+extern const value_string sm::ssc_mode_values[] = {
     {0x1, "SSC mode 1"},
     {0x2, "SSC mode 2"},
     {0x3, "SSC mode 3"},
@@ -90,7 +90,7 @@ const field_meta sm::hf_sm_sc_mode = {
     "nas.nr.sm.sc_mode",
     ft::ft_uint8,
     fd::base_dec,
-    sm::sc_mode_values,
+    sm::ssc_mode_values,
     nullptr,
     nullptr,
     0x0f,

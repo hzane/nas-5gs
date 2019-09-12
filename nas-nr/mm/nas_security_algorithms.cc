@@ -18,7 +18,7 @@ int mm::dissect_security_algo(dissector d, context* ctx) {
 }
 
 /* *   9.11.3.34    NAS security algorithms */
-extern const val_string mm::mm_type_of_ip_algo_vals[] = {
+extern const val_string mm::integrity_protection_algo_type_values[] = {
     {0x0, "5G-IA0 (null integrity protection algorithm)"},
     {0x1, "128-5G-IA1"},
     {0x2, "128-5G-IA2"},
@@ -35,7 +35,7 @@ const field_meta mm::hf_sec_algo_ip = {
     "nas.nr.mm.nas_sec_algo_ip",
     ft::ft_uint8,
     fd::base_dec,
-    mm_type_of_ip_algo_vals,
+    integrity_protection_algo_type_values,
     nullptr,
     nullptr,
     0x0f,

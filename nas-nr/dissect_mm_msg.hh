@@ -10,44 +10,33 @@ namespace mm {
 inline __declspec(selectany) extern const dissect_fnc_t no_dissect = nullptr;
 
 extern const message_meta      msgs[];
+
 extern const true_false_string tfs_sal_al_t;
+
 inline const true_false_string tfs_requested_not_requested = {
     "Requested",
     "Not Requested",
 };
+
 inline __declspec(selectany) extern const true_false_string tfs_odd_even = {
     "Odd number of identity digits",
     "Even number of identity digits",
 };
 
-extern const true_false_string tfs_eps_tsc;
-
-extern const true_false_string tfs_nas_5gs_mm_n1_mod;
-extern const true_false_string tfs_nas_5gs_mm_s1_mod;
-
-extern const true_false_string tfs_follow_on_req;
-extern const true_false_string tfs_mm_tsc;
+extern const true_false_string tfs_eps_security_context_types;
+extern const true_false_string tfs_follow_on_request;
+extern const true_false_string tfs_security_context_types;
 extern const true_false_string tfs_sms_requested;
-
-
-extern const val_string mm_pld_cont_type_values[];
-extern const val_string values_cause[];
-extern const val_string mm_sal_t_li_values[];
-extern const val_string nas_eps_emm_nas_ksi_values[];
-/* 9.11.3.7    5GS registration type */
+extern const val_string        payload_container_type_values[];
+extern const val_string        tac_list_values[];
+extern const val_string        nas_ksi_values[];
 extern const val_string values_registration_type[];
-extern const val_string mm_type_of_enc_algo_vals[];
-extern const val_string mm_type_of_ip_algo_vals[];
-extern const val_string mm_req_type_vals[];
-extern const val_string mm_serv_type_vals[];
+extern const val_string        enc_algo_type_values[];
+extern const val_string        integrity_protection_algo_type_values[];
+extern const val_string        request_type_values[];
+extern const val_string        service_type_values[];
 extern const val_string identity_type_values[];
 
-#if 0
-inline __declspec(selectany) extern const true_false_string tfs_supported_not_supported = {
-    "Supported",
-    "Not supported",
-};
-#endif
 inline __declspec(selectany) extern const true_false_string tfs_requested_or_not = {
     "Requested",
     "Not Requested",

@@ -15,7 +15,6 @@ namespace nas {
 
 extern const element_meta t3348_gprs_timer3;
 extern const field_meta*  hf_msg_elem;
-extern const field_meta*  hf_spare_half_octet_invisible;
 extern const field_meta*  hf_epd;
 extern const field_meta*  hf_pdu_sess_id;
 extern const field_meta*  hf_mm_msg_type;
@@ -27,91 +26,7 @@ extern const field_meta   hf_pid_next_hd;
 extern const field_meta   hf_single_port_type;
 extern const field_meta*  hf_seq_no;
 extern const field_meta*  hf_proc_trans_id;
-extern const field_meta   hf_service_request_msg_id;
-#if 0
-inline extern const field_meta hf_spare_b7 = {
-    "Spare",
-    "nas.nr.spare_b7",
-    ft::ft_uint8,
-    fd::base_dec,
-    nullptr,
-    nullptr,
-    nullptr,
-    0x80,
-};
-inline __declspec(selectany) extern const field_meta hf_spare_b6 = {
-    "Spare",
-    "nas.nr.spare_b6",
-    ft::ft_uint8,
-    fd::base_dec,
-    nullptr,
-    nullptr,
-    nullptr,
-    0x40,
-};
-inline __declspec(selectany) extern const field_meta hf_spare_b5 = {
-    "Spare",
-    "nas.nr.spare_b5",
-    ft::ft_uint8,
-    fd::base_dec,
-    nullptr,
-    nullptr,
-    nullptr,
-    0x20,
-};
-inline __declspec(selectany) extern const field_meta hf_spare_b4 = {
-    "Spare",
-    "nas.nr.spare_b4",
-    ft::ft_uint8,
-    fd::base_dec,
-    nullptr,
-    nullptr,
-    nullptr,
-    0x10,
-};
-inline __declspec(selectany) extern const field_meta hf_spare_b3 = {
-    "Spare",
-    "nas.nr.spare_b3",
-    ft::ft_uint8,
-    fd::base_dec,
-    nullptr,
-    nullptr,
-    nullptr,
-    0x08,
-};
-inline __declspec(selectany) extern const field_meta hf_spare_b2 = {
-    "Spare",
-    "nas.nr.spare_b2",
-    ft::ft_uint8,
-    fd::base_dec,
-    nullptr,
-    nullptr,
-    nullptr,
-    0x04,
-};
-
-inline __declspec(selectany) extern const field_meta hf_spare_b1 = {
-    "Spare",
-    "nas.nr.spare_b1",
-    ft::ft_uint8,
-    fd::base_dec,
-    nullptr,
-    nullptr,
-    nullptr,
-    0x02,
-};
-
-inline __declspec(selectany) extern const field_meta hf_spare_b0 = {
-    "Spare",
-    "nas.nr.spare.b0",
-    ft::ft_uint8,
-    fd::base_dec,
-    nullptr,
-    nullptr,
-    nullptr,
-    0x01,
-};
-#endif
+extern const field_meta   hf_service_request_msg_id; // TODO: check the ie
 
 inline extern const true_false_string tfs_supported_not_supported = {
     "Supported",

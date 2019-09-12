@@ -27,7 +27,7 @@ int sm::dissect_int_prot_max_data_rate(dissector d, context* ctx) {
 
 
 // * 9.11.4.7 Integrity protection maximum data rate
-extern const value_string sm::sm_int_prot_max_data_rate_values[] = {
+extern const value_string sm::int_prot_max_data_rate_values[] = {
     {0x0, "64 kbps"},
     {0xff, "Full data rate"},
     {0, nullptr},
@@ -38,7 +38,7 @@ const field_meta sm::hf_sm_int_prot_max_data_rate_ul = {
     "nas.nr.sm.int_prot_max_data_rate_ul",
     ft::ft_uint8,
     fd::base_dec,
-    sm::sm_int_prot_max_data_rate_values,
+    sm::int_prot_max_data_rate_values,
     nullptr,
     nullptr,
     0x0,
@@ -48,7 +48,7 @@ const field_meta sm::hf_sm_int_prot_max_data_rate_dl = {
     "nas.nr.sm.int_prot_max_data_rate_dl",
     ft::ft_uint8,
     fd::base_dec,
-    sm::sm_int_prot_max_data_rate_values,
+    sm::int_prot_max_data_rate_values,
     nullptr,
     nullptr,
     0x0,

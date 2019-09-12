@@ -29,7 +29,6 @@ extern void diag(const char* format, ...);
 namespace enc {
 inline const uint32_t na   = 0;
 inline const uint32_t be   = 1; // big endian
-inline const uint32_t le   = 2; // little endian
 inline const uint32_t none = 4; // host order
 } // namespace enc
 
@@ -104,14 +103,15 @@ inline void store_payload_content_type(context* ctx, uint8_t pct) {
     if (ctx) ctx->payload_content_type = pct;
 }
 
-inline uint8_t retrive_payload_content_type(context* ctx) {
+inline uint8_t retrieve_payload_content_type(context* ctx) {
     return ctx ? ctx->payload_content_type : 0;
 }
 // code is host order
 inline void store_msg_auth_code(context*ctx, uint32_t code){
     if (ctx) ctx->msg_auth_code = code;
 }
-inline uint32_t retrive_msg_auth_code(context*ctx){
+inline uint32_t retrieve_msg_auth_code(context*ctx){
+    (void) retrieve_msg_auth_code;
     return ctx ? ctx->msg_auth_code : 0;
 }
 
@@ -120,7 +120,6 @@ inline string paths(context* ctx) {
     return ctx->path();
 }
 
-inline uint8_t  n2uint7(const uint8_t* d) { return *d & 0x7F; };
 inline uint8_t  n2uint8(const uint8_t* d) { return *d; };
 inline uint16_t n2uint16(const uint8_t* data) {
     const uint16_t a = data[0];
@@ -219,7 +218,6 @@ string bits7_string(const uint8_t* data, int len);
 ustring ts_23_038_7bits_string(const uint8_t* ptr, int bit_offset, int no_of_chars);
 
 int ws_ctz(uint64_t mask);
-int ms_ctz(uint64_t mask);
 
 uint32_t get_ext_ambr_unit(uint32_t unit, const char** unit_str);
 
@@ -238,8 +236,6 @@ string gprs_timer_string(const uint8_t* d, int len);
 string ipv6_string(const uint8_t*d, int length);
 string ipv6_link_local_string(const uint8_t* d, int length);
 
-uint32_t mcc_mnc3(const uint8_t*d, uint32_t*mcc, uint32_t *mnc); // return mcc*1000+mnc
-
 //  [3] 10.5.1.13 PLMN list TS24.008
 string mcc_string(const uint8_t* d, int length = 3);
 string mcc_mnc_string(const uint8_t* d, int length = 3);
@@ -249,8 +245,6 @@ string bcd_string(const uint8_t* d, int length);
 string imei_string(const uint8_t* d, int length); // 0xf0 terminated if even
 string timezone_time_string(const uint8_t* d, int length);
 string timezone_string(const uint8_t* d);
-
-uint64_t uintmap(uint64_t f, uint64_t mask);
 
 int ext_length(const uint8_t* d);
 

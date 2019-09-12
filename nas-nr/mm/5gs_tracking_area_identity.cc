@@ -52,7 +52,7 @@ const field_meta mm::hf_tal_t_li = {
     "nas.nr.mm.tal_t_li",
     ft::ft_uint8,
     fd::base_dec,
-    nas_5gs_mm_tal_t_li_values,
+    tac_list_values,
     nullptr,
     nullptr,
     0x60,

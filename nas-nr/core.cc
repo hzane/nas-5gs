@@ -31,20 +31,6 @@ void diag(const char* format, ...) {
     OutputDebugStringA(buf.data());
 }
 
-void extraneous_data_check(dissector d, int maxlen) {
-    if (d.length < 0) {
-        diag("overflow at %d\n", d.offset);
-    }
-    if (d.length > maxlen) {
-        d.tree->add_expert(d.pinfo,
-                           d.tvb,
-                           d.offset,
-                           d.length - maxlen,
-                           "extraneous data (%d) bytes",
-                           (d.length - maxlen));
-    }
-}
-
 string context::path() const { return join(paths, "/"); }
 
 string bits7_string(const uint8_t* data, int len){
@@ -235,6 +221,26 @@ const message_meta* find_dissector(uint8_t iei, const message_meta* meta) {
     return nullptr;
 }
 
+
+static char digit_tbcd[] =
+    {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '?', 'B', 'C', '*', '#', '?'};
+
+inline char d2asc(uint8_t v) { return v < 9 ? digit_tbcd[v] : char(v + 55); }
+
+// Decode the MCC/MNC from 3 octets in 'octs'
+string mcc_aux(const uint8_t* d, int length) {
+    (void) mcc_aux;
+    if (length < 3) return string();
+
+    char mcc[4]={0};
+
+    mcc[0] = d2asc(d[0] & 0x0fu);
+    mcc[1] = d2asc((d[0] & 0xf0u) >> 4);
+    mcc[2] = d2asc(d[1] & 0x0fu);
+    mcc[3] = '\0';
+
+    return string(static_cast< const char* >(mcc));
+}
 /* Little Endian
  * MNC of length 3:
  *
@@ -247,46 +253,8 @@ const message_meta* find_dissector(uint8_t iei, const message_meta* meta) {
  * |  MNC digit 2  |  MNC digit 1  |  octet x+2
  * +---------------+---------------+
  * */
-uint32_t mcc_mnc3(const uint8_t*d, uint32_t*mcc, uint32_t *mnc){
-    /* Mobile country code MCC */
-    auto octet = (uint32_t)d[0];
-    auto mcc1 = octet & 0x0fu;
-    auto mcc2 = octet >> 4u;
-
-    octet = d[1];
-    auto mcc3 = octet & 0x0fu;
-    /* MNC, Mobile network code (octet 3 bits 5 to 8, octet 4)  */
-    auto mnc3 = octet >> 4u;
-
-    octet = d[2];
-    auto mnc1 = octet & 0x0fu;
-    auto mnc2 = octet >> 4u;
-
-    *mcc = 100 * mcc1 + 10 * mcc2 + mcc3;
-    *mnc = 100 * mnc1 + 10*mnc2 + mnc3;
-    return (*mcc)*1000 + *mnc;
-}
-
-static char digit_tbcd[] =
-    {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '?', 'B', 'C', '*', '#', '?'};
-
-inline char d2asc(uint8_t v) { return v < 9 ? digit_tbcd[v] : char(v + 55); }
-
-// Decode the MCC/MNC from 3 octets in 'octs'
-string mcc_aux(const uint8_t* d, int length) {
-    if (length < 3) return string();
-
-    char mcc[4]={0};
-
-    mcc[0] = d2asc(d[0] & 0x0fu);
-    mcc[1] = d2asc((d[0] & 0xf0u) >> 4);
-    mcc[2] = d2asc(d[1] & 0x0fu);
-    mcc[3] = '\0';
-
-    return string(static_cast< const char* >(mcc));
-}
-
 string mnc_aux(const uint8_t* d, int length) {
+    (void) mnc_aux;
     if (length < 3) return string();
 
     char mnc[4]={0};
@@ -303,10 +271,8 @@ string mnc_aux(const uint8_t* d, int length) {
     return string(static_cast< const char* >(mnc));
 }
 
-namespace{
 static const char digits_bcd[] =
     {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '?', '?', '?', '?', '?', '?'};
-}
 // BCD number
 string bcd_string(const uint8_t*d, int length){
     if (length<=0 || !d) return string();
@@ -337,20 +303,6 @@ string imei_string(const uint8_t*d, int length){
         }
     }
     return ret;
-}
-
-void extraneous_data_check(int offset, int len, int maxlen, context*ctx){
-    if (len<0){
-        diag("underflow %s %d:%d\n", paths(ctx).c_str(), offset, len);
-        return;
-    }
-    if (len>maxlen){
-        diag("extraneous data %s %d:%d\n", paths(ctx).c_str(), offset, len);
-    }
-}
-
-uint64_t uintmap(uint64_t f, uint64_t mask) {
-    return mask ? (f&mask)>>ws_ctz(mask) : f;
 }
 
 int ext_length(const uint8_t* d) {
@@ -413,6 +365,7 @@ string timezone_string(const uint8_t*d){
 }
 
 string w2utf8(const wchar_t* s) {
+    (void) w2utf8;
 #if defined(_WIN32) || defined(_WIN64)
     const auto sz  = wcslen(s);
     const auto out = new char[sz * 4 + 1]; // large enough

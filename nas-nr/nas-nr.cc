@@ -24,7 +24,7 @@ struct nas_nr_message_imp final : nas_nr_message {
     const nas_nr_message* first_child() const override;
     const nas_nr_message* next_sibling() const override;
 
-    virtual ~nas_nr_message_imp();
+    ~nas_nr_message_imp() final;
     nas_nr_message_imp()                           = default;
     nas_nr_message_imp(const nas_nr_message_imp&)  = delete;
     nas_nr_message_imp(const nas_nr_message_imp&&) = delete;

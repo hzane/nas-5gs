@@ -10,7 +10,7 @@ int mm::dissect_nas_ksi(dissector d, context* ctx) {
 
     static const field_meta* flags[] = {
         &hf_tsc,
-        hf_nas_eps_nas_ksi, //& hf_nas_key_set_id,
+        hf_nas_eps_nas_ksi,
         nullptr,
     };
 
@@ -23,7 +23,7 @@ int mm::dissect_nas_ksi(dissector d, context* ctx) {
 
 
 /* NAS key set identifier (octet 1) Bits 3  2   1 */
-extern const val_string mm::nas_eps_emm_nas_ksi_values[] = {
+extern const val_string mm::nas_ksi_values[] = {
     {0, "0"},
     {1, "1"},
     {2, "2"},
@@ -40,7 +40,7 @@ const field_meta mm::hf_nas_key_set_id = {
     "nas.nr.mm.nas_key_set_id",
     ft::ft_uint8,
     fd::base_dec,
-    nas_eps_emm_nas_ksi_values,
+    nas_ksi_values,
     nullptr,
     nullptr,
     0x07,

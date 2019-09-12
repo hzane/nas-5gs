@@ -23,7 +23,6 @@ string mcc_string(const uint8_t* d, int length) {
     octet           = d[1];
     const auto mcc3 = octet & 0x0fu;
 
-    octet           = d[2];
     const auto mcc = 100 * mcc1 + 10 * mcc2 + mcc3;
 
     if (mcc == 460) {

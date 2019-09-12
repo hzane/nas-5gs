@@ -41,7 +41,7 @@ const field_meta mm::hf_request_type = {
     "nas.nr.mm.request.type",
     ft::ft_uint8,
     fd::base_dec,
-    nas_5gs_mm_req_type_vals,
+    request_type_values,
     nullptr,
     nullptr,
     0x0f,

@@ -35,10 +35,10 @@ void print_nas_nr_message(nas_nr_message const*m) {
 }
 int main() { // NOLINT: exception-escape
     
-    nas_nr_message* xroot = nullptr;
-    dissect_nas_nr(&xroot, packet_sample, int(std::size(packet_sample)));
-    print_nas_nr_message(xroot);
-    nas_nr_message_free(xroot);
+    nas_nr_message* rot = nullptr;
+    dissect_nas_nr(&rot, packet_sample, int(std::size(packet_sample)));
+    print_nas_nr_message(rot);
+    nas_nr_message_free(rot);
 
     const auto en =
         fs::path(L"f:/nas-data\\nas-1-00032348-18-7e-00-5c-00-0d-01-64.bin");

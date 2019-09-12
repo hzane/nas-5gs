@@ -34,7 +34,7 @@ extern const field_meta hf_mm_n1_mode_reg_b1;
 extern const field_meta hf_mm_s1_mode_reg_b0;
 
 // 9.11.2.7 N1 mode to S1 mode NAS transparent container page.350
-int dissect_n1_to_s1_mode_container(dissector d, context* ctx);
+int dissect_n1_to_s1_mode_container(dissector d, context* ctx); // NOLINT
 
 // 9.11.2.9	S1 mode to N1 mode NAS transparent container
 int dissect_s1_to_n1_mode_container(dissector d, context*ctx);
