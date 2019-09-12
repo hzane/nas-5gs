@@ -4,3 +4,6 @@
 tidy/
 Debug/
 cmake-build-debug/
+x64/
+Win32/
+Release/

@@ -3,8 +3,6 @@
 
 // 9.11.2.6 Intra N1 mode NAS transparent container page.349
 int cmn::dissect_intra_n1_mode_container(dissector d, context* ctx) {
-    (void) dissect_intra_n1_mode_container;
-
     use_context uc(ctx, "intra-n1-mode-nas-transparent-container", d, 0);
 
     /*The value part of the Intra N1 mode NAS transparent container information element is
