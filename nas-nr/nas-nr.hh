@@ -1,9 +1,15 @@
 #pragma once
 #include "description.hh"
 
-#if defined(NASNRTS24501_EXPORTS)
+#if defined NASNRTS24501_EXPORTS
+
+#if defined _WIN32 || defined _WIN64
 // NOLINTNEXTLINE
 #define NASNRAPI __declspec(dllexport)
+#else
+#define NASNRAPI __attribute__((visibility("default")))
+#endif
+
 #else
 #define NASNRAPI
 #endif
@@ -24,9 +30,10 @@ struct nas_nr_message {
 protected:    virtual ~nas_nr_message(){};                            // NOLINT
 };
 
-void NASNRAPI nas_nr_message_free(nas_nr_message* p);
+NASNRAPI void nas_nr_message_free(nas_nr_message* p);
 
-int NASNRAPI dissect_nas_nr(nas_nr_message** root, const octet* data, int length);
+NASNRAPI int dissect_nas_nr(nas_nr_message** root, const octet* data, int length);
 
-char NASNRAPI *pretty_format(const description* m, const octet* data, int length);
-void NASNRAPI pretty_format_free(char* p);
+NASNRAPI char* pretty_format(const description* m, const octet* data, int length);
+
+NASNRAPI void  pretty_format_free(char* p);

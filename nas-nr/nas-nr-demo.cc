@@ -3,7 +3,7 @@
 #include <vector>
 #include <fstream>
 #include <filesystem>
-#include "nas-nr.hh"
+// #include "nas-nr.hh"
 
 namespace fs = std::filesystem;
 using namespace std;
@@ -25,20 +25,22 @@ void dissect(const fs::path& entry) {
     print_node(std::cout, &node, -1);
     cout << endl;
 }
+#if 0
 void print_nas_nr_message(nas_nr_message const*m) {
     if (!m) return;
     cout << string(size_t(m->indent()) * 2, ' ') << m->name() << " : " << m->value()
          << endl;
-    
+
     print_nas_nr_message(m->first_child());
     print_nas_nr_message(m->next_sibling());
 }
+#endif
 int main() { // NOLINT: exception-escape
-    
-    nas_nr_message* rot = nullptr;
-    dissect_nas_nr(&rot, packet_sample, int(std::size(packet_sample)));
-    print_nas_nr_message(rot);
-    nas_nr_message_free(rot);
+
+  // nas_nr_message* rot = nullptr;
+    //    dissect_nas_nr(&rot, packet_sample, int(std::size(packet_sample)));
+    //    print_nas_nr_message(rot);
+    //    nas_nr_message_free(rot);
 
     const auto en =
         fs::path(L"f:/nas-data/nas-1-00032348-18-7e-00-5c-00-0d-01-64.bin");

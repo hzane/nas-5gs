@@ -1,5 +1,6 @@
 #include "nas-nr.hh"
 #include <string>
+#include <cstring>
 #include "dissect_nas5g.hh"
 
 using string = std::string;
@@ -99,12 +100,18 @@ int dissect_nas_nr(nas_nr_message * * root, const octet* data, int length) {
     return ret;
 }
 
+#if defined _WIN32 || defined _WIN64
+#define xstrdup _strdup
+#else
+#define xstrdup strdup
+#endif
+
 char NASNRAPI *pretty_format(const description* m, const octet* data, int length) {
     const auto fm   = static_cast< const field_meta* >(m); // NOLINT
     if (!fm) return nullptr;
 
     const auto  text = fm->format(data, length, enc::be);
-    return _strdup(text.c_str());
+    return strdup (text.c_str());
 }
 
 void NASNRAPI pretty_format_free(char* p) {
