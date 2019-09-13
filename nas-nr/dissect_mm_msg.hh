@@ -7,7 +7,7 @@
 
 /* 5GS mobility management messages */
 namespace mm {
-inline __declspec(selectany) extern const dissect_fnc_t no_dissect = nullptr;
+inline const dissect_fnc_t no_dissect = nullptr;
 
 extern const message_meta      msgs[];
 
@@ -18,7 +18,7 @@ inline const true_false_string tfs_requested_not_requested = {
     "Not Requested",
 };
 
-inline __declspec(selectany) extern const true_false_string tfs_odd_even = {
+inline const true_false_string tfs_odd_even = {
     "Odd number of identity digits",
     "Even number of identity digits",
 };
@@ -37,7 +37,7 @@ extern const val_string        request_type_values[];
 extern const val_string        service_type_values[];
 extern const val_string identity_type_values[];
 
-inline __declspec(selectany) extern const true_false_string tfs_requested_or_not = {
+inline const true_false_string tfs_requested_or_not = {
     "Requested",
     "Not Requested",
 };
