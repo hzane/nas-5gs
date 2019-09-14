@@ -20,4 +20,4 @@ add_library(nas-nr-ts24501 SHARED ${NASNR_API_SRCS} ${NAS_5GS_MM_SRCS} ${NAS_5GS
 target_compile_definitions(nas-nr-ts24501 PRIVATE NASNRTS24501_EXPORTS)
 
 add_executable(nas-nr-demo ${NAS_5GS_SRCS} ${NAS_5GS_MM_SRCS} ${NAS_5GS_SM_SRCS} ${NAS_5GS_COMMON_SRCS} ${HEADERS})
-target_link_libraries(nas-nr-demo PUBLIC stdc++fs)
+# target_link_libraries(nas-nr-demo PUBLIC stdc++fs)
