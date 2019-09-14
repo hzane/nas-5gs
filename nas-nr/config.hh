@@ -1,5 +1,5 @@
 #pragma once
-#include "nas-nr-compiler-detection.hh"
+// #include "nas-nr-compiler-detection.hh"
 #include <cstdint>
 #include <string>
 #include <vector>
