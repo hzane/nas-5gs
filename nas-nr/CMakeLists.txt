@@ -1,11 +1,20 @@
 cmake_minimum_required(VERSION 3.14)
 project(nas-nr)
 
+include(WriteCompilerDetectionHeader)
+
 set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_C_STANDARD 11)
+set(CMAKE_C_STANDARD 99)
 
 # set(CMAKE_CXX_FLAGS  "-fms-extensions -Wno-extern-initializer")
 # set(CMAKE_C_FLAGS "-fms-extensions")
+
+#write_compiler_detection_header (
+#        FILE nas-nr-compiler-detection.hh
+#        PREFIX NASNA
+#        COMPILERS GNU MSVC Clang
+#        FEATURES cxx_variadic_templates c_restrict cxx_constexpr cxx_final cxx_noexcept cxx_override cxx_extern_templates cxx_deleted_functions cxx_alignas cxx_nullptr cxx_alignof cxx_static_assert cxx_attribute_deprecated
+#)
 
 aux_source_directory(. NAS_5GS_SRCS)
 list(REMOVE_ITEM NAS_5GS_SRCS ./pch.h ./nas-nr.cc ./dllmain.cc )
