@@ -16,7 +16,7 @@ void dissect(const fs::path& entry) {
     auto        inf = ifstream(entry, std::ios::in | std::ios::binary);
     auto        buf = buffer(if_iterator(inf), if_iterator());
     tvbuff      tvb = {buf.data(), static_cast< int >(buf.size())};
-    context     ctx = {};
+    context     ctx = NASNR_LIST_INIT(context, );
     packet_info pinfo{};
     proto_node  node{};
     dissector   d{&pinfo, &node, &tvb, 0, static_cast< int >(buf.size()), nullptr};
@@ -42,7 +42,7 @@ int main() { // NOLINT: exception-escape
     //    print_nas_nr_message(rot);
     //    nas_nr_message_free(rot);
 
-    const auto en =
+    const NASNR_AUTO(fs::path) en =
         fs::path(L"f:/nas-data/nas-1-00032348-18-7e-00-5c-00-0d-01-64.bin");
     dissect(en);
 

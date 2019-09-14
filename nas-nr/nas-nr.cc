@@ -6,15 +6,15 @@
 using string = std::string;
 
 struct nas_nr_message_imp final : nas_nr_message {
-    string              tag     = {};
-    string              val     = {};
-    const octet*        dat     = nullptr;
-    int                 len     = 0;
-    int                 start   = 0;
-    int                 level   = 0;
-    const description*  meta    = nullptr;
-    nas_nr_message_imp* child   = nullptr;
-    nas_nr_message_imp* sibling = nullptr;
+    string              tag     NASNR_EQUAL_INIT ({});
+    string              val     NASNR_EQUAL_INIT ({});
+    const octet*        dat     NASNR_EQUAL_INIT (nullptr) ;
+    int                 len     NASNR_EQUAL_INIT (0);
+    int                 start   NASNR_EQUAL_INIT (0);
+    int                 level   NASNR_EQUAL_INIT (0);
+    const description*  meta    NASNR_EQUAL_INIT (nullptr);
+    nas_nr_message_imp* child   NASNR_EQUAL_INIT (nullptr);
+    nas_nr_message_imp* sibling NASNR_EQUAL_INIT (nullptr);
 
     const char*           name() const override;
     const char*           value() const override;
@@ -26,12 +26,12 @@ struct nas_nr_message_imp final : nas_nr_message {
     const nas_nr_message* first_child() const override;
     const nas_nr_message* next_sibling() const override;
 
-    ~nas_nr_message_imp() final;
-    nas_nr_message_imp()                           = default;
-    nas_nr_message_imp(const nas_nr_message_imp&)  = delete;
-    nas_nr_message_imp(const nas_nr_message_imp&&) = delete;
-    nas_nr_message_imp& operator=(const nas_nr_message_imp&&) = delete;
-    nas_nr_message_imp& operator=(const nas_nr_message_imp&) = delete;
+    ~nas_nr_message_imp() NASNR_FINAL;
+    nas_nr_message_imp() NASNR_DEFAULT_FUNCTION;
+    nas_nr_message_imp(const nas_nr_message_imp&) NASNR_DELETED_FUNCTION;    
+    nas_nr_message_imp(const nas_nr_message_imp&&) NASNR_DELETED_FUNCTION;
+    nas_nr_message_imp& operator=(const nas_nr_message_imp&&) NASNR_DELETED_FUNCTION;
+    nas_nr_message_imp& operator=(const nas_nr_message_imp&) NASNR_DELETED_FUNCTION;
 };
 
 const description* nas_nr_message_imp::desc() const { return meta; }
@@ -84,13 +84,13 @@ nas_nr_message_imp* export_proto_node(proto_node const* node, int indent) {
 }
 
 int dissect_nas_nr(nas_nr_message * * root, const octet* data, int length) {
-    tvbuff          tvb   = {data, length};
-    context         ctx   = {};
-    packet_info     pinfo = {};
-    proto_node      node  = {};
+    tvbuff          tvb   = NASNR_LIST_INIT(tvbuff, data, length);
+    context         ctx   = NASNR_LIST_INIT(context);
+    packet_info     pinfo = NASNR_LIST_INIT(packet_info);
+    proto_node      node  = NASNR_LIST_INIT(proto_node);
     *root                 = nullptr;
 
-    const dissector d{&pinfo, &node, &tvb, 0, length, nullptr};
+    const dissector d = {&pinfo, &node, &tvb, 0, length, nullptr};
 
     const auto ret = nas_5gs_module.dissector(d, &ctx);
     if (!node.children.empty()) {
@@ -101,6 +101,7 @@ int dissect_nas_nr(nas_nr_message * * root, const octet* data, int length) {
 }
 
 #if defined _WIN32 || defined _WIN64
+// NOLINTNEXTLINE
 #define xstrdup _strdup
 #else
 #define xstrdup strdup
@@ -111,7 +112,7 @@ char NASNRAPI *pretty_format(const description* m, const octet* data, int length
     if (!fm) return nullptr;
 
     const auto  text = fm->format(data, length, enc::be);
-    return strdup (text.c_str());
+    return xstrdup (text.c_str());
 }
 
 void NASNRAPI pretty_format_free(char* p) {

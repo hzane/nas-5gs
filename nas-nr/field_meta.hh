@@ -43,7 +43,7 @@ inline uint32_t integer_size(const uint32_t t) { return t & 0x7u; }
 } // namespace ft
 
 namespace fd {
-inline const uint32_t base_none          = 0; /* none */
+NASNR_INLINE const uint32_t base_none          = 0; /* none */
 inline const uint32_t base_dec           = 1; /* decimal */
 inline const uint32_t base_hex           = 2; /* hexadecimal */
 inline const uint32_t base_oct           = 3; /* octal */
@@ -88,6 +88,6 @@ using string = std::string;
 
 struct field_meta : description {
     string format(const uint8_t* p, int len, uint32_t enc) const;
-    [[nodiscard]] string format(uint64_t val) const;
+    NASNR_NODISCARD string format(uint64_t val) const;
 };
 

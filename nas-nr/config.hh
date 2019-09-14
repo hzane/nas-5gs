@@ -1,4 +1,5 @@
 #pragma once
+#include "nas-nr-compiler-detection.hh"
 #include <cstdint>
 #include <string>
 #include <vector>
@@ -67,7 +68,35 @@ struct use_tree { // NOLINT: special;-member-functions
 
 typedef int (*dissect_fnc_t)(dissector, context* ctx);
 
-struct context {
+struct nr_security_context {
+    uint8_t  activated         = 0;
+    uint8_t  security_type     = 0; // 33.401
+    uint8_t  nas_ksi           = 0; // NAS key set identifier for E-UTRAN
+    int      vector_index      = 0; // pointer of vector, -1 means invalid
+    uint8_t  cyphering_key[16] = {};
+    uint8_t  integrity_key[16] = {};
+    uint32_t dl_count_overflow = 0; // downlink count parameters
+    uint32_t dl_count_seq_no   = 0;
+    uint32_t ul_count_overflow = 0;
+    uint32_t ul_count_seq_no   = 0;
+    struct {
+        uint8_t ciphering_nr   = 0; // ciphering algo for nr
+        uint8_t integrity_nr   = 0; // integrity algo for nr
+        uint8_t ciphering_umts = 0; // algothrim for ciphering
+        uint8_t integrity_umts = 0; // algorighm for integrity
+        uint8_t ciphering_gprs = 0; // algorighm used for ciphering
+        uint8_t integrity_gprs = 0; // unused
+        bool    umts_present   = false;
+        bool    gprs_present   = false;
+    } capability; // UE network capability
+    struct {
+        uint8_t ciphering_type = 0;
+        uint8_t integrity_type = 0; // for integrity protection
+    } selected_algorithm;           // AMF selected algorithm
+};
+
+struct context : nr_security_context {
+    bool                       security_context_available = false;
     uint32_t                   msg_auth_code        = 0;
     uint8_t                    payload_content_type = 0;
     std::vector< std::string > paths                = {};
@@ -248,3 +277,24 @@ string timezone_string(const uint8_t* d);
 int ext_length(const uint8_t* d);
 
 string w2utf8(const wchar_t*str);
+
+struct authentication_vector{
+    uint8_t kasme[32];    // ASME key
+    uint8_t rand[16];     // random challenge parameter
+    uint8_t autn[16];     // Authentication token parameters
+    uint8_t xresult_size; //
+    uint8_t xresult[16];  // expected authentication response parameter
+};
+
+int nas_nr_decrypt(const uint8_t*       from,
+                   uint8_t*             to,
+                   int                  length,
+                   uint8_t              type,
+                   uint32_t             code,
+                   uint8_t              seq,
+                   nr_security_context* ctx);
+
+uint32_t nas_calc_auth_code(const uint8_t*       data,
+                            int                  length,
+                            int                  direction,
+                            nr_security_context* ctx);
