@@ -298,3 +298,14 @@ uint32_t nas_calc_auth_code(const uint8_t*       data,
                             int                  length,
                             int                  direction,
                             nr_security_context* ctx);
+
+struct nas_stream_cipher{
+    uint8_t* key;
+    uint32_t key_length;
+    uint32_t count;
+    uint8_t bearer;
+    uint8_t direction;
+    int      decrypt_nea1(const uint8_t* data, uint32_t bits, uint8_t* out);
+    int      decrypt_nea2(const uint8_t* data, uint32_t bits, uint8_t* out);
+};
+
