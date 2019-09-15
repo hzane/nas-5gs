@@ -47,17 +47,6 @@ const field_meta mm::hf_sal_num_e = {
     0x1f,
 };
 
-/* *     9.11.3.47    Request type */
-const val_string mm::request_type_values[] = {
-    {0x01, "Initial request"},
-    {0x02, "Existing PDU session"},
-    {0x03, "Initial emergency request"},
-    {0x04, "Existing emergency PDU session"},
-    {0x05, "Modification request"},
-    {0x07, "Reserved"},
-    {0, nullptr},
-};
-
 /* *    9.11.3.48    S1 UE network capability */
 /* See subclause 9.9.3.34 in 3GPP TS 24.301 */
 

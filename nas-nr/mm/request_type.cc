@@ -23,7 +23,7 @@ extern const element_meta mm::request_type = {
 };
 
 /* *     9.11.3.47    Request type */
-const val_string request_type_values[] = {
+const val_string mm::request_type_values[] = {
     {0x01, "Initial request"},
     {0x02, "Existing PDU session"},
     {0x03, "Initial emergency request"},
@@ -37,7 +37,7 @@ const field_meta mm::hf_request_type = {
     "nas.nr.mm.request.type",
     ft::ft_uint8,
     fd::base_dec,
-    ::request_type_values,
+    mm::request_type_values,
     nullptr,
     nullptr,
     0x0f,

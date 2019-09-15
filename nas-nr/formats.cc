@@ -26,7 +26,7 @@ inline int16_t int8to16(uint64_t v) {
     const auto v8   = uint8_t(v);
     const auto sign = v8 & 0x80u;
     if (sign) {
-        const auto x = int16_t(~v8 & 0x7fu + 1);
+        const auto x = int16_t(~(v8 & 0x7fu) + 1u);
         return -x;
     }
     return int16_t(v8);
@@ -136,16 +136,16 @@ string format_int_bit_mask(uint32_t ftype, uint64_t v, uint64_t mask, const char
     switch (ftype) {
     case ft::ft_int64:
     case ft::ft_uint64:
-        ss << bitset< 8 >((v & 0xff00'0000'0000'0000u) >> 56) ;
+        ss << bitset< 8 >((v & 0xff00'0000'0000'0000u) >> 56u) ;
     case ft::ft_int48:
     case ft::ft_uint48:
-        ss << bitset< 8 >((v & 0xff00'0000'0000u) >> 40) ;
+        ss << bitset< 8 >((v & 0xff00'0000'0000u) >> 40u) ;
     case ft::ft_int32:
     case ft::ft_uint32:
-        ss << bitset< 8 >((v & 0xff00'0000u) >> 24) ;
+        ss << bitset< 8 >((v & 0xff00'0000u) >> 24u) ;
     case ft::ft_int24:
     case ft::ft_uint24:
-        ss << bitset< 8 >((v & 0xff'0000u) >> 16) ;
+        ss << bitset< 8 >((v & 0xff'0000u) >> 16u) ;
     case ft::ft_int16:
     case ft::ft_uint16:
         ss << bitset< 8 >((v & 0xff00u) >> 8u) ;
@@ -162,7 +162,7 @@ string format_int_bit_mask(uint32_t ftype, uint64_t v, uint64_t mask, const char
 
 string format_bit(const uint8_t* data, int len, const char* sep) {
     stringstream ss;
-    for (auto i = 0; i < len; i++) {
+    for (int i = 0; i < len; i++) {
         bitset< 8 > v(data[i]);
         ss << v << sep;
     }
@@ -179,8 +179,8 @@ string      format_bits(const uint8_t* data, int bits, const char* sep) {
     if (sep != nullptr) ret = ret + sep;
 
     const auto last = data[clen];
-    for (auto i = 7; i > 8 - blen; i--) {
-        ret.push_back((last & (1u << i)) ? '1' : '0');
+    for (int i = 7; i > 8 - blen; i--) {
+        ret.push_back((last & (1u << uint8_t(i))) ? '1' : '0');
     }
     return ret;
 }
@@ -228,7 +228,7 @@ std::string format_int(uint64_t v, uint32_t ftype, uint32_t display) {
 string format_bcd(const uint8_t* data, int len) {
     stringstream ss;
     ss << hex << setfill('0');
-    for (auto i = 0; i < len; i++) {
+    for (int i = 0; i < len; i++) {
         ss << setw(2) << uint32_t(data[i]);
     }
     return ss.str();
@@ -241,7 +241,7 @@ string format_hex(const uint8_t* data, int len, const char* sep, const char* lf)
     stringstream ss;
     ss << hex << setfill('0');
 
-    for (auto i = 0; i < len; i++) {
+    for (int i = 0; i < len; i++) {
         ss << setw(2) << uint32_t(data[i]) << sep;
 
         if (i % 8 == 7) ss << sep;

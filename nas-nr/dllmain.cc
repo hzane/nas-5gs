@@ -1,6 +1,6 @@
 #include "pch.h"
 
-BOOL APIENTRY DllMain( HMODULE module,
+BOOL __stdcall DllMain( HMODULE module,
                        DWORD  ul_reason_for_call,
                        LPVOID resv
                      )

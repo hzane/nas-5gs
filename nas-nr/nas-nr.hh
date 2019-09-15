@@ -33,8 +33,15 @@ protected:    virtual ~nas_nr_message(){};                            // NOLINT
 
 NASNRAPI void nas_nr_message_free(nas_nr_message* p);
 
-NASNRAPI int dissect_nas_nr(nas_nr_message** root, const octet* data, int length);
+// use nas_nr_context_new to create env
+NASNRAPI int dissect_nas_nr(nas_nr_message** root, const octet* data, int length, void* env);
 
 NASNRAPI char* pretty_format(const description* m, const octet* data, int length);
 
 NASNRAPI void  pretty_format_free(char* p);
+
+NASNRAPI const char* nas_nr_description();
+
+NASNRAPI void* nas_nr_context_new();
+
+NASNRAPI void nas_nr_context_free(void*);

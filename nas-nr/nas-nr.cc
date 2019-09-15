@@ -16,22 +16,22 @@ struct nas_nr_message_imp final : nas_nr_message {
     nas_nr_message_imp* child   NASNR_EQUAL_INIT (nullptr);
     nas_nr_message_imp* sibling NASNR_EQUAL_INIT (nullptr);
 
-    const char*           name() const override;
-    const char*           value() const override;
-    const octet*          data() const override;
-    int                   offset() const override;
-    int                   length() const override;
-    int                   indent() const override;
-    const description*    desc() const override;
-    const nas_nr_message* first_child() const override;
-    const nas_nr_message* next_sibling() const override;
+    [[nodiscard]] const char*           name() const override;
+    [[nodiscard]] const char*           value() const override;
+    [[nodiscard]] const octet*          data() const override;
+    [[nodiscard]] int                   offset() const override;
+    [[nodiscard]] int                   length() const override;
+    [[nodiscard]] int                   indent() const override;
+    [[nodiscard]] const description*    desc() const override;
+    [[nodiscard]] const nas_nr_message* first_child() const override;
+    [[nodiscard]] const nas_nr_message* next_sibling() const override;
 
-    ~nas_nr_message_imp() NASNR_FINAL;
-    nas_nr_message_imp() NASNR_DEFAULT_FUNCTION;
-    nas_nr_message_imp(const nas_nr_message_imp&) NASNR_DELETED_FUNCTION;    
-    nas_nr_message_imp(const nas_nr_message_imp&&) NASNR_DELETED_FUNCTION;
-    nas_nr_message_imp& operator=(const nas_nr_message_imp&&) NASNR_DELETED_FUNCTION;
-    nas_nr_message_imp& operator=(const nas_nr_message_imp&) NASNR_DELETED_FUNCTION;
+    ~nas_nr_message_imp() final;
+    nas_nr_message_imp() = default;
+    nas_nr_message_imp(const nas_nr_message_imp&) = delete;
+    nas_nr_message_imp(const nas_nr_message_imp&&) = delete;
+    nas_nr_message_imp& operator=(const nas_nr_message_imp&&) = delete;
+    nas_nr_message_imp& operator=(const nas_nr_message_imp&) = delete;
 };
 
 const description* nas_nr_message_imp::desc() const { return meta; }
@@ -83,16 +83,18 @@ nas_nr_message_imp* export_proto_node(proto_node const* node, int indent) {
     return ret;
 }
 
-int dissect_nas_nr(nas_nr_message * * root, const octet* data, int length) {
+NASNRAPI int dissect_nas_nr(nas_nr_message * * root, const octet* data, int length, void* env) {
     tvbuff          tvb   = NASNR_LIST_INIT(tvbuff, data, length);
-    context         ctx   = NASNR_LIST_INIT(context);
+    context         alt   = NASNR_LIST_INIT(context);
     packet_info     pinfo = NASNR_LIST_INIT(packet_info);
     proto_node      node  = NASNR_LIST_INIT(proto_node);
     *root                 = nullptr;
 
+    context* ctx = env ? static_cast<context*>(env) : &alt;
+
     const dissector d = {&pinfo, &node, &tvb, 0, length, nullptr};
 
-    const auto ret = nas_5gs_module.dissector(d, &ctx);
+    const auto ret = nas_5gs_module.dissector(d, ctx);
     if (!node.children.empty()) {
         *root = export_proto_node(node.children.front(), 0);
     }
@@ -117,5 +119,15 @@ char NASNRAPI *pretty_format(const description* m, const octet* data, int length
 
 void NASNRAPI pretty_format_free(char* p) {
     free(p);
-    return;
+}
+
+NASNRAPI const char* nas_nr_description(){
+    return nas_5gs_module.full_name;
+}
+NASNRAPI void* nas_nr_context_new(){
+    return new context{};
+}
+NASNRAPI void nas_nr_context_free(void*d){
+    auto ctx = static_cast<context*>(d);
+    delete ctx;
 }

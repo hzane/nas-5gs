@@ -6,15 +6,15 @@ struct true_false_string;
 struct range_string;
 
 // NOLINTNEXTLINE
-struct description {    
-    const char*              tag;     /* full name of this field */
-    const char*              abbrev;  /* abbreviated name of this field */
-    unsigned int             typi;    /* field_type::*/
-    unsigned int             display; /* one of base_ */
-    const val_string*        val_strings;
-    const true_false_string* tf_strings;
-    const range_string*      range_strings;
-    unsigned long long       bitmask; /* bitmask of interesting bits */
+struct description {
+    const char*              tag;           // full name of this field
+    const char*              abbrev;        // abbreviated name of this field
+    unsigned int             typi;          // field_type::
+    unsigned int             display;       // one of base_
+    const val_string*        val_strings;   //
+    const true_false_string* tf_strings;    //
+    const range_string*      range_strings; //
+    unsigned long long       bitmask;       // bitmask of interesting bits
 };
 
 struct val_string {

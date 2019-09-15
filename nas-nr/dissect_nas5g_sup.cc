@@ -222,7 +222,7 @@ const field_meta* nas::hf_mm_msg_type = &hfm_mm_msg_type;
 
 const field_meta nas::hf_service_request_msg_id = {
     "Service request message identity",
-    "nas.nr.mm.message_type",
+    "nas.nr.mm.message.identity.type",
     ft::ft_uint8,
     fd::base_hex,
     mm_message_type_values,
