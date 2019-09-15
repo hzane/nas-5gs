@@ -103,9 +103,6 @@ int dissect_opt_t(const field_meta *,
     return 1;
 }
 
-
-// extern const field_meta *hf_gsm_a_length;
-
 /* * Length Value (LV) element dissector */
 int dissect_opt_lv(const field_meta *,
                         const element_meta *val_meta,
@@ -134,8 +131,6 @@ int dissect_opt_lv(const field_meta *,
 
     return parm_len + 1;
 }
-
-// const extern field_meta *hf_gsm_e_length;
 
 /* Length Value Extended(LV-E) element dissector */
 int dissect_opt_lv_e(const field_meta *,
@@ -166,7 +161,6 @@ int dissect_opt_lv_e(const field_meta *,
 
 
 /* * Value (V) element dissector
-
  * Length cannot be used in these functions, big problem if a element dissector
  * is not defined for these.
  */

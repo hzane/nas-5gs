@@ -34,16 +34,17 @@ void diag(const char* format, ...) {
 string context::path() const { return join(paths, "/"); }
 
 string bits7_string(const uint8_t* data, int len){
-    auto d = ts_23_038_7bits_string(data, 0, (len<<3)/7);
+    int nch = int(uint32_t(len)<<3u)/7;
+    auto d = ts_23_038_7bits_string(data, 0, nch); // NOLINT
     return string(d.begin(), d.end());
 }
 
-string   ipv6_link_local_string(const uint8_t* data, int len) {
+string   ipv6_link_local_string(const uint8_t* data, const int len) {
     if (!data || !len) return string();
 
     std::stringstream ss;
     ss << "fe80:";
-    for (auto i = 0; i < len; i++) {
+    for (int i = 0; i < len; ++i) {
         ss << ":" << std::hex << data[i];
     }
     return ss.str();
@@ -53,41 +54,41 @@ string ipv6_string(const uint8_t* d, int len) {
     if (!d || !len) return string();
     std::stringstream ss;
     ss << d[0];
-    for (auto i = 1; i<len; i++) {
+    for (int i = 1; i<len; i++) {
         ss << ":" << std::hex << d[i];
     }
     return ss.str();
 }
 
 uint32_t get_ext_ambr_unit(uint32_t unit, const char** unit_str) {
-    uint32_t mult = 1;
+    uint32_t mul = 1;
 
     if (unit == 0) {
         *unit_str = "Unit value 0, Illegal";
-        return mult;
+        return mul;
     }
     unit = unit - 1;
 
     if (unit <= 0x05) {
-        mult      = 1 << (2 * unit); // pow4(guint32, unit);
+        mul       = 1u << (2 * unit);
         *unit_str = "Kbps";
     } else if (unit <= 0x0a) {
-        mult      = 1 << (2 * (unit - 0x05)); // pow4(guint32, unit - 0x05);
+        mul       = 1u << (2 * (unit - 0x05));
         *unit_str = "Mbps";
     } else if (unit <= 0x0e) {
-        mult      = 1 << (2 * (unit - 0x07)); // pow4(guint32, unit - 0x07);
+        mul       = 1u << (2 * (unit - 0x07));
         *unit_str = "Gbps";
     } else if (unit <= 0x14) {
-        mult      = 1 << (2 * (unit - 0x0c)); // pow4(guint32, unit - 0x0c);
+        mul       = 1u << (2 * (unit - 0x0c));
         *unit_str = "Tbps";
     } else if (unit <= 0x19) {
-        mult      = 1 << (2 * (unit - 0x11)); // pow4(guint32, unit - 0x11);
+        mul       = 1u << (2 * (unit - 0x11));
         *unit_str = "Pbps";
     } else {
-        mult      = 256;
+        mul       = 256;
         *unit_str = "Pbps";
     }
-    return mult;
+    return mul;
 }
 
 string ambr_string(const uint8_t*d, int length) {
@@ -234,7 +235,7 @@ string mcc_aux(const uint8_t* d, int length) {
     char mcc[4]={0};
 
     mcc[0] = d2asc(d[0] & 0x0fu);
-    mcc[1] = d2asc((d[0] & 0xf0u) >> 4);
+    mcc[1] = d2asc((d[0] & 0xf0u) >> 4u);
     mcc[2] = d2asc(d[1] & 0x0fu);
     mcc[3] = '\0';
 
@@ -256,9 +257,9 @@ string mnc_aux(const uint8_t* d, int length) {
     if (length < 3) return string();
 
     char mnc[4]={0};
-    mnc[2]     = d2asc((d[1] & 0xf0u) >> 4);
+    mnc[2]     = d2asc((d[1] & 0xf0u) >> 4u);
     mnc[0]     = d2asc(d[2] & 0x0fu);
-    mnc[1]     = d2asc((d[2] & 0xf0u) >> 4);
+    mnc[1]     = d2asc((d[2] & 0xf0u) >> 4u);
 
     if (mnc[1]=='F') // only 1 digit MNC
         mnc[1]='\0';
@@ -280,7 +281,7 @@ string bcd_string(const uint8_t*d, int length){
         const auto a   = d[i] & 0x0fu;
         ret.push_back(digits_bcd[a]);
 
-        auto b   = (d[i] & 0xf0u) >> 4;
+        auto b   = (d[i] & 0xf0u) >> 4u;
 
         // if the last octet's lower-order nibble is 0x0f
         // ignore it
@@ -293,7 +294,7 @@ string imei_string(const uint8_t*d, int length){
     if (length <= 0 || !d) return string();
     string ret={};
 
-    ret.push_back(digits_bcd[(d[0] & 0xf0u) >> 4]);
+    ret.push_back(digits_bcd[(d[0] & 0xf0u) >> 4u]);
     for (auto i = 1; i < length; ++i) {
         ret.push_back(digits_bcd[d[i] & 0x0fu]);
         if (i!=length-1||(d[i]&0xf0u)!=0xf0u){
@@ -306,7 +307,7 @@ string imei_string(const uint8_t*d, int length){
 int ext_length(const uint8_t* d) {
     const auto msb = d[0];
     /* length in 2 octets */
-    if ((msb & 0x80u) == 0) return (int(msb) << 8) + int(d[1]);
+    if ((msb & 0x80u) == 0) return (int(msb) << 8u) + int(d[1]);
     return int(msb & 0x7fu);
 }
 

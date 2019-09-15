@@ -28,7 +28,7 @@ size_t u32utf8(uint32_t ch, uint8_t *dest) {
     return 0;
 }
 
-void ustring_add_utf8(ustring &s, const uint32_t c) {
+void ustring_append_utf8(ustring &s, const uint32_t c) {
     uint8_t buf[6] = {};
 
     const size_t nchar = u32utf8(c, buf);
@@ -105,11 +105,12 @@ bool handle_ts_23_038_char(ustring &s, uint8_t code_point, bool saw_escape) {
         } else {
             uchar = GSM2UNICHAR(code_point);
         }
-        ustring_add_utf8(s, uchar);
+        ustring_append_utf8(s, uchar);
     }
     return saw_escape;
 }
 
+// copied from ue-lte
 ustring ts_23_038_7bits_string(const uint8_t *ptr, int bit_offset, int no_of_chars) {
     if (!ptr) return ustring();
 
@@ -171,7 +172,7 @@ ustring ts_23_038_7bits_string(const uint8_t *ptr, int bit_offset, int no_of_cha
          * XXX - for now, show the escape as a REPLACEMENT
          * CHARACTER.
          */
-        ustring_add_utf8(ret, UNREP);
+        ustring_append_utf8(ret, UNREP);
     }
 
     return ret;

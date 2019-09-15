@@ -6,7 +6,6 @@ struct packet_info;
 struct proto_node;
 struct context;
 
-
 namespace direction {
 inline extern const int unknown = 0;
 inline extern const int ul      = 1;
@@ -21,9 +20,11 @@ struct packet_info {
     int64_t  rel_ts         = 0; // nano seconds
     int      dir            = 0; // direction
 };
+
 inline void up_link(packet_info*pinfo){
     if (pinfo) pinfo->dir = direction::ul;
 }
+
 inline void down_link(packet_info*pinfo){
     if (pinfo) pinfo->dir = direction::dl;
 }

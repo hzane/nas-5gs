@@ -261,7 +261,7 @@ static inline int ws_ctz32(uint32_t x) {
     return table[((uint32_t)((x & (uint32_t)(0u - x)) * 0x077CB531U)) >> 27u];
 }
 
-int ws_ctz(uint64_t x) {
+unsigned int ws_ctz(uint64_t x) {
     auto hi = uint32_t(x >> 32u);
     auto lo = (uint32_t) x;
 
