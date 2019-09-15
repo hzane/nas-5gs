@@ -35,19 +35,26 @@ void print_nas_nr_message(nas_nr_message const*m) {
     print_nas_nr_message(m->next_sibling());
 }
 #endif
-int main() { // NOLINT: exception-escape
+int main(int argc, char*argv[]) { // NOLINT: exception-escape
+  fs::path en = argc>1 ? argv[1] : "f:/nas-data";
 
+  if (fs::is_regular_file(en)){
+    dissect(en);
+    return 0;
+  }
+  if (!fs::is_directory(en)) return 0;
   // nas_nr_message* rot = nullptr;
     //    dissect_nas_nr(&rot, packet_sample, int(std::size(packet_sample)));
     //    print_nas_nr_message(rot);
     //    nas_nr_message_free(rot);
 
-    const auto en = fs::path(L"f:/nas-data/nas-1-00032348-18-7e-00-5c-00-0d-01-64.bin");
-    dissect(en);
+    // const auto en = fs::path(L"f:/nas-data/nas-1-00032348-18-7e-00-5c-00-0d-01-64.bin");
+  //    dissect(en);
 
-    const string root = "f:/nas-data";
-    for(const auto& entry : fs::directory_iterator(root)) {
+  // const string root = "f:/nas-data";
+    for(const auto& entry : fs::directory_iterator(en)) {
         cout << entry.path() << endl;
         dissect(entry.path());
     }
+    return 0;
 }
