@@ -82,9 +82,9 @@ struct nr_security_context {
     struct {
         uint8_t ciphering_nr   = 0; // ciphering algo for nr
         uint8_t integrity_nr   = 0; // integrity algo for nr
-        uint8_t ciphering_umts = 0; // algothrim for ciphering
-        uint8_t integrity_umts = 0; // algorighm for integrity
-        uint8_t ciphering_gprs = 0; // algorighm used for ciphering
+        uint8_t ciphering_umts = 0; // algorithm for ciphering
+        uint8_t integrity_umts = 0; // algorithm for integrity
+        uint8_t ciphering_gprs = 0; // algorithm used for ciphering
         uint8_t integrity_gprs = 0; // unused
         bool    umts_present   = false;
         bool    gprs_present   = false;
@@ -245,7 +245,7 @@ string bits7_string(const uint8_t* data, int len);
 
 ustring ts_23_038_7bits_string(const uint8_t* ptr, int bit_offset, int no_of_chars);
 
-int ws_ctz(uint64_t mask);
+unsigned int ws_ctz(uint64_t mask);
 
 uint32_t get_ext_ambr_unit(uint32_t unit, const char** unit_str);
 
@@ -278,7 +278,7 @@ int ext_length(const uint8_t* d);
 
 string w2utf8(const wchar_t*str);
 
-struct authentication_vector{
+struct authentication_vector {
     uint8_t kasme[32];    // ASME key
     uint8_t rand[16];     // random challenge parameter
     uint8_t autn[16];     // Authentication token parameters
