@@ -117,7 +117,7 @@ int mm::dissect_mobile_id_suci(dissector d, context* ctx) {
     d.add_bits(flags_supi_fmt_tid);
     d.step(1);
 
-    const auto supi_fmt = oct & 0x70;
+    const auto supi_fmt = oct & 0x70u;
     if (supi_fmt != 1) { // supi_fmt == 0
         // IMSI
         const auto consumed = dissect_e212_mcc_mnc(d, ctx);

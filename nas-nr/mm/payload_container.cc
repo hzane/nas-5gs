@@ -20,15 +20,15 @@ int mm::dissect_pld_container_entry(dissector d, context* ctx) {
 
     (void) d.add_item(1, &hf_payload_container_type, enc::be);
 
-    auto nie = (d.uint8() & 0xf0u) >> 4;
+    uint8_t nie = (d.uint8() & 0xf0u) >> 4u;
     (void) d.add_item(1, &hf_pld_cont_entry_nie, enc::be);
     d.step(1);
 
-    while (nie > 0) {
+    while (nie != 0) {
         const auto consumed = dissect_optional_ie(d, ctx);
         d.step(consumed);
 
-        --nie;
+        nie = nie - 1;
     }
     (void) d.add_item(d.length, &hf_pld_cont_entry_contents, enc::na);
     return len;
@@ -78,7 +78,7 @@ int mm::dissect_payload_container(dissector d, context* ctx) {
     } break;
     case 5: {
         /* UE policy container */
-        const auto consumed = dissect_updp(d, ctx);
+        const auto consumed = dissect_ue_policy_delivery_procedure(d, ctx);
         d.step(consumed);
     } break;
     case 6: {
@@ -99,12 +99,12 @@ int mm::dissect_payload_container(dissector d, context* ctx) {
     } break;
     case 15: {
         // Multiple payloads
-        auto nentries = d.uint8();
+        auto ne = d.uint8();
         d.step(1);
-        while (nentries > 0) {
+        while (ne != 0) {
             const auto consumed = dissect_pld_container_entry(d, ctx);
             d.step(consumed);
-            --nentries;
+            ne = ne - 1;
         }
         /*
         If the payload container type is set to "Multiple payloads", the number of entries
@@ -124,7 +124,7 @@ int mm::dissect_payload_container(dissector d, context* ctx) {
 
 /* UPDP */
 /* D.6.1 UE policy delivery service message type */
-int mm::dissect_updp(dissector d, context* ctx) {
+int mm::dissect_ue_policy_delivery_procedure(dissector d, context* ctx) {
     const use_context uc(ctx, "updp", d, 0);
 
     /* 9.6  Procedure transaction identity

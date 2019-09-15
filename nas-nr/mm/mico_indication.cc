@@ -33,7 +33,7 @@ const true_false_string tfs_raai = {
 
 const field_meta mm::hfm_mm_raai_b0 = {
     "Registration Area Allocation Indication (RAAI)",
-    "nas.nr.mm.raai_b0",
+    "nas.nr.mm.raai",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,

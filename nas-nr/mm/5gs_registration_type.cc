@@ -89,7 +89,7 @@ const element_meta mm::aguti_mobile_id = {
     nullptr,
 };
 
-
+// UE's usage setting         9.11.3.55
 const element_meta mm::ue_usage_setting = {
     0x18,
     "UE's usage setting",
@@ -98,7 +98,7 @@ const element_meta mm::ue_usage_setting = {
 };
 
 // UE's usage setting    UE's usage setting         9.11.3.55
-static true_false_string tfs_nas_5gs_mm_ue_usage_setting = {
+const true_false_string tfs_nas_5gs_mm_ue_usage_setting = {
     "Data centric",
     "Voice centric",
 };

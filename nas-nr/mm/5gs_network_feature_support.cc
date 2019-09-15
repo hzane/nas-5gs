@@ -78,7 +78,7 @@ static const tf_string tfs_iwi = {
 /* 9.11.3.5    5GS network feature support */
 const field_meta hf_nw_feat_sup_ims_iwk_n26_b6 = {
     "Interworking without N26",
-    "nas.nr.nw_feat_sup.iwk_n26",
+    "nas.nr.nw.feature.support.n26",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -128,6 +128,7 @@ const value_string nas_5gs_nw_feat_sup_ims_vops_values[] = {
     {0x3, "Reserved"},
     {0, nullptr},
 };
+
 const field_meta hf_nw_feat_sup_ims_vops_b1b0 = {
     "IMS voice over PS session indicator (IMS VoPS)",
     "nas.nr.mm.nw.feature.ims.vops",
@@ -143,26 +144,32 @@ const true_false_string tfs_nwfs_b0 = {
     "Emergency services supported over non-3GPP access",
     "Emergency services not supported over non-3GPP access",
 };
+
 const true_false_string tfs_nwfs_b1 = {
     "Access identity 2 valid",
     "Access identity 2 not valid",
 };
+
 const true_false_string tfs_nwfs_b2 = {
     "Use of enhanced coverage is restricted",
     "Use of enhanced coverage is not restricted",
 };
+
 const true_false_string tfs_nwfs_b3 = {
     "Control plane CIoT 5GS optimization supported",
     "Control plane CIoT 5GS optimization not supported",
 };
+
 const true_false_string tfs_nwfs_b4 = {
     "N3 data transfer not supported",
     "N3 data transfer supported",
 };
+
 const true_false_string tfs_nwfs_b5 = {
     "Header compression for control plane CIoT 5GS optimization supported",
     "Header compression for control plane CIoT 5GS optimization not supported",
 };
+
 const true_false_string tfs_nwfs_b6 = {
     "User plane CIoT 5GS optimization supported",
     "User plane CIoT 5GS optimization not supported",
@@ -178,6 +185,7 @@ const field_meta hf_nwfs_emcn3_b0 = {
     nullptr,
     0x01,
 };
+
 const field_meta hf_nwfs_mcsi_b1 = {
     "MCS indicator (MCSI)",
     "nas.nr.mm.nw.feature.mcs",
@@ -188,6 +196,7 @@ const field_meta hf_nwfs_mcsi_b1 = {
     nullptr,
     0x02,
 };
+
 const field_meta hf_nwfs_restrict_ec_b2 = {
     "Restriction on enhanced coverage (RestrictEC)",
     "nas.nr.nw.feature.restrict.ec",
@@ -210,7 +219,7 @@ const field_meta hf_nwfs_5gcp_ciot_b3 = {
 };
 const field_meta hf_nwfs_n3data_b4 = {
     "N3 data transfer (N3 data)",
-    "nas.nr.mm.nw.feature.n3data",
+    "nas.nr.mm.nw.feature.n3",
     ft::ft_uint8,
     fd::base_dec,
     nullptr,

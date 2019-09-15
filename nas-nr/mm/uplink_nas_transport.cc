@@ -47,7 +47,7 @@ int mm::dissect_ul_nas_transp(dissector d, context* ctx) {
     d.step(consumed);
 
     /*24 Additional information  9.11.2.1    O    TLV 3-n */
-    consumed = dissect_opt_tlv(nullptr, &additional_inf, d, ctx);
+    consumed = dissect_opt_tlv(nullptr, &additional_information, d, ctx);
     d.step(consumed);
 
     // Z	MA PDU session information	MA PDU session information	O	TV	1

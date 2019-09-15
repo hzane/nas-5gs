@@ -127,10 +127,8 @@ const field_meta hf_conf_upd_ind_ack_b0 = {
 };
 
 
-/*
- * [3] 10.5.3.12 Daylight Saving Time
- */
-static const value_string gsm_a_dtap_dst_adjustment_vals[] = {
+/*[3] 10.5.3.12 Daylight Saving Time */
+static const value_string gsm_daylight_saving_adjustment_values[] = {
     {0, "No adjustment for Daylight Saving Time"},
     {1, "+1 hour adjustment for Daylight Saving Time"},
     {2, "+2 hours adjustment for Daylight Saving Time"},
@@ -142,7 +140,7 @@ const field_meta hf_dst_adjustment = {
     "gsm_a.dtap.dst_adjustment",
     ft::ft_uint8,
     fd::base_dec,
-    gsm_a_dtap_dst_adjustment_vals,
+    gsm_daylight_saving_adjustment_values,
     nullptr,
     nullptr,
     0x03,
@@ -150,7 +148,7 @@ const field_meta hf_dst_adjustment = {
 
 
 /* [3] 10.5.3.5a Network Name */
-static const value_string gsm_a_dtap_number_of_spare_bits_vals[] = {
+static const value_string gsm_network_name_values[] = {
     {0, "this field carries no information about the number of spare bits in octet n"},
     {1, "bit 8 is spare and set to '0' in octet n"},
     {2, "bits 7 and 8 are spare and set to '0' in octet n"},
@@ -168,7 +166,7 @@ const true_false_string tfs_add_ci = {
     "The MS should not add the letters for the Country's Initials to the text string",
 };
 
-static const value_string gsm_a_dtap_coding_scheme_vals[] = {
+const value_string gsm_coding_scheme_values[] = {
     {0,
      "Cell Broadcast data coding scheme, GSM default alphabet, language unspecified, "
         "defined in 3GPP TS 23.038",
@@ -183,7 +181,7 @@ static const value_string gsm_a_dtap_coding_scheme_vals[] = {
     {0, nullptr},
 };
 
-static const true_false_string gsm_a_extension_value = {"No Extension", "Extended"};
+const true_false_string extension_value = {"No Extension", "Extended"};
 
 const field_meta hf_extension = {
     "Extension",
@@ -191,17 +189,17 @@ const field_meta hf_extension = {
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
-    &gsm_a_extension_value,
+    &extension_value,
     nullptr,
     0x80,
 };
 
 const field_meta hf_coding_scheme = {
     "Coding Scheme",
-    "gsm_a.dtap.coding_scheme",
+    "gsm.coding.scheme",
     ft::ft_uint8,
     fd::base_dec,
-    gsm_a_dtap_coding_scheme_vals,
+    gsm_coding_scheme_values,
     nullptr,
     nullptr,
     0x70,
@@ -209,7 +207,7 @@ const field_meta hf_coding_scheme = {
 
 const field_meta hf_add_ci = {
     "Add CI",
-    "gsm_a.dtap.add_ci",
+    "gsm.add.ci",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -220,10 +218,10 @@ const field_meta hf_add_ci = {
 
 const field_meta hf_number_of_spare_bits = {
     "Number of spare bits in last octet",
-    "gsm_a.dtap.number_of_spare_bits",
+    "gsm.spare.number",
     ft::ft_uint8,
     fd::base_dec,
-    gsm_a_dtap_number_of_spare_bits_vals,
+    gsm_network_name_values,
     nullptr,
     nullptr,
     0x07,
@@ -231,14 +229,11 @@ const field_meta hf_number_of_spare_bits = {
 
 const field_meta hf_text_string = {
     "Text String",
-    "gsm_a.dtap.text_string",
+    "gsm.text.string",
     ft::ft_bytes,
     fd::bits7,
     nullptr,nullptr,nullptr,
     0x0,
 };
-
-
-
 
 }

@@ -19,7 +19,7 @@ int dissect_operator_defined_access_category_definitions(dissector d, context* c
 int dissect_sms_indication(dissector d, context* ctx);
 int dissect_security_algo(dissector d, context* ctx);
 int dissect_replayed_ue_sec_cap(dissector d, context* ctx);
-int dissect_imeisv_req(dissector d, context* ctx);
+int dissect_imeisv_request(dissector d, context* ctx);
 int dissect_selected_eps_security_algo(dissector d, context* ctx);
 int dissect_additional_security_info(dissector d, context* ctx);
 int dissect_reported_s1_ue_sec_cap(dissector d, context* ctx);
@@ -86,7 +86,7 @@ int dissect_mm_status(dissector d, context* ctx);
 int dissect_notification(dissector d, context* ctx);
 int dissect_notification_resp(dissector d, context* ctx);
 int dissect_ul_nas_transp(dissector d, context* ctx);
-int dissect_dl_nas_transp(dissector d, context* ctx);
+int dissect_dl_nas_transparent(dissector d, context* ctx);
 
 int dissect_allowed_nssai(dissector d, context* ctx);
 int dissect_tracking_area_id_list(dissector d, context* ctx);
@@ -106,7 +106,7 @@ int dissect_ladn_information(dissector d, context* ctx); /*  9.11.3.30    LADN i
 int dissect_mobile_id(dissector d, context* ctx);
 
 //  9.11.3.36    Network slicing indication
-int dissect_nw_slicing_ind(dissector d, context* ctx);
+int dissect_nw_slicing_indication(dissector d, context* ctx);
 int dissect_nas_ksi(dissector d, context* ctx);
 int dissect_nas_msg_container(dissector d, context* ctx = nullptr);
 
@@ -130,7 +130,7 @@ int dissect_registration_request_type(dissector d, context* ctx);
 //  5GMM capability  9.11.3.1
 int dissect_mm_capability(dissector d, context* ctx);
 
-int dissect_updp(dissector d, context* ctx);
+int dissect_ue_policy_delivery_procedure(dissector d, context* ctx);
 int dissect_security_protected_5gs_nas_msg(dissector d, context* ctx);
 
 int dissect_emergency_num_list(dissector d, context* ctx);

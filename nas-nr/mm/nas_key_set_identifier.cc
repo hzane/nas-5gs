@@ -36,12 +36,12 @@ extern const val_string mm::nas_ksi_values[] = {
 };
 
 // only spare half octet
-const field_meta mm::hf_ngksi_nas_ksi = {
+const field_meta mm::hf_nas_ksi = {
     "NAS key set identifier - ngKSI",
     "nas.nr.mm.ngksi",
     ft::ft_uint8,
     fd::base_dec,
-    nullptr,
+    nas_ksi_values,
     nullptr,
     nullptr,
     0xF0,

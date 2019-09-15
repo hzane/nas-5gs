@@ -128,7 +128,7 @@ extern const message_meta mm::msgs[] = {
     {0x65, "Notification", dissect_notification, nullptr},
     {0x66, "Notification response", dissect_notification_resp, nullptr},
     {0x67, "UL NAS transport", dissect_ul_nas_transp, nullptr},
-    {0x68, "DL NAS transport", dissect_dl_nas_transp, nullptr},
+    {0x68, "DL NAS transport", dissect_dl_nas_transparent, nullptr},
     {0, nullptr, nullptr, nullptr},
 };
 

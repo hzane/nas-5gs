@@ -8,7 +8,7 @@ using namespace nas;
 using namespace mm;
 
 /*  8.2.11 DL NAS transport */
-int mm::dissect_dl_nas_transp(dissector d, context* ctx) {    
+int mm::dissect_dl_nas_transparent(dissector d, context* ctx) {
     const use_context uc(ctx, "dl-nas-transport", d, 0);
     // network to UE
     down_link(d.pinfo);
@@ -32,13 +32,11 @@ int mm::dissect_dl_nas_transp(dissector d, context* ctx) {
     d.step(consumed);
 
     /*24    Additional information 9.11.2.1    O    TLV 3-n*/
-    // ELEM_OPT_TLV(0x24, , DE_NAS_5GS_CMN_ADD_INF, NULL);
-    consumed = dissect_opt_tlv(nullptr, &additional_inf, d, ctx);
+    consumed = dissect_opt_tlv(nullptr, &additional_information, d, ctx);
     d.step(consumed);
 
     /*58    5GMM cause  9.11.3.2    O    TV    2 */
-    // ELEM_OPT_TV(0x58, , DE_NAS_5GS_MM_5GMM_CAUSE, NULL);
-    consumed = dissect_opt_tv(nullptr, &mm_cause, d, ctx);
+     consumed = dissect_opt_tv(nullptr, &mm_cause, d, ctx);
     d.step(consumed);
 
     /*37    Back-off timer value    GPRS timer 3 9.11.2.5    O    TLV    3 */

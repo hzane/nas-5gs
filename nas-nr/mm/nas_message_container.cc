@@ -4,7 +4,7 @@
 int mm::dissect_nas_msg_container(dissector d, context* ctx) {
     /* The purpose of the NAS message container IE is to
      * encapsulate a plain 5GS NAS message. */
-    /* a NAS message without NAS security heade */
+    /* a NAS message without NAS security header */
 
     const use_context uc(ctx, "nas-msg-container", d, -1);
 

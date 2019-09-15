@@ -23,13 +23,13 @@ const true_false_string nas_5gs_mm_switch_off_tfs = {
     "Normal de-registration",
 };
 
-static const true_false_string nas_5gs_mm_re_reg_req_tfs = {
+const true_false_string tfs_reregistration_required = {
     "re-registration required",
     "re-registration not required"};
 
 const field_meta mm::hf_switch_off = {
     "Switch off",
-    "nas.nr.mm.switch_off",
+    "nas.nr.mm.switch.off",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -39,11 +39,11 @@ const field_meta mm::hf_switch_off = {
 };
 const field_meta mm::hf_reregistration_request = {
     "Re-registration required",
-    "nas.nr.mm.re_reg_req",
+    "nas.nr.mm.re.registration.required",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
-    &nas_5gs_mm_re_reg_req_tfs,
+    &tfs_reregistration_required,
     nullptr,
     0x04,
 };

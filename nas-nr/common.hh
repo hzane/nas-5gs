@@ -20,7 +20,7 @@ extern const element_meta dnn;
 int dissect_additional_inf(dissector d, context* ctx);
 
 /* 9.10.2.1    Additional information*/
-extern const element_meta additional_inf;
+extern const element_meta additional_information;
 
 /* TS 24.008 g10[9] 10.5.7.3 GPRS Timer */
 int dissect_gprs_timer_set(dissector d, context* ctx);

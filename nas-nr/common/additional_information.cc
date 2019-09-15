@@ -1,7 +1,7 @@
 #include "../common.hh"
 
 // Additional information  9.11.2.1
-extern const element_meta cmn::additional_inf = {
+extern const element_meta cmn::additional_information = {
     0x24,
     "Additional information",
     cmn::dissect_additional_inf,

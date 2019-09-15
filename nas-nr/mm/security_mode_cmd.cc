@@ -75,7 +75,7 @@ extern const element_meta replayed_ue_sec_cap = {
 extern const element_meta imeisv_req = {
     0xE0,
     "IMEISV request",
-    dissect_imeisv_req,
+    dissect_imeisv_request,
     nullptr,
 };
 

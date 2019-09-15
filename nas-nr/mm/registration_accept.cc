@@ -279,14 +279,14 @@ const field_meta hf_mobile_network_code = {
 
 
 /* 9.9.3.37a Extended Emergency Number List TS24.301*/
-static true_false_string tfs_eenlv_value = {
+static true_false_string tfs_ext_emergency_number_list = {
     "Valid only in the PLMN from which this IE is received",
     "Valid in the country of the PLMN from which this IE is received",
 };
 
 const field_meta hf_emergency_number_info = {
     "Emergency Number Information",
-    "gsm_a.dtap.emergency_number_information",
+    "gsm.ext.emergency.number.information",
     ft::ft_uint32,
     fd::base_dec,
     nullptr,nullptr,nullptr,
@@ -294,7 +294,7 @@ const field_meta hf_emergency_number_info = {
 };
 const field_meta hf_emergency_number_length = {
     "Emergency Number Info length",
-    "gsm_a.dtap.emerg_num_info_length",
+    "gsm.emergency.number.length",
     ft::ft_uint8,
     fd::base_dec,
     nullptr,
@@ -329,7 +329,7 @@ const field_meta hf_fire_brigade = {
 };
 const field_meta hf_ambulance = {
     "Ambulance",
-    "gsm_a.dtap.serv_cat_b2",
+    "gsm.emergency.ambulance",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,nullptr,nullptr,
@@ -337,7 +337,7 @@ const field_meta hf_ambulance = {
 };
 const field_meta hf_police = {
     "Police",
-    "gsm.police",
+    "gsm.emergency.police",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,nullptr,nullptr,
@@ -345,7 +345,7 @@ const field_meta hf_police = {
 };
 const field_meta hf_emergency_bcd_num = {
     "Emergency BCD Number",
-    "gsm_a.dtap.emergency_bcd_num",
+    "gsm.emergency.bcd",
     ft::ft_bytes,
     fd::bcd,
     nullptr,
@@ -361,7 +361,7 @@ const field_meta hf_ext_emergency_number_list_validity = {
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
-    &tfs_eenlv_value,
+    &tfs_ext_emergency_number_list,
     nullptr,
     0x01,
 };
@@ -464,115 +464,121 @@ const field_meta hf_sor_hdr0_sor_data_type = {
     nullptr,
     0x01,
 };
-const true_false_string tfs_selected_not_selected = {"Selected", "Not Selected"};
+
+const true_false_string tfs_selected_not_selected = {"Selected", "Not Selected",};
+
 const field_meta        hf_access_tech_utran      = {
     "Access technology UTRAN",
-    "nas.nr.cces_tech_o1_b7.utran",
+    "nas.nr.access.technology.utran",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
-    (&tfs_selected_not_selected),
+    &tfs_selected_not_selected,
     nullptr,
     0x80,
 };
-const field_meta hf_access_tech_e_utran = {
+const field_meta hf_access_tech_eutran = {
     "Access technology E-UTRAN",
-    "nas.nr.cces_tech_o1_b6.e_utran",
+    "nas.nr.access.technology.eutran",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
-    (&tfs_selected_not_selected),
+    &tfs_selected_not_selected,
     nullptr,
     0x40,
 };
-const field_meta hf_access_tech_e_utran_wb = {
+const field_meta hf_access_tech_eutran_wb = {
     "Access technology E-UTRAN in WB-S1 mode",
-    "nas.nr.cces_tech_o1_b5.e_utran_in_wb_s1_mode",
+    "nas.nr.access.technology.eutran.wb",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
-    (&tfs_selected_not_selected),
+    &tfs_selected_not_selected,
     nullptr,
     0x20,
 };
-const field_meta hf_access_tech_e_utran_nb = {
+const field_meta hf_access_tech_eutran_nb = {
     "Access technology E-UTRAN in NB-S1 mode",
-    "nas.nr.cces_tech_o1_b4.e_utran_in_nb_s1_mode",
+    "nas.nr.access.technology.eutran.nb",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
-    (&tfs_selected_not_selected),
+    &tfs_selected_not_selected,
     nullptr,
     0x10,
 };
-const field_meta hf_acces_tech_o1_b3 = {
+const field_meta hf_access_tech_o1_b3 = {
     "Access technology NG-RAN",
-    "nas.nr.cces_tech_o1_b3.ng_ran",
+    "nas.nr.access.technology.ran",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
-    (&tfs_selected_not_selected),
+    &tfs_selected_not_selected,
     nullptr,
     0x08,
 };
 
-const field_meta hf_acces_tech_o2_b7 = {
+const field_meta hf_access_tech_o2_b7 = {
     "Access technology GSM",
-    "nas.nr.cces_tech_o2_b7.gsm",
+    "nas.nr.access.technology.gsm",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
-    (&tfs_selected_not_selected),
+    &tfs_selected_not_selected,
     nullptr,
     0x80,
 };
-const field_meta hf_acces_tech_o2_b6 = {
+
+const field_meta hf_access_tech_o2_b6 = {
     "Access technology GSM COMPACT",
-    "nas.nr.cces_tech_o2_b6.gsm_compact",
+    "nas.nr.acces.technology.gsm.compact",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
-    (&tfs_selected_not_selected),
+    &tfs_selected_not_selected,
     nullptr,
     0x40,
 };
-const field_meta hf_acces_tech_o2_b5 = {
+
+const field_meta hf_access_tech_o2_b5 = {
     "Access technology CDMA2000 HRPD",
-    "nas.nr.cces_tech_o2_b5.cdma2000_hrpd",
+    "nas.nr.access.technology.cdma2000.hrpd",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
-    (&tfs_selected_not_selected),
+    &tfs_selected_not_selected,
     nullptr,
     0x20,
 };
-const field_meta hf_acces_tech_o2_b4 = {
+
+const field_meta hf_access_tech_o2_b4 = {
     "Access technology CDMA2000 1xRTT",
-    "nas.nr.cces_tech_o2_b4.cdma2000_1x_rtt",
+    "nas.nr.access.technology.cdma2000.rtt",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
-    (&tfs_selected_not_selected),
+    &tfs_selected_not_selected,
     nullptr,
     0x10,
 };
-const field_meta hf_acces_tech_o2_b3 = {
+
+const field_meta hf_access_tech_o2_b3 = {
     "Access technology EC-GSM-IoT",
-    "nas.nr.cces_tech_o2_b3.ec_gsm_iot",
+    "nas.nr.access.technology.gsm.iot",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
-    (&tfs_selected_not_selected),
+    &tfs_selected_not_selected,
     nullptr,
     0x08,
 };
 const field_meta hf_acces_tech_o2_b2 = {
     "Access technology GSM ",
-    " nas_5gs.cces_tech_o2_b2.gsm ",
+    " nas_5gs.access.technology.gsm ",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
-    (&tfs_selected_not_selected),
+    &tfs_selected_not_selected,
     nullptr,
     0x04,
 };
@@ -613,7 +619,7 @@ const field_meta hf_sor_mac_iue = {
 };
 const field_meta hf_sor_mac_iausf = {
     "SOR-MAC-IAUSF",
-    "nas.nr.mm.sor_mac_iausf",
+    "nas.nr.mm.sor.mac.iausf",
     ft::ft_bytes,
     fd::base_none,
     nullptr,nullptr,nullptr,

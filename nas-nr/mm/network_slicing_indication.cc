@@ -7,7 +7,7 @@ extern const field_meta hf_dcni;
 extern const field_meta hf_nssci;
 
 //  9.11.3.36    Network slicing indication
-int mm::dissect_nw_slicing_ind(dissector d, context* ctx) {
+int mm::dissect_nw_slicing_indication(dissector d, context* ctx) {
     const use_context uc(ctx, "nw-slicing-indication", d, -1);
 
     static const field_meta* flags[] = {
@@ -27,12 +27,12 @@ int mm::dissect_nw_slicing_ind(dissector d, context* ctx) {
 extern const element_meta mm::nw_slicing_ind = {
     0x90,
     "Network slicing indication",
-    mm::dissect_nw_slicing_ind,
+    mm::dissect_nw_slicing_indication,
     nullptr,
 };
 
 /* 9-  Network slicing indication  Network slicing indication 9.11.3.36  O  TV 1 */
-const true_false_string nas_5gs_mm_dcni_tfs = {
+const true_false_string tfs_dcni = {
     "Requested NSSAI created from default configured NSSAI",
     "Requested NSSAI not created from default configured NSSAI",
 };
@@ -43,7 +43,7 @@ const field_meta hf_dcni = {
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
-    &nas_5gs_mm_dcni_tfs,
+    &tfs_dcni,
     nullptr,
     0x02,
 };
