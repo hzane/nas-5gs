@@ -15,8 +15,8 @@ const element_meta mm::guti_mobile_id = {
 int mm::dissect_mobile_id(dissector d, context* ctx) {
     const use_context uc(ctx, "mobile-id", d, 0);
 
-    const auto oct      = d.uint8();
-    const auto type_id  = oct & 0x07u;
+    const NASNR_AUTO(int) oct      = d.uint8();
+    const NASNR_AUTO(int) type_id  = oct & 0x07u;
 
     int consumed = 0;
     switch (type_id) {
@@ -112,15 +112,15 @@ int mm::dissect_mobile_id_5gstmsi(dissector d, context* ctx) {
 int mm::dissect_mobile_id_suci(dissector d, context* ctx) {
     const use_context uc(ctx, "mobile-id-suci", d, 0);
 
-    const auto oct = d.uint8();
+    const NASNR_AUTO(int) oct = d.uint8();
 
     d.add_bits(flags_supi_fmt_tid);
     d.step(1);
 
-    const auto supi_fmt = oct & 0x70;
+    const NASNR_AUTO(uint8_t) supi_fmt = oct & 0x70;
     if (supi_fmt != 1) { // supi_fmt == 0
         // IMSI
-        const auto consumed = dissect_e212_mcc_mnc(d, ctx);
+        const NASNR_AUTO(int) consumed = dissect_e212_mcc_mnc(d, ctx);
         d.step(consumed);
 
         /* Routing indicator octet 8-9 */
@@ -128,7 +128,7 @@ int mm::dissect_mobile_id_suci(dissector d, context* ctx) {
         d.step(2);
 
         /* Protection scheme id octet 10 */
-        const auto scheme_id = d.uint8() & 0x0fu;
+        const NASNR_AUTO(int) scheme_id = d.uint8() & 0x0fu;
         (void) d.add_item(1, &hf_protection_scheme_id, enc::be);
         d.step(1);
 
@@ -160,7 +160,7 @@ int mm::dissect_mobile_id_5gguti(dissector d, context* ctx) {
     (void) d.add_item(1, &hf_identity_type, enc::be);
     d.step(1);
 
-    const auto consumed = dissect_e212_mcc_mnc(d, ctx);
+    const NASNR_AUTO(int) consumed = dissect_e212_mcc_mnc(d, ctx);
     d.step(consumed);
 
     /* AMF Region ID octet 7 */
