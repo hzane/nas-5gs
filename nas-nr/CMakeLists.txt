@@ -1,13 +1,10 @@
 cmake_minimum_required(VERSION 3.14)
 project(nas-nr)
 
-include(WriteCompilerDetectionHeader)
+# include(WriteCompilerDetectionHeader)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_C_STANDARD 99)
-
-# set(CMAKE_CXX_FLAGS  "-fms-extensions -Wno-extern-initializer")
-# set(CMAKE_C_FLAGS "-fms-extensions")
 
 #write_compiler_detection_header (
 #        FILE nas-nr-compiler-detection.hh
@@ -30,3 +27,5 @@ target_compile_definitions(nas-nr-ts24501 PRIVATE NASNRTS24501_EXPORTS)
 
 add_executable(nas-nr-demo ${NAS_5GS_SRCS} ${NAS_5GS_MM_SRCS} ${NAS_5GS_SM_SRCS} ${NAS_5GS_COMMON_SRCS} ${HEADERS})
 target_link_libraries(nas-nr-demo PRIVATE nas-nr-ts24501 stdc++fs)
+
+
