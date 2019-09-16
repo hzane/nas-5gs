@@ -82,8 +82,11 @@ static const uint16_t gsm_default_alphabet[0x80] = {
     'x',   'y',   'z',   0xe4, 0xf6,  0xf1, 0xfc,  0xe0};
 
 static uint32_t GSM2UNICHAR(uint8_t c) {
+#if NASNR_COMPILER_CXX_STDSIZE
     if (c < std::size(gsm_default_alphabet)) return gsm_default_alphabet[c];
-
+#else
+	if (c<_countof(gsm_default_alphabet)) return gsm_default_alphabet[c];
+#endif
     return UNREP;
 }
 
@@ -120,7 +123,7 @@ ustring ts_23_038_7bits_string(const uint8_t *ptr, int bit_offset, int no_of_cha
 
     ustring ret;
 
-    auto bits = static_cast< uint32_t >(bit_offset) & 0x07u;
+    NASNR_AUTO(uint32_t) bits = static_cast< uint32_t >(bit_offset) & 0x07u;
     if (!bits) {
         bits = 7;
     }
