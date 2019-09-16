@@ -17,15 +17,15 @@ int mm::dissect_emergency_num_list(dissector d, context* ctx) {
         &hf_mountain_rescue,
         nullptr,
     };
-    const auto len = d.length;
+    const NASNR_AUTO(int) len = d.length;
 
     while (d.length > 0) {
         /* Length of 1st Emergency Number information note 1) octet 3
          * NOTE 1: The length contains the number of octets used to encode the
          * Emergency Service Category Value and the Number digits.
          */
-        auto       elen    = d.uint8();
-        const auto subtree = d.add_item(elen + 1, &hf_emergency_number_info, enc::be);
+        NASNR_AUTO(uint8_t)       elen    = d.uint8();
+        NASNR_AUTO(proto_node*) const subtree = d.add_item(elen + 1, &hf_emergency_number_info, enc::be);
         use_tree   ut(d, subtree);
 
         (void) d.add_item(1, &hf_emergency_number_length, enc::be);
