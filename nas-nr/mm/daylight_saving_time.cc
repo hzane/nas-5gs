@@ -8,10 +8,9 @@ using namespace mm;
 int mm::dissect_daylight_saving_time(dissector d, context* ctx) {
     const use_context uc(ctx, "daylight-saving-time", d, -1);
 
-    auto i = d.add_item(1, &hf_dst_adjustment, enc::be);
+    (void) d.add_item(1, &hf_dst_adjustment, enc::be);
     d.step(1);
 
-    unused(i);
     return 1;
 }
 
