@@ -1,10 +1,18 @@
 #pragma once
 #include "nas-nr-compiler-detection.hh"
+#if _MSC_VER > 1600
 #include <cstdint>
+#else
+#include "stdint.h"
+#endif
 #include <string>
 #include <vector>
 
+#if NASNR_COMPILER_CXX_VARIADIC_TEMPLATES
 template <typename... Args> inline void unused(Args&&...) {}
+#else
+#define unused(X) (void) X
+#endif
 
 struct tvbuff;
 
@@ -20,43 +28,49 @@ struct val_string;
 struct true_false_string;
 struct range_string;
 
+#if NASNR_COMPILER_CXX_USING_ALIAS
 using proto_tree = proto_node;
 using proto_item = proto_node;
 using string     = std::string;
 using ustring    = std::vector< uint8_t >;
-
+#else
+typedef proto_node proto_tree;
+typedef proto_node proto_item;
+using std::string;
+typedef std::vector<uint8_t> ustring;
+#endif
 extern void diag(const char* format, ...);
 
 namespace enc {
-inline const uint32_t na   = 0;
-inline const uint32_t be   = 1; // big endian
-inline const uint32_t none = 4; // host order
+NASNR_INLINE const uint32_t na   = 0;
+NASNR_INLINE const uint32_t be   = 1; // big endian
+NASNR_INLINE const uint32_t none = 4; // host order
 } // namespace enc
 
 struct dissector {
-    packet_info* pinfo  = nullptr;
-    proto_node*  tree   = nullptr;
-    tvbuff*      tvb    = nullptr;
-    int          offset = 0;
-    int          length = 0;
-    void*        data   = nullptr;
+    packet_info* pinfo NASNR_EQUAL_INIT(nullptr);
+    proto_node* tree NASNR_EQUAL_INIT(nullptr);
+    tvbuff* tvb NASNR_EQUAL_INIT(nullptr);
+    int offset NASNR_EQUAL_INIT(0);
+    int length NASNR_EQUAL_INIT(0);
+    void* data NASNR_EQUAL_INIT(nullptr);
 
     dissector& step(int consumed) {
         offset += consumed;
         length -= consumed;
         return *this;
     }
-    proto_node* add_item(int len, const field_meta* fm, uint32_t e = enc::be) const;
-    proto_node* add_item(int len, const char* format, ...) const;
-    void        add_bits(const field_meta* metas[]) const;
-    void        extraneous_data_check(int max_len, context* ctx = nullptr) const;
-    auto        safe_ptr() const -> const uint8_t*;
-    auto        safe_length(int len) const -> int;
-    auto        slice(int len) const -> dissector;
-    auto        use_elem(void* elem) const -> dissector;
-    auto        uint8() const -> uint8_t;
-    auto        ntohs() const -> uint16_t;
-    auto        uint32() const -> uint32_t;
+    proto_node*    add_item(int len, const field_meta* fm, uint32_t e = enc::be) const;
+    proto_node*    add_item(int len, const char* format, ...) const;
+    void           add_bits(const field_meta* metas[]) const;
+    void           extraneous_data_check(int max_len, context* ctx = nullptr) const;
+    const uint8_t* safe_ptr() const;
+    int            safe_length(int len) const;
+    dissector      slice(int len) const;
+    dissector      use_elem(void* elem) const;
+    uint8_t        uint8() const;
+    uint16_t       ntohs() const;
+    uint32_t       uint32() const;
 };
 
 struct use_tree { // NOLINT: special;-member-functions
@@ -69,52 +83,56 @@ struct use_tree { // NOLINT: special;-member-functions
 typedef int (*dissect_fnc_t)(dissector, context* ctx);
 
 struct nr_security_context {
-    uint8_t  activated         = 0;
-    uint8_t  security_type     = 0; // 33.401
-    uint8_t  nas_ksi           = 0; // NAS key set identifier for E-UTRAN
-    int      vector_index      = 0; // pointer of vector, -1 means invalid
-    uint8_t  cyphering_key[16] = {};
-    uint8_t  integrity_key[16] = {};
-    uint32_t dl_count_overflow = 0; // downlink count parameters
-    uint32_t dl_count_seq_no   = 0;
-    uint32_t ul_count_overflow = 0;
-    uint32_t ul_count_seq_no   = 0;
+    uint8_t activated NASNR_EQUAL_INIT(0);
+    uint8_t security_type NASNR_EQUAL_INIT(0); // 33.401
+    uint8_t nas_ksi NASNR_EQUAL_INIT(0);       // NAS key set identifier for E-UTRAN
+    int vector_index NASNR_EQUAL_INIT(0);      // pointer of vector, -1 means invalid
+    uint8_t          cyphering_key[16] NASNR_EQUAL_INIT({0});
+    uint8_t          integrity_key[16] NASNR_EQUAL_INIT({0});
+    uint32_t dl_count_overflow NASNR_EQUAL_INIT(0); // downlink count parameters
+    uint32_t dl_count_seq_no NASNR_EQUAL_INIT(0);
+    uint32_t ul_count_overflow NASNR_EQUAL_INIT(0);
+    uint32_t ul_count_seq_no NASNR_EQUAL_INIT(0);
     struct {
-        uint8_t ciphering_nr   = 0; // ciphering algo for nr
-        uint8_t integrity_nr   = 0; // integrity algo for nr
-        uint8_t ciphering_umts = 0; // algothrim for ciphering
-        uint8_t integrity_umts = 0; // algorighm for integrity
-        uint8_t ciphering_gprs = 0; // algorighm used for ciphering
-        uint8_t integrity_gprs = 0; // unused
-        bool    umts_present   = false;
-        bool    gprs_present   = false;
+        uint8_t ciphering_nr NASNR_EQUAL_INIT(0); // ciphering algo for nr
+        uint8_t integrity_nr NASNR_EQUAL_INIT(0); // integrity algo for nr
+        uint8_t ciphering_umts NASNR_EQUAL_INIT(0); // algothrim for ciphering
+        uint8_t integrity_umts NASNR_EQUAL_INIT(0); // algorighm for integrity
+        uint8_t ciphering_gprs NASNR_EQUAL_INIT(0); // algorighm used for ciphering
+        uint8_t integrity_gprs NASNR_EQUAL_INIT(0); // unused
+        bool umts_present NASNR_EQUAL_INIT(false);
+        bool gprs_present NASNR_EQUAL_INIT(false);
     } capability; // UE network capability
     struct {
-        uint8_t ciphering_type = 0;
-        uint8_t integrity_type = 0; // for integrity protection
+        uint8_t ciphering_type NASNR_EQUAL_INIT(0);        
+        uint8_t integrity_type NASNR_EQUAL_INIT(0); // for integrity protection
     } selected_algorithm;           // AMF selected algorithm
 };
 
 struct context : nr_security_context {
-    bool                       security_context_available = false;
-    uint32_t                   msg_auth_code        = 0;
-    uint8_t                    payload_content_type = 0;
-    std::vector< std::string > paths                = {};
+    bool security_context_available NASNR_EQUAL_INIT(false);
+    uint32_t msg_auth_code     NASNR_EQUAL_INIT(0);
+    uint8_t payload_content_type NASNR_EQUAL_INIT(0);
+    std::vector< std::string > paths NASNR_EQUAL_INIT({});
     std::string  path() const;
 };
 
 struct use_context { // NOLINT: special-member-functions
-    context*         ctx    = nullptr;
-    int              offset = 0;
-    int              length = 0;
-    int              maxlen = 0;
+    context* ctx NASNR_EQUAL_INIT(nullptr);
+    int offset       NASNR_EQUAL_INIT(0);
+    int length       NASNR_EQUAL_INIT(0);
+    int maxlen       NASNR_EQUAL_INIT(0);
     const dissector& d;
 
     use_context(context* ctx, const char* path, dissector const& d, const int maxlen = 0)
         : ctx(ctx), offset(d.offset), length(d.length), maxlen(maxlen), d(d) {
         if (!ctx) return;
         if (path == nullptr) path = ".";
+#if _MSC_VER > 1600
         ctx->paths.emplace_back(path);
+#else
+		ctx->paths.push_back(path);
+#endif
         diag("%s%s %d-%d\n",
              string(ctx->paths.size() << 1u, ' ').c_str(),
              path,
