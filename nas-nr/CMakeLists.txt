@@ -13,7 +13,7 @@ set(CMAKE_C_STANDARD 99)
 #        FILE nas-nr-compiler-detection.hh
 #        PREFIX NASNA
 #        COMPILERS GNU MSVC Clang
-#        FEATURES cxx_variadic_templates c_restrict cxx_constexpr cxx_final cxx_noexcept cxx_override cxx_extern_templates cxx_deleted_functions cxx_alignas cxx_nullptr cxx_alignof cxx_static_assert cxx_attribute_deprecated
+#        FEATURES cxx_variadic_templates c_restrict cxx_constexpr cxx_final cxx_noexcept cxx_override cxx_extern_templates cxx_deleted_functions cxx_alignas cxx_nullptr cxx_alignof cxx_static_assert cxx_attribute_deprecated cxx_defaulted_functions cxx_auto_type
 #)
 
 aux_source_directory(. NAS_5GS_SRCS)
