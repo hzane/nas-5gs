@@ -3,7 +3,7 @@
 #include "../packet_info.hh"
 
 /*  8.3.8    PDU session modification reject */
-int sm::dissect_pdu_ses_modification_rej(dissector d, context* ctx) {    
+int sm::dissect_pdu_ses_modification_reject(dissector d, context* ctx) {
     const use_context uc(ctx, "pdu-session-modification-reject", d, 3);
 
     /* Direction: network to UE */
@@ -19,7 +19,6 @@ int sm::dissect_pdu_ses_modification_rej(dissector d, context* ctx) {
     d.step(consumed);
 
     /*7B    Extended protocol configuration options   9.11.4.6    O    TLV - E    4 - 65538*/
-    // ELEM_OPT_TLV_E(0x7B, , DE_ESM_EXT_PCO, NULL);
     consumed = dissect_opt_tlv_e(nullptr, &extended_pco, d, ctx);
     d.step(consumed);
 

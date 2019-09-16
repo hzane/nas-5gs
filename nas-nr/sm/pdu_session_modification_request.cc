@@ -6,7 +6,7 @@ using namespace nas;
 using namespace sm;
 
 /* 8.3.7 PDU session modification request */
-int sm::dissect_pdu_ses_modification_req(dissector d, context* ctx) {    
+int sm::dissect_pdu_ses_modification_request(dissector d, context* ctx) {
     const use_context uc(ctx, "pdu-session-modification-request", d, 0);
 
     /* Direction: UE to network */

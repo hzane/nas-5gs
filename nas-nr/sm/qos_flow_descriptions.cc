@@ -4,7 +4,7 @@
 extern const element_meta sm::requested_qos_flow_des = {
     0x79,
     "QoS flow descriptions - Requested",
-    sm::dissect_authorized_qos_flow_des,
+    sm::dissect_authorized_qos_flow_description,
     nullptr,
 };
 
@@ -12,7 +12,7 @@ extern const element_meta sm::requested_qos_flow_des = {
 extern const element_meta sm::authorized_qos_flow_desc = {
     0x79,
     "QoS flow descriptions - Authorized",
-    sm::dissect_authorized_qos_flow_des,
+    sm::dissect_authorized_qos_flow_description,
     nullptr,
 };
 
@@ -48,7 +48,7 @@ const field_meta sm::hf_sm_qos_des_flow_opt_code = {
     0xe0,
 };
 
-int sm::dissect_qos_param(dissector d, int j, context* ctx) {
+int sm::dissect_qos_parameters(dissector d, int j, context* ctx) {
     const use_context uc(ctx, "qos-param", d, -1);
 
     /* Parameter list */
@@ -107,7 +107,7 @@ int sm::dissect_qos_param(dissector d, int j, context* ctx) {
 }
 
 // Authorized QoS flow descriptions     QoS flow descriptions 9.11.4.12
-int sm::dissect_authorized_qos_flow_des(dissector d, context* ctx) {
+int sm::dissect_authorized_qos_flow_description(dissector d, context* ctx) {
     const use_context uc(ctx, "authorized-qos-flow-desc", d, 0);
 
     static const field_meta* param_flags[] = {
@@ -137,7 +137,7 @@ int sm::dissect_authorized_qos_flow_des(dissector d, context* ctx) {
 
         auto j = 1;
         while (num_param > 0) {
-            const auto consumed = dissect_qos_param(d, j, ctx);
+            const auto consumed = dissect_qos_parameters(d, j, ctx);
             d.step(consumed);
             ++j;
             --num_param;

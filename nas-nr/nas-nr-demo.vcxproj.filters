@@ -150,9 +150,6 @@
     <ClCompile Include="mm\deregistration_type.cc">
       <Filter>nas</Filter>
     </ClCompile>
-    <ClCompile Include="mm\dl_nas_transp.cc">
-      <Filter>nas</Filter>
-    </ClCompile>
     <ClCompile Include="common\dnn.cc">
       <Filter>nas</Filter>
     </ClCompile>
@@ -447,6 +444,7 @@
     <ClCompile Include="mm\use_status.cc">
       <Filter>nas</Filter>
     </ClCompile>
+    <ClCompile Include="mm\downlink_nas_transparent.cc" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common.hh" />

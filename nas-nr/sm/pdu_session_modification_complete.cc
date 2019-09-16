@@ -3,14 +3,13 @@
 #include "../packet_info.hh"
 
 /* * 8.3.10 PDU session modification complete */
-int sm::dissect_pdu_ses_modification_cmpl(dissector d, context* ctx) {    
+int sm::dissect_pdu_ses_modification_complete(dissector d, context* ctx) {
     const use_context uc(ctx, "pdu-session-modification-complete", d, 2);
 
     /* Direction: UE to network */
     up_link(d.pinfo);    
 
     /*7B Extended protocol configuration options 9.11.4.6    O    TLV - E    4 - 65538*/
-    // ELEM_OPT_TLV_E(0x7B, , DE_ESM_EXT_PCO, NULL);
     const auto consumed = dissect_opt_tlv_e(nullptr, &extended_pco, d, ctx);
     d.step(consumed);
 

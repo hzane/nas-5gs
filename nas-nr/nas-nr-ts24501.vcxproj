@@ -245,7 +245,7 @@
     <ClCompile Include="mm\deregistration_request_ue_origin.cc" />
     <ClCompile Include="mm\deregistration_request_ue_terminate.cc" />
     <ClCompile Include="mm\deregistration_type.cc" />
-    <ClCompile Include="mm\dl_nas_transp.cc" />
+    <ClCompile Include="mm\downlink_nas_transparent.cc" />
     <ClCompile Include="mm\drx_parameters.cc" />
     <ClCompile Include="mm\emergency_number_list.cc" />
     <ClCompile Include="mm\eps_bearer_context_status.cc" />

@@ -24,5 +24,5 @@ extern const element_meta sm_pdu_dn_request_container;
 extern const element_meta requested_qos_rules;
 extern const element_meta authorized_qos_flow_desc; // Authorized QoS flow descriptions QoS
 extern const element_meta requested_qos_flow_des;  // Requested QoS flow descriptions QoS
-
+extern const element_meta control_plane_only_indication;
 }

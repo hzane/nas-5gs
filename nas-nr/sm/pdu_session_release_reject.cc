@@ -3,7 +3,7 @@
 #include "../packet_info.hh"
 
 /*  8.3.13 PDU session release reject */
-int sm::dissect_pdu_ses_release_rej(dissector d, context* ctx) {    
+int sm::dissect_pdu_ses_release_reject(dissector d, context* ctx) {
     const use_context uc(ctx, "pdu-session-release-reject", d, 0);
 
     /* Direction: network to UE */

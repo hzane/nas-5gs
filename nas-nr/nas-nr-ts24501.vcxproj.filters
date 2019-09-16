@@ -227,9 +227,6 @@
     <ClCompile Include="mm\deregistration_type.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="mm\dl_nas_transp.cc">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="mm\drx_parameters.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -582,6 +579,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="dllmain.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mm\downlink_nas_transparent.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

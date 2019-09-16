@@ -76,10 +76,20 @@ int sm::dissect_pdu_ses_establishment_accept(dissector d, context* ctx) {
     d.step(consumed);
 
     /*xx	5GSM network feature support 9.11.4.18	O	TLV	3-15
+     * consumed = dissect_opt_tlv(nullptr, &sm_nw_feature_support, d, ctx);
+     * d.step(consumed);
     xx	Session-TMBR	Session-TMBR 9.11.4.19	O	TLV	8
+     consumed = dissect_opt_tlv(nullptr, &session_tmbr, d, ctx);
+     d.step(consumed);
     TBD	Serving PLMN rate control 9.11.4.20	O	TLV	4
+     consumed = dissect_opt_tlv(nullptr, &serving_plmn_rate_control, d, ctx);
+     d.step(consumed);
     XX	ATSSS container 9.11.4.22	O	TLV-E	3-65538
+     consumed = dissect_opt_tlv_e(nullptr, &atsss_container, d, ctx);
+     d.step(consumed);
     XX	Control plane only indication 9.11.4.23	O	TV	1
+     consumed = dissect_opt_tv_short(nullptr, &control_plane_only_indication, d, ctx);
+     d.step(consumed);
     */
    // no data length check
 

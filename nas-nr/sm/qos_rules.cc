@@ -10,7 +10,7 @@ int dissect_packet_filter(dissector d, int pf_type, context* ctx) {
 
     auto len = d.length;
     switch (pf_type) {
-    case 1: {
+    case 1:
         /* Match-all type
          * . If the "match-all type" packet filter component is
          * present in the packet filter, no other packet filter
@@ -19,7 +19,7 @@ int dissect_packet_filter(dissector d, int pf_type, context* ctx) {
          * to one.
          */
         len = 0;
-    } break;
+        break;
     case 16:
         /* For "IPv4 remote address type", the packet filter
          * component value field shall be encoded as a sequence of
@@ -28,7 +28,7 @@ int dissect_packet_filter(dissector d, int pf_type, context* ctx) {
          * transmitted first.
          */
 
-    case 17: {
+    case 17:
         /* For "IPv4 local address type", the packet filter
          * component value field shall be encoded as defined for
          * "IPv4 remote address type"
@@ -38,50 +38,50 @@ int dissect_packet_filter(dissector d, int pf_type, context* ctx) {
         (void) d.add_item(4, &nas::hf_pdu_ipv4_mask, enc::be);
         d.step(4);
         len = 8;
-    } break;
-    case 33: { // IPv6 remote address/prefix length type
-    };
-    case 35: { // IPv6 local address/prefix length type
+        break;
+    case 33:  // IPv6 remote address/prefix length type
+
+    case 35:  // IPv6 local address/prefix length type
         // d.add_item(16, &hf_pdu_addr_ipv6, enc::be);
         d.step(16);
         // d.add_item(1, &hf_pdu_addr_ipv6_prefix, enc::be);
         d.step(1);
-    } break;
-    case 48: { // Protocol identifier/Next header type
+        break;
+    case 48:  // Protocol identifier/Next header type
         (void) d.add_item(1, &nas::hf_pid_next_hd, enc::be);
         d.step(1);
         len = 1;
-    } break;
-    case 64: { /* Single local port type */
+        break;
+    case 64:  /* Single local port type */
         (void) d.add_item(2, &nas::hf_single_port_type, enc::be);
         d.step(2);
         len = 2;
-    } break;
-    case 0x51: { // Remote port range type
+        break;
+    case 0x51:  // Remote port range type
         // the packet filter component value field shall be encoded as a sequence of a two
         // octet port range low limit field and a two octet port range high limit field.
         // The port range low limit field shall be transmitted first
         d.step(4);
-    } break;
-    case 80: { /* Single remote port type */
-    };
-    case 0x41: { // Local port range type
+        break;
+    case 80:  /* Single remote port type */
+
+    case 0x41:  // Local port range type
         (void) d.add_item(2, &nas::hf_single_port_type, enc::be);
         d.step(2);
         len = 2;
-    }; break;
-    case 0x60: { // Security parameter index type
+        break;
+    case 0x60:  // Security parameter index type
         // For "security parameter index", the packet filter component value field shall
         // be encoded as four octets which specify the IPSec security parameter index
         d.step(4);
-    } break;
-    case 0x70: { // Type of service/Traffic class type
+        break;
+    case 0x70:  // Type of service/Traffic class type
         // For "type of service/traffic class type", the packet filter component value
         // field shall be encoded as a sequence of a one octet type-of-service/traffic
         // class field and a one octet type-of-service/traffic class mask field. The
         // type-of-service/traffic class field shall be transmitted first.
         d.step(2);
-    } break;
+        break;
     default:
         d.step(d.length);
     }

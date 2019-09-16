@@ -7,7 +7,7 @@ using namespace nas;
 using namespace sm;
 
 /* 8.3.1 PDU session establishment request */
-int sm::dissect_pdu_ses_establishment_req(dissector d, context* ctx) {
+int sm::dissect_pdu_ses_establishment_request(dissector d, context* ctx) {
     const use_context uc(ctx, "pdu-session-establishment-request", d, 0);
 
     /* Direction: UE to network*/
