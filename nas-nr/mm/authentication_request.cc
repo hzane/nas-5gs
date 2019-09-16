@@ -18,7 +18,7 @@ int mm::authentication_request(dissector d, context* ctx) {
     d.step(1);
 
     /* ABBA    ABBA 9.11.3.10    M    LV    3-n */
-    auto consumed = dissect_lv(nullptr, &abba, d, ctx);
+    NASNR_AUTO(int) consumed = dissect_lv(nullptr, &abba, d, ctx);
     d.step(consumed);
 
     /*21    Authentication parameter RAND (5G authentication challenge)    Authentication
