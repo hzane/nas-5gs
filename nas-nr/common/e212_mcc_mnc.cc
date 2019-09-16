@@ -2,8 +2,11 @@
 #include "../field_meta.hh"
 #include "../common.hh"
 
+#if NASNR_COMPILER_CXX_USING_ALIAS
 using mcc = string;
 using mnc = string;
+#else
+#endif
 
 namespace cmn {
 extern const field_meta   hf_e212_mcc;
