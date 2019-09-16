@@ -15,7 +15,7 @@ int mm::dissect_security_mode_cmpl(dissector d, context* ctx) {
     up_link(d.pinfo);
 
     /* 77    IMEISV    5G mobile identity 9.11.3.4    O    TLV-E    11 */
-    auto consumed = dissect_opt_tlv_e(nullptr, &imeisv_mobile_id, d, ctx);
+    NASNR_AUTO(int) consumed = dissect_opt_tlv_e(nullptr, &imeisv_mobile_id, d, ctx);
     d.step(consumed);
 
     /* 71    NAS message container  9.11.3.33    O    TLV-E    4-n  */
