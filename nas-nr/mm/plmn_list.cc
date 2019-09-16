@@ -17,9 +17,9 @@ int mm::dissect_plmn_list(dissector d, context* ctx) {
     const use_context uc(ctx, "plmn-list", d, 0);
     
     // See subclause 10.5.1.13 in 3GPP TS 24.008 [12].
-    auto num = 1;
+    NASNR_AUTO(int) num = 1;
     while (d.length >= 3) {
-        const auto subtree = d.add_item(3, "PLMN[%u]", num++);
+        NASNR_AUTO(proto_node*) const subtree = d.add_item(3, "PLMN[%u]", num++);
         use_tree ut(d, subtree);
 
         (void) d.add_item(3, &hf_mobile_country_code, enc::na);
