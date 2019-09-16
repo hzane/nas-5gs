@@ -13,19 +13,19 @@ int mm::dissect_tracking_area_id_list(dissector d, context* ctx) {
         nullptr,
     };
 
-    auto consumed = 0;
-    auto n        = 1;
+    NASNR_AUTO(int) consumed = 0;
+    NASNR_AUTO(int) n        = 1;
     /*Partial tracking area list*/
     while (d.length > 0) {
-        const auto orig_offset = d.offset;
-        auto       subtree     = d.add_item(-1, "Partial tracking area list  %u", n++);
+        const NASNR_AUTO(int) orig_offset = d.offset;
+        NASNR_AUTO(proto_node*)       subtree     = d.add_item(-1, "Partial tracking area list  %u", n++);
         use_tree   ut(d, subtree);
 
         /*Head of Partial tracking area list*/
         /* Type of list    Number of elements    octet 1 */
-        const auto head  = d.tvb->uint8(d.offset);
-        const auto li    = (head & 0x60u) >> 5u;
-        auto       num_e = (head & 0x1fu) + 1;
+        const NASNR_AUTO(uint8_t) head  = d.tvb->uint8(d.offset);
+        const NASNR_AUTO(uint8_t) li    = (head & 0x60u) >> 5u;
+        NASNR_AUTO(uint8_t)       num_e = (head & 0x1fu) + 1;
         d.add_bits(flags);
         d.step(1);
 
@@ -39,7 +39,7 @@ int mm::dissect_tracking_area_id_list(dissector d, context* ctx) {
             d.step(consumed);
 
             while (num_e > 0) {
-                auto i = d.add_item(3, &hf_tac, enc::be);
+                NASNR_AUTO(proto_node*) i = d.add_item(3, &hf_tac, enc::be);
                 d.step(3);
 
                 unused(i);
@@ -56,7 +56,7 @@ int mm::dissect_tracking_area_id_list(dissector d, context* ctx) {
             d.step(consumed);
 
             /*octet 5  TAC 1*/
-            auto i = d.add_item(3, &hf_tac, enc::be);
+            NASNR_AUTO(proto_node*) i = d.add_item(3, &hf_tac, enc::be);
             d.step(3);
 
             unused(i);
@@ -71,7 +71,7 @@ int mm::dissect_tracking_area_id_list(dissector d, context* ctx) {
                 d.step(consumed);
 
                 /*octet 5  TAC 1*/
-                auto i = d.add_item(3, &hf_tac, enc::be);
+                NASNR_AUTO(proto_node*) i = d.add_item(3, &hf_tac, enc::be);
                 d.step(3);
 
                 unused(i);
