@@ -15,7 +15,7 @@ struct protocol_meta {
 // protocol dissect entry
 extern int dissect_nas5g(dissector, context*);
 
-inline const protocol_meta nas_5gs_module = {
+NASNR_INLINE const protocol_meta nas_5gs_module = {
     "NAS-5GS",
     "Non-Access-Stratum 5GS (NAS)PDU",
     dissect_nas5g,
@@ -23,8 +23,8 @@ inline const protocol_meta nas_5gs_module = {
 
 // Extended protocol discriminator
 namespace epd {
-inline const uint8_t MM5G = 0x7e; // TGPP_PD_5GMM
-inline const uint8_t SM5G = 0x2e; // TGPP_PD_5GSM
+NASNR_INLINE const uint8_t MM5G = 0x7e; // TGPP_PD_5GMM
+NASNR_INLINE const uint8_t SM5G = 0x2e; // TGPP_PD_5GSM
 } // namespace EPD
 
 typedef dissect_fnc_t dissect_msg_fnc_t;
