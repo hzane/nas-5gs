@@ -3,9 +3,13 @@
 #include <cstring>
 #include "dissect_nas5g.hh"
 
+#if NASNR_COMPILER_CXX_USING_ALIAS
 using string = std::string;
+#else
+using std::string;
+#endif
 
-struct nas_nr_message_imp final : nas_nr_message {
+struct nas_nr_message_imp NASNR_FINAL : nas_nr_message {
     string              tag     NASNR_EQUAL_INIT ({});
     string              val     NASNR_EQUAL_INIT ({});
     const octet*        dat     NASNR_EQUAL_INIT (nullptr) ;
@@ -28,11 +32,16 @@ struct nas_nr_message_imp final : nas_nr_message {
 
     ~nas_nr_message_imp() NASNR_FINAL;
     nas_nr_message_imp() NASNR_DEFAULT_FUNCTION;
-    nas_nr_message_imp(const nas_nr_message_imp&) NASNR_DELETED_FUNCTION;    
+    nas_nr_message_imp(const nas_nr_message_imp&) NASNR_DELETED_FUNCTION; 
+#if NASNR_COMPILER_CXX_DELETED_FUNCTIONS   
     nas_nr_message_imp(const nas_nr_message_imp&&) NASNR_DELETED_FUNCTION;
     nas_nr_message_imp& operator=(const nas_nr_message_imp&&) NASNR_DELETED_FUNCTION;
+#endif
     nas_nr_message_imp& operator=(const nas_nr_message_imp&) NASNR_DELETED_FUNCTION;
 };
+
+nas_nr_message_imp::nas_nr_message_imp(){
+}
 
 const description* nas_nr_message_imp::desc() const { return meta; }
 
@@ -58,23 +67,26 @@ nas_nr_message_imp::~nas_nr_message_imp() {
 const char* nas_nr_message_imp::name() const { return tag.c_str(); }
 
 void NASNRAPI nas_nr_message_free(nas_nr_message* p){
-    const auto ne = dynamic_cast< nas_nr_message_imp* >(p);
+    const NASNR_AUTO(nas_nr_message_imp*) ne = dynamic_cast< nas_nr_message_imp* >(p);
     delete ne;
 }
 
 nas_nr_message_imp* export_proto_node(proto_node const* node, int indent) {
-    auto ret = new nas_nr_message_imp();
+    NASNR_AUTO(nas_nr_message_imp*) ret = new nas_nr_message_imp();
     ret->tag = node->name;
     ret->val = node->text;
     ret->dat = node->data;
     ret->len = node->length;
     ret->start = node->offset;
     ret->level = indent;
-    ret->meta  = node->meta;
-
+#if NASNR_COMPILER_CXX_TYPE_DEDUCE
+	ret->meta = node->meta;
+#else
+    ret->meta  = (const description*) node->meta;
+#endif
     nas_nr_message_imp* next = nullptr;
-    for (const auto n : node->children) {
-        const auto child = export_proto_node(n, indent + 1);
+	for (NASNR_AUTO(std::list<proto_node*>::const_iterator) n = node->children.begin(); n!=node->children.end(); ++n) {
+        NASNR_AUTO(nas_nr_message_imp*) const child = export_proto_node(*n, indent + 1);
         if (ret->child == nullptr) ret->child = child;
         if (next != nullptr)
             next->sibling = child;
@@ -92,7 +104,7 @@ int dissect_nas_nr(nas_nr_message * * root, const octet* data, int length) {
 
     const dissector d = {&pinfo, &node, &tvb, 0, length, nullptr};
 
-    const auto ret = nas_5gs_module.dissector(d, &ctx);
+    const NASNR_AUTO(int) ret = nas_5gs_module.dissector(d, &ctx);
     if (!node.children.empty()) {
         *root = export_proto_node(node.children.front(), 0);
     }
@@ -108,10 +120,14 @@ int dissect_nas_nr(nas_nr_message * * root, const octet* data, int length) {
 #endif
 
 char NASNRAPI *pretty_format(const description* m, const octet* data, int length) {
-    const auto fm   = static_cast< const field_meta* >(m); // NOLINT
+#if NASNR_COMPILER_CXX_TYPE_DEDUCE
+	const auto fm = static_cast<const field_meta*>(m);
+#else
+    NASNR_AUTO(const field_meta*) fm   = reinterpret_cast< const field_meta* >(m); // NOLINT
+#endif
     if (!fm) return nullptr;
 
-    const auto  text = fm->format(data, length, enc::be);
+    const NASNR_AUTO(string)  text = field_meta_format(fm, data, length, enc::be);
     return xstrdup (text.c_str());
 }
 
