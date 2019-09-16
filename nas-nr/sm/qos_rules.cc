@@ -8,7 +8,7 @@ using namespace sm;
 int dissect_packet_filter(dissector d, int pf_type, context* ctx) {
     const use_context uc(ctx, "packet-filter", d, -1);
 
-    auto len = d.length;
+    NASNR_AUTO(int) len = d.length;
     switch (pf_type) {
     case 1: {
         /* Match-all type
@@ -105,30 +105,30 @@ int dissect_packet_filters(dissector d, int rop, context* ctx) {
     d.step(1);
 
     /* Length of packet filter contents */
-    auto pfclen = static_cast< int >(d.uint8());
+    NASNR_AUTO(int) pfclen = static_cast< int >(d.uint8());
     // (void) d.add_item(1, &hf_sm_pf_len, enc::be);
     d.step(1);
 
     d.step(pfclen);
     pfclen = 0; // skip dissect packet filter contents
     // TODO: detail
-    auto k = 1;
+    NASNR_AUTO(int) k = 1;
     /* Packet filter contents */
     while (pfclen > 0) {
-        const auto start   = d.offset;
-        auto       subtree = d.add_item(-1, "Packet filter component %u", k);
+        const NASNR_AUTO(int) start   = d.offset;
+        NASNR_AUTO(proto_node*)       subtree = d.add_item(-1, "Packet filter component %u", k);
         use_tree   ut(d, subtree);
         /* Each packet filter component shall be encoded as a sequence of a
          * one octet packet filter component type identifier and a fixed
          * length packet filter component value field. The packet filter
          * component type identifier shall be transmitted first.
          */
-        const auto pf_type = d.uint8();
+        const NASNR_AUTO(uint8_t) pf_type = d.uint8();
         (void) d.add_item(1, &hf_sm_pf_type, enc::be);
         d.step(1);
         /* Packet filter length contains the length of component type and
          * content */
-        const auto consumed = dissect_packet_filter(d.slice(pfclen - 1), pf_type, ctx);
+        const NASNR_AUTO(int) consumed = dissect_packet_filter(d.slice(pfclen - 1), pf_type, ctx);
         d.step(consumed);
         subtree->set_length(d.offset - start);
 
@@ -162,10 +162,10 @@ int sm::dissect_qos_rules(dissector d, context* ctx) {
         nullptr,
     };
 
-    auto i = 1;
+    NASNR_AUTO(int) i = 1;
     while (d.length > 0) {
         /* QoS Rule */
-        auto     subtree = d.add_item(-1, "QoS rule %u", i++);
+        NASNR_AUTO(proto_node*)     subtree = d.add_item(-1, "QoS rule %u", i++);
         use_tree ut(d, subtree);
 
         /* QoS rule identifier Octet 4*/
@@ -173,15 +173,15 @@ int sm::dissect_qos_rules(dissector d, context* ctx) {
         d.step(1);
 
         /* Length of QoS rule Octet 5 - 6*/
-        const auto length = static_cast< int >(d.ntohs());
+        const NASNR_AUTO(int) length = static_cast< int >(d.ntohs());
         // (void) d.add_item(2, &hf_sm_length, enc::be);
         d.step(2);
 
         subtree->set_length(length + 3);
 
         /* Rule operation code    DQR bit    Number of packet filters */
-        auto n_filters = d.uint8();
-        const auto rop       = n_filters >> 5u;
+        NASNR_AUTO(uint8_t) n_filters = d.uint8();
+        const NASNR_AUTO(uint8_t) rop       = n_filters >> 5u;
         n_filters            = n_filters & 0x0fu;
         d.add_bits(pkt_flt_flags);
         d.step(1);
@@ -206,17 +206,17 @@ int sm::dissect_qos_rules(dissector d, context* ctx) {
             }
         }
         /* Packet filter list */
-        for (auto j = 1; j <= n_filters; j++) {
-            const auto     st2 = d.add_item(-1, "Packet filter %u", j);
+        for (NASNR_AUTO(int) j = 1; j <= n_filters; j++) {
+            NASNR_AUTO(proto_node*)     st2 = d.add_item(-1, "Packet filter %u", j);
             use_tree ut2(d, st2);
-            auto           start = d.offset;
+            NASNR_AUTO(int)           start = d.offset;
             if (rop == 5) {
                 /* modify existing QoS rule and delete packet filters */
                 /* 0    0    0    0    Packet filter identifier x*/
                 (void) d.add_item(1, &hf_sm_pkt_flt_id, enc::be);
                 d.step(1);
             } else {
-                const auto consumed = dissect_packet_filters(d, rop, ctx);
+                const NASNR_AUTO(int) consumed = dissect_packet_filters(d, rop, ctx);
                 d.step(consumed);
             }
             st2->set_length(d.offset - start);
