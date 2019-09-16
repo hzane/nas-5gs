@@ -31,20 +31,20 @@ struct proto_node { // NOLINT: special-member-functions
                             const char*  format,
                             ...);
 
-    std::list< proto_node* > children    = {};
-    std::string              name        = {};
-    std::string              text        = {};
-    uint64_t                 val         = 0;
-    uint32_t                 enc         = enc::na; // enc::na
-    const field_meta*        meta        = nullptr;
-    const uint8_t*           data        = nullptr;
-    int                      length      = 0;
-    int                      offset      = 0;
-    uint8_t                  unused_bits = 0;
-    uint8_t                  unit        = 0;
+    std::list< proto_node* > children NASNR_EQUAL_INIT({});
+    std::string name NASNR_EQUAL_INIT({});
+    std::string text NASNR_EQUAL_INIT({});
+    uint64_t val NASNR_EQUAL_INIT(0);
+    uint32_t enc      NASNR_EQUAL_INIT(enc::na);
+    const field_meta* meta NASNR_EQUAL_INIT(nullptr);
+    const uint8_t* data NASNR_EQUAL_INIT(nullptr);
+    int length NASNR_EQUAL_INIT(0);
+    int offset NASNR_EQUAL_INIT(0);
+    uint8_t unused_bits NASNR_EQUAL_INIT(0);
+    uint8_t unit NASNR_EQUAL_INIT(0);
 
     virtual ~proto_node();
-    proto_node()= default;
+    proto_node() NASNR_DEFAULT_FUNCTION;
     proto_node(const uint8_t*    buffer,
                int               offset,
                int               length,
