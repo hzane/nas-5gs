@@ -10,7 +10,7 @@ int mm::dissect_notification(dissector d, context* ctx) {
     down_link(d.pinfo);
 
     /* Access type    Access type 9.11.3.11    M    V    1/2  */        
-    const auto consumed = dissect_access_type(d, ctx);
+    const NASNR_AUTO(int) consumed = dissect_access_type(d, ctx);
     d.step(consumed);
 
     /* Spare half octet    Spare half octet 9.5    M    V    1/2  */
