@@ -10,7 +10,7 @@ int mm::dissect_registration_accept(dissector d, context* ctx) {
     const use_context uc(ctx, "registration-accept", d, 12);
 
     /*      5GS registration result    9.11.3.6    M    LV 2*/
-    auto consumed = dissect_lv(nullptr, &registration_result, d, ctx);
+    NASNR_AUTO(int) consumed = dissect_lv(nullptr, &registration_result, d, ctx);
     d.step(consumed);
 
     /*77    5G-GUTI    5GS mobile identity 9.11.3.4    O    TLV-E    14 */
@@ -674,18 +674,18 @@ const field_meta hf_mm_op_defined_acd_criteria = {};
 int dissect_operator_defined_acd(dissector d, context* ctx) {
     const use_context uc(ctx, "operator-defined-access-category-definitions", d, 0);
 
-    auto i = 1;
+    NASNR_AUTO(int) i = 1;
     while(d.length>0){
-        auto subtree =
+        NASNR_AUTO(proto_node*) subtree =
             d.add_item(2, "Operator-defined access category definition  %u", i++);
         use_tree ut(d, subtree);
 
         // Length of operator-defined access category definition contents oct4
-        const auto length = static_cast< int >(d.uint8());
+        const NASNR_AUTO(int) length = static_cast< int >(d.uint8());
         // d.add_item(1, &hf_mm_length, enc::be);
         d.step(1);
 
-        auto sd = d.slice(length);
+        NASNR_AUTO(dissector) sd = d.slice(length);
         /* Precedence value oct5*/
         (void) sd.add_item(1, &hf_mm_precedence, enc::be);
         sd.step(1);
@@ -695,7 +695,7 @@ int dissect_operator_defined_acd(dissector d, context* ctx) {
         sd.step(1);
 
         /* Length of criteria oct7*/
-        const auto clen = static_cast< int >(sd.uint8());
+        const NASNR_AUTO(int) clen = static_cast< int >(sd.uint8());
         sd.step(1);
 
         /* Criteria 8 - a-1*/
