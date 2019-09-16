@@ -9,10 +9,9 @@ int mm::dissect_auth_fail_param(dissector d, context* ctx) {
     const use_context uc(ctx, "auth-failure-param", d, -1);
 
     /* This IE contains either the SRES or the 4 most significant octets of the RES */
-    auto i = d.add_item(4, &hf_gsm_result, enc::na);
+    (void) d.add_item(4, &hf_gsm_result, enc::na);
     d.step(4);
 
-    unused(i);
     return 4;
 }
 
