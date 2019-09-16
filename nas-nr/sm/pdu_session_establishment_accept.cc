@@ -23,7 +23,7 @@ int sm::dissect_pdu_ses_establishment_accept(dissector d, context* ctx) {
 
     /* Authorized QoS rules QoS rules 9.11.4.13 M LV-E 2-65537  DE_NAS_5GS_SM_QOS_RULES*/
     // ELEM_MAND_LV_E(,DE_NAS_5GS_SM_QOS_RULES, " - Authorized QoS rules",);
-    auto consumed = dissect_lv_e(nullptr, &authorized_qos_rules, d, ctx);
+    NASNR_AUTO(int) consumed = dissect_lv_e(nullptr, &authorized_qos_rules, d, ctx);
     d.step(consumed);
 
     /* Session-AMBR 9.11.4.14    M    LV    7 */
