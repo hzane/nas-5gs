@@ -14,7 +14,7 @@ int sm::dissect_pdu_ses_establishment_req(dissector d, context* ctx) {
     up_link(d.pinfo);
 
     /* Integrity protection maximum data rate   9.11.4.7    M    V    2 */
-    auto consumed = dissect_v(nullptr, &int_prot_max_data_rate, d, ctx);
+    NASNR_AUTO(int) consumed = dissect_v(nullptr, &int_prot_max_data_rate, d, ctx);
     d.step(consumed);
 
     /*9- PDU session type 9.11.4.11    O    TV    1*/
