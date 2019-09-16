@@ -23,7 +23,7 @@ const field_meta sm::hf_pdu_addr_ipv6 = {
 int sm::dissect_pdu_address(dissector d, context* ctx) {
     const use_context uc(ctx, "pdu-address", d, 8);
 
-    const auto val  = static_cast< uint32_t >(d.tvb->uint8(d.offset));
+    const NASNR_AUTO(uint32_t) val  = static_cast< uint32_t >(d.tvb->uint8(d.offset));
     (void) d.add_item(1, &hf_sm_pdu_ses_type, enc::be);
     d.step(1);
 
