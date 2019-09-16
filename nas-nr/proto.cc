@@ -22,7 +22,7 @@ proto_item* proto_node::add_item(packet_info*      pinfo,
                                  uint32_t          encoding) {
     (void) pinfo;
 
-    auto item    = new proto_node(buf->data, start, len, field);
+    NASNR_AUTO(proto_node*) item    = new proto_node(buf->data, start, len, field);
     item->enc    = encoding;
     children.push_back(item);
 
@@ -40,7 +40,7 @@ proto_item* proto_node::set_item(int len, const field_meta* field, uint32_t enco
     if (encoding == enc::na || encoding == enc::none) return this;
 
     if (field && ft::is_integer(field->typi)) {
-        auto v = n2_uint(data, len);
+        NASNR_AUTO(uint64_t) v = n2_uint(data, len);
         if (field->bitmask) {
             v = (v & field->bitmask) >> ws_ctz(field->bitmask);
         }
@@ -68,7 +68,7 @@ proto_item* proto_node::add_expert(packet_info* pinfo,
                                    int          len,
                                    const char*  format,
                                    ...) {
-    auto item = add_item(pinfo, buf, start, len, &hf_expert, enc::na);
+    NASNR_AUTO(proto_node*) item = add_item(pinfo, buf, start, len, &hf_expert, enc::na);
     va_list args;
     va_start(args, format);
     item->text = vformat(format, args);
@@ -83,7 +83,7 @@ proto_tree* proto_node::add_subtree(packet_info* ,
                                     const char*  format,
                                     ...) {
     using namespace std;
-    auto item    = new proto_tree(buf->data, start, len, nullptr);
+    NASNR_AUTO(proto_node*) item    = new proto_tree(buf->data, start, len, nullptr);
 
     va_list args;
     va_start(args, format);
@@ -95,9 +95,15 @@ proto_tree* proto_node::add_subtree(packet_info* ,
 }
 
 proto_node::~proto_node() {
+#if NASNR_COMPILER_CXX_TYPE_DEDUCE
     for (auto node : children) {
         delete node;
     }
+#else
+	for(std::list<proto_node*>::const_iterator node = children.begin(); node != children.end(); ++node){
+		delete *node;
+	}
+#endif
     children.clear();
 }
 
@@ -112,14 +118,14 @@ std::string print_text(const field_meta* meta,
         return formats("%d bytes", len);
     }
     if (ft::is_integer(meta->typi)){
-        auto v = n2_uint(data, len);
+        NASNR_AUTO(uint64_t) v = n2_uint(data, len);
         if (meta->bitmask) {
             v = v & meta->bitmask;
             v = v >> ws_ctz(meta->bitmask);
         }
-        return meta->format(v);
+        return field_meta_format(meta, v);
     }
-    return meta->format(data, len, enc);
+    return field_meta_format(meta, data, len, enc);
 }
 
 
@@ -128,12 +134,12 @@ std::string print_text(const field_meta* meta, uint64_t v) {
         return formats("%ud(%#x) value", v, v);
     }
 
-    return meta->format(v);
+    return field_meta_format(meta, v);
 }
 
 void print_node(std::ostream& out, const proto_node* node, int indent) {
     if (!node->name.empty()) {
-        const auto prefix = std::string(size_t(indent) + indent, char(' '));
+        const NASNR_AUTO(string) prefix = std::string(size_t(indent) + indent, char(' '));
         out << prefix << node->name ;
 
         if (!node->text.empty()) {
@@ -141,7 +147,16 @@ void print_node(std::ostream& out, const proto_node* node, int indent) {
         }
         out << " [" << node->offset << "-" << node->length << "]" << std::endl;        
     }
-    for (auto n : node->children) {
+#if NASNR_COMPILER_CXX_TYPE_DEDUCE
+    for (NASNR_AUTO(const proto_node*) n : node->children) {
         print_node(out, n, indent + 1);
     }
+#else
+	for(std::list<proto_node*>::const_iterator n = node->children.begin(); n!=node->children.end(); ++n){
+		print_node(out, *n, indent + 1);
+	}
+#endif
+}
+
+proto_node::proto_node(){
 }
