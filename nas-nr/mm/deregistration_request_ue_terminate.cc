@@ -12,7 +12,7 @@ int mm::dissect_deregistration_req_ue_term(dissector d, context* ctx) {
     down_link(d.pinfo);
 
     /* De-registration type    De-registration type 9.11.3.20   M   V   1 */    
-    auto consumed = dissect_deregistration_type(d, ctx);
+    NASNR_AUTO(int) consumed = dissect_deregistration_type(d, ctx);
     d.step(consumed);
 
     /* Spare half octet    Spare half octet 9.5    M    V    1/2 */
