@@ -14,7 +14,7 @@ int dissect_elem_mandatory(const field_meta*   type_meta,
                                   dissector           d,
                                   tlv_fnc_t           fnc,
                                   context*            ctx) {
-    auto consumed = 0;
+    NASNR_AUTO(int) consumed = 0;
     if (d.length > 0) {
         consumed = fnc(type_meta, val_meta, d, ctx);
         d.step(consumed);
@@ -33,7 +33,6 @@ int dissect_t(const field_meta*   type_meta,
                           const element_meta* val_meta,
                           dissector           d,
                           context*            ctx) {
-    unused(dissect_t);
     return dissect_elem_mandatory(type_meta, val_meta, d, dissect_opt_t, ctx);
 }
 
@@ -66,7 +65,6 @@ int dissect_tv(const field_meta*   type_meta,
                            const element_meta* val_meta,
                            dissector           d,
                            context*            ctx) {
-    unused(dissect_tv);
     return dissect_elem_mandatory(type_meta, val_meta, d, dissect_opt_tv, ctx);
 }
 
@@ -75,7 +73,6 @@ int dissect_tlv(const field_meta*   type_meta,
                             const element_meta* val_meta,
                             dissector           d,
                             context*            ctx) {
-    unused(dissect_tlv);
     return dissect_elem_mandatory(type_meta, val_meta, d, dissect_opt_tlv, ctx);
 }
 
@@ -85,12 +82,16 @@ int dissect_opt_t(const field_meta *,
                        dissector           d,
                        context *           ctx) {
     (void) ctx;
+#if NASNR_COMPILER_STATIC_CAST_VOID
     const auto e = static_cast< optional_element_intra* >(d.data);
+#else
+	optional_element_intra* e = reinterpret_cast<optional_element_intra*>(d.data);
+#endif
     set_elem_presence(e, false);
 
     if (d.length <= 0) return not_present_diag(0, val_meta, ctx);
 
-    const auto iei = d.uint8();
+    const NASNR_AUTO(uint8_t) iei = d.uint8();
     if (iei != val_meta->type && val_meta->type != 0xffu)
         return not_present_diag(0, val_meta, ctx);
 
@@ -111,25 +112,25 @@ int dissect_opt_lv(const field_meta *,
                         const element_meta *val_meta,
                         dissector           d,
                         context *           ctx) {
-    auto e = static_cast< optional_element_intra* >(d.data);
+    NASNR_AUTO(optional_element_intra*) e = static_cast< optional_element_intra* >(d.data);
     set_elem_presence(e,false);
 
     if (d.length <= 0) return not_present_diag(0, val_meta, ctx);
     set_elem_presence(e, true);
 
-    const auto parm_len = static_cast< int >(d.uint8());
+    const NASNR_AUTO(int) parm_len = static_cast< int >(d.uint8());
     set_elem_length(e, parm_len);
 
-    const auto subtree = d.add_item(1 + parm_len, val_meta->name);
+    NASNR_AUTO(proto_node*) subtree = d.add_item(1 + parm_len, val_meta->name);
     const use_tree ut(d, subtree);
 
-    // auto l = d.add_item(1, hf_gsm_a_length, enc::be);
+    // NASNR_AUTO(proto_node*) l = d.add_item(1, hf_gsm_a_length, enc::be);
     d.step(1);
 
     if (parm_len == 0) return 1;
-    const auto fnc = val_meta->fnc ? val_meta->fnc : dissect_msg_unknown_body;
+    const NASNR_AUTO(dissect_msg_fnc_t) fnc = val_meta->fnc ? val_meta->fnc : dissect_msg_unknown_body;
 
-    const auto consumed = fnc(d.slice(parm_len).use_elem(e ? e->elem : nullptr), ctx);
+    const NASNR_AUTO(int) consumed = fnc(d.slice(parm_len).use_elem(e ? e->elem : nullptr), ctx);
     d.step(consumed);
 
     return parm_len + 1;
@@ -142,23 +143,23 @@ int dissect_opt_lv_e(const field_meta *,
                           const element_meta *val_meta,
                           dissector           d,
                           context *           ctx) {
-    auto e = static_cast< optional_element_intra* >(d.data);
+    NASNR_AUTO(optional_element_intra*) e = static_cast< optional_element_intra* >(d.data);
     set_elem_presence(e, false);
 
     if (d.length <= 0) return not_present_diag(0, val_meta, ctx);
 
-    const auto parm_len = d.ntohs();
+    const NASNR_AUTO(uint16_t) parm_len = d.ntohs();
     set_elem_presence(e, true);
     set_elem_length(e, parm_len);
 
-    const auto subtree = d.add_item(2 + parm_len, val_meta->name);
+    NASNR_AUTO(proto_node*) const subtree = d.add_item(2 + parm_len, val_meta->name);
     use_tree ut(d, subtree);
 
     // (void) d.add_item(2, hf_gsm_e_length, enc::be);
     d.step(2);
 
-    const auto fnc      = val_meta->fnc ? val_meta->fnc : dissect_msg_unknown_body;
-    const auto consumed = fnc(d.slice(parm_len).use_elem(get_elem_data(e)), ctx);
+    const NASNR_AUTO(dissect_msg_fnc_t) fnc      = val_meta->fnc ? val_meta->fnc : dissect_msg_unknown_body;
+    const NASNR_AUTO(int) consumed = fnc(d.slice(parm_len).use_elem(get_elem_data(e)), ctx);
     d.step(consumed);
 
     return parm_len + 2;
@@ -174,15 +175,16 @@ int dissect_opt_v(const field_meta *,
                        const element_meta *val_meta,
                        dissector           d,
                        context *           ctx) {
-    auto e = static_cast< optional_element_intra* >(d.data);
+    NASNR_AUTO(optional_element_intra*) e = static_cast< optional_element_intra* >(d.data);
     set_elem_presence(e, false);
 
     if (d.length <= 0) return not_present_diag(0, val_meta, ctx);
 
-    auto subtree = d.add_item(-1, val_meta->name);
+    NASNR_AUTO(proto_node*) subtree = d.add_item(-1, val_meta->name);
     use_tree ut(d, subtree);
 
-    const auto consumed = val_meta->fnc(d, ctx);
+	const NASNR_AUTO(dissect_msg_fnc_t) fnc      = val_meta->fnc ? val_meta->fnc : dissect_msg_unknown_body;
+    const NASNR_AUTO(int) consumed = fnc(d, ctx);
     subtree->set_length(consumed);
 
     set_elem_presence(e, consumed>0);
@@ -203,7 +205,7 @@ int dissect_opt_tv_short(const field_meta *,
                               const element_meta *val_meta,
                               dissector           d,
                               context *           ctx) {
-    const auto e = static_cast< optional_element_intra* >(d.data);
+    NASNR_AUTO(optional_element_intra*) const e = static_cast< optional_element_intra* >(d.data);
     set_elem_presence(e, false);
 
     if (d.length <= 0) return not_present_diag(0, val_meta, ctx);
@@ -215,10 +217,10 @@ int dissect_opt_tv_short(const field_meta *,
     set_elem_presence(e, true);
     set_elem_type(e, iei);
 
-    const auto subtree = d.add_item(1, val_meta->name);
+    NASNR_AUTO(proto_node*) const subtree = d.add_item(1, val_meta->name);
     const use_tree ut(d, subtree);
 
-    const auto consumed = val_meta->fnc(d.use_elem(get_elem_data(e)), ctx);
+    const NASNR_AUTO(int) consumed = val_meta->fnc(d.use_elem(get_elem_data(e)), ctx);
     unused(consumed);
 
     return 1;
@@ -235,12 +237,12 @@ int dissect_opt_tv(const field_meta *,
                         const element_meta *val_meta,
                         dissector           d,
                         context *           ctx) {
-    const auto e = static_cast< optional_element_intra* >(d.data);
+    NASNR_AUTO(optional_element_intra*) const e = static_cast< optional_element_intra* >(d.data);
     set_elem_presence(e, false);
 
     if (d.length <= 0) return not_present_diag(0, val_meta, ctx);
 
-    const auto iei = d.uint8();
+    const NASNR_AUTO(uint8_t) iei = d.uint8();
     if (iei != val_meta->type && val_meta->type != 0xffu)
         return not_present_diag(0, val_meta, ctx);
 
@@ -254,7 +256,7 @@ int dissect_opt_tv(const field_meta *,
     }    
     d.step(1);
 
-    const auto consumed = val_meta->fnc(d.use_elem(get_elem_data(e)), ctx);
+    const NASNR_AUTO(int) consumed = val_meta->fnc(d.use_elem(get_elem_data(e)), ctx);
 
     if(subtree) subtree->set_length(consumed + 1);
     set_elem_length(e, consumed);
@@ -267,32 +269,32 @@ int dissect_opt_tlv(const field_meta *,
                          const element_meta *val_meta,
                          dissector           d,
                          context *           ctx) {
-    const auto e = static_cast< optional_element_intra* >(d.data);
+    NASNR_AUTO(optional_element_intra*) const e = static_cast< optional_element_intra* >(d.data);
     set_elem_presence(e, false);
 
     if (d.length <= 0) return not_present_diag(0, val_meta, ctx);
 
-    const auto iei = d.uint8();
+    const NASNR_AUTO(uint8_t) iei = d.uint8();
     if (iei != val_meta->type && val_meta->type != 0xffu)
         return not_present_diag(0, val_meta, ctx);
 
     set_elem_presence(e, true);
     set_elem_type(e, iei);
 
-    const auto parm_len = d.tvb->uint8(d.offset + 1);
+    const NASNR_AUTO(uint8_t) parm_len = d.tvb->uint8(d.offset + 1);
 
-    const auto subtree = d.add_item(parm_len + 1 + 1, val_meta->name);
+    NASNR_AUTO(proto_node*) const subtree = d.add_item(parm_len + 1 + 1, val_meta->name);
     d.step(1);
     const use_tree ut(d, subtree);
 
-    // auto t = d.add_item(1, hf_gsm_a_length, enc::be);
+    // NASNR_AUTO(proto_node*) t = d.add_item(1, hf_gsm_a_length, enc::be);
     d.step(1);
 
     if (parm_len == 0) return 2;
 
-    const auto fnc = val_meta->fnc ? val_meta->fnc : dissect_msg_unknown_body;
+    const NASNR_AUTO(dissect_msg_fnc_t) fnc = val_meta->fnc ? val_meta->fnc : dissect_msg_unknown_body;
 
-    const auto consumed = fnc(d.slice(parm_len).use_elem(get_elem_data(e)), ctx);
+    const NASNR_AUTO(int) consumed = fnc(d.slice(parm_len).use_elem(get_elem_data(e)), ctx);
     d.step(consumed);
     set_elem_length(e, consumed);
 
@@ -313,12 +315,12 @@ int dissect_opt_telv(const field_meta *,
                           const element_meta *val_meta,
                           dissector           d,
                           context *           ctx) {
-    auto e = static_cast< optional_element_intra * >(d.data);
+    NASNR_AUTO(optional_element_intra*) e = static_cast< optional_element_intra * >(d.data);
     set_elem_presence(e, false);
 
     if (d.length <= 0) return not_present_diag(0, val_meta, ctx);
 
-    const auto iei = d.tvb->uint8(d.offset);
+    const NASNR_AUTO(uint8_t) iei = d.tvb->uint8(d.offset);
     if (iei != val_meta->type && val_meta->type != 0xffu)
         return not_present_diag(0, val_meta, ctx);
 
@@ -326,7 +328,7 @@ int dissect_opt_telv(const field_meta *,
     set_elem_type(e, iei);
 
     uint16_t parm_len     = d.tvb->uint8(d.offset + 1);
-    auto     len_length = 1;
+    NASNR_AUTO(int)     len_length = 1;
 
     if ((parm_len & 0x80u) == 0) {
         /* length in 2 octets */
@@ -336,7 +338,7 @@ int dissect_opt_telv(const field_meta *,
         parm_len = parm_len & 0x7Fu;
     }
 
-    const auto subtree = d.add_item( parm_len + 1 + len_length, val_meta->name);
+    NASNR_AUTO(proto_node*) const subtree = d.add_item( parm_len + 1 + len_length, val_meta->name);
     const use_tree   ut(d, subtree);
     d.step(1);
 
@@ -346,8 +348,8 @@ int dissect_opt_telv(const field_meta *,
 
     if (parm_len == 0) return 1 + len_length;
 
-    const auto fnc      = val_meta->fnc ? val_meta->fnc : dissect_msg_unknown_body;
-    const auto consumed = fnc(d.slice(parm_len).use_elem(get_elem_data(e)), ctx);
+    NASNR_AUTO(dissect_msg_fnc_t) const fnc      = val_meta->fnc ? val_meta->fnc : dissect_msg_unknown_body;
+    NASNR_AUTO(int) const consumed = fnc(d.slice(parm_len).use_elem(get_elem_data(e)), ctx);
 
     set_elem_length(e, consumed);
 
@@ -364,19 +366,19 @@ int dissect_opt_tlv_e(const field_meta *,
                            const element_meta *val_meta,
                            dissector           d,
                            context *           ctx) {
-    auto e = static_cast< optional_element_intra* >(d.data);
+    NASNR_AUTO(optional_element_intra*) e = static_cast< optional_element_intra* >(d.data);
     if (d.length <= 0) return not_present_diag(0, val_meta, ctx);
 
-    const auto iei = d.tvb->uint8(d.offset);
+    const NASNR_AUTO(uint8_t) iei = d.tvb->uint8(d.offset);
     if (iei != val_meta->type && val_meta->type != 0xffu)
         return not_present_diag(0, val_meta, ctx);
 
     set_elem_presence(e, true);
     set_elem_type(e, iei);
 
-    const auto parm_len = d.tvb->ntohs(d.offset + 1);
+    const NASNR_AUTO(uint16_t) parm_len = d.tvb->ntohs(d.offset + 1);
 
-    const auto subtree = d.add_item(1 + 2 + parm_len, val_meta->name);
+    NASNR_AUTO(proto_node*) const subtree = d.add_item(1 + 2 + parm_len, val_meta->name);
     const use_tree ut(d, subtree);
     d.step(1);
 
@@ -385,8 +387,8 @@ int dissect_opt_tlv_e(const field_meta *,
 
     if (parm_len == 0) return 1 + 2;
 
-    const auto fnc = val_meta->fnc ? val_meta->fnc : dissect_msg_unknown_body;
-    const auto consumed = fnc(d.slice(parm_len).use_elem(get_elem_data(e)), ctx);
+    NASNR_AUTO(dissect_fnc_t) const fnc = val_meta->fnc ? val_meta->fnc : dissect_msg_unknown_body;
+    NASNR_AUTO(int) const consumed = fnc(d.slice(parm_len).use_elem(get_elem_data(e)), ctx);
 
     set_elem_length(e, consumed);
 
@@ -397,7 +399,7 @@ int dissect_msg_unknown_body(dissector d, context *ctx) {
     const use_context uc(ctx, "unknown message body", d, -1);
 
     d.tree->add_item(d.pinfo, d.tvb, d.offset, d.length, nas::hf_msg_elem, enc::na);
-    return d.length;
+    return 0;
 }
 
 
