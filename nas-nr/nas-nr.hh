@@ -19,7 +19,7 @@ struct description;
 
 // NOLINTNEXTLINE
 struct nas_nr_message {
-    virtual const char*           name() const         NASNR_EQUAL_INIT(0); // NOLINT
+    virtual const char*           name() const         = 0; // NOLINT
     virtual const char*           value() const        = 0; // NOLINT -use-nodiscard
     virtual const octet*          data() const         = 0; // NOLINT -use-nodiscard
     virtual int                   offset() const       = 0; // NOLINT -use-nodiscard
