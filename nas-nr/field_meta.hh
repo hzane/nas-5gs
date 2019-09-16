@@ -94,6 +94,13 @@ using string = std::string;
 using std::string;
 #endif
 
+#if NASNR_COMPILER_CXX_DEFAULT_FUNCTIONS
+struct field_meta : description {
+    string format(const uint8_t* p, int len, uint32_t enc) const;
+    string format(uint64_t val) const;
+};
+
+#else
 struct field_meta  {
     const char*              tag;     /* full name of this field */
     const char*              abbrev;  /* abbreviated name of this field */
@@ -105,5 +112,6 @@ struct field_meta  {
     unsigned long long       bitmask; /* bitmask of interesting bits */
 };
 
-string field_meta_format(const field_meta* self, const uint8_t* p, int len, uint32_t enc) ;
+#endif
+string field_meta_format(const field_meta* self, const uint8_t* p, int len, uint32_t enc);
 string field_meta_format(const field_meta* self, uint64_t val);

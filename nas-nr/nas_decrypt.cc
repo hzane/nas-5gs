@@ -1,25 +1,45 @@
 #include "config.hh"
 
 
-bool is_security_type_cyphered(uint8_t type) { return false; }
+bool is_security_type_cyphered(uint8_t type) {
+    (void) type;
+    return false;
+}
 
 // NEA0	空算法（也即不加密）
-bool security_ctx_is_nea0(nr_security_context* ctx) { return false; }
+bool security_ctx_is_nea0(nr_security_context* ctx) {
+    (void) ctx;
+    return false;
+}
 
 // 	128-NEA1	128位SNOW 3G加密算法
-bool security_ctx_is_nea1(nr_security_context* ctx) { return false; }
+bool security_ctx_is_nea1(nr_security_context* ctx) {
+    (void) ctx;
+    return false;
+}
 
 // 128-NEA2	128位AES算法
-bool security_ctx_is_nea2(nr_security_context* ctx) { return false; }
+bool security_ctx_is_nea2(nr_security_context* ctx) {
+    (void) ctx;
+    return false;
+}
 
 // 128-NEA3	128位祖冲之算法
-bool security_ctx_is_nea3(nr_security_context* ctx) { return false; }
+bool security_ctx_is_nea3(nr_security_context* ctx) {
+    (void) ctx;
+    return false;
+}
 
 int nas_nr_decrypt_nea1(const uint8_t*       from,
                         uint8_t*             to,
                         int                  length,
                         uint8_t              seq,
                         nr_security_context* ctx) {
+    (void) from;
+    (void) to;
+    (void) length;
+    (void) seq;
+    (void) ctx;
     return 0;
 }
 
@@ -28,6 +48,11 @@ int nas_nr_decrypt_nea2(const uint8_t*       from,
                         int                  length,
                         uint8_t              seq,
                         nr_security_context* ctx) {
+    (void) from;
+    (void) to;
+    (void) length;
+    (void) seq;
+    (void) ctx;
     return 0;
 }
 
@@ -38,6 +63,7 @@ int nas_nr_decrypt(const uint8_t*       from,
                    uint32_t             code,
                    uint8_t              seq,
                    nr_security_context* ctx) {
+    (void) code;
     diag("in-nas-nr-decrypt\n");
     if (!is_security_type_cyphered(type)) return 0;
 

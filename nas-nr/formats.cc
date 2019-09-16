@@ -198,10 +198,11 @@ std::string vformat(const char* format, va_list args) {
     va_list va2;
 #if NASNR_COMPILER_CXX_VA_COPY
     va_copy(va2, args);
+    NASNR_AUTO(int) len = vsnprintf(nullptr, 0, format, va2);
 #else
 	va2 = args;
+	int len = vsnprintf_s(nullptr, 0, 0, format, va2);
 #endif
-    NASNR_AUTO(int) len = vsnprintf(nullptr, 0, format, va2);
     va_end(va2);
 
     vector< char > zc(len + 1);
@@ -209,7 +210,7 @@ std::string vformat(const char* format, va_list args) {
     vsnprintf(zc.data(), zc.size(), format, args);
     return string(zc.data(), zc.size());
 #else
-	vsnprintf(&zc[0], zc.size(), format, args);
+	vsnprintf_s(&zc[0], zc.size(), len+1, format, args);
 	return string(&zc[0], zc.size());
 #endif
 }

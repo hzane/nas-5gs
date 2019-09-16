@@ -40,8 +40,10 @@ struct nas_nr_message_imp NASNR_FINAL : nas_nr_message {
     nas_nr_message_imp& operator=(const nas_nr_message_imp&) NASNR_DELETED_FUNCTION;
 };
 
+#if !NASNR_COMPILER_CXX_DEFAULT_FUNCTIONS
 nas_nr_message_imp::nas_nr_message_imp(){
 }
+#endif
 
 const description* nas_nr_message_imp::desc() const { return meta; }
 

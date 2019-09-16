@@ -158,5 +158,7 @@ void print_node(std::ostream& out, const proto_node* node, int indent) {
 #endif
 }
 
+#if !NASNR_COMPILER_CXX_TYPE_DEDUCE
 proto_node::proto_node(){
 }
+#endif

@@ -132,3 +132,10 @@ string field_meta_format(const field_meta* self, uint64_t v)  {
     return format_int(v, self->typi, self->display);
 }
 
+#if NASNR_COMPILER_CXX_DEFAULT_FUNCTIONS
+string field_meta::format(const uint8_t* p, int len, uint32_t enc) const {
+    return field_meta_format(this, p, len, enc);
+}
+
+string field_meta::format(uint64_t val) const { return field_meta_format(this, val); }
+#endif
