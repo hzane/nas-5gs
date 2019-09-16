@@ -16,13 +16,12 @@ extern const element_meta mm::mico_indication = {
 int mm::dissect_mico_ind(dissector d, context* ctx) {
     const use_context uc(ctx, "mico-indication", d, -1);
 
-    auto i = d.add_item(1, hf_mm_raai_b0, enc::be);
+    (void) d.add_item(1, hf_mm_raai_b0, enc::be);
 
     // In the UE to network direction bit 1 is spare. The UE shall set this bit to
     // zero. In the network to UE and the UE to network direction:
-    i = d.add_item(1, &hf_mm_sprti, enc::be);
+    (void) d.add_item(1, &hf_mm_sprti, enc::be);
 
-    unused(i);
     return 1;
 }
 
