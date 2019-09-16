@@ -15,7 +15,7 @@ int sm::dissect_pdu_ses_modification_rej(dissector d, context* ctx) {
 
     /*37    Back-off timer value    GPRS timer 3 9.11.2.5    O    TLV    3 */
     // ELEM_OPT_TLV(0x37, , DE_GPRS_TIMER_3, " - Back-off timer value");
-    auto consumed = dissect_opt_tlv(nullptr, &backoff_gprs_timer3, d, ctx);
+    NASNR_AUTO(int) consumed = dissect_opt_tlv(nullptr, &backoff_gprs_timer3, d, ctx);
     d.step(consumed);
 
     /*7B    Extended protocol configuration options   9.11.4.6    O    TLV - E    4 - 65538*/
