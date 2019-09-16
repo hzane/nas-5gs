@@ -5,16 +5,16 @@
 int mm::dissect_ladn_indication(dissector d, context* ctx) {
     const use_context uc(ctx, "ladn-indication", d, 0);
 
-    auto i = 1;
+    NASNR_AUTO(int) i = 1;
     while (d.length > 0) {
-        auto     subtree = d.add_item(2, "LADN DNN value %u", i++);
+        NASNR_AUTO(proto_node*)     subtree = d.add_item(2, "LADN DNN value %u", i++);
         use_tree ut(d, subtree);
         /*LADN DNN value is coded as the length and value part of DNN information element
          * as specified in subclause 9.11.2.1A starting with the second octet*/
         const int length = static_cast< int >(d.uint8());
         d.step(1);
 
-        const auto consumed = cmn::dissect_dnn(d.slice(length), ctx);
+        const NASNR_AUTO(int) consumed = cmn::dissect_dnn(d.slice(length), ctx);
         d.step(consumed);
         subtree->set_length(length + 1);
     }
