@@ -18,7 +18,7 @@ int mm::dissect_deregistration_req_ue_orig(dissector d, context* ctx) {
 
     /* 5GS mobile identity  9.11.3.4    M    LV-E    6-n */
     /*ELEM_MAND_LV_E(DE_NAS_5GS_MM_5GS_MOBILE_ID,); */
-    const auto consumed = dissect_lv_e(nullptr, &mobile_id, d, ctx);
+    const NASNR_AUTO(int) consumed = dissect_lv_e(nullptr, &mobile_id, d, ctx);
     d.step(consumed);
     
     return uc.length;
