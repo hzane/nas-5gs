@@ -1,31 +1,31 @@
 #include "field_meta.hh"
 #include "tvbuff.hh"
 
-string field_meta::format(const uint8_t* p, int length, uint32_t enc) const {
+string field_meta_format(const field_meta* self, const uint8_t* p, int length, uint32_t enc) {
 
     if (!p || length <= 0) return string();
     if (enc == enc::na || enc == enc::none) {
         return string();
     }
-    if (ft::is_integer(typi)) {
-        auto v = n2_uint(p, length);
-        return format(v);
+    if (ft::is_integer(self->typi)) {
+        NASNR_AUTO(uint64_t) v = n2_uint(p, length);
+        return field_meta_format(self, v);
     }
-    if (typi == ft::none) return string();
-    if (typi == ft::protocol || typi == ft::ft_struct || typi == ft::ft_expert)
+    if (self->typi == ft::none) return string();
+    if (self->typi == ft::protocol || self->typi == ft::ft_struct || self->typi == ft::ft_expert)
         return string();
-    if (display == fd::base_none) return string();
+    if (self->display == fd::base_none) return string();
 
-    if (typi == ft::ft_boolean) {
-        auto v  = *p;
-        if (bitmask)
-            v = (v & bitmask);
+    if (self->typi == ft::ft_boolean) {
+        NASNR_AUTO(uint8_t) v  = *p;
+        if (self->bitmask)
+            v = (v & self->bitmask);
 
-        const auto tf = this->tf_strings ? tf_strings : &true_false;
+        const NASNR_AUTO(true_false_string*) tf = self->tf_strings ? self->tf_strings : &true_false;
         return formats("%s (%d)", v ? tf->true_string : tf->false_string, v ? 1 : 0);
     }
 
-    switch (display) {
+    switch (self->display) {
         case fd::base_string: return string(reinterpret_cast< const char* >(p), length);
         case fd::base_bin: return format_bit(p, length, " ");
         case fd::base_hex: return format_hex(p, length, " ");
@@ -76,59 +76,59 @@ string field_meta::format(const uint8_t* p, int length, uint32_t enc) const {
 
 }
 
-string field_meta::format(uint64_t v) const {
-    if (typi == ft::none || typi == ft::protocol) return string();
-    if (display == fd::base_none) return string();
+string field_meta_format(const field_meta* self, uint64_t v)  {
+    if (self->typi == ft::none || self->typi == ft::protocol) return string();
+    if (self->display == fd::base_none) return string();
 
-    if (typi == ft::ft_boolean || tf_strings) {
-        const auto tf = this->tf_strings ? tf_strings : &true_false;
+    if (self->typi == ft::ft_boolean || self->tf_strings) {
+        const NASNR_AUTO(tf_string*) tf = self->tf_strings ? self->tf_strings : &true_false;
         return formats(
             "%s (%d)", v ? tf->true_string : tf->false_string, v ? 1 : 0);
     }
 
-    if (display == fd::base_char) {
+    if (self->display == fd::base_char) {
         return formats("%c", static_cast< char >(v));
     }
 
-    if (val_strings && display == fd::base_bit) {
-        const auto flags = find_bits_string(val_strings, static_cast< uint32_t >(v));
+    if (self->val_strings && self->display == fd::base_bit) {
+		const NASNR_AUTO(std::vector<std::string>) flags = find_bits_string(self->val_strings, static_cast< uint32_t >(v));
         return join(flags, " | ");
     }
 
-    if (val_strings) {
-        auto s = find_val_string(val_strings, uint32_t(v));
+    if (self->val_strings) {
+        NASNR_AUTO(const char*) s = find_val_string(self->val_strings, uint32_t(v));
         return formats("%s (%#x)", s, uint32_t(v));
     }
 
-    if (range_strings){
-        const auto s = find_r_string(range_strings, uint32_t(v));
+    if (self->range_strings){
+        const NASNR_AUTO(char*) s = find_r_string(self->range_strings, uint32_t(v));
         return formats("%s (%#x)", s, uint32_t(v));
     }
 
-    if(display == fd::timer) {
-        auto v8 = static_cast< uint8_t >(v);
+    if(self->display == fd::timer) {
+        NASNR_AUTO(uint8_t) v8 = static_cast< uint8_t >(v);
         return gprs_timer_string(&v8, 1);
     }
 
-    if (display == fd::timer3) {
+    if (self->display == fd::timer3) {
         return gprs_timer3_format(uint8_t(v));
     }
 
-    if (display == fd::timer2){
+    if (self->display == fd::timer2){
         return gprs_timer2_format(uint8_t(v));
     }
 
-    if (display == fd::base_bin) {
-        return format_int_bit_mask(typi, v, bitmask, nullptr);
+    if (self->display == fd::base_bin) {
+        return format_int_bit_mask(self->typi, v, self->bitmask, nullptr);
     }
 
-    if (display == fd::right) {
+    if (self->display == fd::right) {
         return formats("%1x", (v & 0x0fu));
     }
-    if (display == fd::left) {
+    if (self->display == fd::left) {
         return formats("%1x", (v & 0xf0u) >> 4u);
     }
 
-    return format_int(v, typi, display);
+    return format_int(v, self->typi, self->display);
 }
 
