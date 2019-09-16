@@ -12,18 +12,18 @@ int mm::dissect_service_area_list(dissector d, context* ctx) {
         &hf_sal_num_e,
         nullptr,
     };
-    auto n = 1;
+    NASNR_AUTO(int) n = 1;
     /*Partial service area list*/
     while (d.length > 0) {
-        const auto     start   = d.offset;
-        const auto     subtree = d.add_item(-1, "Partial service area list  %u", n++);
+        const NASNR_AUTO(int)     start   = d.offset;
+        NASNR_AUTO(proto_node*)   const  subtree = d.add_item(-1, "Partial service area list  %u", n++);
         use_tree ut(d, subtree);
 
         /*Head of Partial service area list*/
         /* Allowed type    Type of list    Number of elements    octet 1 */
-        const auto sal_head  = d.tvb->uint8(d.offset);
-        const auto sal_t_li  = (sal_head & 0x60u) >> 5u;
-        auto sal_num_e = (sal_head & 0x1f) + 1;
+        const NASNR_AUTO(uint8_t) sal_head  = d.tvb->uint8(d.offset);
+        const NASNR_AUTO(uint8_t) sal_t_li  = (sal_head & 0x60u) >> 5u;
+        NASNR_AUTO(uint8_t) sal_num_e = (sal_head & 0x1f) + 1;
         d.add_bits(flags);
         d.step(1);
 
