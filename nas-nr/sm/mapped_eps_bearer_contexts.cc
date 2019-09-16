@@ -7,16 +7,16 @@ using namespace nas;
 int dissect_eps_param(dissector d, int i, context* ctx) {
     const use_context uc(ctx, "mapped-eps-bearer-contexts", d, 0);
 
-    auto     subtree = d.add_item(-1, "EPS parameter %u", i);
+    NASNR_AUTO(proto_node*)     subtree = d.add_item(-1, "EPS parameter %u", i);
     use_tree ut(d, subtree);
 
     /* EPS parameter identifier */
-    const auto param_id = static_cast< uint32_t >(d.uint8());
+    const NASNR_AUTO(uint32_t) param_id = static_cast< uint32_t >(d.uint8());
     (void) d.add_item(1, &hf_sm_mapd_eps_b_cont_num_eps_param_id, enc::be);
     d.step(1);
 
     /*length of the EPS parameter contents field */
-    const auto length = static_cast< int >(d.uint8());
+    const NASNR_AUTO(int) length = static_cast< int >(d.uint8());
     // (void) d.add_item(1, &hf_sm_length, enc::be);
     d.step(1);
 
@@ -54,11 +54,11 @@ int sm::dissect_mapped_eps_bearer_ctx(dissector d, context* ctx) {
         &hf_sm_mapd_eps_b_cont_num_eps_parms,
         nullptr,
     };
-    auto n = 1;
+    NASNR_AUTO(int) n = 1;
     /* The IE contains a number of Mapped EPS bearer context */
     while (d.length > 0) {
         /* Figure 9.11.4.5.2: Mapped EPS bearer context */
-        auto     subtree = d.add_item(-1, "Mapped EPS bearer context %u", n);
+        NASNR_AUTO(proto_node*)     subtree = d.add_item(-1, "Mapped EPS bearer context %u", n);
         use_tree ut(d, subtree);
 
         /* EPS bearer identity */
@@ -66,7 +66,7 @@ int sm::dissect_mapped_eps_bearer_ctx(dissector d, context* ctx) {
         d.step(1);
 
         /* Length of Mapped EPS bearer context*/
-        const auto length = static_cast< int >(d.ntohs());
+        const NASNR_AUTO(int) length = static_cast< int >(d.ntohs());
         // (void) d.add_item(2, &hf_sm_length, enc::be);
         d.step(2);
 
@@ -74,8 +74,8 @@ int sm::dissect_mapped_eps_bearer_ctx(dissector d, context* ctx) {
         /*     8   7      6    5   4  3  2  1          */
         /* operation code | spare |  E | number of EPS params     */
 
-        auto       nep      = d.tvb->uint8(d.offset);
-        const auto opt_code = (nep & 0xc0u) >> 6u;
+        NASNR_AUTO(uint8_t)       nep      = d.tvb->uint8(d.offset);
+        const NASNR_AUTO(uint8_t) opt_code = (nep & 0xc0u) >> 6u;
         nep                 = nep & 0x0f;
 
         /* operation code = 3 Modify existing EPS bearer */
@@ -87,9 +87,9 @@ int sm::dissect_mapped_eps_bearer_ctx(dissector d, context* ctx) {
         d.step(1);
 
         /* EPS parameters list */
-        auto i = 1;
+        NASNR_AUTO(int) i = 1;
         while (nep > 0) {
-            auto consumed = dissect_eps_param(d, i, ctx);
+            NASNR_AUTO(int) consumed = dissect_eps_param(d, i, ctx);
             d.step(consumed);
             --nep;
             ++i;
