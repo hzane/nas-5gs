@@ -52,16 +52,16 @@ int sm::dissect_qos_param(dissector d, int j, context* ctx) {
     const use_context uc(ctx, "qos-param", d, -1);
 
     /* Parameter list */
-    const auto     subtree = d.add_item(-1, "Parameter %u", j);
+    NASNR_AUTO(proto_node*)    const subtree = d.add_item(-1, "Parameter %u", j);
     use_tree ut(d, subtree);
 
     /* Parameter identifier */
-    const auto param_id = static_cast< uint32_t >(d.uint8());
+    const NASNR_AUTO(uint32_t) param_id = static_cast< uint32_t >(d.uint8());
     (void) d.add_item(1, &hf_sm_param_id, enc::be);
     d.step(1);
 
     /* Length of parameter contents */
-    const auto param_len = static_cast< int >(d.uint8());
+    const NASNR_AUTO(int) param_len = static_cast< int >(d.uint8());
     // d.add_item(1, &hf_sm_param_len, enc::be);
     d.step(1);
 
@@ -116,10 +116,10 @@ int sm::dissect_authorized_qos_flow_des(dissector d, context* ctx) {
         nullptr,
     };
 
-    auto i = 1;
+    NASNR_AUTO(int) i = 1;
     while (d.length > 0) {
         /* QoS fow description */
-        const auto subtree = d.add_item(-1, "QoS flow description %u", i++);
+        NASNR_AUTO(proto_node*) const subtree = d.add_item(-1, "QoS flow description %u", i++);
         use_tree   ut(d, subtree);
 
         /* 0 0 QFI */
@@ -131,13 +131,13 @@ int sm::dissect_authorized_qos_flow_des(dissector d, context* ctx) {
         d.step(1);
 
         /* 0 Spare    E    Number of parameters */
-        auto num_param = d.uint8() & 0x3fu;
+        NASNR_AUTO(uint8_t) num_param = d.uint8() & 0x3fu;
         d.add_bits(param_flags);
         d.step(1);
 
-        auto j = 1;
+        NASNR_AUTO(int) j = 1;
         while (num_param > 0) {
-            const auto consumed = dissect_qos_param(d, j, ctx);
+            const NASNR_AUTO(int) consumed = dissect_qos_param(d, j, ctx);
             d.step(consumed);
             ++j;
             --num_param;
