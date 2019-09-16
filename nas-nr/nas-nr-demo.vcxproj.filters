@@ -441,9 +441,6 @@
     <ClCompile Include="mm\uplink_nas_transport.cc">
       <Filter>nas</Filter>
     </ClCompile>
-    <ClCompile Include="mm\use_status.cc">
-      <Filter>nas</Filter>
-    </ClCompile>
     <ClCompile Include="mm\downlink_nas_transparent.cc" />
   </ItemGroup>
   <ItemGroup>

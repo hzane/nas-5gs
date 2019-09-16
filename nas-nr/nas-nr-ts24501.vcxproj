@@ -309,7 +309,6 @@
     <ClCompile Include="mm\ue_usage_setting.cc" />
     <ClCompile Include="mm\uplink_data_status.cc" />
     <ClCompile Include="mm\uplink_nas_transport.cc" />
-    <ClCompile Include="mm\use_status.cc" />
     <ClCompile Include="nas-nr.cc" />
     <ClCompile Include="proto.cc" />
     <ClCompile Include="sm\5gsm_capability.cc" />

@@ -416,9 +416,6 @@
     <ClCompile Include="mm\uplink_nas_transport.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="mm\use_status.cc">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="sm\5gsm_capability.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
