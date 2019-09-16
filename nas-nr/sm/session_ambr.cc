@@ -8,7 +8,7 @@ int sm::dissect_session_ambr(dissector d, context* ctx) {
     /* Session-AMBR for downlink (octets 4 and 5) */
 
     // d.add_item(1, &hf_sm_ses_ambr_dl_unit, enc::be);
-    // auto ambr_val = static_cast< uint32_t >(d.ntohs());
+    // NASNR_AUTO(uint32_t) ambr_val = static_cast< uint32_t >(d.ntohs());
 
     (void) d.add_item(3, &hf_sm_ses_ambr_dl, enc::be);
     d.step(3);
