@@ -13,7 +13,7 @@ int mm::dissect_registration_rej(dissector d, context* ctx) {
     down_link(d.pinfo);
 
     /* 5GMM cause   9.11.3.2  M   V   1 */
-    auto consumed = dissect_mm_cause(d, ctx);
+    NASNR_AUTO(int) consumed = dissect_mm_cause(d, ctx);
     d.step(consumed);
 
     /* 5F  T3346 value GPRS timer 2     9.11.2.4   O   TLV 3 */
