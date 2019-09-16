@@ -23,7 +23,7 @@ int mm::dissect_dl_nas_transp(dissector d, context* ctx) {
     d.step(1);
 
     /* Payload container     9.11.3.39    M    LV-E    3-65537*/
-    auto consumed = dissect_lv_e(nullptr, &payload_container, d, ctx);
+    NASNR_AUTO(int) consumed = dissect_lv_e(nullptr, &payload_container, d, ctx);
     d.step(consumed);
 
     /*12    PDU session ID    PDU session identity 2 9.11.3.41    C    TV    2 */
