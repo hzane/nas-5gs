@@ -19,13 +19,13 @@ int mm::dissect_ext_emerge_num_list(dissector d, context* ctx) {
     (void) d.add_item(1, &hf_ext_emergency_number_list_validity, enc::be);
     d.step(1);
 
-    auto i = 1;
+    NASNR_AUTO(int) i = 1;
     while (d.length > 0) {
-        const auto start   = d.offset;
-        auto       subtree = d.add_item(-1, "Extended emergency number #%u", i++);
+        NASNR_AUTO(int) const start   = d.offset;
+        NASNR_AUTO(proto_node*)       subtree = d.add_item(-1, "Extended emergency number #%u", i++);
         use_tree   ut(d, subtree);
 
-        auto length = static_cast< int >(d.uint8());
+        NASNR_AUTO(int) length = static_cast< int >(d.uint8());
         (void) d.add_item(1, &hf_ext_emerge_num_len, enc::be);
         d.step(1);
 
