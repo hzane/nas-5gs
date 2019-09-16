@@ -16,14 +16,14 @@ extern const value_string mnc_codes[];
  */
 string mcc_string(const uint8_t* d, int length) {
     if (!d || length < 3) return string();
-    auto       octet = static_cast< uint32_t >(d[0]);
-    const auto mcc1  = octet & 0x0fu;
-    const auto mcc2  = octet >> 4u;
+    NASNR_AUTO(uint32_t)       octet = static_cast< uint32_t >(d[0]);
+    const NASNR_AUTO(uint32_t) mcc1  = octet & 0x0fu;
+    const NASNR_AUTO(uint32_t) mcc2  = octet >> 4u;
 
     octet           = d[1];
-    const auto mcc3 = octet & 0x0fu;
+    const NASNR_AUTO(uint8_t) mcc3 = octet & 0x0fu;
 
-    const auto mcc = 100 * mcc1 + 10 * mcc2 + mcc3;
+    const NASNR_AUTO(uint32_t) mcc = 100 * mcc1 + 10 * mcc2 + mcc3;
 
     if (mcc == 460) {
         return "China (460)";
@@ -33,16 +33,16 @@ string mcc_string(const uint8_t* d, int length) {
 
 string mcc_mnc_string(const uint8_t* d, int length) {
     if (!d || length < 3) return string();
-    auto octet = d[1];
+    NASNR_AUTO(uint8_t) octet = d[1];
 
     /* MNC, Mobile network code (octet 3 bits 5 to 8, octet 4)  */
-    const auto mnc3 = octet >> 4u;
+    const NASNR_AUTO(uint32_t) mnc3 = octet >> 4u;
 
     octet           = d[2];
-    const auto mnc1 = octet & 0x0fu;
-    const auto mnc2 = octet >> 4u;
+    const NASNR_AUTO(uint8_t) mnc1 = octet & 0x0fu;
+    const NASNR_AUTO(uint8_t) mnc2 = octet >> 4u;
 
-    auto       mnc  = 100 * mnc1 + 10 * mnc2 + mnc3;
+    NASNR_AUTO(uint32_t)       mnc  = 100 * mnc1 + 10 * mnc2 + mnc3;
 
     if (mnc3 > 9) mnc = mnc1 * 10 + mnc2; // 2 digits
 
