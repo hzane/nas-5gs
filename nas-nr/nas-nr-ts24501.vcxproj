@@ -163,6 +163,7 @@
     <ClInclude Include="common.hh" />
     <ClInclude Include="config.hh" />
     <ClInclude Include="core.hh" />
+    <ClInclude Include="description.hh" />
     <ClInclude Include="dissect_mm_msg.hh" />
     <ClInclude Include="dissect_nas5g.hh" />
     <ClInclude Include="dissect_sm_msg.hh" />
@@ -174,6 +175,7 @@
     <ClInclude Include="mm\mm_dissects.hh" />
     <ClInclude Include="mm\mm_element_meta.hh" />
     <ClInclude Include="mm\mm_field_meta.hh" />
+    <ClInclude Include="nas-nr-compiler-detection.hh" />
     <ClInclude Include="nas-nr.hh" />
     <ClInclude Include="packet_info.hh" />
     <ClInclude Include="pch.h" />
@@ -311,6 +313,7 @@
     <ClCompile Include="mm\uplink_nas_transport.cc" />
     <ClCompile Include="mm\use_status.cc" />
     <ClCompile Include="nas-nr.cc" />
+    <ClCompile Include="nas_decrypt.cc" />
     <ClCompile Include="proto.cc" />
     <ClCompile Include="sm\5gsm_capability.cc" />
     <ClCompile Include="sm\5gsm_cause.cc" />
