@@ -7,11 +7,10 @@ int mm::dissect_registration_result(dissector d, context* ctx) {
     use_context uc(ctx, "5gs-registration-result", d, -1);
 
     /* 0 Spare 0 Spare 0 Spare 0 Spare SMS allowed 5GS registration result value */
-    auto i = d.add_item(1, &hf_reg_res_sms_allowed, enc::be);
-    i = d.add_item(1, &hf_registration_result, enc::be);
+    (void) d.add_item(1, &hf_reg_res_sms_allowed, enc::be);
+    (void) d.add_item(1, &hf_registration_result, enc::be);
     d.step(1);
 
-    unused(i);
     return 1;
 }
 
