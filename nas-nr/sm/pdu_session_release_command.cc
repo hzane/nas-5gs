@@ -19,7 +19,7 @@ int sm::dissect_pdu_ses_release_cmd(dissector d, context* ctx) {
 
     /*37    Back-off timer value    GPRS timer 3 9.11.2.25    O    TLV    3 */
     // ELEM_OPT_TLV(0x37, , DE_GPRS_TIMER_3, " - Back-off timer value");
-    auto consumed = dissect_opt_tlv(nullptr, &backoff_gprs_timer3, d, ctx);
+    NASNR_AUTO(int) consumed = dissect_opt_tlv(nullptr, &backoff_gprs_timer3, d, ctx);
     d.step(consumed);
 
     /*78  EAP message 9.10.2.2    O    TLV-E    7 - 1503*/
