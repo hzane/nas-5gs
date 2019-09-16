@@ -16,16 +16,16 @@ int mm::dissect_pld_container_entry(dissector d, context* ctx) {
     using namespace mm;
     const use_context uc(ctx, "pld-content-entry", d, -1);
 
-    const auto len = static_cast< int >(d.ntohs());
+    const NASNR_AUTO(int) len = static_cast< int >(d.ntohs());
 
     (void) d.add_item(1, &hf_payload_container_type, enc::be);
 
-    auto nie = (d.uint8() & 0xf0u) >> 4;
+    NASNR_AUTO(uint8_t) nie = (d.uint8() & 0xf0u) >> 4;
     (void) d.add_item(1, &hf_pld_cont_entry_nie, enc::be);
     d.step(1);
 
     while (nie > 0) {
-        const auto consumed = dissect_optional_ie(d, ctx);
+        const NASNR_AUTO(int) consumed = dissect_optional_ie(d, ctx);
         d.step(consumed);
 
         --nie;
@@ -38,12 +38,12 @@ int mm::dissect_pld_container_entry(dissector d, context* ctx) {
 int mm::dissect_payload_container(dissector d, context* ctx) {
     const use_context uc(ctx, "pld-content", d, 0);
 
-    const auto typi = retrieve_payload_content_type(ctx) & 0x0fu;
+    const NASNR_AUTO(uint8_t) typi = retrieve_payload_content_type(ctx) & 0x0fu;
 
     switch (typi) {
     case 1: {
         /* N1 SM information */
-        const auto consumed = dissect_nas5g_plain(d, ctx);
+        const NASNR_AUTO(int) consumed = dissect_nas5g_plain(d, ctx);
         d.step(consumed);
     } break;
     case 2: {
@@ -78,7 +78,7 @@ int mm::dissect_payload_container(dissector d, context* ctx) {
     } break;
     case 5: {
         /* UE policy container */
-        const auto consumed = dissect_updp(d, ctx);
+        const NASNR_AUTO(int) consumed = dissect_updp(d, ctx);
         d.step(consumed);
     } break;
     case 6: {
@@ -99,10 +99,10 @@ int mm::dissect_payload_container(dissector d, context* ctx) {
     } break;
     case 15: {
         // Multiple payloads
-        auto nentries = d.uint8();
+        NASNR_AUTO(uint8_t) nentries = d.uint8();
         d.step(1);
         while (nentries > 0) {
-            const auto consumed = dissect_pld_container_entry(d, ctx);
+            const NASNR_AUTO(int) consumed = dissect_pld_container_entry(d, ctx);
             d.step(consumed);
             --nentries;
         }
@@ -222,13 +222,13 @@ const field_meta hf_pld_optional_ie_value = {
 int mm::dissect_optional_ie(dissector d, context* ctx) {
     const use_context uc(ctx, "optional-ie", d, -1);
 
-    const auto subtree = d.add_item(-1, &hf_pld_optional_ie, enc::na);
+    NASNR_AUTO(proto_node*) const subtree = d.add_item(-1, &hf_pld_optional_ie, enc::na);
     use_tree   ut(d, subtree);
 
     (void) d.add_item(1, &hf_pld_optional_ie_type, enc::be);
     d.step(1);
 
-    const auto len = static_cast< int >(d.uint8());
+    const NASNR_AUTO(int) len = static_cast< int >(d.uint8());
     (void) d.add_item(1, &hf_pld_optional_ie_length, enc::be);
     d.step(1);
 
