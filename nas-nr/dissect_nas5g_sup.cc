@@ -232,7 +232,7 @@ const field_meta nas::hf_service_request_msg_id = {
 };
 
 // GPRS timer 3 9.11.2.4
-const element_meta nas::t3348_gprs_timer3{
+const element_meta nas::t3348_gprs_timer3 = {
     0xff,
     "GPRS timer3 - T4448 value",
     dissect_gprs_timer3_set,
