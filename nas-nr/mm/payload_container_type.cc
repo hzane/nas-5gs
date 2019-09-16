@@ -20,7 +20,7 @@ int mm::dissect_payload_container_type(dissector d, context* ctx) {
     const uint8_t oct = d.tvb->uint8(d.offset) & 0x0fu;
     store_payload_content_type(ctx, oct);
 
-    auto i = d.add_item(1, &mm::hf_payload_container_type, enc::be);
+    NASNR_AUTO(proto_node*) i = d.add_item(1, &mm::hf_payload_container_type, enc::be);
     unused(i);
     return 1;
 }
