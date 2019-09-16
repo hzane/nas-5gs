@@ -13,7 +13,7 @@ int mm::dissect_config_update_cmd(dissector d, context* ctx) {
     down_link(d.pinfo);
 
     /*D-    Configuration update indication 9.11.3.18 O    TV    1 */
-    auto consumed = dissect_opt_tv_short(nullptr, &configure_update_indication, d, ctx);
+    NASNR_AUTO(int) consumed = dissect_opt_tv_short(nullptr, &configure_update_indication, d, ctx);
     d.step(consumed);
 
     /*77    5G-GUTI    5GS mobile identity     9.11.3.4    O    TLV    TBD*/
