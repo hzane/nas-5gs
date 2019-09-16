@@ -28,12 +28,12 @@ extern const field_meta*  hf_seq_no;
 extern const field_meta*  hf_proc_trans_id;
 extern const field_meta   hf_service_request_msg_id; // TODO: check the ie
 
-inline extern const true_false_string tfs_supported_not_supported = {
+NASNR_INLINE const true_false_string tfs_supported_not_supported = {
     "Supported",
     "Not supported",
 };
 
-inline extern const true_false_string tfs_allowed_not_allowed = {
+NASNR_INLINE const true_false_string tfs_allowed_not_allowed = {
     "Allowed",
     "Not Allowed",
 };
