@@ -10,7 +10,7 @@ int sm::dissect_pdu_ses_release_req(dissector d, context* ctx) {
     up_link(d.pinfo);    
 
     /* 59 5GSM cause 9.11.4.2    O    TV    2 */
-    auto consumed = dissect_opt_tv(nullptr, &sm_cause, d, ctx);
+    NASNR_AUTO(int) consumed = dissect_opt_tv(nullptr, &sm_cause, d, ctx);
     d.step(consumed);
 
     /* 7B    Extended protocol configuration options   9.11.4.6    O    TLV - E    4 - 65538*/
