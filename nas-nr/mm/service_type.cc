@@ -24,7 +24,7 @@ const val_string mm::service_type_values[] = {
     {0x04, "Emergency services fallback"},
     {0x05, "High priority access"},
     {0x06, "elevated signalling"},
-    {0x07, R"(unused; shall be interpreted as "signalling", if received by the network)"},
+    {0x07, "unused; shall be interpreted as \"signalling\", if received by the network"},
     {0x08, "unused; shall be interpreted as \"signalling\", if received by the network"},
     {0x09, "unused; shall be interpreted as \"data\", if received by the network"},
     {0x0a, "unused; shall be interpreted as \"data\", if received by the network"},
