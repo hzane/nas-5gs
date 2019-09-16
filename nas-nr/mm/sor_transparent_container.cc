@@ -67,16 +67,16 @@ int mm::dissect_sor_trans_cont(dissector d, context* ctx) {
         &hf_rfu_b0,
         nullptr,
     };
-    auto i         = 1;
-    const auto oct       = d.tvb->uint8(d.offset);
-    const auto data_type = oct & 0x01u;
+    NASNR_AUTO(int) i         = 1;
+    const NASNR_AUTO(uint8_t) oct       = d.tvb->uint8(d.offset);
+    const NASNR_AUTO(uint8_t) data_type = oct & 0x01u;
 
     if (data_type == 0) {
         /* SOR header    octet 4*/
         d.add_bits(flags_dt0);
         d.step(1);
 
-        const auto list_type = (oct & 0x4u) >> 2u;
+        const NASNR_AUTO(uint8_t) list_type = (oct & 0x4u) >> 2u;
         /* SOR-MAC-IAUSF    octet 5-20 */
         (void) d.add_item(16, &hf_sor_mac_iausf, enc::na);
         d.step(16);
@@ -92,7 +92,7 @@ int mm::dissect_sor_trans_cont(dissector d, context* ctx) {
         } else {
             /* PLMN ID and access technology list    octet 23*-102* */
             while (d.length > 0) {
-                const auto subtree = d.add_item(-1, "List item %u", i);
+                NASNR_AUTO(proto_node*) const subtree = d.add_item(-1, "List item %u", i);
                 use_tree ut(d, subtree);
                 /* The PLMN ID and access technology list consists of PLMN ID and access
                  * technology identifier and are coded as specified in 3GPP TS 31.102 [22]
@@ -102,7 +102,7 @@ int mm::dissect_sor_trans_cont(dissector d, context* ctx) {
                  * - according to TS 24.008 [9].
                  */
                 /* PLMN ID 1    octet 23*- 25* */
-                const auto consumed = dissect_e212_mcc_mnc(d, ctx);
+                const NASNR_AUTO(int) consumed = dissect_e212_mcc_mnc(d, ctx);
                 d.step(consumed);
 
                 /* access technology identifier 1    octet 26*- 27* */
