@@ -8,3 +8,6 @@ x64/
 Win32/
 Release/
 build/
+*.ncb
+*.suo
+*.user
