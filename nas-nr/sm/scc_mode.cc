@@ -4,7 +4,7 @@
 int sm::dissect_ssc_mode(dissector d, context* ctx) {
     const use_context uc(ctx, "ssc-mode", d, -1);
 
-    auto i = d.add_item(1, &hf_sm_sc_mode, enc::be);
+    NASNR_AUTO(proto_node*) i = d.add_item(1, &hf_sm_sc_mode, enc::be);
     unused(i);
 
     return 1;
