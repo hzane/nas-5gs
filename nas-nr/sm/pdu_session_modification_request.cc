@@ -13,7 +13,7 @@ int sm::dissect_pdu_ses_modification_req(dissector d, context* ctx) {
     up_link(d.pinfo);    
 
     /* 28 5GSM capability 9.11.4.1    O    TLV    3-15 */
-    auto consumed = dissect_opt_tlv(nullptr, &sm_cap, d, ctx);
+    NASNR_AUTO(int) consumed = dissect_opt_tlv(nullptr, &sm_cap, d, ctx);
     d.step(consumed);
 
     /* 59 5GSM cause 9.11.4.2    O    TV    2 */
