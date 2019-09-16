@@ -16,16 +16,16 @@ extern const element_meta mm::operator_defined_access_category_defs = {
 int mm::dissect_operator_defined_access_category_definitions(dissector d, context* ctx) {
     const use_context uc(ctx, "operator-defined-access-category-definitions", d, 0);
 
-    auto i = 1;
+    NASNR_AUTO(int) i = 1;
     while (d.length > 0) {
-        const auto length  = static_cast< int >(d.tvb->uint8(d.offset));
-        auto       sd      = d.slice(length + 1);
-        const auto subtree = d.add_item(
+        const NASNR_AUTO(int) length  = static_cast< int >(d.tvb->uint8(d.offset));
+        NASNR_AUTO(dissector)       sd      = d.slice(length + 1);
+        NASNR_AUTO(proto_node*) const subtree = d.add_item(
             length + 1, "Operator-defined access category definition  %u", i++);
         use_tree    ut(sd, subtree);
         use_context suc(ctx, "operator-defined-access-category-definition", sd, 0);
 
-        // auto n = sd.add_item(1, &hf_mm_length, enc::be);
+        // NASNR_AUTO(proto_node*) n = sd.add_item(1, &hf_mm_length, enc::be);
         sd.step(1);
 
         /* Precedence value */
@@ -33,13 +33,13 @@ int mm::dissect_operator_defined_access_category_definitions(dissector d, contex
         sd.step(1);
 
         /* PSAC    0 Spare    0 Spare    Operator-defined access category number */
-        const auto psac = (sd.uint8() & 0x80u);
+        const NASNR_AUTO(uint8_t) psac = (sd.uint8() & 0x80u);
         (void) sd.add_item(1, &hf_access_cat_n, enc::be);
         (void) sd.add_item(1, &hf_psac, enc::be);
         sd.step(1);
 
         /* Length of criteria */
-        const auto cl = static_cast< int >(sd.uint8());
+        const NASNR_AUTO(int) cl = static_cast< int >(sd.uint8());
         // n             = sd.add_item(1, &hf_criteria_length, enc::be);
         sd.step(1);
 
