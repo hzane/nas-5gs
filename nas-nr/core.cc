@@ -14,7 +14,7 @@ void OutputDebugStringA(const char*){}
 
 // declared in config.hh
 void diag(const char* format, ...) {
-
+#if NASNR_COMPILER_CXX_VECTOR_DATA
     va_list args;
     va_start(args, format);
 
@@ -22,19 +22,19 @@ void diag(const char* format, ...) {
     va_copy(cp, args);
 
     std::vector< char > buf(
-        1 + static_cast< size_t >(std::vsnprintf(nullptr, 0, format, args)));
+        1 + static_cast< size_t >(vsnprintf(nullptr, 0, format, args)));
     va_end(args);
-
 
     vsnprintf(buf.data(), buf.size(), format, cp);
     va_end(cp);
     OutputDebugStringA(buf.data());
+#endif
 }
 
 string context::path() const { return join(paths, "/"); }
 
 string bits7_string(const uint8_t* data, int len){
-    auto d = ts_23_038_7bits_string(data, 0, (len<<3)/7);
+    NASNR_AUTO(ustring) d = ts_23_038_7bits_string(data, 0, (len<<3)/7);
     return string(d.begin(), d.end());
 }
 
@@ -43,7 +43,7 @@ string   ipv6_link_local_string(const uint8_t* data, int len) {
 
     std::stringstream ss;
     ss << "fe80:";
-    for (auto i = 0; i < len; i++) {
+    for (int i = 0; i < len; i++) {
         ss << ":" << std::hex << data[i];
     }
     return ss.str();
@@ -53,7 +53,7 @@ string ipv6_string(const uint8_t* d, int len) {
     if (!d || !len) return string();
     std::stringstream ss;
     ss << d[0];
-    for (auto i = 1; i<len; i++) {
+    for (int i = 1; i<len; i++) {
         ss << ":" << std::hex << d[i];
     }
     return ss.str();
@@ -92,14 +92,14 @@ uint32_t get_ext_ambr_unit(uint32_t unit, const char** unit_str) {
 
 string ambr_string(const uint8_t*d, int length) {
     if (!d || length <= 0) return string();
-    const auto unit = uint32_t(d[0]);
-    const auto val  = n2uint16(d + 1);
+    const NASNR_AUTO(uint32_t) unit = uint32_t(d[0]);
+    const NASNR_AUTO(uint16_t) val  = n2uint16(d + 1);
     return ambr_string(val, unit);
 }
 
 string ambr_string(uint32_t val, uint32_t unit){
-    auto       unit_str = "";
-    const auto multi = get_ext_ambr_unit(unit, &unit_str);
+    NASNR_AUTO(const char*)       unit_str = "";
+    const NASNR_AUTO(uint32_t) multi = get_ext_ambr_unit(unit, &unit_str);
     return formats("%u %s (%u)", val * multi, unit_str, val);
 }
 
@@ -110,7 +110,7 @@ string bstrn_string(const uint8_t*d, int len){
     string str(d, d + len);
 
     for (size_t i = 0; i < str.size();) {
-        const auto next = str[i];
+        const NASNR_AUTO(char) next = str[i];
         str[i]          = '.';
         i               = i + next + 1;
     }
@@ -120,9 +120,9 @@ string bstrn_string(const uint8_t*d, int len){
 string gprs_timer_string(const uint8_t*d, int len) {
     if (!d || len <= 0) return string();
 
-    const auto  val   = static_cast< uint32_t >(d[0]) & 0x1fu;
-    const auto  unitf = static_cast< int >(d[0] >> 5u);
-    auto        unit  = "min";
+    const NASNR_AUTO(uint32_t)  val   = static_cast< uint32_t >(d[0]) & 0x1fu;
+    const NASNR_AUTO(int)  unitf = static_cast< int >(d[0] >> 5u);
+    NASNR_AUTO(const char*)        unit  = "min";
     uint32_t    mul   = 1;
 
     if (unitf == 0) {
@@ -151,8 +151,8 @@ string gprs_timer3_string(const uint8_t*d, int len) {
 
 /* * 3GPP TS 24.008 g10 10.5.7.4a */
 string gprs_timer3_format(uint8_t oct) {
-    auto        uf   = oct >> 5u;
-    auto        val  = uint32_t(oct) & 0x1fu;
+    NASNR_AUTO(uint8_t)        uf   = oct >> 5u;
+    NASNR_AUTO(uint32_t)       val  = uint32_t(oct) & 0x1fu;
     const char* unit = "hr";
     uint32_t    mul  = 1;
 
@@ -189,7 +189,7 @@ string gprs_timer3_format(uint8_t oct) {
 
 /* * 3GPP TS 24.008 g10 10.5.7.4 */
 string gprs_timer2_format(uint8_t oct) {
-    auto        val  = uint8_t(oct) & 0x1fu;
+    NASNR_AUTO(uint8_t)        val  = uint8_t(oct) & 0x1fu;
     const char* unit = "min";
     uint32_t    mul  = 1;
     switch (oct >> 5u) {
@@ -275,12 +275,12 @@ static const char digits_bcd[] =
 string bcd_string(const uint8_t*d, int length){
     if (length<=0 || !d) return string();
 
-    string ret = {};
-    for(auto i =0; i < length; i++){
-        const auto a   = d[i] & 0x0fu;
+    string ret = NASNR_LIST_INIT(string,);
+    for(int i =0; i < length; i++) {
+        const NASNR_AUTO(uint8_t) a   = d[i] & 0x0fu;
         ret.push_back(digits_bcd[a]);
 
-        auto b   = (d[i] & 0xf0u) >> 4;
+        NASNR_AUTO(uint8_t) b   = (d[i] & 0xf0u) >> 4u;
 
         // if the last octet's lower-order nibble is 0x0f
         // ignore it
@@ -291,10 +291,10 @@ string bcd_string(const uint8_t*d, int length){
 
 string imei_string(const uint8_t*d, int length){
     if (length <= 0 || !d) return string();
-    string ret={};
+    string ret= NASNR_LIST_INIT(string,);
 
     ret.push_back(digits_bcd[(d[0] & 0xf0u) >> 4]);
-    for (auto i = 1; i < length; ++i) {
+    for (int i = 1; i < length; ++i) {
         ret.push_back(digits_bcd[d[i] & 0x0fu]);
         if (i!=length-1||(d[i]&0xf0u)!=0xf0u){
             ret.push_back(digits_bcd[(d[i] & 0xf0u) >> 4u]);
@@ -304,7 +304,7 @@ string imei_string(const uint8_t*d, int length){
 }
 
 int ext_length(const uint8_t* d) {
-    const auto msb = d[0];
+    const NASNR_AUTO(uint8_t) msb = d[0];
     /* length in 2 octets */
     if ((msb & 0x80u) == 0) return (int(msb) << 8) + int(d[1]);
     return int(msb & 0x7fu);
@@ -313,7 +313,12 @@ int ext_length(const uint8_t* d) {
 string asc_time(const tm* t) {
 #if defined(_WIN32) || defined(_WIN64)
     char buf[128] = {0};
+#if NASNR_COMPILER_CXX_STDSIZE
     auto e = asctime_s(buf, std::size(buf), t);
+#else
+	NASNR_AUTO(errno_t) e = asctime_s(buf, _countof(buf), t);
+#endif
+
     return !e ? string(buf) : string();
 #else
     auto x = asctime(t);
@@ -344,32 +349,32 @@ string timezone_time_string(const uint8_t*d, int length){
     o= d[5];
     t.tm_sec = (o & 0x0f) * 10 + ((o & 0xf0) >> 4);
 
-    auto ts = asc_time(&t);
+    NASNR_AUTO(string) ts = asc_time(&t);
     if (ts.empty()) return ts;
 
-    const auto sign     = (d[6] & 0x08u) ? '-' : '+';
-    auto       quarters = (d[6] >> 4u) + (d[6] & 0x07u) * 10;
-    const auto h        = quarters / 4;
+    NASNR_AUTO(char) const sign     = (d[6] & 0x08u) ? '-' : '+';
+    NASNR_AUTO(uint8_t)       quarters = (d[6] >> 4u) + (d[6] & 0x07u) * 10;
+    NASNR_AUTO(uint8_t) const h        = quarters / 4;
     quarters            = quarters % 4 * 15;
     return formats("%s GMT %c %d hours %d minutes", ts.c_str(), sign, h, quarters);
 }
 
 string timezone_string(const uint8_t*d){
-    const auto sign     = (d[0] & 0x08u) ? '-' : '+';
-    auto       quarters = (d[0] >> 4u) + (d[0] & 0x07u) * 10;
-    const auto h        = quarters / 4;
+    NASNR_AUTO(char) const sign     = (d[0] & 0x08u) ? '-' : '+';
+    NASNR_AUTO(uint8_t)    quarters = (d[0] >> 4u) + (d[0] & 0x07u) * 10;
+    NASNR_AUTO(uint8_t) const h     = quarters / 4;
     quarters            = quarters % 4 * 15;
     return formats("GMT %c %d hours %d minutes", sign, h, quarters);
 }
 
 string w2utf8(const wchar_t* s) {
 #if defined(_WIN32) || defined(_WIN64)
-    const auto sz  = wcslen(s);
-    const auto out = new char[sz * 4 + 1]; // large enough
+    const NASNR_AUTO(size_t) sz  = wcslen(s);
+    NASNR_AUTO(char*) const out = new char[sz * 4 + 1]; // large enough
     (void) WideCharToMultiByte(
         CP_UTF8, 0, s, -1, out, static_cast< int >(sz), nullptr, nullptr);
     string ret(out);
-    delete[]out;
+    delete out;
     return ret;
 #else
     return string();
