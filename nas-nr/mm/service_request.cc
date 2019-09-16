@@ -18,7 +18,7 @@ int mm::dissect_service_request(dissector d, context* ctx) {
     d.step(1);
 
     /* 5G-S-TMSI    5GS mobile identity 9.11.3.4    M    LV    9 */
-    auto consumed = dissect_lv_e(nullptr, &s_tmsi, d, ctx);
+    NASNR_AUTO(int) consumed = dissect_lv_e(nullptr, &s_tmsi, d, ctx);
     d.step(consumed);
 
     /*40 Uplink data status  9.11.3.57   O   TLV  4 - 34*/
