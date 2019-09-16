@@ -2,8 +2,8 @@
 #include "config.hh"
 
 struct tvbuff { // NOLINT: typo
-    const uint8_t *data   = nullptr;
-    int            length = 0;
+    const uint8_t *data   NASNR_EQUAL_INIT( nullptr);
+    int            length NASNR_EQUAL_INIT( 0);
 
     tvbuff(const uint8_t *data, int len) : data(data), length(len) {}
 

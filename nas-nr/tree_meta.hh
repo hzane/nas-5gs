@@ -9,12 +9,13 @@ struct tree_meta {
     string pretty()const;
 };
 
+inline char nospace(const char c){
+      if (isspace(c)) return '-';
+        return static_cast< char >(tolower(c));
+}
 inline string tree_meta::pretty() const {
     if (alias) return string(alias);
     string ret(name);
-    std::transform(ret.begin(), ret.end(), ret.begin(), [](const char c)->char{
-      if (isspace(c)) return '-';
-        return static_cast< char >(tolower(c));
-    });
+    std::transform(ret.begin(), ret.end(), ret.begin(), nospace);
     return ret;
 }
