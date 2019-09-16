@@ -51,6 +51,7 @@ const field_meta        hf_5gsr_vcc = {
     nullptr,
     0,
 };
+
 const field_meta        hf_5gup_ciot = {
     "User plane CIoT 5GS optimization (5G-UP CIoT) ",
     "nas.nr.mm.cap.5gup.ciot",
@@ -157,12 +158,12 @@ const field_meta hf_lpp_capability = {
 };
 
 const true_false_string tfs_ho_attach_1 = {
-    R"(ATTACH REQUEST message containing PDN CONNECTIVITY REQUEST message with request )"
-    R"(type set to "handover" or "handover of emergency bearer services" to )"
-    R"(transfer PDU session from N1 mode to S1 mode supported)",
-    R"(ATTACH REQUEST message containing PDN CONNECTIVITY REQUEST message with request )"
-    R"(type set to "handover" or "handover of emergency bearer services" to transfer )"
-    R"(PDU session from N1 mode to S1 mode not supported)",
+    "ATTACH REQUEST message containing PDN CONNECTIVITY REQUEST message with request "
+    "type set to \"handover\" or \"handover of emergency bearer services\" to "
+    "transfer PDU session from N1 mode to S1 mode supported",
+    "ATTACH REQUEST message containing PDN CONNECTIVITY REQUEST message with request "
+    "type set to \"handover\" or \"handover of emergency bearer services\" to transfer "
+    "PDU session from N1 mode to S1 mode not supported",
 };
 
 const field_meta hf_handover_attach = {
@@ -171,7 +172,7 @@ const field_meta hf_handover_attach = {
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
-    (&tfs_ho_attach_1),
+    &tfs_ho_attach_1,
     nullptr,
     0x02,
 };
