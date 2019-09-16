@@ -17,13 +17,13 @@ extern const element_meta mm::rejected_nssai = {
 int mm::dissect_rejected_nssai(dissector d, context* ctx) {
     const use_context uc(ctx, "rejected-nssai", d, 0);
 
-    auto i = 1;
+    NASNR_AUTO(int) i = 1;
     while (d.length > 0) {
-        const auto subtree = d.add_item(2, "Rejected S-NSSAI %u", i++);
+        NASNR_AUTO(proto_node*) const subtree = d.add_item(2, "Rejected S-NSSAI %u", i++);
         use_tree   ut(d, subtree);
 
-        const auto len = int(d.uint8() >> 4u);
-        auto       n   = d.add_item(1, &hf_rej_nssai_cause, enc::be);
+        const NASNR_AUTO(int) len = int(d.uint8() >> 4u);
+        NASNR_AUTO(proto_node*)       n   = d.add_item(1, &hf_rej_nssai_cause, enc::be);
         d.step(1);
 
         n = d.add_item(1, &hf_sst, enc::be);
