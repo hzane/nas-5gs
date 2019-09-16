@@ -7,7 +7,7 @@
 // struct dissector defined in config.hh
 
 void dissector::add_bits(const field_meta* metas[]) const {
-    for (auto meta = metas; *meta != nullptr; meta++) {
+    for (const field_meta** meta = metas; *meta != nullptr; meta++) {
         (void) add_item(1, *meta, enc::be); // NOLINT        
     }
 }
@@ -18,7 +18,7 @@ proto_node* dissector::add_item(int len, const field_meta* meta, uint32_t enc) c
 proto_node *dissector::add_item(int len, const char*format, ...) const {
     va_list args;
     va_start(args, format);
-    const auto txt = vformat(format, args);
+    const NASNR_AUTO(string) txt = vformat(format, args);
     va_end(args);
     return tree->add_subtree(pinfo, tvb, offset, len, txt.c_str());
 }
@@ -46,7 +46,7 @@ void dissector::extraneous_data_check(int maxlen, context* ctx)const {
 }
 
 dissector dissector::slice(int len) const {
-    auto ret   = *this;
+    NASNR_AUTO(dissector) ret   = *this;
     ret.length = len;
     return ret;
 }
@@ -64,24 +64,25 @@ int dissector::safe_length(int len) const {
 }
 
 dissector dissector::use_elem(void* elem)const {
-    return dissector{pinfo, tree, tvb, offset, length, elem};
+    dissector ret = {pinfo, tree, tvb, offset, length, elem};
+	return ret;
 }
 
 uint8_t dissector::uint8() const{
-    const auto p = safe_ptr();
+    const NASNR_AUTO(uint8_t*) p = safe_ptr();
     if (p) return *p;
     return 0;
 }
 
 uint16_t dissector::ntohs() const {
-    const auto p = safe_ptr();
-    const auto l = safe_length(2);
+    const NASNR_AUTO(uint8_t*) p = safe_ptr();
+    const NASNR_AUTO(int) l = safe_length(2);
     if (p && l > 0) return n2uint16(p);
     return 0;
 }
 uint32_t dissector::uint32() const {
-    const auto p = safe_ptr();
-    const auto l = safe_length(4);
+    const NASNR_AUTO(uint8_t*) p = safe_ptr();
+    const NASNR_AUTO(int) l = safe_length(4);
     if (p && l > 0) return n2uint32(p);
     return 0;
 }
