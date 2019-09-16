@@ -31,13 +31,13 @@ int mm::dissect_short_name_network(dissector d, context* ctx) {
 int mm::dissect_full_name_network(dissector d, context* ctx) {
     const use_context uc(ctx, "network-name", d, 0);
     
-    const auto oct = d.tvb->uint8(d.offset);
+    const NASNR_AUTO(uint8_t) oct = d.tvb->uint8(d.offset);
     (void) d.add_item(1, &hf_extension, enc::be);
-    const auto code_scheme = (oct & 0x70u) >> 4u;
+    const NASNR_AUTO(uint8_t) code_scheme = (oct & 0x70u) >> 4u;
     (void) d.add_item(1, &hf_coding_scheme, enc::be);
     (void) d.add_item(1, &hf_add_ci, enc::be);
 
-    //const auto num_spare_bits = oct & 0x07u;
+    //const NASNR_AUTO(uint8_t) num_spare_bits = oct & 0x07u;
 
     (void) d.add_item(1, &hf_number_of_spare_bits, enc::be);
     d.step(1);
