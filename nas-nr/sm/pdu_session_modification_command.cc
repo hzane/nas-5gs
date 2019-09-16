@@ -15,7 +15,7 @@ int sm::dissect_pdu_ses_modification_cmd(dissector d, context* ctx) {
 
     /* 59 5GSM cause 9.11.4.2    O    TV    2*/
     // ELEM_OPT_TV(0x59, , DE_NAS_5GS_SM_5GSM_CAUSE, NULL);
-    auto consumed = dissect_opt_tv(nullptr, &sm_cause, d, ctx);
+    NASNR_AUTO(int) consumed = dissect_opt_tv(nullptr, &sm_cause, d, ctx);
     d.step(consumed);
 
     /* 2A Session-AMBR     9.11.4.14    O    TLV    8*/
