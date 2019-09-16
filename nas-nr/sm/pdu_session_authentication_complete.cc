@@ -10,7 +10,7 @@ int sm::dissect_pdu_ses_authentication_cmpl(dissector d, context* ctx) {
     up_link(d.pinfo);    
 
     /* EAP message 9.11.2.2    M    LV-E    6-1502 */
-    auto consumed = dissect_lv_e(nullptr, &cmn::eap_msg, d, ctx);
+    NASNR_AUTO(int) consumed = dissect_lv_e(nullptr, &cmn::eap_msg, d, ctx);
     d.step(consumed);
 
     /*7B    Extended protocol configuration options 9.11.4.6    O    TLV - E    4 - 65538*/
