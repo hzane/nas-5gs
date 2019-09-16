@@ -23,7 +23,7 @@ int mm::dissect_security_mode_cmd(dissector d, context* ctx) {
 
     /* Replayed UE security capabilities    UE security capability   9.11.3.54  M  LV   3-5*/
     // ELEM_MAND_LV(,DE_NAS_5GS_MM_UE_SEC_CAP," - Replayed UE security capabilities",);
-    auto consumed = dissect_lv(nullptr, &replayed_ue_sec_cap, d, ctx);
+    NASNR_AUTO(int) consumed = dissect_lv(nullptr, &replayed_ue_sec_cap, d, ctx);
     d.step(consumed);
 
     /*E-    IMEISV request    IMEISV request     9.11.3.28    O    TV    1*/
