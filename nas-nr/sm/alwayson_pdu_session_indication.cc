@@ -1,16 +1,16 @@
 #include "../dissect_sm_msg.hh"
 
-const true_false_string tfs_pdu_always_on_ses_id_apsi = {
+const true_false_string tfs_pdu_alwayson_session_ind = {
     "Always-on PDU session allowed",
     "Always-on PDU session not allowed"};
 
-const field_meta hf_pdu_always_on_ses_ind = {
+const field_meta hf_pdu_alwayson_session_ind = {
     "Always-on PDU session indication",
-    "nas.nr.sm.pdu.ses_id",
+    "nas.nr.sm.pdu.alwayson.session.ind",
     ft::ft_uint8,
     fd::base_dec,
     nullptr,
-    &tfs_pdu_always_on_ses_id_apsi,
+    &tfs_pdu_alwayson_session_ind,
     nullptr,
     0x01,
 };
@@ -19,7 +19,7 @@ const field_meta hf_pdu_always_on_ses_ind = {
 int sm::dissect_always_on_pdu_ses_ind(dissector d, context* ctx) {
     const use_context uc(ctx, "always-on-pdu-session-indication", d, -1);
 
-    auto i = d.add_item(1, &hf_pdu_always_on_ses_ind, enc::be);
+    auto i = d.add_item(1, &hf_pdu_alwayson_session_ind, enc::be);
     unused(i);
     d.step(1);
 

@@ -12,7 +12,7 @@ int dissect_eps_param(dissector d, int i, context* ctx) {
 
     /* EPS parameter identifier */
     const auto param_id = static_cast< uint32_t >(d.uint8());
-    (void) d.add_item(1, &hf_sm_mapd_eps_b_cont_num_eps_param_id, enc::be);
+    (void) d.add_item(1, &hf_sm_mapped_eps_b_cont_num_eps_param_id, enc::be);
     d.step(1);
 
     /*length of the EPS parameter contents field */
@@ -29,7 +29,7 @@ int dissect_eps_param(dissector d, int i, context* ctx) {
     case 4: /* 04H (APN-AMBR) */
     case 5: /* 05H (extended APN-AMBR). */
     default:
-        (void) d.add_item(length, &hf_sm_mapd_eps_b_cont_eps_param_cont, enc::be);
+        (void) d.add_item(length, &hf_sm_mapped_eps_b_cont_eps_param_cont, enc::be);
         d.step(length);
     }
     return d.offset - uc.offset;
@@ -40,18 +40,16 @@ int sm::dissect_mapped_eps_bearer_ctx(dissector d, context* ctx) {
     const use_context uc(ctx, "mapped-eps-bearer-contexts", d, 0);
 
     static const field_meta* mapd_eps_b_cont_flags[] = {
-        &hf_sm_mapd_eps_b_cont_opt_code,
-//        &hf_spare_b5,
-        &hf_sm_mapd_eps_b_cont_e,
-        &hf_sm_mapd_eps_b_cont_num_eps_parms,
+        &hf_sm_mapped_eps_b_cont_opt_code,
+        &hf_sm_mapped_eps_b_cont_e,
+        &hf_sm_mapped_eps_b_cont_num_eps_params,
         nullptr,
     };
 
     static const field_meta* mapd_eps_b_cont_flags_modify[] = {
-        &hf_sm_mapd_eps_b_cont_opt_code,
-//        &hf_spare_b5,
-        &hf_sm_mapd_eps_b_cont_e_mod,
-        &hf_sm_mapd_eps_b_cont_num_eps_parms,
+        &hf_sm_mapped_eps_b_cont_opt_code,
+        &hf_sm_mapped_eps_b_cont_e_mod,
+        &hf_sm_mapped_eps_b_cont_num_eps_params,
         nullptr,
     };
     auto n = 1;
@@ -62,7 +60,7 @@ int sm::dissect_mapped_eps_bearer_ctx(dissector d, context* ctx) {
         use_tree ut(d, subtree);
 
         /* EPS bearer identity */
-        (void) d.add_item(1, &hf_sm_mapd_eps_b_cont_id, enc::be);
+        (void) d.add_item(1, &hf_sm_mapped_eps_b_cont_id, enc::be);
         d.step(1);
 
         /* Length of Mapped EPS bearer context*/
@@ -76,7 +74,7 @@ int sm::dissect_mapped_eps_bearer_ctx(dissector d, context* ctx) {
 
         auto       nep      = d.tvb->uint8(d.offset);
         const auto opt_code = (nep & 0xc0u) >> 6u;
-        nep                 = nep & 0x0f;
+        nep                 = nep & 0x0fu;
 
         /* operation code = 3 Modify existing EPS bearer */
         if (opt_code == 3) {
@@ -145,7 +143,7 @@ extern const value_string sm::eps_parameter_identity_values[] = {
     {0, nullptr},
 };
 
-const field_meta sm::hf_sm_mapd_eps_b_cont_opt_code = {
+const field_meta sm::hf_sm_mapped_eps_b_cont_opt_code = {
     "Operation code",
     "nas.nr.sm.mapd_eps_b_cont_opt_code",
     ft::ft_uint8,
@@ -155,7 +153,7 @@ const field_meta sm::hf_sm_mapd_eps_b_cont_opt_code = {
     nullptr,
     0xc0,
 };
-const field_meta sm::hf_sm_mapd_eps_b_cont_deb = {
+const field_meta sm::hf_sm_mapped_eps_b_cont_deb = {
     "DEB bit",
     "nas.nr.deb",
     ft::ft_uint8,
@@ -165,7 +163,7 @@ const field_meta sm::hf_sm_mapd_eps_b_cont_deb = {
     nullptr,
     0x20,
 };
-const field_meta sm::hf_sm_mapd_eps_b_cont_e = {
+const field_meta sm::hf_sm_mapped_eps_b_cont_e = {
     "E bit",
     "nas.nr.sm.e-bit",
     ft::ft_uint8,
@@ -175,7 +173,7 @@ const field_meta sm::hf_sm_mapd_eps_b_cont_e = {
     nullptr,
     0x10,
 };
-const field_meta sm::hf_sm_mapd_eps_b_cont_num_eps_parms = {
+const field_meta sm::hf_sm_mapped_eps_b_cont_num_eps_params = {
     "Number of EPS parameters",
     "nas.nr.eps.parameters",
     ft::ft_uint8,
@@ -185,7 +183,7 @@ const field_meta sm::hf_sm_mapd_eps_b_cont_num_eps_parms = {
     nullptr,
     0x0f,
 };
-const field_meta sm::hf_sm_mapd_eps_b_cont_e_mod = {
+const field_meta sm::hf_sm_mapped_eps_b_cont_e_mod = {
     "E bit",
     "nas.nr.sm.e-bit.modify",
     ft::ft_uint8,
@@ -196,7 +194,7 @@ const field_meta sm::hf_sm_mapd_eps_b_cont_e_mod = {
     0x10,
 };
 
-const field_meta sm::hf_sm_mapd_eps_b_cont_id = {
+const field_meta sm::hf_sm_mapped_eps_b_cont_id = {
     "EPS bearer identity",
     "nas.nr.sm.bearer.identity",
     ft::ft_uint8,
@@ -206,7 +204,7 @@ const field_meta sm::hf_sm_mapd_eps_b_cont_id = {
     nullptr,
     0xf0,
 };
-const field_meta sm::hf_sm_mapd_eps_b_cont_num_eps_param_id = {
+const field_meta sm::hf_sm_mapped_eps_b_cont_num_eps_param_id = {
     "EPS parameter identity",
     "nas.nr.sm.eps.parameter",
     ft::ft_uint8,
@@ -216,7 +214,7 @@ const field_meta sm::hf_sm_mapd_eps_b_cont_num_eps_param_id = {
     nullptr,
     0x0,
 };
-const field_meta sm::hf_sm_mapd_eps_b_cont_eps_param_cont = {
+const field_meta sm::hf_sm_mapped_eps_b_cont_eps_param_cont = {
     "EPS parameter contents",
     "nas.nr.sm.eps.parameter",
     ft::ft_bytes,

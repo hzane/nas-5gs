@@ -58,7 +58,7 @@ extern const value_string sm::sm_cause_values[] = {
 };
 const field_meta sm::hf_sm_cause = {
     "5GSM cause",
-    "nas.nr.sm.5gsm_cause",
+    "nas.nr.sm.cause",
     ft::ft_uint8,
     fd::base_dec,
     sm::sm_cause_values,

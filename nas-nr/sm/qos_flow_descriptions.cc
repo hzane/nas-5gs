@@ -111,7 +111,7 @@ int sm::dissect_authorized_qos_flow_des(dissector d, context* ctx) {
     const use_context uc(ctx, "authorized-qos-flow-desc", d, 0);
 
     static const field_meta* param_flags[] = {
-        &hf_sm_e,
+        &hf_sm_ebit,
         &hf_sm_nof_params,
         nullptr,
     };

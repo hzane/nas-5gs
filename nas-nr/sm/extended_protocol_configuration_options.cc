@@ -3,7 +3,7 @@
 
 const field_meta hf_gsm_sm_extension = {
     "Extension",
-    "nas.nr.gsm.sm.ext",
+    "nas.nr.sm.extension",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -13,7 +13,7 @@ const field_meta hf_gsm_sm_extension = {
 };
 const field_meta hf_gsm_configuration_protocol = {
     "Configuration Protocol",
-    "nas.nr.gsm.sm.configuration_protocol",
+    "nas.nr.sm.configuration_protocol",
     ft::ft_uint8,
     fd::base_dec,
     nullptr,
@@ -36,7 +36,7 @@ const field_meta hf_proto_id = {
 };
 
 // Extended protocol configuration options  9.11.4.6
-int sm::dissect_ext_pco(dissector d, context* ctx) {
+int sm::dissect_extended_protocol_configuration_options(dissector d, context* ctx) {
     const use_context uc(ctx, "extended-protocol-conf-options", d, -1);
 
     // See subclause 10.5.6.3A in 3GPP TS 24.008
@@ -50,10 +50,10 @@ int sm::dissect_ext_pco(dissector d, context* ctx) {
 }
 
 // Extended protocol configuration options  9.11.4.6
-const element_meta sm::ext_pco = {
+const element_meta sm::extended_pco = {
     0x7B,
     "Extended protocol configuration options",
-    sm::dissect_ext_pco,
+    sm::dissect_extended_protocol_configuration_options,
     nullptr,
 };
 
@@ -74,7 +74,7 @@ extern const value_string ppp_protocol_values[] = {
 };
 
 
-extern const range_string gsm_a_sm_pco_ms2net_prot_vals[] = {
+extern const range_string sm_pco_ms2net_prot_vals[] = {
     {0x0001, 0x0001, "P-CSCF IPv6 Address Request"},
     {0x0002, 0x0002, "IM CN Subsystem Signaling Flag"},
     {0x0003, 0x0003, "DNS Server IPv6 Address Request"},
@@ -112,7 +112,7 @@ extern const range_string gsm_a_sm_pco_ms2net_prot_vals[] = {
     {0xff00, 0xffff, "Operator Specific Use"},
     {0, 0, nullptr},
 };
-extern const range_string gsm_a_sm_pco_net2ms_prot_vals[] = {
+extern const range_string sm_pco_net2ms_prot_vals[] = {
     {0x0001, 0x0001, "P-CSCF IPv6 Address"},
     {0x0002, 0x0002, "IM CN Subsystem Signaling Flag"},
     {0x0003, 0x0003, "DNS Server IPv6 Address"},

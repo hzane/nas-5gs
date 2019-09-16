@@ -13,7 +13,7 @@ int sm::dissect_pdu_ses_modification_req(dissector d, context* ctx) {
     up_link(d.pinfo);    
 
     /* 28 5GSM capability 9.11.4.1    O    TLV    3-15 */
-    auto consumed = dissect_opt_tlv(nullptr, &sm_cap, d, ctx);
+    auto consumed = dissect_opt_tlv(nullptr, &sm_capability, d, ctx);
     d.step(consumed);
 
     /* 59 5GSM cause 9.11.4.2    O    TV    2 */
@@ -25,11 +25,11 @@ int sm::dissect_pdu_ses_modification_req(dissector d, context* ctx) {
     d.step(consumed);
 
     /* B-    Always-on PDU session requested  9.11.4.4 O    TV    1 */
-    consumed = dissect_opt_tv_short(nullptr, &alwayson_pdu_session_req, d, ctx);
+    consumed = dissect_opt_tv_short(nullptr, &alwayson_pdu_session_requested, d, ctx);
     d.step(consumed);
 
     /* 13    Integrity protection maximum data rate   9.11.4.7    O    TV    3 */
-    consumed = dissect_opt_tv(nullptr, &int_prot_max_data_rate, d, ctx);
+    consumed = dissect_opt_tv(nullptr, &integrity_protection_max_data_rate, d, ctx);
     d.step(consumed);
 
     /*7A    Requested QoS rules    QoS rules 9.11.4.13    O    TLV-E    3-65538 */
@@ -49,7 +49,7 @@ int sm::dissect_pdu_ses_modification_req(dissector d, context* ctx) {
     d.step(consumed);
 
     /* 7B Extended protocol configuration options  9.11.4.6 O TLV-E    4-65538*/
-    consumed = dissect_opt_tlv_e(nullptr, &ext_pco, d, ctx);
+    consumed = dissect_opt_tlv_e(nullptr, &extended_pco, d, ctx);
     d.step(consumed);
 
     // It is possible for UEs compliant with earlier versions of this specification

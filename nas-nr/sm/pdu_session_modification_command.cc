@@ -46,7 +46,7 @@ int sm::dissect_pdu_ses_modification_cmd(dissector d, context* ctx) {
     d.step(consumed);
 
     /*7B    Extended protocol configuration options  9.11.4.6    O    TLV-E    4-65538*/
-    consumed = dissect_opt_tlv_e(nullptr, &ext_pco, d, ctx);
+    consumed = dissect_opt_tlv_e(nullptr, &extended_pco, d, ctx);
     d.step(consumed);
 
     /*xx Session-TMBR    9.11.4.19	O	TLV	8    */
@@ -74,7 +74,7 @@ int dissect_requested_qos_rules(dissector d, context* ctx) {
     return dissect_qos_rules(d, ctx);
 }
 
-const field_meta hf_sm_e = {
+const field_meta hf_sm_ebit = {
     "E bit",
     "nas.nr.sm.e",
     ft::ft_uint8,

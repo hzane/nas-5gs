@@ -14,7 +14,7 @@ int sm::dissect_pdu_session_modification_command_reject(dissector d, context* ct
     d.step(consumed);
 
     /* 7B    Extended protocol configuration options  9.11.4.6 O TLV-E    4 - 65538*/
-    consumed = dissect_opt_tlv_e(nullptr, &ext_pco, d, ctx);
+    consumed = dissect_opt_tlv_e(nullptr, &extended_pco, d, ctx);
     d.step(consumed);
 
     return uc.length;

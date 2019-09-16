@@ -25,7 +25,7 @@ extern const value_string      deb_bit_values[];
 extern const value_string      e_bit_values[];
 extern const value_string      e_bit_modify_values[];
 extern const value_string      eps_parameter_identity_values[];
-extern const value_string      int_prot_max_data_rate_values[];
+extern const value_string      integrity_protection_max_data_rate_values[];
 extern const value_string      ssc_mode_values[];
 
 inline const true_false_string tfs_allowed_not_allowed = {

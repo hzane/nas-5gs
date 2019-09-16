@@ -6,7 +6,7 @@ const true_false_string tfs_abo = {
 };
 const field_meta sm::hf_abo = {
     "ABO",
-    "",
+    "nas.nr.sm.abo",
     ft::ft_uint8,
     fd::base_dec,
     nullptr,

@@ -20,7 +20,7 @@ int sm::dissect_pdu_ses_modification_rej(dissector d, context* ctx) {
 
     /*7B    Extended protocol configuration options   9.11.4.6    O    TLV - E    4 - 65538*/
     // ELEM_OPT_TLV_E(0x7B, , DE_ESM_EXT_PCO, NULL);
-    consumed = dissect_opt_tlv_e(nullptr, &ext_pco, d, ctx);
+    consumed = dissect_opt_tlv_e(nullptr, &extended_pco, d, ctx);
     d.step(consumed);
 
     /*TBD	Re-attempt indicator 9.11.4.17	O	TLV	3    */
