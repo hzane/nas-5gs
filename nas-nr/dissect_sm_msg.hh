@@ -11,7 +11,7 @@ struct context;
 
 /* 5GS session management messages */
 namespace sm {
-inline const dissect_fnc_t no_dissect = nullptr;
+NASNR_INLINE const dissect_fnc_t no_dissect = nullptr;
 
 extern const true_false_string tfs_sm_default_qos_rules;
 extern const message_meta      msgs[];
@@ -28,7 +28,7 @@ extern const value_string      eps_parameter_identity_values[];
 extern const value_string      int_prot_max_data_rate_values[];
 extern const value_string      ssc_mode_values[];
 
-inline const true_false_string tfs_allowed_not_allowed = {
+NASNR_INLINE const true_false_string tfs_allowed_not_allowed = {
     "Allowed",
     "Not Allowed",
 };
