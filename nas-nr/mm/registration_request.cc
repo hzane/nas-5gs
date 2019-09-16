@@ -22,7 +22,7 @@ int mm::dissect_registration_req(dissector d, context* ctx) {
     d.step(1);
 
     /* 5GS mobile identity 9.11.3.4    M    LV-E    6-n*/
-    auto consumed = dissect_lv_e(nullptr, &mobile_id, d, ctx);
+    NASNR_AUTO(int) consumed = dissect_lv_e(nullptr, &mobile_id, d, ctx);
     d.step(consumed);
 
     /*C-    Non-current native NAS KSI    NAS key set identifier 9.11.3.32    O    TV 1*/
