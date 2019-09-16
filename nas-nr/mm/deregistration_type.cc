@@ -8,12 +8,11 @@ int mm::dissect_deregistration_type(dissector d, context* ctx) {
     const use_context uc(ctx, "de-registration-type", d, -1);
 
     /* Switch off   Re-registration required    Access type */
-    auto i = d.add_item(1, &hf_switch_off, enc::be);
-    i = d.add_item(1, &hf_reregistration_request, enc::be);
-    i = d.add_item(1, &hf_acc_type, enc::be);
+    (void) d.add_item(1, &hf_switch_off, enc::be);
+    (void) d.add_item(1, &hf_reregistration_request, enc::be);
+    (void) d.add_item(1, &hf_acc_type, enc::be);
     d.step(1);
 
-    unused(i);
     return 1;
 }
 
