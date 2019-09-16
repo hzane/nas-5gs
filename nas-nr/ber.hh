@@ -2,26 +2,29 @@
 #include "core.hh"
 
 struct optional_element_intra {
-    bool*    presence = nullptr;
-    uint8_t* t        = nullptr;
-    int*     length   = nullptr;
-    void*    elem     = nullptr;
+    bool*    presence NASNR_EQUAL_INIT( nullptr);
+    uint8_t* t        NASNR_EQUAL_INIT( nullptr);
+    int*     length   NASNR_EQUAL_INIT( nullptr);
+    void*    elem     NASNR_EQUAL_INIT( nullptr);
 };
 
 template < typename elem_t >
 struct optional_element {
-    bool    presence = false;
-    uint8_t t        = 0xffu;
-    int     length   = 0;
-    elem_t  elem     = {};
+    bool    presence NASNR_EQUAL_INIT( false);
+    uint8_t t        NASNR_EQUAL_INIT( 0xffu );
+    int     length   NASNR_EQUAL_INIT( 0);
+	elem_t  elem     NASNR_EQUAL_INIT({} );
 
     optional_element_intra to_internal() {
         (void) this->to_internal;
         return optional_element_intra{&presence, &t, &length, &elem};
     }
 };
-
+#if NASNR_COMPILER_CXX_USING_ALIAS
 using opt_tv_short = optional_element<uint8_t>;
+#else
+typedef optional_element<uint8_t> opt_tv_short;
+#endif
 
 inline void set_elem_presence(optional_element_intra*self, bool presence){
     if (self&&self->presence)*self->presence = presence;
