@@ -8,7 +8,7 @@ int mm::dissect_identity_resp(dissector d, context* ctx) {
     up_link(d.pinfo);
 
     /* Mobile identity  5GS mobile identity 9.11.3.4    M    LV-E    3-n  */    
-    const auto consumed = dissect_lv_e(nullptr, &mobile_id, d, ctx);
+    const NASNR_AUTO(int) consumed = dissect_lv_e(nullptr, &mobile_id, d, ctx);
     d.step(consumed);
     
     return uc.length;
