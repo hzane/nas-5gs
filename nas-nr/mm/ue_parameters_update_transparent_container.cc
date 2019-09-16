@@ -6,7 +6,7 @@ int mm::dissect_ue_parameters_update_transparent_container(dissector d, context*
     diag("no dissect yet\n");
 
     (void) d.add_item(1, &hf_upu_data_type, enc::be);
-    const auto uput = d.uint8() & 0x01u;
+    const NASNR_AUTO(uint8_t) uput = d.uint8() & 0x01u;
     if (uput) {
         (void) d.add_item(1, &hf_ack, enc::be);
         (void) d.add_item(1, &hf_reregistration, enc::be);
