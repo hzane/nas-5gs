@@ -91,6 +91,7 @@ struct sd_t {
 struct mapped_configured_sst_t {
     uint8_t _;
 };
+
 struct nssai_t{
     uint8_t sst;
     std::optional<sd_t> sd;

@@ -7,12 +7,12 @@ using namespace mm;
 const element_meta mm::ext_emerge_num_list = {
     0x7A,
     "Extended emergency number list",
-    dissect_ext_emerge_num_list,
+    dissect_extended_emergency_number_list,
     nullptr,
 };
 
 // Extended emergency number list  9.11.3.26
-int mm::dissect_ext_emerge_num_list(dissector d, context* ctx) {
+int mm::dissect_extended_emergency_number_list(dissector d, context* ctx) {
     // See subclause 9.9.3.37A in 3GPP TS 24.301 [15].
     const use_context uc(ctx, "extended-emergency-number-list", d, 0);
 

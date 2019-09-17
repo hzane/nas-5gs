@@ -133,10 +133,10 @@ int dissect_mm_capability(dissector d, context* ctx);
 int dissect_ue_policy_delivery_procedure(dissector d, context* ctx);
 int dissect_security_protected_5gs_nas_msg(dissector d, context* ctx);
 
-int dissect_emergency_num_list(dissector d, context* ctx);
+int dissect_emergency_number_list(dissector d, context* ctx);
 
 // Extended emergency number list  9.11.3.26
-int dissect_ext_emerge_num_list(dissector d, context* ctx );
+int dissect_extended_emergency_number_list(dissector d, context* ctx );
 int dissect_nssai_inclusion_mode(dissector d, context* ctx);
 int dissect_optional_ie(dissector d, context* ctx);
 int dissect_pld_container_entry(dissector d, context* ctx);
@@ -147,4 +147,7 @@ int dissect_plmn_list(dissector d, context* ctx );
 int dissect_ue_parameters_update_transparent_container(dissector d, context* ctx);
 int dissect_deregistration_accept_ue_origin(dissector d, context* ctx);
 int dissect_deregistration_accept_ue_terminate(dissector d, context* ctx);
+int dissect_extended_drx_parameters(dissector d, context* ctx) ;
+int dissect_ma_pdu_session_information(dissector d, context* ctx);
+int dissect_mobile_station_classmark2(dissector d, context* ctx) ;
 } // namespace mm

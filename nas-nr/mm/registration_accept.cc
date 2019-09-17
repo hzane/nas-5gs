@@ -99,7 +99,7 @@ int mm::dissect_registration_accept(dissector d, context* ctx) {
 
     /*34  Emergency number list  9.11.3.23 O   TLV  5-50*/
     // ELEM_OPT_TLV(0x34, , DE_EMERGENCY_NUM_LIST, NULL);
-    consumed = dissect_opt_tlv(nullptr, &emergency_num_list, d, ctx);
+    consumed = dissect_opt_tlv(nullptr, &emergency_number_list, d, ctx);
     d.step(consumed);
 
     /*7A    Extended emergency number list  9.11.3.26  O    TLV-E    TBD*/

@@ -16,7 +16,7 @@ struct emergency_number_list_t {
     std::vector< emergency_number_information_t > numbers;
 };
 // Emergency number list  9.11.3.23
-int mm::dissect_emergency_num_list(dissector d, context* ctx) {
+int mm::dissect_emergency_number_list(dissector d, context* ctx) {
     const use_context uc(ctx, "emergency-number-list", d, 0);
 
     // See subclause 10.5.3.13 in 3GPP TS 24.008 [12].
@@ -55,9 +55,9 @@ int mm::dissect_emergency_num_list(dissector d, context* ctx) {
     return len;
 }
 
-const element_meta mm::emergency_num_list = {
+const element_meta mm::emergency_number_list = {
     0x34,
     "Emergency number list",
-    dissect_emergency_num_list,
+    dissect_emergency_number_list,
     nullptr,
 };

@@ -28,7 +28,7 @@ extern const element_meta service_area_list;
 extern const element_meta t3512_gprs_timer_3;
 extern const element_meta de_reg_timer_gprs_timer2;
 extern const element_meta t3502_gprs_timer_2;
-extern const element_meta emergency_num_list;
+extern const element_meta emergency_number_list;
 extern const element_meta ext_emerge_num_list;
 extern const element_meta sor_trans_cont;
 extern const element_meta eap_message;

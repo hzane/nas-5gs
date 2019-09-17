@@ -69,7 +69,7 @@ const true_false_string eps_emm_ebi_vals = {
 
 const field_meta hf_eps_emm_ebi7 = {
     "EBI(7)",
-    "nas_eps.emm.ebi7",
+    "nas.emm.ebi7",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -79,7 +79,7 @@ const field_meta hf_eps_emm_ebi7 = {
 };
 const field_meta hf_eps_emm_ebi6 = {
     "EBI(6)",
-    "nas_eps.emm.ebi6",
+    "nas.emm.ebi6",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -89,7 +89,7 @@ const field_meta hf_eps_emm_ebi6 = {
 };
 const field_meta hf_eps_emm_ebi5 = {
     "EBI(5)",
-    "nas_eps.emm.ebi5",
+    "nas.emm.ebi5",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -99,7 +99,7 @@ const field_meta hf_eps_emm_ebi5 = {
 };
 const field_meta hf_eps_emm_ebi4 = {
     "EBI(4)",
-    "nas_eps.emm.ebi4",
+    "nas.emm.ebi4",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -109,7 +109,7 @@ const field_meta hf_eps_emm_ebi4 = {
 };
 const field_meta hf_eps_emm_ebi3 = {
     "EBI(3)",
-    "nas_eps.emm.ebi3",
+    "nas.emm.ebi3",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -119,7 +119,7 @@ const field_meta hf_eps_emm_ebi3 = {
 };
 const field_meta hf_eps_emm_ebi2 = {
     "EBI(2)",
-    "nas_eps.emm.ebi2",
+    "nas.emm.ebi2",
     ft::ft_boolean,
     8,
     nullptr,
@@ -129,7 +129,7 @@ const field_meta hf_eps_emm_ebi2 = {
 };
 const field_meta hf_eps_emm_ebi1 = {
     "EBI(1)",
-    "nas_eps.emm.ebi1",
+    "nas.emm.ebi1",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -139,7 +139,7 @@ const field_meta hf_eps_emm_ebi1 = {
 };
 const field_meta hf_eps_emm_ebi0 = {
     "EBI(0) spare",
-    "nas_eps.emm.ebi0",
+    "nas.emm.ebi0",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -150,7 +150,7 @@ const field_meta hf_eps_emm_ebi0 = {
 
 const field_meta hf_eps_emm_ebi15 = {
     "EBI(15)",
-    "nas_eps.emm.ebi15",
+    "nas.emm.ebi15",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -160,7 +160,7 @@ const field_meta hf_eps_emm_ebi15 = {
 };
 const field_meta hf_eps_emm_ebi14 = {
     "EBI(14)",
-    "nas_eps.emm.ebi14",
+    "nas.emm.ebi14",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -170,7 +170,7 @@ const field_meta hf_eps_emm_ebi14 = {
 };
 const field_meta hf_eps_emm_ebi13 = {
     "EBI(13)",
-    "nas_eps.emm.ebi13",
+    "nas.emm.ebi13",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -180,7 +180,7 @@ const field_meta hf_eps_emm_ebi13 = {
 };
 const field_meta hf_eps_emm_ebi12 = {
     "EBI(12)",
-    "nas_eps.emm.ebi12",
+    "nas.emm.ebi12",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -190,7 +190,7 @@ const field_meta hf_eps_emm_ebi12 = {
 };
 const field_meta hf_eps_emm_ebi11 = {
     "EBI(11)",
-    "nas_eps.emm.ebi11",
+    "nas.emm.ebi11",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -200,7 +200,7 @@ const field_meta hf_eps_emm_ebi11 = {
 };
 const field_meta hf_eps_emm_ebi10 = {
     "EBI(10)",
-    "nas_eps.emm.ebi10",
+    "nas.emm.ebi10",
     ft::ft_boolean,
     8,
     nullptr,
@@ -210,7 +210,7 @@ const field_meta hf_eps_emm_ebi10 = {
 };
 const field_meta hf_eps_emm_ebi9 = {
     "EBI(9)",
-    "nas_eps.emm.ebi9",
+    "nas.emm.ebi9",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -220,7 +220,7 @@ const field_meta hf_eps_emm_ebi9 = {
 };
 const field_meta hf_eps_emm_ebi8 = {
     "EBI(8)",
-    "nas_eps.emm.ebi8",
+    "nas.emm.ebi8",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
