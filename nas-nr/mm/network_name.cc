@@ -39,7 +39,7 @@ int mm::dissect_full_name_network(dissector d, context* ctx) {
 
     //const auto num_spare_bits = oct & 0x07u;
 
-    (void) d.add_item(1, &hf_number_of_spare_bits, enc::be);
+    // (void) d.add_item(1, &hf_number_of_spare_bits, enc::be);
     d.step(1);
 
     if (uc.length <= 1) return uc.length;

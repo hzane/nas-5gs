@@ -36,7 +36,7 @@ int mm::dissect_mm_capability(dissector d, context* ctx) {
         d.step(1);
     }
     // 5-15 octets is spare
-    return 1;
+    return uc.length;
 }
 
 struct mm_capability_t {
