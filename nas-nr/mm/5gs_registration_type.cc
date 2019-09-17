@@ -109,7 +109,7 @@ const true_false_string tfs_nas_5gs_mm_ue_usage_setting = {
 
 const field_meta mm::hf_ue_usage_setting = {
     "UE's usage setting",
-    "nas.nr.mm.ue_usage_setting",
+    "nas.nr.mm.ue.usage.setting",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -125,7 +125,7 @@ const element_meta mm::requested_drx_param = {
     nullptr,
 };
 
-const element_meta mm::eps_nas_msg_container = {
+const element_meta mm::eps_nas_message_container = {
     0x70,
     "EPS NAS message container",
     dissect_eps_nas_msg_container,

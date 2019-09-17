@@ -13,7 +13,7 @@ int mm::dissect_registration_rej(dissector d, context* ctx) {
     down_link(d.pinfo);
 
     /* 5GMM cause   9.11.3.2  M   V   1 */
-    auto consumed = dissect_mm_cause(d, ctx);
+    auto consumed = dissect_nrmm_cause(d, ctx);
     d.step(consumed);
 
     /* 5F  T3346 value GPRS timer 2     9.11.2.4   O   TLV 3 */
@@ -27,7 +27,7 @@ int mm::dissect_registration_rej(dissector d, context* ctx) {
     d.step(consumed);
 
     /* 78    EAP message  9.11.2.2    O    TLV-E    7-1503 */
-    consumed = dissect_opt_tlv_e(nullptr, &eap_msg, d, ctx);
+    consumed = dissect_opt_tlv_e(nullptr, &eap_message, d, ctx);
     d.step(consumed);    
 
     return uc.length;

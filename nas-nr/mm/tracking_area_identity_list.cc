@@ -8,8 +8,8 @@ int mm::dissect_tracking_area_id_list(dissector d, context* ctx) {
     const use_context uc(ctx, "5gs-tai-list", d, 0);
 
     static const field_meta* flags[] = {
-        &hf_tal_t_li,
-        &hf_tal_num_e,
+        &hf_tracking_area_list_type,
+        &hf_tracking_area_list_number,
         nullptr,
     };
 
@@ -39,7 +39,7 @@ int mm::dissect_tracking_area_id_list(dissector d, context* ctx) {
             d.step(consumed);
 
             while (num_e > 0) {
-                auto i = d.add_item(3, &hf_tac, enc::be);
+                auto i = d.add_item(3, &hf_tracking_area_code, enc::be);
                 d.step(3);
 
                 unused(i);
@@ -56,7 +56,7 @@ int mm::dissect_tracking_area_id_list(dissector d, context* ctx) {
             d.step(consumed);
 
             /*octet 5  TAC 1*/
-            auto i = d.add_item(3, &hf_tac, enc::be);
+            auto i = d.add_item(3, &hf_tracking_area_code, enc::be);
             d.step(3);
 
             unused(i);
@@ -71,7 +71,7 @@ int mm::dissect_tracking_area_id_list(dissector d, context* ctx) {
                 d.step(consumed);
 
                 /*octet 5  TAC 1*/
-                auto i = d.add_item(3, &hf_tac, enc::be);
+                auto i = d.add_item(3, &hf_tracking_area_code, enc::be);
                 d.step(3);
 
                 unused(i);

@@ -45,7 +45,7 @@ int mm::dissect_dl_nas_transparent(dissector d, context* ctx) {
     d.step(consumed);
 
     /*58    5GMM cause  9.11.3.2    O    TV    2 */
-     consumed = dissect_opt_tv(nullptr, &mm_cause, d, ctx);
+     consumed = dissect_opt_tv(nullptr, &nrmm_cause, d, ctx);
     d.step(consumed);
 
     /*37    Back-off timer value    GPRS timer 3 9.11.2.5    O    TLV    3 */

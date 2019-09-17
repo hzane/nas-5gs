@@ -31,7 +31,7 @@ int mm::dissect_registration_req(dissector d, context* ctx) {
     d.step(consumed);
 
     /*10    5GMM capability  9.11.3.1    O    TLV    3-15*/
-    consumed = dissect_opt_tlv(nullptr, &mm_cap, d, ctx);
+    consumed = dissect_opt_tlv(nullptr, &nrmm_capability, d, ctx);
     d.step(consumed);
 
     /*2E    UE security capability   9.11.3.54    O    TLV 4-10*/
@@ -94,7 +94,7 @@ int mm::dissect_registration_req(dissector d, context* ctx) {
 
     /* 70    EPS NAS message container  9.11.3.24    O    TLV-E 4-n */
     // ELEM_OPT_TLV_E(0x70, , DE_NAS_5GS_MM_EPS_NAS_MSG_CONT, NULL);
-    consumed = dissect_opt_tlv_e(nullptr, &eps_nas_msg_container, d, ctx);
+    consumed = dissect_opt_tlv_e(nullptr, &eps_nas_message_container, d, ctx);
     d.step(consumed);
 
     /* 74    LADN indication  9.11.3.29    O    TLV-E    3-811 */
@@ -800,9 +800,9 @@ const true_false_string tfs_needed_not_needed = {
     "Not Needed",
 };
 
-const field_meta        mm::hf_ng_ran_rcu        = {
+const field_meta        mm::hf_ngran_radio_capability_update = {
     "NG-RAN Radio Capability Update (NG-RAN-RCU)",
-    "nas.nr.mm.ng_ran_rcu",
+    "nas.nr.mm.ng.ran.radio.capability.update",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -819,9 +819,9 @@ const val_string pnb_ciot_values[] = {
     {0, nullptr},
 };
 
-const field_meta mm::hf_pnb_ciot = {
-    "",
-    "nas.nr.mm.pnb_ciot",
+const field_meta mm::hf_preferred_network_behaviour = {
+    "Preferred CIoT network behaviour (PNB-CIoT)",
+    "nas.nr.pnb.ciot",
     ft::ft_uint8,
     fd::base_dec,
     pnb_ciot_values,

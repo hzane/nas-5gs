@@ -452,7 +452,7 @@ const field_meta hf_msin = {
 
 const field_meta hf_mm_scheme_output = {
     "Scheme output - Network specific identifier",
-    "nas.nr.scheme.nsid",
+    "nas.nr.scheme.network.specific.id",
     ft::ft_bytes,
     fd::base_none,
     nullptr,

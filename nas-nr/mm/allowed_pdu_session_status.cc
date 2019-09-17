@@ -65,7 +65,7 @@ const true_false_string tfs_nas_5gs_allow_pdu_ses_sts_psi = {
 };
 const field_meta mm::hf_allow_pdu_ses_sts_psi_0_b0 = {
     "Spare",
-    "nas.nr.allow_pdu_ses_sts_psi_0_b0",
+    "nas.nr.psi",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -75,7 +75,7 @@ const field_meta mm::hf_allow_pdu_ses_sts_psi_0_b0 = {
 };
 const field_meta mm::hf_allow_pdu_ses_sts_psi_1_b1 = {
     "PSI(1)",
-    "nas.nr.allow_pdu_ses_sts_psi_1_b1",
+    "nas.nr.psi",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -85,7 +85,7 @@ const field_meta mm::hf_allow_pdu_ses_sts_psi_1_b1 = {
 };
 const field_meta mm::hf_allow_pdu_ses_sts_psi_2_b2 = {
     "PSI(2)",
-    "nas.nr.allow_pdu_ses_sts_psi_2_b2",
+    "nas.nr.psi",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -95,7 +95,7 @@ const field_meta mm::hf_allow_pdu_ses_sts_psi_2_b2 = {
 };
 const field_meta mm::hf_allow_pdu_ses_sts_psi_3_b3 = {
     "PSI(3)",
-    "nas.nr.allow_pdu_ses_sts_psi_3_b3",
+    "nas.nr.psi",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -105,7 +105,7 @@ const field_meta mm::hf_allow_pdu_ses_sts_psi_3_b3 = {
 };
 const field_meta mm::hf_allow_pdu_ses_sts_psi_4_b4 = {
     "PSI(4)",
-    "nas.nr.allow_pdu_ses_sts_psi_4_b4",
+    "nas.nr.psi",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -115,7 +115,7 @@ const field_meta mm::hf_allow_pdu_ses_sts_psi_4_b4 = {
 };
 const field_meta mm::hf_allow_pdu_ses_sts_psi_5_b5 = {
     "PSI(5)",
-    "nas.nr.allow_pdu_ses_sts_psi_5_b5",
+    "nas.nr.psi",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -125,7 +125,7 @@ const field_meta mm::hf_allow_pdu_ses_sts_psi_5_b5 = {
 };
 const field_meta mm::hf_allow_pdu_ses_sts_psi_6_b6 = {
     "PSI(6)",
-    "nas.nr.allow_pdu_ses_sts_psi_6_b6",
+    "nas.nr.psi",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -135,7 +135,7 @@ const field_meta mm::hf_allow_pdu_ses_sts_psi_6_b6 = {
 };
 const field_meta mm::hf_allow_pdu_ses_sts_psi_7_b7 = {
     "PSI(7)",
-    "nas.nr.allow_pdu_ses_sts_psi_7_b7",
+    "nas.nr.psi",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -145,7 +145,7 @@ const field_meta mm::hf_allow_pdu_ses_sts_psi_7_b7 = {
 };
 const field_meta mm::hf_allow_pdu_ses_sts_psi_8_b0 = {
     "PSI(8)",
-    "nas.nr.allow_pdu_ses_sts_psi_8_b0",
+    "nas.nr.psi",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -155,7 +155,7 @@ const field_meta mm::hf_allow_pdu_ses_sts_psi_8_b0 = {
 };
 const field_meta mm::hf_allow_pdu_ses_sts_psi_9_b1 = {
     "PSI(9)",
-    "nas.nr.allow_pdu_ses_sts_psi_9_b1",
+    "nas.nr.psi",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -165,7 +165,7 @@ const field_meta mm::hf_allow_pdu_ses_sts_psi_9_b1 = {
 };
 const field_meta mm::hf_allow_pdu_ses_sts_psi_10_b2 = {
     "PSI(10)",
-    "nas.nr.allow_pdu_ses_sts_psi_10_b2",
+    "nas.nr.psi",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -175,7 +175,7 @@ const field_meta mm::hf_allow_pdu_ses_sts_psi_10_b2 = {
 };
 const field_meta mm::hf_allow_pdu_ses_sts_psi_11_b3 = {
     "PSI(11)",
-    "nas.nr.allow_pdu_ses_sts_psi_11_b3",
+    "nas.nr.psi",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -185,7 +185,7 @@ const field_meta mm::hf_allow_pdu_ses_sts_psi_11_b3 = {
 };
 const field_meta mm::hf_allow_pdu_ses_sts_psi_12_b4 = {
     "PSI(12)",
-    "nas.nr.allow_pdu_ses_sts_psi_12_b4",
+    "nas.nr.psi",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -195,7 +195,7 @@ const field_meta mm::hf_allow_pdu_ses_sts_psi_12_b4 = {
 };
 const field_meta mm::hf_allow_pdu_ses_sts_psi_13_b5 = {
     "PSI(13)",
-    "nas.nr.allow_pdu_ses_sts_psi_13_b5",
+    "nas.nr.psi",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -205,7 +205,7 @@ const field_meta mm::hf_allow_pdu_ses_sts_psi_13_b5 = {
 };
 const field_meta mm::hf_allow_pdu_ses_sts_psi_14_b6 = {
     "PSI(14)",
-    "nas.nr.allow_pdu_ses_sts_psi_14_b6",
+    "nas.nr.psi",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -215,7 +215,7 @@ const field_meta mm::hf_allow_pdu_ses_sts_psi_14_b6 = {
 };
 const field_meta mm::hf_allow_pdu_ses_sts_psi_15_b7 = {
     "PSI(15)",
-    "nas.nr.allow_pdu_ses_sts_psi_15_b7",
+    "nas.nr.psi",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,

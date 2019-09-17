@@ -18,7 +18,7 @@ int mm::dissect_deregistration_req_ue_terminate(dissector d, context* ctx) {
     /* Spare half octet    Spare half octet 9.5    M    V    1/2 */
 
     /* 58 5GMM cause  9.11.3.2  O   TV   2 */
-    consumed = dissect_opt_tv(nullptr, &mm_cause, d, ctx);
+    consumed = dissect_opt_tv(nullptr, &nrmm_cause, d, ctx);
     d.step(consumed);
 
     /* 5F  T3346 value GPRS timer 2     9.11.2.4   O   TLV 3 */

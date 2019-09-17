@@ -6,7 +6,7 @@ int cmn::dissect_s1_to_n1_mode_container(dissector d, context* ctx) {
 
     /*The value part of the Intra N1 mode NAS transparent container information element is
 included in specific information elements within some RRC messages sent to the UE.*/
-    (void) d.add_item(4, &hf_msg_auth_code, enc::be);
+    (void) d.add_item(4, &hf_authentication_code, enc::be);
     d.step(4);
 
     (void) d.add_item(1, &hf_integrity_algo_type, enc::be);
@@ -39,7 +39,7 @@ const true_false_string tfs_emm_registration_status = {
     "UE is not in EMM-REGISTERED state",
 };
 
-const field_meta hf_msg_auth_code = {
+const field_meta hf_authentication_code = {
     "Message authentication code",
     "nas.nr.cmn.mac",
     ft::ft_uint32,

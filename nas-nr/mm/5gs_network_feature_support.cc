@@ -23,7 +23,7 @@ int mm::dissect_nw_feature_support(dissector d, context* ctx) {
         &hf_emergency_service_support_n3gpp,
         &hf_mcs_indicator,
         &hf_restrict_ec,
-        &hf_5gcp_ciot,
+        &hf_nr_control_plane_ciot,
         &hf_nwfs_n3data_b4,
         &hf_header_compression_control_plane,
         &hf_nwfs_5gup_ciot_b6,
@@ -63,7 +63,7 @@ const value_string nas_5gs_nw_feat_sup_emf_values[] = {
     },
     {
         0x3,
-        "mergency services fallback supported in NR "
+        "emergency services fallback supported in NR "
         "connected to 5GCN and E-UTRA connected  to 5GCN",
     },
     {0, nullptr},
@@ -135,7 +135,7 @@ const field_meta hf_emergency_service_support_indicator = {
     0x0c,
 };
 
-const value_string nas_5gs_nw_feat_sup_ims_vops_values[] = {
+const value_string ims_voice_over_ps_session_values[] = {
     {0x0, "IMS voice over PS session not supported"},
     {0x1, "IMS voice over PS session supported over 3GPP access"},
     {0x2, "IMS voice over PS session supported over non - 3GPP access"},
@@ -148,43 +148,43 @@ const field_meta hf_ims_voice_over_ps_session_indicator = {
     "nas.nr.mm.nw.feature.ims.vops",
     ft::ft_uint8,
     fd::base_dec,
-    nas_5gs_nw_feat_sup_ims_vops_values,
+    ims_voice_over_ps_session_values,
     nullptr,
     nullptr,
     0x03,
 };
 
-const true_false_string tfs_nwfs_b0 = {
+const true_false_string tfs_emergency_services_over_n3gpp = {
     "Emergency services supported over non-3GPP access",
     "Emergency services not supported over non-3GPP access",
 };
 
-const true_false_string tfs_nwfs_b1 = {
+const true_false_string tfs_access_identity2_valid = {
     "Access identity 2 valid",
     "Access identity 2 not valid",
 };
 
-const true_false_string tfs_nwfs_b2 = {
+const true_false_string tfs_use_of_enhanced_coverage_restricted = {
     "Use of enhanced coverage is restricted",
     "Use of enhanced coverage is not restricted",
 };
 
-const true_false_string tfs_nwfs_b3 = {
+const true_false_string tfs_control_plane_nr_optimization = {
     "Control plane CIoT 5GS optimization supported",
     "Control plane CIoT 5GS optimization not supported",
 };
 
-const true_false_string tfs_nwfs_b4 = {
+const true_false_string tfs_n3_data_transfer = {
     "N3 data transfer not supported",
     "N3 data transfer supported",
 };
 
-const true_false_string tfs_nwfs_b5 = {
+const true_false_string tfs_header_compression = {
     "Header compression for control plane CIoT 5GS optimization supported",
     "Header compression for control plane CIoT 5GS optimization not supported",
 };
 
-const true_false_string tfs_nwfs_b6 = {
+const true_false_string tfs_user_plane_ciot_nr_optimization = {
     "User plane CIoT 5GS optimization supported",
     "User plane CIoT 5GS optimization not supported",
 };
@@ -195,7 +195,7 @@ const field_meta hf_emergency_service_support_n3gpp = {
     ft::ft_uint8,
     fd::base_dec,
     nullptr,
-    &tfs_nwfs_b0,
+    &tfs_emergency_services_over_n3gpp,
     nullptr,
     0x01,
 };
@@ -206,7 +206,7 @@ const field_meta hf_mcs_indicator = {
     ft::ft_uint8,
     fd::base_dec,
     nullptr,
-    &tfs_nwfs_b1,
+    &tfs_access_identity2_valid,
     nullptr,
     0x02,
 };
@@ -217,17 +217,17 @@ const field_meta hf_restrict_ec = {
     ft::ft_uint8,
     fd::base_dec,
     nullptr,
-    &tfs_nwfs_b2,
+    &tfs_use_of_enhanced_coverage_restricted,
     nullptr,
     0x04,
 };
-const field_meta hf_5gcp_ciot = {
+const field_meta hf_nr_control_plane_ciot = {
     "Control plane CIoT 5GS optimization (5G-CP CIoT)",
     "nas.nr.mm.nw.feature.ciot.cp",
     ft::ft_uint8,
     fd::base_dec,
     nullptr,
-    &tfs_nwfs_b3,
+    &tfs_control_plane_nr_optimization,
     nullptr,
     0x08,
 };
@@ -237,7 +237,7 @@ const field_meta hf_nwfs_n3data_b4 = {
     ft::ft_uint8,
     fd::base_dec,
     nullptr,
-    &tfs_nwfs_b4,
+    &tfs_n3_data_transfer,
     nullptr,
     0x10,
 };
@@ -247,7 +247,7 @@ const field_meta hf_header_compression_control_plane = {
     ft::ft_uint8,
     fd::base_dec,
     nullptr,
-    &tfs_nwfs_b5,
+    &tfs_header_compression,
     nullptr,
     0x20,
 };
@@ -257,7 +257,7 @@ const field_meta hf_nwfs_5gup_ciot_b6 = {
     ft::ft_uint8,
     fd::base_dec,
     nullptr,
-    &tfs_nwfs_b6,
+    &tfs_user_plane_ciot_nr_optimization,
     nullptr,
     0x40,
 };

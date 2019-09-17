@@ -99,7 +99,7 @@ int dissect_configured_nssai(dissector d, context* ctx);
 int dissect_pdu_session_reactive_result(dissector d, context* ctx );
 
 int dissect_pdu_session_status(dissector d, context* ctx); /* 9.11.3.44*/
-int dissect_mm_cause(dissector d, context* ctx);                 // 5GMM cause   9.11.3.2
+int dissect_nrmm_cause(dissector d, context* ctx);                 // 5GMM cause   9.11.3.2
 int dissect_drx_param(dissector d, context* ctx);
 
 int dissect_ladn_information(dissector d, context* ctx); /*  9.11.3.30    LADN information */

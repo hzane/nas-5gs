@@ -25,7 +25,7 @@ int mm::dissect_service_accept(dissector d, context* ctx) {
 
 
     /*78    EAP message 9.11.2.2    O    TLV-E    7-1503*/
-    consumed = dissect_opt_tlv_e(nullptr, &cmn::eap_msg, d, ctx);
+    consumed = dissect_opt_tlv_e(nullptr, &cmn::eap_message, d, ctx);
     d.step(consumed);
 
     // XX	T3448 value	GPRS timer 3  9.11.2.4 O TLV 3

@@ -11,7 +11,7 @@ int mm::dissect_last_visited_tai(dissector d, context* ctx) {
     d.step(3);
 
     /* TAC Octet 5 - 7 */
-    (void) d.add_item(3, &hf_tac, enc::na);
+    (void) d.add_item(3, &hf_tracking_area_code, enc::na);
 
     return 6;
 }
@@ -29,7 +29,7 @@ extern const value_string tracking_area_identity_list_values[] = {
     {0, nullptr},
 };
 
-extern const value_string nas_5gs_mm_tal_num_e[] = {
+extern const value_string tracking_area_list_number_values[] = {
     {0x00, "1 element"},
     {0x01, "2 elements"},
     {0x02, "3 elements"},
@@ -48,7 +48,7 @@ extern const value_string nas_5gs_mm_tal_num_e[] = {
     {0x0f, "16 elements"},
     {0, nullptr},
 };
-const field_meta mm::hf_tal_t_li = {
+const field_meta mm::hf_tracking_area_list_type = {
     "Type of list",
     "nas.nr.mm.tracking.area.type",
     ft::ft_uint8,
@@ -58,18 +58,20 @@ const field_meta mm::hf_tal_t_li = {
     nullptr,
     0x60,
 };
-const field_meta mm::hf_tal_num_e = {
+const field_meta mm::hf_tracking_area_list_number = {
     "Number of elements",
     "nas.nr.number",
     ft::ft_uint8,
     fd::base_dec,
-    nas_5gs_mm_tal_num_e,
+    tracking_area_list_number_values,
     nullptr,
     nullptr,
     0x1f,
 };
-const field_meta mm::hf_tac = {
-    "TAC",
+
+// TAC, Tracking area code
+const field_meta mm::hf_tracking_area_code = {
+    "TAC, Tracking area code",
     "nas.nr.tac",
     ft::ft_uint24,
     fd::base_hex,

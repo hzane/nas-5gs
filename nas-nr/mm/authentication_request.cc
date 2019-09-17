@@ -34,7 +34,7 @@ int mm::authentication_request(dissector d, context* ctx) {
     d.step(consumed);
 
     /*78  EAP message 9.11.2.2    O    TLV-E    7-1503 */
-    consumed = dissect_opt_tlv_e(nullptr, &cmn::eap_msg, d, ctx);
+    consumed = dissect_opt_tlv_e(nullptr, &cmn::eap_message, d, ctx);
     d.step(consumed);
 
     return uc.length;

@@ -150,7 +150,7 @@ const field_meta hf_restrict_ec_support = {
     0x08,
 };
 
-const true_false_string tfs_lpp_2 = {
+const true_false_string tfs_lte_positioning_protocol = {
     "LPP in N1 mode supported",
     "LPP in N1 mode not supported",
 };
@@ -161,7 +161,7 @@ const field_meta hf_lpp_capability = {
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
-    (&tfs_lpp_2),
+    &tfs_lte_positioning_protocol,
     nullptr,
     0x04,
 };
@@ -177,11 +177,11 @@ const true_false_string tfs_ho_attach_1 = {
 
 const field_meta hf_handover_attach = {
     "HO attach",
-    "nas.nr.mm.ho_attach_b1",
+    "nas.nr.mm.ho.attach.b1",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
-    (&tfs_ho_attach_1),
+    &tfs_ho_attach_1,
     nullptr,
     0x02,
 };
@@ -193,7 +193,7 @@ const true_false_string tfs_s1_mode_0 = {
 
 const field_meta hf_s1_mode_b0 = {
     "S1 mode",
-    "nas.nr.mm.s1_mode_b0",
+    "nas.nr.mm.s1.mode.b0",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -204,7 +204,7 @@ const field_meta hf_s1_mode_b0 = {
 }
 
 /*10    5GMM capability  9.11.3.1    O    TLV    3-15*/
-const element_meta mm::mm_cap = {
+const element_meta mm::nrmm_capability = {
     0x10,
     "5GMM capability",
     mm::dissect_mm_capability,

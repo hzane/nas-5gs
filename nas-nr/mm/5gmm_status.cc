@@ -1,4 +1,5 @@
 #include "../dissect_mm_msg.hh"
+#include "../config.hh"
 
 /*  8.2.29 5GMM status */
 int mm::dissect_mm_status(dissector d, context* ctx) {
@@ -7,14 +8,14 @@ int mm::dissect_mm_status(dissector d, context* ctx) {
     /* Direction: both*/
 
     /* 5GMM cause 9.11.3.2    M    V    1 */
-    (void) dissect_mm_cause(d, ctx);
+    (void) dissect_nrmm_cause(d, ctx);
     d.step(1);
 
     return 1;
 }
 
 struct nrmm_cause_t {
-    uint8_t _;
+    uint8_t cause;
 };
 
 struct mm_status_t {

@@ -8,8 +8,8 @@ int mm::dissect_additional_security_info(dissector d, context* ctx) {
     const use_context        uc(ctx, "additional-5g-security-information", d, -1);
 
     static const field_meta* flags[] = {
-        &hf_mm_rinmr,
-        &hf_mm_hdp,
+        &hf_retransmission_of_initial_nas_request,
+        &hf_horizontal_derivation_parameter,
         nullptr,
     };
 
@@ -18,7 +18,7 @@ int mm::dissect_additional_security_info(dissector d, context* ctx) {
     return 1;
 }
 
-struct additional_security_infomation_t{
+struct additional_security_information_t{
     uint8_t mm_rinr;
     uint8_t mm_hdp;
 };

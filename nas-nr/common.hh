@@ -5,9 +5,9 @@
 namespace cmn{
 /* 9.11.2.2    EAP message RFC2284 RFC3748 */
 extern const field_meta hf_eap;
-extern const element_meta eap_msg;
+extern const element_meta eap_message;
 /* 9.11.2.2    EAP message RFC2284 RFC3748 */
-int dissect_eap_msg(dissector d, context* ctx);
+int dissect_eap_message(dissector d, context* ctx);
 
 /*  9.11.2.1A    DNN */
 extern const field_meta hf_dnn;
@@ -49,7 +49,7 @@ extern const val_string        enc_algo_type_values[];
 }
 
 namespace cmn {
-extern const field_meta hf_msg_auth_code;
+extern const field_meta hf_authentication_code;
 extern const field_meta hf_sequence_no;
 extern const field_meta hf_integrity_algo_type;
 extern const field_meta hf_ciphering_algo_type;

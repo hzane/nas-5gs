@@ -33,7 +33,7 @@ int mm::dissect_service_area_list(dissector d, context* ctx) {
             dissect_e212_mcc_mnc(d, ctx);
             d.step(3);
             while (sal_num_e > 0) {
-                (void) d.add_item(3, &hf_tac, enc::be);
+                (void) d.add_item(3, &hf_tracking_area_code, enc::be);
                 d.step(3);
                 --sal_num_e;
             }
@@ -44,7 +44,7 @@ int mm::dissect_service_area_list(dissector d, context* ctx) {
             d.step(3);
 
             /*octet 5  TAC 1*/
-            (void) d.add_item(3, &hf_tac, enc::be);
+            (void) d.add_item(3, &hf_tracking_area_code, enc::be);
             d.step(3);
         } break;
         case 2: {
@@ -54,7 +54,7 @@ int mm::dissect_service_area_list(dissector d, context* ctx) {
                 d.step(3);
 
                 /*octet 5  TAC 1*/
-                (void) d.add_item(3, &hf_tac, enc::be);
+                (void) d.add_item(3, &hf_tracking_area_code, enc::be);
                 d.step(3);
                 --sal_num_e;
             }

@@ -29,7 +29,7 @@ int sm::dissect_pdu_ses_establishment_reject(dissector d, context* ctx) {
 
     /*78  EAP message 9.11.2.2    O    TLV - E    7 - 1503*/
     // ELEM_OPT_TLV_E(0x78, , DE_NAS_5GS_CMN_EAP_MESSAGE, NULL);
-    consumed = dissect_opt_tlv_e(nullptr, &cmn::eap_msg, d, ctx);
+    consumed = dissect_opt_tlv_e(nullptr, &cmn::eap_message, d, ctx);
     d.step(consumed);
 
     /*7B    Extended protocol configuration options   9.11.4.6    O    TLV - E    4 - 65538*/

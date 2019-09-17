@@ -17,8 +17,8 @@ int mm::dissect_update_type(dissector d, context* ctx) {
 
     static const field_meta* flags[] = {
         // &nas::hf_spare_b3,
-        &hf_pnb_ciot,
-        &hf_ng_ran_rcu,
+        &hf_preferred_network_behaviour,
+        &hf_ngran_radio_capability_update,
         &hf_sms_requested,
         nullptr,
     };

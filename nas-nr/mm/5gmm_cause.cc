@@ -5,18 +5,18 @@ using namespace nas;
 using namespace mm;
 
 // 9.11.3.2	5GMM cause
-extern const element_meta mm::mm_cause = {
+extern const element_meta mm::nrmm_cause = {
     0x58,
     nullptr,
-    mm::dissect_mm_cause,
+    mm::dissect_nrmm_cause,
     nullptr,
 };
 
 // 9.11.3.2	5GMM cause
-int mm::dissect_mm_cause(dissector d, context* ctx) {
+int mm::dissect_nrmm_cause(dissector d, context* ctx) {
     const use_context uc(ctx, "5gmm-cause", d, -1);
 
-    (void) d.add_item(1, &hf_mm_cause, enc::be);
+    (void) d.add_item(1, &hf_nrmm_cause, enc::be);
     d.step(1);
 
     return 1;
@@ -25,7 +25,7 @@ int mm::dissect_mm_cause(dissector d, context* ctx) {
 
 namespace mm {
 /* * 9.11.3.2 5GMM cause */
-extern const val_string mm_cause_values[] = {
+extern const val_string nrmm_cause_values[] = {
     {0x03, "Illegal UE"},
     {0x05, "PEI not accepted"},
     {0x06, "Illegal ME"},
@@ -66,12 +66,12 @@ extern const val_string mm_cause_values[] = {
 };
 }
 // 5GMM cause   9.11.3.2
-const field_meta mm::hf_mm_cause = {
+const field_meta mm::hf_nrmm_cause = {
     "5GMM cause",
     "nas.nr.mm.5gmm.cause",
     ft::ft_uint8,
     fd::base_dec,
-    mm_cause_values,
+    nrmm_cause_values,
     nullptr,
     nullptr,
     0x0,

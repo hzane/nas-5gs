@@ -2,11 +2,11 @@
 #include "../core.hh"
 
 namespace mm{
-extern const element_meta mm_cap;
-extern const element_meta mm_cause;
+extern const element_meta nrmm_capability;
+extern const element_meta nrmm_cause;
 extern const element_meta nw_feature_support ;
 extern const element_meta nw_slicing_ind;
-extern const element_meta eps_nas_msg_container;
+extern const element_meta eps_nas_message_container;
 extern const element_meta ue_status;
 extern const element_meta last_visited_tai;
 extern const element_meta nc_native_nas_ksi;
