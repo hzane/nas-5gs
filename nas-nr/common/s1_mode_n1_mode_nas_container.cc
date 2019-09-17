@@ -9,13 +9,13 @@ included in specific information elements within some RRC messages sent to the U
     (void) d.add_item(4, &hf_msg_auth_code, enc::be);
     d.step(4);
 
-    (void) d.add_item(1, &hf_int_prot_algo_type, enc::be);
+    (void) d.add_item(1, &hf_integrity_algo_type, enc::be);
     (void) d.add_item(1, &hf_ciphering_algo_type, enc::be);
     d.step(1);
 
     (void) d.add_item(1, &hf_ksi_5g, enc::be);
-    (void) d.add_item(1, &hf_tsc, enc::be);
-    (void) d.add_item(1, &hf_ncc, enc::be);
+    (void) d.add_item(1, &hf_security_context_type, enc::be);
+    (void) d.add_item(1, &hf_next_hop_chaining_counter, enc::be);
     d.step(1);
 
     // oct 9-10 is spare
@@ -24,17 +24,17 @@ included in specific information elements within some RRC messages sent to the U
     return uc.length;
 }
 
-struct s1_to_n1_mode_container{
+struct s1_to_n1_mode_container_t {
     uint8_t auth_code[4];
     uint8_t integrity_algo_type;
     uint8_t ciphering_algo_type;
     uint8_t nas_ksi;
-    uint8_t tsc;
+    uint8_t security_context_type;
     uint8_t ncc;
 };
 
 namespace cmn {
-const true_false_string tfs_nas_5gs_mm_s1_mod = {
+const true_false_string tfs_emm_registration_status = {
     "UE is in EMM-REGISTERED state",
     "UE is not in EMM-REGISTERED state",
 };
@@ -51,9 +51,9 @@ const field_meta hf_msg_auth_code = {
 };
 
 // Next hop chaining counter (see 3GPP TS 33.501 [24])
-const field_meta hf_ncc= {
-    "NCC",
-    "",
+const field_meta hf_next_hop_chaining_counter = {
+    "Next hop chaining counter (NCC)",
+    "nas.nr.cmn.ncc",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -61,16 +61,15 @@ const field_meta hf_ncc= {
     nullptr,
     0x70u,
 };
-
 }
 
-const field_meta cmn::hf_mm_s1_mode_reg_b0 = {
-    "S1 mode reg",
-    "nas.nr.mm.s1_mode_reg_b0",
+const field_meta cmn::hf_emm_registration_status = {
+    "EMM registration status (S1 mode reg)",
+    "nas.nr.emm.s1.mode.reg.b0",
     ft::ft_boolean,
     8,
     nullptr,
-    &cmn::tfs_nas_5gs_mm_s1_mod,
+    &cmn::tfs_emm_registration_status,
     nullptr,
     0x01,
 

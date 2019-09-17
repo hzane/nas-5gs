@@ -33,6 +33,6 @@ const element_meta cmn::eap_msg = {
     nullptr,
 };
 
-struct eap {
-    std::vector<uint8_t> v;
+struct eap_message_t {
+    std::vector<uint8_t> _;
 };

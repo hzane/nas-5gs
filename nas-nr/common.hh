@@ -30,8 +30,8 @@ int dissect_gprs_timer3_set(dissector d, context* ctx); /* TS 24.008 g10 [10] 10
 
 int dissect_e212_mcc_mnc(dissector d, context*); // implemented in e212_mcc_mnc.cc
 
-extern const field_meta hf_mm_n1_mode_reg_b1;
-extern const field_meta hf_mm_s1_mode_reg_b0;
+extern const field_meta hf_5gmm_registration_status;
+extern const field_meta hf_emm_registration_status;
 
 // 9.11.2.7 N1 mode to S1 mode NAS transparent container page.350
 int dissect_n1_to_s1_mode_container(dissector d, context* ctx); // NOLINT
@@ -50,11 +50,11 @@ extern const val_string        enc_algo_type_values[];
 
 namespace cmn {
 extern const field_meta hf_msg_auth_code;
-extern const field_meta hf_seq_no;
-extern const field_meta hf_int_prot_algo_type;
+extern const field_meta hf_sequence_no;
+extern const field_meta hf_integrity_algo_type;
 extern const field_meta hf_ciphering_algo_type;
 extern const field_meta hf_ksi_5g;
-extern const field_meta hf_tsc;
+extern const field_meta hf_security_context_type;
 extern const field_meta hf_kacf;
-extern const field_meta hf_ncc;
+extern const field_meta hf_next_hop_chaining_counter;
 } // namespace cmn

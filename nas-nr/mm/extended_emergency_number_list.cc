@@ -47,3 +47,11 @@ int mm::dissect_ext_emerge_num_list(dissector d, context* ctx) {
 
     return uc.length;
 }
+struct extended_emergency_number_t {
+    std::vector< uint8_t > number;
+    std::vector< uint8_t > field;
+};
+struct extended_emergency_number_list_t {
+    uint8_t validity;
+    std::vector< extended_emergency_number_t > numbers;
+};

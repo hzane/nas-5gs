@@ -8,7 +8,7 @@ extern const element_meta cmn::additional_information = {
     nullptr,
 };
 
-const field_meta hf_additional_inf = {
+const field_meta hf_additional_infomation = {
     "Additional information",
     "nas.nr.cmn.additional.info",
     ft::ft_bytes,
@@ -24,13 +24,13 @@ int cmn::dissect_additional_information(dissector d, context* ctx) {
     // The coding of the additional information value is dependent on the LCS application.
     diag("no dissect for %s\n", paths(ctx).c_str());
 
-    auto i = d.add_item(d.length, &hf_additional_inf, enc::na);
+    auto i = d.add_item(d.length, &hf_additional_infomation, enc::na);
     d.step(d.length);
     unused(i);
 
     return d.length;
 }
 
-struct additional_information{
-    std::vector<uint8_t> content;
+struct additional_information_t {
+    std::vector< uint8_t > _;
 };

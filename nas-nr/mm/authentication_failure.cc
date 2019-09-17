@@ -3,7 +3,7 @@
 
 
 /* 8.2.4 Authentication failure */
-int mm::authentication_failure(dissector d, context* ctx) {    
+int mm::authentication_failure(dissector d, context* ctx) {
     const use_context uc(ctx, "authentication-failure", d, 0);
     // UE to network
     up_link(d.pinfo);
@@ -13,8 +13,17 @@ int mm::authentication_failure(dissector d, context* ctx) {
     d.step(consumed);
 
     /* 30    Authentication failure parameter   9.11.3.14    O    TLV    16 */
-    consumed = dissect_opt_tlv(nullptr, &auth_fail_param, d, ctx);
+    consumed = dissect_opt_tlv(nullptr, &authentication_failure_parameter, d, ctx);
     d.step(consumed);
-    
+
     return uc.length;
 }
+
+struct authentication_failure_parameter_t{
+    uint8_t result[4];
+};
+
+struct authentication_failure_t{
+    uint8_t cause;
+    authentication_failure_parameter_t parameter;
+};

@@ -32,7 +32,6 @@ extern const element_meta cmn::dnn = {
     nullptr,
 };
 
-struct dnn {
-    // std::vector<std::string> apn = {};
-    std::string apn = {};
-}
+struct dnn_t {
+    std::vector<string> apn;
+};

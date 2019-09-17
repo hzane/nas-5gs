@@ -27,5 +27,3 @@ target_compile_definitions(nas-nr-ts24501 PRIVATE NASNRTS24501_EXPORTS)
 
 add_executable(nas-nr-demo ${NAS_5GS_SRCS} ${NAS_5GS_MM_SRCS} ${NAS_5GS_SM_SRCS} ${NAS_5GS_COMMON_SRCS} ${HEADERS})
 target_link_libraries(nas-nr-demo PRIVATE nas-nr-ts24501 stdc++fs)
-
-

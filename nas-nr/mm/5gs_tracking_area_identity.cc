@@ -4,7 +4,7 @@ using namespace cmn;
 
 
 //* 9.11.3.8     5GS tracking area identity
-int mm::dissect_last_v_tai(dissector d, context* ctx) {
+int mm::dissect_last_visited_tai(dissector d, context* ctx) {
     const use_context uc(ctx, "5gs-tracking area identity", d, -1);
 
     dissect_e212_mcc_mnc(d, ctx);
@@ -15,6 +15,11 @@ int mm::dissect_last_v_tai(dissector d, context* ctx) {
 
     return 6;
 }
+struct last_visit_tracking_area_identity_t{
+    string mcc;
+    string mnc;
+    uint8_t tac[3];
+};
 
 /*  9.11.3.9     5GS tracking area identity list */
 extern const value_string tracking_area_identity_list_values[] = {

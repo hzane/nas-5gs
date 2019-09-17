@@ -6,12 +6,12 @@ using namespace cmn;
 
 
 /*  8.2.14 De-registration request (UE terminated de-registration) */
-int mm::dissect_deregistration_req_ue_term(dissector d, context* ctx) {
+int mm::dissect_deregistration_req_ue_terminate(dissector d, context* ctx) {
     const use_context uc(ctx, "de-registration-request-ue-term", d, 0);
     // network to UE
     down_link(d.pinfo);
 
-    /* De-registration type    De-registration type 9.11.3.20   M   V   1 */    
+    /* De-registration type    De-registration type 9.11.3.20   M   V   1 */
     auto consumed = dissect_deregistration_type(d, ctx);
     d.step(consumed);
 

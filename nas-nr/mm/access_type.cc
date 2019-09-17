@@ -7,11 +7,14 @@ using namespace mm;
 int mm::dissect_access_type(dissector d, context* ctx) {
     const use_context uc(ctx, "access-type", d, -1);
 
-    (void) d.add_item(1, &hf_acc_type, enc::be);
+    (void) d.add_item(1, &hf_access_type, enc::be);
     d.step(1);
 
     return 1;
 }
+struct access_type_t {
+    uint8_t _;
+};
 
 /*  9.11.3.11    Access type */
 const value_string access_type_values[] = {
@@ -21,7 +24,7 @@ const value_string access_type_values[] = {
     {0, nullptr},
 };
 
-const field_meta mm::hf_acc_type = {
+const field_meta mm::hf_access_type = {
     "Access type",
     "nas.nr.mm.access.type",
     ft::ft_uint8,
@@ -31,4 +34,3 @@ const field_meta mm::hf_acc_type = {
     nullptr,
     0x03,
 };
-

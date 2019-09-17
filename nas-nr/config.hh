@@ -25,7 +25,9 @@ struct range_string;
 using proto_tree = proto_node;
 using proto_item = proto_node;
 using string     = std::string;
+using payload_t  = std::vector< uint8_t >;
 using ustring    = std::vector< uint8_t >;
+using std::optional;
 
 extern void diag(const char* format, ...);
 

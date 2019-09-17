@@ -13,7 +13,7 @@ int mm::dissect_identity_type(dissector d, context* ctx) {
     return 1;
 }
 
-struct identity_type {
+struct identity_type_t {
     uint8_t _;
 };
 

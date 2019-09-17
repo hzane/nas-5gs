@@ -17,3 +17,8 @@ int mm::dissect_additional_security_info(dissector d, context* ctx) {
 
     return 1;
 }
+
+struct additional_security_infomation_t{
+    uint8_t mm_rinr;
+    uint8_t mm_hdp;
+};

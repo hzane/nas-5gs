@@ -4,8 +4,8 @@ using namespace cmn;
 using namespace nas;
 
 namespace mm {
-extern const field_meta hf_5gsr_vcc;
-extern const field_meta hf_5gup_ciot;
+extern const field_meta hf_5gsrvcc_capability;
+extern const field_meta hf_user_plane_5gs_optimization;
 } // namespace mm
 
 /* 9.11.3.1     5GMM capability*/
@@ -17,7 +17,7 @@ int mm::dissect_mm_capability(dissector d, context* ctx) {
         &hf_header_compression_for_ctrl_plane,
         &hf_n3data_5,
         &hf_control_plane,
-        &hf_restrict_ec_3,
+        &hf_restrict_ec_support,
         &hf_lpp_capability,
         &hf_handover_attach,
         &hf_s1_mode_b0,
@@ -28,8 +28,8 @@ int mm::dissect_mm_capability(dissector d, context* ctx) {
 
     if (d.length>0) {
         static const field_meta* o4flags[] = {
-            &hf_5gsr_vcc,
-            &hf_5gup_ciot,
+            &hf_5gsrvcc_capability,
+            &hf_user_plane_5gs_optimization,
             nullptr,
         };
         d.add_bits(o4flags);
@@ -39,21 +39,21 @@ int mm::dissect_mm_capability(dissector d, context* ctx) {
     return 1;
 }
 
-struct mm_capability {
+struct mm_capability_t {
     uint8_t service_gap_control;
     uint8_t header_compression_for_control_plane;
     uint8_t n3_data;
     uint8_t control_plane;
-    uint8_t restrict_ec_3;
+    uint8_t restrict_ec_support;
     uint8_t lpp_capability;
     uint8_t handover_attach;
     uint8_t s1_mode;
-    std::optional<uint8_t> sr_vcc;
-    std::optional<uint8_t> up_ciot;
+    std::optional<uint8_t> nrsr_vcc;
+    std::optional<uint8_t> user_plane_nr_optimization;
 };
 
 namespace mm {
-const field_meta        hf_5gsr_vcc = {
+const field_meta        hf_5gsrvcc_capability = {
     "5G-SRVCC from NG-RAN to UTRAN (5GSRVCC) capability",
     "nas.nr.mm.cap.5gsrvcc",
     ft::ft_boolean,
@@ -63,7 +63,8 @@ const field_meta        hf_5gsr_vcc = {
     nullptr,
     0,
 };
-const field_meta        hf_5gup_ciot = {
+
+const field_meta        hf_user_plane_5gs_optimization = {
     "User plane CIoT 5GS optimization (5G-UP CIoT) ",
     "nas.nr.mm.cap.5gup.ciot",
     ft::ft_boolean,
@@ -74,32 +75,34 @@ const field_meta        hf_5gup_ciot = {
     0,
 };
 
-const true_false_string tfs_sgc_7 = {
+const true_false_string tfs_service_gap_control = {
     "service gap control supported",
     "service gap control not supported",
 };
 
 const field_meta hf_service_gap_control = {
-    "Service gap control SGC",
+    "Service gap control (SGC)",
     "nas.nr.mm.sgc",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
-    (&tfs_sgc_7),
+    &tfs_service_gap_control,
     nullptr,
     0x80,
 };
-const true_false_string tfs_hccp_ciot_6 = {
+
+const true_false_string tfs_header_compression_for_control = {
     "Header compression for control plane CIoT 5GS optimization supported",
     "Header compression for control plane CIoT 5GS optimization not supported",
 };
+
 const field_meta hf_header_compression_for_ctrl_plane = {
     "Header compression for control plane CIoT 5GS optimization (5G-HC-CP-CIoT)",
     "nas.nr.mm.5g_hc_cp_ciot",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
-    (&tfs_hccp_ciot_6),
+    &tfs_header_compression_for_control,
     nullptr,
     0x40,
 };
@@ -115,39 +118,34 @@ const field_meta hf_n3data_5 = {
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
-    (&tfs_n3data_5),
+    &tfs_n3data_5,
     nullptr,
     0x20,
 };
 
-const true_false_string tfs_5gcp_ciot_4 = {
-    "Header compression for control plane CIoT 5GS optimization supported",
-    "Header compression for control plane CIoT 5GS optimization not supported",
-};
-
 const field_meta hf_control_plane = {
     "Control plane CIoT 5GS optimization (5G-CP CIoT)",
-    "nas.nr.mm.5g_cp_ciot",
+    "nas.nr.mm.cp.ciot",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
-    (&tfs_5gcp_ciot_4),
+    &tfs_header_compression_for_control,
     nullptr,
     0x10,
 };
 
-const true_false_string tfs_restrict_ec_3 = {
+const true_false_string tfs_restrict_ec = {
     "Restriction on use of enhanced coverage supported",
     "Restriction on use of enhanced coverage not supported",
 };
 
-const field_meta hf_restrict_ec_3 = {
+const field_meta hf_restrict_ec_support = {
     "Restriction on use of enhanced coverage support (RestrictEC)",
     "nas.nr.mm.restrict_ec",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
-    (&tfs_restrict_ec_3),
+    &tfs_restrict_ec,
     nullptr,
     0x08,
 };

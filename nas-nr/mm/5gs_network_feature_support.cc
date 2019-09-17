@@ -8,11 +8,11 @@ int mm::dissect_nw_feature_support(dissector d, context* ctx) {
     const use_context uc(ctx, "5gs-network-feature-support", d, 1);
 
     static const field_meta* flags[] = {
-        &hf_nw_feat_sup_mpsi_b7,
-        &hf_nw_feat_sup_ims_iwk_n26_b6,
-        &hf_nw_feat_sup_ims_emf_b5b4,
-        &hf_nw_feat_sup_ims_emc_b3b2,
-        &hf_nw_feat_sup_ims_vops_b1b0,
+        &hf_mps_indicator,
+        &hf_interworking_without_n26,
+        &hf_emergency_service_fallback_indicator,
+        &hf_emergency_service_support_indicator,
+        &hf_ims_voice_over_ps_session_indicator,
         nullptr,
     };
     /* MPSI    IWK N26    EMF    EMC    IMS VoPS    octet 3*/
@@ -20,12 +20,12 @@ int mm::dissect_nw_feature_support(dissector d, context* ctx) {
     d.step(1);
 
     static const field_meta* oct4[] = {
-        &hf_nwfs_emcn3_b0,
-        &hf_nwfs_mcsi_b1,
-        &hf_nwfs_restrict_ec_b2,
-        &hf_nwfs_5gcp_ciot_b3,
+        &hf_emergency_service_support_n3gpp,
+        &hf_mcs_indicator,
+        &hf_restrict_ec,
+        &hf_5gcp_ciot,
         &hf_nwfs_n3data_b4,
-        &hf_nwfs_5ghc_cp_ciot_b5,
+        &hf_header_compression_control_plane,
         &hf_nwfs_5gup_ciot_b6,
         nullptr,
     };
@@ -39,19 +39,19 @@ int mm::dissect_nw_feature_support(dissector d, context* ctx) {
     return uc.length; // 1-3
 }
 
-struct mm_network_feature_support{
-    uint8_t mpsi;
-    uint8_t ims_iwk;
-    uint8_t ims_emf;
-    uint8_t ims_emc;
-    uint8_t ims_vops;
-    uint8_t emcn3;
-    uint8_t mcsi;
-    uint8_t restrict_ec;
-    uint8_t cp_ciot;
-    uint8_t n3data;
-    uint8_t hc_cp_ciot;
-    uint8_t up_ciot;
+struct mm_network_feature_support_t {
+    uint8_t mps_indicator;
+    uint8_t interworking_without_n26;
+    uint8_t emergency_fallback_indicator;
+    uint8_t                emergency_support_indicator;
+    uint8_t                ims_voice_over_ps_indicator;
+    std::optional< uint8_t > emergency_support_for_n3gpp;
+    std::optional< uint8_t > mcs_indicator;
+    std::optional<uint8_t> restrict_ec;
+    std::optional<uint8_t> nr_control_plane_ciot;
+    std::optional<uint8_t> n3data;
+    std::optional<uint8_t> hc_cp_ciot;
+    std::optional<uint8_t> up_ciot;
 };
 namespace mm {
 const value_string nas_5gs_nw_feat_sup_emf_values[] = {
@@ -73,9 +73,9 @@ const true_false_string tfs_nas_5gs_nw_feat_sup_mpsi = {
     "Access identity 1 valid in RPLMN or equivalent PLMN",
     "Access identity 1 not valid in RPLMN or equivalent PLMN",
 };
-const field_meta hf_nw_feat_sup_mpsi_b7 = {
+const field_meta hf_mps_indicator = {
     "MPS indicator (MPSI)",
-    "nas.nr.nw_feat_sup.mpsi",
+    "nas.nr.nw.feature.support.mpsi",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -90,7 +90,7 @@ static const tf_string tfs_iwi = {
 };
 
 /* 9.11.3.5    5GS network feature support */
-const field_meta hf_nw_feat_sup_ims_iwk_n26_b6 = {
+const field_meta hf_interworking_without_n26 = {
     "Interworking without N26",
     "nas.nr.nw.feature.support.n26",
     ft::ft_boolean,
@@ -100,7 +100,7 @@ const field_meta hf_nw_feat_sup_ims_iwk_n26_b6 = {
     nullptr,
     0x40,
 };
-const field_meta hf_nw_feat_sup_ims_emf_b5b4 = {
+const field_meta hf_emergency_service_fallback_indicator = {
     "Emergency service fallback indicator (EMF)",
     "nas.nr.nw.feature.ims.emf",
     ft::ft_uint8,
@@ -124,7 +124,7 @@ const value_string nas_5gs_nw_feat_sup_emc_values[] = {
     },
     {0, nullptr},
 };
-const field_meta hf_nw_feat_sup_ims_emc_b3b2 = {
+const field_meta hf_emergency_service_support_indicator = {
     "Emergency service support indicator (EMC)",
     "nas.nr.nf.feature.ims.emc",
     ft::ft_uint8,
@@ -143,7 +143,7 @@ const value_string nas_5gs_nw_feat_sup_ims_vops_values[] = {
     {0, nullptr},
 };
 
-const field_meta hf_nw_feat_sup_ims_vops_b1b0 = {
+const field_meta hf_ims_voice_over_ps_session_indicator = {
     "IMS voice over PS session indicator (IMS VoPS)",
     "nas.nr.mm.nw.feature.ims.vops",
     ft::ft_uint8,
@@ -189,7 +189,7 @@ const true_false_string tfs_nwfs_b6 = {
     "User plane CIoT 5GS optimization not supported",
 };
 
-const field_meta hf_nwfs_emcn3_b0 = {
+const field_meta hf_emergency_service_support_n3gpp = {
     "Emergency service support for non-3GPP access indicator (EMCN3)",
     "nas.nr.network.feature.support.emcn3",
     ft::ft_uint8,
@@ -200,7 +200,7 @@ const field_meta hf_nwfs_emcn3_b0 = {
     0x01,
 };
 
-const field_meta hf_nwfs_mcsi_b1 = {
+const field_meta hf_mcs_indicator = {
     "MCS indicator (MCSI)",
     "nas.nr.mm.nw.feature.mcs",
     ft::ft_uint8,
@@ -211,7 +211,7 @@ const field_meta hf_nwfs_mcsi_b1 = {
     0x02,
 };
 
-const field_meta hf_nwfs_restrict_ec_b2 = {
+const field_meta hf_restrict_ec = {
     "Restriction on enhanced coverage (RestrictEC)",
     "nas.nr.nw.feature.restrict.ec",
     ft::ft_uint8,
@@ -221,7 +221,7 @@ const field_meta hf_nwfs_restrict_ec_b2 = {
     nullptr,
     0x04,
 };
-const field_meta hf_nwfs_5gcp_ciot_b3 = {
+const field_meta hf_5gcp_ciot = {
     "Control plane CIoT 5GS optimization (5G-CP CIoT)",
     "nas.nr.mm.nw.feature.ciot.cp",
     ft::ft_uint8,
@@ -241,7 +241,7 @@ const field_meta hf_nwfs_n3data_b4 = {
     nullptr,
     0x10,
 };
-const field_meta hf_nwfs_5ghc_cp_ciot_b5 = {
+const field_meta hf_header_compression_control_plane = {
     "Header compression for control plane CIoT 5GS optimization (5G-HC-CP CIoT)",
     "nas.nr.mm.nw.feature.hc.cp.ciot",
     ft::ft_uint8,

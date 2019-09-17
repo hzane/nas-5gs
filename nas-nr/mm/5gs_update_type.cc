@@ -25,3 +25,9 @@ int mm::dissect_update_type(dissector d, context* ctx) {
     d.add_bits(flags);
     return 1;
 }
+
+struct update_type_t{
+    uint8_t pnb_ciot;
+    uint8_t ng_ran_rcu;
+    uint8_t sms_requested;
+};

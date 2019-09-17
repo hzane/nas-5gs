@@ -11,6 +11,10 @@ int mm::dissect_drx_param(dissector d, context* ctx) {
     return 1;
 }
 
+struct drx_parameters_t {
+    uint8_t _;
+};
+
 /* 9.11.3.2A    5GS DRX parameters*/
 const value_string drx_parameters_values[] = {
     {0x0, "DRX value not specified"},
@@ -30,4 +34,3 @@ const field_meta mm::hf_drx_param = {
     nullptr,
     0x0f,
 };
-

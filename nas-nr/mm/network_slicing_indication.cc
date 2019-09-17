@@ -23,6 +23,11 @@ int mm::dissect_nw_slicing_indication(dissector d, context* ctx) {
     return 1;
 }
 
+struct network_slicing_indication_t {
+    uint8_t dcni;
+    uint8_t nssci;
+};
+
 // Network slicing indication  9.11.3.36
 extern const element_meta mm::nw_slicing_ind = {
     0x90,

@@ -24,7 +24,7 @@ extern const true_false_string mm::tfs_security_context_types = {
     "Native security context (for KSIAMF)",
 };
 
-const field_meta mm::hf_tsc = {
+const field_meta mm::hf_security_context_type = {
     "Type of security context flag (TSC)",
     "nas.nr.mm.tsc",
     ft::ft_boolean,
@@ -34,7 +34,6 @@ const field_meta mm::hf_tsc = {
     nullptr,
     0x08,
 };
-
 
 const field_meta mm::hf_sal_num_e = {
     "Number of elements",
@@ -80,17 +79,17 @@ extern const message_meta mm::msgs[] = {
     {0x43, "Registration complete", dissect_registration_complete, nullptr},
     {0x44, "Registration reject", dissect_registration_rej, nullptr},
     {0x45, "Deregistration request (UE originating)",
-     dissect_deregistration_req_ue_orig, nullptr},
+     dissect_deregistration_req_ue_origin, nullptr},
     {0x46, "Deregistration accept (UE originating)",
-     dissect_deregistration_accept_ue_orig, nullptr},
+     dissect_deregistration_accept_ue_origin, nullptr},
     {
         0x47,
         "Deregistration request (UE terminated)",
-        dissect_deregistration_req_ue_term,
+        dissect_deregistration_req_ue_terminate,
         nullptr,
     },
     {0x48, "Deregistration accept (UE terminated)",
-     dissect_deregistration_accept_ue_term, nullptr},
+     dissect_deregistration_accept_ue_terminate, nullptr},
 
     {0x49, "Not used in current version", no_dissect, nullptr},
     {0x4a, "Not used in current version", no_dissect, nullptr},
@@ -106,10 +105,10 @@ extern const message_meta mm::msgs[] = {
     {0x52, "Not used in current version", no_dissect, nullptr},
     {0x53, "Not used in current version", no_dissect, nullptr},
 
-    {0x54, "Configuration update command", dissect_config_update_cmd, nullptr},
-    {0x55, "Configuration update complete", dissect_config_update_cmpl, nullptr},
+    {0x54, "Configuration update command", dissect_configuration_update_cmd, nullptr},
+    {0x55, "Configuration update complete", dissect_configuration_update_complete, nullptr},
     {0x56, "Authentication request", authentication_request, nullptr},
-    {0x57, "Authentication response", authentication_resp, nullptr},
+    {0x57, "Authentication response", authentication_response, nullptr},
     {0x58, "Authentication reject", authentication_reject, nullptr},
     {0x59, "Authentication failure", authentication_failure, nullptr},
 
@@ -174,7 +173,6 @@ extern const field_meta mm::hfm_nas_eps_nas_ksi = { // NOLINT
     nullptr,
     0x07,
 };
-const field_meta* mm::hf_nas_eps_nas_ksi = &hfm_nas_eps_nas_ksi;
 
 // NAS message container 9.11.3.33
 extern const element_meta mm::nas_msg_container = {
@@ -192,9 +190,9 @@ extern const element_meta mm::eps_bearer_ctx_status = {
     nullptr,
 };
 
-const field_meta mm::hf_sd = {
+const field_meta mm::hf_slice_differentiator = {
     "Slice differentiator (SD)",
-    "nas.nr.mm.mm_sd",
+    "nas.nr.mm.slice.differentiator",
     ft::ft_uint24,
     fd::base_dec,
     nullptr,
@@ -203,7 +201,8 @@ const field_meta mm::hf_sd = {
     0x0,
 };
 
-const field_meta mm::hf_sst = {
+// defined in 3GPP TS 23.003
+const field_meta mm::hf_slice_service_type = {
     "Slice/service type (SST)",
     "nas.nr.mm.sst",
     ft::ft_uint8,

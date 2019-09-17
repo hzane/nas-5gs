@@ -10,33 +10,33 @@ included in specific information elements within some RRC messages sent to the U
     (void) d.add_item(4, &hf_msg_auth_code, enc::be);
     d.step(4);
 
-    (void) d.add_item(1, &hf_int_prot_algo_type, enc::be);
+    (void) d.add_item(1, &hf_integrity_algo_type, enc::be);
     (void) d.add_item(1, &hf_ciphering_algo_type, enc::be);
     d.step(1);
 
     (void) d.add_item(1, &hf_ksi_5g, enc::be);
-    (void) d.add_item(1, &hf_tsc, enc::be);
+    (void) d.add_item(1, &hf_security_context_type, enc::be);
     (void) d.add_item(1, &hf_kacf, enc::be);
     d.step(1);
 
-    (void) d.add_item(1, &hf_seq_no, enc::be);
+    (void) d.add_item(1, &hf_sequence_no, enc::be);
 
     return uc.length;
 }
 
-struct intra_n1_mode_container{
+struct intra_n1_mode_container_t {
     uint8_t auth_code[4];
     uint8_t integrity_algo_type;
     uint8_t ciphering_algo_type;
     uint8_t nas_ksi;
-    uint8_t tsc;
-    uint8_t kacf;
+    uint8_t security_context_flag_type;
+    uint8_t kamf_change_flag;
     uint8_t sequence_no;
 };
 
 namespace cmn {
 // NAS security algorithms information element (see subclause 9.11.3.34
-const field_meta hf_int_prot_algo_type = {
+const field_meta hf_integrity_algo_type = {
     "Type of integrity protection algorithm",
     "nas.nr.cmn.integrity.protection.algorithm",
     ft::ft_uint8,
@@ -47,8 +47,9 @@ const field_meta hf_int_prot_algo_type = {
     0x0fu,
 };
 
-const field_meta hf_tsc                = {
-    "TSC",
+// Type of security context flag (TSC)
+const field_meta hf_security_context_type = {
+    "Type of security context flag (TSC)",
     "nas.nr.cmn.tsc",
     ft::ft_boolean,
     fd::base_dec,
@@ -62,8 +63,9 @@ const true_false_string tfs_kacf = {
     "a new KAMF has not been calculated by the network",
 };
 
+// K_AMF_change_flag
 const field_meta hf_kacf               = {
-    "KACF","",
+    "K-AMF change flag (KACF)","nas.nr.cmn.kacf",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -102,14 +104,5 @@ const field_meta hf_ciphering_algo_type = {
     nullptr,
     nullptr,
     0xf0u,
-};
-const field_meta hf_seq_no              = {
-    "Sequence number", "",
-    ft::ft_uint8,
-    fd::base_dec,
-    nullptr,
-    nullptr,
-    nullptr,
-    0,
 };
 }

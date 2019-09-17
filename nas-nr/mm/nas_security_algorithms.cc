@@ -17,6 +17,11 @@ int mm::dissect_security_algo(dissector d, context* ctx) {
     return 1;
 }
 
+struct security_algorithm_t {
+    uint8_t ciphering_algo;
+    uint8_t integrity_algo;
+};
+
 /* *   9.11.3.34    NAS security algorithms */
 extern const val_string mm::integrity_protection_algo_type_values[] = {
     {0x0, "5G-IA0 (null integrity protection algorithm)"},

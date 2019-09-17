@@ -11,6 +11,10 @@ const element_meta mm::allowed_pdu_ses_status = {
     nullptr,
 };
 
+struct allowed_pdu_session_status_t{
+    uint8_t psia;
+    uint8_t psib;
+};
 
 /*  9.11.3.13    Allowed PDU session status */
 int mm::dissect_allowed_pdu_ses_status(dissector d, context* ctx) {

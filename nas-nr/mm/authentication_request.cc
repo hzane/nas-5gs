@@ -5,13 +5,13 @@
 using namespace nas;
 
 /* 8.2.1.1    Authentication request */
-int mm::authentication_request(dissector d, context* ctx) {    
+int mm::authentication_request(dissector d, context* ctx) {
     const use_context uc(ctx, "authentication-request", d, 0);
     // network to UE
     down_link(d.pinfo);
 
     /* Spare half octet    Spare half octet     9.5    M    V    1/2 H1 */
-    
+
     /*ngKSI     NAS key set identifier 9.11.3.32    M    V    1/2  */
     // ELEM_MAND_V(DE_NAS_5GS_MM_NAS_KEY_SET_ID, " - ngKSI",);
     dissect_v(nullptr, &nas_ksi, d, ctx);
@@ -36,9 +36,54 @@ int mm::authentication_request(dissector d, context* ctx) {
     /*78  EAP message 9.11.2.2    O    TLV-E    7-1503 */
     consumed = dissect_opt_tlv_e(nullptr, &cmn::eap_msg, d, ctx);
     d.step(consumed);
-    
+
     return uc.length;
 }
+
+struct abba_t{
+    payload_t _;
+};
+struct authentication_parameter_rand_t{
+    uint8_t rand[16];
+};
+struct autn_t{
+    std::vector<uint8_t> _;
+};
+struct authentication_parameter_autn_t{
+    autn_t autn;
+    uint8_t sqn[6];
+    uint16_t amf;
+    uint8_t mac[8];
+};
+struct eap_message_t{
+    std::vector<uint8_t> _;
+};
+struct authentication_reject_t{
+    eap_message_t eap;
+};
+
+struct authentication_requset_t{
+    uint8_t nas_ksi;
+    abba_t abba;
+    std::optional<authentication_parameter_rand_t> rand;
+    std::optional<authentication_parameter_autn_t> autn;
+    std::optional<eap_message_t> eap;
+};
+struct authentication_response_parameter_t{
+    uint8_t sres[4];
+};
+
+struct authentication_response_t{
+    std::optional<authentication_response_parameter_t> parameter;
+    std::optional<eap_message_t> eap;
+};
+
+struct authentication_result_t {
+    uint8_t nas_ksi;
+    eap_message_t eap;
+    std::optional<abba_t> abba;
+};
+
 namespace mm {
 
 extern const element_meta auth_param_rand = {
@@ -51,7 +96,7 @@ extern const element_meta auth_param_rand = {
 extern const element_meta auth_param_autn = {
     0x20,
     "Authentication parameter AUTN - 5G authentication challenge",
-    dissect_auth_parameter_autn,
+    dissect_authentication_parameter_autn,
     nullptr,
 };
 
@@ -106,4 +151,4 @@ extern const field_meta hf_dtap_autn_mac = {
 };
 
 
-} // namespace 
+} // namespace

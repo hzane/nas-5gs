@@ -37,7 +37,7 @@ extern const element_meta operator_defined_acd;
 extern const element_meta nego_drx_param;
 extern const element_meta n3gpp_nw_provided_policies;
 extern const element_meta registration_result;
-extern const element_meta auth_fail_param;
+extern const element_meta authentication_failure_parameter;
 extern const element_meta auth_param_rand;
 extern const element_meta auth_param_autn;
 extern const element_meta auth_resp_param;

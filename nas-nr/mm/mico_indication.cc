@@ -20,11 +20,15 @@ int mm::dissect_mico_ind(dissector d, context* ctx) {
 
     // In the UE to network direction bit 1 is spare. The UE shall set this bit to
     // zero. In the network to UE and the UE to network direction:
-    i = d.add_item(1, &hf_mm_sprti, enc::be);
+    (void) d.add_item(1, &hf_mm_sprti, enc::be);
 
-    unused(i);
     return 1;
 }
+
+struct mico_indication_t {
+    uint8_t raai;
+    uint8_t sprti;
+};
 
 const true_false_string tfs_raai = {
     "all PLMN registration area allocated",

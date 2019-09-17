@@ -24,7 +24,7 @@ extern const field_meta*  hf_msg_auth_code;
 extern const field_meta   hf_pdu_ipv4_mask;
 extern const field_meta   hf_pid_next_hd;
 extern const field_meta   hf_single_port_type;
-extern const field_meta*  hf_seq_no;
+extern const field_meta*  hf_sequence_no;
 extern const field_meta*  hf_proc_trans_id;
 extern const field_meta   hf_service_request_msg_id; // TODO: check the ie
 

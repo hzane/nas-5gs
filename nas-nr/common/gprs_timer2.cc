@@ -57,8 +57,7 @@ int cmn::dissect_gprs_timer2_set(dissector d, context *ctx) {
     return 1;
 }
 
-
-struct gprs_timer2{
+struct gprs_timer2 {
     uint8_t unit;
     uint32_t value;
 };

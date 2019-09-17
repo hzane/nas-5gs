@@ -14,6 +14,10 @@ int mm::dissect_registration_result(dissector d, context* ctx) {
     unused(i);
     return 1;
 }
+struct registration_result_t{
+    uint8_t sms_allowed;
+    uint8_t registration_result;
+};
 
 namespace mm {
 
@@ -42,4 +46,3 @@ const element_meta mm::registration_result = {
     dissect_registration_result,
     nullptr,
 };
-

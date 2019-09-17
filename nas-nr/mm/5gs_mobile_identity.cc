@@ -11,63 +11,71 @@ const element_meta mm::guti_mobile_id = {
     nullptr,
 };
 
-struct mobile_id_imseisv{
-    uint8_t odd_even;
-    uint8_t type;
-    std::vector<uint8_t> imseisv;
+struct mobile_id_imseisv_t {
+    uint8_t                odd_even;
+    uint8_t                type;
+    std::vector< uint8_t > imseisv;
 };
-struct supi_nai{
+struct supi_nai_t {
     string _;
 };
-struct scheme_msin{
-    std::vector<uint8_t> _;
+struct scheme_msin_t {
+    std::vector< uint8_t > _;
 };
-struct scheme_output{
-    std::vector<uint8_t> _;
+struct scheme_output_t {
+    std::vector< uint8_t > _;
 };
-struct supi_imsi{
-    std::string mcc;
-    std::string mnc;
-    uint16_t routing_indicator;
-    uint8_t protection_scheme_id;
-    uint8_t public_key_id;
-    std::variant<scheme_msin, scheme_output> scheme;
+struct supi_imsi_t {
+    std::string                                mcc;
+    std::string                                mnc;
+    uint16_t                                   routing_indicator;
+    uint8_t                                    protection_scheme_id;
+    uint8_t                                    public_key_id;
+    std::variant< scheme_msin_t, scheme_output_t > scheme;
 };
-struct mobile_id_suci{
-    uint8_t odd_even;
-    uint8_t type;
-    uint8_t supi_format;
-    std::variant<supi_imsi, supi_nai> supi;
+struct mobile_id_suci_t {
+    uint8_t                             odd_even;
+    uint8_t                             type;
+    uint8_t                             supi_format;
+    std::variant< supi_imsi_t, supi_nai_t > supi;
 };
-struct mobile_id_tmsi{
-    uint8_t type;
+struct mobile_id_tmsi_t {
+    uint8_t  type;
     uint16_t amf_set_id;
-    uint8_t amf_pointer;
-    uint8_t tmsi[4];
+    uint8_t  amf_pointer;
+    uint8_t  tmsi[4];
 };
-struct mobile_id_guti{
-    uint8_t type;
-    string mcc;
-    string mnc;
-    uint8_t amf_region_id;
+struct mobile_id_guti_t {
+    uint8_t  type;
+    string   mcc;
+    string   mnc;
+    uint8_t  amf_region_id;
     uint16_t amf_set_id;
-    uint8_t amf_pointer;
-    uint8_t tmsi[4];
+    uint8_t  amf_pointer;
+    uint8_t  tmsi[4];
 };
-struct mobile_id_imei{
+struct mobile_id_imei_t {
+    uint8_t                type;
+    uint8_t                odd_even;
+    std::vector< uint8_t > imei;
+};
+struct mobile_id_noid_t {
     uint8_t type;
-    uint8_t odd_even;
-    std::vector<uint8_t> imei;
 };
-struct mobile_id_noid{
+struct mobile_id_mac_t {
     uint8_t type;
-};
-struct mobile_id_mac{
     uint8_t mac[6];
 };
-struct mobile_id{
+struct mobile_id_t {
     uint8_t type;
-    std::variant<mobile_id_noid, mobile_id_suci, mobile_id_guti, mobile_id_imei, mobile_id_tmsi, mobile_id_imseisv, mobile_id_mac> id;
+    std::variant< mobile_id_noid_t,
+                  mobile_id_suci_t,
+                  mobile_id_guti_t,
+                  mobile_id_imei_t,
+                  mobile_id_tmsi_t,
+                  mobile_id_imseisv_t,
+                  mobile_id_mac_t >
+        id;
 };
 
 // 9.11.3.4 5GS mobile identity
@@ -136,11 +144,16 @@ int mm::dissect_mobile_id_mac(dissector d, context* ctx) {
     return 7;
 }
 
+static const field_meta* flags_odd_even_id_type[] = {
+    &hf_odd_even_indication,
+    &hf_identity_type,
+    nullptr,
+};
 // type_id = 0, no identity
 int mm::dissect_mobile_id_noid(dissector d, context* ctx) {
     const use_context uc(ctx, "mobile-no-identity", d, -1);
 
-    d.add_bits(flags_odd_even_tid);
+    d.add_bits(flags_odd_even_id_type);
     d.step(1);
 
     return 1;
@@ -172,6 +185,14 @@ int mm::dissect_mobile_id_suci(dissector d, context* ctx) {
     const use_context uc(ctx, "mobile-id-suci", d, 0);
 
     const auto oct = d.uint8();
+
+    static const field_meta* flags_supi_fmt_tid[] = {
+        // &hf_spare_b7,
+        &hf_supi_format,
+        // &hf_spare_b3,
+        &hf_identity_type,
+        nullptr,
+    };
 
     d.add_bits(flags_supi_fmt_tid);
     d.step(1);
@@ -244,7 +265,7 @@ int mm::dissect_mobile_id_5gguti(dissector d, context* ctx) {
 int mm::dissect_mobile_id_imei(dissector d, context* ctx) {
     const use_context uc(ctx, "mobile-id-imei", d, 0);
 
-    d.add_bits(flags_odd_even_tid);
+    d.add_bits(flags_odd_even_id_type);
 
     // The format of the IMEI is described in 3GPP TS 23.003
     (void) d.add_item(d.length, &hf_imei, enc::be);
@@ -257,7 +278,7 @@ int mm::dissect_mobile_id_imei(dissector d, context* ctx) {
 int mm::dissect_mobile_id_imeisv(dissector d, context* ctx) {
     const use_context uc(ctx, "mobile-id-imeisv", d, 0);
 
-    d.add_bits(flags_odd_even_tid);
+    d.add_bits(flags_odd_even_id_type);
 
     // The format of the IMEISV is described in 3GPP TS 23.003
     (void) d.add_item(d.length, &hf_imeisv, enc::be);
@@ -287,11 +308,6 @@ const element_meta mm::mobile_id = {
 
 namespace mm {
 
-const field_meta* flags_odd_even_tid[] = {
-    &hf_odd_even_indication,
-    &hf_identity_type,
-    nullptr,
-};
 const field_meta hf_mac_address = {
     "MAC address",
     "nas.nr.mac",
@@ -307,7 +323,7 @@ const val_string supi_fmt_values[] = {
     {0x1, "Network Specific Identifier"},
     {0, nullptr},
 };
-const field_meta hf_supi_fmt = {
+const field_meta hf_supi_format = {
     "SUPI format",
     "nas.nr.suci.supi.format",
     ft::ft_uint8,
@@ -339,13 +355,6 @@ const field_meta hf_imei = {
     0,
 };
 
-const field_meta* flags_supi_fmt_tid[] = {
-    // &hf_spare_b7,
-    &hf_supi_fmt,
-    // &hf_spare_b3,
-    &hf_identity_type,
-    nullptr,
-};
 const field_meta hf_imeisv = {
     "IMEISV",
     "nas.nr.imeisv",

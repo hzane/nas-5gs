@@ -16,13 +16,13 @@ const element_meta mm::ladn_information = {
 /* 9.11.3.30    LADN information  */
 int mm::dissect_ladn_information(dissector d, context* ctx) {
     const use_context uc(ctx, "ladn-information", d, 0);
-    
+
     auto       i   = 1;
     while (d.length > 0) {
         const auto start = d.offset;
         auto       subtree = d.add_item(2, "LADN %u", i++);
         use_tree ut(d, subtree);
-        
+
         /* DNN value (octet 5 to octet m):
          * LADN DNN value is coded as the length and value part of DNN information element
          * as specified in subclause 9.11.2.1A starting with the second octet
@@ -46,8 +46,15 @@ int mm::dissect_ladn_information(dissector d, context* ctx) {
         consumed = dissect_tracking_area_id_list(d.slice(length), ctx);
         d.step(consumed);
         subtree->set_length(d.offset - start);
-        
+
     }
 
     return uc.length;
 }
+struct ladn_t {
+    payload_t dnn;
+    // tracking_area_id_list_t tai;
+};
+struct ladn_information_t {
+    std::vector< ladn_t > ladn;
+};

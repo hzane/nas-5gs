@@ -40,7 +40,7 @@ int dissect_nas5g_security_protected(dissector d, context* ctx){
     d.step(4);
 
     /* 9.10 Sequence number    octet 7 */
-    i = d.add_item(1, nas::hf_seq_no, enc::be);
+    i = d.add_item(1, nas::hf_sequence_no, enc::be);
     d.step(1);
 
     // TODO: decrypt the body
@@ -110,7 +110,7 @@ int dissect_mm_msg(dissector d, context* ctx) {
 
     /* Extended protocol discriminator 9.2 octet 1 */
     (void) d.add_item(1, hf_epd, enc::be);
-    d.step(1);    
+    d.step(1);
 
     /*Security header type 9.3	M	V	1/2 */
     (void) d.add_item(1, hf_sec_header_type, enc::be);
@@ -129,4 +129,3 @@ int dissect_mm_msg(dissector d, context* ctx) {
 
     return uc.length;
 }
-

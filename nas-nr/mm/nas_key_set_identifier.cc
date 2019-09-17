@@ -9,8 +9,8 @@ int mm::dissect_nas_ksi(dissector d, context* ctx) {
     use_context uc(ctx, "NAS key set identifier", d, -1);
 
     static const field_meta* flags[] = {
-        &hf_tsc,
-        hf_nas_eps_nas_ksi,
+        &hf_security_context_type,
+        &hfm_nas_eps_nas_ksi,
         nullptr,
     };
 
@@ -21,6 +21,10 @@ int mm::dissect_nas_ksi(dissector d, context* ctx) {
     return 1;
 }
 
+struct nas_ksi_t {
+    uint8_t security_context_type;
+    uint8_t nas_ksi;
+};
 
 /* NAS key set identifier (octet 1) Bits 3  2   1 */
 extern const val_string mm::nas_ksi_values[] = {
@@ -54,4 +58,3 @@ extern const element_meta mm::nas_ksi = {
     dissect_nas_ksi,
     nullptr,
 };
-

@@ -7,6 +7,15 @@ using namespace cmn;
 using namespace nas;
 using namespace mm;
 
+struct payload_container_t {
+    std::vector< uint8_t > _;
+};
+struct downlink_nas_transparent_t {
+    uint8_t             type;
+    payload_container_t container;
+    // optional< pdu_session_id_t > pdu_session_id;
+};
+
 /*  8.2.11 DL NAS transport */
 int mm::dissect_dl_nas_transparent(dissector d, context* ctx) {
     const use_context uc(ctx, "dl-nas-transport", d, 0);
@@ -43,7 +52,7 @@ int mm::dissect_dl_nas_transparent(dissector d, context* ctx) {
     // ELEM_OPT_TLV(0x37, , DE_GPRS_TIMER_3, " - Back-off timer value");
     consumed = dissect_opt_tlv(nullptr, &backoff_gprs_timer3, d, ctx);
     d.step(consumed);
-    
+
     return uc.length;
 }
 
@@ -55,5 +64,3 @@ extern const element_meta mm::backoff_gprs_timer3 = {
     dissect_gprs_timer3_set,
     nullptr,
 };
-
-

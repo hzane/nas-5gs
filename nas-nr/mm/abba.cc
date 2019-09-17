@@ -22,6 +22,9 @@ int mm::dissect_abba_set(dissector d, context* ctx) {
      *the UE shall use the length and the contents of the ABBA IE as received from the network.
      */
 }
+struct abba_set_t{
+    std::vector<uint8_t> content;
+};
 
 extern const element_meta mm::abba = {
     0x38,

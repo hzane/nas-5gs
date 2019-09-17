@@ -22,3 +22,7 @@ const element_meta mm::n3gpp_nw_provided_policies = {
     dissect_n3gpp_nw_provided_policies,
     nullptr,
 };
+
+struct n3gpp_network_provided_policies_t {
+    uint8_t _;
+};

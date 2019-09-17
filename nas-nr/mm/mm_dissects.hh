@@ -2,12 +2,12 @@
 #include "../core.hh"
 
 namespace mm {
-int dissect_auth_fail_param(dissector d, context* ctx);
+int dissect_authentication_failure_parameter(dissector d, context* ctx);
 int dissect_auth_parameter_rand(dissector d, context* ctx);
-int dissect_auth_parameter_autn(dissector d, context* ctx);
-int dissect_auth_resp_param(dissector d, context* ctx);
+int dissect_authentication_parameter_autn(dissector d, context* ctx);
+int dissect_authentication_response_parameter(dissector d, context* ctx);
 int dissect_deregistration_type(dissector d, context* ctx);
-int dissect_config_update_ind(dissector d, context* ctx);
+int dissect_configuration_update_indication(dissector d, context* ctx);
 int dissect_service_area_list(dissector d, context* ctx);
 int dissect_timezone_time_set(dissector d, context* ctx);
 int dissect_daylight_saving_time(dissector d, context* ctx);
@@ -31,7 +31,7 @@ int dissect_payload_container_type(dissector d, context* ctx); // 9.11.3.40
 int dissect_payload_container(dissector d, context* ctx);      // 9.11.3.39
 int dissect_request_type(dissector d, context* ctx);
 
-int dissect_last_v_tai(dissector d, context* ctx); //  9.11.3.8
+int dissect_last_visited_tai(dissector d, context* ctx); //  9.11.3.8
 int dissect_s1_ue_net_capability(dissector d, context* ctx);
 
 int dissect_ue_status(dissector d, context* ctx ); // 9.11.3.56
@@ -63,16 +63,16 @@ int dissect_registration_req(dissector d, context* ctx);
 int dissect_registration_accept(dissector d, context* ctx);
 int dissect_registration_complete(dissector d, context* ctx);
 int dissect_registration_rej(dissector d, context* ctx);
-int dissect_deregistration_req_ue_orig(dissector d, context* ctx);
-int dissect_deregistration_req_ue_term(dissector d, context* ctx);
+int dissect_deregistration_req_ue_origin(dissector d, context* ctx);
+int dissect_deregistration_req_ue_terminate(dissector d, context* ctx);
 int dissect_service_request(dissector d, context* ctx);
 int dissect_service_reject(dissector d, context* ctx);
 int dissect_service_accept(dissector d, context* ctx);
 
-int dissect_config_update_cmd(dissector d, context* ctx);
-int dissect_config_update_cmpl(dissector d, context* ctx);
+int dissect_configuration_update_cmd(dissector d, context* ctx);
+int dissect_configuration_update_complete(dissector d, context* ctx);
 int authentication_request(dissector d, context* ctx);
-int authentication_resp(dissector d, context* ctx);
+int authentication_response(dissector d, context* ctx);
 int authentication_reject(dissector d, context* ctx);
 int authentication_failure(dissector d, context* ctx);
 int authentication_result(dissector d, context* ctx);
@@ -145,6 +145,6 @@ int dissect_pld_container_entry(dissector d, context* ctx);
 int dissect_plmn_list(dissector d, context* ctx );
 
 int dissect_ue_parameters_update_transparent_container(dissector d, context* ctx);
-int dissect_deregistration_accept_ue_orig(dissector d, context* ctx);
-int dissect_deregistration_accept_ue_term(dissector d, context* ctx);
+int dissect_deregistration_accept_ue_origin(dissector d, context* ctx);
+int dissect_deregistration_accept_ue_terminate(dissector d, context* ctx);
 } // namespace mm

@@ -5,7 +5,7 @@ using namespace mm;
 
 // See sub-clause 10.5.3.2.2 in 3GPP TS 24.008 [12].
 // Authentication failure parameter
-int mm::dissect_auth_fail_param(dissector d, context* ctx) {
+int mm::dissect_authentication_failure_parameter(dissector d, context* ctx) {
     const use_context uc(ctx, "authentication-failure-param", d, -1);
 
     /* This IE contains either the SRES or the 4 most significant octets of the RES */
@@ -16,10 +16,11 @@ int mm::dissect_auth_fail_param(dissector d, context* ctx) {
     return 4;
 }
 
-extern const element_meta mm::auth_fail_param = {
+
+extern const element_meta mm::authentication_failure_parameter = {
     0x30,
     "Authentication failure parameter",
-    dissect_auth_fail_param,
+    dissect_authentication_failure_parameter,
     nullptr,
 };
 

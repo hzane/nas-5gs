@@ -16,6 +16,9 @@ int mm::dissect_nssai_inclusion_mode(dissector d, context* ctx) {
 
     return 1;
 }
+struct nssai_inclusion_mode_t {
+    uint8_t inclusion_mode;
+};
 
 /* 9.11.3.37A   NSSAI inclusion mode */
 const value_string inclusion_mode_values[] = {

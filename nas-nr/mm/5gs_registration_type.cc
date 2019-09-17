@@ -16,6 +16,10 @@ int mm::dissect_registration_request_type(dissector d, context* ctx) {
     d.add_bits(flags);
     return 1;
 }
+struct registration_request_type_t{
+    uint8_t follow_on_request;
+    uint8_t registration_type;
+};
 
 // 9.11.3.7	5GS registration type
 extern const val_string mm::values_registration_type[] = {
@@ -62,7 +66,7 @@ const element_meta mm::requested_nssai = {
 const element_meta mm::last_visited_tai = {
     0x52,
     "5GS tracking area identity - Last visited registered TAI",
-    dissect_last_v_tai,
+    dissect_last_visited_tai,
     nullptr,
 };
 
@@ -135,7 +139,3 @@ const element_meta mm::ladn_indication = {
     dissect_ladn_indication,
     nullptr,
 };
-
-
-
-

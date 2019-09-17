@@ -8,7 +8,7 @@ using mnc = string;
 namespace cmn {
 extern const field_meta   hf_e212_mcc;
 extern const field_meta   hf_e212_mnc;
-} // namespace
+}
 
 
 /*
@@ -73,7 +73,7 @@ const field_meta cmn::hf_e212_mnc = {
     0,
 };
 
-struct mcc_mnc{
+struct mcc_mnc_t {
     std::string mcc = {};
     std::string mnc = {};
 };

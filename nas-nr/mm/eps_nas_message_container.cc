@@ -10,3 +10,6 @@ int mm::dissect_eps_nas_msg_container(dissector d, context* ctx) {
 
     return d.length;
 }
+struct eps_nas_message_container_t{
+    payload_t _;
+};

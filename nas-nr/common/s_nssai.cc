@@ -9,7 +9,7 @@ extern const element_meta cmn::s_nssai = {
 };
 
 namespace {
-const field_meta hf_sst = {
+const field_meta hf_slice_service_type = {
     "Slice/service type (SST)",
     "nas.nr.mm.sst",
     ft::ft_uint8,
@@ -20,7 +20,8 @@ const field_meta hf_sst = {
     0x0,
 };
 
-const field_meta hf_sd = {
+// The coding of the SD value part is defined in 3GPP TS 23.003 [4].
+const field_meta hf_slice_differentiator = {
     "Slice differentiator (SD)",
     "nas.nr.mm.slice.differentiator",
     ft::ft_uint24,
@@ -62,12 +63,12 @@ int cmn::dissect_s_nssai(dissector d, context* ctx) {
      * This field contains the 8 bit SST value. The coding of the SST value part is
      * defined in 3GPP TS 23.003
      */
-    (void) d.add_item(1, &hf_sst, enc::be);
+    (void) d.add_item(1, &hf_slice_service_type, enc::be);
     d.step(1);
     if (d.length<=0) return uc.length;
 
     /* SD    octet 4 - octet 6* */
-    (void) d.add_item(3, &hf_sd, enc::be);
+    (void) d.add_item(3, &hf_slice_differentiator, enc::be);
     d.step(3);
 
     if (d.length <= 0) return uc.length;
@@ -84,15 +85,15 @@ int cmn::dissect_s_nssai(dissector d, context* ctx) {
     return uc.length;
 }
 
-struct sd{
+struct sd_t {
     uint8_t _[3];
 };
-struct mapped_configured_sst{
+struct mapped_configured_sst_t {
     uint8_t _;
 };
-struct s_nssai{
+struct nssai_t{
     uint8_t sst;
-    std::optional<sd> sd;
-    std::optional<mapped_configured_sst> mapped_configured_sst;
-    std::optional<sd> mapped_configured_sd;
+    std::optional<sd_t> sd;
+    std::optional<mapped_configured_sst_t> mapped_configured_sst;
+    std::optional<sd_t> mapped_configured_sd;
 };

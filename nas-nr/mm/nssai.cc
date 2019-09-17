@@ -30,12 +30,15 @@ int mm::dissect_configured_nssai(dissector d, context* ctx) {
 
         const auto consumed = cmn::dissect_s_nssai(d.slice(length), ctx);
         d.step(consumed);
-        
+
     }
     return uc.length;
 }
 
-
+struct nssai_t{};
+struct configured_nssai_t {
+    std::vector< nssai_t > _;
+};
 
 /* 9.11.3.37    NSSAI
  * S-NSSAI value is coded as the length and value part of S-NSSAI information element
@@ -56,10 +59,14 @@ int mm::dissect_allowed_nssai(dissector d, context* ctx) {
         const auto consumed = dissect_s_nssai(d.slice(l), ctx);
         d.step(consumed);
         d.tree->set_length(consumed + 1);
-        
+
     }
     return uc.length;
 }
+
+struct allowed_nssai_t {
+    std::vector< payload_t > nssai;
+};
 
 /* 9.11.3.37    NSSAI*/
 int mm::dissect_requested_nssai(dissector d, context* ctx) {
@@ -78,8 +85,11 @@ int mm::dissect_requested_nssai(dissector d, context* ctx) {
         const auto consumed = dissect_s_nssai(d.slice(length), ctx);
         d.step(consumed);
         subtree->set_length(length + 1);
-        
+
     }
     return uc.length;
 }
 
+struct requested_nssai_t {
+    std::vector< payload_t > nssai;
+};

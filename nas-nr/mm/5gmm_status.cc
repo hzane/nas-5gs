@@ -13,6 +13,10 @@ int mm::dissect_mm_status(dissector d, context* ctx) {
     return 1;
 }
 
-struct mm_status{
-    uint8_t cause;
+struct nrmm_cause_t {
+    uint8_t _;
+};
+
+struct mm_status_t {
+    nrmm_cause_t cause;
 };

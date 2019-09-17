@@ -22,9 +22,6 @@ int mm::dissect_mm_cause(dissector d, context* ctx) {
     return 1;
 }
 
-struct mm_cause{
-    uint8_t _;
-};
 
 namespace mm {
 /* * 9.11.3.2 5GMM cause */
@@ -71,7 +68,7 @@ extern const val_string mm_cause_values[] = {
 // 5GMM cause   9.11.3.2
 const field_meta mm::hf_mm_cause = {
     "5GMM cause",
-    "nas.nr.mm.5gmm_cause",
+    "nas.nr.mm.5gmm.cause",
     ft::ft_uint8,
     fd::base_dec,
     mm_cause_values,

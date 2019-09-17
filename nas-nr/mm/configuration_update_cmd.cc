@@ -6,8 +6,23 @@ using namespace cmn;
 using namespace mm;
 using namespace nas;
 
+#if 0
+struct configuration_update_command_t{
+    std::optional<uint8_t> indication;
+    std::optional<mobile_id_t> guti_mobile_id;
+    std::optional<tracking_area_id_list_t> tai;
+    std::optional<nssai_t> allowed_nssai;
+    std::optional<service_area_list_t> service_area_list;
+    std::optional<network_name_t> full_name;
+    std::optional<network_name_t> short_name;
+    std::optional<local_timezone_t> local_timezone;
+    std::optional<timezone_time_t> timezone_time;
+    std::optional<daylight_saving_time_t> daylight_saving_time;
+};
+#endif
+
 /* 8.2.19 Configuration update command */
-int mm::dissect_config_update_cmd(dissector d, context* ctx) {
+int mm::dissect_configuration_update_cmd(dissector d, context* ctx) {
     use_context uc(ctx, "configuration-update-command", d, 3);
     // network to UE
     down_link(d.pinfo);

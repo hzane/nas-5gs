@@ -30,7 +30,7 @@ int mm::dissect_short_name_network(dissector d, context* ctx) {
 // 9.11.3.35	Network name
 int mm::dissect_full_name_network(dissector d, context* ctx) {
     const use_context uc(ctx, "network-name", d, 0);
-    
+
     const auto oct = d.tvb->uint8(d.offset);
     (void) d.add_item(1, &hf_extension, enc::be);
     const auto code_scheme = (oct & 0x70u) >> 4u;
@@ -54,8 +54,15 @@ int mm::dissect_full_name_network(dissector d, context* ctx) {
         d.step(d.length);
     }
     if (code_scheme != 0 && code_scheme !=1 ) {
-        diag("invalid code scheme %d\n", code_scheme);        
+        diag("invalid code scheme %d\n", code_scheme);
     }
 
     return uc.length;
 }
+
+struct network_name_t {
+    uint8_t extension;
+    uint8_t code_scheme;
+    uint8_t add_ci;
+    string  text;
+};

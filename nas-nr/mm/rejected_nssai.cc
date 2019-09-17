@@ -23,16 +23,15 @@ int mm::dissect_rejected_nssai(dissector d, context* ctx) {
         use_tree   ut(d, subtree);
 
         const auto len = int(d.uint8() >> 4u);
-        auto       n   = d.add_item(1, &hf_rej_nssai_cause, enc::be);
+        (void) d.add_item(1, &hf_reject_nssai_cause, enc::be);
         d.step(1);
 
-        n = d.add_item(1, &hf_sst, enc::be);
+        (void) d.add_item(1, &hf_slice_service_type, enc::be);
         d.step(1);
         if (len == 1) continue; // len == 1 || len == 4
 
-        n = d.add_item(3, &hf_sd, enc::be);
+        (void) d.add_item(3, &hf_slice_differentiator, enc::be);
 
-        unused(n);
         d.step(3);
     }
     return uc.length;
@@ -46,7 +45,7 @@ static const val_string ref_nssai_cause_values[] = {
     {0, nullptr},
 };
 
-const field_meta mm::hf_rej_nssai_cause = {
+const field_meta mm::hf_reject_nssai_cause = {
     "Cause",
     "nas.nr.mm.cause",
     ft::ft_uint8,
