@@ -17,7 +17,7 @@ int dissect_dnn(dissector d, context* ctx);
 extern const element_meta dnn;
 
 /* 9.10.2.1    Additional information*/
-int dissect_additional_inf(dissector d, context* ctx);
+int dissect_additional_information(dissector d, context* ctx);
 
 /* 9.10.2.1    Additional information*/
 extern const element_meta additional_information;

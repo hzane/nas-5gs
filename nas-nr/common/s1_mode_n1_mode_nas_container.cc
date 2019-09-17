@@ -24,6 +24,14 @@ included in specific information elements within some RRC messages sent to the U
     return uc.length;
 }
 
+struct s1_to_n1_mode_container{
+    uint8_t auth_code[4];
+    uint8_t integrity_algo_type;
+    uint8_t ciphering_algo_type;
+    uint8_t nas_ksi;
+    uint8_t tsc;
+    uint8_t ncc;
+};
 
 namespace cmn {
 const true_false_string tfs_nas_5gs_mm_s1_mod = {

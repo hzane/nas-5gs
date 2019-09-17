@@ -39,6 +39,18 @@ int mm::dissect_mm_capability(dissector d, context* ctx) {
     return 1;
 }
 
+struct mm_capability {
+    uint8_t service_gap_control;
+    uint8_t header_compression_for_control_plane;
+    uint8_t n3_data;
+    uint8_t control_plane;
+    uint8_t restrict_ec_3;
+    uint8_t lpp_capability;
+    uint8_t handover_attach;
+    uint8_t s1_mode;
+    std::optional<uint8_t> sr_vcc;
+    std::optional<uint8_t> up_ciot;
+};
 
 namespace mm {
 const field_meta        hf_5gsr_vcc = {
@@ -200,5 +212,3 @@ const element_meta mm::mm_cap = {
     mm::dissect_mm_capability,
     nullptr,
 };
-
-

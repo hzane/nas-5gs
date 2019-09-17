@@ -51,8 +51,7 @@ int cmn::dissect_e212_mcc_mnc(dissector d, context*) {
 }
 
 
-namespace cmn{
-const field_meta hf_e212_mcc = {
+const field_meta cmn::hf_e212_mcc = {
     "MCC",
     "mcc",
     ft::ft_bytes,
@@ -63,7 +62,7 @@ const field_meta hf_e212_mcc = {
     0,
 };
 
-const field_meta hf_e212_mnc = {
+const field_meta cmn::hf_e212_mnc = {
     "MNC",
     "nas.nr.cmn.mnc",
     ft::ft_bytes,
@@ -74,5 +73,7 @@ const field_meta hf_e212_mnc = {
     0,
 };
 
-
-}
+struct mcc_mnc{
+    std::string mcc = {};
+    std::string mnc = {};
+};

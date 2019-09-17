@@ -12,6 +12,9 @@ int cmn::dissect_n1_to_s1_mode_container(dissector d, context* ctx) {
     return uc.length;
 }
 
+struct n1_to_s1_mode_container {
+    uint8_t sequence_no;
+};
 
 namespace cmn {
 /* *    9.11.3.56    UE status */

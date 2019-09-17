@@ -24,11 +24,21 @@ included in specific information elements within some RRC messages sent to the U
     return uc.length;
 }
 
+struct intra_n1_mode_container{
+    uint8_t auth_code[4];
+    uint8_t integrity_algo_type;
+    uint8_t ciphering_algo_type;
+    uint8_t nas_ksi;
+    uint8_t tsc;
+    uint8_t kacf;
+    uint8_t sequence_no;
+};
+
 namespace cmn {
 // NAS security algorithms information element (see subclause 9.11.3.34
 const field_meta hf_int_prot_algo_type = {
     "Type of integrity protection algorithm",
-    "nas.nr.cmn.int_prot_algo",
+    "nas.nr.cmn.integrity.protection.algorithm",
     ft::ft_uint8,
     fd::base_dec,
     nullptr,

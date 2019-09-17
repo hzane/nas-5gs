@@ -14,7 +14,7 @@ const value_string gsm_a_gm_gprs_timer_unit_vals[] = {
 #endif
 const field_meta hf_gprs_timer = {
     "GPRS Timer",
-    "gsm_a.gm.gmm.gprs_timer",
+    "gsm.gprs.timer",
     ft::ft_uint8,
     fd::timer,
     nullptr,
@@ -35,3 +35,8 @@ int cmn::dissect_gprs_timer_set(dissector d, context *ctx) {
     /* no length check possible */
     return 1;
 }
+
+struct gprs_timer{
+    uint8_t unit;
+    uint32_t value;
+};

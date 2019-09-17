@@ -33,7 +33,6 @@ int dissect_t(const field_meta*   type_meta,
                           const element_meta* val_meta,
                           dissector           d,
                           context*            ctx) {
-    unused(dissect_t);
     return dissect_elem_mandatory(type_meta, val_meta, d, dissect_opt_t, ctx);
 }
 
@@ -245,7 +244,7 @@ int dissect_opt_tv(const field_meta *,
     if (val_meta->name) {
         subtree = d.add_item(-1, val_meta->name);
         d.tree  = subtree;
-    }    
+    }
     d.step(1);
 
     const auto consumed = val_meta->fnc(d.use_elem(get_elem_data(e)), ctx);

@@ -39,6 +39,20 @@ int mm::dissect_nw_feature_support(dissector d, context* ctx) {
     return uc.length; // 1-3
 }
 
+struct mm_network_feature_support{
+    uint8_t mpsi;
+    uint8_t ims_iwk;
+    uint8_t ims_emf;
+    uint8_t ims_emc;
+    uint8_t ims_vops;
+    uint8_t emcn3;
+    uint8_t mcsi;
+    uint8_t restrict_ec;
+    uint8_t cp_ciot;
+    uint8_t n3data;
+    uint8_t hc_cp_ciot;
+    uint8_t up_ciot;
+};
 namespace mm {
 const value_string nas_5gs_nw_feat_sup_emf_values[] = {
     {0x0, "Emergency services fallback not supported"},

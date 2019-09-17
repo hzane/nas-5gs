@@ -22,7 +22,7 @@ const field_meta hf_sst = {
 
 const field_meta hf_sd = {
     "Slice differentiator (SD)",
-    "nas.nr.mm.mm_sd",
+    "nas.nr.mm.slice.differentiator",
     ft::ft_uint24,
     fd::base_dec,
     nullptr,
@@ -33,7 +33,7 @@ const field_meta hf_sd = {
 
 const field_meta hf_mapped_conf_sst = {
     "Mapped configured SST",
-    "nas.nr.mm.mapped_conf_sst",
+    "nas.nr.mm.mapped.configured.sst",
     ft::ft_uint8,
     fd::base_dec,
     nullptr,
@@ -42,9 +42,9 @@ const field_meta hf_mapped_conf_sst = {
     0x0,
 };
 
-const field_meta hf_mapped_conf_ssd = {
+const field_meta hf_mapped_conf_sd = {
     "Mapped configured SD",
-    "nas.nr.mm.mapped_conf_ssd",
+    "nas.nr.mm.mapped.configured.sd",
     ft::ft_uint24,
     fd::base_dec,
     nullptr,
@@ -78,9 +78,21 @@ int cmn::dissect_s_nssai(dissector d, context* ctx) {
     if (d.length <= 0) return uc.length;
 
     /* Mapped configured SD    octet 8 - octet 10* */
-    (void) d.add_item(3, &hf_mapped_conf_ssd, enc::be);
+    (void) d.add_item(3, &hf_mapped_conf_sd, enc::be);
     d.step(3);
 
     return uc.length;
 }
 
+struct sd{
+    uint8_t _[3];
+};
+struct mapped_configured_sst{
+    uint8_t _;
+};
+struct s_nssai{
+    uint8_t sst;
+    std::optional<sd> sd;
+    std::optional<mapped_configured_sst> mapped_configured_sst;
+    std::optional<sd> mapped_configured_sd;
+};

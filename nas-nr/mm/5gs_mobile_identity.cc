@@ -11,6 +11,65 @@ const element_meta mm::guti_mobile_id = {
     nullptr,
 };
 
+struct mobile_id_imseisv{
+    uint8_t odd_even;
+    uint8_t type;
+    std::vector<uint8_t> imseisv;
+};
+struct supi_nai{
+    string _;
+};
+struct scheme_msin{
+    std::vector<uint8_t> _;
+};
+struct scheme_output{
+    std::vector<uint8_t> _;
+};
+struct supi_imsi{
+    std::string mcc;
+    std::string mnc;
+    uint16_t routing_indicator;
+    uint8_t protection_scheme_id;
+    uint8_t public_key_id;
+    std::variant<scheme_msin, scheme_output> scheme;
+};
+struct mobile_id_suci{
+    uint8_t odd_even;
+    uint8_t type;
+    uint8_t supi_format;
+    std::variant<supi_imsi, supi_nai> supi;
+};
+struct mobile_id_tmsi{
+    uint8_t type;
+    uint16_t amf_set_id;
+    uint8_t amf_pointer;
+    uint8_t tmsi[4];
+};
+struct mobile_id_guti{
+    uint8_t type;
+    string mcc;
+    string mnc;
+    uint8_t amf_region_id;
+    uint16_t amf_set_id;
+    uint8_t amf_pointer;
+    uint8_t tmsi[4];
+};
+struct mobile_id_imei{
+    uint8_t type;
+    uint8_t odd_even;
+    std::vector<uint8_t> imei;
+};
+struct mobile_id_noid{
+    uint8_t type;
+};
+struct mobile_id_mac{
+    uint8_t mac[6];
+};
+struct mobile_id{
+    uint8_t type;
+    std::variant<mobile_id_noid, mobile_id_suci, mobile_id_guti, mobile_id_imei, mobile_id_tmsi, mobile_id_imseisv, mobile_id_mac> id;
+};
+
 // 9.11.3.4 5GS mobile identity
 int mm::dissect_mobile_id(dissector d, context* ctx) {
     const use_context uc(ctx, "mobile-id", d, 0);
