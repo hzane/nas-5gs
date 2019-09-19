@@ -148,7 +148,7 @@ extern const element_meta mm::tracking_area_id_list = {
 };
 
 // PDU session reactivation result   9.11.3.42
-extern const element_meta mm::pdu_ses_react_res = {
+extern const element_meta mm::pdu_session_reactivation_result = {
     0x26,
     "PDU session reactivation result",
     dissect_pdu_session_reactive_result,
@@ -156,7 +156,7 @@ extern const element_meta mm::pdu_ses_react_res = {
 };
 
 /* 9.11.3.44    PDU session status */
-extern const element_meta mm::pdu_ses_status = {
+extern const element_meta mm::pdu_session_status = {
     0x50,
     "PDU session status",
     dissect_pdu_session_status,

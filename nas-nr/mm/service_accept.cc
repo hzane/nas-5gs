@@ -11,11 +11,11 @@ int mm::dissect_service_accept(dissector d, context* ctx) {
     down_link(d.pinfo);
 
     /*50  PDU session status     9.11.3.44    O    TLV    4-34*/
-    auto consumed = dissect_opt_tlv(nullptr, &pdu_ses_status, d, ctx);
+    auto consumed = dissect_opt_tlv(nullptr, &pdu_session_status, d, ctx);
     d.step(consumed);
 
     /*26    PDU session reactivation result 9.11.3.42 O    TLV    4-32*/
-    consumed = dissect_opt_tlv(nullptr, &pdu_ses_react_res, d, ctx);
+    consumed = dissect_opt_tlv(nullptr, &pdu_session_reactivation_result, d, ctx);
     d.step(consumed);
 
 

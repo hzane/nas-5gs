@@ -26,7 +26,7 @@ int mm::dissect_service_request(dissector d, context* ctx) {
     d.step(consumed);
 
     /*50 PDU session status  9.11.3.44  O  TLV   4 - 34*/
-    consumed = dissect_opt_tlv(nullptr, &pdu_ses_status, d, ctx);
+    consumed = dissect_opt_tlv(nullptr, &pdu_session_status, d, ctx);
     d.step(consumed);
 
     /*25 Allowed PDU session status  9.11.3.13  O    TLV    4 - 34*/

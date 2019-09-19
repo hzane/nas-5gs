@@ -102,7 +102,7 @@ int mm::dissect_configuration_update_cmd(dissector d, context* ctx) {
 
     /* F-    SMS indication    SMS indication 9.10.3.50A    O    TV    1 */
     // ELEM_OPT_TV_SHORT(0xF0, NAS_5GS_PDU_TYPE_MM, DE_NAS_5GS_MM_SMS_IND, NULL);
-    consumed = dissect_opt_tv_short(nullptr, &sms_ind, d, ctx);
+    consumed = dissect_opt_tv_short(nullptr, &sms_indication, d, ctx);
     d.step(consumed);
 
     // Tbd	T3447 value	GPRS timer 3    9.11.2.5 O TLV 3
@@ -112,7 +112,7 @@ int mm::dissect_configuration_update_cmd(dissector d, context* ctx) {
 
 namespace mm {
 
-extern const element_meta sms_ind = {
+extern const element_meta sms_indication = {
     0xF0,
     "SMS indication",
     dissect_sms_indication,

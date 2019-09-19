@@ -5,7 +5,7 @@ using namespace nas;
 using namespace mm;
 
 // SOR transparent container   9.11.3.51
-const element_meta mm::sor_trans_cont = {
+const element_meta mm::sor_transparent_container = {
     0x73,
     "SOR transparent container",
     dissect_sor_trans_cont,

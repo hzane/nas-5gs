@@ -50,11 +50,11 @@ int mm::dissect_registration_accept(dissector d, context* ctx) {
 
     /*50    PDU session status   9.10.3.44    O    TLV    */
     // ELEM_OPT_TLV(0x50, , DE_NAS_5GS_MM_PDU_SES_STATUS, NULL);
-    consumed = dissect_opt_tlv(nullptr, &pdu_ses_status, d, ctx);
+    consumed = dissect_opt_tlv(nullptr, &pdu_session_status, d, ctx);
     d.step(consumed);
 
     /*26    PDU session reactivation result   9.11.3.42    O    TLV    4-32*/
-    consumed = dissect_opt_tlv(nullptr, &pdu_ses_react_res, d, ctx);
+    consumed = dissect_opt_tlv(nullptr, &pdu_session_reactivation_result, d, ctx);
     d.step(consumed);
 
     /*72    PDU session reactivation result error cause 9.11.3.43  O TLV-E  5-515*/
@@ -109,7 +109,7 @@ int mm::dissect_registration_accept(dissector d, context* ctx) {
 
     /*73    SOR transparent container   9.11.3.51    O    TLV-E 20-2048 */
     // ELEM_OPT_TLV_E(0x73, , DE_NAS_5GS_MM_SOR_TRASP_CONT, NULL);
-    consumed = dissect_opt_tlv_e(nullptr, &sor_trans_cont, d, ctx);
+    consumed = dissect_opt_tlv_e(nullptr, &sor_transparent_container, d, ctx);
     d.step(consumed);
 
     /*78    EAP message  9.11.2.2    O    TLV-E    7-1503 */
@@ -129,7 +129,7 @@ int mm::dissect_registration_accept(dissector d, context* ctx) {
 
     /* 51    Negotiated DRX parameters 9.11.3.2A    O    TLV    3 */
     // ELEM_OPT_TLV(0x51,,DE_NAS_5GS_MM_5GS_DRX_PARAM," -  Negotiated DRX parameters");
-    consumed = dissect_opt_tlv(nullptr, &nego_drx_param, d, ctx);
+    consumed = dissect_opt_tlv(nullptr, &negotiated_drx_param, d, ctx);
     d.step(consumed);
 
     // D- Non-3GPP NW policies Non - 3GPP NW provided policies 9.11.3.58 O TV 1
@@ -218,7 +218,7 @@ extern const element_meta operator_defined_acd = {
 };
 
 // Negotiated DRX parameters 9.11.3.2A
-const element_meta nego_drx_param = {
+const element_meta negotiated_drx_param = {
     0x51,
     "Negotiated DRX parameters",
     dissect_drx_param,

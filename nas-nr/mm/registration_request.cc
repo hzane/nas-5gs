@@ -59,7 +59,7 @@ int mm::dissect_registration_req(dissector d, context* ctx) {
 
     /*50    PDU session status  9.11.3.44    O    TLV    4-34 */
     // ELEM_OPT_TLV(0x50, , DE_NAS_5GS_MM_PDU_SES_STATUS, NULL);
-    consumed = dissect_opt_tlv(nullptr, &pdu_ses_status, d, ctx);
+    consumed = dissect_opt_tlv(nullptr, &pdu_session_status, d, ctx);
     d.step(consumed);
 
     /*B-  MICO indication 9.11.3.31    O    TV    1*/

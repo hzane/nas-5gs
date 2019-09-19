@@ -12,7 +12,7 @@ int mm::dissect_security_mode_cmd(dissector d, context* ctx) {
     down_link(d.pinfo);
 
     /*Selected NAS security algorithms NAS security algorithms 9.11.3.34 M V 1  */
-    dissect_v(nullptr, &sec_algo, d, ctx);
+    dissect_v(nullptr, &selected_security_algo, d, ctx);
     d.step(1);
 
     /*ngKSI     NAS key set identifier 9.11.3.32    M    V    1/2  */
@@ -28,7 +28,7 @@ int mm::dissect_security_mode_cmd(dissector d, context* ctx) {
     d.step(consumed);
 
     /*E-    IMEISV request    IMEISV request     9.11.3.28    O    TV    1*/
-    consumed = dissect_opt_tv_short(nullptr, &imeisv_req, d, ctx);
+    consumed = dissect_opt_tv_short(nullptr, &imeisv_request, d, ctx);
     d.step(consumed);
 
     /*57 Selected EPS NAS security algorithms EPS NAS security algorithms 9.11.3.25  O TV
@@ -40,7 +40,7 @@ int mm::dissect_security_mode_cmd(dissector d, context* ctx) {
 
     /*36    Additional 5G security information  9.11.3.12    O    TLV    3 */
     // ELEM_OPT_TLV(0x36, , DE_NAS_5GS_MM_ADD_5G_SEC_INF, NULL);
-    consumed = dissect_opt_tlv(nullptr, &additional_sec_info, d, ctx);
+    consumed = dissect_opt_tlv(nullptr, &additional_security_info, d, ctx);
     d.step(consumed);
 
     /*78    EAP message  9.11.2.2    O    TLV-E    7*/
@@ -55,14 +55,14 @@ int mm::dissect_security_mode_cmd(dissector d, context* ctx) {
     /*19 Replayed S1 UE security capabilities    S1 UE security capability 9.11.3.48A
      * O    TLV    4-7 */
     // ELEM_OPT_TLV(0x19, DE_EMM_UE_SEC_CAP, " - Replayed S1 UE security capabilities");
-    consumed = dissect_opt_tlv(nullptr, &replayed_s1_ue_sec_cap, d, ctx);
+    consumed = dissect_opt_tlv(nullptr, &replayed_s1_ue_security_capability, d, ctx);
     d.step(consumed);
 
     return uc.length;
 }
 
 namespace mm {
-extern const element_meta sec_algo = {
+extern const element_meta selected_security_algo = {
     0xff,
     "Selected NAS security algorithms",
     dissect_security_algo,
@@ -74,21 +74,21 @@ extern const element_meta replayed_ue_sec_cap = {
     dissect_replayed_ue_sec_cap,
     nullptr,
 };
-extern const element_meta imeisv_req = {
+extern const element_meta imeisv_request = {
     0xE0,
     "IMEISV request",
     dissect_imeisv_request,
     nullptr,
 };
 
-extern const element_meta additional_sec_info = {
+extern const element_meta additional_security_info = {
     0x36,
     "Additional 5G security information",
     dissect_additional_security_info,
     nullptr,
 };
 
-extern const element_meta replayed_s1_ue_sec_cap = {
+extern const element_meta replayed_s1_ue_security_capability = {
     0x19,
     "S1 UE security capability - Replayed S1 UE security capabilities",
     dissect_reported_s1_ue_sec_cap,
