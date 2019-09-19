@@ -155,11 +155,11 @@ int mm::dissect_reported_s1_ue_sec_cap(dissector d, context* ctx) {
     const use_context uc(ctx, "s1-ue-security-capability", d, 0);
    
     static const field_meta* oct3_flags[] = {
-        &hf_emm_eea0,
-        &hf_emm_128eea1,
-        &hf_emm_128eea2,
-        &hf_emm_eea3,
-        &hf_emm_eea4,
+        &hf_mm_eea0,
+        &hf_mm_128eea1,
+        &hf_mm_128eea2,
+        &hf_mm_eea3,
+        &hf_mm_eea4,
         &hf_emm_eea5,
         &hf_emm_eea6,
         &hf_emm_eea7,

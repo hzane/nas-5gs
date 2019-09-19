@@ -475,56 +475,6 @@ const field_meta hf_horizontal_derivation_parameter = {
     0x01,
 };
 
-const field_meta hf_emm_eea0 = {
-    "EEA0",
-    "nas.emm.eea0",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &tfs_supported_not_supported,
-    nullptr,
-    0x80,
-};
-const field_meta hf_emm_128eea1 = {
-    "128-EEA1",
-    "nas.emm.128eea1",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &tfs_supported_not_supported,
-    nullptr,
-    0x40,
-};
-const field_meta hf_emm_128eea2 = {
-    "128-EEA2",
-    "nas.emm.128eea2",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &tfs_supported_not_supported,
-    nullptr,
-    0x20,
-};
-const field_meta hf_emm_eea3 = {
-    "128-EEA3",
-    "nas.emm.eea3",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &tfs_supported_not_supported,
-    nullptr,
-    0x10,
-};
-const field_meta hf_emm_eea4 = {
-    "EEA4",
-    "nas.emm.eea4",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &tfs_supported_not_supported,
-    nullptr,
-    0x08,
-};
 const field_meta hf_emm_eea5 = {
     "EEA5",
     "nas.emm.eea5",
