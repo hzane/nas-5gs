@@ -107,9 +107,9 @@ const value_string nas_5gs_mm_type_of_enc_algo_vals[] = {
     {0, nullptr},
 };
 
-const field_meta hf_sec_algo_enc = {
+const field_meta hf_security_ciphering_algo = {
     "Type of ciphering algorithm",
-    "nas.nr.mm.nas_sec_algo_enc",
+    "nas.nr.mm.security.algorithm.type",
     ft::ft_uint8,
     fd::base_dec,
     nas_5gs_mm_type_of_enc_algo_vals,
@@ -120,7 +120,7 @@ const field_meta hf_sec_algo_enc = {
 
 const field_meta hf_mm_128_5g_ea1 = {
     "128-5G-EA1",
-    "nas.nr.mm.128_5g_ea1",
+    "nas.nr.mm.128.5g-ea1",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -130,7 +130,7 @@ const field_meta hf_mm_128_5g_ea1 = {
 };
 const field_meta hf_mm_128_5g_ea2 = {
     "128-5G-EA2",
-    "nas.nr.mm.128_5g_ea2",
+    "nas.nr.mm.128-5g.ea2",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -140,7 +140,7 @@ const field_meta hf_mm_128_5g_ea2 = {
 };
 const field_meta hf_mm_128_5g_ea3 = {
     "128-5G-EA3",
-    "nas.nr.mm.128_5g_ea3",
+    "nas.nr.mm.128.5g-ea3",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -150,7 +150,7 @@ const field_meta hf_mm_128_5g_ea3 = {
 };
 const field_meta hf_mm_5g_ea4 = {
     "5G-EA4",
-    "nas.nr.mm.5g_ea4",
+    "nas.nr.mm.5g.ea4",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -160,7 +160,7 @@ const field_meta hf_mm_5g_ea4 = {
 };
 const field_meta hf_mm_5g_ea5 = {
     "5G-EA5",
-    "nas.nr.mm.5g_ea5",
+    "nas.nr.mm.5g.ea5",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -170,7 +170,7 @@ const field_meta hf_mm_5g_ea5 = {
 };
 const field_meta hf_mm_5g_ea6 = {
     "5G-EA6",
-    "nas.nr.mm.5g_ea6",
+    "nas.nr.mm.5g.ea6",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -180,7 +180,7 @@ const field_meta hf_mm_5g_ea6 = {
 };
 const field_meta hf_mm_5g_ea7 = {
     "5G-EA7",
-    "nas.nr.mm.5g_ea7",
+    "nas.nr.mm.5g.ea7",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -201,7 +201,7 @@ const field_meta hf_mm_5g_ia0 = {
 };
 const field_meta hf_mm_128_5g_ia1 = {
     "128-5G-IA1",
-    "nas.nr.mm.5g_128_ia1",
+    "nas.nr.mm.5g-128.ia1",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -211,7 +211,7 @@ const field_meta hf_mm_128_5g_ia1 = {
 };
 const field_meta hf_mm_128_5g_ia2 = {
     "128-5G-IA2",
-    "nas.nr.mm.5g_128_ia2",
+    "nas.nr.mm.5g.128.ia2",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -221,7 +221,7 @@ const field_meta hf_mm_128_5g_ia2 = {
 };
 const field_meta hf_mm_128_5g_ia3 = {
     "128-5G-IA3",
-    "nas.nr.mm.5g_128_ia4",
+    "nas.nr.mm.5g.128.ia4",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -231,7 +231,7 @@ const field_meta hf_mm_128_5g_ia3 = {
 };
 const field_meta hf_mm_5g_ia4 = {
     "5G-IA4",
-    "nas.nr.mm.5g_128_ia4",
+    "nas.nr.mm.5g.128.ia4",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -241,7 +241,7 @@ const field_meta hf_mm_5g_ia4 = {
 };
 const field_meta hf_mm_5g_ia5 = {
     "5G-IA5",
-    "nas.nr.mm.5g_ia5",
+    "nas.nr.mm.5g.ia5",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -251,7 +251,7 @@ const field_meta hf_mm_5g_ia5 = {
 };
 const field_meta hf_mm_5g_ia6 = {
     "5G-IA6",
-    "nas.nr.mm.5g_ia6",
+    "nas.nr.mm.5g.ia6",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -261,7 +261,7 @@ const field_meta hf_mm_5g_ia6 = {
 };
 const field_meta hf_mm_5g_ia7 = {
     "5G-IA7",
-    "nas.nr.mm.5g_ia7",
+    "nas.nr.mm.5g.ia7",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -442,7 +442,7 @@ const field_meta hf_spare_b3 = {
 };
 const field_meta hf_spare_b2 = {
     "Spare",
-    "nas.nr.spare_b2",
+    "nas.nr.spare",
     ft::ft_uint8,
     fd::base_dec,
     nullptr,nullptr,nullptr,

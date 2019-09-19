@@ -9,8 +9,8 @@ int mm::dissect_security_algo(dissector d, context* ctx) {
     const use_context uc(ctx, "sec-algo", d, -1);
 
     static const field_meta* flags[] = {
-        &hf_sec_algo_enc,
-        &hf_sec_algo_ip,
+        &hf_security_ciphering_algo,
+        &hf_security_integrity_algo,
         nullptr,
     };
     d.add_bits(flags);
@@ -35,7 +35,7 @@ extern const val_string mm::integrity_protection_algo_type_values[] = {
     {0, nullptr},
 };
 
-const field_meta mm::hf_sec_algo_ip = {
+const field_meta mm::hf_security_integrity_algo = {
     "Type of integrity protection algorithm",
     "nas.nr.mm.nas_sec_algo_ip",
     ft::ft_uint8,

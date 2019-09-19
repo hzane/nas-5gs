@@ -9,7 +9,7 @@ int mm::dissect_service_area_list(dissector d, context* ctx) {
     static const field_meta* flags[] = {
         &hf_sal_allowed_type,
         &hf_sal_list_type,
-        &hf_sal_num_e,
+        &hf_element_number,
         nullptr,
     };
     auto n = 1;
@@ -109,4 +109,3 @@ const field_meta mm::hf_sal_list_type = {
     nullptr,
     0x60,
 };
-

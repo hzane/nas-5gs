@@ -231,9 +231,9 @@ const true_false_string gsm_a_gm_n3en_ind_value = {
     "Use of non-3GPP emergency numbers not permitted",
 };
 
-const field_meta hf_gsm_a_n3en_ind = {
+const field_meta hf_n3en_indicator = {
     "N3EN indicator",
-    "gsm_a.gm.gmm.n3en_ind",
+    "gsm.gmm.n3en.indicator",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -375,7 +375,7 @@ const field_meta hf_ext_emerge_num_len = {
     nullptr,
     0x0,
 };
-const field_meta hf_emerge_num = {
+const field_meta hf_emergency_number = {
     "Emergency number",
     "nas.mm.emergency",
     ft::ft_bytes,
@@ -384,9 +384,9 @@ const field_meta hf_emerge_num = {
     0x0,
 };
 
-const field_meta hf_ext_emerge_sub_serv_field_len = {
+const field_meta hf_sub_services_field_length = {
     "Sub-services field length",
-    "nas_eps.emm.ext_emerg_num_list.sub_serv_field.len",
+    "nas.mm.sub.services.field.length",
     ft::ft_uint8,
     fd::base_dec,
     nullptr,
@@ -396,7 +396,7 @@ const field_meta hf_ext_emerge_sub_serv_field_len = {
 };
 const field_meta hf_sub_services_field = {
     "Sub-services field",
-    "nas_eps.emm.ext_emerg_num_list.sub_serv_field",
+    "nas.mm.sub.service.field",
     ft::ft_bytes,
     fd::bits7,
     nullptr,
@@ -412,7 +412,7 @@ const true_false_string tfs_nas_5gs_list_type = {
     "Secured packet",
 };
 
-const true_false_string tfs_nas_5gs_list_ind = {
+const true_false_string tfs_sor_list_indication = {
     "List of preferred PLMN/access technology combinations is provided",
     "No list of preferred PLMN/access technology combinations is provided",
 };
@@ -424,9 +424,9 @@ const true_false_string tfs_nas_5gs_sor_data_type = {
 };
 
 
-const field_meta hf_sor_hdr0_ack = { // NOLINT
+const field_meta hf_sor_hdr_ack = { // NOLINT
     "Acknowledgement (ACK)",
-    "nas.nr.sor.hdr..ack",
+    "nas.nr.sor.hdr.ack",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -434,23 +434,23 @@ const field_meta hf_sor_hdr0_ack = { // NOLINT
     nullptr,
     0x08,
 };
-const field_meta hf_sor_hdr0_list_type = {
+const field_meta hf_sor_hdr_list_type = {
     "List type",
     "nas.nr.sor.hdr.type",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
-    (&tfs_nas_5gs_list_type),
+    &tfs_nas_5gs_list_type,
     nullptr,
     0x04,
 };
-const field_meta hf_sor_hdr0_list_ind = {
+const field_meta hf_sor_hdr_list_indication = {
     "List indication",
     "nas.nr.sor.hdr",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
-    (&tfs_nas_5gs_list_ind),
+    &tfs_sor_list_indication,
     nullptr,
     0x02,
 };

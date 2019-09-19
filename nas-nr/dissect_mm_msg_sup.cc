@@ -35,9 +35,9 @@ const field_meta mm::hf_security_context_type = {
     0x08,
 };
 
-const field_meta mm::hf_sal_num_e = {
+const field_meta mm::hf_element_number = {
     "Number of elements",
-    "nas.nr.mm.sal_num_e",
+    "nas.nr.mm.sal.number.element",
     ft::ft_uint8,
     fd::base_dec,
     nullptr,
@@ -64,7 +64,7 @@ extern const val_string mm::tac_list_values[] = {
 
 const field_meta mm::hf_element = {
     "Message Elements",
-    "nas.nr.message_elements",
+    "nas.nr.message.elements",
     ft::ft_bytes,
     fd::base_none,
     nullptr,
@@ -165,7 +165,7 @@ extern const element_meta mm::pdu_ses_status = {
 
 extern const field_meta mm::hfm_nas_eps_nas_ksi = { // NOLINT
     "NAS key set identifier",
-    "nas_eps.emm.nas_key_set_id",
+    "nas_eps.emm.nas.key.set.id",
     ft::ft_uint8,
     fd::base_dec,
     nas_ksi_values,
