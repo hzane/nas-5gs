@@ -65,7 +65,7 @@ extern const element_meta pdu_ses_react_res;
 extern const element_meta pdu_session_reactive_result_error_cause;
 extern const element_meta s_tmsi;
 extern const element_meta uplink_data_status;
-extern const element_meta old_pdu_ses_id;
+extern const element_meta old_pdu_session_id;
 extern const element_meta request_type;
 extern const element_meta nas_ksi;
 extern const element_meta nas_msg_container;

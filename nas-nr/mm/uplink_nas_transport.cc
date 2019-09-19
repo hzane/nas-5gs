@@ -31,7 +31,7 @@ int mm::dissect_ul_nas_transp(dissector d, context* ctx) {
     d.step(consumed);
 
     /*59    Old PDU session ID    PDU session identity 2 9.11.3.41    O    TV    2 */
-     consumed = dissect_opt_tv(nullptr, &old_pdu_ses_id, d, ctx);
+     consumed = dissect_opt_tv(nullptr, &old_pdu_session_id, d, ctx);
     d.step(consumed);
 
     /*8-    Request type  9.11.3.47    O    TV    1 */
@@ -51,7 +51,7 @@ int mm::dissect_ul_nas_transp(dissector d, context* ctx) {
     d.step(consumed);
 
     // Z	MA PDU session information	MA PDU session information	O	TV	1
-   
+
 
     return uc.length;
 }

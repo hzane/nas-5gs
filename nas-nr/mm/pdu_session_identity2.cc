@@ -54,7 +54,7 @@ extern const element_meta mm::pdu_session_id = {
 
 
 // PDU session identity 2 9.11.3.41
-extern const element_meta mm::old_pdu_ses_id = {
+extern const element_meta mm::old_pdu_session_id = {
     0x59,
     "PDU session identity 2 - Old PDU session ID",
     dissect_pdu_session_id_set,

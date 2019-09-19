@@ -8,7 +8,7 @@
 
 void dissector::add_bits(const field_meta* metas[]) const {
     for (const field_meta** meta = metas; *meta != nullptr; meta++) {
-        (void) add_item(1, *meta, enc::be); // NOLINT        
+        (void) add_item(1, *meta, enc::be); // NOLINT
     }
 }
 proto_node* dissector::add_item(int len, const field_meta* meta, uint32_t enc) const {
@@ -79,6 +79,7 @@ uint16_t dissector::ntohs() const {
     if (p && l > 0) return n2uint16(p);
     return 0;
 }
+
 uint32_t dissector::uint32() const {
     const auto p = safe_ptr();
     const auto l = safe_length(4);

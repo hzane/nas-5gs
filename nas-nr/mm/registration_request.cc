@@ -201,7 +201,7 @@ const true_false_string nas_eps_emm_ucs2_supp_flg_value = {
 
 const field_meta hf_nas_eps_emm_eea0 = {
     "EEA0",
-    "nas_eps.emm.eea0",
+    "nas.mm.eea0",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -212,7 +212,7 @@ const field_meta hf_nas_eps_emm_eea0 = {
 
 const field_meta hf_nas_eps_emm_128eea1 = {
     "128-EEA1",
-    "nas_eps.emm.128eea1",
+    "nas.mm.128eea1",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -223,7 +223,7 @@ const field_meta hf_nas_eps_emm_128eea1 = {
 
 const field_meta hf_nas_eps_emm_128eea2 = {
     "128-EEA2",
-    "nas_eps.emm.128eea2",
+    "nas.mm.128eea2",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -234,7 +234,7 @@ const field_meta hf_nas_eps_emm_128eea2 = {
 
 const field_meta hf_nas_eps_emm_eea3 = {
     "128-EEA3",
-    "nas_eps.emm.eea3",
+    "nas.mm.eea3",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -244,7 +244,7 @@ const field_meta hf_nas_eps_emm_eea3 = {
 };
 const field_meta hf_nas_eps_emm_eea4 = {
     "EEA4",
-    "nas_eps.emm.eea4",
+    "nas.mm.eea4",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -254,7 +254,7 @@ const field_meta hf_nas_eps_emm_eea4 = {
 };
 const field_meta hf_nas_eps_emm_eea5 = {
     "EEA5",
-    "nas_eps.emm.eea5",
+    "nas.mm.eea5",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -264,7 +264,7 @@ const field_meta hf_nas_eps_emm_eea5 = {
 };
 const field_meta hf_nas_eps_emm_eea6 = {
     "EEA6",
-    "nas_eps.emm.eea6",
+    "nas.mm.eea6",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -274,7 +274,7 @@ const field_meta hf_nas_eps_emm_eea6 = {
 };
 const field_meta hf_nas_eps_emm_eea7 = {
     "EEA7",
-    "nas_eps.emm.eea7",
+    "nas.mm.eea7",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -285,7 +285,7 @@ const field_meta hf_nas_eps_emm_eea7 = {
 
 const field_meta hf_nas_eps_emm_eia0 = {
     "EIA0",
-    "nas_eps.emm.eia0",
+    "nas.mm.eia0",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -295,7 +295,7 @@ const field_meta hf_nas_eps_emm_eia0 = {
 };
 const field_meta hf_nas_eps_emm_128eia1 = {
     "128-EIA1",
-    "nas_eps.emm.128eia1",
+    "nas.mm.128eia1",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -305,7 +305,7 @@ const field_meta hf_nas_eps_emm_128eia1 = {
 };
 const field_meta hf_nas_eps_emm_128eia2 = {
     "128-EIA2",
-    "nas_eps.emm.128eia2",
+    "nas.mm.128eia2",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -315,7 +315,7 @@ const field_meta hf_nas_eps_emm_128eia2 = {
 };
 const field_meta hf_nas_eps_emm_eia3 = {
     "128-EIA3",
-    "nas_eps.emm.eia3",
+    "nas.mm.eia3",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -325,7 +325,7 @@ const field_meta hf_nas_eps_emm_eia3 = {
 };
 const field_meta hf_nas_eps_emm_eia4 = {
     "EIA4",
-    "nas_eps.emm.eia4",
+    "nas.mm.eia4",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -335,7 +335,7 @@ const field_meta hf_nas_eps_emm_eia4 = {
 };
 const field_meta hf_nas_eps_emm_eia5 = {
     "EIA5",
-    "nas_eps.emm.eia5",
+    "nas.mm.eia5",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -345,7 +345,7 @@ const field_meta hf_nas_eps_emm_eia5 = {
 };
 const field_meta hf_nas_eps_emm_eia6 = {
     "EIA6",
-    "nas_eps.emm.eia6",
+    "nas.mm.eia6",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -355,7 +355,7 @@ const field_meta hf_nas_eps_emm_eia6 = {
 };
 const field_meta hf_nas_eps_emm_eia7 = {
     "EIA7",
-    "nas_eps.emm.eia7",
+    "nas.mm.eia7",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -366,7 +366,7 @@ const field_meta hf_nas_eps_emm_eia7 = {
 
 const field_meta hf_nas_eps_emm_uea0 = {
     "UEA0",
-    "nas_eps.emm.uea0",
+    "nas.mm.uea0",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -376,7 +376,7 @@ const field_meta hf_nas_eps_emm_uea0 = {
 };
 const field_meta hf_nas_eps_emm_uea1 = {
     "UEA1",
-    "nas_eps.emm.uea1",
+    "nas.mm.uea1",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -386,7 +386,7 @@ const field_meta hf_nas_eps_emm_uea1 = {
 };
 const field_meta hf_nas_eps_emm_uea2 = {
     "UEA2",
-    "nas_eps.emm.uea2",
+    "nas.mm.uea2",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -396,7 +396,7 @@ const field_meta hf_nas_eps_emm_uea2 = {
 };
 const field_meta hf_nas_eps_emm_uea3 = {
     "UEA3",
-    "nas_eps.emm.uea3",
+    "nas.mm.uea3",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -406,7 +406,7 @@ const field_meta hf_nas_eps_emm_uea3 = {
 };
 const field_meta hf_nas_eps_emm_uea4 = {
     "UEA4",
-    "nas_eps.emm.uea4",
+    "nas.mm.uea4",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -416,7 +416,7 @@ const field_meta hf_nas_eps_emm_uea4 = {
 };
 const field_meta hf_nas_eps_emm_uea5 = {
     "UEA5",
-    "nas_eps.emm.uea5",
+    "nas.mm.uea5",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -426,7 +426,7 @@ const field_meta hf_nas_eps_emm_uea5 = {
 };
 const field_meta hf_nas_eps_emm_uea6 = {
     "UEA6",
-    "nas_eps.emm.uea6",
+    "nas.mm.uea6",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -436,7 +436,7 @@ const field_meta hf_nas_eps_emm_uea6 = {
 };
 const field_meta hf_nas_eps_emm_uea7 = {
     "UEA7",
-    "nas_eps.emm.uea7",
+    "nas.emm.uea7",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -447,7 +447,7 @@ const field_meta hf_nas_eps_emm_uea7 = {
 
 const field_meta hf_nas_eps_emm_ucs2_supp = {
     "UCS2 support (UCS2)",
-    "nas_eps.emm.emm_ucs2_supp",
+    "nas.mm.emm.ucs2.support",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -457,7 +457,7 @@ const field_meta hf_nas_eps_emm_ucs2_supp = {
 };
 const field_meta hf_nas_eps_emm_uia1 = {
     "UMTS integrity algorithm UIA1",
-    "nas_eps.emm.uia1",
+    "nas.emm.uia1",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -467,7 +467,7 @@ const field_meta hf_nas_eps_emm_uia1 = {
 };
 const field_meta hf_nas_eps_emm_uia2 = {
     "UMTS integrity algorithm UIA2",
-    "nas_eps.emm.uia2",
+    "nas.mm.uia2",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -477,7 +477,7 @@ const field_meta hf_nas_eps_emm_uia2 = {
 };
 const field_meta hf_nas_eps_emm_uia3 = {
     "UMTS integrity algorithm UIA3",
-    "nas_eps.emm.uia3",
+    "nas.mm.uia3",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -487,7 +487,7 @@ const field_meta hf_nas_eps_emm_uia3 = {
 };
 const field_meta hf_nas_eps_emm_uia4 = {
     "UMTS integrity algorithm UIA4",
-    "nas_eps.emm.uia4",
+    "nas.mm.uia4",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -497,7 +497,7 @@ const field_meta hf_nas_eps_emm_uia4 = {
 };
 const field_meta hf_nas_eps_emm_uia5 = {
     "UMTS integrity algorithm UIA5",
-    "nas_eps.emm.uia5",
+    "nas.mm.uia5",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -507,7 +507,7 @@ const field_meta hf_nas_eps_emm_uia5 = {
 };
 const field_meta hf_nas_eps_emm_uia6 = {
     "UMTS integrity algorithm UIA6",
-    "nas_eps.emm.uia6",
+    "nas.mm.uia6",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -517,7 +517,7 @@ const field_meta hf_nas_eps_emm_uia6 = {
 };
 const field_meta hf_nas_eps_emm_uia7 = {
     "UMTS integrity algorithm UIA7",
-    "nas_eps.emm.uia7",
+    "nas.mm.uia7",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -528,7 +528,7 @@ const field_meta hf_nas_eps_emm_uia7 = {
 
 const field_meta hf_nas_eps_emm_prose_dd_cap = {
     "ProSe direct discovery",
-    "nas_eps.emm.prose_dd_cap",
+    "nas.mm.prose.direct.discovery.capability",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -538,7 +538,7 @@ const field_meta hf_nas_eps_emm_prose_dd_cap = {
 };
 const field_meta hf_nas_eps_emm_prose_cap = {
     "ProSe",
-    "nas_eps.emm.prose_cap",
+    "nas.mm.prose.capability",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -548,7 +548,7 @@ const field_meta hf_nas_eps_emm_prose_cap = {
 };
 const field_meta hf_nas_eps_emm_h245_ash_cap = {
     "H.245 After SRVCC Handover",
-    "nas_eps.emm.h245_ash_cap",
+    "nas.mm.h245.after.srvcc.handover",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -558,7 +558,7 @@ const field_meta hf_nas_eps_emm_h245_ash_cap = {
 };
 const field_meta hf_access_class_control_csfb_cap = {
     "Access class control for CSFB",
-    "nas_eps.emm.acc_csfb_cap",
+    "nas.mm.access.csfb.capability",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -578,7 +578,7 @@ const field_meta hf_nas_eps_emm_lpp_cap = {
 };
 const field_meta hf_nas_eps_emm_lcs_cap = {
     "Location services (LCS) notification mechanisms",
-    "nas_eps.emm.lcs_cap",
+    "nas.mm.lcs.capability",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -588,7 +588,7 @@ const field_meta hf_nas_eps_emm_lcs_cap = {
 };
 const field_meta hf_nas_eps_emm_1xsrvcc_cap = {
     "SRVCC from E-UTRAN to cdma2000 1xCS",
-    "nas_eps.emm.1xsrvcc_cap",
+    "nas.mm.srvcc.capability",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -598,7 +598,7 @@ const field_meta hf_nas_eps_emm_1xsrvcc_cap = {
 };
 const field_meta hf_nas_eps_emm_nf_cap = {
     "Notification procedure",
-    "nas_eps.emm.nf_cap",
+    "nas.mm.nf.capability",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -609,7 +609,7 @@ const field_meta hf_nas_eps_emm_nf_cap = {
 
 const field_meta hf_nas_eps_emm_epco_cap = {
     "Extended protocol configuration options",
-    "nas_eps.emm.epco_cap",
+    "nas.mm.epco.capability",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -619,7 +619,7 @@ const field_meta hf_nas_eps_emm_epco_cap = {
 };
 const field_meta hf_nas_eps_emm_hc_cp_ciot_cap = {
     "Header compression for control plane CIoT EPS optimization",
-    "nas_eps.emm.hc_cp_ciot_cap",
+    "nas.mm.hc.cp.ciot.capability",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -629,7 +629,7 @@ const field_meta hf_nas_eps_emm_hc_cp_ciot_cap = {
 };
 const field_meta hf_nas_eps_emm_er_wo_pdn_cap = {
     "EMM-REGISTERED w/o PDN connectivity",
-    "nas_eps.emm.er_wo_pdn_cap",
+    "nas.mm.er.wo.pdn.capability",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -639,7 +639,7 @@ const field_meta hf_nas_eps_emm_er_wo_pdn_cap = {
 };
 const field_meta hf_nas_eps_emm_s1u_data_cap = {
     "S1-U data transfer",
-    "nas_eps.emm.s1u_data_cap",
+    "nas.mm.s1u.data.capability",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -649,7 +649,7 @@ const field_meta hf_nas_eps_emm_s1u_data_cap = {
 };
 const field_meta hf_nas_eps_emm_up_ciot_cap = {
     "User plane CIoT EPS optimization",
-    "nas_eps.emm.up_ciot_cap",
+    "nas.mm.up.ciot.capability",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -659,7 +659,7 @@ const field_meta hf_nas_eps_emm_up_ciot_cap = {
 };
 const field_meta hf_nas_eps_emm_cp_ciot_cap = {
     "Control plane CIoT EPS optimization",
-    "nas_eps.emm.cp_ciot_cap",
+    "nas.mm.cp.ciot.capability",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -669,7 +669,7 @@ const field_meta hf_nas_eps_emm_cp_ciot_cap = {
 };
 const field_meta hf_nas_eps_emm_prose_relay_cap = {
     "ProSe UE-to-network relay",
-    "nas_eps.emm.prose_relay_cap",
+    "nas.mm.prose.relay.capability",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -690,7 +690,7 @@ const field_meta hf_nas_eps_emm_prose_dc_cap = {
 
 const field_meta hf_nas_eps_15_bearers_cap = {
     "Signalling for a maximum number of 15 EPS bearer contexts",
-    "nas_eps.emm.15_bearers_cap",
+    "nas.mm.bearers.capability",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -700,7 +700,7 @@ const field_meta hf_nas_eps_15_bearers_cap = {
 };
 const field_meta hf_nas_eps_sgc_cap = {
     "Service gap control",
-    "nas_eps.emm.sgc_cap",
+    "nas.mm.sgc.capability",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -710,7 +710,7 @@ const field_meta hf_nas_eps_sgc_cap = {
 };
 const field_meta hf_nas_eps_n1mode_cap = {
     "N1 mode",
-    "nas_eps.emm.n1mode_cap",
+    "nas.mm.n1mode.capability",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -720,7 +720,7 @@ const field_meta hf_nas_eps_n1mode_cap = {
 };
 const field_meta hf_nas_eps_dcnr_cap = {
     "Dual connectivity with NR",
-    "nas_eps.emm.dcnr_cap",
+    "nas.mm.dcnr.capability",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -730,7 +730,7 @@ const field_meta hf_nas_eps_dcnr_cap = {
 };
 const field_meta hf_nas_eps_cp_backoff_cap = {
     "Control plane data backoff",
-    "nas_eps.emm.cp_backoff_cap",
+    "nas.mm.cp.backoff.capability",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -740,7 +740,7 @@ const field_meta hf_nas_eps_cp_backoff_cap = {
 };
 const field_meta hf_nas_eps_restrict_ec_cap = {
     "Restriction on use of enhanced coverage",
-    "nas_eps.emm.restrict_ec_cap",
+    "nas.mm.restrict_ec.capability",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -750,7 +750,7 @@ const field_meta hf_nas_eps_restrict_ec_cap = {
 };
 const field_meta hf_nas_eps_v2x_pc5_cap = {
     "V2X communication over PC5",
-    "nas_eps.emm.v2x_pc5_cap",
+    "nas.mm.v2x.pc5.capability",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -760,7 +760,7 @@ const field_meta hf_nas_eps_v2x_pc5_cap = {
 };
 const field_meta hf_nas_eps_multiple_drb_cap = {
     "Multiple DRB",
-    "nas_eps.emm.multiple_drb_cap",
+    "nas.mm.multiple.drb.capability",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -771,7 +771,7 @@ const field_meta hf_nas_eps_multiple_drb_cap = {
 
 const field_meta hf_nas_eps_spare_bits = {
     "Spare bit(s)",
-    "nas_eps.spare_bits",
+    "nas.spare.bits",
     ft::ft_uint8,
     fd::base_hex,
     nullptr,
@@ -829,4 +829,3 @@ const field_meta mm::hf_preferred_network_behaviour = {
     nullptr,
     0,
 };
-

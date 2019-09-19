@@ -30,12 +30,12 @@ int mm::dissect_extended_emergency_number_list(dissector d, context* ctx) {
         d.step(1);
 
         if (length > 0) {
-            (void) d.add_item(length, &hf_emerge_num, enc::be);
+            (void) d.add_item(length, &hf_emergency_number, enc::be);
             d.step(length);
         }
 
         length = d.uint8();
-        (void) d.add_item(1, &hf_ext_emerge_sub_serv_field_len, enc::be);
+        (void) d.add_item(1, &hf_sub_services_field_length, enc::be);
         d.step(1);
 
         if (length > 0) {

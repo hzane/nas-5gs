@@ -18,16 +18,16 @@ using namespace nas;
 // SOR transparent container   9.11.3.51
 int mm::dissect_sor_trans_cont(dissector d, context* ctx) {
     const use_context uc(ctx, "sor-transparent-container", d, 0);
-    
+
     /* Layout differs depending on SOR data type*/
     static const field_meta* flags_dt0[] = {
 //        &hf_spare_b7,
 //        &hf_spare_b6,
 //        &hf_spare_b5,
 //        &hf_spare_b4,
-        &hf_sor_hdr0_ack,
-        &hf_sor_hdr0_list_type,
-        &hf_sor_hdr0_list_ind,
+        &hf_sor_hdr_ack,
+        &hf_sor_hdr_list_type,
+        &hf_sor_hdr_list_indication,
         &hf_sor_hdr0_sor_data_type,
         nullptr,
     };
@@ -123,6 +123,6 @@ int mm::dissect_sor_trans_cont(dissector d, context* ctx) {
         (void) d.add_item(16, &hf_sor_mac_iue, enc::na);
         d.step(16);
     }
-    
+
     return uc.length;
 }

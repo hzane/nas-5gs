@@ -12,7 +12,7 @@ int mm::dissect_ue_status(dissector d, context* ctx) {
         &hf_emm_registration_status,
         nullptr,
     };
-    /* 0     0     0     0     0     0     0 Spare    S1  mode reg */
+    /* 0     0     0     0     0     0 Spare    S1  mode reg */
     d.add_bits(flags);
     return 1;
 }

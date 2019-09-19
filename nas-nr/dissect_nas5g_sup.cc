@@ -86,7 +86,7 @@ const field_meta* nas::hf_msg_auth_code = &hfm_msg_auth_code;
 
 field_meta hfm_sequence_no = {
     "Sequence number",
-    "nas.nr.seq_no",
+    "nas.nr.seq.number",
     ft::ft_uint8,
     fd::base_dec,
     nullptr,
@@ -133,7 +133,7 @@ const val_string sm_message_type_values[] = {
 
 field_meta hfm_sm_message_type = {
     "Message type",
-    "nas.nr.sm.message_type",
+    "nas.nr.sm.message.type",
     ft::ft_uint8,
     fd::base_hex,
     sm_message_type_values,
@@ -146,7 +146,7 @@ const field_meta* nas::hf_sm_msg_type = &hfm_sm_message_type;
 
 field_meta hfm_proc_trans_id = {
     "Procedure transaction identity",
-    "nas.nr.proc_trans_id",
+    "nas.nr.procedure.transaction.id",
     ft::ft_uint8,
     fd::base_dec,
     nullptr,
@@ -210,7 +210,7 @@ const val_string mm_message_type_values[] = {
 };
 const field_meta hfm_mm_msg_type = {
     "Message type",
-    "nas.nr.mm.message_type",
+    "nas.nr.mm.message.type",
     ft::ft_uint8,
     fd::base_hex,
     mm_message_type_values,
@@ -242,7 +242,7 @@ const element_meta nas::t3348_gprs_timer3{
 
 const field_meta nas::hf_pdu_ipv4_mask = {
     "IPv4 address mask",
-    "nas.nr.ipv4_address_mask",
+    "nas.nr.ipv4.address.mask",
     ft::ft_uint32,
     fd::ipv4,
     nullptr,
@@ -252,7 +252,7 @@ const field_meta nas::hf_pdu_ipv4_mask = {
 };
 const field_meta nas::hf_pid_next_hd = {
     "Protocol identifier/Next header type",
-    "nas.nr.protocol_identifier_or_next_hd",
+    "nas.nr.protocol.identifier.next.hd",
     ft::ft_uint8,
     fd::base_dec,
     nullptr,
@@ -261,8 +261,8 @@ const field_meta nas::hf_pid_next_hd = {
     0x0,
 };
 const field_meta nas::hf_single_port_type = {
-    "Port number",
-    "nas.nr.port_type",
+    "Port type",
+    "nas.nr.port.type",
     ft::ft_uint16,
     fd::base_dec,
     nullptr,
