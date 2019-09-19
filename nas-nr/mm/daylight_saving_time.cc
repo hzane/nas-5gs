@@ -15,7 +15,7 @@ int mm::dissect_daylight_saving_time(dissector d, context* ctx) {
 }
 
 // 9.11.3.19
-extern const element_meta mm::day_saving_time = {
+extern const element_meta mm::daylight_saving_time = {
     0x49,
     "Network daylight saving time",
     dissect_daylight_saving_time,

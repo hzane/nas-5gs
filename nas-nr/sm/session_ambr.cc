@@ -10,10 +10,10 @@ int sm::dissect_session_ambr(dissector d, context* ctx) {
     // d.add_item(1, &hf_sm_ses_ambr_dl_unit, enc::be);
     // auto ambr_val = static_cast< uint32_t >(d.ntohs());
 
-    (void) d.add_item(3, &hf_sm_ses_ambr_dl, enc::be);
+    (void) d.add_item(3, &hf_downlink_session_ambr, enc::be);
     d.step(3);
 
-    (void) d.add_item(3, &hf_sm_ses_ambr_ul, enc::be);
+    (void) d.add_item(3, &hf_uplink_session_ambr, enc::be);
     d.step(3);
 
     return uc.length;
@@ -81,7 +81,7 @@ const field_meta sm::hf_sm_ses_ambr_ul_unit = {
     0x0,
 };
 
-const field_meta sm::hf_sm_ses_ambr_dl = {
+const field_meta sm::hf_downlink_session_ambr = {
     "Session-AMBR for downlink",
     "nas.nr.sm.session_ambr_dl",
     ft::ft_bytes,
@@ -92,7 +92,7 @@ const field_meta sm::hf_sm_ses_ambr_dl = {
     0x0,
 };
 
-const field_meta sm::hf_sm_ses_ambr_ul = {
+const field_meta sm::hf_uplink_session_ambr = {
     "Session-AMBR for uplink",
     "nas.nr.sm.session_ambr_ul",
     ft::ft_bytes,

@@ -69,7 +69,7 @@ int mm::dissect_configuration_update_cmd(dissector d, context* ctx) {
     d.step(consumed);
 
     /*49 Network daylight saving time Daylight saving time 9.11.3.19 O TLV 3*/
-    consumed = dissect_opt_tlv(nullptr, &day_saving_time, d, ctx);
+    consumed = dissect_opt_tlv(nullptr, &daylight_saving_time, d, ctx);
     d.step(consumed);
 
     /*79    LADN information 9.11.3.30    O    TLV-E    11-1579*/

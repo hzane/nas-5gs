@@ -8,7 +8,7 @@ extern const element_meta sm::pdu_address = {
     nullptr,
 };
 
-const field_meta sm::hf_pdu_addr_ipv6 = {
+const field_meta sm::hf_pdu_address_ipv6 = {
     "PDU address information",
     "nas.nr.sm.pdu_addr_inf_ipv6",
     ft::ft_bytes,
@@ -24,13 +24,13 @@ int sm::dissect_pdu_address(dissector d, context* ctx) {
     const use_context uc(ctx, "pdu-address", d, 8);
 
     const auto val  = static_cast< uint32_t >(d.tvb->uint8(d.offset));
-    (void) d.add_item(1, &hf_sm_pdu_ses_type, enc::be);
+    (void) d.add_item(1, &hf_sm_pdu_session_type, enc::be);
     d.step(1);
 
     /* PDU address information */
     switch (val) {
     case 1: // ipv4
-        (void) d.add_item(4, &hf_pdu_addr_ipv4, enc::be);
+        (void) d.add_item(4, &hf_pdu_address_ipv4, enc::be);
         d.step(4);
         break;
     case 2: // ipv6
@@ -38,7 +38,7 @@ int sm::dissect_pdu_address(dissector d, context* ctx) {
          * octet 4 to octet 11 contains an interface identifier for the IPv6 link local
          * address.
          */
-        (void) d.add_item(8, &hf_pdu_addr_ipv6, enc::na);
+        (void) d.add_item(8, &hf_pdu_address_ipv6, enc::na);
         d.step(8);
         break;
     case 3: // ipv6 and ipv4
@@ -46,9 +46,9 @@ int sm::dissect_pdu_address(dissector d, context* ctx) {
          * octet 4 to octet 11 contains an interface identifier for the IPv6 link local
          * address and in octet 12 to octet 15 contains an IPv4 address.
          */
-        (void) d.add_item(8, &hf_pdu_addr_ipv6, enc::na);
+        (void) d.add_item(8, &hf_pdu_address_ipv6, enc::na);
         d.step(8);
-        (void) d.add_item(4, &hf_pdu_addr_ipv4, enc::be);
+        (void) d.add_item(4, &hf_pdu_address_ipv4, enc::be);
         d.step(4);
         break;
     default:
@@ -57,7 +57,7 @@ int sm::dissect_pdu_address(dissector d, context* ctx) {
     return uc.length;
 }
 
-const field_meta sm::hf_pdu_addr_ipv4 = {
+const field_meta sm::hf_pdu_address_ipv4 = {
     "PDU address information",
     "nas.nr.sm.pdu_addr_inf_ipv4",
     ft::ft_bytes, // FT_IPv4,

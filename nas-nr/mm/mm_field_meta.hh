@@ -290,7 +290,6 @@ extern const field_meta hf_mm_sprti;
 extern const field_meta  hf_tracking_area_code;
 extern const field_meta  hf_tracking_area_list_number;
 extern const field_meta  hf_tracking_area_list_type;
-extern const field_meta* hf_mm_raai_b0;
 extern const field_meta  hf_payload_container_type;
 extern const field_meta  hf_follow_on_req;
 extern const field_meta  hf_abba;

@@ -49,7 +49,7 @@ int mm::dissect_registration_req(dissector d, context* ctx) {
 
     /*17    S1 UE network capability  9.11.3.48    O    TLV  4-15 */
     // ELEM_OPT_TLV(0x17, , DE_EMM_UE_NET_CAP, NULL);
-    consumed = dissect_opt_tlv(nullptr, &s1_ue_net_capability, d, ctx);
+    consumed = dissect_opt_tlv(nullptr, &s1_ue_network_capability, d, ctx);
     d.step(consumed);
 
     /*40    Uplink data status  9.11.3.57    O    TLV    4-34 */

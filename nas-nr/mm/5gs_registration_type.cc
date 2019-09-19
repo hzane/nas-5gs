@@ -70,7 +70,7 @@ const element_meta mm::last_visited_tai = {
     nullptr,
 };
 
-const element_meta mm::s1_ue_net_capability = {
+const element_meta mm::s1_ue_network_capability = {
     0x17,
     "S1 UE network capability",
     dissect_s1_ue_net_capability,

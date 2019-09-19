@@ -211,7 +211,7 @@ const field_meta sm::hf_sm_length = {
 };
 #endif
 
-const field_meta sm::hf_sm_pkt_flt_id = {
+const field_meta sm::hf_sm_packet_filter_id = {
     "Packet filter identifier",
     "nas.nr.sm.pkt_flt_id",
     ft::ft_uint8,
@@ -221,7 +221,7 @@ const field_meta sm::hf_sm_pkt_flt_id = {
     nullptr,
     0x0f,
 };
-const field_meta sm::hf_sm_pkt_flt_dir = {
+const field_meta sm::hf_sm_packet_filter_direction = {
     "Packet filter direction",
     "nas.nr.sm.pkt_flt_dir",
     ft::ft_uint8,
@@ -244,7 +244,7 @@ const field_meta sm::hf_sm_pf_len = {
 };
 #endif
 
-const field_meta sm::hf_sm_pf_type = {
+const field_meta sm::hf_sm_packet_filter_type = {
     "Packet filter component type",
     "nas.nr.sm.pf_type",
     ft::ft_uint8,

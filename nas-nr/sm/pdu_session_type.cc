@@ -26,7 +26,7 @@ const value_string nas_5gs_sm_pdu_ses_type_vals[] = {
     {0, nullptr},
 };
 
-const field_meta sm::hf_sm_pdu_ses_type = {
+const field_meta sm::hf_sm_pdu_session_type = {
     "PDU session type",
     "nas.nr.sm.pdu_ses_type",
     ft::ft_uint8,
@@ -41,7 +41,7 @@ const field_meta sm::hf_sm_pdu_ses_type = {
 int sm::dissect_pdu_session_type(dissector d, context* ctx) {
     const use_context uc(ctx, "selected-pdu-session-type", d, -1);
 
-    (void) d.add_item(1, &hf_sm_pdu_ses_type, enc::be);
+    (void) d.add_item(1, &hf_sm_pdu_session_type, enc::be);
     d.step(1);
 
     return 1;

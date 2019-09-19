@@ -16,7 +16,7 @@ extern const element_meta sm::authorized_qos_flow_desc = {
     nullptr,
 };
 
-const field_meta sm::hf_sm_qfi = {
+const field_meta sm::hf_sm_qos_flow_identity = {
     "Qos flow identifier",
     "nas.nr.sm.qfi",
     ft::ft_uint8,
@@ -37,9 +37,9 @@ const value_string nas_5gs_sm_qos_des_flow_opt_code_vals[] = {
     {0, nullptr},
 };
 
-const field_meta sm::hf_sm_qos_des_flow_opt_code = {
+const field_meta sm::hf_sm_qos_des_flow_operation_code = {
     "Operation code",
-    "nas.nr.sm.hf_nas.nr_sm_qos_des_flow_opt_code",
+    "nas.nr.sm.qos.flow.operation.code",
     ft::ft_uint8,
     fd::base_dec,
     nas_5gs_sm_qos_des_flow_opt_code_vals,
@@ -57,7 +57,7 @@ int sm::dissect_qos_parameters(dissector d, int j, context* ctx) {
 
     /* Parameter identifier */
     const auto param_id = static_cast< uint32_t >(d.uint8());
-    (void) d.add_item(1, &hf_sm_param_id, enc::be);
+    (void) d.add_item(1, &hf_sm_parameter_identifier, enc::be);
     d.step(1);
 
     /* Length of parameter contents */
@@ -68,7 +68,7 @@ int sm::dissect_qos_parameters(dissector d, int j, context* ctx) {
     /*parameter content*/
     switch (param_id) {
     case 0x01: /* 01H (5QI)*/
-        (void) d.add_item(param_len, &hf_sm_pal_cont, enc::be);
+        (void) d.add_item(param_len, &hf_sm_parameters_content, enc::be);
         d.step(param_len);
         break;
         /* 02H (GFBR uplink);*/
@@ -76,7 +76,7 @@ int sm::dissect_qos_parameters(dissector d, int j, context* ctx) {
     case 0x04: { //  04H (MFBR uplink)
         /* Unit for Session-AMBR for uplink */
         /* Session-AMBR for downlink */
-        (void) d.add_item(3, &hf_sm_ses_ambr_ul, enc::be);
+        (void) d.add_item(3, &hf_uplink_session_ambr, enc::be);
         d.step(3);
     } break;
 
@@ -84,7 +84,7 @@ int sm::dissect_qos_parameters(dissector d, int j, context* ctx) {
     case 0x05: {
         /* Unit for Session-AMBR for uplink */
         /* Session-AMBR for downlink*/
-        (void) d.add_item(3, &hf_sm_ses_ambr_dl, enc::be);
+        (void) d.add_item(3, &hf_downlink_session_ambr, enc::be);
         d.step(3);
     } break;
     case 06: // averaging window; and
@@ -97,7 +97,7 @@ int sm::dissect_qos_parameters(dissector d, int j, context* ctx) {
         d.step(1);
         break;
     default:
-        (void) d.add_item(param_len, &hf_sm_pal_cont, enc::be);
+        (void) d.add_item(param_len, &hf_sm_parameters_content, enc::be);
         d.step(param_len);
         break;
     }
@@ -112,7 +112,7 @@ int sm::dissect_authorized_qos_flow_description(dissector d, context* ctx) {
 
     static const field_meta* param_flags[] = {
         &hf_sm_ebit,
-        &hf_sm_nof_params,
+        &hf_sm_parameters_number,
         nullptr,
     };
 
@@ -123,11 +123,11 @@ int sm::dissect_authorized_qos_flow_description(dissector d, context* ctx) {
         use_tree   ut(d, subtree);
 
         /* 0 0 QFI */
-        (void) d.add_item(1, &hf_sm_qfi, enc::be);
+        (void) d.add_item(1, &hf_sm_qos_flow_identity, enc::be);
         d.step(1);
 
         /* Operation code */
-        (void) d.add_item(1, &hf_sm_qos_des_flow_opt_code, enc::be);
+        (void) d.add_item(1, &hf_sm_qos_des_flow_operation_code, enc::be);
         d.step(1);
 
         /* 0 Spare    E    Number of parameters */

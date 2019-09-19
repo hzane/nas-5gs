@@ -84,7 +84,7 @@ const field_meta hf_sm_ebit = {
     nullptr,
     0x40,
 };
-const field_meta hf_sm_nof_params = {
+const field_meta hf_sm_parameters_number = {
     "Number of parameters",
     "nas.nr.sm.nof_params",
     ft::ft_uint8,
@@ -105,7 +105,7 @@ static const value_string nas_5gs_sm_param_id_values[] = {
     {0x07, "EPS bearer identity"},
     {0, nullptr},
 };
-const field_meta hf_sm_param_id = {
+const field_meta hf_sm_parameter_identifier = {
     "Parameter identifier",
     "nas.nr.sm.param_id",
     ft::ft_uint8,
@@ -128,7 +128,7 @@ const field_meta hf_sm_param_len = {
 };
 #endif
 
-const field_meta hf_sm_pal_cont = {
+const field_meta hf_sm_parameters_content = {
     "Parameters content",
     "nas.nr.sm.pal_cont",
     ft::ft_uint8,

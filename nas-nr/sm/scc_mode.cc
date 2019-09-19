@@ -4,7 +4,7 @@
 int sm::dissect_ssc_mode(dissector d, context* ctx) {
     const use_context uc(ctx, "ssc-mode", d, -1);
 
-    auto i = d.add_item(1, &hf_sm_sc_mode, enc::be);
+    auto i = d.add_item(1, &hf_sm_ssc_mode, enc::be);
     unused(i);
 
     return 1;
@@ -26,7 +26,7 @@ const val_string nas_5gs_sc_mode_values[] = {
 };
 
 // Selected SSC mode    SSC mode 9.11.4.16
-extern const field_meta sm::hfm_sel_sc_mode = {
+extern const field_meta sm::hfm_selected_ssc_mode = {
     "SSC mode - Selected",
     "nas.nr.sm.sel_sc_mode",
     ft::ft_uint8,
@@ -36,7 +36,6 @@ extern const field_meta sm::hfm_sel_sc_mode = {
     nullptr,
     0xf0,
 };
-const field_meta* sm::hf_sel_sc_mode = &sm::hfm_sel_sc_mode;
 
 const element_meta sm::allowed_ssc_mode = {
     0xf0,
@@ -46,7 +45,7 @@ const element_meta sm::allowed_ssc_mode = {
 };
 
 
-const field_meta sm::hf_sm_all_ssc_mode_b2 = {
+const field_meta sm::hf_ssc_mode_3 = {
     "SSC mode 3",
     "nas.nr.sm.all_ssc_mode_b2",
     ft::ft_boolean,
@@ -56,7 +55,7 @@ const field_meta sm::hf_sm_all_ssc_mode_b2 = {
     nullptr,
     0x04,
 };
-const field_meta sm::hf_sm_all_ssc_mode_b1 = {
+const field_meta sm::hf_ssc_mode_2 = {
     "SSC mode 2",
     "nas.nr.sm.all_ssc_mode_b1",
     ft::ft_boolean,
@@ -66,7 +65,7 @@ const field_meta sm::hf_sm_all_ssc_mode_b1 = {
     nullptr,
     0x02,
 };
-const field_meta sm::hf_sm_all_ssc_mode_b0 = {
+const field_meta sm::hf_sm_ssc_mode_1 = {
     "SSC mode 1",
     "nas.nr.sm.all_ssc_mode_b0",
     ft::ft_boolean,
@@ -85,7 +84,7 @@ extern const value_string sm::ssc_mode_values[] = {
     {0, nullptr},
 };
 
-const field_meta sm::hf_sm_sc_mode = {
+const field_meta sm::hf_sm_ssc_mode = {
     "SSC mode",
     "nas.nr.sm.sc_mode",
     ft::ft_uint8,

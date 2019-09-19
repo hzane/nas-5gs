@@ -33,7 +33,7 @@ int dissect_packet_filter(dissector d, int pf_type, context* ctx) {
          * component value field shall be encoded as defined for
          * "IPv4 remote address type"
          */
-        (void) d.add_item(4, &hf_pdu_addr_ipv4, enc::be);
+        (void) d.add_item(4, &hf_pdu_address_ipv4, enc::be);
         d.step(4);
         (void) d.add_item(4, &nas::hf_pdu_ipv4_mask, enc::be);
         d.step(4);
@@ -42,7 +42,7 @@ int dissect_packet_filter(dissector d, int pf_type, context* ctx) {
     case 33:  // IPv6 remote address/prefix length type
 
     case 35:  // IPv6 local address/prefix length type
-        // d.add_item(16, &hf_pdu_addr_ipv6, enc::be);
+        // d.add_item(16, &hf_pdu_address_ipv6, enc::be);
         d.step(16);
         // d.add_item(1, &hf_pdu_addr_ipv6_prefix, enc::be);
         d.step(1);
@@ -100,8 +100,8 @@ int dissect_packet_filters(dissector d, int rop, context* ctx) {
      * filters" or "modify existing QoS rule and replace packet filters"
      */
     /* 0    0    Packet filter direction 1    Packet filter identifier 1*/
-    (void) d.add_item(1, &hf_sm_pkt_flt_dir, enc::be);
-    (void) d.add_item(1, &hf_sm_pkt_flt_id, enc::be);
+    (void) d.add_item(1, &hf_sm_packet_filter_direction, enc::be);
+    (void) d.add_item(1, &hf_sm_packet_filter_id, enc::be);
     d.step(1);
 
     /* Length of packet filter contents */
@@ -124,7 +124,7 @@ int dissect_packet_filters(dissector d, int rop, context* ctx) {
          * component type identifier shall be transmitted first.
          */
         const auto pf_type = d.uint8();
-        (void) d.add_item(1, &hf_sm_pf_type, enc::be);
+        (void) d.add_item(1, &hf_sm_packet_filter_type, enc::be);
         d.step(1);
         /* Packet filter length contains the length of component type and
          * content */
@@ -156,9 +156,9 @@ int sm::dissect_qos_rules(dissector d, context* ctx) {
     const use_context uc(ctx, "authorized-qos-rules", d);
 
     static const field_meta* pkt_flt_flags[] = {
-        &hf_sm_rop,
+        &hf_sm_rule_operation_code,
         &hf_sm_dqr,
-        &hf_sm_nof_pkt_filters,
+        &hf_sm_packet_filters,
         nullptr,
     };
 
@@ -213,7 +213,7 @@ int sm::dissect_qos_rules(dissector d, context* ctx) {
             if (rop == 5) {
                 /* modify existing QoS rule and delete packet filters */
                 /* 0    0    0    0    Packet filter identifier x*/
-                (void) d.add_item(1, &hf_sm_pkt_flt_id, enc::be);
+                (void) d.add_item(1, &hf_sm_packet_filter_id, enc::be);
                 d.step(1);
             } else {
                 const auto consumed = dissect_packet_filters(d, rop, ctx);
@@ -236,7 +236,7 @@ int sm::dissect_qos_rules(dissector d, context* ctx) {
          * QoS flow identifier value field shall be included.
          */
         /* Segregation bit (bit 7 of octet z+2) */
-        (void) d.add_item(1, &hf_sm_qfi, enc::be);
+        (void) d.add_item(1, &hf_sm_qos_flow_identity, enc::be);
         (void) d.add_item(1, &hf_segregation, enc::be);
         d.step(1);
 
@@ -307,7 +307,7 @@ extern const value_string sm::rule_operation_code_values[] = {
     {0, nullptr},
 };
 
-const field_meta sm::hf_sm_rop = {
+const field_meta sm::hf_sm_rule_operation_code = {
     "Rule operation code",
     "nas.nr.sm.rop",
     ft::ft_uint8,
@@ -317,7 +317,7 @@ const field_meta sm::hf_sm_rop = {
     nullptr,
     0xe0,
 };
-const field_meta sm::hf_sm_nof_pkt_filters = {
+const field_meta sm::hf_sm_packet_filters = {
     "Number of packet filters",
     "nas.nr.sm.nof_pkt_filters",
     ft::ft_uint8,

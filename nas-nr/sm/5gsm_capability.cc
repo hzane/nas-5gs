@@ -8,7 +8,7 @@ int sm::dissect_sm_capability(dissector d, context* ctx) {
     const use_context        uc(ctx, "5gsm-capability", d, -1);
 
     static const field_meta* flags[] = {
-        &hf_reflective_qos_b0,
+        &hf_reflective_qos,
         nullptr,
     };
     d.add_bits(flags);
@@ -24,7 +24,7 @@ const element_meta sm::sm_capability = {
     dissect_sm_capability,
     nullptr,
 };
-const field_meta sm::hf_reflective_qos_b0 = {
+const field_meta sm::hf_reflective_qos = {
     "Reflective QoS(RqoS)",
     "nas.nr.sm.reflective.qos",
     ft::ft_boolean,

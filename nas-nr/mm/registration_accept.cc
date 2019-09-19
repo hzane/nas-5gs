@@ -89,7 +89,7 @@ int mm::dissect_registration_accept(dissector d, context* ctx) {
 
     /*5D    Non-3GPP de-registration timer value  GPRS timer 2 9.11.2.4  O TLV 3*/
     // ELEM_OPT_TLV(0x5D, , DE_GPRS_TIMER_2, " - Non-3GPP de-registration timer value");
-    consumed = dissect_opt_tlv(nullptr, &de_reg_timer_gprs_timer2, d, ctx);
+    consumed = dissect_opt_tlv(nullptr, &n3g_deregistration_timer_gprs_timer2, d, ctx);
     d.step(consumed);
 
     /*16    T3502 value    GPRS timer 2     9.11.2.4     O    TLV    3*/
@@ -104,7 +104,7 @@ int mm::dissect_registration_accept(dissector d, context* ctx) {
 
     /*7A    Extended emergency number list  9.11.3.26  O    TLV-E    TBD*/
     // ELEM_OPT_TLV(0x7A, , DE_EMM_EXT_EMERG_NUM_LIST, NULL);
-    consumed = dissect_opt_tlv_e(nullptr, &ext_emerge_num_list, d, ctx);
+    consumed = dissect_opt_tlv_e(nullptr, &ext_emergency_number_list, d, ctx);
     d.step(consumed);
 
     /*73    SOR transparent container   9.11.3.51    O    TLV-E 20-2048 */
@@ -170,7 +170,7 @@ const element_meta t3512_gprs_timer_3 = {
 };
 
 
-const element_meta de_reg_timer_gprs_timer2 = {
+const element_meta n3g_deregistration_timer_gprs_timer2 = {
     0x5D,
     "GPRS timer 2 - Non-3GPP de-registration timer value",
     dissect_gprs_timer2_set,
