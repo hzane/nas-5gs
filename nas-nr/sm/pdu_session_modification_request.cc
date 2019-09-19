@@ -6,7 +6,7 @@ using namespace nas;
 using namespace sm;
 
 /* 8.3.7 PDU session modification request */
-int sm::dissect_pdu_ses_modification_request(dissector d, context* ctx) {
+int sm::dissect_pdu_session_modification_request(dissector d, context* ctx) {
     const use_context uc(ctx, "pdu-session-modification-request", d, 0);
 
     /* Direction: UE to network */
@@ -21,7 +21,7 @@ int sm::dissect_pdu_ses_modification_request(dissector d, context* ctx) {
     d.step(consumed);
 
     /*55    Maximum number of supported packet filter 9.11.4.9    O    TV    3*/
-    consumed = dissect_opt_tv(nullptr, &max_of_supported_pkt_filter, d, ctx);
+    consumed = dissect_opt_tv(nullptr, &max_supported_packet_filters, d, ctx);
     d.step(consumed);
 
     /* B-    Always-on PDU session requested  9.11.4.4 O    TV    1 */

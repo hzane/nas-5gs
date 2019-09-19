@@ -107,12 +107,12 @@ extern const message_meta mm::msgs[] = {
 
     {0x54, "Configuration update command", dissect_configuration_update_cmd, nullptr},
     {0x55, "Configuration update complete", dissect_configuration_update_complete, nullptr},
-    {0x56, "Authentication request", authentication_request, nullptr},
-    {0x57, "Authentication response", authentication_response, nullptr},
-    {0x58, "Authentication reject", authentication_reject, nullptr},
-    {0x59, "Authentication failure", authentication_failure, nullptr},
+    {0x56, "Authentication request", dissect_authentication_request, nullptr},
+    {0x57, "Authentication response", dissect_authentication_response, nullptr},
+    {0x58, "Authentication reject", dissect_authentication_reject, nullptr},
+    {0x59, "Authentication failure", dissect_authentication_failure, nullptr},
 
-    {0x5a, "Authentication result", authentication_result, nullptr},
+    {0x5a, "Authentication result", dissect_authentication_result, nullptr},
     {0x5b, "Identity request", dissect_identity_request, nullptr},
     {0x5c, "Identity response", dissect_identity_resp, nullptr},
     {0x5d, "Security mode command", dissect_security_mode_cmd, nullptr},

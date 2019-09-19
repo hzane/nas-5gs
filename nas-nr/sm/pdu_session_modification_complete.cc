@@ -3,7 +3,7 @@
 #include "../packet_info.hh"
 
 /* * 8.3.10 PDU session modification complete */
-int sm::dissect_pdu_ses_modification_complete(dissector d, context* ctx) {
+int sm::dissect_pdu_session_modification_complete(dissector d, context* ctx) {
     const use_context uc(ctx, "pdu-session-modification-complete", d, 2);
 
     /* Direction: UE to network */

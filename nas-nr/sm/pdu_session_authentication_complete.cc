@@ -3,7 +3,7 @@
 #include "../common.hh"
 
 /*  8.3.5 PDU session authentication complete */
-int sm::dissect_pdu_ses_authentication_complete(dissector d, context* ctx) {
+int sm::dissect_pdu_session_authentication_complete(dissector d, context* ctx) {
     const use_context uc(ctx, "pdu-session-authentication-complete", d, 0);    
 
     /* Direction: UE to network */

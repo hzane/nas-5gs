@@ -11,19 +11,19 @@ extern const message_meta sm::msgs[] = {
     {
         0xc1,
         "PDU session establishment request",
-        dissect_pdu_ses_establishment_request,
+        dissect_pdu_session_establishment_request,
         nullptr,
     },
     {
         0xc2,
         "PDU session establishment accept",
-        dissect_pdu_ses_establishment_accept,
+        dissect_pdu_session_establishment_accept,
         nullptr,
     },
     {
         0xc3,
         "PDU session establishment reject",
-        dissect_pdu_ses_establishment_reject,
+        dissect_pdu_session_establishment_reject,
         nullptr,
     },
 
@@ -36,14 +36,14 @@ extern const message_meta sm::msgs[] = {
     {
         0xc5,
         "PDU session authentication command",
-        dissect_pdu_ses_authentication_cmd,
+        dissect_pdu_session_authentication_cmd,
         nullptr,
     },
 
     {
         0xc6,
         "PDU session authentication complete",
-        dissect_pdu_ses_authentication_complete,
+        dissect_pdu_session_authentication_complete,
         nullptr,
     },
     {
@@ -62,25 +62,25 @@ extern const message_meta sm::msgs[] = {
     {
         0xc9,
         "PDU session modification request",
-        dissect_pdu_ses_modification_request,
+        dissect_pdu_session_modification_request,
         nullptr,
     },
     {
         0xca,
         "PDU session modification reject",
-        dissect_pdu_ses_modification_reject,
+        dissect_pdu_session_modification_reject,
         nullptr,
     },
     {
         0xcb,
         "PDU session modification command",
-        dissect_pdu_ses_modification_cmd,
+        dissect_pdu_session_modification_cmd,
         nullptr,
     },
     {
         0xcc,
         "PDU session modification complete",
-        dissect_pdu_ses_modification_complete,
+        dissect_pdu_session_modification_complete,
         nullptr,
     },
     {
@@ -112,25 +112,25 @@ extern const message_meta sm::msgs[] = {
     {
         0xd1,
         "PDU session release request",
-        dissect_pdu_ses_release_request,
+        dissect_pdu_session_release_request,
         nullptr,
     },
     {
         0xd2,
         "PDU session release reject",
-        dissect_pdu_ses_release_reject,
+        dissect_pdu_session_release_reject,
         nullptr,
     },
     {
         0xd3,
         "PDU session release command",
-        dissect_pdu_ses_release_cmd,
+        dissect_pdu_session_release_cmd,
         nullptr,
     },
     {
         0xd4,
         "PDU session release complete",
-        dissect_pdu_ses_release_complete,
+        dissect_pdu_session_release_complete,
         nullptr,
     },
 

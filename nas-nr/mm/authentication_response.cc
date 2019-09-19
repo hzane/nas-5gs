@@ -5,7 +5,7 @@
 using namespace nas;
 
 /* 8.2.2    Authentication response */
-int mm::authentication_response(dissector d, context* ctx) {
+int mm::dissect_authentication_response(dissector d, context* ctx) {
     const use_context uc(ctx, "authentication-response", d, 0);
 
     /* 2D    Authentication response parameter 9.11.3.17    O    TLV    18 */

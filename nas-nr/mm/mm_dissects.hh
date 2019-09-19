@@ -55,7 +55,7 @@ int dissect_n3gpp_nw_provided_policies(dissector d, context* ctx);
 
 int dissect_pdu_session_reactive_result_error_cause(dissector d, context*);
 
-int dissect_sor_trans_cont(dissector d, context* ctx);
+int dissect_sor_transparent_container(dissector d, context* ctx);
 
 int dissect_access_type(dissector d, context*);/*  9.11.3.11    Access type */
 
@@ -71,11 +71,11 @@ int dissect_service_accept(dissector d, context* ctx);
 
 int dissect_configuration_update_cmd(dissector d, context* ctx);
 int dissect_configuration_update_complete(dissector d, context* ctx);
-int authentication_request(dissector d, context* ctx);
-int authentication_response(dissector d, context* ctx);
-int authentication_reject(dissector d, context* ctx);
-int authentication_failure(dissector d, context* ctx);
-int authentication_result(dissector d, context* ctx);
+int dissect_authentication_request(dissector d, context* ctx);
+int dissect_authentication_response(dissector d, context* ctx);
+int dissect_authentication_reject(dissector d, context* ctx);
+int dissect_authentication_failure(dissector d, context* ctx);
+int dissect_authentication_result(dissector d, context* ctx);
 int dissect_identity_request(dissector d, context* ctx);
 int dissect_identity_resp(dissector d, context* ctx);
 int dissect_security_mode_cmd(dissector d, context* ctx);

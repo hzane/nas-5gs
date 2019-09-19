@@ -8,7 +8,7 @@ using namespace mm;
 const element_meta mm::sor_transparent_container = {
     0x73,
     "SOR transparent container",
-    dissect_sor_trans_cont,
+    dissect_sor_transparent_container,
     nullptr,
 };
 
@@ -16,7 +16,7 @@ using namespace cmn;
 using namespace nas;
 
 // SOR transparent container   9.11.3.51
-int mm::dissect_sor_trans_cont(dissector d, context* ctx) {
+int mm::dissect_sor_transparent_container(dissector d, context* ctx) {
     const use_context uc(ctx, "sor-transparent-container", d, 0);
 
     /* Layout differs depending on SOR data type*/

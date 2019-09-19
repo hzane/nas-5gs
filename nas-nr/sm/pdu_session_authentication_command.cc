@@ -4,7 +4,7 @@
 #include "../common.hh"
 
 /* 8.3.4 PDU session authentication command */
-int sm::dissect_pdu_ses_authentication_cmd(dissector d, context* ctx) {
+int sm::dissect_pdu_session_authentication_cmd(dissector d, context* ctx) {
     const use_context uc(ctx, "pdu-session-authentication-command", d, 0);    
 
     /* Direction: network to UE */

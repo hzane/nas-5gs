@@ -4,7 +4,7 @@
 using namespace nas;
 
 /* 8.2.5 Authentication reject */
-int mm::authentication_reject(dissector d, context* ctx) {
+int mm::dissect_authentication_reject(dissector d, context* ctx) {
     const use_context uc(ctx, "authentication-reject", d, 0);
 
     /* 78    EAP message  9.11.2.2    O    TLV-E    7-1503 */

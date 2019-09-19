@@ -11,7 +11,7 @@ extern const element_meta sm::selected_pdu_ses_type = {
 };
 
 // PDU session type    PDU session type 9.11.4.11
-extern const element_meta sm::pdu_ses_type = {
+extern const element_meta sm::pdu_session_type = {
     0x90,
     "PDU session type",
     sm::dissect_pdu_session_type,
@@ -28,7 +28,7 @@ const value_string nas_5gs_sm_pdu_ses_type_vals[] = {
 
 const field_meta sm::hf_sm_pdu_session_type = {
     "PDU session type",
-    "nas.nr.sm.pdu_ses_type",
+    "nas.nr.sm.pdu_session_type",
     ft::ft_uint8,
     fd::base_dec,
     nas_5gs_sm_pdu_ses_type_vals,

@@ -5,7 +5,7 @@
 using namespace nas;
 
 /* 8.2.1.1    Authentication request */
-int mm::authentication_request(dissector d, context* ctx) {
+int mm::dissect_authentication_request(dissector d, context* ctx) {
     const use_context uc(ctx, "authentication-request", d, 0);
     // network to UE
     down_link(d.pinfo);
