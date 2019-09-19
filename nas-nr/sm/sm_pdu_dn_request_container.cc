@@ -29,3 +29,7 @@ int sm::dissect_pdu_dn_request_container(dissector d, context* ctx) {
 
     return uc.length;
 }
+
+struct pud_dn_request_container_t {
+    string dn_specific_id;
+};

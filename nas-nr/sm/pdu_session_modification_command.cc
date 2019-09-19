@@ -19,7 +19,7 @@ int sm::dissect_pdu_session_modification_cmd(dissector d, context* ctx) {
     d.step(consumed);
 
     /* 2A Session-AMBR     9.11.4.14    O    TLV    8*/
-    consumed = dissect_opt_tlv(nullptr, &ses_ambr, d, ctx);
+    consumed = dissect_opt_tlv(nullptr, &session_ambr, d, ctx);
     d.step(consumed);
 
     /*56    RQ timer value    GPRS timer     9.11.2.3    O    TV    2*/

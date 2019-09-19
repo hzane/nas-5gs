@@ -10,7 +10,7 @@ using namespace sm;
 /* 8.3.2 PDU session establishment accept */
 int sm::dissect_pdu_session_establishment_accept(dissector d, context* ctx) {
     const use_context uc(ctx, "pdu-session-establishment-accept", d, -1);
-    
+
     /* Direction: network to UE */
     down_link(d.pinfo);
 
@@ -27,7 +27,7 @@ int sm::dissect_pdu_session_establishment_accept(dissector d, context* ctx) {
     d.step(consumed);
 
     /* Session-AMBR 9.11.4.14    M    LV    7 */
-    consumed = dissect_lv(nullptr, &ses_ambr, d, ctx);
+    consumed = dissect_lv(nullptr, &session_ambr, d, ctx);
     d.step(consumed);
 
     /*59 5GSM cause 9.11.4.2    O    TV    2*/

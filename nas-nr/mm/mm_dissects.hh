@@ -85,7 +85,7 @@ int dissect_security_mode_reject(dissector d, context* ctx);
 int dissect_mm_status(dissector d, context* ctx);
 int dissect_notification(dissector d, context* ctx);
 int dissect_notification_resp(dissector d, context* ctx);
-int dissect_ul_nas_transp(dissector d, context* ctx);
+int dissect_ul_nas_transport(dissector d, context* ctx);
 int dissect_dl_nas_transparent(dissector d, context* ctx);
 
 int dissect_allowed_nssai(dissector d, context* ctx);

@@ -7,7 +7,7 @@ using namespace nas;
 using namespace mm;
 
 /* 8.2.10    UL NAS transport */
-int mm::dissect_ul_nas_transp(dissector d, context* ctx) {
+int mm::dissect_ul_nas_transport(dissector d, context* ctx) {
     const use_context uc(ctx, "ul-nas-transport", d, 1);
 
     /* Direction: UE to network */

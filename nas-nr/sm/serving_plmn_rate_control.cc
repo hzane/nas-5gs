@@ -1,8 +1,14 @@
 #include "../dissect_sm_msg.hh"
 
 const field_meta hf_serving_plmn_rate_control = {
-    "Serving PLMN rate control value", "nas.nr.serving.plmn.rate.control",
-    ft::ft_uint16, fd::base_dec, nullptr,nullptr,nullptr, 0,
+    "Serving PLMN rate control value",
+    "nas.nr.serving.plmn.rate.control",
+    ft::ft_uint16,
+    fd::base_dec,
+    nullptr,
+    nullptr,
+    nullptr,
+    0,
 };
 
 // Serving PLMN rate control 9.11.4.20
@@ -13,3 +19,7 @@ int dissect_serving_plmn_rate_control(dissector d, context*ctx) {
     (void) d.add_item(2, &hf_serving_plmn_rate_control, enc::be);
     return 2;
 }
+
+struct serving_plmn_rate_control_t {
+    uint16_t _;
+};
