@@ -23,7 +23,7 @@ int mm::dissect_abba_set(dissector d, context* ctx) {
      */
 }
 struct abba_set_t{
-    std::vector<uint8_t> content;
+    payload_t content;
 };
 
 extern const element_meta mm::abba = {

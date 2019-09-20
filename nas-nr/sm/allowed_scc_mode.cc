@@ -9,7 +9,7 @@ int sm::dissect_allowed_ssc_mode(dissector d, context* ctx) {
     static const field_meta* flags[] = {
         &hf_ssc_mode_3,
         &hf_ssc_mode_2,
-        &hf_sm_ssc_mode_1,
+        &hf_ssc_mode_1,
         nullptr,
     };
     d.add_bits(flags);

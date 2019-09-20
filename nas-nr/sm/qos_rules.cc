@@ -157,7 +157,7 @@ int sm::dissect_qos_rules(dissector d, context* ctx) {
 
     static const field_meta* pkt_flt_flags[] = {
         &hf_sm_rule_operation_code,
-        &hf_sm_dqr,
+        &hf_sm_default_qos_rule,
         &hf_sm_packet_filters,
         nullptr,
     };
@@ -263,7 +263,7 @@ const true_false_string sm::tfs_sm_default_qos_rules = {
     "The QoS rule is not the default QoS rule",
 };
 
-const field_meta sm::hf_sm_dqr = {
+const field_meta sm::hf_sm_default_qos_rule = {
     "DQR",
     "nas.nr.sm.dqr",
     ft::ft_boolean,

@@ -8,7 +8,7 @@ int mm::dissect_ue_parameters_update_transparent_container(dissector d, context*
     (void) d.add_item(1, &hf_upu_data_type, enc::be);
     const auto uput = d.uint8() & 0x01u;
     if (uput) {
-        (void) d.add_item(1, &hf_ack, enc::be);
+        (void) d.add_item(1, &hf_ue_parameters_update_ack, enc::be);
         (void) d.add_item(1, &hf_reregistration, enc::be);
     }
     d.step(1);
@@ -40,7 +40,7 @@ const tf_string tfs_ack = {
     "acknowledgement requested",
 };
 
-const field_meta mm::hf_ack = {
+const field_meta mm::hf_ue_parameters_update_ack = {
     "ACK",
     "nas.nr.mm.ue.parameters.update.ack",
     ft::ft_boolean,
@@ -62,6 +62,7 @@ const field_meta mm::hf_reregistration                = {
     nullptr,
     0,
 };
+
 // UPU-MAC-IAUSF, UPU-MAC-IUE and CounterUPU are coded as specified in 3GPP TS 33.501 [24]
 const field_meta mm::hf_upu_mac_i = {
     "UPU-MAC-I",

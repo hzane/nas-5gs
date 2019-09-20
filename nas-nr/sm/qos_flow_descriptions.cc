@@ -37,7 +37,7 @@ const value_string nas_5gs_sm_qos_des_flow_opt_code_vals[] = {
     {0, nullptr},
 };
 
-const field_meta sm::hf_sm_qos_des_flow_operation_code = {
+const field_meta sm::hf_qos_flow_operation_code = {
     "Operation code",
     "nas.nr.sm.qos.flow.operation.code",
     ft::ft_uint8,
@@ -76,7 +76,7 @@ int sm::dissect_qos_parameters(dissector d, int j, context* ctx) {
     case 0x04: { //  04H (MFBR uplink)
         /* Unit for Session-AMBR for uplink */
         /* Session-AMBR for downlink */
-        (void) d.add_item(3, &hf_uplink_session_ambr, enc::be);
+        (void) d.add_item(3, &hf_session_ambr_uplink, enc::be);
         d.step(3);
     } break;
 
@@ -84,11 +84,11 @@ int sm::dissect_qos_parameters(dissector d, int j, context* ctx) {
     case 0x05: {
         /* Unit for Session-AMBR for uplink */
         /* Session-AMBR for downlink*/
-        (void) d.add_item(3, &hf_downlink_session_ambr, enc::be);
+        (void) d.add_item(3, &hf_session_ambr_downlink, enc::be);
         d.step(3);
     } break;
     case 06: // averaging window; and
-        (void) d.add_item(2, &hf_averaging_wind, enc::be);
+        (void) d.add_item(2, &hf_averaging_window, enc::be);
         d.step(2);
         break;
     case 07: // EPS bearer identity
@@ -111,7 +111,7 @@ int sm::dissect_authorized_qos_flow_description(dissector d, context* ctx) {
     const use_context uc(ctx, "authorized-qos-flow-desc", d, 0);
 
     static const field_meta* param_flags[] = {
-        &hf_sm_ebit,
+        &hf_qos_flow_ebit,
         &hf_sm_parameters_number,
         nullptr,
     };
@@ -127,7 +127,7 @@ int sm::dissect_authorized_qos_flow_description(dissector d, context* ctx) {
         d.step(1);
 
         /* Operation code */
-        (void) d.add_item(1, &hf_sm_qos_des_flow_operation_code, enc::be);
+        (void) d.add_item(1, &hf_qos_flow_operation_code, enc::be);
         d.step(1);
 
         /* 0 Spare    E    Number of parameters */

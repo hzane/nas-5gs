@@ -11,7 +11,7 @@ int sm::dissect_pdu_session_establishment_reject(dissector d, context* ctx) {
     const use_context uc(ctx, "pdu-session-establishment-reject", d, 0);
 
     /* Direction: network to UE */
-    down_link(d.pinfo);    
+    down_link(d.pinfo);
 
     /*  5GSM cause 9.11.4.2    M    V    1 */
      auto consumed = dissect_sm_cause(d, ctx);
@@ -43,7 +43,6 @@ int sm::dissect_pdu_session_establishment_reject(dissector d, context* ctx) {
     /*61	5GSM congestion re-attempt indicator  9.11.4.21	O	TLV	3    */
     consumed = dissect_opt_tlv(nullptr, &sm_congestion_reattempt, d, ctx);
     d.step(consumed);
-        
+
     return uc.length;
 }
-

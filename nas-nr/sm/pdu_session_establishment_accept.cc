@@ -105,6 +105,9 @@ struct s_nssai_t{};
 struct pdu_session_indication_t {};
 struct mapped_eps_bearer_contexts_t {};
 
+struct extended_pco_t {};
+struct congestion_reattempt_t {};
+
 struct pdu_session_establishment_accept_t {
     pdu_session_type_t type;
     qos_rules_t        authorized_qos_rules;
@@ -116,5 +119,6 @@ struct pdu_session_establishment_accept_t {
     pdu_session_indication_t alwayson_pdu_session_indication;
     mapped_eps_bearer_contexts_t mapped_eps_bearer_contexts;
     payload_t                    eap_message;
-
+    extended_pco_t               extened_pco;
+    congestion_reattempt_t       congestion_reattempt;
 };

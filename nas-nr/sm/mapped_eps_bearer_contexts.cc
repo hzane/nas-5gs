@@ -42,7 +42,6 @@ int dissect_eps_parameters(dissector d, int i, context* ctx) {
 struct eps_parameter_t {
 
 };
-
 struct bearer_context_t {
     uint8_t                        identity;
     std::vector< eps_parameter_t > parameters;
@@ -58,14 +57,14 @@ int sm::dissect_mapped_eps_bearer_contexts(dissector d, context* ctx) {
     const use_context uc(ctx, "mapped-eps-bearer-contexts", d, 0);
 
     static const field_meta* mapd_eps_b_cont_flags[] = {
-        &hf_sm_mapped_eps_b_cont_opt_code,
-        &hf_sm_mapped_eps_b_cont_e,
+        &hf_sm_bearer_content_operation_code,
+        &hf_bearer_ebit,
         &hf_eps_parameters_numbers,
         nullptr,
     };
 
     static const field_meta* mapd_eps_b_cont_flags_modify[] = {
-        &hf_sm_mapped_eps_b_cont_opt_code,
+        &hf_sm_bearer_content_operation_code,
         &hf_eps_ebit_modify,
         &hf_eps_parameters_numbers,
         nullptr,
@@ -161,7 +160,7 @@ extern const value_string sm::eps_parameter_identity_values[] = {
     {0, nullptr},
 };
 
-const field_meta sm::hf_sm_mapped_eps_b_cont_opt_code = {
+const field_meta sm::hf_sm_bearer_content_operation_code = {
     "Operation code",
     "nas.nr.sm.mapd_eps_b_cont_opt_code",
     ft::ft_uint8,
@@ -171,7 +170,7 @@ const field_meta sm::hf_sm_mapped_eps_b_cont_opt_code = {
     nullptr,
     0xc0,
 };
-const field_meta sm::hf_sm_mapped_eps_b_cont_deb = {
+const field_meta sm::hf_eps_bearer_deb = {
     "DEB bit",
     "nas.nr.deb",
     ft::ft_uint8,
@@ -181,7 +180,7 @@ const field_meta sm::hf_sm_mapped_eps_b_cont_deb = {
     nullptr,
     0x20,
 };
-const field_meta sm::hf_sm_mapped_eps_b_cont_e = {
+const field_meta sm::hf_bearer_ebit = {
     "E bit",
     "nas.nr.sm.e-bit",
     ft::ft_uint8,

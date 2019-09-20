@@ -74,9 +74,9 @@ int dissect_requested_qos_rules(dissector d, context* ctx) {
     return dissect_qos_rules(d, ctx);
 }
 
-const field_meta hf_sm_ebit = {
+const field_meta hf_qos_flow_ebit = {
     "E bit",
-    "nas.nr.sm.e",
+    "nas.nr.sm.qos.flow.ebit",
     ft::ft_uint8,
     fd::base_dec,
     nullptr,
@@ -130,7 +130,7 @@ const field_meta hf_sm_param_len = {
 
 const field_meta hf_sm_parameters_content = {
     "Parameters content",
-    "nas.nr.sm.pal_cont",
+    "nas.nr.sm.parameter.content",
     ft::ft_uint8,
     fd::base_dec,
     nas_5gs_rule_param_cont,
@@ -138,7 +138,7 @@ const field_meta hf_sm_parameters_content = {
     nullptr,
     0x0,
 };
-const field_meta hf_averaging_wind = {
+const field_meta hf_averaging_window = {
     "Average Window",
     "nas.nr.sm.qos.param",
     ft::ft_uint16,
