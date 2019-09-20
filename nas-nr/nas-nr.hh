@@ -4,7 +4,7 @@
 
 #if defined NASNRTS24501_EXPORTS
 
-#if defined _WIN32 || defined _WIN64
+#if defined(_WIN32) || defined (_WIN64)
 // NOLINTNEXTLINE
 #define NASNRAPI __declspec(dllexport)
 #else
@@ -34,7 +34,11 @@ protected:    virtual ~nas_nr_message(){};                            // NOLINT
 NASNRAPI void nas_nr_message_free(nas_nr_message* p);
 
 // use nas_nr_context_new to create env
-NASNRAPI int dissect_nas_nr(nas_nr_message** root, const octet* data, int length, void* env);
+NASNRAPI int dissect_nas_nr(nas_nr_message** root,
+                            const octet*     data,
+                            int              length,
+                            int   direction, // 1: uplink, 2: downlink, 0: unknow
+                            void* env);
 
 NASNRAPI char* pretty_format(const description* m, const octet* data, int length);
 

@@ -32,6 +32,13 @@ template<typename t> using optional = std::optional<t>;
 
 extern void diag(const char* format, ...);
 
+namespace direction {
+inline extern const int unknown = 0;
+inline extern const int ul      = 1;
+inline extern const int dl      = 2;
+inline extern const int both    = 3;
+} // namespace direction
+
 namespace enc {
 inline const uint32_t na   = 0;
 inline const uint32_t be   = 1; // big endian

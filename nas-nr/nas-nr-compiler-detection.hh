@@ -132,6 +132,8 @@
 
 #define NASNR_COMPILER_CXX_TYPE_DEDUCE 1
 
+#define NASNR_COMPILER_CXX_17_FEATURE 1
+
 #  elif NASNR_COMPILER_IS_MSVC
 
 #    if !(_MSC_VER >= 1500)
@@ -252,8 +254,10 @@
 
 #if _MSC_VER >= 1900
 #define NASNR_COMPILER_CXX_TYPE_DEDUCE 1
+#define NASNR_COMPILER_CXX_17_FEATURE 1
 #else
 #define NASNR_COMPILER_CXX_TYPE_DEDUCE 0
+#define NASNR_COMPILER_CXX_17_FEATURE 0
 #endif
 
 #  elif NASNR_COMPILER_IS_Clang
@@ -362,6 +366,7 @@
 #endif
 
 #define NASNR_COMPILER_CXX_TYPE_DEDUCE 1
+#define NASNR_COMPILER_CXX_17_FEATURE 1
 
 #  else
 #    error Unsupported compiler
@@ -597,4 +602,3 @@ template<> struct NASNRStaticAssert<true>{};
 #  endif
 
 #endif
-

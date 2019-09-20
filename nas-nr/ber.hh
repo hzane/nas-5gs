@@ -12,7 +12,7 @@ struct optional_element_intra {
 template < typename elem_t >
 struct optional_element {
     bool    presence = false;
-    uint8_t t        = 0xffu;
+    uint8_t t        = 0;
     int     length   = 0;
     elem_t  elem     = {};
 

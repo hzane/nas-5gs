@@ -45,7 +45,7 @@ int main(int argc, char*argv[]) { // NOLINT: exception-escape
   if (!fs::is_directory(en)) return 0;
 
   nas_nr_message* rot = nullptr;
-  dissect_nas_nr(&rot, packet_sample, int(std::size(packet_sample)), nullptr);
+  dissect_nas_nr(&rot, packet_sample, int(std::size(packet_sample)), 0, nullptr);
   print_nas_nr_message(rot);
   nas_nr_message_free(rot);
 

@@ -83,14 +83,18 @@ nas_nr_message_imp* export_proto_node(proto_node const* node, int indent) {
     return ret;
 }
 
-NASNRAPI int dissect_nas_nr(nas_nr_message * * root, const octet* data, int length, void* env) {
+NASNRAPI int dissect_nas_nr(nas_nr_message** root,
+                            const octet*     data,
+                            int              length,
+                            int              dir,
+                            void*            env) {
     tvbuff          tvb   = NASNR_LIST_INIT(tvbuff, data, length);
     context         alt   = NASNR_LIST_INIT(context);
     packet_info     pinfo = NASNR_LIST_INIT(packet_info);
     proto_node      node  = NASNR_LIST_INIT(proto_node);
     *root                 = nullptr;
-
-    context* ctx = env ? static_cast<context*>(env) : &alt;
+    pinfo.dir             = dir;
+    context* ctx          = env ? static_cast< context* >(env) : &alt;
 
     const dissector d = {&pinfo, &node, &tvb, 0, length, nullptr};
 
