@@ -416,12 +416,6 @@
     <ClCompile Include="mm\uplink_nas_transport.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="sm\5gnrsm_capability.cc">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="sm\5gnrsm_cause.cc">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="sm\5gsm_congestion_reattempt_indicator.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -579,6 +573,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="mm\downlink_nas_transparent.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sm\5gsm_capability.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sm\5gsm_cause.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
