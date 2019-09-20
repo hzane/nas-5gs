@@ -116,7 +116,7 @@ int sm::dissect_mapped_eps_bearer_contexts(dissector d, context* ctx) {
 
 
 // Mapped EPS  bearer contexts     9.11.4.5
-const element_meta sm::mapped_eps_bearer_ctx = {
+const element_meta sm::mapped_eps_bearer_context = {
     0x75,
     "Mapped EPS bearer contexts",
     dissect_mapped_eps_bearer_contexts,

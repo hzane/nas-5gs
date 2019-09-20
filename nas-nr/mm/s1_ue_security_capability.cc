@@ -82,8 +82,8 @@ int mm::dissect_ue_security_capability(dissector d, context* ctx) {
 }
 
 /*  9.11.3.54    UE security capability  */
-int mm::dissect_replayed_ue_sec_cap(dissector d, context* ctx) {
-    const use_context uc(ctx, "ue-security-capability", d, 0);    
+int mm::dissect_replayed_ue_security_capability(dissector d, context* ctx) {
+    const use_context uc(ctx, "ue-security-capability", d, 0);
 
     static const field_meta* oct3_flags[] = {
         &hf_ea0,

@@ -7,10 +7,10 @@ int sm::dissect_pdu_session_modification_reject(dissector d, context* ctx) {
     const use_context uc(ctx, "pdu-session-modification-reject", d, 3);
 
     /* Direction: network to UE */
-    down_link(d.pinfo);    
+    down_link(d.pinfo);
 
     /* 5GSM cause 9.11.4.2    M    V    1 */
-    dissect_sm_cause(d, ctx);
+    dissect_nrsm_cause(d, ctx);
     d.step(1);
 
     /*37    Back-off timer value    GPRS timer 3 9.11.2.5    O    TLV    3 */
@@ -27,7 +27,7 @@ int sm::dissect_pdu_session_modification_reject(dissector d, context* ctx) {
 
     /*61 5GSM congestion re-attempt indicator    9.11.4.21	O	TLV	3    */
     consumed = dissect_opt_tlv(nullptr, &sm_congestion_reattempt, d, ctx);
-    d.step(consumed); 
+    d.step(consumed);
 
     return uc.length;
 }

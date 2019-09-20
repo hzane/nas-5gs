@@ -7,7 +7,7 @@ extern const field_meta hf_dcni;
 extern const field_meta hf_nssci;
 
 //  9.11.3.36    Network slicing indication
-int mm::dissect_nw_slicing_indication(dissector d, context* ctx) {
+int mm::dissect_network_slicing_indicationication(dissector d, context* ctx) {
     const use_context uc(ctx, "nw-slicing-indication", d, -1);
 
     static const field_meta* flags[] = {
@@ -29,10 +29,10 @@ struct network_slicing_indication_t {
 };
 
 // Network slicing indication  9.11.3.36
-extern const element_meta mm::nw_slicing_ind = {
+extern const element_meta mm::network_slicing_indication = {
     0x90,
     "Network slicing indication",
-    mm::dissect_nw_slicing_indication,
+    mm::dissect_network_slicing_indicationication,
     nullptr,
 };
 

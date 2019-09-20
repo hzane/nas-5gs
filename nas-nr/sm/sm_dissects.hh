@@ -35,13 +35,13 @@ int dissect_pdu_session_release_cmd(dissector d, context* ctx);
 int dissect_pdu_session_release_complete(dissector d, context* ctx);
 int dissect_sm_status(dissector d, context* ctx);
 
-int dissect_sm_cause(dissector d, context* ctx);
+int dissect_nrsm_cause(dissector d, context* ctx);
 int dissect_extended_protocol_configuration_options(dissector d, context* ctx);
 int dissect_authorized_qos_rules(dissector d, context* ctx);
 int dissect_qos_rules(dissector d, context* ctx);
 int dissect_mapped_eps_bearer_contexts(dissector d, context* ctx);
 
-int dissect_sm_capability(dissector d, context* ctx);
+int dissect_nrsm_capability(dissector d, context* ctx);
 int dissect_max_number_supported_packet_filter(dissector d, context* ctx);
 int dissect_session_ambr(dissector d, context* ctx);
 int dissect_always_on_pdu_session_indication(dissector d, context* ctx);

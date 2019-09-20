@@ -273,10 +273,10 @@
     <ClCompile Include="sm\pdu_address.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="sm\5gsm_capability.cc">
+    <ClCompile Include="sm\5gnrsm_capability.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="sm\5gsm_cause.cc">
+    <ClCompile Include="sm\5gnrsm_cause.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="sm\5gsm_congestion_reattempt_indicator.cc">

@@ -45,7 +45,7 @@ int mm::dissect_registration_accept(dissector d, context* ctx) {
 
     /*21    5GS network feature support   9.11.3.5    O TLV 3-5 */
     // ELEM_OPT_TLV(0x21, , DE_NAS_5GS_MM_5GS_NW_FEAT_SUP, NULL);
-    consumed = dissect_opt_tlv(nullptr, &nw_feature_support, d, ctx);
+    consumed = dissect_opt_tlv(nullptr, &network_feature_support, d, ctx);
     d.step(consumed);
 
     /*50    PDU session status   9.10.3.44    O    TLV    */
@@ -73,8 +73,8 @@ int mm::dissect_registration_accept(dissector d, context* ctx) {
     d.step(consumed);
 
     /* 9-  Network slicing indication  9.11.3.36  O  TV 1 */
-    // ELEM_OPT_TV_SHORT(0x90, , DE_NAS_5GS_MM_NW_SLICING_IND, NULL);
-    consumed = dissect_opt_tv_short(nullptr, &nw_slicing_ind, d, ctx);
+    // ELEM_OPT_TV_SHORT(0x90, , DE_NAS_5GS_MM_network_slicing_indication, NULL);
+    consumed = dissect_opt_tv_short(nullptr, &network_slicing_indication, d, ctx);
     d.step(consumed);
 
     /*27    Service area list   9.11.3.49    O    TLV    6-194*/
@@ -129,7 +129,7 @@ int mm::dissect_registration_accept(dissector d, context* ctx) {
 
     /* 51    Negotiated DRX parameters 9.11.3.2A    O    TLV    3 */
     // ELEM_OPT_TLV(0x51,,DE_NAS_5GS_MM_5GS_DRX_PARAM," -  Negotiated DRX parameters");
-    consumed = dissect_opt_tlv(nullptr, &negotiated_drx_param, d, ctx);
+    consumed = dissect_opt_tlv(nullptr, &negotiated_drx_parameter, d, ctx);
     d.step(consumed);
 
     // D- Non-3GPP NW policies Non - 3GPP NW provided policies 9.11.3.58 O TV 1
@@ -218,10 +218,10 @@ extern const element_meta operator_defined_acd = {
 };
 
 // Negotiated DRX parameters 9.11.3.2A
-const element_meta negotiated_drx_param = {
+const element_meta negotiated_drx_parameter = {
     0x51,
     "Negotiated DRX parameters",
-    dissect_drx_param,
+    dissect_drx_parameter,
     nullptr,
 };
 

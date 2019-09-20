@@ -2,7 +2,7 @@
 #include "../ber.hh"
 
 /* 8.2.24 Notification response */
-int mm::dissect_notification_resp(dissector d, context* ctx) {
+int mm::dissect_notification_response(dissector d, context* ctx) {
     const use_context uc(ctx, "notification-response", d, 0);
     // UE to network
     up_link(d.pinfo);

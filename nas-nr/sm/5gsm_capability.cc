@@ -4,7 +4,7 @@ using namespace nas;
 using namespace sm;
 
 /*  9.11.4.1    5GSM capability */
-int sm::dissect_sm_capability(dissector d, context* ctx) {
+int sm::dissect_nrsm_capability(dissector d, context* ctx) {
     const use_context        uc(ctx, "5gsm-capability", d, -1);
 
     static const field_meta* flags[] = {
@@ -17,15 +17,15 @@ int sm::dissect_sm_capability(dissector d, context* ctx) {
     return 1;
 }
 
-struct sm_capability_t {
+struct nrsm_capability_t {
     uint8_t reflective_qos;
 };
 
 // 5GSM capability 9.11.4.1
-const element_meta sm::sm_capability = {
+const element_meta sm::nrsm_capability = {
     0x28,
     "5GSM capability",
-    dissect_sm_capability,
+    dissect_nrsm_capability,
     nullptr,
 };
 const field_meta sm::hf_reflective_qos = {

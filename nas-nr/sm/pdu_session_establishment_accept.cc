@@ -31,7 +31,7 @@ int sm::dissect_pdu_session_establishment_accept(dissector d, context* ctx) {
     d.step(consumed);
 
     /*59 5GSM cause 9.11.4.2    O    TV    2*/
-    consumed = dissect_opt_tv(nullptr, &sm_cause, d, ctx);
+    consumed = dissect_opt_tv(nullptr, &nrsm_cause, d, ctx);
     d.step(consumed);
 
     /*29  PDU address 9.11.4.10    O    TLV    7 */
@@ -48,11 +48,11 @@ int sm::dissect_pdu_session_establishment_accept(dissector d, context* ctx) {
     d.step(consumed);
 
     /* 8-    Always-on PDU session indication   9.11.4.3  O    TV    1 */
-    consumed = dissect_opt_tv_short(nullptr, &alwayson_pdu_ses_ind, d, ctx);
+    consumed = dissect_opt_tv_short(nullptr, &alwayson_pdu_session_indication, d, ctx);
     d.step(consumed);
 
     /* 75    Mapped EPS bearer contexts  9.11.4.8    O  TLV-E    7-65538 */
-    consumed = dissect_opt_tlv_e(nullptr, &mapped_eps_bearer_ctx, d, ctx);
+    consumed = dissect_opt_tlv_e(nullptr, &mapped_eps_bearer_context, d, ctx);
     d.step(consumed);
 
     /*78    EAP message    EAP message 9.11.2.2    O    TLV-E    7-1503*/
@@ -76,7 +76,7 @@ int sm::dissect_pdu_session_establishment_accept(dissector d, context* ctx) {
     d.step(consumed);
 
     /*xx	5GSM network feature support 9.11.4.18	O	TLV	3-15
-     * consumed = dissect_opt_tlv(nullptr, &sm_nw_feature_support, d, ctx);
+     * consumed = dissect_opt_tlv(nullptr, &sm_network_feature_support, d, ctx);
      * d.step(consumed);
     xx	Session-TMBR	Session-TMBR 9.11.4.19	O	TLV	8
      consumed = dissect_opt_tlv(nullptr, &session_tmbr, d, ctx);
@@ -99,7 +99,7 @@ int sm::dissect_pdu_session_establishment_accept(dissector d, context* ctx) {
 struct pdu_session_type_t {};
 struct qos_rules_t {};
 struct ambr_t {};
-struct sm_cause_t {};
+struct nrsm_cause_t {};
 struct pdu_address_t {};
 struct s_nssai_t{};
 struct pdu_session_indication_t {};
@@ -112,7 +112,7 @@ struct pdu_session_establishment_accept_t {
     pdu_session_type_t type;
     qos_rules_t        authorized_qos_rules;
     ambr_t             session_ambr;
-    sm_cause_t         cause;
+    nrsm_cause_t         cause;
     pdu_address_t      address;
     timer_t            rq_timer;
     s_nssai_t          s_nssai;

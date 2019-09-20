@@ -2,7 +2,7 @@
 
 
 // DRX parameters 9.11.3.2A
-int mm::dissect_drx_param(dissector d, context* ctx) {
+int mm::dissect_drx_parameter(dissector d, context* ctx) {
     const use_context uc(ctx, "DRX parameters", d, -1);
 
     (void) d.add_item(1, &hf_drx_param, enc::be);

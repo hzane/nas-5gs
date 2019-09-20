@@ -14,8 +14,8 @@ int sm::dissect_pdu_session_modification_cmd(dissector d, context* ctx) {
     down_link(d.pinfo);
 
     /* 59 5GSM cause 9.11.4.2    O    TV    2*/
-    // ELEM_OPT_TV(0x59, , DE_NAS_5GS_SM_5GSM_CAUSE, NULL);
-    auto consumed = dissect_opt_tv(nullptr, &sm_cause, d, ctx);
+    // ELEM_OPT_TV(0x59, , DE_NAS_5GS_SM_5Gnrsm_cause, NULL);
+    auto consumed = dissect_opt_tv(nullptr, &nrsm_cause, d, ctx);
     d.step(consumed);
 
     /* 2A Session-AMBR     9.11.4.14    O    TLV    8*/
@@ -28,7 +28,7 @@ int sm::dissect_pdu_session_modification_cmd(dissector d, context* ctx) {
     d.step(consumed);
 
     /* 8-  Always-on PDU session indication 9.11.4.3  O    TV    1 */
-    consumed = dissect_opt_tv_short(nullptr, &alwayson_pdu_ses_ind, d, ctx);
+    consumed = dissect_opt_tv_short(nullptr, &alwayson_pdu_session_indication, d, ctx);
     d.step(consumed);
 
     /*7A    Authorized QoS rules    QoS rules     9.11.4.13    O    TLV-E    3-65538*/
@@ -37,7 +37,7 @@ int sm::dissect_pdu_session_modification_cmd(dissector d, context* ctx) {
     d.step(consumed);
 
     /*75 Mapped EPS  bearer contexts     9.11.4.5    O TLV-E    7-65538*/
-    consumed = dissect_opt_tlv_e(nullptr, &mapped_eps_bearer_ctx, d, ctx);
+    consumed = dissect_opt_tlv_e(nullptr, &mapped_eps_bearer_context, d, ctx);
     d.step(consumed);
 
     /*79 Authorized QoS flow descriptions     QoS flow descriptions 9.11.4.12 O TLV-E 6-65538*/

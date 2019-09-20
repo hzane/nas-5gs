@@ -5,7 +5,7 @@ using namespace cmn;
 using namespace mm;
 
 /* 9.11.3.7    5GS registration type */
-int mm::dissect_registration_request_type(dissector d, context* ctx) {
+int mm::dissect_registration_requestuest_type(dissector d, context* ctx) {
     const use_context uc(ctx, "5gs-registration-type", d, -1);
 
     const field_meta* flags[] = {
@@ -118,10 +118,10 @@ const field_meta mm::hf_ue_usage_setting = {
     0x01,
 };
 
-const element_meta mm::requested_drx_param = {
+const element_meta mm::requested_drx_parameter = {
     0x51,
     "5GS DRX parameters - Requested",
-    dissect_drx_param,
+    dissect_drx_parameter,
     nullptr,
 };
 

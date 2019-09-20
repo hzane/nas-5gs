@@ -51,10 +51,10 @@
     <ClCompile Include="mm\5gs_update_type.cc">
       <Filter>nas</Filter>
     </ClCompile>
-    <ClCompile Include="sm\5gsm_capability.cc">
+    <ClCompile Include="sm\5gnrsm_capability.cc">
       <Filter>nas</Filter>
     </ClCompile>
-    <ClCompile Include="sm\5gsm_cause.cc">
+    <ClCompile Include="sm\5gnrsm_cause.cc">
       <Filter>nas</Filter>
     </ClCompile>
     <ClCompile Include="sm\5gsm_congestion_reattempt_indicator.cc">

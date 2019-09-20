@@ -26,7 +26,7 @@ int sm::dissect_pdu_session_establishment_request(dissector d, context* ctx) {
     d.step(consumed);
 
     /*28	5GSM capability	9.11.4.1	O	TLV	3-15 */
-    consumed = dissect_opt_tlv(nullptr, &sm_capability, d, ctx);
+    consumed = dissect_opt_tlv(nullptr, &nrsm_capability, d, ctx);
     d.step(consumed);
 
     /*55	Maximum number of supported packet filters 9.11.4.9	O	TV	3 */

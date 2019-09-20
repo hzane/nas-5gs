@@ -7,7 +7,7 @@ using namespace cmn;
 using namespace nas;
 
 /*  8.2.9 Registration reject */
-int mm::dissect_registration_rej(dissector d, context* ctx) {    
+int mm::dissect_registration_reject(dissector d, context* ctx) {
     const use_context uc(ctx, "registration-reject", d, 0);
     //network to UE
     down_link(d.pinfo);
@@ -28,8 +28,7 @@ int mm::dissect_registration_rej(dissector d, context* ctx) {
 
     /* 78    EAP message  9.11.2.2    O    TLV-E    7-1503 */
     consumed = dissect_opt_tlv_e(nullptr, &eap_message, d, ctx);
-    d.step(consumed);    
+    d.step(consumed);
 
     return uc.length;
 }
-

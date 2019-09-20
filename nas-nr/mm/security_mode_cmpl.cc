@@ -9,7 +9,7 @@ const element_meta mm::imeisv_mobile_id = {
 };
 
 /*  8.2.26 Security mode complete */
-int mm::dissect_security_mode_cmpl(dissector d, context* ctx) {
+int mm::dissect_security_mode_complete(dissector d, context* ctx) {
     const use_context uc(ctx, "security-mode-complete", d, 0);
     // UE to network
     up_link(d.pinfo);
@@ -21,6 +21,6 @@ int mm::dissect_security_mode_cmpl(dissector d, context* ctx) {
     /* 71    NAS message container  9.11.3.33    O    TLV-E    4-n  */
     consumed = dissect_opt_tlv_e(nullptr, &nas_msg_container, d, ctx);
     d.step(consumed);
-    
+
     return uc.length;
 }

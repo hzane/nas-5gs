@@ -11,10 +11,10 @@ int sm::dissect_pdu_session_release_cmd(dissector d, context* ctx) {
     const use_context uc(ctx, "pdu-session-release-command", d, 0);
 
     /* Direction: network to UE */
-    down_link(d.pinfo);    
+    down_link(d.pinfo);
 
     /* 5GSM cause 9.11.4.2    M    V    1 */
-    (void) dissect_sm_cause(d, ctx);
+    (void) dissect_nrsm_cause(d, ctx);
     d.step(1);
 
     /*37    Back-off timer value    GPRS timer 3 9.11.2.25    O    TLV    3 */
@@ -35,6 +35,6 @@ int sm::dissect_pdu_session_release_cmd(dissector d, context* ctx) {
     // ELEM_OPT_TLV_E(0x7B, , DE_ESM_EXT_PCO, NULL);
     consumed = dissect_opt_tlv_e(nullptr, &extended_pco, d, ctx);
     d.step(consumed);
-    
+
     return uc.length;
 }

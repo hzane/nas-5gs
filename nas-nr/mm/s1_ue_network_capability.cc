@@ -151,9 +151,9 @@ int mm::dissect_s1_ue_net_capability(dissector d, context* ctx) {
 }
 // 9.11.3.48A S1 UE security capability page.391
 // See subclause 9.9.3.36 in 3GPP TS 24.301 [15].
-int mm::dissect_reported_s1_ue_sec_cap(dissector d, context* ctx) {
+int mm::dissect_reported_s1_ue_security_capability(dissector d, context* ctx) {
     const use_context uc(ctx, "s1-ue-security-capability", d, 0);
-   
+
     static const field_meta* oct3_flags[] = {
         &hf_mm_eea0,
         &hf_mm_128eea1,

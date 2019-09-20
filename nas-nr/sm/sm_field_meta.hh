@@ -5,7 +5,7 @@ namespace sm{
 
 extern const field_meta  hf_sm_integrity_protection_max_data_rate_ul;
 extern const field_meta  hf_sm_integrity_protection_max_data_rate_dl;
-extern const field_meta hf_sm_cause;
+extern const field_meta hf_nrsm_cause;
 extern const field_meta  hf_ssc_mode;
 extern const field_meta  hf_ssc_mode_3;
 extern const field_meta  hf_ssc_mode_2;

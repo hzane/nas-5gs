@@ -1,29 +1,29 @@
 #include "../dissect_sm_msg.hh"
 
 // 5GSM cause 9.11.4.2
-int sm::dissect_sm_cause(dissector d, context* ctx) {
+int sm::dissect_nrsm_cause(dissector d, context* ctx) {
     const use_context uc(ctx, "5gsm-cause", d, -1);
 
-    (void) d.add_item(1, &hf_sm_cause, enc::be);
+    (void) d.add_item(1, &hf_nrsm_cause, enc::be);
     d.step(1);
 
     return 1;
 }
 
-struct sm_cause_t {
+struct nrsm_cause_t {
     uint8_t cause;
 };
 
 // 5GSM cause 9.11.4.2
-const element_meta sm::sm_cause = {
+const element_meta sm::nrsm_cause = {
     0x59,
     nullptr,
-    sm::dissect_sm_cause,
+    sm::dissect_nrsm_cause,
     nullptr,
 };
 
 /* * 9.11.4.2    5GSM cause */
-extern const value_string sm::sm_cause_values[] = {
+extern const value_string sm::nrsm_cause_values[] = {
     {0x1a, "Insufficient resources"},
     {0x1b, "Missing or unknown DNN"},
     {0x1c, "Unknown PDU session type"},
@@ -60,12 +60,12 @@ extern const value_string sm::sm_cause_values[] = {
     {0x6f, "Protocol error, unspecified"},
     {0, nullptr},
 };
-const field_meta sm::hf_sm_cause = {
+const field_meta sm::hf_nrsm_cause = {
     "5GSM cause",
     "nas.nr.sm.cause",
     ft::ft_uint8,
     fd::base_dec,
-    sm::sm_cause_values,
+    sm::nrsm_cause_values,
     nullptr,
     nullptr,
     0x0,

@@ -22,7 +22,7 @@ struct configuration_update_command_t{
 #endif
 
 /* 8.2.19 Configuration update command */
-int mm::dissect_configuration_update_cmd(dissector d, context* ctx) {
+int mm::dissect_configuration_update_command(dissector d, context* ctx) {
     use_context uc(ctx, "configuration-update-command", d, 3);
     // network to UE
     down_link(d.pinfo);
@@ -81,8 +81,8 @@ int mm::dissect_configuration_update_cmd(dissector d, context* ctx) {
     d.step(consumed);
 
     // 9-	Network slicing indication	 9.11.3.36 O TV 1
-    // ELEM_OPT_TV_SHORT(0x90, , DE_NAS_5GS_MM_NW_SLICING_IND, NULL);
-    consumed = dissect_opt_tv_short(nullptr, &nw_slicing_ind, d, ctx);
+    // ELEM_OPT_TV_SHORT(0x90, , DE_NAS_5GS_MM_network_slicing_indication, NULL);
+    consumed = dissect_opt_tv_short(nullptr, &network_slicing_indication, d, ctx);
     d.step(consumed);
 
     /*31    Configured NSSAI    NSSAI     9.11.3.37    O    TLV    4-74*/

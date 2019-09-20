@@ -3,7 +3,7 @@
 #include "../common.hh"
 
 // Selected PDU session type    PDU session type 9.11.4.11
-extern const element_meta sm::selected_pdu_ses_type = {
+extern const element_meta sm::selected_pdu_session_type = {
     0x90,
     "Selected PDU session type",
     sm::dissect_pdu_session_type,

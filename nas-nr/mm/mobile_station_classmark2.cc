@@ -113,18 +113,18 @@ const field_meta hf_ss_screening_indicator = {
 };
 
 /* SM capability (MT SMS pt to pt capability) (octet 4)*/
-static const true_false_string tfs_sm_capability = {
+static const true_false_string tfs_nrsm_capability = {
     "Mobile station supports mobile terminated point to point SMS",
     "Mobile station does not support mobile terminated point to point SMS",
 };
 
-const field_meta hf_sm_capability = {
+const field_meta hf_nrsm_capability = {
     "SM capability (MT SMS pt to pt capability)",
     "gsm_a.SM_cap",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
-    &tfs_sm_capability,
+    &tfs_nrsm_capability,
     nullptr,
     0x08,
 };
@@ -309,7 +309,7 @@ int dissect_mobile_station_classmark2(dissector d, context* ctx) {
 
     (void) d.add_item(1, &hf_ps_support_capability, enc::be);
     (void) d.add_item(1, &hf_ss_screening_indicator, enc::be);
-    (void) d.add_item(1, &hf_sm_capability, enc::be);
+    (void) d.add_item(1, &hf_nrsm_capability, enc::be);
     (void) d.add_item(1, &hf_vbs_notification_rec, enc::be);
     (void) d.add_item(1, &hf_vgcs_notification_reception, enc::be);
     (void) d.add_item(1, &hf_fc_frequency_capability, enc::be);

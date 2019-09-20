@@ -27,7 +27,7 @@ int sm::dissect_always_on_pdu_session_indication(dissector d, context* ctx) {
 
 
 // Always-on PDU session indication 9.11.4.3
-const element_meta sm::alwayson_pdu_ses_ind = {
+const element_meta sm::alwayson_pdu_session_indication = {
     0x80,
     "Always-on PDU session indication",
     sm::dissect_always_on_pdu_session_indication,

@@ -8,7 +8,7 @@ using namespace nas;
 
 
 /* * 8.2.6 Registration request */
-int mm::dissect_registration_req(dissector d, context* ctx) {
+int mm::dissect_registration_request(dissector d, context* ctx) {
     const use_context uc(ctx, "registration-request", d, -1);
 
     // UE to network
@@ -16,7 +16,7 @@ int mm::dissect_registration_req(dissector d, context* ctx) {
     // get private data
 
     /*   5GS registration type  9.11.3.7    M    V    1/2  H0*/
-    (void) dissect_registration_request_type(d, ctx);
+    (void) dissect_registration_requestuest_type(d, ctx);
     /*    ngKSI    NAS key set identifier 9.11.3.32    M    V    1/2 H1*/
     (void) dissect_v(nullptr, &nas_ksi, d, ctx);
     d.step(1);
@@ -79,7 +79,7 @@ int mm::dissect_registration_req(dissector d, context* ctx) {
 
     /*25    Allowed PDU session status    9.11.3.13  O    TLV    4 - 34 */
     // ELEM_OPT_TLV(0x25, , DE_NAS_5GS_MM_ALLOW_PDU_SES_STS, NULL);
-    consumed = dissect_opt_tlv(nullptr, &allowed_pdu_ses_status, d, ctx);
+    consumed = dissect_opt_tlv(nullptr, &allowed_pdu_session_status, d, ctx);
     d.step(consumed);
 
     /*18    UE's usage setting    9.11.3.55    O    TLV    3 */
@@ -89,7 +89,7 @@ int mm::dissect_registration_req(dissector d, context* ctx) {
 
     /* 51    Requested DRX parameters    5GS DRX parameters 9.11.3.2A    O    TLV    3 */
     /* ELEM_OPT_TLV(0x51,DE_NAS_5GS_MM_5GS_DRX_PARAM, " - Requested DRX parameters"); */
-    consumed = dissect_opt_tlv(nullptr, &requested_drx_param, d, ctx);
+    consumed = dissect_opt_tlv(nullptr, &requested_drx_parameter, d, ctx);
     d.step(consumed);
 
     /* 70    EPS NAS message container  9.11.3.24    O    TLV-E 4-n */
@@ -113,8 +113,8 @@ int mm::dissect_registration_req(dissector d, context* ctx) {
     d.step(consumed);
 
     /* 9-    Network slicing indication 9.11.3.36    O    TV 1 */
-    // ELEM_OPT_TV_SHORT(0x90, , DE_NAS_5GS_MM_NW_SLICING_IND, NULL);
-    consumed = dissect_opt_tv_short(nullptr, &nw_slicing_ind, d, ctx);
+    // ELEM_OPT_TV_SHORT(0x90, , DE_NAS_5GS_MM_network_slicing_indication, NULL);
+    consumed = dissect_opt_tv_short(nullptr, &network_slicing_indication, d, ctx);
     d.step(consumed);
 
     /* 53    5GS update type 9.11.3.9A    O    TLV    3 */

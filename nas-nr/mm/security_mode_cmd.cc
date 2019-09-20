@@ -5,7 +5,7 @@ using namespace nas;
 using namespace mm;
 
 /* 8.2.25 Security mode command  */
-int mm::dissect_security_mode_cmd(dissector d, context* ctx) {
+int mm::dissect_security_mode_command(dissector d, context* ctx) {
     const use_context uc(ctx, "security-mode-cmd", d, 0);
 
     /* Direction: network to UE */
@@ -24,7 +24,7 @@ int mm::dissect_security_mode_cmd(dissector d, context* ctx) {
     /* Replayed UE security capabilities    UE security capability   9.11.3.54  M  LV
      * 3-5*/
     // ELEM_MAND_LV(,DE_NAS_5GS_MM_UE_SEC_CAP," - Replayed UE security capabilities",);
-    auto consumed = dissect_lv(nullptr, &replayed_ue_sec_cap, d, ctx);
+    auto consumed = dissect_lv(nullptr, &replayed_ue_security_capability, d, ctx);
     d.step(consumed);
 
     /*E-    IMEISV request    IMEISV request     9.11.3.28    O    TV    1*/
@@ -68,10 +68,10 @@ extern const element_meta selected_security_algo = {
     dissect_security_algo,
     nullptr,
 };
-extern const element_meta replayed_ue_sec_cap = {
+extern const element_meta replayed_ue_security_capability = {
     0xff,
     "UE security capability - Replayed UE security capabilities",
-    dissect_replayed_ue_sec_cap,
+    dissect_replayed_ue_security_capability,
     nullptr,
 };
 extern const element_meta imeisv_request = {
@@ -91,7 +91,7 @@ extern const element_meta additional_security_info = {
 extern const element_meta replayed_s1_ue_security_capability = {
     0x19,
     "S1 UE security capability - Replayed S1 UE security capabilities",
-    dissect_reported_s1_ue_sec_cap,
+    dissect_reported_s1_ue_security_capability,
     nullptr,
 };
 

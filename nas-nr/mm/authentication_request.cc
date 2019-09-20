@@ -24,13 +24,13 @@ int mm::dissect_authentication_request(dissector d, context* ctx) {
     /*21    Authentication parameter RAND (5G authentication challenge)    Authentication
      * parameter RAND     9.11.3.16    O    TV    17*/
     // ELEM_OPT_TV(0x21, , DE_AUTH_PARAM_RAND, " - 5G authentication challenge");
-    consumed = dissect_opt_tv(nullptr, &auth_parameter_rand, d, ctx);
+    consumed = dissect_opt_tv(nullptr, &authentication_parameter_rand, d, ctx);
     d.step(consumed);
 
     /*20    Authentication parameter AUTN (5G authentication challenge)    Authentication
      * parameter AUTN     9.11.3.15    O    TLV    18*/
     // ELEM_OPT_TLV(0x20, , DE_AUTH_PARAM_AUTN, " - 5G authentication challenge");
-    consumed = dissect_opt_tlv(nullptr, &auth_parameter_autn, d, ctx);
+    consumed = dissect_opt_tlv(nullptr, &authentication_parameter_autn, d, ctx);
     d.step(consumed);
 
     /*78  EAP message 9.11.2.2    O    TLV-E    7-1503 */
@@ -86,14 +86,14 @@ struct authentication_result_t {
 
 namespace mm {
 
-extern const element_meta auth_parameter_rand = {
+extern const element_meta authentication_parameter_rand = {
     0x21,
     "Authentication parameter RAND - 5G authentication challenge",
-    dissect_auth_parameter_rand,
+    dissect_authentication_parameter_rand,
     nullptr,
 };
 
-extern const element_meta auth_parameter_autn = {
+extern const element_meta authentication_parameter_autn = {
     0x20,
     "Authentication parameter AUTN - 5G authentication challenge",
     dissect_authentication_parameter_autn,

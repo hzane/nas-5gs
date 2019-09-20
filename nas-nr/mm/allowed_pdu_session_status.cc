@@ -4,10 +4,10 @@ using namespace cmn;
 using namespace mm;
 
 // Allowed PDU session status
-const element_meta mm::allowed_pdu_ses_status = {
+const element_meta mm::allowed_pdu_session_status = {
     0x25,
     "Allowed PDU session status",
-    dissect_allowed_pdu_ses_status,
+    dissect_allowed_pdu_session_status,
     nullptr,
 };
 
@@ -17,7 +17,7 @@ struct allowed_pdu_session_status_t{
 };
 
 /*  9.11.3.13    Allowed PDU session status */
-int mm::dissect_allowed_pdu_ses_status(dissector d, context* ctx) {
+int mm::dissect_allowed_pdu_session_status(dissector d, context* ctx) {
     const use_context uc(ctx, "allowed-pdu-session-status", d, 30);
 
     static const field_meta* psi_0_7_flags[] = {
