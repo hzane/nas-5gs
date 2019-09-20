@@ -71,9 +71,15 @@ struct dissector {
     auto        uint32() const -> uint32_t;
 };
 
-struct use_tree { // NOLINT: special;-member-functions
+struct use_tree {
     dissector&  d;
     proto_node* prev;
+
+    use_tree&   operator=(const use_tree&) = delete;
+
+    use_tree()                             = delete;
+    use_tree(const use_tree&)              = delete;
+
     use_tree(dissector& d, proto_node* p) : d(d), prev(d.tree) { d.tree = p; }
     ~use_tree() { d.tree = prev; }
 };
@@ -115,12 +121,16 @@ struct context : nr_security_context {
     std::string  path() const;
 };
 
-struct use_context { // NOLINT: special-member-functions
+struct use_context {
     context*         ctx    = nullptr;
     int              offset = 0;
     int              length = 0;
     int              maxlen = 0;
     const dissector& d;
+
+    use_context& operator=(const use_context&) = delete;
+    use_context()                              = delete;
+    use_context(const use_context&) = delete;
 
     use_context(context* ctx, const char* path, dissector const& d, const int maxlen = 0)
         : ctx(ctx), offset(d.offset), length(d.length), maxlen(maxlen), d(d) {
@@ -134,12 +144,13 @@ struct use_context { // NOLINT: special-member-functions
              length);
     }
     ~use_context() {
+        d.extraneous_data_check(maxlen, ctx);
         if (ctx) {
             ctx->paths.pop_back();
         }
-        d.extraneous_data_check(maxlen, ctx);
     }
 };
+
 inline void store_payload_content_type(context* ctx, uint8_t pct) {
     if (ctx) ctx->payload_content_type = pct;
 }

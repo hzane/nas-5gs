@@ -11,6 +11,7 @@ void dissector::add_bits(const field_meta* metas[]) const {
         (void) add_item(1, *meta, enc::be); // NOLINT
     }
 }
+
 proto_node* dissector::add_item(int len, const field_meta* meta, uint32_t enc) const {
     return tree->add_item(pinfo, tvb, offset, len, meta, enc);
 }

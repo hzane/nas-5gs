@@ -212,6 +212,36 @@ struct pdu_session_establishment_reject_t {
     congestion_reattempt_t congestion_reattempt;
 };
 
+struct nrsm_cause_t {};
+struct extended_pco_t {};
+struct authorized_qos_rules_t {};
+struct qos_rules_t {};
+struct mapped_eps_bearer_context_t {};
+struct bearer_context_t {};
+struct backoff_timer_t {};
+struct gprs_timer3_t {};
+struct nrsm_capability_t {};
+struct max_supported_packet_filters_t {};
+struct session_ambr_t {};
+struct ambr_t {};
+struct rq_gprs_timer_t {};
+struct alwayson_pdu_session_indication_t {};
+struct pdu_session_indication_t {};
+struct congestion_reattempt_t {};
+struct pdu_session_type_t {};
+struct selected_pdu_session_type_t {};
+struct pdu_address_t {};
+struct max_data_rate_t {};
+struct integrity_protection_max_data_rate_t {};
+struct ssc_mode_t {};
+struct pdu_dn_request_container_t {};
+struct requested_qos_rules_t {};
+struct qos_rules_t {};
+struct authorized_qos_flow_description_t {};
+struct qos_flow_description_t {};
+struct request_qos_flow_description_t {};
+struct control_plane_only_indication_t {};
+
 } // namespace sm
 
 namespace mm{
@@ -301,3 +331,15 @@ struct network_feature_support_t {};
 struct network_slicing_indication_t {};
 struct abba_t {};
 } // namespace mm
+
+namespace cmn{
+struct none_t {};
+struct decimal_t {};
+
+template<size_t N>
+struct octet_t {
+    std::array< uint8_t, N > _;
+};
+
+
+} // namespace cmn
