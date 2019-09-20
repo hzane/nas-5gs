@@ -107,6 +107,7 @@ struct mapped_eps_bearer_contexts_t {};
 
 struct extended_pco_t {};
 struct congestion_reattempt_t {};
+struct timer_t{};
 
 struct pdu_session_establishment_accept_t {
     pdu_session_type_t type;
