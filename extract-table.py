@@ -44,14 +44,17 @@ for block in block_items(doc):
             fields = []
             prev = None
             for cell in row.cells:
-                txt = cell.paragraphs[0].text
+                txt = cell.text
                 if txt.startswith('NOTE:'):
                     txt = ''
-                if prev == None or txt != prev or len(txt) < 8:
-                    if txt == '':
-                        txt ='-'
-                    fields.append(txt)
-                    prev = txt
+                txt = txt.replace('\n', '')
+                if txt == '':
+                    txt = '-'
+                if txt == prev:
+                    txt = '-'
+                else: prev = txt
+                fields.append(txt)
+
             line = '\t'.join(fields)
             print(line)
         print()
