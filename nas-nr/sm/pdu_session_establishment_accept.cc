@@ -62,7 +62,7 @@ int sm::dissect_pdu_session_establishment_accept(dissector d, context* ctx) {
     /*79 Authorized QoS flow descriptions    QoS flow descriptions 9.11.4.12    O
      * TLV-E    6-65538 */
     // ELEM_OPT_TLV_E( 0x79, , DE_NAS_5GS_SM_QOS_FLOW_DES, " - Authorized");
-    consumed = dissect_opt_tlv_e(nullptr, &authorized_qos_rules, d, ctx);
+    consumed = dissect_opt_tlv_e(nullptr, &authorized_qos_flow_desc, d, ctx);
     d.step(consumed);
 
     /*7B  Extended protocol configuration options 9.11.4.6    O    TLV-E    4-65538*/
@@ -96,3 +96,25 @@ int sm::dissect_pdu_session_establishment_accept(dissector d, context* ctx) {
     return uc.length;
 }
 
+struct pdu_session_type_t {};
+struct qos_rules_t {};
+struct ambr_t {};
+struct sm_cause_t {};
+struct pdu_address_t {};
+struct s_nssai_t{};
+struct pdu_session_indication_t {};
+struct mapped_eps_bearer_contexts_t {};
+
+struct pdu_session_establishment_accept_t {
+    pdu_session_type_t type;
+    qos_rules_t        authorized_qos_rules;
+    ambr_t             session_ambr;
+    sm_cause_t         cause;
+    pdu_address_t      address;
+    timer_t            rq_timer;
+    s_nssai_t          s_nssai;
+    pdu_session_indication_t alwayson_pdu_session_indication;
+    mapped_eps_bearer_contexts_t mapped_eps_bearer_contexts;
+    payload_t                    eap_message;
+
+};

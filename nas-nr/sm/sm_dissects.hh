@@ -22,7 +22,7 @@ int dissect_qos_parameters(dissector d, int j, context* ctx);
 int dissect_pdu_session_establishment_request(dissector d, context* ctx);
 int dissect_pdu_session_establishment_accept(dissector d, context* ctx);
 int dissect_pdu_session_establishment_reject(dissector d, context* ctx);
-int dissect_pdu_session_authentication_cmd(dissector d, context* ctx);
+int dissect_pdu_session_authentication_command(dissector d, context* ctx);
 int dissect_pdu_session_authentication_complete(dissector d, context* ctx);
 int dissect_pdu_session_modification_request(dissector d, context* ctx);
 int dissect_pdu_session_modification_reject(dissector d, context* ctx);
@@ -39,7 +39,7 @@ int dissect_sm_cause(dissector d, context* ctx);
 int dissect_extended_protocol_configuration_options(dissector d, context* ctx);
 int dissect_authorized_qos_rules(dissector d, context* ctx);
 int dissect_qos_rules(dissector d, context* ctx);
-int dissect_mapped_eps_bearer_ctx(dissector d, context* ctx);
+int dissect_mapped_eps_bearer_contexts(dissector d, context* ctx);
 
 int dissect_sm_capability(dissector d, context* ctx);
 int dissect_max_number_supported_packet_filter(dissector d, context* ctx);
