@@ -30,7 +30,3 @@ int cmn::dissect_additional_information(dissector d, context* ctx) {
 
     return d.length;
 }
-
-struct additional_information_t {
-    std::vector< uint8_t > _;
-};

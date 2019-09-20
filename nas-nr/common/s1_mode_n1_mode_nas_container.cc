@@ -24,15 +24,6 @@ included in specific information elements within some RRC messages sent to the U
     return uc.length;
 }
 
-struct s1_to_n1_mode_container_t {
-    uint8_t auth_code[4];
-    uint8_t integrity_algo_type;
-    uint8_t ciphering_algo_type;
-    uint8_t nas_ksi;
-    uint8_t security_context_type;
-    uint8_t ncc;
-};
-
 namespace cmn {
 const true_false_string tfs_emm_registration_status = {
     "UE is in EMM-REGISTERED state",
@@ -62,15 +53,3 @@ const field_meta hf_next_hop_chaining_counter = {
     0x70u,
 };
 }
-
-const field_meta cmn::hf_emm_registration_status = {
-    "EMM registration status (S1 mode reg)",
-    "nas.nr.emm.s1.mode.reg.b0",
-    ft::ft_boolean,
-    8,
-    nullptr,
-    &cmn::tfs_emm_registration_status,
-    nullptr,
-    0x01,
-
-};

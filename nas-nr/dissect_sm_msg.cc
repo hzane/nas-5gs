@@ -74,7 +74,7 @@ extern const message_meta sm::msgs[] = {
     {
         0xcb,
         "PDU session modification command",
-        dissect_pdu_session_modification_cmd,
+        dissect_pdu_session_modification_command,
         nullptr,
     },
     {
@@ -124,7 +124,7 @@ extern const message_meta sm::msgs[] = {
     {
         0xd3,
         "PDU session release command",
-        dissect_pdu_session_release_cmd,
+        dissect_pdu_session_release_command,
         nullptr,
     },
     {
@@ -198,6 +198,7 @@ extern const value_string sm::packet_filter_direction_values[] = {
     {0x03, "Bidirectional"},
     {0, nullptr},
 };
+
 #if 0
 const field_meta sm::hf_sm_length = {
     "Length",
@@ -213,7 +214,7 @@ const field_meta sm::hf_sm_length = {
 
 const field_meta sm::hf_sm_packet_filter_id = {
     "Packet filter identifier",
-    "nas.nr.sm.pkt_flt_id",
+    "nas.nr.sm.packet.filter.id",
     ft::ft_uint8,
     fd::base_dec,
     nullptr,
@@ -221,9 +222,10 @@ const field_meta sm::hf_sm_packet_filter_id = {
     nullptr,
     0x0f,
 };
+
 const field_meta sm::hf_sm_packet_filter_direction = {
     "Packet filter direction",
-    "nas.nr.sm.pkt_flt_dir",
+    "nas.nr.sm.packet.filter.direction",
     ft::ft_uint8,
     fd::base_dec,
     packet_filter_direction_values,
@@ -231,10 +233,11 @@ const field_meta sm::hf_sm_packet_filter_direction = {
     nullptr,
     0x30,
 };
+
 #if 0
-const field_meta sm::hf_sm_pf_len = {
+const field_meta sm::hf_packet_filter_lenght = {
     "Length",
-    "nas.nr.sm.pf_len",
+    "nas.nr.sm.packet.filter.length",
     ft::ft_uint8,
     fd::base_dec,
     nullptr,
@@ -246,7 +249,7 @@ const field_meta sm::hf_sm_pf_len = {
 
 const field_meta sm::hf_sm_packet_filter_type = {
     "Packet filter component type",
-    "nas.nr.sm.pf_type",
+    "nas.nr.sm.packet.filter.type",
     ft::ft_uint8,
     fd::base_dec,
     packet_filter_component_type_values,

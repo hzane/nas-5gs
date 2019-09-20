@@ -70,7 +70,7 @@ extern const element_meta request_type;
 extern const element_meta nas_ksi;
 extern const element_meta nas_msg_container;
 extern const element_meta abba;
-extern const element_meta eps_bearer_ctx_status;
+extern const element_meta eps_bearer_context_status;
 extern const element_meta allowed_nssai;
 extern const element_meta tracking_area_id_list;
 extern const element_meta rejected_nssai;

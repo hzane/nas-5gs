@@ -16,3 +16,34 @@ int mm::dissect_ue_status(dissector d, context* ctx) {
     d.add_bits(flags);
     return 1;
 }
+
+/*    9.11.3.56    UE status */
+const true_false_string cmn::tfs_ue_status_n1_mode = {
+    "UE is in 5GMM-REGISTERED state",
+    "UE is not in 5GMM-REGISTERED state",
+};
+
+// 5GMM registration status (N1 mode reg) (octet 3, bit 2)
+const field_meta cmn::hf_5gmm_registration_status = {
+    "5GMM registration status (N1 mode reg)",
+    "nas.nr.registration.status.n1",
+    ft::ft_boolean,
+    8,
+    nullptr,
+    &cmn::tfs_ue_status_n1_mode,
+    nullptr,
+    0x02,
+
+};
+
+const field_meta cmn::hf_emm_registration_status = {
+    "EMM registration status (S1 mode reg)",
+    "nas.nr.registration.status.s1",
+    ft::ft_boolean,
+    8,
+    nullptr,
+    &cmn::tfs_emm_registration_status,
+    nullptr,
+    0x01,
+
+};

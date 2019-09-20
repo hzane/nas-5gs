@@ -17,8 +17,7 @@ int cmn::dissect_eap_message(dissector d, context* ctx) {
     const use_context uc(ctx, "EAP", d, 0);
 
     /* EAP message as specified in IETF RFC 3748 */
-    auto i = d.add_item(d.length, &hf_eap, enc::na);
-    unused(i);
+    (void) d.add_item(d.length, &hf_eap, enc::na);
     d.step(d.length);
 
     return uc.length;
@@ -31,8 +30,4 @@ const element_meta cmn::eap_message = {
     "EAP message",
     cmn::dissect_eap_message,
     nullptr,
-};
-
-struct eap_message_t {
-    std::vector<uint8_t> _;
 };

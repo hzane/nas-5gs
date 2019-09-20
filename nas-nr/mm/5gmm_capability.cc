@@ -39,18 +39,6 @@ int mm::dissect_mm_capability(dissector d, context* ctx) {
     return uc.length;
 }
 
-struct mm_capability_t {
-    uint8_t service_gap_control;
-    uint8_t header_compression_for_control_plane;
-    uint8_t n3_data;
-    uint8_t control_plane;
-    uint8_t restrict_ec_support;
-    uint8_t lpp_capability;
-    uint8_t handover_attach;
-    uint8_t s1_mode;
-    std::optional<uint8_t> nrsr_vcc;
-    std::optional<uint8_t> user_plane_nr_optimization;
-};
 
 namespace mm {
 const field_meta        hf_5gsrvcc_capability = {
@@ -193,7 +181,7 @@ const true_false_string tfs_s1_mode_0 = {
 
 const field_meta hf_s1_mode_b0 = {
     "S1 mode",
-    "nas.nr.mm.s1.mode.b0",
+    "nas.nr.mm.s1.mode",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,

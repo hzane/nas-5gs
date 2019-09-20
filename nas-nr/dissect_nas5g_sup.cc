@@ -70,7 +70,7 @@ field_meta hfm_security_header_type = {
     nullptr,
     0x0f,
 };
-const field_meta* nas::hf_sec_header_type = &hfm_security_header_type;
+const field_meta* nas::hf_security_header_type = &hfm_security_header_type;
 
 field_meta hfm_msg_auth_code = {
     "Message authentication code",
@@ -154,7 +154,7 @@ field_meta hfm_proc_trans_id = {
     nullptr,
     0x0,
 };
-const field_meta* nas::hf_proc_trans_id = &hfm_proc_trans_id;
+const field_meta* nas::hf_procedure_transaction_id = &hfm_proc_trans_id;
 
 /* 9.7  Message type */
 

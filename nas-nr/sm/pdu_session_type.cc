@@ -76,4 +76,4 @@ const field_meta hfm_pdu_session_id = {
     nullptr,
     0x0,
 };
-const field_meta* nas::hf_pdu_sess_id = &hfm_pdu_session_id;
+const field_meta* nas::hf_pdu_session_id = &hfm_pdu_session_id;

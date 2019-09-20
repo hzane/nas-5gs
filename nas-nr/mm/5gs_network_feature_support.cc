@@ -39,22 +39,8 @@ int mm::dissect_network_feature_support(dissector d, context* ctx) {
     return uc.length; // 1-3
 }
 
-struct mm_network_feature_support_t {
-    uint8_t mps_indicator;
-    uint8_t interworking_without_n26;
-    uint8_t emergency_fallback_indicator;
-    uint8_t                emergency_support_indicator;
-    uint8_t                ims_voice_over_ps_indicator;
-    std::optional< uint8_t > emergency_support_for_n3gpp;
-    std::optional< uint8_t > mcs_indicator;
-    std::optional<uint8_t> restrict_ec;
-    std::optional<uint8_t> nr_control_plane_ciot;
-    std::optional<uint8_t> n3data;
-    std::optional<uint8_t> hc_cp_ciot;
-    std::optional<uint8_t> up_ciot;
-};
 namespace mm {
-const value_string nas_5gs_nw_feat_sup_emf_values[] = {
+const value_string emergency_services_fallback_values[] = {
     {0x0, "Emergency services fallback not supported"},
     {0x1, "Emergency services fallback supported in NR connected to 5GCN only"},
     {
@@ -69,7 +55,7 @@ const value_string nas_5gs_nw_feat_sup_emf_values[] = {
     {0, nullptr},
 };
 
-const true_false_string tfs_nas_5gs_nw_feat_sup_mpsi = {
+const true_false_string tfs_access_identity_1_valid_or_not = {
     "Access identity 1 valid in RPLMN or equivalent PLMN",
     "Access identity 1 not valid in RPLMN or equivalent PLMN",
 };
@@ -79,7 +65,7 @@ const field_meta hf_mps_indicator = {
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
-    &tfs_nas_5gs_nw_feat_sup_mpsi,
+    &tfs_access_identity_1_valid_or_not,
     nullptr,
     0x80,
 };
@@ -105,13 +91,13 @@ const field_meta hf_emergency_service_fallback_indicator = {
     "nas.nr.nw.feature.ims.emf",
     ft::ft_uint8,
     fd::base_dec,
-    nas_5gs_nw_feat_sup_emf_values,
+    emergency_services_fallback_values,
     nullptr,
     nullptr,
     0x30,
 };
 
-const value_string nas_5gs_nw_feat_sup_emc_values[] = {
+const value_string emergency_services_values[] = {
     {0x0, "Emergency services not supported"},
     {0x1, "Emergency services supported in NR connected to 5GCN only"},
     {
@@ -129,7 +115,7 @@ const field_meta hf_emergency_service_support_indicator = {
     "nas.nr.nf.feature.ims.emc",
     ft::ft_uint8,
     fd::base_dec,
-    nas_5gs_nw_feat_sup_emc_values,
+    emergency_services_values,
     nullptr,
     nullptr,
     0x0c,

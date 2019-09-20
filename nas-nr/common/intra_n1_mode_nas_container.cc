@@ -24,15 +24,6 @@ included in specific information elements within some RRC messages sent to the U
     return uc.length;
 }
 
-struct intra_n1_mode_container_t {
-    uint8_t auth_code[4];
-    uint8_t integrity_algo_type;
-    uint8_t ciphering_algo_type;
-    uint8_t nas_ksi;
-    uint8_t security_context_flag_type;
-    uint8_t kamf_change_flag;
-    uint8_t sequence_no;
-};
 
 namespace cmn {
 // NAS security algorithms information element (see subclause 9.11.3.34
@@ -64,8 +55,9 @@ const true_false_string tfs_kacf = {
 };
 
 // K_AMF_change_flag
-const field_meta hf_kacf               = {
-    "K-AMF change flag (KACF)","nas.nr.cmn.kacf",
+const field_meta hf_kacf = {
+    "K-AMF change flag (KACF)",
+    "nas.nr.cmn.kacf",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
@@ -73,6 +65,7 @@ const field_meta hf_kacf               = {
     nullptr,
     0x10u,
 };
+
 const field_meta hf_ksi_5g             = {
     "Key set identifier in 5G",
     "nas.nr.cmn.ksi",

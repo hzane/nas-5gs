@@ -69,7 +69,7 @@ int dissect_authentication_reject(dissector d, context* ctx);
 int dissect_authentication_failure(dissector d, context* ctx);
 int dissect_authentication_result(dissector d, context* ctx);
 int dissect_identity_request(dissector d, context* ctx);
-int dissect_identity_resp(dissector d, context* ctx);
+int dissect_identity_response(dissector d, context* ctx);
 int dissect_security_mode_command(dissector d, context* ctx);
 int dissect_security_mode_complete(dissector d, context* ctx);
 int dissect_security_mode_reject(dissector d, context* ctx);

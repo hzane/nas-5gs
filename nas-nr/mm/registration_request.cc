@@ -132,7 +132,7 @@ int mm::dissect_registration_request(dissector d, context* ctx) {
     d.step(consumed);
 
     /*60	EPS bearer context status	9.11.3.59	O	TLV	4 */
-    consumed = dissect_opt_tlv(nullptr, &eps_bearer_ctx_status, d, ctx);
+    consumed = dissect_opt_tlv(nullptr, &eps_bearer_context_status, d, ctx);
     d.step(consumed);
 
     /* XX	Requested extended DRX parameters 9.11.3.60	O TLV 3*/

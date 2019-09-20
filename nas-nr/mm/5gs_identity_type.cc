@@ -13,9 +13,6 @@ int mm::dissect_identity_type(dissector d, context* ctx) {
     return 1;
 }
 
-struct identity_type_t {
-    uint8_t _;
-};
 
 /*5GS mobile identity     5GS mobile identity 9.11.3.4    */
 const val_string mm::identity_type_values[] = {

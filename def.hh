@@ -16,8 +16,6 @@ struct field_v{
 
 using additional_info = std::vector< uint8_t >;
 
-using dnn = string;
-
 struct mcc_mnc {
     const v_string mcc;
     const v_string mnc;
@@ -77,8 +75,6 @@ struct s1_to_n1_container {
     bool                ncc;
 };
 
-// 9.11.3.2	5GMM cause
-using mm_cause = v_string;
 
 struct mm_capability {
     bool             service_gap_control;
@@ -179,7 +175,69 @@ struct network_feature_support{
     bool ims_vops;
 };
 
+namespace cmn {
+struct gprs_timer_t {};
+struct gprs_timer_2_t {};
+struct gprs_timer_3_t {};
+
+struct none_t {};
+struct decimal_t {};
+
+template < size_t N >
+using octet_t = std::array< uint8_t, N >;
+
+template < size_t N = 4 >
+struct nibble_t {
+    uint8_t _ : N;
+};
+
+using additional_information_t = payload_t;
+using dnn_t                    = payload_t;
+using mcc_mnc_t                = octet_t< 3 >;
+using eap_message_t            = payload_t;
+using gprs_timer_t             = uint8_t;
+using gprs_timer_2_t           = uint8_t;
+using gprs_timer_3_t           = uint8_t;
+using ciphering_algorithm_t    = uint8_t;
+using integrity_algorithm_t    = uint8_t;
+using k_amf_change_flag_t      = bool;
+using security_context_type_flag_t = bool;
+
+struct intra_n1_mode_container_t {
+    oectet_t< 4 >             auth_code;
+    nibble_t< 4 >               integrity_algorithm_type;
+    nibble_t< 4 >               ciphering_algorithm_type;
+    nibble_t< 3 >               nas_ksi;
+    bool                        security_context_flag_type;
+    bool                        kamf_change_flag;
+    uint8_t                     sequence_no;
+};
+
+struct n1_to_s1_mode_container_t {
+    uint8_t sequence_no;
+};
+
+using registration_status_t = bool;
+
+struct s1_to_n1_mode_container_t {
+    oectet_t< 4 > auth_code;
+    nibble_t< 4 > integrity_algo_type;
+    nibble_t< 4 > ciphering_algo_type;
+    nibble_t< 3 > nas_ksi;
+    bool          security_context_type_flag;
+    bool          next_hop_chaining_counter;
+};
+} // namespace cmn
+
 namespace sm {
+struct backoff_timer_t : cmn::gprs_timer_3_t {};
+struct rq_timer_t : cmn::gprs_timer_t {};
+
+using packet_filter_type_t = uint8;
+using packet_filter_length_t = uint8_t;
+using packet_filter_direction_t = nibble_t< 2 >;
+using packet_filter_id_t        = nibble_t< 4 >;
+
 struct max_data_rate_t {};
 struct uplink_integrity_protection_max_data_rate_t : max_data_rate_t {};
 struct downlink_integrity_protection_max_data_rate_t : max_data_rate_t {};
@@ -192,7 +250,7 @@ struct eps_bearer_content_t {
     uint8_t ebit;
     uint8_t deb;
 };
-struct gprs_timer3_t {};
+
 struct ssc_mode_t {};
 struct ssc_mode_1_t : ssc_mode_t  {};
 struct ssc_mode_2_t : ssc_mode_t {};
@@ -218,13 +276,10 @@ struct authorized_qos_rules_t {};
 struct qos_rules_t {};
 struct mapped_eps_bearer_context_t {};
 struct bearer_context_t {};
-struct backoff_timer_t {};
-struct gprs_timer3_t {};
 struct nrsm_capability_t {};
 struct max_supported_packet_filters_t {};
 struct session_ambr_t {};
 struct ambr_t {};
-struct rq_gprs_timer_t {};
 struct alwayson_pdu_session_indication_t {};
 struct pdu_session_indication_t {};
 struct congestion_reattempt_t {};
@@ -245,15 +300,126 @@ struct control_plane_only_indication_t {};
 } // namespace sm
 
 namespace mm{
-struct imeisv_mobile_id_t {};
-struct pdu_session_status_t {};
-struct rejected_nssai_t {};
-struct tracking_area_id_list_t {};
-struct allowed_nssai_t {};
 struct nssai_t {};
-struct eps_bearer_context_status_t {};
+
+struct allowed_nssai_t {
+    std::vector< nssai_t > nssais;
+};
+
+struct tracking_area_identity_t{};
+
+using tracking_area_identity_list_t = std::vector< tracking_area_identity_t >;
+
+struct pdu_session_indications_t {};
+struct pdu_session_reactivation_result_t : pdu_session_indications_t {};
+struct pdu_session_status_t : pdu_session_indications_t {};
+
+using nas_ksi_t = nibble_t< 3 >;
+
+struct eps_bearer_indications_t {};
+struct eps_bearer_context_status_t : eps_bearer_indications_t {};
+
+using slice_differentiator_t = octect_t< 3 >;
+using slice_service_type_t   = uint8_t;
+using follow_on_request_t    = bool;
+
+struct nrmm_capability_t {
+    bool                  service_gap_control;
+    bool                  header_compression_for_control_plane;
+    bool                  n3_data;
+    bool                  control_plane;
+    bool                  restrict_ec_support;
+    bool                  lpp_capability;
+    bool                  handover_attach;
+    bool                  s1_mode;
+    std::optional< bool > nrsr_vcc;
+    std::optional< bool > user_plane_nr_optimization;
+};
+
+using nrmm_status_t = uint8_t;
+using identity_type = nibble_t< 3 >;
+
+struct mobile_id_imseisv_t {
+    bool                   odd_even;
+    nibble_t< 3 >          type;
+    payload_t              imseisv;
+};
+using supi_nai_t = string;
+
+using scheme_msin_t   = payload_t;
+using scheme_output_t = payload_t;
+
+struct supi_imsi_t {
+    mcc_mnc_t                                      mccmnc;
+    uint16_t                                       routing_indicator;
+    uint8_t                                        protection_scheme_id;
+    uint8_t                                        public_key_id;
+    std::variant< scheme_msin_t, scheme_output_t > scheme;
+};
+struct mobile_id_suci_t {
+    bool                                    odd_even;
+    nibble_t< 3 >                           type;
+    uint8_t                                 supi_format;
+    std::variant< supi_imsi_t, supi_nai_t > supi;
+};
+struct mobile_id_tmsi_t {
+    nibble_t< 3 > type;
+    octet_t< 2 >  amf_set_id;
+    uint8_t       amf_pointer;
+    octet_t< 4 >  tmsi;
+};
+struct mobile_id_guti_t {
+    nibble_t< 3 > type;
+    mcc_mnc_t     mccmnc;
+    uint8_t       amf_region_id;
+    oectet_t< 2 > amf_set_id;
+    uint8_t       amf_pointer;
+    octet_t< 4 > tmsi;
+};
+struct mobile_id_imei_t {
+    bool                   odd_even;
+    nibble_t< 3 >          type;
+    payload_t              imei;
+};
+
+struct mobile_id_noid_t {
+    uint8_t type;
+};
+
+struct mobile_id_mac_t {
+    nibble_t< 3 > type;
+    octet_t< 6 > mac;
+};
+struct mobile_id_t {
+    uint8_t type;
+    std::variant< mobile_id_noid_t,
+                  mobile_id_suci_t,
+                  mobile_id_guti_t,
+                  mobile_id_imei_t,
+                  mobile_id_tmsi_t,
+                  mobile_id_imseisv_t,
+                  mobile_id_mac_t >
+        id;
+};
+
+struct mm_network_feature_support_t {
+    bool                  mps_indicator;
+    bool                  interworking_without_n26;
+    bool                  emergency_fallback_indicator;
+    bool                  emergency_support_indicator;
+    bool                  ims_voice_over_ps_indicator;
+    std::optional< bool > emergency_support_for_n3gpp;
+    std::optional< bool > mcs_indicator;
+    std::optional< bool > restrict_ec;
+    std::optional< bool > nr_control_plane_ciot;
+    std::optional< bool > n3data;
+    std::optional< bool > hc_cp_ciot;
+    std::optional< bool > up_ciot;
+};
+
+struct imeisv_mobile_id_t {};
+struct rejected_nssai_t {};
 struct nas_message_container_t {};
-struct nas_ksi_t {};
 struct request_type_t {};
 struct old_pud_session_id_t {};
 struct pdu_session_id_t {};
@@ -262,7 +428,6 @@ struct data_status_t {};
 struct downlink_data_status_t {};
 struct s_tmsi_t {};
 struct pdu_session_reactive_result_error_t {};
-struct pdu_session_reactivation_result_t {};
 struct replayed_s1_ue_security_capability_t {};
 struct additional_security_information_t {};
 struct selected_eps_security_algo_t {};
@@ -325,21 +490,83 @@ struct last_visited_tai_t {};
 struct tracking_area_id_t {};
 struct ue_status_t {};
 struct eps_nas_message_container_t {};
-struct nrmm_cause_t {};
-struct nrmm_capability_t {};
+
+using nrmm_cause_t = uint8_t;
+
 struct network_feature_support_t {};
 struct network_slicing_indication_t {};
 struct abba_t {};
 } // namespace mm
 
-namespace cmn{
-struct none_t {};
-struct decimal_t {};
+struct nrmm_unknown_t {};
+struct nrms_unknown_t {};
 
-template<size_t N>
-struct octet_t {
-    std::array< uint8_t, N > _;
+struct nrmm_message_t {
+    uint8_t extended_protocol_discriminator;
+    nibble_t< 4 > security_header_type;
+    uint8_t       message_type;
+    std::variant< nrmm_unknown_t,
+                  registration_request_t,
+                  registration_accept_t,
+                  registration_complete_t,
+                  registration_reject_t,
+                  deregistration_request_ue_origin_t,
+                  deregistration_request_ue_terminate_t,
+                  deregistration_accept_ue_origin_t,
+                  deregistration_accept_ue_terminate_t,
+                  service_request_t,
+                  service_reject_t,
+                  service_accept_t,
+                  configuration_update_command_t,
+                  configuration_update_complete_t,
+                  authentication_request_t,
+                  authentication_response_t,
+                  authentication_reject_t,
+                  authentication_failure_t,
+                  authentication_result_t,
+                  identity_request_t,
+                  identity_response_t,
+                  security_mode_command_t,
+                  security_mode_complete_t,
+                  security_mode_reject_t,
+                  mm_status_t,
+                  notification_t,
+                  notification_response_t,
+                  ul_nas_transparent_container_t,
+                  dl_nas_transparent_container_t >
+        ie;
+};
+struct nrsm_message_t {
+    uint8_t extended_protocol_discriminator;
+    uint8_t pdu_session_id;
+    uint8_t procedure_transaction_id;
+    uint8_t message_type;
+    std::variant< nrsm_unknown_t,
+                  pdu_session_establishment_request_t,
+                  pdu_session_establishment_accept_t,
+                  pdu_session_establishment_reject_t,
+                  pdu_session_authentication_complete_t,
+                  pdu_session_modification_request_t,
+                  pdu_session_modification_reject_t,
+                  pdu_session_modification_command_t,
+                  pdu_session_modification_complete_t,
+                  pdu_session_modification_command_reject_t,
+                  pdu_session_release_request_t,
+                  pdu_session_release_reject_t,
+                  pdu_session_release_command_t,
+                  pdu_session_release_complete_t nrsm_status_t >
+        ie;
+};
+using nas_plain_message_t = std::variant< nrmm_message_t, nrsm_message_t >;
+
+struct nas_protected_message_t {
+    uint8_t             extended_protocol_discriminator;
+    nibble_t< 4 >       security_header_type;
+    octet_t< 4 >        authentication_code;
+    uint8_t             sequence_no;
+    nas_plain_message_t body;
 };
 
+using nas_message_t = std::variant< nas_plain_message_t, nas_protected_message_t >;
 
-} // namespace cmn
+using nas_message_container_t = nas_message_t;

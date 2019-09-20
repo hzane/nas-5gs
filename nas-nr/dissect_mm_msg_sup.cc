@@ -78,18 +78,31 @@ extern const message_meta mm::msgs[] = {
     {0x42, "Registration accept", dissect_registration_accept, nullptr},
     {0x43, "Registration complete", dissect_registration_complete, nullptr},
     {0x44, "Registration reject", dissect_registration_reject, nullptr},
-    {0x45, "Deregistration request (UE originating)",
-     dissect_deregistration_request_ue_origin, nullptr},
-    {0x46, "Deregistration accept (UE originating)",
-     dissect_deregistration_accept_ue_origin, nullptr},
+
+    {
+        0x45,
+        "Deregistration request (UE originating)",
+        dissect_deregistration_request_ue_origin,
+        nullptr,
+    },
+    {
+        0x46,
+        "Deregistration accept (UE originating)",
+        dissect_deregistration_accept_ue_origin,
+        nullptr,
+    },
     {
         0x47,
         "Deregistration request (UE terminated)",
         dissect_deregistration_request_ue_terminate,
         nullptr,
     },
-    {0x48, "Deregistration accept (UE terminated)",
-     dissect_deregistration_accept_ue_terminate, nullptr},
+    {
+        0x48,
+        "Deregistration accept (UE terminated)",
+        dissect_deregistration_accept_ue_terminate,
+        nullptr,
+    },
 
     {0x49, "Not used in current version", no_dissect, nullptr},
     {0x4a, "Not used in current version", no_dissect, nullptr},
@@ -106,15 +119,21 @@ extern const message_meta mm::msgs[] = {
     {0x53, "Not used in current version", no_dissect, nullptr},
 
     {0x54, "Configuration update command", dissect_configuration_update_command, nullptr},
-    {0x55, "Configuration update complete", dissect_configuration_update_complete, nullptr},
+    {
+        0x55,
+        "Configuration update complete",
+        dissect_configuration_update_complete,
+        nullptr,
+    },
+
     {0x56, "Authentication request", dissect_authentication_request, nullptr},
     {0x57, "Authentication response", dissect_authentication_response, nullptr},
     {0x58, "Authentication reject", dissect_authentication_reject, nullptr},
     {0x59, "Authentication failure", dissect_authentication_failure, nullptr},
-
     {0x5a, "Authentication result", dissect_authentication_result, nullptr},
+
     {0x5b, "Identity request", dissect_identity_request, nullptr},
-    {0x5c, "Identity response", dissect_identity_resp, nullptr},
+    {0x5c, "Identity response", dissect_identity_response, nullptr},
     {0x5d, "Security mode command", dissect_security_mode_command, nullptr},
     {0x5e, "Security mode complete", dissect_security_mode_complete, nullptr},
     {0x5f, "Security mode reject", dissect_security_mode_reject, nullptr},
@@ -123,6 +142,7 @@ extern const message_meta mm::msgs[] = {
     {0x61, "Not used in current version", no_dissect, nullptr},
     {0x62, "Not used in current version", no_dissect, nullptr},
     {0x63, "Not used in current version", no_dissect, nullptr},
+
     {0x64, "5GMM status", dissect_mm_status, nullptr},
     {0x65, "Notification", dissect_notification, nullptr},
     {0x66, "Notification response", dissect_notification_response, nullptr},
@@ -183,7 +203,7 @@ extern const element_meta mm::nas_msg_container = {
 };
 
 // EPS bearer context status	9.11.3.59
-extern const element_meta mm::eps_bearer_ctx_status = {
+extern const element_meta mm::eps_bearer_context_status = {
     0x60,
     "EPS bearer context status",
     dissect_eps_bearer_context_status,
@@ -222,7 +242,7 @@ const field_meta mm::hf_follow_on_request = {
     "Follow-On Request bit (FOR)",
     "nas.nr.mm.for",
     ft::ft_boolean,
-    fd::sep_dot,
+    fd::base_dec,
     nullptr,
     &tfs_follow_on_request,
     nullptr,

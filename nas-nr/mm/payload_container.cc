@@ -133,7 +133,7 @@ int mm::dissect_ue_policy_delivery_procedure(dissector d, context* ctx) {
      * 3GPP TS 24.007
      * XXX Only 5GSM ?
      */
-    (void) d.add_item(1, nas::hf_proc_trans_id, enc::be);
+    (void) d.add_item(1, nas::hf_procedure_transaction_id, enc::be);
     d.step(1);
 
     /* Message type IE*/

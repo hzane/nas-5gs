@@ -72,8 +72,3 @@ const field_meta cmn::hf_e212_mnc = {
     nullptr,
     0,
 };
-
-struct mcc_mnc_t {
-    std::string mcc = {};
-    std::string mnc = {};
-};

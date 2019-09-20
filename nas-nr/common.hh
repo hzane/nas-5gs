@@ -33,14 +33,11 @@ int dissect_e212_mcc_mnc(dissector d, context*); // implemented in e212_mcc_mnc.
 extern const field_meta hf_5gmm_registration_status;
 extern const field_meta hf_emm_registration_status;
 
-// 9.11.2.7 N1 mode to S1 mode NAS transparent container page.350
-int dissect_n1_to_s1_mode_container(dissector d, context* ctx); // NOLINT
+int dissect_n1_to_s1_mode_container(dissector d, context* ctx); // 9.11.2.7
 
-// 9.11.2.9	S1 mode to N1 mode NAS transparent container
-int dissect_s1_to_n1_mode_container(dissector d, context*ctx);
+int dissect_s1_to_n1_mode_container(dissector d, context*ctx);// 9.11.2.9
 
-// 9.11.2.6 Intra N1 mode NAS transparent container page.349
-int dissect_intra_n1_mode_container(dissector d, context* ctx);
+int dissect_intra_n1_mode_container(dissector d, context* ctx);// 9.11.2.6
 
 // S-NSSAI   9.11.2.8
 int dissect_s_nssai(dissector d, context* ctx);
@@ -57,4 +54,7 @@ extern const field_meta hf_ksi_5g;
 extern const field_meta hf_security_context_type;
 extern const field_meta hf_kacf;
 extern const field_meta hf_next_hop_chaining_counter;
+
+extern const true_false_string tfs_ue_status_n1_mode;
+extern const true_false_string tfs_emm_registration_status;
 } // namespace cmn
