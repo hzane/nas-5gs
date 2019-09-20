@@ -57,6 +57,20 @@ int sm::dissect_pdu_address(dissector d, context* ctx) {
     return uc.length;
 }
 
+struct pdu_address_ipv4_t {};
+struct pdu_address_ipv6_t {};
+struct pdu_address_ip64_t {};
+struct pdu_address_unknown_t{};
+
+struct pdu_address_t {
+    uint8_t type;
+    std::variant< pdu_address_ipv4_t,
+                   pdu_address_ipv6_t,
+                   pdu_address_ip64_t,
+                   pdu_address_unknown_t >
+        address;
+};
+
 const field_meta sm::hf_pdu_address_ipv4 = {
     "PDU address information",
     "nas.nr.sm.pdu_addr_inf_ipv4",

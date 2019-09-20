@@ -10,6 +10,10 @@ int sm::dissect_sm_cause(dissector d, context* ctx) {
     return 1;
 }
 
+struct sm_cause_t {
+    uint8_t cause;
+};
+
 // 5GSM cause 9.11.4.2
 const element_meta sm::sm_cause = {
     0x59,

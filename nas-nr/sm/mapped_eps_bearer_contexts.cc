@@ -3,8 +3,12 @@
 using namespace sm;
 using namespace nas;
 
+struct eps_parameters_t {
+    uint8_t   identifier;
+    payload_t content;
+};
 /* 9.11.4.8 Mapped EPS bearer contexts */
-int dissect_eps_param(dissector d, int i, context* ctx) {
+int dissect_eps_parameters(dissector d, int i, context* ctx) {
     const use_context uc(ctx, "mapped-eps-bearer-contexts", d, 0);
 
     auto     subtree = d.add_item(-1, "EPS parameter %u", i);
@@ -35,8 +39,22 @@ int dissect_eps_param(dissector d, int i, context* ctx) {
     return d.offset - uc.offset;
 }
 
+struct eps_parameter_t {
+
+};
+
+struct bearer_context_t {
+    uint8_t                        identity;
+    std::vector< eps_parameter_t > parameters;
+};
+struct mapped_eps_bearer_contexts_t {
+    uint8_t operation_code;
+    uint8_t ebit;
+    uint8_t parameters_number;
+    std::vector< bearer_context_t > contexts;
+};
 // Mapped EPS  bearer contexts     9.11.4.8
-int sm::dissect_mapped_eps_bearer_ctx(dissector d, context* ctx) {
+int sm::dissect_mapped_eps_bearer_contexts(dissector d, context* ctx) {
     const use_context uc(ctx, "mapped-eps-bearer-contexts", d, 0);
 
     static const field_meta* mapd_eps_b_cont_flags[] = {
@@ -87,7 +105,7 @@ int sm::dissect_mapped_eps_bearer_ctx(dissector d, context* ctx) {
         /* EPS parameters list */
         auto i = 1;
         while (nep > 0) {
-            auto consumed = dissect_eps_param(d, i, ctx);
+            auto consumed = dissect_eps_parameters(d, i, ctx);
             d.step(consumed);
             --nep;
             ++i;
@@ -102,7 +120,7 @@ int sm::dissect_mapped_eps_bearer_ctx(dissector d, context* ctx) {
 const element_meta sm::mapped_eps_bearer_ctx = {
     0x75,
     "Mapped EPS bearer contexts",
-    dissect_mapped_eps_bearer_ctx,
+    dissect_mapped_eps_bearer_contexts,
     nullptr,
 };
 

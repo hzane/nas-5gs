@@ -25,6 +25,10 @@ int sm::dissect_integrity_protection_max_data_rate(dissector d, context* ctx) {
     return 2;
 }
 
+struct integrity_protection_max_data_rate_t {
+    uint8_t uplink_max_rate;
+    uint8_t downlink_max_rate;
+};
 
 // * 9.11.4.7 Integrity protection maximum data rate
 extern const value_string sm::integrity_protection_max_data_rate_values[] = {

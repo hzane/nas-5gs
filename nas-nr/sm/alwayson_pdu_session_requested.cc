@@ -31,3 +31,7 @@ int sm::dissect_alwayson_pdu_session_requested(dissector d, context* ctx) {
 
     return 1;
 }
+
+struct alwayson_pdu_session_requested_t {
+    uint8_t requested;
+};

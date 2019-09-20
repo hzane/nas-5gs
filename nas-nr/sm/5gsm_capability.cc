@@ -17,6 +17,10 @@ int sm::dissect_sm_capability(dissector d, context* ctx) {
     return 1;
 }
 
+struct sm_capability_t {
+    uint8_t reflective_qos;
+};
+
 // 5GSM capability 9.11.4.1
 const element_meta sm::sm_capability = {
     0x28,
@@ -34,4 +38,3 @@ const field_meta sm::hf_reflective_qos = {
     nullptr,
     0x01,
 };
-

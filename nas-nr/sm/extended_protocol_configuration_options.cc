@@ -49,6 +49,11 @@ int sm::dissect_extended_protocol_configuration_options(dissector d, context* ct
     return uc.length;
 }
 
+struct extended_protocol_configuration_options_t {
+    uint8_t options;
+    uint8_t protocol;
+};
+
 // Extended protocol configuration options  9.11.4.6
 const element_meta sm::extended_pco = {
     0x7B,

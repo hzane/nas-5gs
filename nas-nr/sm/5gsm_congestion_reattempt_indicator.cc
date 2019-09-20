@@ -16,3 +16,7 @@ int sm::dissect_sm_congestion_reattempt(dissector d, context* ctx) {
     d.step(1);
     return 1;
 }
+
+struct sm_congestion_reattempt_t {
+    uint8_t abo;
+};

@@ -36,7 +36,7 @@ extern const message_meta sm::msgs[] = {
     {
         0xc5,
         "PDU session authentication command",
-        dissect_pdu_session_authentication_cmd,
+        dissect_pdu_session_authentication_command,
         nullptr,
     },
 
@@ -254,4 +254,3 @@ const field_meta sm::hf_sm_packet_filter_type = {
     nullptr,
     0x0,
 };
-
