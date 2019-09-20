@@ -163,9 +163,9 @@ extern const element_meta mm::pdu_session_status = {
     nullptr,
 };
 
-extern const field_meta mm::hfm_nas_eps_nas_ksi = { // NOLINT
+extern const field_meta mm::hf_eps_nas_ksi = { // NOLINT
     "NAS key set identifier",
-    "nas_eps.emm.nas.key.set.id",
+    "nas.mm.nas.key.set.id",
     ft::ft_uint8,
     fd::base_dec,
     nas_ksi_values,
@@ -218,7 +218,7 @@ const true_false_string mm::tfs_follow_on_request = {
     "No follow-on request pending",
 };
 
-const field_meta mm::hf_follow_on_req = {
+const field_meta mm::hf_follow_on_request = {
     "Follow-On Request bit (FOR)",
     "nas.nr.mm.for",
     ft::ft_boolean,

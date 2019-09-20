@@ -18,7 +18,7 @@ int mm::dissect_registration_req(dissector d, context* ctx) {
     /*   5GS registration type  9.11.3.7    M    V    1/2  H0*/
     (void) dissect_registration_request_type(d, ctx);
     /*    ngKSI    NAS key set identifier 9.11.3.32    M    V    1/2 H1*/
-    (void) d.add_item(1, &hf_nas_ksi, enc::be);
+    (void) dissect_v(nullptr, &nas_ksi, d, ctx);
     d.step(1);
 
     /* 5GS mobile identity 9.11.3.4    M    LV-E    6-n*/

@@ -10,7 +10,7 @@ int mm::dissect_nas_ksi(dissector d, context* ctx) {
 
     static const field_meta* flags[] = {
         &hf_security_context_type,
-        &hfm_nas_eps_nas_ksi,
+        &hf_eps_nas_ksi,
         nullptr,
     };
 
