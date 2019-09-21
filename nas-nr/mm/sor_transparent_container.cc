@@ -44,7 +44,7 @@ int mm::dissect_sor_transparent_container(dissector d, context* ctx) {
         nullptr,
     };
     /* 3GPP TS 31.102 [22] subclause 4.2.5 */
-    static const field_meta* flags_acces_tech_1[] = {
+    static const field_meta* flags_access_technology_1[] = {
         &hf_access_tech_utran,
         &hf_access_tech_eutran,
         &hf_access_tech_eutran_wb,
@@ -56,7 +56,7 @@ int mm::dissect_sor_transparent_container(dissector d, context* ctx) {
         nullptr,
     };
 
-    static const field_meta* flags_acces_tech_2[] = {
+    static const field_meta* flags_access_technology_2[] = {
         &hf_access_tech_o2_b7,
         &hf_access_tech_o2_b6,
         &hf_access_tech_o2_b5,
@@ -106,10 +106,10 @@ int mm::dissect_sor_transparent_container(dissector d, context* ctx) {
                 d.step(consumed);
 
                 /* access technology identifier 1    octet 26*- 27* */
-                d.add_bits(flags_acces_tech_1);
+                d.add_bits(flags_access_technology_1);
                 d.step(1);
 
-                d.add_bits(flags_acces_tech_2);
+                d.add_bits(flags_access_technology_2);
                 d.step(1);
 
                 i++;

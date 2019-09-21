@@ -373,11 +373,15 @@ struct control_plane_only_indication_t {};
 } // namespace sm
 
 namespace mm{
-struct nssai_t {};
-
-struct allowed_nssai_t {
-    std::vector< nssai_t > nssais;
+struct nssai_t {
+    uint8_t                            cause;
+    uint8_t                            slice_service_type;
+    optional< slice_differentiator_t > sd;
 };
+
+using allowed_nssai_t = std::vector< nssai_t >;
+
+using rejected_nssai_t = std::vector< nssai_t >;
 
 using tracking_area_code_t = octet_t< 3 >;
 
@@ -634,7 +638,33 @@ struct timezone_time_t {
     uint8_t timezone;
 };
 
-struct sms_indication_t {};
+struct codec_bitmap_t {
+    bool tdma_efr;
+    bool umts_amr2;
+    bool umts_amr;
+    bool hr_amr;
+    bool fr_amr;
+    bool gsm_efr;
+    bool gsm_hr;
+    bool gsm_fr;
+    optional< bool > umts_evs;
+    optional< bool > ohr_amr_wb;
+    optional< bool > ofr_amr_wb;
+    optional< bool > ohr_arm;
+    optional< bool > umts_amr_wb;
+    optional< bool > fr_amr_wb;
+    optional< bool > pdc_efr;
+};
+
+struct supported_codec_t {
+    uint8_t system_indentification;
+    codec_bitmap_t bitmap;
+};
+using supported_codec_list_t = std::vector< supported_codec_t >;
+
+using sms_indication_t = bool;
+using service_type_t   = uint8_t;
+
 struct operator_defined_access_category_t {};
 struct local_timezone_t {};
 struct network_name {};
@@ -646,20 +676,115 @@ struct authentication_response_parameter_t {};
 struct authentication_parameter_autn {};
 struct authentication_parameter_rand_t {};
 struct authentication_failure_parameter_t {};
+
+struct registration_request_t {
+    nibble_t< 4 >                          type;
+    nas_ksi_t                              nas_ksi;
+    mobile_id_t                            mobile_id;
+    optional< nas_ksi >                    native_nas_ksi;
+    optional< nrmm_capability_t >          mm_capability;
+    optional< ue_security_capability_t >   ue_security_capability;
+    optional< nssai_t >                    requested_nssai;
+    optional< tracking_area_id_t >         last_visited_tai;
+    optional< s1_ue_network_capability_t > s1_ue_network_capability;
+};
+
+struct registration_reject_t {
+    uint8_t                    mm_cause;
+    optional< gprs_timer_3_t > t3346_timer;
+    optional< gprs_timer_2_t > t3502_timer;
+    optional< eap_message_t >  eap_message;
+};
+
+struct registration_complete_t {
+    optional< sor_transparent_container_t > container;
+};
+
+struct registration_accept_t {
+    registration_result_t               result;
+    optional< mobile_id >               guti_mobile_id;
+    optional< plmn_list_t >             plmn_list;
+    optional< tracking_area_id_list_t > tai_list;
+    optional< nssai_t >                 allowed_nssai;
+    optional< rejected_nssai_t >        rejected_nssai;
+    optional< nssai_t >                 configured_nssai;
+    optional< network_feature_support_t > network_feature_support;
+    optional< pdu_session_status_t >      pdu_session_status;
+    optional< pdu_session_reactivation_result_t > pdu_session_reactivation_result;
+    optional< pdu_session_reactivation_result_error_cause_t > error_cause;
+    optional< ladn_information_t >                            ladn_information;
+    optional< nibble_t< 4 > >                                 mico_indication;
+    optional< nibble_t< 4 > >                                 network_slicing_indication;
+    optional< service_area_list_t >                           service_area_list;
+    optional< gprs_timer_3_t >                                t3512_timer;
+    optional< gprs_timer_2_t >                                n3_deregistration_timer;
+    optional< gprs_timer_2_t >                                t3502_timer;
+    optional< emergency_number_list_t >                       emergency_number_list;
+    optional< extended_emergency_number_list_t > extended_emergency_number_list;
+    optional< sor_transparent_container_t >      sor_container;
+    optional< eap_message_t >                    eap_message;
+};
+
 struct registration_result_t {};
+
 struct n3gpp_network_provided_policies_t {};
 struct negotiated_drx_parametereter_t {};
 struct operator_defined_acd_t {};
 struct nssai_inclusion_mode_t {};
 struct eap_message_t {};
-struct sor_transparent_container_t {};
+
+struct sor_plmnid_list_t {
+    mcc_mnc_t mccmnc;
+    uint8_t   access_technology_identifier_1;
+    uint8_t   access_technology_identifier_2;
+};
+struct sor_mac_iausf_t {
+    uint8_t sor_header;
+    sor_mac_iausf_t sor_mac_iausf;
+    uint16_t        counter;
+    std::variant< sor_secured_packet_t, sor_plmnid_list_t > item;
+};
+struct sor_mac_iue_t {
+    uint8_t       header;
+    octet_t< 16 > iue;
+};
+using sor_transparent_container_t = std::variant< sor_mac_iausf_t, sor_mac_iue_t >;
+
 struct extended_emergency_number_list_t {};
 struct emergency_number_list_t {};
 struct t3502_t {};
 struct gprs_timer2_t {};
 struct n3g_deregistration_timer_t {};
 struct t3512_t {};
-struct service_area_list_t {};
+
+struct service_area_00_t {
+    mcc_mnc_t mccmnc;
+    std::vector< octet_t< 3 > > tracking_area_code;
+};
+struct service_area_01_t {
+    mcc_mnc_t mccmnc;
+    octet_t< 3 > tracking_area_code;
+};
+using service_area_10_t = std::vector< service_area_01_t >;
+
+struct service_area_11_t {
+    mcc_mnc_t mccmnc;
+};
+
+struct service_area_t {
+    bool          allowed_type;
+    nibble_t< 2 > list_type;
+    nibble_t< 5 > number;
+    std::variant< service_area_00_t,
+                  service_area_01_t,
+                  service_area_10_t,
+                  service_area_11_t >
+        value;
+};
+struct service_area_list_t {
+    std::vector< service_area_t > value;
+};
+
 struct ladn_information_t {};
 struct guti_mobile_id_t {};
 struct requested_nssai_t {};
@@ -701,6 +826,71 @@ struct abba_t {};
 
 struct nrmm_unknown_t {};
 struct nrms_unknown_t {};
+
+struct service_reject_t {
+    nrmm_cause_t                     cause;
+    optional< pdu_session_status_t > pdu_session_status;
+    optional< gprs_timer_2_t >       t3346_timer;
+    optional< eap_message_t >        eap_message;
+    optional< grps_timer_3_t >       t3348_timer;
+};
+
+struct service_request_t {
+    nibble_t< 4 >                            nas_ksi;
+    nibble_t< 4 >                            service_type;
+    s_tmsi_t                                 s_tmsi;
+    optional< uplink_data_status_t >         uplink_data_status;
+    optional< pdu_session_status_t >         pdu_session_status;
+    optional< allowed_pdu_session_status_t > allowed_pdu_session_status;
+    optional< payload_t >                    container;
+};
+
+struct pdu_session_reactivation_result_error_cause_t {};
+struct pdu_session_reactivation_result_t {};
+struct service_accept_t {
+    optional< pdu_session_status_t >              pdu_session_status;
+    optional< pdu_session_reactivation_result_t > pdu_session_reactivation_result;
+    optional< pdu_session_reactivation_result_error_cause_t > error_cause;
+    optional< eap_message_t >                                 eap_message;
+    optional< gprs_timer3 >                                   t3348;
+};
+
+struct security_mode_reject_t {
+    nrmm_cause_t cause;
+};
+
+struct security_mode_complete_t {
+    optional< mobile_id_t > imeisv;
+    optional< eap_message_t > eap_message;
+};
+
+struct security_mode_command_t {
+    security_algorithm_t    algo;
+    nas_ksi_t               nas_ksi;
+    security_capabilities_t replayed_ue_security_capabilities;
+    optional< nibble_t< 4 > >                     imeisv_request;
+    optional< security_algorithm_t >              selected_eps_security_algo;
+    optional< additional_security_information_t > additional;
+    optional< eap_message_t >                     eap_message;
+    optional< abba_t >                            abba;
+    optional< security_capabilities_t >           replayed_s1_ue_security_capability;
+};
+
+struct ue_security_capability_t {
+    uint8_t nea;
+    uint8_t nia;
+    uint8_t eea;
+    uint8_t eia;
+};
+using replayed_ue_security_capability_t = ue_security_capability_t;
+
+struct s1_ue_network_capability_t {
+    uint8_t eea;
+    uint8_t eia;
+    uint8_t uea;
+    uint8_t uia;
+};
+using reported_ue_network_capability_t = s1_ue_network_capability_t;
 
 struct nrmm_message_t {
     uint8_t extended_protocol_discriminator;
@@ -838,3 +1028,4 @@ struct nas_protected_message_t {
 using nas_message_t = std::variant< nas_plain_message_t, nas_protected_message_t >;
 
 using nas_message_container_t = nas_message_t;
+using security_protected_nas_message = nas_message_t;

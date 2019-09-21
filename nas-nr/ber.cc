@@ -85,7 +85,7 @@ int dissect_opt_t(const field_meta *,
                        context *           ctx) {
     (void) ctx;
     const auto e = static_cast< optional_element_intra* >(d.data);
-    set_elem_presence(e, false);
+    elem_set_presence(e, false);
 
     if (d.length <= 0) return not_present_diag(0, val_meta, ctx);
 
@@ -93,8 +93,8 @@ int dissect_opt_t(const field_meta *,
     if (iei != val_meta->type && val_meta->type != 0xffu)
         return not_present_diag(0, val_meta, ctx);
 
-    set_elem_presence(e, true);
-    set_elem_type(e, iei);
+    elem_set_presence(e, true);
+    elem_set_id(e, iei);
 
     d.add_item(1, val_meta->name);
     d.step(1);
@@ -108,13 +108,13 @@ int dissect_opt_lv(const field_meta *,
                         dissector           d,
                         context *           ctx) {
     auto e = static_cast< optional_element_intra* >(d.data);
-    set_elem_presence(e,false);
+    elem_set_presence(e,false);
 
     if (d.length <= 0) return not_present_diag(0, val_meta, ctx);
-    set_elem_presence(e, true);
+    elem_set_presence(e, true);
 
     const auto parm_len = static_cast< int >(d.uint8());
-    set_elem_length(e, parm_len);
+    elem_set_length(e, parm_len);
 
     const auto subtree = d.add_item(1 + parm_len, val_meta->name);
     const use_tree ut(d, subtree);
@@ -137,13 +137,13 @@ int dissect_opt_lv_e(const field_meta *,
                           dissector           d,
                           context *           ctx) {
     auto e = static_cast< optional_element_intra* >(d.data);
-    set_elem_presence(e, false);
+    elem_set_presence(e, false);
 
     if (d.length <= 0) return not_present_diag(0, val_meta, ctx);
 
     const auto parm_len = d.ntohs();
-    set_elem_presence(e, true);
-    set_elem_length(e, parm_len);
+    elem_set_presence(e, true);
+    elem_set_length(e, parm_len);
 
     const auto subtree = d.add_item(2 + parm_len, val_meta->name);
     use_tree ut(d, subtree);
@@ -152,7 +152,7 @@ int dissect_opt_lv_e(const field_meta *,
     d.step(2);
 
     const auto fnc      = val_meta->fnc ? val_meta->fnc : dissect_msg_unknown_body;
-    const auto consumed = fnc(d.slice(parm_len).use_elem(get_elem_data(e)), ctx);
+    const auto consumed = fnc(d.slice(parm_len).use_elem(elem_get_data(e)), ctx);
     d.step(consumed);
 
     return parm_len + 2;
@@ -168,7 +168,7 @@ int dissect_opt_v(const field_meta *,
                        dissector           d,
                        context *           ctx) {
     auto e = static_cast< optional_element_intra* >(d.data);
-    set_elem_presence(e, false);
+    elem_set_presence(e, false);
 
     if (d.length <= 0) return not_present_diag(0, val_meta, ctx);
 
@@ -178,8 +178,8 @@ int dissect_opt_v(const field_meta *,
     const auto consumed = val_meta->fnc(d, ctx);
     subtree->set_length(consumed);
 
-    set_elem_presence(e, consumed>0);
-    set_elem_length(e, consumed);
+    elem_set_presence(e, consumed>0);
+    elem_set_length(e, consumed);
 
     return consumed;
 }
@@ -197,7 +197,7 @@ int dissect_opt_tv_short(const field_meta *,
                               dissector           d,
                               context *           ctx) {
     const auto e = static_cast< optional_element_intra* >(d.data);
-    set_elem_presence(e, false);
+    elem_set_presence(e, false);
 
     if (d.length <= 0) return not_present_diag(0, val_meta, ctx);
 
@@ -205,13 +205,13 @@ int dissect_opt_tv_short(const field_meta *,
     if (iei != (val_meta->type & 0xf0u) && val_meta->type != 0xffu)
         return not_present_diag(0, val_meta, ctx);
 
-    set_elem_presence(e, true);
-    set_elem_type(e, iei);
+    elem_set_presence(e, true);
+    elem_set_id(e, iei);
 
     const auto subtree = d.add_item(1, val_meta->name);
     const use_tree ut(d, subtree);
 
-    const auto consumed = val_meta->fnc(d.use_elem(get_elem_data(e)), ctx);
+    const auto consumed = val_meta->fnc(d.use_elem(elem_get_data(e)), ctx);
     unused(consumed);
 
     return 1;
@@ -229,7 +229,7 @@ int dissect_opt_tv(const field_meta *,
                         dissector           d,
                         context *           ctx) {
     const auto e = static_cast< optional_element_intra* >(d.data);
-    set_elem_presence(e, false);
+    elem_set_presence(e, false);
 
     if (d.length <= 0) return not_present_diag(0, val_meta, ctx);
 
@@ -237,8 +237,8 @@ int dissect_opt_tv(const field_meta *,
     if (iei != val_meta->type && val_meta->type != 0xffu)
         return not_present_diag(0, val_meta, ctx);
 
-    set_elem_presence(e, true);
-    set_elem_type(e, iei);
+    elem_set_presence(e, true);
+    elem_set_id(e, iei);
 
     proto_node* subtree = nullptr;
     if (val_meta->name) {
@@ -247,10 +247,10 @@ int dissect_opt_tv(const field_meta *,
     }
     d.step(1);
 
-    const auto consumed = val_meta->fnc(d.use_elem(get_elem_data(e)), ctx);
+    const auto consumed = val_meta->fnc(d.use_elem(elem_get_data(e)), ctx);
 
     if(subtree) subtree->set_length(consumed + 1);
-    set_elem_length(e, consumed);
+    elem_set_length(e, consumed);
 
     return consumed + 1;
 }
@@ -261,7 +261,7 @@ int dissect_opt_tlv(const field_meta *,
                          dissector           d,
                          context *           ctx) {
     const auto e = static_cast< optional_element_intra* >(d.data);
-    set_elem_presence(e, false);
+    elem_set_presence(e, false);
 
     if (d.length <= 0) return not_present_diag(0, val_meta, ctx);
 
@@ -269,8 +269,8 @@ int dissect_opt_tlv(const field_meta *,
     if (iei != val_meta->type && val_meta->type != 0xffu)
         return not_present_diag(0, val_meta, ctx);
 
-    set_elem_presence(e, true);
-    set_elem_type(e, iei);
+    elem_set_presence(e, true);
+    elem_set_id(e, iei);
 
     const auto parm_len = d.tvb->uint8(d.offset + 1);
 
@@ -285,9 +285,9 @@ int dissect_opt_tlv(const field_meta *,
 
     const auto fnc = val_meta->fnc ? val_meta->fnc : dissect_msg_unknown_body;
 
-    const auto consumed = fnc(d.slice(parm_len).use_elem(get_elem_data(e)), ctx);
+    const auto consumed = fnc(d.slice(parm_len).use_elem(elem_get_data(e)), ctx);
     d.step(consumed);
-    set_elem_length(e, consumed);
+    elem_set_length(e, consumed);
 
     return parm_len + 2;
 }
@@ -307,7 +307,7 @@ int dissect_opt_telv(const field_meta *,
                           dissector           d,
                           context *           ctx) {
     auto e = static_cast< optional_element_intra * >(d.data);
-    set_elem_presence(e, false);
+    elem_set_presence(e, false);
 
     if (d.length <= 0) return not_present_diag(0, val_meta, ctx);
 
@@ -315,8 +315,8 @@ int dissect_opt_telv(const field_meta *,
     if (iei != val_meta->type && val_meta->type != 0xffu)
         return not_present_diag(0, val_meta, ctx);
 
-    set_elem_presence(e, true);
-    set_elem_type(e, iei);
+    elem_set_presence(e, true);
+    elem_set_id(e, iei);
 
     uint16_t parm_len     = d.tvb->uint8(d.offset + 1);
     auto     len_length = 1;
@@ -340,9 +340,9 @@ int dissect_opt_telv(const field_meta *,
     if (parm_len == 0) return 1 + len_length;
 
     const auto fnc      = val_meta->fnc ? val_meta->fnc : dissect_msg_unknown_body;
-    const auto consumed = fnc(d.slice(parm_len).use_elem(get_elem_data(e)), ctx);
+    const auto consumed = fnc(d.slice(parm_len).use_elem(elem_get_data(e)), ctx);
 
-    set_elem_length(e, consumed);
+    elem_set_length(e, consumed);
 
     return 1 + len_length + consumed;
 }
@@ -364,8 +364,8 @@ int dissect_opt_tlv_e(const field_meta *,
     if (iei != val_meta->type && val_meta->type != 0xffu)
         return not_present_diag(0, val_meta, ctx);
 
-    set_elem_presence(e, true);
-    set_elem_type(e, iei);
+    elem_set_presence(e, true);
+    elem_set_id(e, iei);
 
     const auto parm_len = d.tvb->ntohs(d.offset + 1);
 
@@ -379,9 +379,9 @@ int dissect_opt_tlv_e(const field_meta *,
     if (parm_len == 0) return 1 + 2;
 
     const auto fnc = val_meta->fnc ? val_meta->fnc : dissect_msg_unknown_body;
-    const auto consumed = fnc(d.slice(parm_len).use_elem(get_elem_data(e)), ctx);
+    const auto consumed = fnc(d.slice(parm_len).use_elem(elem_get_data(e)), ctx);
 
-    set_elem_length(e, consumed);
+    elem_set_length(e, consumed);
 
     return 1 + 2 + consumed;
 }

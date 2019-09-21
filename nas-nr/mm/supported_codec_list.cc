@@ -9,10 +9,10 @@ const value_string system_id_values[] = {
 
 const field_meta hf_system_indentification = {    {
     "System Identification (SysID)",
-    "gsm.sysid",
+    "gsm.sys.id",
     ft::ft_uint8,
     fd::base_hex,
-     system_id_values,
+    system_id_values,
     nullptr,
     nullptr,
     0x0},
