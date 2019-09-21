@@ -27,7 +27,7 @@ const field_meta hf_bitmap_length = {    {
         nullptr,
         nullptr,
         0x0,
-        
+
     },
 };
 
@@ -42,7 +42,7 @@ const field_meta hf_gsm_a_dtap_codec_tdma_efr   = {{
     0x80,
 }};
 
-const field_meta hf_gsm_a_dtap_codec_umts_amr_2 = {{
+const field_meta hf_umts_amr_2 = {{
     "UMTS AMR 2",
     "gsm.codec.umts.amr.2",
     ft::ft_boolean,
@@ -53,7 +53,7 @@ const field_meta hf_gsm_a_dtap_codec_umts_amr_2 = {{
     0x40,
 }};
 
-const field_meta hf_gsm_a_dtap_codec_umts_amr   = {{
+const field_meta hf_umts_amr   = {{
     "UMTS AMR",
     "gsm.codec.umts.amr",
     ft::ft_boolean,
@@ -71,7 +71,7 @@ const field_meta hf_gsm_a_dtap_codec_hr_amr     = {{
     fd::base_dec,
     nullptr,
     nullptr,
-    nullptr,    
+    nullptr,
     0x10,
 }};
 
@@ -205,8 +205,8 @@ int dissect_codec_bitmap(dissector d, int idx, context* ctx) {
 
     static const field_meta* flags1[] = {
         &hf_gsm_a_dtap_codec_tdma_efr,
-        &hf_gsm_a_dtap_codec_umts_amr_2,
-        &hf_gsm_a_dtap_codec_umts_amr,
+        &hf_umts_amr_2,
+        &hf_umts_amr,
         &hf_gsm_a_dtap_codec_hr_amr,
         &hf_gsm_a_dtap_codec_fr_amr,
         &hf_gsm_a_dtap_codec_gsm_efr,

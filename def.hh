@@ -379,7 +379,33 @@ struct allowed_nssai_t {
     std::vector< nssai_t > nssais;
 };
 
-struct tracking_area_identity_t{};
+using tracking_area_code_t = octet_t< 3 >;
+
+struct tracking_area_id_00_t {
+    mcc_mnc_t                           mccmnc;
+    std::vector< tracking_area_code_t > code;
+};
+
+struct tracking_area_id_01_t {
+    mcc_mnc_t mccmnc;
+    tracking_area_code_t code;
+};
+
+using tracking_area_id_02_t = std::vector< tracking_area_id_01_t >;
+
+struct tracking_area_id_03_t {
+    mcc_mnc_t mccmnc;
+};
+
+struct tracking_area_identity_t {
+    nibble_t< 2 > type;
+    nibble_t< 5 > number;
+    std::variant< tracking_area_id_00_t,
+                  tracking_area_id_01_t,
+                  tracking_area_id_02_t,
+                  tracking_area_id_03_t >
+        value;
+};
 
 using tracking_area_identity_list_t = std::vector< tracking_area_identity_t >;
 
@@ -594,7 +620,20 @@ struct backoff_gprs_timer3 {};
 struct pdu_session_id_t {};
 struct mobile_id_t {};
 struct configured_nssai_t {};
-struct timezone_time_t {};
+
+// struct timezone_t {};
+using timezone_t = uint8_t;
+
+struct timezone_time_t {
+    uint8_t yeaer;
+    uint8_t month;
+    uint8_t mday;
+    uint8_t hour;
+    uint8_t minute;
+    uint8_t second;
+    uint8_t timezone;
+};
+
 struct sms_indication_t {};
 struct operator_defined_access_category_t {};
 struct local_timezone_t {};
@@ -642,7 +681,9 @@ struct payload_container_t {};
 struct nc_native_nas_ksi_t {};
 struct nas_ksi_t {};
 struct last_visited_tai_t {};
+
 struct tracking_area_id_t {};
+
 
 struct ue_status_t {
     bool nmm_registration_status;

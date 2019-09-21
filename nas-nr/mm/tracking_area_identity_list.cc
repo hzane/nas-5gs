@@ -30,7 +30,7 @@ int mm::dissect_tracking_area_id_list(dissector d, context* ctx) {
         d.step(1);
 
         switch (li) {
-        case 0: {
+        case 0:
             // 00
             /*octet 2  MCC digit2  MCC digit1*/
             /*octet 3  MNC digit3  MCC digit3*/
@@ -39,15 +39,14 @@ int mm::dissect_tracking_area_id_list(dissector d, context* ctx) {
             d.step(consumed);
 
             while (num_e > 0) {
-                auto i = d.add_item(3, &hf_tracking_area_code, enc::be);
+                (void) d.add_item(3, &hf_tracking_area_code, enc::be);
                 d.step(3);
 
-                unused(i);
                 --num_e;
             }
 
-        } break;
-        case 1: {
+            break;
+        case 1:
             // 01
             /*octet 2  MCC digit2  MCC digit1*/
             /*octet 3  MNC digit3  MCC digit3*/
@@ -56,12 +55,11 @@ int mm::dissect_tracking_area_id_list(dissector d, context* ctx) {
             d.step(consumed);
 
             /*octet 5  TAC 1*/
-            auto i = d.add_item(3, &hf_tracking_area_code, enc::be);
+            (void) d.add_item(3, &hf_tracking_area_code, enc::be);
             d.step(3);
 
-            unused(i);
-        } break;
-        case 2: {
+            break;
+        case 2:
             // 10
             while (num_e > 0) {
                 /*octet 2  MCC digit2  MCC digit1*/
@@ -71,19 +69,18 @@ int mm::dissect_tracking_area_id_list(dissector d, context* ctx) {
                 d.step(consumed);
 
                 /*octet 5  TAC 1*/
-                auto i = d.add_item(3, &hf_tracking_area_code, enc::be);
+                (void) d.add_item(3, &hf_tracking_area_code, enc::be);
                 d.step(3);
 
-                unused(i);
                 --num_e;
             }
-        } break;
-        case 3: {
+            break;
+        case 3:
             // All other values are reserved.
             // not defined in 24.501 16.1.0
             consumed = dissect_e212_mcc_mnc(d, ctx);
             d.step(consumed);
-        } break;
+            break;
         default:
             diag("reserved type of list %d\n", li);
             d.step(d.length); // consumed all left bytes
