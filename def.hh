@@ -238,62 +238,135 @@ using packet_filter_length_t = uint8_t;
 using packet_filter_direction_t = nibble_t< 2 >;
 using packet_filter_id_t        = nibble_t< 4 >;
 
-struct max_data_rate_t {};
-struct uplink_integrity_protection_max_data_rate_t : max_data_rate_t {};
-struct downlink_integrity_protection_max_data_rate_t : max_data_rate_t {};
+using max_data_rate_t = uint16_t;
+// struct max_data_rate_t {};
+// struct uplink_integrity_protection_max_data_rate_t : max_data_rate_t {};
+// struct downlink_integrity_protection_max_data_rate_t : max_data_rate_t {};
 
 struct nrsm_cause_t {};
 
-struct ssc_mode_t {};
+struct ssc_mode_t {
+    inline static const auto meta = &ssc_mode;
+    inline static const auto values = ssc_mode_values;
+    nibble< 3 >              value;
+};
 struct eps_bearer_content_t {
     uint8_t operation_code;
     uint8_t ebit;
     uint8_t deb;
 };
 
-struct ssc_mode_t {};
-struct ssc_mode_1_t : ssc_mode_t  {};
-struct ssc_mode_2_t : ssc_mode_t {};
-struct ssc_mode_3_t : ssc_mode_t {};
+struct allowed_ssc_mode_t {
+    bool mode_1;
+    bool mode_2;
+    bool mode_3;
+};
 
 struct extended_pco_t {};
 struct congestion_reattempt_t {};
 struct nrsm_cause_t {};
 struct eap_message_t {};
+struct allowed_ssc_mode_t {};
+
+struct reattempt_indicator_t {
+    bool ratc;
+    bool eplmnc;
+};
+// using reattempt_indicator_t = octet_t< 3 >;
 
 struct pdu_session_establishment_reject_t {
-    uint8_t                cause;
-    gprs_timer3_t          backoff_timer;
-    ssc_mode_t             allowed;
-    eap_message_t          eap_message;
-    extended_pco_t         extended_pco;
-    congestion_reattempt_t congestion_reattempt;
+    nrms_cause_t                       cause;
+    optional< gprs_timer3_t >          backoff_timer;
+    optional< allowed_ssc_mode_t >     allowed_ssc_mode;
+    optional< eap_message_t >          eap_message;
+    optional< extended_pco_t >         extended_pco;
+    optional< reattempt_indicator_t >  reattempt_indicator;
+    optional< congestion_reattempt_t > congestion_reattempt;
 };
 
 struct nrsm_cause_t {};
 struct extended_pco_t {};
-struct authorized_qos_rules_t {};
-struct qos_rules_t {};
+
+struct parameter_content_t {};
+struct eps_bearer_identity_t {};
+struct averaging_window_t {};
+
+struct qos_parameter_t {
+    uint8_t id;
+    std::variant< qi5_t,
+                  ambr_t,
+                  averaging_window_t,
+                  eps_bearer_identity_t,
+                  parameter_content_t >
+        content;
+};
+
+struct qos_rule_t {};
+
+// 9.11.4.13 QoS rules
+struct qos_rules_t {
+    inline static const element_meta* meta = &qos_rules;
+    std::vector< qos_rule_t >         rules;
+};
+
 struct mapped_eps_bearer_context_t {};
 struct bearer_context_t {};
 struct nrsm_capability_t {};
-struct max_supported_packet_filters_t {};
-struct session_ambr_t {};
-struct ambr_t {};
+
+struct max_supported_packet_filters_t {
+    uint8_t number;
+    uint8_t c;
+};
+
+struct ambr_t {
+    uint8_t  unit;
+    uint16_t value;
+};
+
+// Session-AMBR 9.11.4.14
+struct session_ambr_t  {
+    inline static const element_meta* meta = session_ambr;
+    ambr_t                            downlink;
+    ambr_t                            uplink;
+};
+
+struct serving_plmn_rate_control_t {
+    inline static const element_meta* meta = serving_plmn_rate_control;
+    uint16_t                          value;
+};
+
 struct alwayson_pdu_session_indication_t {};
 struct pdu_session_indication_t {};
 struct congestion_reattempt_t {};
-struct pdu_session_type_t {};
+
+// struct pdu_session_type_t {};
+using pdu_session_type_t = nibble_t< 4 >;
+
 struct selected_pdu_session_type_t {};
 struct pdu_address_t {};
 struct max_data_rate_t {};
 struct integrity_protection_max_data_rate_t {};
 struct ssc_mode_t {};
-struct pdu_dn_request_container_t {};
+
+struct pdu_dn_request_container_t {
+    inline static const element_meta* meta = &sm_pdu_dn_request_container;
+    inline static const field_meta*   dn_specific_identity = &hf_dn_specific_identity;
+    string                      id; // utf-8 string
+};
 struct requested_qos_rules_t {};
-struct qos_rules_t {};
-struct authorized_qos_flow_description_t {};
-struct qos_flow_description_t {};
+
+struct qos_flow_description_t {
+    uint8_t                        qos_flow_indentity;
+    qos_flow_operation_code_t      qos_flow_operation_code;
+    nibble_t< 1 >                  ebit;
+    nibble_t< 7 >                  number;
+    std::vector< qos_parameter_t > parameters;
+};
+
+struct authorized_qos_flow_descriptions_t {
+    vector< qos_flow_description_t > values;
+};
+
 struct request_qos_flow_description_t {};
 struct control_plane_only_indication_t {};
 
@@ -309,6 +382,8 @@ struct allowed_nssai_t {
 struct tracking_area_identity_t{};
 
 using tracking_area_identity_list_t = std::vector< tracking_area_identity_t >;
+
+using alwayson_pdu_session_requested = nibble< 1 >;
 
 struct pdu_session_indications_t {};
 struct pdu_session_reactivation_result_t : pdu_session_indications_t {};
@@ -417,13 +492,90 @@ struct mm_network_feature_support_t {
     std::optional< bool > up_ciot;
 };
 
+struct session_tmbr_t {};
+struct atsss_container_t {};
+
+struct pdu_session_establishment_accept_t {
+    pdu_session_type_t           type;
+    ssc_mode_t                   selected;
+    qos_rules_t                  authorized_qos_rules;
+    session_ambr_t               session_ambr;
+    std::optional<nrsm_cause_t>                 cause;
+    std::optional<pdu_address_t>                address;
+    std::optional<gprs_timer_t>                 rq_timer;
+    std::optional<s_nssai_t>                    s_nssai;
+    std::optional<pdu_session_indication_t>     alwayson_pdu_session_indication;
+    std::optional<mapped_eps_bearer_contexts_t> mapped_eps_bearer_contexts;
+    std::optional<eap_message_t>                    eap_message;
+    std::optional< qos_flow_description_t >         authorized_qos_flow_description;
+    std::optional< extended_pco_t >                 extened_pco;
+    std::optional< dnn_t >                          dnn;
+    std::optional< network_feature_support_t >      network_feature_support;
+    std::optional< session_tmbr_t >                 session_tmbr_t;
+    std::optional< serving_plmn_rate_control_t >    serving_plmn_rate_control;
+    std::optional< atsss_container_t >              atsss_container;
+    std::optional< control_plane_only_indication_t > control_plane_only_indication;
+};
+
+using pdu_session_type_t = nibble_t< 3 >;
+using alwayson_pdu_session_requested_t = nibble_t< 1 >;
+
+struct pud_session_establishment_request_t {
+    max_data_rate_t                               integrity_protection_max_data_rate;
+    optional< pdu_session_type_t >                pdu_session_type;
+    optional< ssc_mode_t >                        ssc_mode;
+    optional< nrsm_capability_t >                 nrsm_capability;
+    optional< max_supported_packet_filters_t >    max_supported_packet_filters;
+    optional< alwayson_pdu_session_requested_t >  alwayson_pdu_session_requested;
+    optional< pdu_dn_request_container_t >        pdu_dn_request_container;
+    optional< extended_pco_t >                    extended_pco;
+};
+
+struct pdu_session_authentication_result_t {
+    eap_message_t              eap_message;
+    optional< extended_pco_t > extended_pco;
+};
+
+struct pdu_session_authentication_command_t {
+    eap_message_t              eap_message;
+    optional< extended_pco_t > extended_pco;
+};
+
+struct pdu_session_authentication_complete_t {
+    eap_message_t            eap_message;
+    optional<extended_pco_t> extended_pco;
+};
+
+struct ma_pdu_session_information_t {};
+
+using request_type_t = nibble_t< 4 >;
+
+struct uplink_nas_transport_t {
+    nibble_t< 4 >                            payload_container_type;
+    payload_container_t                      payload_container;
+    optional< pdu_session_id_t >             pdu_session_id;
+    optional< pdu_session_id_t >             old_pdu_session_id;
+    optional< request_type_t >               request_type;
+    optional< s_nssai_t >                    s_nssai;
+    optional< dnn_t >                        dnn;
+    optional< additional_information_t >     additional_information;
+    optional< ma_pdu_session_information_t > ma_pdu_session_information;
+};
+
 struct imeisv_mobile_id_t {};
 struct rejected_nssai_t {};
 struct nas_message_container_t {};
 struct request_type_t {};
 struct old_pud_session_id_t {};
 struct pdu_session_id_t {};
-struct uplink_data_status_t {};
+
+// struct uplink_data_status_t {};
+using uplink_data_status_t = octet_t< 2 >;
+
+struct ue_parameters_update_transparent_container_t {
+    bool data_type;
+};
+
 struct data_status_t {};
 struct downlink_data_status_t {};
 struct s_tmsi_t {};
@@ -479,7 +631,10 @@ struct payload_container_type_t {};
 struct aguti_mobile_id_t {};
 struct allowed_pdu_session_status_t {};
 struct pdu_session_status_t {};
-struct ue_usage_setting_t{};
+
+// struct ue_usage_setting_t{    bool value;};
+using ue_usage_setting_t = bool;
+
 struct s1_ue_network_capability_t {};
 struct ue_security_capability_t {};
 struct ladn_indication_t {};
@@ -488,7 +643,12 @@ struct nc_native_nas_ksi_t {};
 struct nas_ksi_t {};
 struct last_visited_tai_t {};
 struct tracking_area_id_t {};
-struct ue_status_t {};
+
+struct ue_status_t {
+    bool nmm_registration_status;
+    bool emm_registration_status;
+};
+
 struct eps_nas_message_container_t {};
 
 using nrmm_cause_t = uint8_t;
@@ -536,6 +696,72 @@ struct nrmm_message_t {
                   dl_nas_transparent_container_t >
         ie;
 };
+
+struct pdu_session_modification_command_reject_t {
+    optional< nrsm_cause_t >   cause;
+    optional< extended_pco_t > extended_pco;
+};
+
+struct pdu_session_modification_command_t {
+    optional< nrsm_cause_t >                 cause;
+    optional< session_ambr_t >               session_ambr;
+    optional< gprs_timer_t >                 rq_timer;
+    optional< pdu_session_indication_t >     pdu_session_indication;
+    optional< qos_rules_t >                  authorized_qos_rules;
+    optional< mapped_eps_bearer_contexts_t > mapped_eps_bearer_contexts;
+    optional< qos_flow_description_t >       authorized_qos_flow_description;
+    optional< extended_pco_t >               extended_pco;
+    optional< session_tmbr_t >               session_tmbr;
+};
+
+struct pdu_session_modification_complete_t {
+    optional< extended_pco_t > extended_pco;
+    optional< nrsm_cause_t >   cause;
+};
+
+struct pdu_session_modification_reject_t {
+    nrsm_cause                 cause;
+    optional< gprs_timer_3 >   backoff_timer;
+    optional< extended_pco_t > extended_pco;
+    optional< reattempt_indicator_t > reattempt_indicator;
+    optional< congestion_reattempt_t> congestion_reattempt
+};
+
+struct pdu_session_modification_request_t {
+    optional< nrsm_capability_t >                capability;
+    optional< nrsm_cause_t >                     cause;
+    optional< max_supported_packet_filters_t >   max_supported_packet_filters;
+    optional< alwayson_pdu_session_requested_t > alwayson_pdu_session_requested;
+    optional< max_data_rate_t >                  integrity_protection_max_data_rate;
+    optional< qos_rules_t >                      requested_qos_rules;
+    optional< qos_flow_description_t >           requested_qos_flow_description;
+    optional< mapped_eps_bearer_contexts_t >     mapped_eps_bearer_contexts;
+    optional< extended_pco_t >                   extended_pco;
+};
+
+struct pdu_session_release_command_t {
+    nrsm_cause_t                      cause;
+    optional< gprs_timer_3_t >        backoff_timer;
+    optional< eap_message_t >         eap_message;
+    optional< congestion_reattempt_t> congestion_reattempt;
+    optional< extended_pco_t >        extended_pco;
+};
+
+struct pdu_session_release_complete_t {
+    optional< nrsm_cause_t > cause;
+    optional<extended_pco_t> extended_pco;
+};
+
+struct pdu_session_release_reject_t {
+    nrsm_cause_t               cause;
+    optional< extended_pco_t > extended_pco;
+};
+
+struct pdu_session_release_request_t {
+    optional< nrsm_cause_t >   cause;
+    optional< extended_pco_t > extended_pco;
+};
+
 struct nrsm_message_t {
     uint8_t extended_protocol_discriminator;
     uint8_t pdu_session_id;
@@ -546,6 +772,7 @@ struct nrsm_message_t {
                   pdu_session_establishment_accept_t,
                   pdu_session_establishment_reject_t,
                   pdu_session_authentication_complete_t,
+                  pdu_session_authentication_command_t,
                   pdu_session_modification_request_t,
                   pdu_session_modification_reject_t,
                   pdu_session_modification_command_t,

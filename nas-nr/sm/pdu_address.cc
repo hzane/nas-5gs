@@ -24,7 +24,7 @@ int sm::dissect_pdu_address(dissector d, context* ctx) {
     const use_context uc(ctx, "pdu-address", d, 8);
 
     const auto val  = static_cast< uint32_t >(d.tvb->uint8(d.offset));
-    (void) d.add_item(1, &hf_sm_pdu_session_type, enc::be);
+    (void) d.add_item(1, &hf_pdu_session_type, enc::be);
     d.step(1);
 
     /* PDU address information */

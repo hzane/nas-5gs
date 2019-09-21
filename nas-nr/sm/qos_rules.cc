@@ -157,7 +157,7 @@ int sm::dissect_qos_rules(dissector d, context* ctx) {
 
     static const field_meta* pkt_flt_flags[] = {
         &hf_sm_rule_operation_code,
-        &hf_sm_default_qos_rule,
+        &hf_default_qos_rule,
         &hf_sm_packet_filters,
         nullptr,
     };
@@ -250,6 +250,13 @@ int sm::dissect_authorized_qos_rules(dissector d, context* ctx) {
     return dissect_qos_rules(d, ctx);
 }
 
+extern const element_meta qos_rules = {
+    0xffu,
+    "Qos rules",
+    dissect_qos_rules,
+    nullptr,
+};
+
 extern const element_meta sm::requested_qos_rules = {
     0x7A,
     "QoS rules - Requested QoS rules",
@@ -258,18 +265,18 @@ extern const element_meta sm::requested_qos_rules = {
 
 };
 /*  9.11.4.13    QoS rules */
-const true_false_string sm::tfs_sm_default_qos_rules = {
+const true_false_string sm::tfs_default_qos_rule = {
     "The QoS rule is the default QoS rule",
     "The QoS rule is not the default QoS rule",
 };
 
-const field_meta sm::hf_sm_default_qos_rule = {
-    "DQR",
+const field_meta sm::hf_default_qos_rule = {
+    "Default Qos rule (DQR)",
     "nas.nr.sm.dqr",
     ft::ft_boolean,
     fd::base_dec,
     nullptr,
-    &tfs_sm_default_qos_rules,
+    &tfs_default_qos_rule,
     nullptr,
     0x10,
 };

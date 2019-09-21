@@ -13,7 +13,7 @@ struct context;
 namespace sm {
 inline const dissect_fnc_t no_dissect = nullptr;
 
-extern const true_false_string tfs_sm_default_qos_rules;
+extern const true_false_string tfs_default_qos_rule;
 extern const message_meta      msgs[];
 extern const value_string      ambr_values[];
 extern const value_string      nrsm_cause_values[];

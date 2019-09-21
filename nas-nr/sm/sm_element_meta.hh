@@ -13,7 +13,7 @@ extern const element_meta session_ambr;
 extern const element_meta rq_gprs_timer;
 extern const element_meta alwayson_pdu_session_indication;
 extern const element_meta allowed_ssc_mode;
-extern const element_meta sm_congestion_reattempt;
+extern const element_meta congestion_reattempt;
 extern const element_meta alwayson_pdu_session_requested;
 extern const element_meta pdu_session_type;
 extern const element_meta selected_pdu_session_type;

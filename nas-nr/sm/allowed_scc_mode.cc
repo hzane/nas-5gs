@@ -17,9 +17,3 @@ int sm::dissect_allowed_ssc_mode(dissector d, context* ctx) {
 
     return 1;
 }
-
-struct allowed_ssc_mode_t {
-    uint8_t mode_1;
-    uint8_t mode_2;
-    uint8_t mode_3;
-};

@@ -101,22 +101,6 @@ const element_meta mm::ue_usage_setting = {
     nullptr,
 };
 
-// UE's usage setting    UE's usage setting         9.11.3.55
-const true_false_string tfs_nas_5gs_mm_ue_usage_setting = {
-    "Data centric",
-    "Voice centric",
-};
-
-const field_meta mm::hf_ue_usage_setting = {
-    "UE's usage setting",
-    "nas.nr.mm.ue.usage.setting",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &tfs_nas_5gs_mm_ue_usage_setting,
-    nullptr,
-    0x01,
-};
 
 const element_meta mm::requested_drx_parameter = {
     0x51,

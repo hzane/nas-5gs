@@ -41,8 +41,15 @@ int sm::dissect_pdu_session_establishment_reject(dissector d, context* ctx) {
     d.step(3);
 
     /*61	5GSM congestion re-attempt indicator  9.11.4.21	O	TLV	3    */
-    consumed = dissect_opt_tlv(nullptr, &sm_congestion_reattempt, d, ctx);
+    consumed = dissect_opt_tlv(nullptr, &congestion_reattempt, d, ctx);
     d.step(consumed);
 
     return uc.length;
 }
+
+const element_meta sm::allowed_ssc_mode = {
+    0xf0,
+    "Allowed SSC mode",
+    sm::dissect_allowed_ssc_mode,
+    nullptr,
+};

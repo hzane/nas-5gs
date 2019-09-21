@@ -1,7 +1,7 @@
 #include "../dissect_sm_msg.hh"
 
 // 5GSM congestion re-attempt indicator 9.11.4.21
-const element_meta sm::sm_congestion_reattempt = {
+const element_meta sm::congestion_reattempt = {
     0x61u,
     "5GSM congestion re-attempt indicator",
     sm::dissect_sm_congestion_reattempt,

@@ -86,7 +86,7 @@ const field_meta hf_qos_flow_ebit = {
 };
 const field_meta hf_sm_parameters_number = {
     "Number of parameters",
-    "nas.nr.sm.nof_params",
+    "nas.nr.sm.number.parameters",
     ft::ft_uint8,
     fd::base_dec,
     nullptr,
@@ -160,4 +160,4 @@ const field_meta hf_eps_bearer_identity = {
 };
 
 
-} // namespace sm_pdu_ses_mod
+}

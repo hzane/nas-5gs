@@ -9,10 +9,6 @@ int sm::dissect_ssc_mode(dissector d, context* ctx) {
     return 1;
 }
 
-struct ssc_mode_t {
-    uint8_t selected;
-};
-
 extern const element_meta sm::ssc_mode = {
     0xa0,
     "SSC mode",
@@ -25,26 +21,10 @@ const val_string ssc_mode_values[] = {
     {0x1, "SSC mode 1"},
     {0x2, "SSC mode 2"},
     {0x3, "SSC mode 3"},
+    {0x4, "SSC mode 1"},
+    {0x5, "SSC mode 2"},
+    {0x6, "SSC mode 3"},
     {0, nullptr},
-};
-
-// Selected SSC mode    SSC mode 9.11.4.16
-extern const field_meta sm::hfm_selected_ssc_mode = {
-    "SSC mode - Selected",
-    "nas.nr.sm.selected.ssc.mode",
-    ft::ft_uint8,
-    fd::base_dec,
-    ssc_mode_values,
-    nullptr,
-    nullptr,
-    0xf0,
-};
-
-const element_meta sm::allowed_ssc_mode = {
-    0xf0,
-    "Allowed SSC mode",
-    sm::dissect_allowed_ssc_mode,
-    nullptr,
 };
 
 

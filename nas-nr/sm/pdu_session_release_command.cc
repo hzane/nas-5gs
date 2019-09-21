@@ -28,7 +28,7 @@ int sm::dissect_pdu_session_release_command(dissector d, context* ctx) {
     d.step(consumed);
 
     /*61	5GSM congestion re-attempt indicator 9.11.4.21	O	TLV	3 */
-    consumed = dissect_opt_tlv(nullptr, &sm_congestion_reattempt, d, ctx);
+    consumed = dissect_opt_tlv(nullptr, &congestion_reattempt, d, ctx);
     d.step(consumed);
 
     /*7B    Extended protocol configuration options 9.11.4.6 O TLV-E 4-65538*/

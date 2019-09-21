@@ -28,8 +28,8 @@ const field_meta sm::hf_sm_qos_flow_identity = {
 };
 
 
-/* 9.11.4.12 QoS flow descriptions */
-const value_string nas_5gs_sm_qos_des_flow_opt_code_vals[] = {
+/* 9.11.4.12 QoS flow descriptions op code*/
+const value_string qos_flow_description_operation_code_values[] = {
     {0x00, "Reserved"},
     {0x01, "Create new QoS flow description"},
     {0x02, "Delete existing QoS flow description"},
@@ -42,7 +42,7 @@ const field_meta sm::hf_qos_flow_operation_code = {
     "nas.nr.sm.qos.flow.operation.code",
     ft::ft_uint8,
     fd::base_dec,
-    nas_5gs_sm_qos_des_flow_opt_code_vals,
+    qos_flow_description_operation_code_values,
     nullptr,
     nullptr,
     0xe0,
@@ -73,20 +73,20 @@ int sm::dissect_qos_parameters(dissector d, int j, context* ctx) {
         break;
         /* 02H (GFBR uplink);*/
     case 0x02:
-    case 0x04: { //  04H (MFBR uplink)
+    case 0x04:  //  04H (MFBR uplink)
         /* Unit for Session-AMBR for uplink */
         /* Session-AMBR for downlink */
         (void) d.add_item(3, &hf_session_ambr_uplink, enc::be);
         d.step(3);
-    } break;
+        break;
 
     case 0x03: /* 03H (GFBR downlink); 05H (MFBR downlink);*/
-    case 0x05: {
+    case 0x05:
         /* Unit for Session-AMBR for uplink */
         /* Session-AMBR for downlink*/
         (void) d.add_item(3, &hf_session_ambr_downlink, enc::be);
         d.step(3);
-    } break;
+        break;
     case 06: // averaging window; and
         (void) d.add_item(2, &hf_averaging_window, enc::be);
         d.step(2);

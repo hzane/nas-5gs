@@ -20,7 +20,7 @@ const field_meta hf_dn_specific_identity = {
 
 // SM PDU DN request container 9.11.4.15
 int sm::dissect_pdu_dn_request_container(dissector d, context* ctx) {
-    const use_context uc(ctx, "dn-specific-identity", d, 0);
+    const use_context uc(ctx, "dn-specific-container", d, 0);
 
     // A DN-specific identity of the UE in the network access identifier (NAI)
     // format according to IETF RFC 7542 [37], encoded as UTF-8 string.
@@ -29,7 +29,3 @@ int sm::dissect_pdu_dn_request_container(dissector d, context* ctx) {
 
     return uc.length;
 }
-
-struct pud_dn_request_container_t {
-    string dn_specific_id;
-};

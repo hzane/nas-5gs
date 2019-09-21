@@ -20,6 +20,9 @@ int dissect_serving_plmn_rate_control(dissector d, context*ctx) {
     return 2;
 }
 
-struct serving_plmn_rate_control_t {
-    uint16_t _;
+const element_meta serving_plmn_rate_control = {
+    0xffu,
+    "Serving PLMN rate control",
+    dissect_serving_plmn_rate_control,
+    nullptr,
 };

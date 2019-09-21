@@ -20,8 +20,3 @@ int sm::dissect_pdu_session_authentication_command(dissector d, context* ctx) {
 
     return uc.length;
 }
-
-struct pdu_session_authentication_command_t {
-    payload_t eap_message;
-    payload_t extended_pco;
-};

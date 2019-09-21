@@ -21,7 +21,7 @@ int sm::dissect_pdu_session_establishment_accept(dissector d, context* ctx) {
     (void) d.add_item(1, &hfm_selected_ssc_mode, enc::be);
     d.step(1);
 
-    /* Authorized QoS rules QoS rules 9.11.4.13 M LV-E 2-65537  DE_NAS_5GS_SM_QOS_RULES*/
+    /* Authorized QoS rules QoS rules 9.11.4.13 M LV-E 2-65537  */
     // ELEM_MAND_LV_E(,DE_NAS_5GS_SM_QOS_RULES, " - Authorized QoS rules",);
     auto consumed = dissect_lv_e(nullptr, &authorized_qos_rules, d, ctx);
     d.step(consumed);
@@ -66,12 +66,10 @@ int sm::dissect_pdu_session_establishment_accept(dissector d, context* ctx) {
     d.step(consumed);
 
     /*7B  Extended protocol configuration options 9.11.4.6    O    TLV-E    4-65538*/
-    // ELEM_OPT_TLV_E(0x7B, , DE_ESM_EXT_PCO, NULL);
     consumed = dissect_opt_tlv_e(nullptr, &extended_pco, d, ctx);
     d.step(consumed);
 
     /* 25 DNN 9.11.2.1A    O    TLV    3-102 */
-    // ELEM_OPT_TLV(0x25, , DE_NAS_5GS_CMN_DNN, NULL);
     consumed = dissect_opt_tlv(nullptr, &dnn, d, ctx);
     d.step(consumed);
 
@@ -96,30 +94,14 @@ int sm::dissect_pdu_session_establishment_accept(dissector d, context* ctx) {
     return uc.length;
 }
 
-struct pdu_session_type_t {};
-struct qos_rules_t {};
-struct ambr_t {};
-struct nrsm_cause_t {};
-struct pdu_address_t {};
-struct s_nssai_t{};
-struct pdu_session_indication_t {};
-struct mapped_eps_bearer_contexts_t {};
-
-struct extended_pco_t {};
-struct congestion_reattempt_t {};
-struct timer_t{};
-
-struct pdu_session_establishment_accept_t {
-    pdu_session_type_t type;
-    qos_rules_t        authorized_qos_rules;
-    ambr_t             session_ambr;
-    nrsm_cause_t         cause;
-    pdu_address_t      address;
-    timer_t            rq_timer;
-    s_nssai_t          s_nssai;
-    pdu_session_indication_t alwayson_pdu_session_indication;
-    mapped_eps_bearer_contexts_t mapped_eps_bearer_contexts;
-    payload_t                    eap_message;
-    extended_pco_t               extened_pco;
-    congestion_reattempt_t       congestion_reattempt;
+// Selected SSC mode    SSC mode 9.11.4.16
+extern const field_meta sm::hfm_selected_ssc_mode = {
+    "SSC mode - Selected",
+    "nas.nr.sm.selected.ssc.mode",
+    ft::ft_uint8,
+    fd::base_dec,
+    ssc_mode_values,
+    nullptr,
+    nullptr,
+    0xf0,
 };
