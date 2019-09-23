@@ -1,4 +1,4 @@
-#include "../dissect_sm_msg.hh"
+#include "../common/dissect_sm_msg.hh"
 
 const true_false_string tfs_pdu_alwayson_session_ind = {
     "Always-on PDU session allowed",

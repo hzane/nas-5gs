@@ -1,5 +1,6 @@
 #pragma once
 #include <algorithm>
+
 #include "config.hh"
 
 struct tree_meta;

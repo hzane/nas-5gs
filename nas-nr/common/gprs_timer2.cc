@@ -1,5 +1,5 @@
-#include "../common.hh"
-#include "../tvbuff.hh"
+#include "common.hh"
+#include "tvbuff.hh"
 
 namespace{
 /* [9] 10.5.7.3 GPRS Timer */

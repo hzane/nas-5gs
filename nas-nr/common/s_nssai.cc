@@ -1,4 +1,4 @@
-#include "../common.hh"
+#include "common.hh"
 
 // S-NSSAI   9.11.2.8
 extern const element_meta cmn::s_nssai = {

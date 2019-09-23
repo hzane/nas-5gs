@@ -1,4 +1,4 @@
-#include "../dissect_sm_msg.hh"
+#include "../common/dissect_sm_msg.hh"
 
 // 9.11.4.14    Session-AMBR
 int sm::dissect_session_ambr(dissector d, context* ctx) {

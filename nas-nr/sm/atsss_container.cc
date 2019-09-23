@@ -1,4 +1,4 @@
-#include "../dissect_sm_msg.hh"
+#include "../common/dissect_sm_msg.hh"
 
 // 9.11.4.22	ATSSS container
 const field_meta hf_atsss_container = {

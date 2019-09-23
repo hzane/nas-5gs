@@ -1,4 +1,4 @@
-#include "../dissect_mm_msg.hh"
+#include "../common/dissect_mm_msg.hh"
 
 // 9.11.3.60	Extended DRX parameters
 // See subclause 10.5.5.32 in 3GPP TS 24.008 [12].

@@ -1,4 +1,4 @@
-#include "../dissect_sm_msg.hh"
+#include "../common/dissect_sm_msg.hh"
 
 // This bit indicates network's capability for Ethernet PDN type in S1 mode.
 const tf_string tfs_epts1 = {

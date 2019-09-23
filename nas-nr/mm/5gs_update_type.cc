@@ -1,4 +1,4 @@
-#include "../dissect_mm_msg.hh"
+#include "../common/dissect_mm_msg.hh"
 
 using namespace cmn;
 using namespace mm;

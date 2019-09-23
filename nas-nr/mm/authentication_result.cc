@@ -1,6 +1,6 @@
-#include "../dissect_mm_msg.hh"
-#include "../ber.hh"
-#include "../common.hh"
+#include "../common/ber.hh"
+#include "../common/common.hh"
+#include "../common/dissect_mm_msg.hh"
 
 using namespace nas;
 

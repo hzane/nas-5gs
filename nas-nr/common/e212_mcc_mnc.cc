@@ -1,6 +1,6 @@
-#include "../config.hh"
-#include "../field_meta.hh"
-#include "../common.hh"
+#include "common.hh"
+#include "config.hh"
+#include "field_meta.hh"
 
 using mcc = string;
 using mnc = string;

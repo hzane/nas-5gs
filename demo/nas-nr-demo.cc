@@ -1,9 +1,10 @@
-#include "core.hh"
+#include <filesystem>
+#include <fstream>
 #include <iostream>
 #include <vector>
-#include <fstream>
-#include <filesystem>
-#include "nas-nr.hh"
+
+#include "../nas-nr/common/core.hh"
+#include "../nas-nr/nas-nr.hh"
 
 namespace fs = std::filesystem;
 using namespace std;

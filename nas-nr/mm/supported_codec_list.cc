@@ -1,4 +1,4 @@
-#include "../dissect_mm_msg.hh"
+#include "../common/dissect_mm_msg.hh"
 
 // 9.11.3.62	Supported codec list
 const value_string system_id_values[] = {

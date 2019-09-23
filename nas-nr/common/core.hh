@@ -1,10 +1,10 @@
 #pragma once
 #include "config.hh"
-#include "tvbuff.hh"
 #include "field_meta.hh"
+#include "packet_info.hh"
 #include "proto.hh"
 #include "tree_meta.hh"
-#include "packet_info.hh"
+#include "tvbuff.hh"
 
 struct protocol_meta {
     const char*   name;

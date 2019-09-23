@@ -1,4 +1,4 @@
-#include "../dissect_mm_msg.hh"
+#include "../common/dissect_mm_msg.hh"
 
 /* 9.11.3.53A   UE parameters update transparent container */
 int mm::dissect_ue_parameters_update_transparent_container(dissector d, context*ctx) {

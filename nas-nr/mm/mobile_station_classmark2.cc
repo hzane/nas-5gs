@@ -1,4 +1,4 @@
-#include "../dissect_mm_msg.hh"
+#include "../common/dissect_mm_msg.hh"
 
 /* Mobile Station Classmark Revision level */
 static const value_string revision_values[] = {

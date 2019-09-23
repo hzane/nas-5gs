@@ -1,4 +1,4 @@
-#include "../dissect_sm_msg.hh"
+#include "../common/dissect_sm_msg.hh"
 
 // SM PDU DN request container 9.11.4.15
 const element_meta sm::sm_pdu_dn_request_container = {

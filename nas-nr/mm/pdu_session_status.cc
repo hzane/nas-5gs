@@ -1,4 +1,4 @@
-#include "../dissect_mm_msg.hh"
+#include "../common/dissect_mm_msg.hh"
 
 /* 9.11.3.44    PDU session status  */
 namespace mm {

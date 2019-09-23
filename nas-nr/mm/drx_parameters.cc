@@ -1,5 +1,4 @@
-#include "../dissect_mm_msg.hh"
-
+#include "../common/dissect_mm_msg.hh"
 
 // DRX parameters 9.11.3.2A
 int mm::dissect_drx_parameter(dissector d, context* ctx) {

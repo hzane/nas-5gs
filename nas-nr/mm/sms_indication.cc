@@ -1,4 +1,4 @@
-#include "../dissect_mm_msg.hh"
+#include "../common/dissect_mm_msg.hh"
 
 /*  9.11.3.50A    SMS indication */
 int mm::dissect_sms_indication(dissector d, context* ctx) {

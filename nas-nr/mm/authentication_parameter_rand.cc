@@ -1,5 +1,4 @@
-#include "../dissect_mm_msg.hh"
-
+#include "../common/dissect_mm_msg.hh"
 
 /* * 9.11.3.16	Authentication parameter RAND */
 int mm::dissect_authentication_parameter_rand(dissector d, context* ctx) {

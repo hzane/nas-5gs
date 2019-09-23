@@ -1,4 +1,4 @@
-#include "../dissect_sm_msg.hh"
+#include "../common/dissect_sm_msg.hh"
 
 const tf_string tfs_ratc = {
     "UE is not allowed to re-attempt the procedure in S1 mode",

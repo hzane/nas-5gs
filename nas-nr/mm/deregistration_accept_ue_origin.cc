@@ -1,4 +1,4 @@
-#include "../dissect_mm_msg.hh"
+#include "../common/dissect_mm_msg.hh"
 
 // no body
 int mm::dissect_deregistration_accept_ue_origin(dissector d, context* ctx) {

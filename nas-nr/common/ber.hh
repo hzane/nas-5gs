@@ -1,6 +1,7 @@
 #pragma once
-#include "core.hh"
 #include <optional>
+
+#include "core.hh"
 
 struct optional_element_intra {
     bool*    presence = nullptr;

@@ -1,4 +1,4 @@
-#include "../dissect_sm_msg.hh"
+#include "../common/dissect_sm_msg.hh"
 
 const tf_string tfs_cpoi = {
     "PDU session can be used for control plane CIoT 5GS optimization only",

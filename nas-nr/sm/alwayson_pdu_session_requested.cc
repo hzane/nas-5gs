@@ -1,4 +1,4 @@
-#include "../dissect_sm_msg.hh"
+#include "../common/dissect_sm_msg.hh"
 
 //  Always-on PDU session requested  9.11.4.4
 extern const element_meta sm::alwayson_pdu_session_requested = {

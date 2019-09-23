@@ -1,5 +1,4 @@
-#include "../dissect_mm_msg.hh"
-
+#include "../common/dissect_mm_msg.hh"
 
 /* 9.11.3.15	Authentication parameter AUTN
  * [9] 10.5.3.1.1 Authentication Parameter AUTN (UMTS and EPS authentication challenge) */

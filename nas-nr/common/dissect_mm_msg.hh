@@ -1,9 +1,9 @@
 #pragma once
-#include "common.hh" // NOLINT
+#include "../mm/mm_dissects.hh"     // NOLINT
+#include "../mm/mm_element_meta.hh" // NOLINT
+#include "../mm/mm_field_meta.hh"   // NOLINT
+#include "common.hh"                // NOLINT
 #include "dissect_nas5g.hh"
-#include "mm/mm_dissects.hh"     // NOLINT
-#include "mm/mm_element_meta.hh" // NOLINT
-#include "mm/mm_field_meta.hh"   // NOLINT
 
 /* 5GS mobility management messages */
 namespace mm {

@@ -1,5 +1,4 @@
-#include "../dissect_mm_msg.hh"
-
+#include "../common/dissect_mm_msg.hh"
 
 /*  9.11.3.29    LADN indication  */
 int mm::dissect_ladn_indication(dissector d, context* ctx) {

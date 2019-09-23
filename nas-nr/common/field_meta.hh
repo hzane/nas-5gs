@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+
 #include "config.hh"
 #include "val_string.hh"
 

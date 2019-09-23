@@ -1,6 +1,5 @@
-#include "../dissect_mm_msg.hh"
-#include "../ber.hh"
-
+#include "../common/ber.hh"
+#include "../common/dissect_mm_msg.hh"
 
 /* 8.2.4 Authentication failure */
 int mm::dissect_authentication_failure(dissector d, context* ctx) {

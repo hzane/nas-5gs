@@ -1,9 +1,11 @@
 #include "proto.hh"
+
 #include <bitset>
 #include <cstdarg>
+
 #include "core.hh"
-#include "tvbuff.hh"
 #include "field_meta.hh"
+#include "tvbuff.hh"
 
 void proto_node::set_length(int len) { length = len; }
 

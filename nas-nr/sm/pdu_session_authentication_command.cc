@@ -1,7 +1,7 @@
-#include "../dissect_nas5g.hh"
-#include "../dissect_sm_msg.hh"
-#include "../ber.hh"
-#include "../common.hh"
+#include "../common/ber.hh"
+#include "../common/common.hh"
+#include "../common/dissect_nas5g.hh"
+#include "../common/dissect_sm_msg.hh"
 
 /* 8.3.4 PDU session authentication command */
 int sm::dissect_pdu_session_authentication_command(dissector d, context* ctx) {

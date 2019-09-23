@@ -1,4 +1,4 @@
-#include "../common.hh"
+#include "common.hh"
 
 // 3GPP TS 24.008 g10
 namespace{

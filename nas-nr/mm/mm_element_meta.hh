@@ -1,5 +1,5 @@
 #pragma once
-#include "../core.hh"
+#include "../common/core.hh"
 
 namespace mm{
 extern const element_meta nrmm_capability;

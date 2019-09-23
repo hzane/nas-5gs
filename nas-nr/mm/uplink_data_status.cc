@@ -1,5 +1,4 @@
-#include "../dissect_mm_msg.hh"
-
+#include "../common/dissect_mm_msg.hh"
 
 /*40    Uplink data status    Uplink data status 9.11.3.57    O    TLV    4-34 */
 int mm::dissect_uplink_data_status(dissector d, context* ctx) {

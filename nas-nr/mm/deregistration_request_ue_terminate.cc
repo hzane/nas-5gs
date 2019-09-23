@@ -1,6 +1,6 @@
-#include "../dissect_mm_msg.hh"
-#include "../ber.hh"
-#include "../gsm.hh"
+#include "../common/ber.hh"
+#include "../common/dissect_mm_msg.hh"
+#include "../common/gsm.hh"
 
 using namespace cmn;
 

@@ -1,4 +1,4 @@
-#include "../dissect_sm_msg.hh"
+#include "../common/dissect_sm_msg.hh"
 
 const field_meta hf_serving_plmn_rate_control = {
     "Serving PLMN rate control value",

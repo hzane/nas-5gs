@@ -1,5 +1,5 @@
-#include "../dissect_mm_msg.hh"
-#include "../ber.hh"
+#include "../common/ber.hh"
+#include "../common/dissect_mm_msg.hh"
 
 /* 8.2.24 Notification response */
 int mm::dissect_notification_response(dissector d, context* ctx) {

@@ -1,4 +1,4 @@
-#include "../dissect_sm_msg.hh"
+#include "../common/dissect_sm_msg.hh"
 
 /*  9.11.4.16    SSC mode */
 int sm::dissect_ssc_mode(dissector d, context* ctx) {

@@ -1,4 +1,4 @@
-#include "../dissect_sm_msg.hh"
+#include "../common/dissect_sm_msg.hh"
 
 // Requested QoS flow descriptions     QoS flow descriptions 9.11.4.12
 extern const element_meta sm::requested_qos_flow_desc = {

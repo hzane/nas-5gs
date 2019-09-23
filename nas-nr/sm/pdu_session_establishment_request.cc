@@ -1,6 +1,6 @@
-#include "../dissect_sm_msg.hh"
-#include "../packet_info.hh"
-#include "../ber.hh"
+#include "../common/ber.hh"
+#include "../common/dissect_sm_msg.hh"
+#include "../common/packet_info.hh"
 
 using namespace cmn;
 using namespace nas;

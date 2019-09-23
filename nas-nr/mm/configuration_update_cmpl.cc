@@ -1,4 +1,4 @@
-#include "../dissect_mm_msg.hh"
+#include "../common/dissect_mm_msg.hh"
 
 /* 8.2.20 Configuration update complete */
 int mm::dissect_configuration_update_complete(dissector d, context* ctx) {

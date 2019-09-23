@@ -1,5 +1,4 @@
-#include "../dissect_sm_msg.hh"
-
+#include "../common/dissect_sm_msg.hh"
 
 // Integrity protection maximum data rate   9.11.4.7
 extern const element_meta sm::integrity_protection_max_data_rate = {

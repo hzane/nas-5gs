@@ -1,6 +1,7 @@
 #include "dissect_sm_msg.hh"
-#include "dissect_nas5g.hh"
+
 #include "common.hh"
+#include "dissect_nas5g.hh"
 
 /* 8.3 5GS session management messages */
 

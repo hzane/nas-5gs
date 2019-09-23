@@ -1,4 +1,4 @@
-#include "../dissect_mm_msg.hh"
+#include "../common/dissect_mm_msg.hh"
 
 extern const field_meta hf_eps_emm_ebi7;
 extern const field_meta hf_eps_emm_ebi6;

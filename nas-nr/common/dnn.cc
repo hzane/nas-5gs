@@ -1,4 +1,4 @@
-#include "../common.hh"
+#include "common.hh"
 
 const field_meta cmn::hf_dnn = {
     "DNN",

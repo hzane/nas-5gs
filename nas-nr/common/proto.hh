@@ -2,6 +2,7 @@
 #include <iostream>
 #include <list>
 #include <string>
+
 #include "config.hh"
 
 struct proto_node { // NOLINT: special-member-functions

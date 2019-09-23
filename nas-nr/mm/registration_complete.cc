@@ -1,5 +1,5 @@
-#include "../ber.hh"
-#include "../dissect_mm_msg.hh"
+#include "../common/ber.hh"
+#include "../common/dissect_mm_msg.hh"
 
 /* 8.2.8 Registration complete */
 int mm::dissect_registration_complete(dissector d, context* ctx) {

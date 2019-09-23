@@ -1,6 +1,5 @@
-#include "../dissect_mm_msg.hh"
-#include "../ber.hh"
-
+#include "../common/ber.hh"
+#include "../common/dissect_mm_msg.hh"
 
 /*  8.2.12 De-registration request (UE originating de-registration)  */
 int mm::dissect_deregistration_request_ue_origin(dissector d, context* ctx) {
