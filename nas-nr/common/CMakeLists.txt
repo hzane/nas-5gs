@@ -48,4 +48,4 @@ set(COMMON_HEADERS ber.hh
         )
 
 add_library(nas-nr-common ${COMMON_SRCS} ${COMMON_HEADERS})
-set_property(TARGET nas-nr-common PROPERTY POSITION_INDEPENDENT_CODE TRUE)
+# set_property(TARGET nas-nr-common PROPERTY POSITION_INDEPENDENT_CODE TRUE)

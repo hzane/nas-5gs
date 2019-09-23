@@ -100,4 +100,4 @@ set(MM_SRCS 5gmm_capability.cc
     mm_field_meta.hh    )
 
 add_library(nas-nr-mm ${MM_SRCS})
-set_property(TARGET nas-nr-mm PROPERTY POSITION_INDEPENDENT_CODE TRUE)
+# set_property(TARGET nas-nr-mm PROPERTY POSITION_INDEPENDENT_CODE TRUE)
