@@ -34,7 +34,7 @@ doc = Document(fn)
 
 for block in block_items(doc):
     if isinstance(block, Paragraph):
-        if block.style.name != 'Normal':
+        if block.style.name != 'Normal' and not block.text.startswith('NOTE'):
             last_para = block
     elif isinstance(block, Table):
         if block.rows[0].cells[0].paragraphs[0].text != '8':
@@ -45,16 +45,18 @@ for block in block_items(doc):
             prev = None
             for cell in row.cells:
                 txt = cell.text
-                if txt.startswith('NOTE:'):
+                if txt.startswith('NOTE'):
                     txt = ''
-                txt = txt.replace('\n', '')
-                if txt == '':
-                    txt = '-'
-                if txt == prev:
-                    txt = '-'
+                txt = txt.replace('\n', ' ').replace('\r', '').strip()
+                if txt == '': continue
+                if txt == prev: continue
                 else: prev = txt
                 fields.append(txt)
-
+            if len(fields)==0: continue
+            if fields[-1] == '-':
+                fields = fields[:-1]
+            if len(row.cells) > 9:
+                fields = fields[:-1]
             line = '\t'.join(fields)
             print(line)
         print()

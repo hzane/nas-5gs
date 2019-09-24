@@ -1,919 +1,916 @@
 
-8	7	6	5	4	3	2	1	-
-Extended protocol discriminator	-	-	-	-	-	-	-	octet 1
-Security header type associated with a spare half octet; orPDU session identity	-	-	-	-	-	-	-	octet 2
-Procedure transaction identity	-	-	-	-	-	-	-	octet 2a*
-Message type	-	-	-	-	-	-	-	octet 3
--	-	-	-	-	-	-	-	octet 4
-Other information elements as required	-	-	-	-	-	-	-	-
--	-	-	-	-	-	-	-	octet n
+8	7	6	5	4	3	2	1
+Extended protocol discriminator	octet 1
+Security header type associated with a spare half octet; or PDU session identity	octet 2
+Procedure transaction identity	octet 2a*
+Message type	octet 3
+octet 4
+Other information elements as required
+octet n
 
 
-8	7	6	5	4	3	2	1	-
-Extended protocol discriminator	-	-	-	-	-	-	-	octet 1
-Security header type associated with a spare half octet	-	-	-	-	-	-	-	octet 2
--	-	-	-	-	-	-	-	octet 3
-Message authentication code	-	-	-	-	-	-	-	-
--	-	-	-	-	-	-	-	-
--	-	-	-	-	-	-	-	octet 6
-Sequence number	-	-	-	-	-	-	-	octet 7
--	-	-	-	-	-	-	-	octet 8
-Plain 5GS NAS message	-	-	-	-	-	-	-	-
--	-	-	-	-	-	-	-	octet n
+8	7	6	5	4	3	2	1
+Extended protocol discriminator	octet 1
+Security header type associated with a spare half octet	octet 2
+octet 3
+Message authentication code
+octet 6
+Sequence number	octet 7
+octet 8
+Plain 5GS NAS message
+octet n
 
 9.1.2	Field format and mapping
-8	7	6	5	4	3	2	1	-
--	-	-	-	-	24	23	22	1st octet of field
-21	20	-	-	-	-	-	-	2nd octet of field
+8	7	6	5	4	3	2	1
+24	23	22	1st octet of field
+21	20	2nd octet of field
 
 
-8	7	6	5	4	3	2	1	-
-Additional information IEI	-	-	-	-	-	-	-	octet 1
-Additional information length	-	-	-	-	-	-	-	octet 2
-Additional information value	-	-	-	-	-	-	-	octets 3-n
+8	7	6	5	4	3	2	1
+Additional information IEI	octet 1
+Additional information length	octet 2
+Additional information value	octets 3-n
 
 9.11.2.1A	DNN
-8	7	6	5	4	3	2	1	-
-DNN IEI	-	-	-	-	-	-	-	octet 1
-Length of DNN contents	-	-	-	-	-	-	-	octet 2
-DNN value	-	-	-	-	-	-	-	octet 3octet n
+8	7	6	5	4	3	2	1
+DNN IEI	octet 1
+Length of DNN contents	octet 2
+DNN value	octet 3  octet n
 
 9.11.2.2	EAP message
-8	7	6	5	4	3	2	1	-
-EAP message IEI	-	-	-	-	-	-	-	octet 1
-Length of EAP message contents	-	-	-	-	-	-	-	octet 2octet 3
-EAP message	-	-	-	-	-	-	-	octet 4octet n
+8	7	6	5	4	3	2	1
+EAP message IEI	octet 1
+Length of EAP message contents	octet 2  octet 3
+EAP message	octet 4  octet n
 
-NOTE:	For these cases the coding of the information element identifier and length information of RRC is defined in 3GPP TS 38.331 [30].
-8	7	6	5	4	3	2	1	-
-Intra N1 mode NAS transparent container IEI	-	-	-	-	-	-	-	octet 1
-Length of Intra N1 mode NAS transparent container contents	-	-	-	-	-	-	-	octet 2
-Message authentication code	-	-	-	-	-	-	-	octet 3octet 6
-Type of ciphering algorithm	-	-	-	Type of integrity protection algorithm	-	-	-	octet 7
-0	0Spare	0	KACF	TSC	Key set identifier in 5G	-	-	octet 8
-Sequence number	-	-	-	-	-	-	-	octet 9
+9.11.2.6	Intra N1 mode NAS transparent container
+8	7	6	5	4	3	2	1
+Intra N1 mode NAS transparent container IEI	octet 1
+Length of Intra N1 mode NAS transparent container contents	octet 2
+Message authentication code	octet 3  octet 6
+Type of ciphering algorithm	Type of integrity protection algorithm	octet 7
+0	0 Spare	0	KACF	TSC	Key set identifier in 5G	octet 8
+Sequence number	octet 9
 
 9.11.2.7	N1 mode to S1 mode NAS transparent container
-8	7	6	5	4	3	2	1	-
-N1 mode to S1 mode NAS transparent container IEI	-	-	-	-	-	-	-	octet 1
-Sequence number	-	-	-	-	-	-	-	octet 2
+8	7	6	5	4	3	2	1
+N1 mode to S1 mode NAS transparent container IEI	octet 1
+Sequence number	octet 2
 
 9.11.2.8	S-NSSAI
-8	7	6	5	4	3	2	1	-
-S-NSSAI IEI	-	-	-	-	-	-	-	octet 1
-Length of S-NSSAI contents	-	-	-	-	-	-	-	octet 2
-SST	-	-	-	-	-	-	-	octet 3
-SD	-	-	-	-	-	-	-	octet 4*octet 6*
-Mapped HPLMN SST	-	-	-	-	-	-	-	octet 7*
-Mapped HPLMN SD	-	-	-	-	-	-	-	octet 8*octet 10*
+8	7	6	5	4	3	2	1
+S-NSSAI IEI	octet 1
+Length of S-NSSAI contents	octet 2
+SST	octet 3
+SD	octet 4*  octet 6*
+Mapped HPLMN SST	octet 7*
+Mapped HPLMN SD	octet 8*  octet 10*
 
 
-8	-	7	-	6	-	5	-	4	-	3	-	2	-	1	-	-	-	S1 mode to N1 mode NAS transparent container IEI
-S1 mode to N1 mode NAS transparent container IEI	-	-	-	-	-	-	-	-	-	-	-	-	-	-	octet 1	-	Length of S1 mode to N1 mode NAS transparent container contents	-
-Length of S1 mode to N1 mode NAS transparent container contents	-	-	-	-	-	-	-	-	-	-	-	-	-	octet 2	-	Message authentication code	-	-
-Message authentication code	-	-	-	-	-	-	-	-	-	-	-	-	octet 3octet 6	-	Type of ciphering algorithm	-	-	-
-Type of ciphering algorithm	-	-	-	Type of integrity protection algorithm	-	-	-	-	-	-	-	octet 7	-	0Spare	-	NCC	-	-
-NCC	-	-	TSC	-	Key set identifier in 5G	-	-	-	-	-	octet 8	-	0Spare	-	-	-	-	-
-0Spare	-	-	-	-	-	-	-	-	-	octet 9octet 10	-	0Spare	-	-	-	-	-	-
-0Spare	-	-	-	-	-	-	-	-	-	octet 9octet 10
+8	7	6	5	4	3	2	1
+S1 mode to N1 mode NAS transparent container IEI	octet 1
+Length of S1 mode to N1 mode NAS transparent container contents	octet 2
+Message authentication code	octet 3  octet 6
+Type of ciphering algorithm	Type of integrity protection algorithm	octet 7	0 Spare
+NCC	TSC	Key set identifier in 5G	octet 8
+0 Spare	octet 9  octet 10
+0 Spare
 
 9.11.3.1	5GMM capability
-8	-	7	-	6	-	5	-	4	-	3	-	2	-	1	-	-	-	5GMM capability IEI
-5GMM capability IEI	-	-	-	-	-	-	-	-	-	-	-	-	-	-	octet 1	-	Length of 5GMM capability contents	-
-Length of 5GMM capability contents	-	-	-	-	-	-	-	-	-	-	-	-	-	octet 2	-	SGC	-	5G-HC-CP CIoT
-5G-HC-CP CIoT	N3 data	-	5G-CP CIoT	-	RestrictEC	-	LPP	-	HO attach	-	S1 mode	-	octet 3	-	0Spare	-	-	-
-0Spare	-	-	-	-	-	-	-	5G-UP CIoT	-	5GSRVCC	-	octet 4*	-	0	-	-	-	-
-0	-	-	-	-	-	-	-	-	-	-	octet 5*-15*	-	Spare	-	-	-	-	-
-Spare	-	-	-	-	-	-	-	-	-	0	octet 5*-15*
+8	7	6	5	4	3	2	1
+5GMM capability IEI	octet 1
+Length of 5GMM capability contents	octet 2	SGC
+5G-HC-CP CIoT	N3 data	5G-CP CIoT	RestrictEC	LPP	HO attach	S1 mode	octet 3
+0 Spare	5G-UP CIoT	5GSRVCC	octet 4*
+0	octet 5*-15*
+Spare	0
 
 9.11.3.2	5GMM cause
-8	7	6	5	4	3	2	1	-
-5GMM cause IEI	-	-	-	-	-	-	-	octet 1
-Cause value	-	-	-	-	-	-	-	octet 2
+8	7	6	5	4	3	2	1
+5GMM cause IEI	octet 1
+Cause value	octet 2
 
 9.11.3.2A	5GS DRX parameters
-8	7	6	5	4	3	2	1	-
-5GS DRX parameters IEI	-	-	-	-	-	-	-	octet 1
-Length of 5GS DRX parameters contents	-	-	-	-	-	-	-	octet 2
-0	-	-	-	DRX value	-	-	-	-
-spare	-	-	-	DRX value	-	-	-	octet 3
+8	7	6	5	4	3	2	1
+5GS DRX parameters IEI	octet 1
+Length of 5GS DRX parameters contents	octet 2
+0	DRX value
+spare	DRX value	octet 3
 
 
-8	7	6	5	-	4	3	-	2	1	-
-5GS identity typeIEI	-	-	-	0spare	-	-	Type ofidentity	-	-	octet 1
+8	7	6	5	4	3	2
+5GS identity type IEI	0 spare	Type of identity
 
 9.11.3.4	5GS mobile identity
-8	7	6	5	4	3	2	1	-
-5GS mobile identity IEI	-	-	-	-	-	-	-	octet 1
-Length of 5GS mobile identity contents	-	-	-	-	-	-	-	octet2octet 3
-1	-	-	-	0spare	Type of identity	-	-	octet 4
-MCC digit 2	-	-	-	MCC digit 1	-	-	-	octet 5
-MNC digit 3	-	-	-	MCC digit 3	-	-	-	octet 6
-MNC digit 2	-	-	-	MNC digit 1	-	-	-	octet 7
-AMF Region ID	-	-	-	-	-	-	-	octet 8
-AMF Set ID	-	-	-	-	-	-	-	octet 9
-AMF Set ID (continued)	-	AMF Pointer	-	-	-	-	-	octet 10
-5G-TMSI	-	-	-	-	-	-	-	octet 11
-5G-TMSI (continued)	-	-	-	-	-	-	-	octet 12
-5G-TMSI (continued)	-	-	-	-	-	-	-	octet 13
-5G-TMSI (continued)	-	-	-	-	-	-	-	octet 14
+8	7	6	5	4	3	2	1
+5GS mobile identity IEI	octet 1
+Length of 5GS mobile identity contents	octet2  octet 3
+1	0 spare	Type of identity	octet 4
+MCC digit 2	MCC digit 1	octet 5
+MNC digit 3	MCC digit 3	octet 6
+MNC digit 2	MNC digit 1	octet 7
+AMF Region ID	octet 8
+AMF Set ID	octet 9
+AMF Set ID (continued)	AMF Pointer	octet 10
+5G-TMSI	octet 11
+5G-TMSI (continued)	octet 12
+5G-TMSI (continued)	octet 13
+5G-TMSI (continued)	octet 14
 
 Figure 9.11.3.4.1: 5GS mobile identity information element for type of identity "5G-GUTI"
-8	7	6	5	4	3	2	1	-
-5GS mobile identity IEI	-	-	-	-	-	-	-	octet 1
-Length of 5GS mobile identity contents	-	-	-	-	-	-	-	octet 2octet 3
-Identity digit 1	-	-	-	odd/evenindic	Type of identity	-	-	octet 4
-Identity digit p+1	-	-	-	Identity digit p	-	-	-	octet 5*
+8	7	6	5	4	3	2	1
+5GS mobile identity IEI	octet 1
+Length of 5GS mobile identity contents	octet 2  octet 3
+Identity digit 1	odd/ even indic	Type of identity	octet 4
+Identity digit p+1	Identity digit p	octet 5*
 
 Figure 9.11.3.4.2: 5GS mobile identity information element for type of identity or "IMEI" or "IMEISV"
-8	7	6	5	4	3	2	1	-
-5GS mobile identity IEI	-	-	-	-	-	-	-	octet 1
-Length of 5GS mobile identity contents	-	-	-	-	-	-	-	octet 2octet 3
-0spare	SUPI format	-	-	0spare	Type of identity	-	-	octet 4
-MCC digit 2	-	-	-	MCC digit 1	-	-	-	octet 5
-MNC digit 3	-	-	-	MCC digit 3	-	-	-	octet 6
-MNC digit 2	-	-	-	MNC digit 1	-	-	-	octet 7
-Routing indicator digit 2	-	-	-	Routing indicator digit 1	-	-	-	octet 8
-Routing indicator digit 4	-	-	-	Routing indicator digit 3	-	-	-	octet 9
-0Spare	-	-	-	Protection scheme Id	-	-	-	octet 10
-Home network public key identifier	-	-	-	-	-	-	-	octet 11
-Scheme output	-	-	-	-	-	-	-	octet 12 - x
+8	7	6	5	4	3	2	1
+5GS mobile identity IEI	octet 1
+Length of 5GS mobile identity contents	octet 2  octet 3
+0 spare	SUPI format	0 spare	Type of identity	octet 4
+MCC digit 2	MCC digit 1	octet 5
+MNC digit 3	MCC digit 3	octet 6
+MNC digit 2	MNC digit 1	octet 7
+Routing indicator digit 2	Routing indicator digit 1	octet 8
+Routing indicator digit 4	Routing indicator digit 3	octet 9
+0 Spare	Protection scheme Id	octet 10
+Home network public key identifier	octet 11
+Scheme output	octet 12 - x
 
 Figure 9.11.3.4.3: 5GS mobile identity information element for type of identity "SUCI" and SUPI format "IMSI"
-8	7	6	5	4	3	2	1	-
-MSIN digit 2	-	-	-	MSIN digit 1	-	-	-	octet 12
-…	-	-	-	-	-	-	-	-
-MSIN digit n+1	-	-	-	MSIN digit n	-	-	-	octet x
+8	7	6	5	4	3	2	1
+MSIN digit 2	MSIN digit 1	octet 12
+…
+MSIN digit n+1	MSIN digit n	octet x
 
 Figure 9.11.3.4.3a: Scheme output for type of identity "SUCI", SUPI format "IMSI" and Protection scheme Id "Null scheme"
-8	7	6	5	4	3	2	1	-
-5GS mobile identity IEI	-	-	-	-	-	-	-	octet 1
-Length of 5GS mobile identity contents	-	-	-	-	-	-	-	octet 2octet 3
-0Spare	SUPI format	-	-	0Spare	Type of identity	-	-	octet 4
-SUCI NAI	-	-	-	-	-	-	-	octet 5 - y
+8	7	6	5	4	3	2	1
+5GS mobile identity IEI	octet 1
+Length of 5GS mobile identity contents	octet 2  octet 3
+0 Spare	SUPI format	0 Spare	Type of identity	octet 4
+SUCI NAI	octet 5 - y
 
 Figure 9.11.3.4.4: 5GS mobile identity information element for type of identity "SUCI" and SUPI format "Network specific identifier"
-8	7	6	5	4	3	2	1	-
-5GS mobile identity IEI	-	-	-	-	-	-	-	octet 1
-Length of 5GS mobile identity contents	-	-	-	-	-	-	-	octet 2octet 3
-1	-	-	-	0spare	Type of identity	-	-	octet 4
-AMF Set ID	-	-	-	-	-	-	-	octet 5
-AMF Set ID (continued)	-	AMF Pointer	-	-	-	-	-	octet 6
-5G-TMSI	-	-	-	-	-	-	-	octet 7
-5G-TMSI (continued)	-	-	-	-	-	-	-	octet 8
-5G-TMSI (continued)	-	-	-	-	-	-	-	octet 9
-5G-TMSI (continued)	-	-	-	-	-	-	-	octet 10
+8	7	6	5	4	3	2	1
+5GS mobile identity IEI	octet 1
+Length of 5GS mobile identity contents	octet 2  octet 3
+1	0 spare	Type of identity	octet 4
+AMF Set ID	octet 5
+AMF Set ID (continued)	AMF Pointer	octet 6
+5G-TMSI	octet 7
+5G-TMSI (continued)	octet 8
+5G-TMSI (continued)	octet 9
+5G-TMSI (continued)	octet 10
 
 Figure 9.11.3.4.5: 5GS mobile identity information element for type of identity "5G-S-TMSI"
-8	7	6	5	4	3	2	1	-
-5GS mobile identity IEI	-	-	-	-	-	-	-	octet 1
-Length of 5GS mobile identity contents	-	-	-	-	-	-	-	octet 2octet 3
-0	-	-	-	-	Type of identity	-	-	octet 4
-spare	-	-	-	-	Type of identity	-	-	octet 4
+8	7	6	5	4	3	2	1
+5GS mobile identity IEI	octet 1
+Length of 5GS mobile identity contents	octet 2  octet 3
+0	Type of identity	octet 4
+spare	Type of identity	octet 4
 
 Figure 9.11.3.4.6: 5GS mobile identity information element for type of identity "No identity"
-8	7	6	5	4	3	2	1	-
-5GS mobile identity IEI	-	-	-	-	-	-	-	octet 1
-Length of 5GS mobile identity contents	-	-	-	-	-	-	-	octet 2octet 3
-0spare	-	-	-	-	Type of identity	-	-	octet 4
-MAC address	-	-	-	-	-	-	-	octet 5octet 10
+8	7	6	5	4	3	2	1
+5GS mobile identity IEI	octet 1
+Length of 5GS mobile identity contents	octet 2  octet 3
+0 spare	Type of identity	octet 4
+MAC address	octet 5  octet 10
 
 9.11.3.5	5GS network feature support
-8	7	6	5	-	4	3	2	1	-
-5GS network feature support IEI	-	-	-	-	-	-	-	-	octet 1
-Length of 5GS network feature support contents	-	-	-	-	-	-	-	-	octet 2
-MPSI	IWK N26	EMF	-	EMC	-	-	IMS- VoPS-N3GPP	IMS- VoPS-3GPP	octet 3
-0Spare	5G-UP CIoT	5G-HC-CP CIoT	N3 data	-	5G-CP CIoT	RestrictEC	MCSI	EMCN3	octet 4
-0	-	-	-	-	-	-	-	-	-
-Spare	-	-	-	-	-	-	-	-	octet 5*
+8	7	6	5	4	3	2
+5GS network feature support IEI
+Length of 5GS network feature support contents
+MPSI	IWK N26	EMF	EMC	IMS- VoPS-N3GPP	IMS- VoPS-3GPP
+0 Spare	5G-UP CIoT	5G-HC-CP CIoT	N3 data	5G-CP CIoT	RestrictEC	MCSI	EMCN3
+
+Spare
 
 
-8	-	7	-	6	-	5	-	4	-	3	2	1	-	-	-	5GS registration result IEI
-5GS registration result IEI	-	-	-	-	-	-	-	-	-	-	-	-	octet 1	-	Length of 5GS registration result contents	-
-Length of 5GS registration result contents	-	-	-	-	-	-	-	-	-	-	-	octet 2	-	0Spare	-	-
-0Spare	-	-	-	-	SMS allowed	-	5GS registration result value	-	-	-	octet 3	-
+8	7	6	5	4	3	2	1
+5GS registration result IEI	octet 1
+Length of 5GS registration result contents	octet 2
+0 Spare	SMS allowed	5GS registration result value
 
 
-8	7	6	5	4	3	2	1	-
-5GS registration type IEI	-	-	-	FOR	5GS registration type value	-	-	octet 1
+8	7	6	5	4	3	2	1
+5GS registration type IEI	FOR	5GS registration type value	octet 1
 
 
-8	7	6	5	4	3	2	1	-
-5GS tracking area identity IEI	-	-	-	-	-	-	-	octet 1
-MCC digit 2	-	-	-	MCC digit 1	-	-	-	octet 2
-MNC digit 3	-	-	-	MCC digit 3	-	-	-	octet 3
-MNC digit 2	-	-	-	MNC digit 1	-	-	-	octet 4
-TAC	-	-	-	-	-	-	-	octet 5
-TAC (continued)	-	-	-	-	-	-	-	octet 6
-TAC (continued)	-	-	-	-	-	-	-	octet 7
+8	7	6	5	4	3	2	1
+5GS tracking area identity IEI	octet 1
+MCC digit 2	MCC digit 1	octet 2
+MNC digit 3	MCC digit 3	octet 3
+MNC digit 2	MNC digit 1	octet 4
+TAC	octet 5
+TAC (continued)	octet 6
+TAC (continued)	octet 7
 
 
-8	7	6	5	4	3	2	1	-
-5GS tracking area identity list IEI	-	-	-	-	-	-	-	octet 1
-Length of 5GS tracking area identity list contents	-	-	-	-	-	-	-	octet 2
-Partial tracking area identity list 1	-	-	-	-	-	-	-	octet 3octet i
-Partial tracking area identity list 2	-	-	-	-	-	-	-	octet i+1*octet l*
-…	-	-	-	-	-	-	-	octet l+1*octet m*
-Partial tracking area identity list p	-	-	-	-	-	-	-	octet m+1*octet n*
+8	7	6	5	4	3	2	1
+5GS tracking area identity list IEI	octet 1
+Length of 5GS tracking area identity list contents	octet 2
+Partial tracking area identity list 1	octet 3  octet i
+Partial tracking area identity list 2	octet i+1*  octet l*
+…	octet l+1*  octet m*
+Partial tracking area identity list p	octet m+1*  octet n*
 
 
-8	7	6	5	4	3	2	1	-
-0Spare	Type of list	-	Number of elements	-	-	-	-	octet 1
-MCC digit 2	-	-	-	MCC digit 1	-	-	-	octet 2
-MNC digit 3	-	-	-	MCC digit 3	-	-	-	octet 3
-MNC digit 2	-	-	-	MNC digit 1	-	-	-	octet 4
-TAC 1	-	-	-	-	-	-	-	octet 5
-TAC 1 (continued)	-	-	-	-	-	-	-	octet 6
-TAC 1 (continued)	-	-	-	-	-	-	-	octet 7
-…	-	-	-	-	-	-	-	-
-…	-	-	-	-	-	-	-	-
-TAC k	-	-	-	-	-	-	-	octet 3k+2*
-TAC k (continued)	-	-	-	-	-	-	-	octet 3k+3*
-TAC k (continued)	-	-	-	-	-	-	-	octet 3k+4*
+8	7	6	5	4	3	2	1
+0 Spare	Type of list	Number of elements	octet 1
+MCC digit 2	MCC digit 1	octet 2
+MNC digit 3	MCC digit 3	octet 3
+MNC digit 2	MNC digit 1	octet 4
+TAC 1	octet 5
+TAC 1 (continued)	octet 6
+TAC 1 (continued)	octet 7
+…
+…
+TAC k	octet 3k+2*
+TAC k (continued)	octet 3k+3*
+TAC k (continued)	octet 3k+4*
 
 
-8	7	6	5	4	3	2	1	-
-0Spare	Type of list	-	Number of elements	-	-	-	-	octet 1
-MCC digit 2	-	-	-	MCC digit 1	-	-	-	octet 2
-MNC digit 3	-	-	-	MCC digit 3	-	-	-	octet 3
-MNC digit 2	-	-	-	MNC digit 1	-	-	-	octet 4
-TAC 1	-	-	-	-	-	-	-	octet 5
-TAC 1 (continued)	-	-	-	-	-	-	-	octet 6
-TAC 1 (continued)	-	-	-	-	-	-	-	octet 7
+8	7	6	5	4	3	2	1
+0 Spare	Type of list	Number of elements	octet 1
+MCC digit 2	MCC digit 1	octet 2
+MNC digit 3	MCC digit 3	octet 3
+MNC digit 2	MNC digit 1	octet 4
+TAC 1	octet 5
+TAC 1 (continued)	octet 6
+TAC 1 (continued)	octet 7
 
 
-8	7	6	5	4	3	2	1	-
-0Spare	Type of list	-	Number of elements	-	-	-	-	octet 1
-MCC digit 2	-	-	-	MCC digit 1	-	-	-	octet 2
-MNC digit 3	-	-	-	MCC digit 3	-	-	-	octet 3
-MNC digit 2	-	-	-	MNC digit 1	-	-	-	octet 4
-TAC 1	-	-	-	-	-	-	-	octet 5
-TAC 1 (continued)	-	-	-	-	-	-	-	octet 6
-TAC 1 (continued)	-	-	-	-	-	-	-	octet 7
-MCC digit 2	-	-	-	MCC digit 1	-	-	-	octet 8*
-MNC digit 3	-	-	-	MCC digit 3	-	-	-	octet 9*
-MNC digit 2	-	-	-	MNC digit 1	-	-	-	octet 10*
-TAC 2	-	-	-	-	-	-	-	octet 11*
-TAC 2 (continued)	-	-	-	-	-	-	-	octet 12*
-TAC 2 (continued)	-	-	-	-	-	-	-	octet 13*
-…	-	-	-	-	-	-	-	-
-…	-	-	-	-	-	-	-	-
-MCC digit 2	-	-	-	MCC digit 1	-	-	-	octet 6k-4*
-MNC digit 3	-	-	-	MCC digit 3	-	-	-	octet 6k-3*
-MNC digit 2	-	-	-	MNC digit 1	-	-	-	octet 6k-2*
-TAC k	-	-	-	-	-	-	-	octet 6k-1*
-TAC k (continued)	-	-	-	-	-	-	-	octet 6k*
-TAC k (continued)	-	-	-	-	-	-	-	octet 6k+1*
+8	7	6	5	4	3	2	1
+0 Spare	Type of list	Number of elements	octet 1
+MCC digit 2	MCC digit 1	octet 2
+MNC digit 3	MCC digit 3	octet 3
+MNC digit 2	MNC digit 1	octet 4
+TAC 1	octet 5
+TAC 1 (continued)	octet 6
+TAC 1 (continued)	octet 7
+MCC digit 2	MCC digit 1	octet 8*
+MNC digit 3	MCC digit 3	octet 9*
+MNC digit 2	MNC digit 1	octet 10*
+TAC 2	octet 11*
+TAC 2 (continued)	octet 12*
+TAC 2 (continued)	octet 13*
+…
+…
+MCC digit 2	MCC digit 1	octet 6k-4*
+MNC digit 3	MCC digit 3	octet 6k-3*
+MNC digit 2	MNC digit 1	octet 6k-2*
+TAC k	octet 6k-1*
+TAC k (continued)	octet 6k*
+TAC k (continued)	octet 6k+1*
 
 9.11.3.9A	5GS update type
-8	-	7	-	6	-	5	-	4	3	-	2	-	1	-	-	-	5GS update type IEI
-5GS update type IEI	-	-	-	-	-	-	-	-	-	-	-	-	-	octet 1	-	Length of 5GS update type	-
-Length of 5GS update type	-	-	-	-	-	-	-	-	-	-	-	-	octet 2	-	0Spare	-	-
-0Spare	-	-	-	-	PNB-CIoT	-	-	NG-RAN-RCU	-	SMS requested	-	octet 3	-
+8	7	6	5	4	3	2	1
+5GS update type IEI	octet 1
+Length of 5GS update type	octet 2
+0 Spare	PNB-CIoT	NG-RAN-RCU	SMS requested
 
 9.11.3.10	ABBA
-8	7	6	5	4	3	2	1	-
-ABBA IEI	-	-	-	-	-	-	-	octet 1
-Length of ABBA contents	-	-	-	-	-	-	-	octet 2
-ABBA contents	-	-	-	-	-	-	-	octet 3octet n
+8	7	6	5	4	3	2	1
+ABBA IEI	octet 1
+Length of ABBA contents	octet 2
+ABBA contents	octet 3  octet n
 
 9.11.3.11	Access type
-8	7	6	5	4	3	2	1	-
-Access typeIEI	-	-	-	0spare	-	Access type	-	octet 1
+8	7	6	5	4	3	2	1
+Access type IEI	0 spare	Access type	octet 1
 
 9.11.3.12	Additional 5G security information
-8	-	7	-	6	-	5	-	4	-	3	-	2	-	1	-	-	-	Additional 5G security parameters IEI
-Additional 5G security parameters IEI	-	-	-	-	-	-	-	-	-	-	-	-	-	-	octet 1	-	Length of Additional 5G security parameters contents	-
-Length of Additional 5G security parameters contents	-	-	-	-	-	-	-	-	-	-	-	-	-	octet 2	-	0Spare	-	-
-0Spare	-	-	-	-	-	-	-	-	RINMR	-	HDP	-	octet 3	-
+8	7	6	5	4	3	2	1
+Additional 5G security parameters IEI	octet 1
+Length of Additional 5G security parameters contents	octet 2
+0 Spare	RINMR	HDP
 
 9.11.3.13	Allowed PDU session status
-8	7	6	5	4	3	2	1	-
-Allowed PDU session status IEI	-	-	-	-	-	-	-	octet 1
-Length of Allowed PDU session status contents	-	-	-	-	-	-	-	octet 2
-PSI(7)	PSI(6)	PSI(5)	PSI(4)	PSI(3)	PSI(2)	PSI(1)	PSI(0)	octet 3
-PSI(15)	PSI(14)	PSI(13)	PSI(12)	PSI(11)	PSI(10)	PSI(9)	PSI(8)	octet 4
-0	-	-	-	-	-	-	-	-
-Spare	-	-	-	-	-	-	-	octet 5* -34*
+8	7	6	5	4	3	2	1
+Allowed PDU session status IEI	octet 1
+Length of Allowed PDU session status contents	octet 2
+PSI (7)	PSI (6)	PSI (5)	PSI (4)	PSI (3)	PSI (2)	PSI (1)	PSI (0)	octet 3
+PSI (15)	PSI (14)	PSI (13)	PSI (12)	PSI (11)	PSI (10)	PSI (9)	PSI (8)	octet 4
+0
+Spare	octet 5* -34*
 
 9.11.3.18	Configuration update indication
-8	7	6	5	4	3	2	1	-
-Configuration update indication IEI	-	-	-	0Spare	-	RED	ACK	octet 1
+8	7	6	5	4	3	2	1
+Configuration update indication IEI	0 Spare	RED	ACK	octet 1
 
 9.11.3.20	De-registration type
-8	7	6	5	4	3	2	1	-
-De-registration typeIEI	-	-	-	Switchoff	Re-registration required	Access type	-	octet 1
+8	7	6	5	4	3	2	1
+De-registration type IEI	Switch off	Re-registration required	Access type	octet 1
 
 9.11.3.24	EPS NAS message container
-8	7	6	5	4	3	2	1	-
-EPS NAS message container IEI	-	-	-	-	-	-	-	octet 1
-Length of EPS NAS message container contents	-	-	-	-	-	-	-	octet 2octet 3
-EPS NAS message container	-	-	-	-	-	-	-	octet 4octet n
+8	7	6	5	4	3	2	1
+EPS NAS message container IEI	octet 1
+Length of EPS NAS message container contents	octet 2  octet 3
+EPS NAS message container	octet 4  octet n
 
 9.11.3.29	LADN indication
-8	7	6	5	4	3	2	1	-
-LADN indication IEI	-	-	-	-	-	-	-	octet 1
-Length of LADN indication contents	-	-	-	-	-	-	-	octet 2octet 3
-LADN DNN value 1	-	-	-	-	-	-	-	octet 4*octet a*
-LADN DNN value 2	-	-	-	-	-	-	-	octet a+1*octet b*
-…	-	-	-	-	-	-	-	octet b+1*octet g*
-LADN DNN value n	-	-	-	-	-	-	-	octet g+1*octet h*
+8	7	6	5	4	3	2	1
+LADN indication IEI	octet 1
+Length of LADN indication contents	octet 2 octet 3
+LADN DNN value 1	octet 4*  octet a*
+LADN DNN value 2	octet a+1*  octet b*
+…	octet b+1*  octet g*
+LADN DNN value n	octet g+1*  octet h*
 
 9.11.3.30	LADN information
-8	7	6	5	4	3	2	1	-
-LADN information IEI	-	-	-	-	-	-	-	octet 1
-Length of LADN information contents	-	-	-	-	-	-	-	octet 2octet 3
-LADN 1	-	-	-	-	-	-	-	octet 4octet a
-LADN 2	-	-	-	-	-	-	-	octet a+1*octet b*
-…	-	-	-	-	-	-	-	octet b+1*octet g*
-LADN n	-	-	-	-	-	-	-	octet g+1*octet h*
+8	7	6	5	4	3	2	1
+LADN information IEI	octet 1
+Length of LADN information contents	octet 2 octet 3
+LADN 1	octet 4  octet a
+LADN 2	octet a+1*  octet b*
+…	octet b+1*  octet g*
+LADN n	octet g+1*  octet h*
 
 Figure 9.11.3.30.1: LADN information information element
-8	7	6	5	4	3	2	1	-
-Length of DNN value	-	-	-	-	-	-	-	octet 4
-DNN value	-	-	-	-	-	-	-	octet 5octet m
-5GS tracking area identity list	-	-	-	-	-	-	-	octet m+1octet a
+8	7	6	5	4	3	2	1
+Length of DNN value	octet 4
+DNN value	octet 5  octet m
+5GS tracking area identity list	octet m+1  octet a
 
 9.11.3.31	MICO indication
-8	7	6	5	4	3	2	1	-
-MICO indication IEI	-	-	-	0Spare	-	SPRTI	RAAI	octet 1
+8	7	6	5	4	3	2	1
+MICO indication IEI	0 Spare	SPRTI	RAAI	octet 1
 
 9.11.3.32	NAS key set identifier
-8	7	6	5	4	3	2	1	-
-NAS key set identifier IEI	-	-	-	TSC	NAS key set identifier	-	-	octet 1
+8	7	6	5	4	3	2	1
+NAS key set identifier IEI	TSC	NAS key set identifier	octet 1
 
 9.11.3.33	NAS message container
-8	7	6	5	4	3	2	1	-
-NAS message container IEI	-	-	-	-	-	-	-	octet 1
-Length of NAS message container contents	-	-	-	-	-	-	-	octet 2
--	-	-	-	-	-	-	-	octet 3
--	-	-	-	-	-	-	-	octet 4
-NAS message container contents	-	-	-	-	-	-	-	-
--	-	-	-	-	-	-	-	octet n
+8	7	6	5	4	3	2	1
+NAS message container IEI	octet 1
+Length of NAS message container contents	octet 2
+octet 3
+octet 4
+NAS message container contents
+octet n
 
 9.11.3.34	NAS security algorithms
-8	7	6	5	4	3	2	1	-
-NAS security algorithms IEI	-	-	-	-	-	-	-	octet 1
-Type of ciphering algorithm	-	-	-	Type of integrity protection algorithm	-	-	-	octet 2
+8	7	6	5	4	3	2	1
+NAS security algorithms IEI	octet 1
+Type of ciphering algorithm	Type of integrity protection algorithm	octet 2
 
 9.11.3.36	Network slicing indication
-8	7	6	5	4	3	2	1	-
-Network slicing indication IEI	-	-	-	0Spare	-	DCNI	NSSCI	octet 1
+8	7	6	5	4	3	2	1
+Network slicing indication IEI	0 Spare	DCNI	NSSCI	octet 1
 
-NOTE 3:	More than one S-NSSAIs in an NSSAI can have the same SST values, and optionally same SD values, which are associated with different mapped HPLMN SST values and optionally mapped HPLMN SD values.
-8	7	6	5	4	3	2	1	-
-NSSAI IEI	-	-	-	-	-	-	-	octet 1
-Length of NSSAI contents	-	-	-	-	-	-	-	octet 2
-S-NSSAI value 1	-	-	-	-	-	-	-	octet 3octet m 
-S-NSSAI value 2	-	-	-	-	-	-	-	octet m+1*octet n*
-…	-	-	-	-	-	-	-	octet n+1*octet u*
-S-NSSAI value n	-	-	-	-	-	-	-	octet u+1*octet v*
+9.11.3.37	NSSAI
+8	7	6	5	4	3	2	1
+NSSAI IEI	octet 1
+Length of NSSAI contents	octet 2
+S-NSSAI value 1	octet 3  octet m
+S-NSSAI value 2	octet m+1*  octet n*
+…	octet n+1*  octet u*
+S-NSSAI value n	octet u+1*  octet v*
 
 9.11.3.37A	NSSAI inclusion mode
-8	7	6	5	4	3	2	1	-
-NSSAI inclusion modeIEI	-	-	-	0spare	-	NSSAI inclusion mode	-	octet 1
+8	7	6	5	4	3	2	1
+NSSAI inclusion mode IEI	0 spare	NSSAI inclusion mode	octet 1
 
 9.11.3.38	Operator-defined access category definitions
-8	7	6	5	4	3	2	1	-
-Operator-defined access category definitions IEI	-	-	-	-	-	-	-	octet 1
-Length of operator-defined access category definitions contents	-	-	-	-	-	-	-	octet 2octet 3
-Operator-defined access category definition 1	-	-	-	-	-	-	-	octet 4octet a
-Operator-defined access category definition 2	-	-	-	-	-	-	-	octet a+1*octet b*
-…	-	-	-	-	-	-	-	octet b+1*octet g*
-Operator-defined access category definition 1 n	-	-	-	-	-	-	-	octet g+1*octet h*
+8	7	6	5	4	3	2	1
+Operator-defined access category definitions IEI	octet 1
+Length of operator-defined access category definitions contents	octet 2 octet 3
+Operator-defined access category definition 1	octet 4  octet a
+Operator-defined access category definition 2	octet a+1*  octet b*
+…	octet b+1*  octet g*
+Operator-defined access category definition 1 n	octet g+1*  octet h*
 
 Figure 9.11.3.38.1: Operator-defined access category definitions information element
-8	7	6	5	4	3	2	1	-
-Length of operator-defined access category definition contents	-	-	-	-	-	-	-	octet 4
-Precedence value	-	-	-	-	-	-	-	octet 5
-PSAC	0Spare	-	Operator-defined access category number	-	-	-	-	octet 6
-Length of criteria	-	-	-	-	-	-	-	octet 7
-Criteria	-	-	-	-	-	-	-	octet 8octet a-1
-0Spare	-	-	Standardized access category	-	-	-	-	octet a*
+8	7	6	5	4	3	2	1
+Length of operator-defined access category definition contents	octet 4
+Precedence value	octet 5
+PSAC	0 Spare	Operator-defined access category number	octet 6
+Length of criteria	octet 7
+Criteria	octet 8  octet a-1
+0 Spare	Standardized access category	octet a*
 
 9.11.3.39	Payload container
-8	7	6	5	4	3	2	1	-	-	Payload container IEI
-Payload container IEI	-	-	-	-	-	-	-	-	octet 1	Length of payload container contents
-Length of payload container contents	-	-	-	-	-	-	-	-	octet 2	-
--	-	-	-	-	-	-	-	-	octet 3	-
--	-	-	-	-	-	-	-	-	octet 4	Payload container contents
-Payload container contents	-	-	-	-	-	-	-	-	-	-
--	-	-	-	-	-	-	-	-	octet n
+8	7	6	5	4	3	2	1
+Payload container IEI	octet 1
+Length of payload container contents
+
+octet 4
+
+
 
 Figure 9.11.3.39.1: Payload container information element
-8	7	6	5	4	3	2	1	-	-	-	Number of entries
-Number of entries	-	-	-	-	-	-	-	octet 4	-	Payload container entry 1	-
-Payload container entry 1	-	-	-	-	-	-	octet 5octet x2	-	Payload container entry 2	-	-
-Payload container entry 2	-	-	-	-	-	octet x2+1octet x3	-	……	-	-	-
-……	-	-	-	-	…	-	Payload container entry i	-	-	-	-
-Payload container entry i	-	-	-	octet xi +1octet n	-
+8	7	6	5	4	3	2	1
+Number of entries	octet 4
+Payload container entry 1	octet 5  octet x2
+Payload container entry 2	octet x2+1  octet x3
+……	…
+Payload container entry i	octet xi +1  octet n
 
 Figure 9.11.3.39.2: Payload container contents with Payload container type "Multiple payloads"
-8	7	6	5	-	4	3	2	1	-	-	-	Length of Payload container entry
-Length of Payload container entry	-	-	-	-	-	-	-	-	octet xi +1octet xi +2	-	Number of optional IEs	-
-Number of optional IEs	-	-	Payload container type	-	-	-	-	octet xi +3	-	Optional IE 1	-	-
-Optional IE 1	-	-	-	-	-	-	octet xi +4octet y2	-	Optional IE 2	-	-	-
-Optional IE 2	-	-	-	-	-	octet y2+1octet y3	-	…	-	-	-	-
-…	-	-	-	-	-	-	Optional IE j	-	-	-	-	-
-Optional IE j	-	-	-	octet yj+1octet z	-	Payload container entry contents	-	-	-	-	-	-
-Payload container entry contents	-	-	octet z+1octet n	-
+8	7	6	5	4	3	2	1
+Length of Payload container entry	octet xi +1 octet xi +2
+Number of optional IEs	Payload container type	octet xi +3
+Optional IE 1	octet xi +4  octet y2
+Optional IE 2	octet y2+1  octet y3
+…
+Optional IE j	octet yj+1  octet z
+Payload container entry contents	octet z+1  octet n
 
 Figure 9.11.3.39.3: Payload container entry
-8	7	6	5	4	3	2	1	-	-	-	Type of optional IE
-Type of optional IE	-	-	-	-	-	-	-	octet xi +4	-	Length of optional IE	-
-Length of optional IE	-	-	-	-	-	-	octet xi +5	-	Value of optional IE	-	-
-Value of optional IE	-	-	-	-	-	octet xi +6octet y2	-
+8	7	6	5	4	3	2	1
+Type of optional IE	octet xi +4
+Length of optional IE	octet xi +5
+Value of optional IE	octet xi +6  octet y2
 
 9.11.3.40	Payload container type
-8	-	7	6	5	4	-	3	2	1	-	-	Payload container typeIEI
-Payload container typeIEI	-	-	-	Payload container type value	-	-	-	-	octet 1	-
+8	7	6	5	4	3	2	1
+Payload container type IEI	Payload container type value
 
 9.11.3.41	PDU session identity 2
-8	7	6	5	4	3	2	1	-
-PDU session identity 2 IEI	-	-	-	-	-	-	-	octet 1
-PDU session identity 2 value	-	-	-	-	-	-	-	octet 2
+8	7	6	5	4	3	2	1
+PDU session identity 2 IEI	octet 1
+PDU session identity 2 value	octet 2
 
 9.11.3.42	PDU session reactivation result
-8	7	6	5	4	3	2	1	-
-PDU session reactivation result IEI	-	-	-	-	-	-	-	octet 1
-Length of PDU session reactivation result	-	-	-	-	-	-	-	octet 2
-PSI(7)	PSI (6)	PSI (5)	PSI (4)	PSI (3)	PSI (2)	PSI (1)	PSI (0)	octet 3
-PSI (15)	PSI (14)	PSI (13)	PSI (12)	PSI (11)	PSI (10)	PSI (9)	PSI (8)	octet 4
--	-	-	-	-	-	-	-	octet 5* -34*
+8	7	6	5	4	3	2	1
+PDU session reactivation result IEI	octet 1
+Length of PDU session reactivation result	octet 2
+PSI (7)	PSI  (6)	PSI  (5)	PSI  (4)	PSI  (3)	PSI  (2)	PSI  (1)	PSI  (0)	octet 3
+PSI  (15)	PSI  (14)	PSI  (13)	PSI  (12)	PSI  (11)	PSI  (10)	PSI  (9)	PSI  (8)	octet 4
+octet 5* -34*
 
 9.11.3.43	PDU session reactivation result error cause
-8	7	6	5	4	3	2	1	-
-PDU session reactivation result error cause IEI	-	-	-	-	-	-	-	octet 1
-Length of PDU session reactivation result error cause	-	-	-	-	-	-	-	octet 2
--	-	-	-	-	-	-	-	octet 3
-PDU session ID	-	-	-	-	-	-	-	octet 4
-cause value 	-	-	-	-	-	-	-	octet 5
--	-	-	-	-	-	-	-	-
-….	-	-	-	-	-	-	-	-
--	-	-	-	-	-	-	-	-
-PDU session ID	-	-	-	-	-	-	-	octet 514*
-cause value	-	-	-	-	-	-	-	octet 515*
+8	7	6	5	4	3	2	1
+PDU session reactivation result error cause IEI	octet 1
+Length of PDU session reactivation result error cause	octet 2
+octet 3
+PDU session ID	octet 4
+cause value	octet 5
+….
+PDU session ID	octet 514*
+cause value	octet 515*
 
 9.11.3.44	PDU session status
-8	7	6	5	4	3	2	1	-
-PDU session status IEI	-	-	-	-	-	-	-	octet 1
-Length of PDU session status contents	-	-	-	-	-	-	-	octet 2
-PSI(7)	PSI(6)	PSI(5)	PSI(4)	PSI(3)	PSI(2)	PSI(1)	PSI(0)	octet 3
-PSI(15)	PSI(14)	PSI(13)	PSI(12)	PSI(11)	PSI(10)	PSI(9)	PSI(8)	octet 4
-0	-	-	-	-	-	-	-	octet 5*-
-spare	-	-	-	-	-	-	-	34*
+8	7	6	5	4	3	2	1
+PDU session status IEI	octet 1
+Length of PDU session status contents	octet 2
+PSI (7)	PSI (6)	PSI (5)	PSI (4)	PSI (3)	PSI (2)	PSI (1)	PSI (0)	octet 3
+PSI (15)	PSI (14)	PSI (13)	PSI (12)	PSI (11)	PSI (10)	PSI (9)	PSI (8)	octet 4
+0	octet 5*-
+spare	34*
 
-NOTE:	The number of rejected S-NSSAI(s) cannot exceed eight.
-8	7	6	5	4	3	2	1	-
-Rejected NSSAI IEI	-	-	-	-	-	-	-	octet 1
-Length of Rejected NSSAI contents	-	-	-	-	-	-	-	octet 2
-Rejected S-NSSAI 1	-	-	-	-	-	-	-	octet 3octet m 
-Rejected S-NSSAI 2	-	-	-	-	-	-	-	octet m+1*octet n*
-…	-	-	-	-	-	-	-	octet n+1*octet u*
-Rejected S-NSSAI n	-	-	-	-	-	-	-	octet u+1*octet v*
+9.11.3.46	Rejected NSSAI
+8	7	6	5	4	3	2	1
+Rejected NSSAI IEI	octet 1
+Length of Rejected NSSAI contents	octet 2
+Rejected S-NSSAI 1	octet 3  octet m
+Rejected S-NSSAI 2	octet m+1*  octet n*
+…	octet n+1*  octet u*
+Rejected S-NSSAI n	octet u+1*  octet v*
 
 Figure 9.11.3.46.1: Rejected NSSAI information element
-8	7	6	5	4	3	2	1	-
-Length of rejected S-NSSAI	-	-	-	Cause value	-	-	-	octet 1
-SST	-	-	-	-	-	-	-	octet 2
-SD	-	-	-	-	-	-	-	octet 3*octet 5*
+8	7	6	5	4	3	2	1
+Length of rejected S-NSSAI	Cause value	octet 1
+SST	octet 2
+SD	octet 3*  octet 5*
 
 9.11.3.47	Request type
-8	7	6	5	4	3	2	1	-
-Request type IEI	-	-	-	0spare	Request type value	-	-	octet 1
+8	7	6	5	4	3	2	1
+Request type IEI	0 spare	Request type value	octet 1
 
 9.11.3.49	Service area list
-8	7	6	5	4	3	2	1	-
-Service area list IEI	-	-	-	-	-	-	-	octet 1
-Length of service area list contents	-	-	-	-	-	-	-	octet 2
-Partial service area list 1	-	-	-	-	-	-	-	octet 3octet i
-Partial service area list 2	-	-	-	-	-	-	-	octet i+1*octet l*
-…	-	-	-	-	-	-	-	octet l+1*octet m*
-Partial service area list p	-	-	-	-	-	-	-	octet m+1*octet n*
+8	7	6	5	4	3	2	1
+Service area list IEI	octet 1
+Length of service area list contents	octet 2
+Partial service area list 1	octet 3  octet i
+Partial service area list 2	octet i+1*  octet l*
+…	octet l+1*  octet m*
+Partial service area list p	octet m+1*  octet n*
 
 Figure 9.11.3.49.1: Service area list information element
-8	7	6	5	4	3	2	1	-
-Allowed type	Type of list	-	Number of elements	-	-	-	-	octet 1
-MCC digit 2	-	-	-	MCC digit 1	-	-	-	octet 2
-MNC digit 3	-	-	-	MCC digit 3	-	-	-	octet 3
-MNC digit 2	-	-	-	MNC digit 1	-	-	-	octet 4
-TAC 1	-	-	-	-	-	-	-	octet 5
-TAC 1 (continued)	-	-	-	-	-	-	-	octet 6
-TAC 1 (continued)	-	-	-	-	-	-	-	octet 7
-…	-	-	-	-	-	-	-	-
-TAC k	-	-	-	-	-	-	-	octet 3k+2*
-TAC k (continued)	-	-	-	-	-	-	-	octet 3k+3*
-TAC k (continued)	-	-	-	-	-	-	-	octet 3k+4*
+8	7	6	5	4	3	2	1
+Allowed type	Type of list	Number of elements	octet 1
+MCC digit 2	MCC digit 1	octet 2
+MNC digit 3	MCC digit 3	octet 3
+MNC digit 2	MNC digit 1	octet 4
+TAC 1	octet 5
+TAC 1 (continued)	octet 6
+TAC 1 (continued)	octet 7
+…
+TAC k	octet 3k+2*
+TAC k (continued)	octet 3k+3*
+TAC k (continued)	octet 3k+4*
 
 
-8	7	6	5	4	3	2	1	-
-Allowed type	Type of list	-	Number of elements	-	-	-	-	octet 1
-MCC digit 2	-	-	-	MCC digit 1	-	-	-	octet 2
-MNC digit 3	-	-	-	MCC digit 3	-	-	-	octet 3
-MNC digit 2	-	-	-	MNC digit 1	-	-	-	octet 4
-TAC 1	-	-	-	-	-	-	-	octet 5
-TAC 1 (continued)	-	-	-	-	-	-	-	octet 6
-TAC 1 (continued)	-	-	-	-	-	-	-	octet 7
+8	7	6	5	4	3	2	1
+Allowed type	Type of list	Number of elements	octet 1
+MCC digit 2	MCC digit 1	octet 2
+MNC digit 3	MCC digit 3	octet 3
+MNC digit 2	MNC digit 1	octet 4
+TAC 1	octet 5
+TAC 1 (continued)	octet 6
+TAC 1 (continued)	octet 7
 
 
-8	7	6	5	4	3	2	1	-
-Allowed type	Type of list	-	Number of elements	-	-	-	-	octet 1
-MCC digit 2	-	-	-	MCC digit 1	-	-	-	octet 2
-MNC digit 3	-	-	-	MCC digit 3	-	-	-	octet 3
-MNC digit 2	-	-	-	MNC digit 1	-	-	-	octet 4
-TAC 1	-	-	-	-	-	-	-	octet 5
-TAC 1 (continued)	-	-	-	-	-	-	-	octet 6
-TAC 1 (continued)	-	-	-	-	-	-	-	octet 7
-MCC digit 2	-	-	-	MCC digit 1	-	-	-	octet 8*
-MNC digit 3	-	-	-	MCC digit 3	-	-	-	octet 9*
-MNC digit 2	-	-	-	MNC digit 1	-	-	-	octet 10*
-TAC 2	-	-	-	-	-	-	-	octet 11*
-TAC 2 (continued)	-	-	-	-	-	-	-	octet 12*
-TAC 2 (continued)	-	-	-	-	-	-	-	octet 13*
-…	-	-	-	-	-	-	-	-
-MCC digit 2	-	-	-	MCC digit 1	-	-	-	octet 6k-4*
-MNC digit 3	-	-	-	MCC digit 3	-	-	-	octet 6k-3*
-MNC digit 2	-	-	-	MNC digit 1	-	-	-	octet 6k-2*
-TAC k	-	-	-	-	-	-	-	octet 6k*-1
-TAC k (continued)	-	-	-	-	-	-	-	octet 6k*
-TAC k (continued)	-	-	-	-	-	-	-	octet 6k+1*
+8	7	6	5	4	3	2	1
+Allowed type	Type of list	Number of elements	octet 1
+MCC digit 2	MCC digit 1	octet 2
+MNC digit 3	MCC digit 3	octet 3
+MNC digit 2	MNC digit 1	octet 4
+TAC 1	octet 5
+TAC 1 (continued)	octet 6
+TAC 1 (continued)	octet 7
+MCC digit 2	MCC digit 1	octet 8*
+MNC digit 3	MCC digit 3	octet 9*
+MNC digit 2	MNC digit 1	octet 10*
+TAC 2	octet 11*
+TAC 2 (continued)	octet 12*
+TAC 2 (continued)	octet 13*
+…
+MCC digit 2	MCC digit 1	octet 6k-4*
+MNC digit 3	MCC digit 3	octet 6k-3*
+MNC digit 2	MNC digit 1	octet 6k-2*
+TAC k	octet 6k*-1
+TAC k (continued)	octet 6k*
+TAC k (continued)	octet 6k+1*
 
 
-8	7	6	5	4	3	2	1	-
-Allowed type	Type of list	-	Number of elements	-	-	-	-	octet 1
-MCC digit 2	-	-	-	MCC digit 1	-	-	-	octet 2
-MNC digit 3	-	-	-	MCC digit 3	-	-	-	octet 3
-MNC digit 2	-	-	-	MNC digit 1	-	-	-	octet 4
+8	7	6	5	4	3	2	1
+Allowed type	Type of list	Number of elements	octet 1
+MCC digit 2	MCC digit 1	octet 2
+MNC digit 3	MCC digit 3	octet 3
+MNC digit 2	MNC digit 1	octet 4
 
 9.11.3.50	Service type
-8	7	6	5	4	3	2	1	-
-Service typeIEI	-	-	-	Service type value	-	-	-	octet 1
+8	7	6	5	4	3	2	1
+Service type IEI	Service type value	octet 1
 
 9.11.3.50A	SMS indication
-8	7	6	5	4	3	2	1	-
-SMS indication IEI	-	-	-	0Spare	-	-	SAI	octet 1
+8	7	6	5	4	3	2	1
+SMS indication IEI	0 Spare	SAI	octet 1
 
-NOTE:	When used in NAS transport procedure, the contents of the SOR transparent container information element in the Payload container IE of the DL NAS TRANSPORT message are used to provide the list of preferred PLMN/access technology combinations and optional acknowledgement request, and the contents of the SOR transparent container information element in the Payload container IE of the UL NAS TRANSPORT message are used to indicate the UE acknowledgement of successful reception of the SOR transparent container IE in the DL NAS TRANSPORT message.
-8	7	6	5	4	3	2	1	-
-SOR transparent container IEI	-	-	-	-	-	-	-	octet 1
-Length of SOR transparent container contents	-	-	-	-	-	-	-	octet 2octet 3
-SOR header	-	-	-	-	-	-	-	octet 4
-SOR-MAC-IAUSF	-	-	-	-	-	-	-	octet 5-20 
-CounterSOR	-	-	-	-	-	-	-	octet 21-22
-Secured packet	-	-	-	-	-	-	-	octet 23* - n*
+9.11.3.51	SOR transparent container
+8	7	6	5	4	3	2	1
+SOR transparent container IEI	octet 1
+Length of SOR transparent container contents	octet 2 octet 3
+SOR header	octet 4
+SOR-MAC-IAUSF	octet 5-20
+CounterSOR	octet 21-22
+Secured packet	octet 23* - n*
 
 Figure 9.11.3.51.1: SOR transparent container information element for list type with value "0" and SOR data type with value "0"
-8	7	6	5	4	3	2	1	-
-SOR transparent container IEI	-	-	-	-	-	-	-	octet 1
-Length of SOR transparent container contents	-	-	-	-	-	-	-	octet 2octet 3
-SOR header	-	-	-	-	-	-	-	octet 4
-SOR-MAC-IAUSF	-	-	-	-	-	-	-	octet 5-20 
-CounterSOR	-	-	-	-	-	-	-	octet 21-22
-PLMN ID and access technology list	-	-	-	-	-	-	-	octet 23*-102*
+8	7	6	5	4	3	2	1
+SOR transparent container IEI	octet 1
+Length of SOR transparent container contents	octet 2 octet 3
+SOR header	octet 4
+SOR-MAC-IAUSF	octet 5-20
+CounterSOR	octet 21-22
+PLMN ID and access technology list	octet 23*-102*
 
 Figure 9.11.3.51.3: PLMN ID and access technology list
-8	7	6	5	4	3	2	1	-
-SOR transparent container IEI	-	-	-	-	-	-	-	octet 1
-Length of SOR transparent container contents	-	-	-	-	-	-	-	octet 2octet 3
-SOR header	-	-	-	-	-	-	-	octet 4
-SOR-MAC-IUE	-	-	-	-	-	-	-	octet 5 - 20
+8	7	6	5	4	3	2	1
+SOR transparent container IEI	octet 1
+Length of SOR transparent container contents	octet 2 octet 3
+SOR header	octet 4
+SOR-MAC-IUE	octet 5 - 20
 
 Figure 9.11.3.51.4: SOR transparent container information element for SOR data type with value "1"
-8	-	7	-	6	-	5	-	4	-	3	-	2	-	1	-	-	-	0Spare
-0Spare	-	-	-	-	-	-	ACK	-	List type	-	List indication	-	SOR data type	-	octet 4	-
+8	7	6	5	4	3	2	1
+0 Spare	ACK	List type	List indication	SOR data type
 
 Figure 9.11.3.51.5: SOR header for SOR data type with value "0"
-8	7	6	5	4	3	2	1	-
-0Spare	-	-	-	-	-	-	SOR data type	octet 4
+8	7	6	5	4	3	2	1
+0 Spare	SOR data type	octet 4
 
 9.11.3.53A	UE parameters update transparent container
-8	7	6	5	4	3	2	1	-
-UE parameters update transparent container IEI	-	-	-	-	-	-	-	octet 1
-Length of UE parameters update transparent container contents	-	-	-	-	-	-	-	octet 2octet 3
-UE parameters update header	-	-	-	-	-	-	-	octet 4
-UPU-MAC-IAUSF	-	-	-	-	-	-	-	octet 5-20 
-CounterUPU	-	-	-	-	-	-	-	octet 21-22
-UE parameters update list	-	-	-	-	-	-	-	octet 23* - n*
+8	7	6	5	4	3	2	1
+UE parameters update transparent container IEI	octet 1
+Length of UE parameters update transparent container contents	octet 2 octet 3
+UE parameters update header	octet 4
+UPU-MAC-IAUSF	octet 5-20
+CounterUPU	octet 21-22
+UE parameters update list	octet 23* - n*
 
 Figure 9.11.3.53A.1: UE parameters update transparent container information element for UE parameters update data type with value "0"
-8	-	7	-	6	-	5	-	4	3	2	1	-	-	-	0Spare
-0Spare	-	-	-	-	-	-	UE parameters update data set 1 type	-	-	-	-	octet 23*	-	Length of UE parameters update data set 1	-
-Length of UE parameters update data set 1	-	-	-	-	-	-	-	-	-	-	octet 24*-25*	-	UE parameters update data set 1	-	-
-UE parameters update data set 1	-	-	-	-	-	-	-	-	-	octet 26*-x*	-	…	-	-	-
-…	-	-	-	-	-	-	-	-	-	-	0Spare	-	-	-	-
-0Spare	-	-	UE parameters update data set n type	-	-	-	-	octet y*	-	Length of UE parameters update data set n	-	-	-	-	-
-Length of UE parameters update data set n	-	-	-	-	-	-	octet y+1*-y+2*	-	UE parameters update data set n	-	-	-	-	-	-
-UE parameters update data set n	-	-	-	-	-	octet y+3*-n*	-
+8	7	6	5	4	3	2	1
+0 Spare	UE parameters update data set 1 type	octet 23*
+Length of UE parameters update data set 1	octet 24*- 25*
+UE parameters update data set 1	octet 26*- x*
+…
+0 Spare	UE parameters update data set n type	octet y*
+Length of UE parameters update data set n	octet y+1*- y+2*
+UE parameters update data set n	octet y+3*- n*
 
 Figure 9.11.3.53A.2: UE parameters update list
-8	7	6	5	4	3	2	1	-
-Secured packet	-	-	-	-	-	-	-	octet a* - a+z*
+8	7	6	5	4	3	2	1
+Secured packet	octet a* - a+z*
 
 Figure 9.11.3.53A.3: UE parameters update data set for UE parameters update data set type with value "00000001"
-8	7	6	5	4	3	2	1	-
-Default configured NSSAI	-	-	-	-	-	-	-	octet b* - c*
+8	7	6	5	4	3	2	1
+Default configured NSSAI	octet b* -  c*
 
 Figure 9.11.3.53A.5: UE parameters update transparent container information element for UE parameters update data type with value "1"
-8	-	7	-	6	-	5	-	4	-	3	-	2	-	1	-	-	-	0Spare
-0Spare	-	-	-	-	-	-	-	-	REG	-	ACK	-	UPU data type	-	octet 4	-
+8	7	6	5	4	3	2	1
+0 Spare	REG	ACK	UPU data type
 
 Figure 9.11.3.53A.6: UE parameters update header for UE parameters update data type with value "0"
-8	7	6	5	4	3	2	1	-
-0Spare	-	-	-	-	-	-	UPU data type	octet 4
+8	7	6	5	4	3	2	1
+0 Spare	UPU data type	octet 4
 
 9.11.3.54	UE security capability
-8	7	6	5	4	3	2	1	-
-UE security capability IEI	-	-	-	-	-	-	-	octet 1
-Length of UE security capability contents	-	-	-	-	-	-	-	octet 2
-5G-EA0	128-5G-EA1	128-5G-EA2	128-5G-EA3	5G-EA4	5G-EA5	5G-EA6	5G-EA7	octet 3
-5G-IA0	128-5G-IA1	128-5G-IA2	128-5G-IA3	5G-IA4	5G-IA5	5G-IA6	5G-IA7	octet 4
-EEA0	128-EEA1	128-EEA2	128-EEA3	EEA4	EEA5	EEA6	EEA7	octet 5*
-EIA0	128-EIA1	128-EIA2	128-EIA3	EIA4	EIA5	EIA6	EIA7	octet 6*
-0	-	-	-	-	-	-	-	-
-Spare	-	-	-	-	-	-	-	octet 7* -10*
+8	7	6	5	4	3	2	1
+UE security capability IEI	octet 1
+Length of UE security capability contents	octet 2
+5G-EA0	128- 5G-EA1	128- 5G-EA2	128- 5G-EA3	5G-EA4	5G-EA5	5G-EA6	5G-EA7	octet 3
+5G-IA0	128- 5G-IA1	128- 5G-IA2	128- 5G-IA3	5G-IA4	5G-IA5	5G-IA6	5G-IA7	octet 4
+EEA0	128- EEA1	128- EEA2	128- EEA3	EEA4	EEA5	EEA6	EEA7	octet 5*
+EIA0	128- EIA1	128- EIA2	128- EIA3	EIA4	EIA5	EIA6	EIA7	octet 6*
+0
+Spare	octet 7* -10*
 
 9.11.3.55	UE's usage setting
-8	7	6	5	4	3	2	1	-
-UE's usage setting IEI	-	-	-	-	-	-	-	octet 1
-Length of UE's usage setting contents	-	-	-	-	-	-	-	octet 2
-0Spare	-	-	-	-	-	-	UE's usage setting	octet 3
+8	7	6	5	4	3	2	1
+UE's usage setting IEI	octet 1
+Length of UE's usage setting contents	octet 2
+0 Spare	UE's usage setting	octet 3
 
 9.11.3.56	UE status
-8	7	6	5	4	3	2	1	-
-UE status IEI	-	-	-	-	-	-	-	octet 1
-Length of UE status contents	-	-	-	-	-	-	-	octet 2
-0Spare	-	-	-	-	-	N1 mode reg	S1 mode reg	octet 3
+8	7	6	5	4	3	2	1
+UE status IEI	octet 1
+Length of UE status contents	octet 2
+0 Spare	N1 mode reg	S1 mode reg	octet 3
 
 9.11.3.57	Uplink data status
-8	7	6	5	4	3	2	1	-
-Uplink data status IEI	-	-	-	-	-	-	-	octet 1
-Length of uplink data status contents	-	-	-	-	-	-	-	octet 2
-PSI(7)	PSI(6)	PSI(5)	PSI(4)	PSI(3)	PSI(2)	PSI(1)	PSI(0)	octet 3
-PSI(15)	PSI(14)	PSI(13)	PSI(12)	PSI(11)	PSI(10)	PSI(9)	PSI(8)	octet 4
-0	-	-	-	-	-	-	-	-
-spare	-	-	-	-	-	-	-	octet 5* -34*
+8	7	6	5	4	3	2	1
+Uplink data status IEI	octet 1
+Length of uplink data status contents	octet 2
+PSI (7)	PSI (6)	PSI (5)	PSI (4)	PSI (3)	PSI (2)	PSI (1)	PSI (0)	octet 3
+PSI (15)	PSI (14)	PSI (13)	PSI (12)	PSI (11)	PSI (10)	PSI (9)	PSI (8)	octet 4
+0
+spare	octet 5* -34*
 
 9.11.3.63	MA PDU session information
-8	7	6	5	4	3	2	1	-
-MA PDU session information IEI	-	-	-	MA PDU session information value	-	-	-	octet 1
+8	7	6	5	4	3	2	1
+MA PDU session information IEI	MA PDU session information value	octet 1
 
 9.11.4.1	5GSM capability
-8	7	6	5	4	3	2	1	-
-5GSM capability IEI	-	-	-	-	-	-	-	octet 1
-Length of 5GSM capability contents	-	-	-	-	-	-	-	octet 2
-0Spare	-	-	MPTCP	ATS-LL	EPT-S1	MH6-PDU 	RqoS	octet 3
-0	-	-	-	-	-	-	-	octet 4* -15*
-Spare	-	-	-	-	-	-	-	octet 4* -15*
+8	7	6	5	4	3	2	1
+5GSM capability IEI	octet 1
+Length of 5GSM capability contents	octet 2
+0 Spare	MPTCP	ATS-LL	EPT-S1	MH6-PDU	RqoS	octet 3
+0	octet 4* -15*
+Spare	octet 4* -15*
 
 9.11.4.2	5GSM cause
-8	7	6	5	4	3	2	1	-
-5GSM cause IEI	-	-	-	-	-	-	-	octet 1
-Cause value	-	-	-	-	-	-	-	octet 2
+8	7	6	5	4	3	2	1
+5GSM cause IEI	octet 1
+Cause value	octet 2
 
 9.11.4.3	Always-on PDU session indication
-8	7	6	5	4	3	2	1	-
-Always-on PDU session indication IEI	-	-	-	0Spare	-	-	APSI	octet 1
+8	7	6	5	4	3	2	1
+Always-on PDU session indication IEI	0 Spare	APSI	octet 1
 
 9.11.4.4	Always-on PDU session requested
-8	7	6	5	4	3	2	1	-
-Always-on PDU session requested IEI	-	-	-	0Spare	-	-	APSR	octet 1
+8	7	6	5	4	3	2	1
+Always-on PDU session requested IEI	0 Spare	APSR	octet 1
 
 9.11.4.5	Allowed SSC mode
-8	7	6	5	4	3	2	1	-
-Allowed SSC mode IEI	-	-	-	0Spare	SSC3 	SSC2	SSC1	octet 1
+8	7	6	5	4	3	2	1
+Allowed SSC mode IEI	0 Spare	SSC3	SSC2	SSC1	octet 1
 
 9.11.4.7	Integrity protection maximum data rate
-8	7	6	5	4	3	2	1	-
-Integrity protection maximum data rate IEI	-	-	-	-	-	-	-	octet 1
-Maximum data rate per UE for user-plane integrity protection for uplink	-	-	-	-	-	-	-	octet 2
-Maximum data rate per UE for user-plane integrity protection for downlink	-	-	-	-	-	-	-	octet 3
+8	7	6	5	4	3	2	1
+Integrity protection maximum data rate IEI	octet 1
+Maximum data rate per UE for user-plane integrity protection for uplink	octet 2
+Maximum data rate per UE for user-plane integrity protection for downlink	octet 3
 
 9.11.4.9	Maximum number of supported packet filters
-8	7	6	5	-	4	3	2	1	-
-Maximum number of supported packet filters IEI	-	-	-	-	-	-	-	-	octet 1
-Maximum number of supported packet filters	-	-	-	-	-	-	-	-	octet 2
-Maximum number of supported packet filters (continued)	-	-	-	0Spare	-	-	-	-	octet 3
+8	7	6	5	4	3	2
+Maximum number of supported packet filters IEI
+Maximum number of supported packet filters
+Maximum number of supported packet filters (continued)	0 Spare
 
 -	an IPv4 address and an interface identifier for the IPv6 link local address, associated with the PDU session.
-8	-	7	-	6	-	5	-	4	-	3	2	1	-
-PDU address IEI	-	-	-	-	-	-	-	-	-	-	-	-	octet 1
-Length of PDU address contents	-	-	-	-	-	-	-	-	-	-	-	-	octet 2
-0	-	-	-	-	-	-	-	-	PDU session type value	-	-	-	octet 3
-spare	-	-	-	-	-	-	-	-	PDU session type value	-	-	-	octet 3
-PDU address information	-	-	-	-	-	-	-	-	-	-	-	-	octet 4octet 15
+8	7	6	5	4	3	2
+PDU address IEI
+Length of PDU address contents
+0	PDU session type value
+spare	PDU session type value
+PDU address information
 
 9.11.4.11	PDU session type
-8	7	6	5	4	3	2	1	-
-PDU session type IEI	-	-	-	0Spare	PDU session type value	-	-	octet 1
+8	7	6	5	4	3	2	1
+PDU session type IEI	0 Spare	PDU session type value	octet 1
 
 9.11.4.12	QoS flow descriptions
-8	7	6	5	4	3	2	1	-
-QoS flow descriptions IEI	-	-	-	-	-	-	-	octet 1
-Length of QoS flow descriptions contents	-	-	-	-	-	-	-	octet 2octet 3
-QoS flow description 1	-	-	-	-	-	-	-	octet 4octet u
-QoS flow description 2	-	-	-	-	-	-	-	octet u+1octet v
-...	-	-	-	-	-	-	-	octet v+1octet w
-QoS flow description n	-	-	-	-	-	-	-	octet w+1octet x
+8	7	6	5	4	3	2	1
+QoS flow descriptions IEI	octet 1
+Length of QoS flow descriptions contents	octet 2  octet 3
+QoS flow description 1	octet 4  octet u
+QoS flow description 2	octet u+1  octet v
+...	octet v+1  octet w
+QoS flow description n	octet w+1  octet x
 
 Figure 9.11.4.12.1: QoS flow descriptions information element
-8	7	-	6	-	5	-	4	-	3	2	-	1	-
-0Spare	-	-	QFI	-	-	-	-	-	-	-	-	-	octet 4
-Operation code	-	-	-	0Spare	-	-	-	-	-	-	-	-	octet 5
-0Spare	-	E	Number of parameters	-	-	-	-	-	-	-	-	-	octet 6
-Parameters list	-	-	-	-	-	-	-	-	-	-	-	-	octet 7*octet u*
+8	7	6	5	4	3	2
+0 Spare	QFI
+Operation code	0 Spare
+0 Spare	E	Number of parameters
+Parameters list
 
 Figure 9.11.4.12.2: QoS flow description 
-8	7	6	5	4	3	2	1	-
-Parameter 1	-	-	-	-	-	-	-	octet 7octet m
-Parameter 2	-	-	-	-	-	-	-	octet m+1octet n
-...	-	-	-	-	-	-	-	octet n+1octet o
-Parameter n	-	-	-	-	-	-	-	octet o+1octet u
+8	7	6	5	4	3	2	1
+Parameter 1	octet 7  octet m
+Parameter 2	octet m+1  octet n
+...	octet n+1  octet o
+Parameter n	octet o+1  octet u
 
 Figure 9.11.4.12.3: Parameters list
-8	7	6	5	4	3	2	1	-
-Parameter identifier	-	-	-	-	-	-	-	octet 7
-Length of parameter contents	-	-	-	-	-	-	-	octet 8
-Parameter contents	-	-	-	-	-	-	-	octet 9octet m
+8	7	6	5	4	3	2	1
+Parameter identifier	octet 7
+Length of parameter contents	octet 8
+Parameter contents	octet 9  octet m
 
 9.11.4.14	Session-AMBR
-8	7	6	5	4	3	2	1	-
-Session-AMBR IEI	-	-	-	-	-	-	-	octet 1
-Length of Session-AMBR contents	-	-	-	-	-	-	-	octet 2
-Unit for Session-AMBR for downlink	-	-	-	-	-	-	-	octet 3
-Session-AMBR for downlink	-	-	-	-	-	-	-	octet 4-5
-Unit for Session-AMBR for uplink	-	-	-	-	-	-	-	octet 6
-Session-AMBR for uplink	-	-	-	-	-	-	-	octet 7-8
+8	7	6	5	4	3	2	1
+Session-AMBR IEI	octet 1
+Length of Session-AMBR contents	octet 2
+Unit for Session-AMBR for downlink	octet 3
+Session-AMBR for downlink	octet 4-5
+Unit for Session-AMBR for uplink	octet 6
+Session-AMBR for uplink	octet 7-8
 
 
-8	7	6	5	4	3	2	1	-
-SM PDU DN request container information IEI	-	-	-	-	-	-	-	octet 1
-SM PDU DN request container information length	-	-	-	-	-	-	-	octet 2
-DN-specific identity	-	-	-	-	-	-	-	octets 3*-n*
+8	7	6	5	4	3	2	1
+SM PDU DN request container information IEI	octet 1
+SM PDU DN request container information length	octet 2
+DN-specific identity	octets 3*-n*
 
 9.11.4.16	SSC mode
-8	7	6	5	4	3	2	1	-
-SSC mode IEI	-	-	-	0Spare	SSC mode value	-	-	octet 1
+8	7	6	5	4	3	2	1
+SSC mode IEI	0 Spare	SSC mode value	octet 1
 
 9.11.4.17	Re-attempt indicator
-8	-	7	-	6	-	5	-	4	3	2	1	-	-
-Re-attempt indicator IEI	-	-	-	-	-	-	-	-	-	-	-	-	octet 1
-Length of Re-attempt indicator contents	-	-	-	-	-	-	-	-	-	-	-	-	octet 2
-0Spare	-	-	-	-	-	-	-	-	-	EPLMNC	-	RATC	octet 3
+8	7	6	5	4	3	2
+Re-attempt indicator IEI
+Length of Re-attempt indicator contents
+0 Spare	EPLMNC	RATC
 
 9.11.4.18	5GSM network feature support
-8	7	6	5	4	3	2	1	-
-5GSM network feature support IEI	-	-	-	-	-	-	-	octet 1
-Length of 5GSM network feature support contents	-	-	-	-	-	-	-	octet 2
-0Spare	-	-	-	-	-	-	EPT-S1	octet 3
-0	-	-	-	-	-	-	-	octet 4* -15*
-Spare	-	-	-	-	-	-	-	octet 4* -15*
+8	7	6	5	4	3	2	1
+5GSM network feature support IEI	octet 1
+Length of 5GSM network feature support contents	octet 2
+0 Spare	EPT-S1	octet 3
+0	octet 4* -15*
+Spare	octet 4* -15*
 
 9.11.4.19	Session-TMBR
-8	7	6	5	4	3	2	1	-
-Session-TMBR IEI	-	-	-	-	-	-	-	octet 1
-Length of Session-TMBR contents	-	-	-	-	-	-	-	octet 2
-Unit for Session-TMBR for downlink	-	-	-	-	-	-	-	octet 3
-Session-TMBR for downlink	-	-	-	-	-	-	-	octet 4-5
-Unit for Session-TMBR for uplink	-	-	-	-	-	-	-	octet 6
-Session-TMBR for uplink	-	-	-	-	-	-	-	octet 7-8
+8	7	6	5	4	3	2	1
+Session-TMBR IEI	octet 1
+Length of Session-TMBR contents	octet 2
+Unit for Session-TMBR for downlink	octet 3
+Session-TMBR for downlink	octet 4-5
+Unit for Session-TMBR for uplink	octet 6
+Session-TMBR for uplink	octet 7-8
 
 9.11.4.21	5GSM congestion re-attempt indicator
-8	-	7	-	6	-	5	-	4	3	2	1	-	-
-5GSM congestion re-attempt indicator IEI	-	-	-	-	-	-	-	-	-	-	-	-	octet 1
-Length of 5GSM congestion re-attempt indicator contents	-	-	-	-	-	-	-	-	-	-	-	-	octet 2
-0Spare	-	-	-	-	-	-	-	-	-	-	-	ABO	octet 3
+8	7	6	5	4	3	2
+5GSM congestion re-attempt indicator IEI
+Length of 5GSM congestion re-attempt indicator contents
+0 Spare	ABO
 
 9.11.4.22	ATSSS container
-8	7	6	5	4	3	2	1	-
-ATSSS container IEI	-	-	-	-	-	-	-	octet 1
-Length of ATSSS container contents	-	-	-	-	-	-	-	octet 2octet 3
-ATSSS container contents	-	-	-	-	-	-	-	octet 4octet x
+8	7	6	5	4	3	2	1
+ATSSS container IEI	octet 1
+Length of ATSSS container contents	octet 2 octet 3
+ATSSS container contents	octet 4  octet x
 
 9.11.4.23	Control plane only indication
-8	7	6	5	4	3	2	1	-
-Control plane only indication IEI	-	-	-	0Spare	-	-	CPOI value	octet 1
+8	7	6	5	4	3	2	1
+Control plane only indication IEI	0 Spare	CPOI value	octet 1
 
 D.6.2	UE policy section management list
-8	7	6	5	4	3	2	1	-
-UE policy section management list IEI	-	-	-	-	-	-	-	octet 1
-Length of UE policy section management list contents	-	-	-	-	-	-	-	octet 2octet 3
-UE policy section management list contents	-	-	-	-	-	-	-	octet 4octet z
+8	7	6	5	4	3	2	1
+UE policy section management list IEI	octet 1
+Length of UE policy section management list contents	octet 2  octet 3
+UE policy section management list contents	octet 4       octet z
 
 Figure D.6.2.1: UE policy section management list information element
-8	7	6	5	4	3	2	1	-
-UE policy section management sublist (PLMN 1)	-	-	-	-	-	-	-	octet 4octet a
-UE policy section management sublist (PLMN 2)	-	-	-	-	-	-	-	octet a+1octet b
-…	-	-	-	-	-	-	-	octet b+1…octet c
-UE policy section management sublist (PLMN N)	-	-	-	-	-	-	-	octet c+1octet z
+8	7	6	5	4	3	2	1
+UE policy section management sublist (PLMN 1)	octet 4  octet a
+UE policy section management sublist (PLMN 2)	octet a+1  octet b
+…	octet b+1 … octet c
+UE policy section management sublist (PLMN N)	octet c+1  octet z
 
 Figure D.6.2.2: UE policy section management list contents
-8	7	6	5	4	3	2	1	-
-Length of UE policy section management sublist	-	-	-	-	-	-	-	octet doctet d+1
--	-	-	-	MCC digit 1	-	-	-	octet d+2
-MCC digit 2	-	-	-	MCC digit 1	-	-	-	octet d+2
--	-	-	-	MCC digit 3	-	-	-	octet d+3
-MNC digit 3	-	-	-	MCC digit 3	-	-	-	octet d+3
--	-	-	-	MNC digit 1	-	-	-	octet d+4
-MNC digit 2	-	-	-	MNC digit 1	-	-	-	octet d+4
-UE policy section management sublist contents	-	-	-	-	-	-	-	octet d+5octet y
+8	7	6	5	4	3	2	1
+Length of UE policy section management sublist	octet d  octet d+1
+MCC digit 1	octet d+2
+MCC digit 2	MCC digit 1	octet d+2
+MCC digit 3	octet d+3
+MNC digit 3	MCC digit 3	octet d+3
+MNC digit 1	octet d+4
+MNC digit 2	MNC digit 1	octet d+4
+UE policy section management sublist contents	octet d+5      octet y
 
 Figure D.6.2.3: UE policy section management sublist
-8	7	6	5	4	3	2	1	-
-Instruction 1	-	-	-	-	-	-	-	octet d+5octet e
-Instruction 2	-	-	-	-	-	-	-	octet e+1octet f
-…	-	-	-	-	-	-	-	octet f+1 …octet g
-Instruction N	-	-	-	-	-	-	-	octet g+1octet e
+8	7	6	5	4	3	2	1
+Instruction 1	octet d+5  octet e
+Instruction 2	octet e+1  octet f
+…	octet f+1   …   octet g
+Instruction N	octet g+1  octet e
 
 Figure D.6.2.4: UE policy section management sublist contents
-8	7	6	5	4	3	2	1	-
-Instruction contents length	-	-	-	-	-	-	-	octet d+5octet d+6
-UPSC	-	-	-	-	-	-	-	octet d+7octet d+8
-UE policy section contents	-	-	-	-	-	-	-	octet d+9octet k
+8	7	6	5	4	3	2	1
+Instruction contents length	octet d+5  octet d+6
+UPSC	octet d+7  octet d+8
+UE policy section contents	octet d+9      octet k
 
 Figure D.6.2.5: Instruction
-8	7	6	5	4	3	2	1	-
-UE policy part 1	-	-	-	-	-	-	-	octet loctet m
-UE policy part 2	-	-	-	-	-	-	-	octet m+1octet n
-…	-	-	-	-	-	-	-	octet n+1 …octet o
-UE policy part N	-	-	-	-	-	-	-	octet o+1octet p
+8	7	6	5	4	3	2	1
+UE policy part 1	octet l  octet m
+UE policy part 2	octet m+1  octet n
+…	octet n+1   …   octet o
+UE policy part N	octet o+1  octet p
 
 Figure D.6.2.6: UE policy section contents
-8	7	6	5	4	3	2	1	-
-UE policy part contents length	-	-	-	-	-	-	-	octet qoctet q+1
-0	-	-	-	UE policy part type	-	-	-	octet q+2
-Spare	-	-	-	UE policy part type	-	-	-	octet q+2
-UE policy part contents	-	-	-	-	-	-	-	octet q+3octet r
+8	7	6	5	4	3	2	1
+UE policy part contents length	octet q  octet q+1
+0	UE policy part type	octet q+2
+Spare	UE policy part type	octet q+2
+UE policy part contents	octet q+3   octet r
 
 D.6.3	UE policy section management result
-8	7	6	5	4	3	2	1	-
-UE policy section management result IEI	-	-	-	-	-	-	-	octet 1
-Length of UE policy section management result contents	-	-	-	-	-	-	-	octet 2octet 3
-UE policy section management result contents	-	-	-	-	-	-	-	octet 4octet z
+8	7	6	5	4	3	2	1
+UE policy section management result IEI	octet 1
+Length of UE policy section management result contents	octet 2  octet 3
+UE policy section management result contents	octet 4       octet z
 
 Figure D.6.3.1: UE policy section management result information element
-8	7	6	5	4	3	2	1	-
-UE policy section management subresult (PLMN 1)	-	-	-	-	-	-	-	octet 4octet a
-UE policy section management subresult (PLMN 2)	-	-	-	-	-	-	-	octet a+1octet b
-…	-	-	-	-	-	-	-	octet b+1…octet c
-UE policy section management subresult (PLMN N)	-	-	-	-	-	-	-	octet c+1octet z
+8	7	6	5	4	3	2	1
+UE policy section management subresult (PLMN 1)	octet 4  octet a
+UE policy section management subresult (PLMN 2)	octet a+1  octet b
+…	octet b+1 … octet c
+UE policy section management subresult (PLMN N)	octet c+1  octet z
 
 Figure D.6.3.2: UE policy section management result contents
-8	7	6	5	4	3	2	1	-
-Number of results	-	-	-	-	-	-	-	octet d
--	-	-	-	MCC digit 1	-	-	-	octet d+1
-MCC digit 2	-	-	-	MCC digit 1	-	-	-	octet d+1
--	-	-	-	MCC digit 3	-	-	-	octet d+2
-MNC digit 3	-	-	-	MCC digit 3	-	-	-	octet d+2
--	-	-	-	MNC digit 1	-	-	-	octet d+3
-MNC digit 2	-	-	-	MNC digit 1	-	-	-	octet d+3
-UE policy section management subresult contents	-	-	-	-	-	-	-	octet d+4octet y
+8	7	6	5	4	3	2	1
+Number of results	octet d
+MCC digit 1	octet d+1
+MCC digit 2	MCC digit 1	octet d+1
+MCC digit 3	octet d+2
+MNC digit 3	MCC digit 3	octet d+2
+MNC digit 1	octet d+3
+MNC digit 2	MNC digit 1	octet d+3
+UE policy section management subresult contents	octet d+4      octet y
 
 Figure D.6.3.3: UE policy section management subresult
-8	7	6	5	4	3	2	1	-
-Result 1	-	-	-	-	-	-	-	octet d+4octet d+8
-Result 2	-	-	-	-	-	-	-	octet d+9octet d+13
-…	-	-	-	-	-	-	-	octet d+14 …octet e
-Result N	-	-	-	-	-	-	-	octet e+1octet e+5
+8	7	6	5	4	3	2	1
+Result 1	octet d+4  octet d+8
+Result 2	octet d+9  octet d+13
+…	octet d+14   …   octet e
+Result N	octet e+1  octet e+5
 
 Figure D.6.3.4: UE policy section management subresult contents
-8	7	6	5	4	3	2	1	-
-UPSC	-	-	-	-	-	-	-	octet foctet f+1
-Failed instruction order	-	-	-	-	-	-	-	octet f+2octet f+3
-Cause	-	-	-	-	-	-	-	octet f+4
+8	7	6	5	4	3	2	1
+UPSC	octet f  octet f+1
+Failed instruction order	octet f+2  octet f+3
+Cause	octet f+4
 
 D.6.4	UPSI list
-8	7	6	5	4	3	2	1	-
-UPSI list IEI	-	-	-	-	-	-	-	octet 1
-Length of UPSI list contents	-	-	-	-	-	-	-	octet 2octet 3
-UPSI sublist (PLMN 1)	-	-	-	-	-	-	-	octet 4octet a
-UPSI sublist (PLMN 2)	-	-	-	-	-	-	-	octet a+1*octet b*
-…	-	-	-	-	-	-	-	octet b+1*octet c*
-UPSI sublist (PLMN N)	-	-	-	-	-	-	-	octet c+1*octet z*
+8	7	6	5	4	3	2	1
+UPSI list IEI	octet 1
+Length of UPSI list contents	octet 2  octet 3
+UPSI sublist (PLMN 1)	octet 4  octet a
+UPSI sublist (PLMN 2)	octet a+1*  octet b*
+…	octet b+1*  octet c*
+UPSI sublist (PLMN N)	octet c+1*  octet z*
 
 Figure D.6.4.1: UPSI list information element
-8	7	6	5	4	3	2	1	-
-Length of UPSI sublist	-	-	-	-	-	-	-	octet doctet d+1
-MCC digit 2	-	-	-	MCC digit 1	-	-	-	octet d+2
-MNC digit 3	-	-	-	MCC digit 3	-	-	-	octet d+3
-MNC digit 2	-	-	-	MNC digit 1	-	-	-	octet d+4
-UPSC	-	-	-	-	-	-	-	octet d+5octet d+6
-UPSC	-	-	-	-	-	-	-	octet d+7*octet d+8*
-…	-	-	-	-	-	-	-	octet d+9*octet e*
-UPSC	-	-	-	-	-	-	-	octet e+1*octet e+2*
+8	7	6	5	4	3	2	1
+Length of UPSI sublist	octet d  octet d+1
+MCC digit 2	MCC digit 1	octet d+2
+MNC digit 3	MCC digit 3	octet d+3
+MNC digit 2	MNC digit 1	octet d+4
+UPSC	octet d+5  octet d+6
+UPSC	octet d+7*  octet d+8*
+…	octet d+9*  octet e*
+UPSC	octet e+1*  octet e+2*
 
 D.6.5	UE policy classmark
-8	-	7	-	6	-	5	-	4	-	3	-	2	-	1	-	-	-	Policy information IEI
-Policy information IEI	-	-	-	-	-	-	-	-	-	-	-	-	-	-	octet 1	-	Length of Policy information contents	-
-Length of Policy information contents	-	-	-	-	-	-	-	-	-	-	-	-	-	octet 2	-	0Spare	-	-
-0Spare	-	-	-	-	-	-	0 Spare	-	-	-	SupportANDSP	-	octet 3	-	0	-	-	-
-0	-	-	-	-	-	-	-	-	-	-	-	octet 4* -5*	-	Spare	-	-	-	-
-Spare	-	-	-	-	-	-	-	-	-	-	0	octet 4* -5*
+8	7	6	5	4	3	2	1
+Policy information IEI	octet 1
+Length of Policy information contents	octet 2
+0 Spare	SupportANDSP	octet 3
+0	octet 4* -5*
+Spare	0
 
 D.6.6	UE OS Id
-8	7	6	5	4	3	2	1	-	-	-	OS Id IEI
-OS Id IEI	-	-	-	-	-	-	-	octet 1	-	Length of OS Id information contents	-
-Length of OS Id information contents	-	-	-	-	-	-	octet 2	-	OS Id_1	-	-
-OS Id_1	-	-	-	-	-	octets 3 - 18	-	…	-	-	-
-…	-	-	-	-	 …	-	OS Id_15	-	-	-	-
-OS Id_15	-	-	-	octets 226* -242*	-
+8	7	6	5	4	3	2	1
+OS Id IEI	octet 1
+Length of OS Id information contents	octet 2
+OS Id_1	octets 3 - 18
+…
+OS Id_15	octets 226* -242*
 
