@@ -344,7 +344,7 @@ const field_meta hf_routing_indication = {
     0,
 };
 
-static const value_string prot_scheme_id_vals[] = {
+static const v_string prot_scheme_id_vals[] = {
     {0x0, "NULL scheme"},
     {0x1, "ECIES scheme profile A"},
     {0x2, "ECIES scheme profile B"},

@@ -4,7 +4,7 @@
 // See subclause 10.5.5.32 in 3GPP TS 24.008 [12].
 
 /* [13] 10.5.5.32 Extended DRX parameters */
-static const value_string paging_time_window_values[] = {
+static const v_string paging_time_window_values[] = {
     {0x0, "Iu: 0 s / WB-S1: 1.28 s / NB-S1: 2.56 s"},
     {0x1, "Iu: 1 s / WB-S1: 2.56 s / NB-S1: 5.12 s"},
     {0x2, "Iu: 2 s / WB-S1: 3.84 s / NB-S1: 7.68 s"},
@@ -24,7 +24,7 @@ static const value_string paging_time_window_values[] = {
     {0, nullptr},
     };
 
-static const value_string edrx_values[] = {
+static const v_string edrx_values[] = {
     {0x0, "GERAN: 1.88 s / UTRAN: 10.24 s / E-UTRAN: 5.12 s"},
     {0x1, "GERAN: 3.76 s / UTRAN: 20.48 s / E-UTRAN: 10.24 s"},
     {0x2, "GERAN: 7.53 s / UTRAN: 40.96 s / E-UTRAN: 20.48 s"},

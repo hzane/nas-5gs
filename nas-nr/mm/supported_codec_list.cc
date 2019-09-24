@@ -1,7 +1,7 @@
 #include "../common/dissect_mm_msg.hh"
 
 // 9.11.3.62	Supported codec list
-const value_string system_id_values[] = {
+const v_string system_id_values[] = {
     {0x0, "GSM"},
     {0x4, "UMTS"},
     {0, nullptr},

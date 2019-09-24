@@ -17,7 +17,7 @@ struct access_type_t {
 };
 
 /*  9.11.3.11    Access type */
-const value_string access_type_values[] = {
+const v_string access_type_values[] = {
     {0x1, "3GPP access"},
     {0x2, "Non-3GPP access"},
     {0x3, "3GPP access and non-3GPP access"},

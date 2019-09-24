@@ -281,7 +281,7 @@ const field_meta sm::hf_default_qos_rule = {
     0x10,
 };
 
-extern const value_string nas_5gs_rule_operation_code_values[] = {
+extern const v_string nas_5gs_rule_operation_code_values[] = {
     {0x0, "Reserved"},
     {0x1, "Create new QoS rule"},
     {0x2, "Delete existing QoS rule"},
@@ -302,7 +302,7 @@ const element_meta sm::authorized_qos_rules = {
 };
 
 
-extern const value_string sm::rule_operation_code_values[] = {
+extern const v_string sm::rule_operation_code_values[] = {
     {0x0, "Reserved"},
     {0x1, "Create new QoS rule"},
     {0x2, "Delete existing QoS rule"},

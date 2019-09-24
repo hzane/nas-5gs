@@ -26,7 +26,7 @@ const element_meta sm::session_ambr = {
 
 
 //  *      9.11.4.14    Session-AMBR
-extern const value_string sm::ambr_values[] = {
+extern const v_string sm::ambr_values[] = {
     {0x00, "value is not used"},
     {0x01, "value is incremented in multiples of 1 Kbps"},
     {0x02, "value is incremented in multiples of 4 Kbps"},

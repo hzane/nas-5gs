@@ -1,7 +1,7 @@
 #include "../common/dissect_mm_msg.hh"
 
 /* Mobile Station Classmark Revision level */
-static const value_string revision_values[] = {
+static const v_string revision_values[] = {
     {0, "Reserved for GSM phase 1"},
     {1, "Used by GSM phase 2 mobile stations"},
     {2, "Used by mobile stations supporting R99 or later versions of the protocol"},
@@ -44,7 +44,7 @@ static const tf_string tfs_a51_algorithm_support_values = {
 };
 
 /* RF Power Capability (Octet 3) */
-static const value_string rf_power_capability_values[] = {
+static const v_string rf_power_capability_values[] = {
     {0, "class 1"},
     {1, "class 2"},
     {2, "class 3"},
@@ -93,7 +93,7 @@ const field_meta hf_ps_support_capability = {
 };
 
 /* SS Screening Indicator (octet 4)defined in 3GPP TS 24.080 */
-static const value_string ss_screening_indicator_values[] = {
+static const v_string ss_screening_indicator_values[] = {
     {0, "Default value of phase 1"},
     {1, "Capability of handling of ellipsis notation and phase 2 error handling "},
     {2, "For future use"},

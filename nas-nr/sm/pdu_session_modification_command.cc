@@ -56,7 +56,7 @@ int sm::dissect_pdu_session_modification_command(dissector d, context* ctx) {
 }
 namespace sm {
 
-const value_string nas_5gs_rule_param_cont[] = {
+const v_string nas_5gs_rule_param_cont[] = {
     {0x0, "Reserved"},
     {0x01, "5QI 1"},
     {0x02, "5QI 2"},
@@ -95,7 +95,7 @@ const field_meta hf_sm_parameters_number = {
     0x3f,
 };
 
-static const value_string nas_5gs_sm_param_id_values[] = {
+static const v_string nas_5gs_sm_param_id_values[] = {
     {0x01, "5QI"},
     {0x02, "GFBR uplink"},
     {0x03, "GFBR downlink"},

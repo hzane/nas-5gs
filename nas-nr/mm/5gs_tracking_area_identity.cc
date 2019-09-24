@@ -22,14 +22,14 @@ struct last_visit_tracking_area_identity_t{
 };
 
 /*  9.11.3.9     5GS tracking area identity list */
-extern const value_string tracking_area_identity_list_values[] = {
+extern const v_string tracking_area_identity_list_values[] = {
     {0x00, "list of TACs belonging to one PLMN, with non-consecutive TAC values"},
     {0x01, "list of TACs belonging to one PLMN, with consecutive TAC values"},
     {0x02, "list of TAIs belonging to different PLMNs"},
     {0, nullptr},
 };
 
-extern const value_string tracking_area_list_number_values[] = {
+extern const v_string tracking_area_list_number_values[] = {
     {0x00, "1 element"},
     {0x01, "2 elements"},
     {0x02, "3 elements"},

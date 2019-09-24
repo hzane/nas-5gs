@@ -60,7 +60,7 @@ const field_meta sm::hf_ssc_mode_1 = {
 };
 
 /*  9.11.4.16    SSC mode */
-extern const value_string sm::ssc_mode_values[] = {
+extern const v_string sm::ssc_mode_values[] = {
     {0x1, "SSC mode 1"},
     {0x2, "SSC mode 2"},
     {0x3, "SSC mode 3"},

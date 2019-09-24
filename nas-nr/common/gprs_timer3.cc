@@ -3,7 +3,7 @@
 namespace{
 /* * 3GPP TS 24.008 g10 10.5.7.4a */
 #if 0
-static const value_string gsm_a_gm_gprs_timer3_unit_vals[] = {
+static const v_string gsm_a_gm_gprs_timer3_unit_vals[] = {
     {0x00, "value is incremented in multiples of 10 minutes"},
     {0x01, "value is incremented in multiples of 1 hour"},
     {0x02, "value is incremented in multiples of 10 hours"},

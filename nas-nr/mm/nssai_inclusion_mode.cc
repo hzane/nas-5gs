@@ -21,7 +21,7 @@ struct nssai_inclusion_mode_t {
 };
 
 /* 9.11.3.37A   NSSAI inclusion mode */
-const value_string inclusion_mode_values[] = {
+const v_string inclusion_mode_values[] = {
     {0x00, "A"},
     {0x01, "B"},
     {0x02, "C"},

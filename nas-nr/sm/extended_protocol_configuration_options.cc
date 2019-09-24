@@ -22,7 +22,7 @@ const field_meta hf_gsm_configuration_protocol = {
     0x7,
 };
 
-extern const value_string ppp_protocol_values[];
+extern const v_string ppp_protocol_values[];
 
 const field_meta hf_proto_id = {
     "Protocol ID",
@@ -63,7 +63,7 @@ const element_meta sm::extended_pco = {
 };
 
 // only part
-extern const value_string ppp_protocol_values[] = {
+extern const v_string ppp_protocol_values[] = {
     {1, "Padding Protocol"},
     {3, "ROHC small-CID"},
     {5, "ROHC large-CID"},

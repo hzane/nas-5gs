@@ -40,7 +40,7 @@ int mm::dissect_network_feature_support(dissector d, context* ctx) {
 }
 
 namespace mm {
-const value_string emergency_services_fallback_values[] = {
+const v_string emergency_services_fallback_values[] = {
     {0x0, "Emergency services fallback not supported"},
     {0x1, "Emergency services fallback supported in NR connected to 5GCN only"},
     {
@@ -97,7 +97,7 @@ const field_meta hf_emergency_service_fallback_indicator = {
     0x30,
 };
 
-const value_string emergency_services_values[] = {
+const v_string emergency_services_values[] = {
     {0x0, "Emergency services not supported"},
     {0x1, "Emergency services supported in NR connected to 5GCN only"},
     {
@@ -121,7 +121,7 @@ const field_meta hf_emergency_service_support_indicator = {
     0x0c,
 };
 
-const value_string ims_voice_over_ps_session_values[] = {
+const v_string ims_voice_over_ps_session_values[] = {
     {0x0, "IMS voice over PS session not supported"},
     {0x1, "IMS voice over PS session supported over 3GPP access"},
     {0x2, "IMS voice over PS session supported over non - 3GPP access"},

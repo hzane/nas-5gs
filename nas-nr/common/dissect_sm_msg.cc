@@ -168,7 +168,7 @@ const element_meta sm::rq_gprs_timer = {
     nullptr,
 };
 
-extern const value_string sm::packet_filter_component_type_values[] = {
+extern const v_string sm::packet_filter_component_type_values[] = {
     {0x01, "Match-all type"},
     {0x10, "IPv4 remote address type"},
     {0x11, "IPv4 local address type"},
@@ -192,7 +192,7 @@ extern const value_string sm::packet_filter_component_type_values[] = {
     {0, nullptr},
 };
 
-extern const value_string sm::packet_filter_direction_values[] = {
+extern const v_string sm::packet_filter_direction_values[] = {
     {0x00, "Reserved"},
     {0x01, "Downlink only"},
     {0x02, "Uplink only"},

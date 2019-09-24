@@ -143,7 +143,7 @@ const field_meta hf_conf_upd_ind_ack_b0 = {
 
 
 /*[3] 10.5.3.12 Daylight Saving Time */
-static const value_string gsm_daylight_saving_adjustment_values[] = {
+static const v_string gsm_daylight_saving_adjustment_values[] = {
     {0, "No adjustment for Daylight Saving Time"},
     {1, "+1 hour adjustment for Daylight Saving Time"},
     {2, "+2 hours adjustment for Daylight Saving Time"},
@@ -163,7 +163,7 @@ const field_meta hf_dst_adjustment = {
 
 
 /* [3] 10.5.3.5a Network Name */
-static const value_string gsm_network_name_values[] = {
+static const v_string gsm_network_name_values[] = {
     {0, "this field carries no information about the number of spare bits in octet n"},
     {1, "bit 8 is spare and set to '0' in octet n"},
     {2, "bits 7 and 8 are spare and set to '0' in octet n"},
@@ -181,7 +181,7 @@ const tf_string tfs_add_ci = {
     "The MS should not add the letters for the Country's Initials to the text string",
 };
 
-const value_string gsm_coding_scheme_values[] = {
+const v_string gsm_coding_scheme_values[] = {
     {0,
      "Cell Broadcast data coding scheme, GSM default alphabet, language unspecified, "
         "defined in 3GPP TS 23.038",

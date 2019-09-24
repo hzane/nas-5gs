@@ -23,7 +23,7 @@ const element_meta sm::nrsm_cause = {
 };
 
 /* * 9.11.4.2    5GSM cause */
-extern const value_string sm::nrsm_cause_values[] = {
+extern const v_string sm::nrsm_cause_values[] = {
     {0x1a, "Insufficient resources"},
     {0x1b, "Missing or unknown DNN"},
     {0x1c, "Unknown PDU session type"},

@@ -15,7 +15,7 @@ struct drx_parameters_t {
 };
 
 /* 9.11.3.2A    5GS DRX parameters*/
-const value_string drx_parameters_values[] = {
+const v_string drx_parameters_values[] = {
     {0x0, "DRX value not specified"},
     {0x1, "DRX cycle parameter T = 32"},
     {0x2, "DRX cycle parameter T = 64"},

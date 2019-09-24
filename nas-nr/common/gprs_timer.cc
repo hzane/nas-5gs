@@ -4,7 +4,7 @@
 namespace{
 /* [9] 10.5.7.3 GPRS Timer */
 #if 0
-const value_string gsm_a_gm_gprs_timer_unit_vals[] = {
+const v_string gsm_a_gm_gprs_timer_unit_vals[] = {
     {0x00, "value is incremented in multiples of 2 seconds"},
     {0x01, "value is incremented in multiples of 1 minute"},
     {0x02, "value is incremented in multiples of decihours"},

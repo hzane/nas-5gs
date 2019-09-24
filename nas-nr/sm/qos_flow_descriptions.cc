@@ -29,7 +29,7 @@ const field_meta sm::hf_sm_qos_flow_identity = {
 
 
 /* 9.11.4.12 QoS flow descriptions op code*/
-const value_string qos_flow_description_operation_code_values[] = {
+const v_string qos_flow_description_operation_code_values[] = {
     {0x00, "Reserved"},
     {0x01, "Create new QoS flow description"},
     {0x02, "Delete existing QoS flow description"},

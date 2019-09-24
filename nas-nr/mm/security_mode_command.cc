@@ -95,7 +95,7 @@ extern const element_meta replayed_s1_ue_security_capability = {
     nullptr,
 };
 
-const value_string nas_5gs_mm_type_of_enc_algo_vals[] = {
+const v_string nas_5gs_mm_type_of_enc_algo_vals[] = {
     {0x0, "5G-EA0 (null ciphering algorithm)"},
     {0x1, "128-5G-EA1"},
     {0x2, "128-5G-EA2"},

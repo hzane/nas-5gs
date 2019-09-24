@@ -5,9 +5,6 @@
 #include "../common/config.hh"
 #include "v_string.hh"
 
-using tf_string    = tf_string;
-using value_string = v_string;
-
 inline const tf_string true_false = {"true", "false"};
 
 namespace ft {

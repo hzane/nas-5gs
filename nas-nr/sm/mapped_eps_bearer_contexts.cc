@@ -125,7 +125,7 @@ const element_meta sm::mapped_eps_bearer_context = {
 
 
 /* 9.11.4.8 Mapped EPS bearer contexts */
-extern const value_string sm::operation_code_values[] = {
+extern const v_string sm::operation_code_values[] = {
     {0x0, "Reserved"},
     {0x01, "Create new EPS bearer"},
     {0x02, "Delete existing EPS bearer"},
@@ -133,25 +133,25 @@ extern const value_string sm::operation_code_values[] = {
     {0, nullptr},
 };
 
-extern const value_string sm::deb_bit_values[] = {
+extern const v_string sm::deb_bit_values[] = {
     {0x0, "the EPS bearer is not the default EPS bearer."},
     {0x01, "the EPS bearer is the default EPS bearer"},
     {0, nullptr},
 };
 
-extern const value_string sm::e_bit_values[] = {
+extern const v_string sm::e_bit_values[] = {
     {0x0, "parameters list is not included"},
     {0x01, "parameters list is included"},
     {0, nullptr},
 };
 
-extern const value_string sm::e_bit_modify_values[] = {
+extern const v_string sm::e_bit_modify_values[] = {
     {0x0, "previously provided parameters list extension"},
     {0x01, "previously provided parameters list replacement"},
     {0, nullptr},
 };
 
-extern const value_string sm::eps_parameter_identity_values[] = {
+extern const v_string sm::eps_parameter_identity_values[] = {
     {0x01, "Mapped EPS QoS parameters"},
     {0x02, "Mapped extended EPS QoS parameters"},
     {0x03, "Traffic flow template"},

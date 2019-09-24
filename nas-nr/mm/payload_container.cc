@@ -177,7 +177,7 @@ const field_meta mm::hf_pld_optional_ie = {
 };
 
 
-const value_string pld_optional_ie_type_values[] = {
+const v_string pld_optional_ie_type_values[] = {
     {0x12, "PDU session ID"},         // see subclause 9.11.3.41
     {0x24, "Additional information"}, // 9.11.2.1
     {0x58, "5GMM cause"},             // 9.11.3.2
