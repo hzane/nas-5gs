@@ -16,7 +16,7 @@ std::string print_text(const field_meta* meta,
 
 std::string print_text(const field_meta* meta, uint64_t v);
 
-proto_item* proto_node::add_item(packet_info*      pinfo,
+proto_item* proto_node::add_item(packet*      pinfo,
                                  bufview*           buf,
                                  int               start,
                                  int               len,
@@ -64,7 +64,7 @@ const field_meta hf_expert = {
     0,
 };
 
-proto_item* proto_node::add_expert(packet_info* pinfo,
+proto_item* proto_node::add_expert(packet* pinfo,
                                    bufview*      buf,
                                    int          start,
                                    int          len,
@@ -78,7 +78,7 @@ proto_item* proto_node::add_expert(packet_info* pinfo,
     return item;
 }
 
-proto_tree* proto_node::add_subtree(packet_info* ,
+proto_tree* proto_node::add_subtree(packet* ,
                                     bufview*      buf,
                                     int          start,
                                     int          len,

@@ -2,11 +2,11 @@
 #include "../common/config.hh"
 
 struct bufview;
-struct packet_info;
+struct packet;
 struct proto_node;
 struct context;
 
-struct packet_info {
+struct packet {
     uint32_t presence_flags = 0; // some flags
     uint32_t num            = 0; // frame number
     int64_t  abs_ts         = 0; // nano seconds
@@ -14,14 +14,14 @@ struct packet_info {
     int      dir            = 0; // direction
 };
 
-inline void up_link(packet_info*pinfo){
+inline void up_link(packet*pinfo){
     if (pinfo) pinfo->dir = direction::ul;
 }
 
-inline void down_link(packet_info*pinfo){
+inline void down_link(packet*pinfo){
     if (pinfo) pinfo->dir = direction::dl;
 }
 
-inline void both_link(packet_info*pinfo) {
+inline void both_link(packet*pinfo) {
     if (pinfo) pinfo->dir = direction::both;
 }

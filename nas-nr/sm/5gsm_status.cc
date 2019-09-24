@@ -1,4 +1,4 @@
-#include "../base/packet_info.hh"
+#include "../base/packet.hh"
 #include "../common/dissect_sm_msg.hh"
 
 /* 8.3.16 5GSM status */

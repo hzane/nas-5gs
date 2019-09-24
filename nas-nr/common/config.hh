@@ -15,7 +15,7 @@
 
 struct bufview;
 
-struct packet_info;
+struct packet;
 struct proto_node;
 struct context;
 
@@ -50,7 +50,7 @@ inline const uint32_t none = 4; // host order
 } // namespace enc
 
 struct dissector {
-    packet_info* pinfo  = nullptr;
+    packet* pinfo  = nullptr;
     proto_node*  tree   = nullptr;
     bufview*      tvb    = nullptr;
     int          offset = 0;

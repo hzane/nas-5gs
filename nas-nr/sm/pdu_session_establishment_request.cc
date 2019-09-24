@@ -1,5 +1,5 @@
 #include "../base/ber.hh"
-#include "../base/packet_info.hh"
+#include "../base/packet.hh"
 #include "../common/dissect_sm_msg.hh"
 
 using namespace cmn;

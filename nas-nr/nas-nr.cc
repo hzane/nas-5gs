@@ -92,7 +92,7 @@ NASNRAPI int dissect_nas_nr(nas_nr_message** root,
                             void*            env) {
     bufview         tvb   = NASNR_LIST_INIT(tvbuff, data, length);
     context         alt   = NASNR_LIST_INIT(context);
-    packet_info     pinfo = NASNR_LIST_INIT(packet_info);
+    packet          pinfo = NASNR_LIST_INIT(packet_info);
     proto_node      node  = NASNR_LIST_INIT(proto_node);
     *root                 = nullptr;
     pinfo.dir             = dir;

@@ -1,7 +1,7 @@
 #pragma once
 #include "../base/bufview.hh"
 #include "../base/field_meta.hh"
-#include "../base/packet_info.hh"
+#include "../base/packet.hh"
 #include "../base/proto.hh"
 #include "../base/tree_meta.hh"
 #include "config.hh"
