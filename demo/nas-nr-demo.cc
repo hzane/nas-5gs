@@ -3,7 +3,7 @@
 #include <iostream>
 #include <vector>
 
-#include "../nas-nr/common/core.hh"
+#include "../nas-nr/base/core.hh"
 #include "../nas-nr/nas-nr.hh"
 
 namespace fs = std::filesystem;
@@ -18,7 +18,7 @@ void dissect(const fs::path& entry) {
     auto        buf = buffer(if_iterator(inf), if_iterator());
     bufview     tvb = {buf.data(), static_cast< int >(buf.size())};
     context     ctx = {};
-    packet_info pinfo{};
+    packet      pinfo{};
     proto_node  node{};
     dissector   d{&pinfo, &node, &tvb, 0, static_cast< int >(buf.size()), nullptr};
     nas_5gs_module.dissector(d, &ctx);

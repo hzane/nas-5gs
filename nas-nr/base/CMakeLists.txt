@@ -1,5 +1,9 @@
 set(BASE_SRCS base.cc
-        ber.cc
+        nas-nr-compiler-detection.hh
+        common.hh
+        config.hh
+        core.cc
+        core.hh        ber.cc
         ber.hh
         charsets.cc
         dissector.cc
@@ -7,7 +11,7 @@ set(BASE_SRCS base.cc
         field_meta.cc
         field_meta.hh
         formats.cc
-        packet_info.hh
+        packet.hh
         proto.cc
         proto.hh
         r_string.hh
