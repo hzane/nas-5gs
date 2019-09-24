@@ -1,7 +1,7 @@
 #pragma once
 #include <algorithm>
 
-#include "../common/config.hh"
+#include "config.hh"
 
 struct tree_meta;
 struct context;

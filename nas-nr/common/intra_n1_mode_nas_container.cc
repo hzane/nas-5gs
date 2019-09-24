@@ -1,4 +1,4 @@
-#include "common.hh"
+#include "../base/common.hh"
 
 // 9.11.2.6 Intra N1 mode NAS transparent container page.349
 int cmn::dissect_intra_n1_mode_container(dissector d, context* ctx) {

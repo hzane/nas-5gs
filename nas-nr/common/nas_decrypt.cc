@@ -1,6 +1,6 @@
 #include <cstring>
 
-#include "config.hh"
+#include "../base/config.hh"
 
 int nas_nr_decrypt(const uint8_t*       from,
                    uint8_t*             to,

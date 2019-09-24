@@ -1,5 +1,5 @@
 #pragma once
-#include "../common/core.hh"
+#include "../base/core.hh"
 
 namespace sm{
 int dissect_sm_congestion_reattempt(dissector d, context* ctx);

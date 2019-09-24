@@ -1,5 +1,5 @@
 #include "../base/ber.hh"
-#include "../common/common.hh"
+#include "../base/common.hh"
 #include "../common/dissect_sm_msg.hh"
 
 // Selected PDU session type    PDU session type 9.11.4.11

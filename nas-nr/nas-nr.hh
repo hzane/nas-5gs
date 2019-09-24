@@ -1,6 +1,6 @@
 #pragma once
+#include "base/nas-nr-compiler-detection.hh"
 #include "common/description.hh"
-#include "common/nas-nr-compiler-detection.hh"
 
 #if defined NASNRTS24501_EXPORTS
 

@@ -1,5 +1,5 @@
 #include "../base/ber.hh"
-#include "../common/common.hh"
+#include "../base/common.hh"
 #include "../common/dissect_mm_msg.hh"
 
 using namespace nas;

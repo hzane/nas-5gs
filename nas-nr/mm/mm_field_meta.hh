@@ -1,5 +1,5 @@
 #pragma once
-#include "../common/core.hh"
+#include "../base/core.hh"
 
 namespace mm {
 extern const field_meta hf_service_gap_control;

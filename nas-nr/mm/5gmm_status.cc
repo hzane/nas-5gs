@@ -1,4 +1,4 @@
-#include "../common/config.hh"
+#include "../base/config.hh"
 #include "../common/dissect_mm_msg.hh"
 
 /*  8.2.29 5GMM status */

@@ -1,4 +1,4 @@
-#include "common.hh"
+#include "../base/common.hh"
 
 int cmn::dissect_s1_to_n1_mode_container(dissector d, context* ctx) {
     const use_context uc(ctx, "s1-mode-to-n1-mode-transparent-container", d, 2);

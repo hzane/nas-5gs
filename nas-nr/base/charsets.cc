@@ -1,4 +1,4 @@
-#include "../common/config.hh"
+#include "config.hh"
 
 size_t u32utf8(uint32_t ch, uint8_t *dest) {
     if (ch < 0x80) {

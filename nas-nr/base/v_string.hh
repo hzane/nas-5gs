@@ -1,5 +1,5 @@
 #pragma once
-#include "../common/config.hh"
 #include "../common/description.hh"
+#include "config.hh"
 
 using v_string = v_string;

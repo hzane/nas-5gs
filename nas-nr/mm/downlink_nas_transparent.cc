@@ -1,19 +1,9 @@
 #include "../base/ber.hh"
 #include "../common/dissect_mm_msg.hh"
-#include "../common/gsm.hh"
 
 using namespace cmn;
 using namespace nas;
 using namespace mm;
-
-struct payload_container_t {
-    std::vector< uint8_t > _;
-};
-struct downlink_nas_transparent_t {
-    uint8_t             type;
-    payload_container_t container;
-    // optional< pdu_session_id_t > pdu_session_id;
-};
 
 /*  8.2.11 DL NAS transport */
 int mm::dissect_dl_nas_transparent(dissector d, context* ctx) {

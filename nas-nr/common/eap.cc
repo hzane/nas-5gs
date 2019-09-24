@@ -1,4 +1,4 @@
-#include "common.hh"
+#include "../base/common.hh"
 
 const field_meta cmn::hf_eap = {
     "EAP",

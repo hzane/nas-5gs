@@ -2,7 +2,7 @@
 
 #include <string>
 
-#include "../common/config.hh"
+#include "config.hh"
 #include "v_string.hh"
 
 inline const tf_string true_false = {"true", "false"};

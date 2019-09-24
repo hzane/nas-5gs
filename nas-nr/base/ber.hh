@@ -1,7 +1,7 @@
 #pragma once
 #include <optional>
 
-#include "../common/core.hh"
+#include "core.hh"
 
 struct optional_element_intra {
     bool*    presence = nullptr;

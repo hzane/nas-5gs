@@ -5,7 +5,7 @@
 #include <sstream>
 #include <vector>
 
-#include "../common/config.hh"
+#include "config.hh"
 #include "field_meta.hh"
 #include "r_string.hh"
 

@@ -1,10 +1,10 @@
 #pragma once
-#include "../base/bufview.hh"
-#include "../base/field_meta.hh"
-#include "../base/packet.hh"
-#include "../base/proto.hh"
-#include "../base/tree_meta.hh"
+#include "bufview.hh"
 #include "config.hh"
+#include "field_meta.hh"
+#include "packet.hh"
+#include "proto.hh"
+#include "tree_meta.hh"
 
 struct protocol_meta {
     const char*   name;

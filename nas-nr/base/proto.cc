@@ -3,8 +3,8 @@
 #include <bitset>
 #include <cstdarg>
 
-#include "../common/core.hh"
 #include "bufview.hh"
+#include "core.hh"
 #include "field_meta.hh"
 
 void proto_node::set_length(int len) { length = len; }

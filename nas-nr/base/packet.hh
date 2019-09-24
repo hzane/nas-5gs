@@ -1,5 +1,5 @@
 #pragma once
-#include "../common/config.hh"
+#include "config.hh"
 
 struct bufview;
 struct packet;

@@ -1,10 +1,10 @@
 #pragma once
+#include "../base/common.hh"
+#include "../base/config.hh"
+#include "../base/core.hh"
 #include "../sm/sm_dissects.hh"
 #include "../sm/sm_element_meta.hh"
 #include "../sm/sm_field_meta.hh"
-#include "common.hh"
-#include "config.hh"
-#include "core.hh"
 #include "dissect_nas5g.hh"
 
 struct context;

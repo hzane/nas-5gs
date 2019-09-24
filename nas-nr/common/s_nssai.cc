@@ -1,4 +1,4 @@
-#include "common.hh"
+#include "../base/common.hh"
 
 // S-NSSAI   9.11.2.8
 extern const element_meta cmn::s_nssai = {
@@ -85,16 +85,3 @@ int cmn::dissect_s_nssai(dissector d, context* ctx) {
     return uc.length;
 }
 
-struct sd_t {
-    uint8_t _[3];
-};
-struct mapped_configured_sst_t {
-    uint8_t _;
-};
-
-struct nssai_t {
-    uint8_t sst{};
-    std::optional<sd_t> sd;
-    std::optional<mapped_configured_sst_t> mapped_configured_sst;
-    std::optional<sd_t> mapped_configured_sd;
-};
