@@ -363,7 +363,7 @@
     <ClInclude Include="mm\mm_element_meta.hh" />
     <ClInclude Include="mm\mm_field_meta.hh" />
     <ClInclude Include="mm\registration_req.hh" />
-    <ClInclude Include="packet_info.hh" />
+    <ClInclude Include="packet.hh" />
     <ClInclude Include="proto.hh" />
     <ClInclude Include="r_string.hh" />
     <ClInclude Include="sm\sm_dissects.hh" />

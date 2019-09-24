@@ -72,7 +72,7 @@
     <ClInclude Include="gsm.hh">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="packet_info.hh">
+    <ClInclude Include="packet.hh">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="proto.hh">

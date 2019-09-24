@@ -462,7 +462,7 @@
     <ClInclude Include="mm\mm_element_meta.hh">
       <Filter>nas</Filter>
     </ClInclude>
-    <ClInclude Include="packet_info.hh">
+    <ClInclude Include="packet.hh">
       <Filter>nas</Filter>
     </ClInclude>
     <ClInclude Include="r_string.hh">
