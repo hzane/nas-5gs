@@ -137,7 +137,7 @@ int dissect_packet_filters(dissector d, int rop, context* ctx) {
 
     return d.offset - uc.offset;
 }
-const true_false_string tfs_segregation = {
+const tf_string tfs_segregation = {
     "Segregation requested",
     "Segregation not requested",
 };
@@ -265,7 +265,7 @@ extern const element_meta sm::requested_qos_rules = {
 
 };
 /*  9.11.4.13    QoS rules */
-const true_false_string sm::tfs_default_qos_rule = {
+const tf_string sm::tfs_default_qos_rule = {
     "The QoS rule is the default QoS rule",
     "The QoS rule is not the default QoS rule",
 };

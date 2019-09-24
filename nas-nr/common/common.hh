@@ -42,7 +42,7 @@ int dissect_intra_n1_mode_container(dissector d, context* ctx);// 9.11.2.6
 // S-NSSAI   9.11.2.8
 int dissect_s_nssai(dissector d, context* ctx);
 extern const element_meta s_nssai;
-extern const val_string        enc_algo_type_values[];
+extern const v_string     enc_algo_type_values[];
 }
 
 namespace cmn {
@@ -55,6 +55,6 @@ extern const field_meta hf_security_context_type;
 extern const field_meta hf_kacf;
 extern const field_meta hf_next_hop_chaining_counter;
 
-extern const true_false_string tfs_ue_status_n1_mode;
-extern const true_false_string tfs_emm_registration_status;
+extern const tf_string tfs_ue_status_n1_mode;
+extern const tf_string tfs_emm_registration_status;
 } // namespace cmn

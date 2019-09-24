@@ -251,7 +251,7 @@ const field_meta hf_mac_address = {
     nullptr,
     0,
 };
-const val_string supi_fmt_values[] = {
+const v_string supi_fmt_values[] = {
     {0x0, "IMSI"},
     {0x1, "Network Specific Identifier"},
     {0, nullptr},

@@ -17,7 +17,7 @@ extern const element_meta sm::ssc_mode = {
 };
 
 /*  9.11.4.16    SSC mode */
-const val_string ssc_mode_values[] = {
+const v_string ssc_mode_values[] = {
     {0x1, "SSC mode 1"},
     {0x2, "SSC mode 2"},
     {0x3, "SSC mode 3"},

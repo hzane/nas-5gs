@@ -4,8 +4,8 @@
 #include <cstdarg>
 
 #include "../common/core.hh"
+#include "bufview.hh"
 #include "field_meta.hh"
-#include "tvbuff.hh"
 
 void proto_node::set_length(int len) { length = len; }
 
@@ -17,7 +17,7 @@ std::string print_text(const field_meta* meta,
 std::string print_text(const field_meta* meta, uint64_t v);
 
 proto_item* proto_node::add_item(packet_info*      pinfo,
-                                 tvbuff*           buf,
+                                 bufview*           buf,
                                  int               start,
                                  int               len,
                                  const field_meta* field,
@@ -65,7 +65,7 @@ const field_meta hf_expert = {
 };
 
 proto_item* proto_node::add_expert(packet_info* pinfo,
-                                   tvbuff*      buf,
+                                   bufview*      buf,
                                    int          start,
                                    int          len,
                                    const char*  format,
@@ -79,7 +79,7 @@ proto_item* proto_node::add_expert(packet_info* pinfo,
 }
 
 proto_tree* proto_node::add_subtree(packet_info* ,
-                                    tvbuff*      buf,
+                                    bufview*      buf,
                                     int          start,
                                     int          len,
                                     const char*  format,

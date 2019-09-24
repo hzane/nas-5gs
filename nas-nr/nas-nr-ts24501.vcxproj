@@ -178,13 +178,13 @@
     <ClInclude Include="packet_info.hh" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="proto.hh" />
-    <ClInclude Include="range_string.hh" />
+    <ClInclude Include="r_string.hh" />
     <ClInclude Include="sm\sm_dissects.hh" />
     <ClInclude Include="sm\sm_element_meta.hh" />
     <ClInclude Include="sm\sm_field_meta.hh" />
     <ClInclude Include="tree_meta.hh" />
-    <ClInclude Include="tvbuff.hh" />
-    <ClInclude Include="val_string.hh" />
+    <ClInclude Include="bufview.hh" />
+    <ClInclude Include="v_string.hh" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ber.cc" />

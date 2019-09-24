@@ -18,7 +18,7 @@ int mm::dissect_ue_status(dissector d, context* ctx) {
 }
 
 /*    9.11.3.56    UE status */
-const true_false_string cmn::tfs_ue_status_n1_mode = {
+const tf_string cmn::tfs_ue_status_n1_mode = {
     "UE is in 5GMM-REGISTERED state",
     "UE is not in 5GMM-REGISTERED state",
 };

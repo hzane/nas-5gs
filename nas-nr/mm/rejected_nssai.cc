@@ -37,7 +37,7 @@ int mm::dissect_rejected_nssai(dissector d, context* ctx) {
     return uc.length;
 }
 
-static const val_string ref_nssai_cause_values[] = {
+static const v_string ref_nssai_cause_values[] = {
     {0, "S-NSSAI not available in the current PLMN"},
     {1,
      "S-NSSAI not available in the current registration area All other values are "

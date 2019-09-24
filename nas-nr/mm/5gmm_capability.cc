@@ -63,7 +63,7 @@ const field_meta        hf_user_plane_5gs_optimization = {
     0,
 };
 
-const true_false_string tfs_service_gap_control = {
+const tf_string tfs_service_gap_control = {
     "service gap control supported",
     "service gap control not supported",
 };
@@ -79,7 +79,7 @@ const field_meta hf_service_gap_control = {
     0x80,
 };
 
-const true_false_string tfs_header_compression_for_control = {
+const tf_string tfs_header_compression_for_control = {
     "Header compression for control plane CIoT 5GS optimization supported",
     "Header compression for control plane CIoT 5GS optimization not supported",
 };
@@ -95,7 +95,7 @@ const field_meta hf_header_compression_for_ctrl_plane = {
     0x40,
 };
 
-const true_false_string tfs_n3data_5 = {
+const tf_string tfs_n3data_5 = {
     "N3 data transfer not supported",
     "N3 data transfer supported",
 };
@@ -122,7 +122,7 @@ const field_meta hf_control_plane = {
     0x10,
 };
 
-const true_false_string tfs_restrict_ec = {
+const tf_string tfs_restrict_ec = {
     "Restriction on use of enhanced coverage supported",
     "Restriction on use of enhanced coverage not supported",
 };
@@ -138,7 +138,7 @@ const field_meta hf_restrict_ec_support = {
     0x08,
 };
 
-const true_false_string tfs_lte_positioning_protocol = {
+const tf_string tfs_lte_positioning_protocol = {
     "LPP in N1 mode supported",
     "LPP in N1 mode not supported",
 };
@@ -154,7 +154,7 @@ const field_meta hf_lpp_capability = {
     0x04,
 };
 
-const true_false_string tfs_ho_attach_1 = {
+const tf_string tfs_ho_attach_1 = {
     R"(ATTACH REQUEST message containing PDN CONNECTIVITY REQUEST message with request )"
     R"(type set to "handover" or "handover of emergency bearer services" to )"
     R"(transfer PDU session from N1 mode to S1 mode supported)",
@@ -174,7 +174,7 @@ const field_meta hf_handover_attach = {
     0x02,
 };
 
-const true_false_string tfs_s1_mode_0 = {
+const tf_string tfs_s1_mode_0 = {
     "S1 mode supported",
     "S1 mode not supported",
 };

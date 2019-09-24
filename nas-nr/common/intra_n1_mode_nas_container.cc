@@ -48,7 +48,7 @@ const field_meta hf_security_context_type = {
     nullptr,
     0x04u,
 };
-const true_false_string tfs_kacf = {
+const tf_string tfs_kacf = {
     "a new KAMF has been calculated by the network",
     "a new KAMF has not been calculated by the network",
 };
@@ -76,7 +76,7 @@ const field_meta hf_ksi_5g             = {
     0x07u,
 };
 
-const val_string enc_algo_type_values[] = {
+const v_string enc_algo_type_values[] = {
     {0x0, "5G-EA0 (null ciphering algorithm)"},
     {0x1, "128-5G-EA1"},
     {0x2, "128-5G-EA2"},

@@ -8,7 +8,7 @@
 struct proto_node { // NOLINT: special-member-functions
     void set_length(int len);
     proto_item* add_item(packet_info*      pinfo,
-                         tvbuff*           buf,
+                         bufview*           buf,
                          int               start,
                          int               len,
                          const field_meta* field,
@@ -19,14 +19,14 @@ struct proto_node { // NOLINT: special-member-functions
                          uint32_t          encoding);
 
     proto_item* add_expert(packet_info* pinfo,
-                           tvbuff*      buf,
+                           bufview*      buf,
                            int          start,
                            int          len,
                            const char*  format,
                            ...);
 
     proto_tree* add_subtree(packet_info* pinfo,
-                            tvbuff*      buf,
+                            bufview*      buf,
                             int          start,
                             int          len,
                             const char*  format,

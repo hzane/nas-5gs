@@ -55,7 +55,7 @@ const value_string emergency_services_fallback_values[] = {
     {0, nullptr},
 };
 
-const true_false_string tfs_access_identity_1_valid_or_not = {
+const tf_string tfs_access_identity_1_valid_or_not = {
     "Access identity 1 valid in RPLMN or equivalent PLMN",
     "Access identity 1 not valid in RPLMN or equivalent PLMN",
 };
@@ -140,37 +140,37 @@ const field_meta hf_ims_voice_over_ps_session_indicator = {
     0x03,
 };
 
-const true_false_string tfs_emergency_services_over_n3gpp = {
+const tf_string tfs_emergency_services_over_n3gpp = {
     "Emergency services supported over non-3GPP access",
     "Emergency services not supported over non-3GPP access",
 };
 
-const true_false_string tfs_access_identity2_valid = {
+const tf_string tfs_access_identity2_valid = {
     "Access identity 2 valid",
     "Access identity 2 not valid",
 };
 
-const true_false_string tfs_use_of_enhanced_coverage_restricted = {
+const tf_string tfs_use_of_enhanced_coverage_restricted = {
     "Use of enhanced coverage is restricted",
     "Use of enhanced coverage is not restricted",
 };
 
-const true_false_string tfs_control_plane_nr_optimization = {
+const tf_string tfs_control_plane_nr_optimization = {
     "Control plane CIoT 5GS optimization supported",
     "Control plane CIoT 5GS optimization not supported",
 };
 
-const true_false_string tfs_n3_data_transfer = {
+const tf_string tfs_n3_data_transfer = {
     "N3 data transfer not supported",
     "N3 data transfer supported",
 };
 
-const true_false_string tfs_header_compression = {
+const tf_string tfs_header_compression = {
     "Header compression for control plane CIoT 5GS optimization supported",
     "Header compression for control plane CIoT 5GS optimization not supported",
 };
 
-const true_false_string tfs_user_plane_ciot_nr_optimization = {
+const tf_string tfs_user_plane_ciot_nr_optimization = {
     "User plane CIoT 5GS optimization supported",
     "User plane CIoT 5GS optimization not supported",
 };

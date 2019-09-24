@@ -62,7 +62,7 @@ struct eps_bearer_context_status_t {
     uint8_t ebib;
 };
 
-const true_false_string eps_emm_ebi_vals = {
+const tf_string eps_emm_ebi_vals = {
     "BEARER CONTEXT-ACTIVE",
     "BEARER CONTEXT-INACTIVE",
 };

@@ -13,7 +13,7 @@ struct context;
 namespace sm {
 inline const dissect_fnc_t no_dissect = nullptr;
 
-extern const true_false_string tfs_default_qos_rule;
+extern const tf_string         tfs_default_qos_rule;
 extern const message_meta      msgs[];
 extern const value_string      ambr_values[];
 extern const value_string      nrsm_cause_values[];
@@ -28,7 +28,7 @@ extern const value_string      eps_parameter_identity_values[];
 extern const value_string      integrity_protection_max_data_rate_values[];
 extern const value_string      ssc_mode_values[];
 
-inline const true_false_string tfs_allowed_not_allowed = {
+inline const tf_string tfs_allowed_not_allowed = {
     "Allowed",
     "Not Allowed",
 };

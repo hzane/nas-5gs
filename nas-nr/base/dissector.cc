@@ -1,14 +1,12 @@
-#include <cstdarg>
-
 #include "../common/config.hh"
+#include "bufview.hh"
 #include "field_meta.hh"
 #include "proto.hh"
-#include "tvbuff.hh"
 
 // struct dissector defined in config.hh
 
 void dissector::add_bits(const field_meta* metas[]) const {
-    for (const field_meta** meta = metas; *meta != nullptr; meta++) {
+    for (const field_meta** meta = metas; *meta != nullptr; meta = meta+1) {
         (void) add_item(1, *meta, enc::be); // NOLINT
     }
 }
@@ -17,6 +15,13 @@ proto_node* dissector::add_item(int len, const field_meta* meta, uint32_t enc) c
     return tree->add_item(pinfo, tvb, offset, len, meta, enc);
 }
 
+proto_node* dissector::set_item(int len, const field_meta* meta, uint32_t enc)const{
+    return tree->set_item(len, meta, enc);
+}
+
+proto_node* dissector::add_expert(int len, const string&name) const{
+    return tree->add_expert(pinfo, tvb, offset, len, name.c_str());
+}
 proto_node *dissector::add_tree(int len, const string&txt) const {
     return tree->add_subtree(pinfo, tvb, offset, len, txt.c_str());
 }

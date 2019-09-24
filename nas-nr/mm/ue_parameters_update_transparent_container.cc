@@ -74,7 +74,7 @@ const field_meta mm::hf_upu_mac_i = {
     nullptr,
     0,
 };
-extern const val_string ue_param_update_data_set_type_values[] = {
+extern const v_string ue_param_update_data_set_type_values[] = {
     {1, "Routing indicator update data"},
     {2, "Default configured NSSAI update data"},
     {0, nullptr},

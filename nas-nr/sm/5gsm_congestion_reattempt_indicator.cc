@@ -22,7 +22,7 @@ struct sm_congestion_reattempt_t {
     uint8_t abo;
 };
 
-const true_false_string tfs_abo = {
+const tf_string tfs_abo = {
     "The back-off timer is applied in all PLMNs.",
     "The back-off timer is applied in the registered PLMN.",
 };

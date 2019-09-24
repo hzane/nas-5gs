@@ -57,7 +57,7 @@ int mm::dissect_allowed_pdu_session_status(dissector d, context* ctx) {
 }
 
 /* 9.11.3.13    Allowed PDU session status */
-const true_false_string tfs_allow_reestablish_or_not = {
+const tf_string tfs_allow_reestablish_or_not = {
     "user-plane resources of corresponding PDU session "
     "can be re-established over 3GPP access",
     "user-plane resources of corresponding PDU session "

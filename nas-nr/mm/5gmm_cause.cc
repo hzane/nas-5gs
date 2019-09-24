@@ -25,7 +25,7 @@ int mm::dissect_nrmm_cause(dissector d, context* ctx) {
 
 namespace mm {
 /* * 9.11.3.2 5GMM cause */
-extern const val_string nrmm_cause_values[] = {
+extern const v_string nrmm_cause_values[] = {
     {0x03, "Illegal UE"},
     {0x05, "PEI not accepted"},
     {0x06, "Illegal ME"},

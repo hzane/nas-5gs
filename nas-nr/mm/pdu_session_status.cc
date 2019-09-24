@@ -2,7 +2,7 @@
 
 /* 9.11.3.44    PDU session status  */
 namespace mm {
-static true_false_string tfs_nas_5gs_pdu_ses_sts_psi = {
+static tf_string tfs_nas_5gs_pdu_ses_sts_psi = {
     "Not PDU SESSION INACTIVE",
     "PDU SESSION INACTIVE",
 };

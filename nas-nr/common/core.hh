@@ -1,9 +1,9 @@
 #pragma once
+#include "../base/bufview.hh"
 #include "../base/field_meta.hh"
 #include "../base/packet_info.hh"
 #include "../base/proto.hh"
 #include "../base/tree_meta.hh"
-#include "../base/tvbuff.hh"
 #include "config.hh"
 
 struct protocol_meta {

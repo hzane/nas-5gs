@@ -22,7 +22,7 @@ struct registration_request_type_t{
 };
 
 // 9.11.3.7	5GS registration type
-extern const val_string mm::values_registration_type[] = {
+extern const v_string mm::values_registration_type[] = {
     {0x1, "initial registration"},
     {0x2, "mobility registration updating"},
     {0x3, "periodic registration updating"},

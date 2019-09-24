@@ -24,7 +24,7 @@ included in specific information elements within some RRC messages sent to the U
 }
 
 namespace cmn {
-const true_false_string tfs_emm_registration_status = {
+const tf_string tfs_emm_registration_status = {
     "UE is in EMM-REGISTERED state",
     "UE is not in EMM-REGISTERED state",
 };

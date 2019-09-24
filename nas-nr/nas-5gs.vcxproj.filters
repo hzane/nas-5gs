@@ -521,16 +521,16 @@
     <ClInclude Include="proto.hh">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="range_string.hh">
+    <ClInclude Include="r_string.hh">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="tree_meta.hh">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="val_string.hh">
+    <ClInclude Include="v_string.hh">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="tvbuff.hh">
+    <ClInclude Include="bufview.hh">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="packet_info.hh">

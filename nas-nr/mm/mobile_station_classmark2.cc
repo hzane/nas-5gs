@@ -21,7 +21,7 @@ const field_meta hf_msc_revision_level = {
 };
 
 /* ES IND (octet 3, bit 5) "Controlled Early Classmark Sending" option implementation */
-static const true_false_string tfs_es_indication = {
+static const tf_string tfs_es_indication = {
     "Controlled Early Classmark Sending option is implemented in the MS",
     "Controlled Early Classmark Sending option is not implemented in the MS",
 };
@@ -38,7 +38,7 @@ const field_meta hf_es_indication = {
 };
 
 /* A5/1 algorithm supported (octet 3, bit 4) */
-static const true_false_string tfs_a51_algorithm_support_values = {
+static const tf_string tfs_a51_algorithm_support_values = {
     "encryption algorithm A5/1 not available",
     "encryption algorithm A5/1 available",
 };
@@ -76,7 +76,7 @@ const field_meta hf_rf_power_capability = {
 };
 
 /* PS capability (pseudo-synchronization capability) (octet 4) */
-static const true_false_string tfs_ps_sup_capability = {
+static const tf_string tfs_ps_sup_capability = {
     "PS capability present",
     "PS capability not present",
 };
@@ -113,7 +113,7 @@ const field_meta hf_ss_screening_indicator = {
 };
 
 /* SM capability (MT SMS pt to pt capability) (octet 4)*/
-static const true_false_string tfs_nrsm_capability = {
+static const tf_string tfs_nrsm_capability = {
     "Mobile station supports mobile terminated point to point SMS",
     "Mobile station does not support mobile terminated point to point SMS",
 };
@@ -130,7 +130,7 @@ const field_meta hf_nrsm_capability = {
 };
 
 /* VBS notification reception (octet 4) */
-static const true_false_string tfs_vbs_notification_reception = {
+static const tf_string tfs_vbs_notification_reception = {
     "VBS capability and notifications wanted",
     "no VBS capability or no notifications wanted",
 };
@@ -147,7 +147,7 @@ const field_meta hf_vbs_notification_rec = {
 };
 
 /* VGCS notification reception (octet 4) */
-static const true_false_string tfs_vgcs_notification_reception = {
+static const tf_string tfs_vgcs_notification_reception = {
     "VGCS capability and notifications wanted",
     "no VGCS capability or no notifications wanted",
 };
@@ -164,7 +164,7 @@ const field_meta hf_vgcs_notification_reception = {
 };
 
 /* FC Frequency Capability (octet 4 ) */
-static const true_false_string tfs_fc_frequency_capability = {
+static const tf_string tfs_fc_frequency_capability = {
     "The MS does support the E-GSM or R-GSM",
     "The MS does not support the E-GSM or R-GSM band"};
 const field_meta hf_fc_frequency_capability = {
@@ -179,7 +179,7 @@ const field_meta hf_fc_frequency_capability = {
 };
 
 /* CM3 (octet 5, bit 8) */
-static const true_false_string tfs_cm3 = {
+static const tf_string tfs_cm3 = {
     "The MS supports options that are indicated in classmark 3 IE",
     "The MS does not support any options that are indicated in CM3",
 };
@@ -196,7 +196,7 @@ const field_meta hf_cm3 = {{
 
 /* LCS VA capability (LCS value added location request notification capability) (octet
  * 5,bit 6) */
-static const true_false_string tfs_lcs_va_capability = {
+static const tf_string tfs_lcs_va_capability = {
     "LCS value added location request notification capability supported",
     "LCS value added location request notification capability not supported",
 };
@@ -213,7 +213,7 @@ const field_meta hf_lcs_va_capability = {{
 }};
 
 /* UCS2 treatment (octet 5, bit 5) */
-static const true_false_string tfs_ucs2_treatment = {
+static const tf_string tfs_ucs2_treatment = {
     "the ME has no preference between the use of the default alphabet and the use of "
     "UCS2",
     "the ME has a preference for the default alphabet",
@@ -231,7 +231,7 @@ const field_meta hf_ucs2_treatmeant = {{
 }};
 
 /* SoLSA (octet 5, bit 4) */
-static const true_false_string tfs_solsa = {
+static const tf_string tfs_solsa = {
     "The ME supports SoLSA",
     "The ME does not support SoLSA",
 };
@@ -247,7 +247,7 @@ const field_meta hf_solsa = {{
 }};
 
 /* CMSP: CM Service Prompt (octet 5, bit 3) */
-static const true_false_string tfs_cmsp = {
+static const tf_string tfs_cmsp = {
     "Network initiated MO CM connection request supported for at least one CM protocol",
     "Network initiated MO CM connection request not supported"};
 const field_meta hf_cmsp = {{
@@ -262,7 +262,7 @@ const field_meta hf_cmsp = {{
 }};
 
 /* A5/3 algorithm supported (octet 5, bit 2) */
-static const true_false_string tfs_a53_algorithm_support = {
+static const tf_string tfs_a53_algorithm_support = {
     "encryption algorithm A5/3 available",
     "encryption algorithm A5/3 not available",
 };
@@ -278,7 +278,7 @@ const field_meta hf_a53_algorighm_support = {{
 }};
 
 /* A5/2 algorithm supported (octet 5, bit 1) */
-static const true_false_string tfs_a52_algorithm_support = {
+static const tf_string tfs_a52_algorithm_support = {
     "encryption algorithm A5/2 available",
     "encryption algorithm A5/2 not available",
 };

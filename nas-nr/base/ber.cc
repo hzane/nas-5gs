@@ -66,7 +66,7 @@ int dissect_tv(const field_meta*   type_meta,
                            const element_meta* val_meta,
                            dissector           d,
                            context*            ctx) {
-    unused(dissect_tv);
+
     return dissect_elem_mandatory(type_meta, val_meta, d, dissect_opt_tv, ctx);
 }
 
@@ -75,7 +75,7 @@ int dissect_tlv(const field_meta*   type_meta,
                             const element_meta* val_meta,
                             dissector           d,
                             context*            ctx) {
-    unused(dissect_tlv);
+
     return dissect_elem_mandatory(type_meta, val_meta, d, dissect_opt_tlv, ctx);
 }
 
@@ -212,8 +212,8 @@ int dissect_opt_tv_short(const field_meta *,
     const auto subtree = d.add_tree(1, val_meta->name);
     const use_tree ut(d, subtree);
 
-    const auto consumed = val_meta->fnc(d.use_elem(elem_get_data(e)), ctx);
-    unused(consumed);
+    val_meta->fnc(d.use_elem(elem_get_data(e)), ctx);
+
 
     return 1;
 }
@@ -324,7 +324,7 @@ int dissect_opt_telv(const field_meta *,
 
     if ((parm_len & 0x80u) == 0) {
         /* length in 2 octets */
-        parm_len     = d.tvb->ntohs(d.offset + 1);
+        parm_len     = d.tvb->uint16(d.offset + 1);
         len_length = 2;
     } else {
         parm_len = parm_len & 0x7Fu;
@@ -368,7 +368,7 @@ int dissect_opt_tlv_e(const field_meta *,
     elem_set_presence(e, true);
     elem_set_id(e, iei);
 
-    const auto parm_len = d.tvb->ntohs(d.offset + 1);
+    const auto parm_len = d.tvb->uint16(d.offset + 1);
 
     const auto subtree = d.add_tree(1 + 2 + parm_len, val_meta->name);
     const use_tree ut(d, subtree);

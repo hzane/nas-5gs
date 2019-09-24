@@ -14,7 +14,7 @@
  */
 
 //  *   9.11.3.42    PDU session reactivation result
-const true_false_string tfs_nas_5gs_pdu_ses_rect_res_psi = {
+const tf_string tfs_nas_5gs_pdu_ses_rect_res_psi = {
     "1",
     "0",
 };

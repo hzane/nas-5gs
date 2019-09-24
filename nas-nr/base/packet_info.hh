@@ -1,7 +1,7 @@
 #pragma once
 #include "../common/config.hh"
 
-struct tvbuff;
+struct bufview;
 struct packet_info;
 struct proto_node;
 struct context;

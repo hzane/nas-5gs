@@ -1,4 +1,4 @@
-#include "../base/range_string.hh"
+#include "../base/r_string.hh"
 #include "../common/dissect_sm_msg.hh"
 
 const field_meta hf_gsm_sm_extension = {
@@ -79,7 +79,7 @@ extern const value_string ppp_protocol_values[] = {
 };
 
 
-extern const range_string sm_pco_ms2net_prot_vals[] = {
+extern const r_string sm_pco_ms2net_prot_vals[] = {
     {0x0001, 0x0001, "P-CSCF IPv6 Address Request"},
     {0x0002, 0x0002, "IM CN Subsystem Signaling Flag"},
     {0x0003, 0x0003, "DNS Server IPv6 Address Request"},
@@ -117,7 +117,7 @@ extern const range_string sm_pco_ms2net_prot_vals[] = {
     {0xff00, 0xffff, "Operator Specific Use"},
     {0, 0, nullptr},
 };
-extern const range_string sm_pco_net2ms_prot_vals[] = {
+extern const r_string sm_pco_net2ms_prot_vals[] = {
     {0x0001, 0x0001, "P-CSCF IPv6 Address"},
     {0x0002, 0x0002, "IM CN Subsystem Signaling Flag"},
     {0x0003, 0x0003, "DNS Server IPv6 Address"},

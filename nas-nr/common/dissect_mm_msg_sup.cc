@@ -3,7 +3,7 @@
 using namespace mm;
 using namespace nas;
 
-const true_false_string mm::tfs_sms_requested = {
+const tf_string mm::tfs_sms_requested = {
     "SMS over NAS supported",
     "SMS over NAS not supported",
 };
@@ -19,7 +19,7 @@ const field_meta mm::hf_sms_requested = {
 };
 
 
-extern const true_false_string mm::tfs_security_context_types = {
+extern const tf_string mm::tfs_security_context_types = {
     "Mapped security context (for KSIASME)",
     "Native security context (for KSIAMF)",
 };
@@ -54,7 +54,7 @@ const field_meta mm::hf_element_number = {
 
 /* *     9.11.3.49    Service area list */
 
-extern const val_string mm::tac_list_values[] = {
+extern const v_string mm::tac_list_values[] = {
     {0x00, "list of TACs belonging to one PLMN, with non-consecutive TAC values"},
     {0x01, "list of TACs belonging to one PLMN, with consecutive TAC values"},
     {0x02, "list of TAIs belonging to different PLMNs"},
@@ -233,7 +233,7 @@ const field_meta mm::hf_slice_service_type = {
     0x0,
 };
 
-const true_false_string mm::tfs_follow_on_request = {
+const tf_string mm::tfs_follow_on_request = {
     "Follow-on request pending",
     "No follow-on request pending",
 };

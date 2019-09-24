@@ -8,27 +8,21 @@ int mm::dissect_deregistration_type(dissector d, context* ctx) {
     const use_context uc(ctx, "de-registration-type", d, -1);
 
     /* Switch off   Re-registration required    Access type */
-    auto i = d.add_item(1, &hf_switch_off, enc::be);
-    i = d.add_item(1, &hf_reregistration_request, enc::be);
-    i = d.add_item(1, &hf_access_type, enc::be);
+    (void) d.add_item(1, &hf_switch_off, enc::be);
+    (void) d.add_item(1, &hf_reregistration_request, enc::be);
+    (void) d.add_item(1, &hf_access_type, enc::be);
     d.step(1);
 
-    unused(i);
     return 1;
 }
-struct deregistration_type_t {
-    uint8_t switch_off;
-    uint8_t reregistration_request;
-    uint8_t access_type;
-};
 
 /* 9.11.3.20    De-registration type */
-const true_false_string nas_5gs_mm_switch_off_tfs = {
+const tf_string nas_5gs_mm_switch_off_tfs = {
     "Switch off",
     "Normal de-registration",
 };
 
-const true_false_string tfs_reregistration_required = {
+const tf_string tfs_reregistration_required = {
     "re-registration required",
     "re-registration not required"};
 

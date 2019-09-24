@@ -48,7 +48,7 @@ const element_meta s_tmsi = {
 };
 
 /* 9.11.3.57    Uplink data status */
-const true_false_string tfs_ul_data_sts_psi = {
+const tf_string tfs_ul_data_sts_psi = {
     "uplink data are pending",
     "no uplink data are pending",
 };

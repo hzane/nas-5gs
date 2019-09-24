@@ -47,7 +47,7 @@ int sm::dissect_pdu_session_type(dissector d, context* ctx) {
     return 1;
 }
 
-const val_string pdu_session_id_values[] = {
+const v_string pdu_session_id_values[] = {
     {0x00, "No PDU session identity assigned"},
     {0x01, "Reserved"},
     {0x02, "Reserved"},

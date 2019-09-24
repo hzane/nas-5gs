@@ -1,7 +1,5 @@
 #include "../common/config.hh"
 
-const uint32_t UNREP = 0x00fffd;
-
 size_t u32utf8(uint32_t ch, uint8_t *dest) {
     if (ch < 0x80) {
         dest[0] = static_cast< char >(ch);
@@ -63,28 +61,29 @@ uint32_t GSMe2UNICHAR(uint8_t c) {
     case 0x65:
         return 0x20ac; /* euro */
     default:
-        return UNREP;/* invalid character */
+        return 0xfffdu;/* invalid character */
     }
 }
 
-/* ETSI GSM 03.38, version 6.0.1, section 6.2.1; Default alphabet */
-static const uint16_t gsm_default_alphabet[0x80] = {
-    '@',   0xa3,  '$',   0xa5, 0xe8,  0xe9, 0xf9,  0xec,  0xf2,  0xc7,  '\n',  0xd8,
-    0xf8,  '\r',  0xc5,  0xe5, 0x394, '_',  0x3a6, 0x393, 0x39b, 0x3a9, 0x3a0, 0x3a8,
-    0x3a3, 0x398, 0x39e, 0xa0, 0xc6,  0xe6, 0xdf,  0xc9,  ' ',   '!',   '\"',  '#',
-    0xa4,  '%',   '&',   '\'', '(',   ')',  '*',   '+',   ',',   '-',   '.',   '/',
-    '0',   '1',   '2',   '3',  '4',   '5',  '6',   '7',   '8',   '9',   ':',   ';',
-    '<',   '=',   '>',   '?',  0xa1,  'A',  'B',   'C',   'D',   'E',   'F',   'G',
-    'H',   'I',   'J',   'K',  'L',   'M',  'N',   'O',   'P',   'Q',   'R',   'S',
-    'T',   'U',   'V',   'W',  'X',   'Y',  'Z',   0xc4,  0xd6,  0xd1,  0xdc,  0xa7,
-    0xbf,  'a',   'b',   'c',  'd',   'e',  'f',   'g',   'h',   'i',   'j',   'k',
-    'l',   'm',   'n',   'o',  'p',   'q',  'r',   's',   't',   'u',   'v',   'w',
-    'x',   'y',   'z',   0xe4, 0xf6,  0xf1, 0xfc,  0xe0};
 
 static uint32_t GSM2UNICHAR(uint8_t c) {
+/* ETSI GSM 03.38, version 6.0.1, section 6.2.1; Default alphabet */
+    static const uint16_t gsm_default_alphabet[0x80] = {
+        '@',   0xa3,  '$',   0xa5, 0xe8,  0xe9, 0xf9,  0xec,  0xf2,  0xc7,  '\n',  0xd8,
+        0xf8,  '\r',  0xc5,  0xe5, 0x394, '_',  0x3a6, 0x393, 0x39b, 0x3a9, 0x3a0, 0x3a8,
+        0x3a3, 0x398, 0x39e, 0xa0, 0xc6,  0xe6, 0xdf,  0xc9,  ' ',   '!',   '\"',  '#',
+        0xa4,  '%',   '&',   '\'', '(',   ')',  '*',   '+',   ',',   '-',   '.',   '/',
+        '0',   '1',   '2',   '3',  '4',   '5',  '6',   '7',   '8',   '9',   ':',   ';',
+        '<',   '=',   '>',   '?',  0xa1,  'A',  'B',   'C',   'D',   'E',   'F',   'G',
+        'H',   'I',   'J',   'K',  'L',   'M',  'N',   'O',   'P',   'Q',   'R',   'S',
+        'T',   'U',   'V',   'W',  'X',   'Y',  'Z',   0xc4,  0xd6,  0xd1,  0xdc,  0xa7,
+        0xbf,  'a',   'b',   'c',  'd',   'e',  'f',   'g',   'h',   'i',   'j',   'k',
+        'l',   'm',   'n',   'o',  'p',   'q',  'r',   's',   't',   'u',   'v',   'w',
+        'x',   'y',   'z',   0xe4, 0xf6,  0xf1, 0xfc,  0xe0};
+
     if (c < std::size(gsm_default_alphabet)) return gsm_default_alphabet[c];
 
-    return UNREP;
+    return 0xfffdu;
 }
 
 bool handle_ts_23_038_char(ustring &s, uint8_t code_point, bool saw_escape) {
@@ -172,7 +171,7 @@ ustring ts_23_038_7bits_string(const uint8_t *ptr, int bit_offset, int no_of_cha
          * XXX - for now, show the escape as a REPLACEMENT
          * CHARACTER.
          */
-        ustring_append_utf8(ret, UNREP);
+        ustring_append_utf8(ret, 0xfffdu);
     }
 
     return ret;

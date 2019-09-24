@@ -1,4 +1,4 @@
 #pragma once
 #include "../common/description.hh"
 
-using r_string = range_string;
+using r_string = r_string;

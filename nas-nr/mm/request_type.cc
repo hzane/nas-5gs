@@ -23,7 +23,7 @@ extern const element_meta mm::request_type = {
 };
 
 /* *     9.11.3.47    Request type */
-const val_string mm::request_type_values[] = {
+const v_string mm::request_type_values[] = {
     {0x01, "Initial request"},
     {0x02, "Existing PDU session"},
     {0x03, "Initial emergency request"},

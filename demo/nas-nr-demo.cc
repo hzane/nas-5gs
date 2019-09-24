@@ -16,7 +16,7 @@ static const uint8_t packet_sample [] = {0x7e, 0x00, 0x43};
 void dissect(const fs::path& entry) {
     auto        inf = ifstream(entry, std::ios::in | std::ios::binary);
     auto        buf = buffer(if_iterator(inf), if_iterator());
-    tvbuff      tvb = {buf.data(), static_cast< int >(buf.size())};
+    bufview     tvb = {buf.data(), static_cast< int >(buf.size())};
     context     ctx = {};
     packet_info pinfo{};
     proto_node  node{};

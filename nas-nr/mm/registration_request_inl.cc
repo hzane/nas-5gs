@@ -4,7 +4,7 @@ namespace mm {
 
 /* * 8.2.6 Registration request */
 
-static const val_string nas_5gs_mm_reg_req_vals[] = {
+static const v_string nas_5gs_mm_reg_req_vals[] = {
     {0x08, "Follow-On Request bit (FOR)"},
     {0x07, "5GS registration type"},
     {0x70, "NAS key set identifier"},
@@ -12,7 +12,7 @@ static const val_string nas_5gs_mm_reg_req_vals[] = {
     {0, nullptr},
 };
 
-const val_string nas_5gs_mm_registration_req_elem[] = {
+const v_string nas_5gs_mm_registration_req_elem[] = {
     {0xc0, "Non-current native NAS KSI"},
     {0x10, "5GMM capability"},
     {0x2e, "UE security capability"},

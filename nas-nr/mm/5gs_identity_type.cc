@@ -15,7 +15,7 @@ int mm::dissect_identity_type(dissector d, context* ctx) {
 
 
 /*5GS mobile identity     5GS mobile identity 9.11.3.4    */
-const val_string mm::identity_type_values[] = {
+const v_string mm::identity_type_values[] = {
     {0x0, "No identity"},
     {0x1, "SUCI"},
     {0x2, "5G-GUTI"},
