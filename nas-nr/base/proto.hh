@@ -3,7 +3,7 @@
 #include <list>
 #include <string>
 
-#include "config.hh"
+#include "../common/config.hh"
 
 struct proto_node { // NOLINT: special-member-functions
     void set_length(int len);

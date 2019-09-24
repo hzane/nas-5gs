@@ -20,8 +20,8 @@ int mm::dissect_operator_defined_access_category_definitions(dissector d, contex
     while (d.length > 0) {
         const auto length  = static_cast< int >(d.tvb->uint8(d.offset));
         auto       sd      = d.slice(length + 1);
-        const auto subtree = d.add_item(
-            length + 1, "Operator-defined access category definition  %u", i++);
+        const auto subtree = d.add_tree(
+            length + 1, formats("Operator-defined access category definition  %u", i++));
         use_tree    ut(sd, subtree);
         use_context suc(ctx, "operator-defined-access-category-definition", sd, 0);
 

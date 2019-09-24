@@ -1,4 +1,4 @@
-#include "../common/ber.hh"
+#include "../base/ber.hh"
 #include "../common/dissect_mm_msg.hh"
 
 /*  8.2.12 De-registration request (UE originating de-registration)  */

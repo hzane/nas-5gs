@@ -1,6 +1,6 @@
-#include "../common/ber.hh"
+#include "../base/ber.hh"
+#include "../base/packet_info.hh"
 #include "../common/dissect_sm_msg.hh"
-#include "../common/packet_info.hh"
 
 /* * 8.3.10 PDU session modification complete */
 int sm::dissect_pdu_session_modification_complete(dissector d, context* ctx) {

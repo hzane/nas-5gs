@@ -21,7 +21,7 @@ int mm::dissect_configured_nssai(dissector d, context* ctx) {
 
     auto i = 1;
     while (d.length > 0) {
-        const auto subtree = d.add_item(2, "S-NSSAI %u", i++);
+        const auto subtree = d.add_tree(2, formats("S-NSSAI %u", i++));
         use_tree   ut(d, subtree);
 
         const auto length = static_cast< int >(d.tvb->uint8(d.offset));
@@ -49,7 +49,7 @@ int mm::dissect_allowed_nssai(dissector d, context* ctx) {
 
     auto i = 1;
     while (d.length > 0) {
-        const auto subtree = d.add_item(-1, "S-NSSAI %u", i++);
+        const auto subtree = d.add_tree(-1, formats("S-NSSAI %u", i++));
         use_tree   ut(d, subtree);
 
         const auto l    = d.uint8();
@@ -74,7 +74,7 @@ int mm::dissect_requested_nssai(dissector d, context* ctx) {
 
     auto i = 1;
     while (d.length > 0) {
-        auto     subtree = d.add_item(2, "S-NSSAI %u", i++);
+        auto     subtree = d.add_tree(2, formats("S-NSSAI %u", i++));
         use_tree ut(d, subtree);
 
         const auto length = static_cast< int >(d.tvb->uint8(d.offset));

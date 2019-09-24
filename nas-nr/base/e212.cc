@@ -1,4 +1,4 @@
-#include "config.hh"
+#include "../common/config.hh"
 #include "field_meta.hh"
 
 extern const value_string e212_codes[];

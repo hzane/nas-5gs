@@ -16,7 +16,7 @@ int mm::dissect_service_area_list(dissector d, context* ctx) {
     /*Partial service area list*/
     while (d.length > 0) {
         const auto     start   = d.offset;
-        const auto     subtree = d.add_item(-1, "Partial service area list  %u", n++);
+        const auto     subtree = d.add_tree(-1, formats("Partial service area list  %u", n++));
         use_tree ut(d, subtree);
 
         /*Head of Partial service area list*/

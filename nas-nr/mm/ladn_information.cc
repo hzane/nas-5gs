@@ -20,7 +20,7 @@ int mm::dissect_ladn_information(dissector d, context* ctx) {
     auto       i   = 1;
     while (d.length > 0) {
         const auto start = d.offset;
-        auto       subtree = d.add_item(2, "LADN %u", i++);
+        auto       subtree = d.add_tree(2, formats("LADN %u", i++));
         use_tree ut(d, subtree);
 
         /* DNN value (octet 5 to octet m):

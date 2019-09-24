@@ -11,7 +11,7 @@ struct eps_parameters_t {
 int dissect_eps_parameters(dissector d, int i, context* ctx) {
     const use_context uc(ctx, "mapped-eps-bearer-contexts", d, 0);
 
-    auto     subtree = d.add_item(-1, "EPS parameter %u", i);
+    auto     subtree = d.add_tree(-1, formats("EPS parameter %u", i));
     use_tree ut(d, subtree);
 
     /* EPS parameter identifier */
@@ -73,7 +73,7 @@ int sm::dissect_mapped_eps_bearer_contexts(dissector d, context* ctx) {
     /* The IE contains a number of Mapped EPS bearer context */
     while (d.length > 0) {
         /* Figure 9.11.4.5.2: Mapped EPS bearer context */
-        auto     subtree = d.add_item(-1, "Mapped EPS bearer context %u", n);
+        auto     subtree = d.add_tree(-1, formats("Mapped EPS bearer context %u", n));
         use_tree ut(d, subtree);
 
         /* EPS bearer identity */

@@ -19,7 +19,7 @@ int mm::dissect_rejected_nssai(dissector d, context* ctx) {
 
     auto i = 1;
     while (d.length > 0) {
-        const auto subtree = d.add_item(2, "Rejected S-NSSAI %u", i++);
+        const auto subtree = d.add_tree(2, formats("Rejected S-NSSAI %u", i++));
         use_tree   ut(d, subtree);
 
         const auto len = int(d.uint8() >> 4u);

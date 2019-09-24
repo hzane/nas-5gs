@@ -1,5 +1,5 @@
 #pragma once
-#include "config.hh"
+#include "../common/config.hh"
 
 struct tvbuff { // NOLINT: typo
     const uint8_t *data   = nullptr;

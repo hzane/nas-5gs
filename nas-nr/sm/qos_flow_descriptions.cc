@@ -52,7 +52,7 @@ int sm::dissect_qos_parameters(dissector d, int j, context* ctx) {
     const use_context uc(ctx, "qos-param", d, -1);
 
     /* Parameter list */
-    const auto     subtree = d.add_item(-1, "Parameter %u", j);
+    const auto     subtree = d.add_tree(-1, formats("Parameter %u", j));
     use_tree ut(d, subtree);
 
     /* Parameter identifier */
@@ -119,7 +119,7 @@ int sm::dissect_authorized_qos_flow_description(dissector d, context* ctx) {
     auto i = 1;
     while (d.length > 0) {
         /* QoS fow description */
-        const auto subtree = d.add_item(-1, "QoS flow description %u", i++);
+        const auto subtree = d.add_tree(-1, formats("QoS flow description %u", i++));
         use_tree   ut(d, subtree);
 
         /* 0 0 QFI */

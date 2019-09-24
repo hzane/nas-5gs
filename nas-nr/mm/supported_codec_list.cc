@@ -200,7 +200,7 @@ const field_meta hf_gsm_a_dtap_codec_pdc_efr     = {{
 int dissect_codec_bitmap(dissector d, int idx, context* ctx) {
     const use_context uc(ctx, "codec-bitmap", d, 0);
 
-    const auto     subtree = d.add_item(-1, "Codec Bitmap for SysID %u", idx);
+    const auto     subtree = d.add_tree(-1, formats("Codec Bitmap for SysID %u", idx));
     const use_tree ut(d, subtree);
 
     static const field_meta* flags1[] = {

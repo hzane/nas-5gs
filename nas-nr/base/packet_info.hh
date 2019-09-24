@@ -1,5 +1,5 @@
 #pragma once
-#include "config.hh"
+#include "../common/config.hh"
 
 struct tvbuff;
 struct packet_info;

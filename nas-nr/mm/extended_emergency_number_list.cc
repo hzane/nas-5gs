@@ -22,7 +22,7 @@ int mm::dissect_extended_emergency_number_list(dissector d, context* ctx) {
     auto i = 1;
     while (d.length > 0) {
         const auto start   = d.offset;
-        auto       subtree = d.add_item(-1, "Extended emergency number #%u", i++);
+        auto       subtree = d.add_tree(-1, formats("Extended emergency number #%u", i++));
         use_tree   ut(d, subtree);
 
         auto length = static_cast< int >(d.uint8());

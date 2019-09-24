@@ -1,4 +1,4 @@
-#include "config.hh"
+#include "../common/config.hh"
 
 const uint32_t UNREP = 0x00fffd;
 

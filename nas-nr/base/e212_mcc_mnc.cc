@@ -1,5 +1,5 @@
-#include "common.hh"
-#include "config.hh"
+#include "../common/common.hh"
+#include "../common/config.hh"
 #include "field_meta.hh"
 
 using mcc = string;

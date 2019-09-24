@@ -116,7 +116,7 @@ int dissect_packet_filters(dissector d, int rop, context* ctx) {
     /* Packet filter contents */
     while (pfclen > 0) {
         const auto start   = d.offset;
-        auto       subtree = d.add_item(-1, "Packet filter component %u", k);
+        auto       subtree = d.add_tree(-1, formats("Packet filter component %u", k));
         use_tree   ut(d, subtree);
         /* Each packet filter component shall be encoded as a sequence of a
          * one octet packet filter component type identifier and a fixed
@@ -165,7 +165,7 @@ int sm::dissect_qos_rules(dissector d, context* ctx) {
     auto i = 1;
     while (d.length > 0) {
         /* QoS Rule */
-        auto     subtree = d.add_item(-1, "QoS rule %u", i++);
+        auto     subtree = d.add_tree(-1, formats("QoS rule %u", i++));
         use_tree ut(d, subtree);
 
         /* QoS rule identifier Octet 4*/
@@ -207,7 +207,7 @@ int sm::dissect_qos_rules(dissector d, context* ctx) {
         }
         /* Packet filter list */
         for (auto j = 1; j <= n_filters; j++) {
-            const auto     st2 = d.add_item(-1, "Packet filter %u", j);
+            const auto     st2 = d.add_tree(-1, formats("Packet filter %u", j));
             use_tree ut2(d, st2);
             auto           start = d.offset;
             if (rop == 5) {

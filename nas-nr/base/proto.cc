@@ -3,7 +3,7 @@
 #include <bitset>
 #include <cstdarg>
 
-#include "core.hh"
+#include "../common/core.hh"
 #include "field_meta.hh"
 #include "tvbuff.hh"
 

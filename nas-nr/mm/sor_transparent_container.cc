@@ -92,7 +92,7 @@ int mm::dissect_sor_transparent_container(dissector d, context* ctx) {
         } else {
             /* PLMN ID and access technology list    octet 23*-102* */
             while (d.length > 0) {
-                const auto subtree = d.add_item(-1, "List item %u", i);
+                const auto subtree = d.add_tree(-1, formats("List item %u", i));
                 use_tree ut(d, subtree);
                 /* The PLMN ID and access technology list consists of PLMN ID and access
                  * technology identifier and are coded as specified in 3GPP TS 31.102 [22]

@@ -1,5 +1,5 @@
+#include "../base/packet_info.hh"
 #include "../common/dissect_sm_msg.hh"
-#include "../common/packet_info.hh"
 
 /* 8.3.16 5GSM status */
 int sm::dissect_sm_status(dissector d, context* ctx) {

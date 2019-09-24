@@ -1,4 +1,4 @@
-#include "../common/ber.hh"
+#include "../base/ber.hh"
 #include "../common/dissect_mm_msg.hh"
 
 /* 8.2.4 Authentication failure */

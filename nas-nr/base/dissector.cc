@@ -1,6 +1,6 @@
 #include <cstdarg>
 
-#include "config.hh"
+#include "../common/config.hh"
 #include "field_meta.hh"
 #include "proto.hh"
 #include "tvbuff.hh"
@@ -17,11 +17,7 @@ proto_node* dissector::add_item(int len, const field_meta* meta, uint32_t enc) c
     return tree->add_item(pinfo, tvb, offset, len, meta, enc);
 }
 
-proto_node *dissector::add_item(int len, const char*format, ...) const {
-    va_list args;
-    va_start(args, format);
-    const auto txt = vformat(format, args);
-    va_end(args);
+proto_node *dissector::add_tree(int len, const string&txt) const {
     return tree->add_subtree(pinfo, tvb, offset, len, txt.c_str());
 }
 

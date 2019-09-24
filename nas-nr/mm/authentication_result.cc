@@ -1,4 +1,4 @@
-#include "../common/ber.hh"
+#include "../base/ber.hh"
 #include "../common/common.hh"
 #include "../common/dissect_mm_msg.hh"
 

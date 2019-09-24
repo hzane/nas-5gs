@@ -59,7 +59,8 @@ struct dissector {
         return *this;
     }
     proto_node* add_item(int len, const field_meta* fm, uint32_t e = enc::be) const;
-    proto_node* add_item(int len, const char* format, ...) const;
+    proto_node* set_item(int len, const field_meta* fm, uint32_t e= enc::be) const;
+    proto_node* add_tree(int len, const string&name) const;
     proto_node* add_expert(int len, const string&name)const;
     void        add_bits(const field_meta* metas[]) const;
     void        extraneous_data_check(int max_len, context* ctx = nullptr) const;

@@ -1,5 +1,5 @@
+#include "../base/range_string.hh"
 #include "../common/dissect_sm_msg.hh"
-#include "../common/range_string.hh"
 
 const field_meta hf_gsm_sm_extension = {
     "Extension",

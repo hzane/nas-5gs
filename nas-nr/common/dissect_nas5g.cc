@@ -20,7 +20,7 @@ int dissect_nas5g(dissector d, context* ctx){
 }
 
 int dissect_nas5g_security_protected(dissector d, context* ctx){
-    const auto        subtree = d.add_item(7, "Security protected NAS 5GS message");
+    const auto        subtree = d.add_tree(7, "Security protected NAS 5GS message");
     use_tree    ut(d, subtree);
     const use_context uc(ctx, subtree->name.c_str(), d, 0);
 
@@ -74,7 +74,7 @@ int dissect_nas5g_plain(dissector d, context* ctx) {
 int dissect_sm_msg(dissector d, context* ctx) {
     const use_context uc(ctx, "session-management-message", d, 0);
 
-    const auto        subtree = d.add_item(d.length, "5GS Session Management Message");
+    const auto        subtree = d.add_tree(d.length, "5GS Session Management Message");
     use_tree    ut(d, subtree);
 
     /* Extended protocol discriminator  octet 1 */
@@ -104,7 +104,7 @@ int dissect_sm_msg(dissector d, context* ctx) {
 int dissect_mm_msg(dissector d, context* ctx) {
     const use_context uc(ctx, "mobile-management-message", d, 0);
 
-    const auto subtree = d.add_item(d.length, "5GS Mobility Management Message");
+    const auto subtree = d.add_tree(d.length, "5GS Mobility Management Message");
     use_tree    ut(d, subtree);
 
     /* Extended protocol discriminator 9.2 octet 1 */

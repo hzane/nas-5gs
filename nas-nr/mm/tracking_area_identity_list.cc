@@ -18,7 +18,7 @@ int mm::dissect_tracking_area_id_list(dissector d, context* ctx) {
     /*Partial tracking area list*/
     while (d.length > 0) {
         const auto orig_offset = d.offset;
-        auto       subtree     = d.add_item(-1, "Partial tracking area list  %u", n++);
+        auto       subtree     = d.add_tree(-1, formats("Partial tracking area list  %u", n++));
         use_tree   ut(d, subtree);
 
         /*Head of Partial tracking area list*/
