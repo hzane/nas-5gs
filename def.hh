@@ -1029,3 +1029,142 @@ using nas_message_t = std::variant< nas_plain_message_t, nas_protected_message_t
 
 using nas_message_container_t = nas_message_t;
 using security_protected_nas_message = nas_message_t;
+
+using dissect_t = int (*)(dissector, context*, const string&name);
+
+int dissect_ie(dissector     d,
+               context*      ctx,
+               uint8_t       ieid,
+               dissect_t     func,
+               const string& name,
+               bool          required = false) {
+    if (d.length <= 0) return d.not_present(0, required, name);
+    auto iei = d.uint8();
+    iei      = d.left();
+    if (iei_not_match(iei, ieid)) return d.not_present(0, required, name);
+
+    auto     consumed = func(d, ctx, name);
+
+    return consumed;
+}
+
+int dissect_ie_something(dissector d, context*ctx, const string&name){
+    const use_context uc(d, ctx, name, 0);
+    auto              tree = d.add_item(-1, name);
+    use_tree          ut(d, tree);
+    // auto ie = static_cast< ie_something* >(d.data);
+    // ie->iei = d.uint8();
+    (void) dissect_iei(d, ctx, none);
+    d.step(1);
+
+    (void) dissect_mcc_mnc(d, ctx);
+    d.step(3);
+
+    d.add_item(3, &mf_tac);
+    d.step(3);
+
+    tree->set_length(d.offset - uc.offset);
+    return d.offset - uc.offset;
+}
+
+int dissect_tlv(dissector d, context* ctx, const ie_meta* meta, bool required = false){
+    if (d.length <= 0) return d.not_present(0, required, meta);
+    auto iei = d.uint8();
+    iei      = d.left();
+    if (iei_not_match(iei, meta)) return d.not_present(0, required, meta);
+
+    auto     tree = d.add_item(-1, meta->name);
+    use_tree ut(d, tree);
+
+    auto consumed = meta->dissect(d, ctx, meta);
+    tree->set_length(consumed);
+    return consumed;
+}
+
+int dissect_v(dissector d, context*ctx, const ie_meta* meta){
+    auto consumed = meta->dissect(d, ctx, meta);
+    return consumed;
+}
+
+int dissect_tracking_area_identity(dissector d, context*ctx, const string&name = string()){
+    auto           iename = "5GS tracking area identity";
+    const use_context    uc(ctx, iename, d, 0);
+
+    auto           tree = d.add_item(-1, use_name(name, iename));
+    const use_tree ud(d, tree);
+
+    auto           t = d.uint8() & 0x60u;
+    auto           n = d.uint8() & 0x1fu;
+    d.step(1);
+
+    (void) dissect_mcc_mnc(d, ctx);
+    d.step(3);
+
+    for (uint8_t i = 1; i <= n; ++i){
+        (void) dissect_tac(d, ctx, formats("TAC %d", i));
+        d.step(3);
+    }
+
+    tree->set_length(d.offset - uc.offset);
+    return d.offset - uc.offset;
+}
+
+int dissect_tracking_area_identiy_list(tracking_area_identity_list*self, dissector d, context*ctx, uint8_t ieid){
+    if (d.length <= 0) return 0;
+    if (iei_not_match(iei, d.uint8())) return 0;
+    const use_context uc(ctx, "tracking-area-identity", 0);
+
+    self->iei = d.uint8();
+    d.step(1);
+
+    self->length = d.uint8();
+    d.step(1);
+
+    for (auto len = self->length; len > 0;) {
+        tracking_area_identity tai;
+        auto                   consumed = dissect_tracking_area_identity(&tai, d, ctx);
+        self->contents.push_back(tai);
+        d.step(consumed);
+        len -= consumed;
+    }
+    return d.offset - uc.offset;
+}
+
+int dissect_pdu_session_modification_reject(void*v, dissector d, context*ctx){
+    auto self = static_cast< pdu_session_modification_reject* >(v);
+    self->epd = d.uint8(true);
+
+    self->pdu_session_id = d.uint(true);
+    self->pti = d.uint(true);
+    self->message_id     = d.uint8(true);
+    self->cause          = d.uint8();
+
+    auto consumed = dissect_gprs_timer_3(
+        d, ctx, &self->backoff_timer.v, &self->backoff_timer.p, 0x37);
+    d.step(consumed);
+
+    if (gprs_timer_3 t = {}; auto consumed = dissect_gprs_timer_3(&t, d, ctx, 0x37)) {
+        self->backoff_timer = t;
+        d.step(consumed);
+    }
+
+
+    auto consumed = dissect_opt_ie(self->extended_pco, dissect_extended_pco, d, ctx, 0x7b);
+    d.step(consumed);
+
+}
+
+int dissect_gprs_timer_3(dissector d, context*ctx, void*v, bool*present, int ieid){
+    auto iei = d.uint8();
+    *present = d.length > 0 && iei_match(iei, ieid);
+    if (!*present) return 0;
+
+    auto t = static_cast< gprs_timer_3* >(v);
+    t->iei = iei;
+
+    t->length = d.uint8();
+
+    t->value  = d.uint8();
+
+    return 3;
+}
