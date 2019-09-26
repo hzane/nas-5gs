@@ -2,7 +2,6 @@
 add_subdirectory(common)
 add_subdirectory(sm)
 add_subdirectory(mm)
-add_subdirectory(base)
 
 set(NASNR_SRCS nas-nr.cc nas-nr.hh)
 

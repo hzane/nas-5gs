@@ -1,7 +1,5 @@
 #pragma once
-#include "../base/core.hh"
 
-namespace sm{
 int dissect_sm_congestion_reattempt(dissector d, context* ctx);
 int dissect_alwayson_pdu_session_requested(dissector d, context* ctx);
 
@@ -45,4 +43,3 @@ int dissect_ssc_mode(dissector d, context* ctx); //* 9.11.4.16    SSC mode
 int dissect_reattempt_indicator(dissector d, context*ctx);
 int dissect_control_plane_only_indication(dissector d, context*ctx);
 int dissect_sm_status(dissector d, context* ctx);
-} // namespace sm

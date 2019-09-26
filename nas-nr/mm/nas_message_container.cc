@@ -1,7 +1,9 @@
-#include "../common/dissect_mm_msg.hh"
+#include "../common/dissector.hh"
+#include "../common/use_context.hh"
+
 
 /* 9.11.3.33    NAS message container */
-int mm::dissect_nas_message_container(dissector d, context* ctx) {
+int dissect_nas_message_container(dissector d, context* ctx) {
     /* The purpose of the NAS message container IE is to
      * encapsulate a plain 5GS NAS message. */
     /* a NAS message without NAS security header */
@@ -11,7 +13,3 @@ int mm::dissect_nas_message_container(dissector d, context* ctx) {
     dissect_nas5g(d, ctx);
     return uc.length;
 }
-
-struct nas_message_container_t {
-    payload_t _;
-};

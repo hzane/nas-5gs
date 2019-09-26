@@ -1,6 +1,4 @@
 #pragma once
-#include "base/nas-nr-compiler-detection.hh"
-#include "common/description.hh"
 
 #if defined NASNRTS24501_EXPORTS
 
@@ -16,36 +14,3 @@
 #endif
 
 struct description;
-
-// NOLINTNEXTLINE
-struct nas_nr_message {
-    virtual const char*           name() const         NASNR_EQUAL_INIT(0); // NOLINT
-    virtual const char*           value() const        = 0; // NOLINT -use-nodiscard
-    virtual const octet*          data() const         = 0; // NOLINT -use-nodiscard
-    virtual int                   offset() const       = 0; // NOLINT -use-nodiscard
-    virtual int                   length() const       = 0; // NOLINT -use-nodiscard
-    virtual int                   indent() const       = 0; // NOLINT
-    virtual const description*    desc() const         = 0; // NOLINT
-    virtual const nas_nr_message* first_child() const  = 0; // NOLINT
-    virtual const nas_nr_message* next_sibling() const = 0; // NOLINT
-protected:    virtual ~nas_nr_message(){};                            // NOLINT
-};
-
-NASNRAPI void nas_nr_message_free(nas_nr_message* p);
-
-// use nas_nr_context_new to create env
-NASNRAPI int dissect_nas_nr(nas_nr_message** root,
-                            const octet*     data,
-                            int              length,
-                            int   direction, // 1: uplink, 2: downlink, 0: unknow
-                            void* env);
-
-NASNRAPI char* pretty_format(const description* m, const octet* data, int length);
-
-NASNRAPI void  pretty_format_free(char* p);
-
-NASNRAPI const char* nas_nr_description();
-
-NASNRAPI void* nas_nr_context_new();
-
-NASNRAPI void nas_nr_context_free(void*);

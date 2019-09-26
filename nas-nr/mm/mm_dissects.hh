@@ -1,5 +1,6 @@
 #pragma once
-#include "../base/core.hh"
+#include "../common/dissector.hh"
+#include "../common/use_context.hh"
 
 namespace mm {
 int dissect_authentication_failure_parameter(dissector d, context* ctx);
