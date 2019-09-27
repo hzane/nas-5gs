@@ -1,6 +1,7 @@
 .vs/
 .vscode/
 .idea/
+.ccls-cache/
 tidy/
 Debug/
 cmake-build-debug/
@@ -11,3 +12,6 @@ build/
 *.suo
 *.ncb
 *.user
+.~*
+*/#*.*#
+*/compile_commands.json

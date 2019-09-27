@@ -133,7 +133,7 @@ NASNRAPI const char* nas_nr_description(){
 NASNRAPI void* nas_nr_context_new(){
     return new context{};
 }
-NASNRAPI void nas_nr_context_free(void*d){
+NASNRAPI void nas_nr_context_free(void*d) {
     auto ctx = static_cast<context*>(d);
     delete ctx;
 }
