@@ -24,7 +24,9 @@ int dissect_service_reject(dissector d, context*ctx, void*ret);
 int dissect_service_accept(dissector d, context*ctx, void*ret);
 int dissect_configuration_update_command(dissector d, context*ctx, void*ret);
 int dissect_configuration_update_complete(dissector d, context*ctx, void*ret);
-int dissect_authentication_request(dissector d, context*ctx, void*ret);
+int dissect_authentication_request(dissector                 d,
+                                   context*                  ctx,
+                                   authentication_request_t* ret);
 int dissect_authentication_response(dissector d, context*ctx, void*ret);
 int dissect_authentication_reject(dissector d, context*ctx, void*ret);
 int dissect_authentication_failure(dissector d, context*ctx, void*ret);

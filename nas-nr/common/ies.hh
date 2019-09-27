@@ -32,11 +32,11 @@ Type of ciphering algorithm	Type of integrity protection algorithm	octet 7
 Sequence number	octet 9
 */
 struct intra_n1_mode_container_t {
-    bit4_t  integrity_algo;
-    bit4_t  ciphering_algo;
-    bit3_t  nksi;
-    bit1_t  tsc;
-    bit1_t  kacf;
+    bit_4  integrity_algo;
+    bit_4  ciphering_algo;
+    bit_3  nksi;
+    bit_1  tsc;
+    bit_1  kacf;
     uint8_t seq_no;
 };
 
@@ -79,11 +79,11 @@ NCC	TSC	Key set identifier in 5G	octet 8
 */
 struct s1_mode_to_n1_mode_container_t {
     octet_4 auth_code;
-    bit4_t  integrity_algo;
-    bit4_t  ciphering_algo;
-    bit3_t  nksi;
-    bit1_t  tsc;
-    bit4_t  ncc;
+    bit_4  integrity_algo;
+    bit_4  ciphering_algo;
+    bit_3  nksi;
+    bit_1  tsc;
+    bit_4  ncc;
 };
 
 /*
@@ -97,15 +97,15 @@ Length of 5GMM capability contents	octet 2	SGC
 Spare	0
 */
 struct nmm_capability_t {
-    bit1_t nhccp_ciot;
-    bit1_t n3data;
-    bit1_t ncp_ciot;
-    bit1_t restrict_ec;
-    bit1_t lpp;
-    bit1_t ho_attach;
-    bit1_t s1_mode;
-    bit1_t nsrvcc;
-    bit1_t nup_ciot;
+    bit_1 nhccp_ciot;
+    bit_1 n3data;
+    bit_1 ncp_ciot;
+    bit_1 restrict_ec;
+    bit_1 lpp;
+    bit_1 ho_attach;
+    bit_1 s1_mode;
+    bit_1 nsrvcc;
+    bit_1 nup_ciot;
 };
 
 /*
@@ -124,13 +124,13 @@ Length of 5GS DRX parameters contents	octet 2
 0	DRX value
 spare	DRX value	octet 3
 */
-using drx_parameters = bit4_t;
+using drx_parameters = bit_4;
 
 /* 9.11.3.3 5GS identity type
 8	7	6	5	4	3	2
 5GS identity type IEI	0 spare	Type of identity
 */
-using nid_type_t = bit3_t;
+using nid_type_t = bit_3;
 
 struct mcc_mnc_t {
     uint16_t mcc;
@@ -157,11 +157,11 @@ AMF Set ID (continued)	AMF Pointer	octet 10
 */
 
 struct guti_nmid_t {
-    bit3_t    type;
+    bit_3    type;
     mcc_mnc_t mccmnc;
     uint8_t   afm_region_id;
-    bita_t    afm_set_id;
-    bit6_t    amf_pointer;
+    bit_a    afm_set_id;
+    bit_6    amf_pointer;
     octet_4   tmsi;
 };
 /*
@@ -174,9 +174,9 @@ Identity digit 1	odd/ even indic	Type of identity	octet 4
 Identity digit p+1	Identity digit p	octet 5*
 */
 struct imeisv_nmid_t {
-    bit3_t type;
-    bit1_t odd_ind;
-    std::vector< bit4_t > digits;
+    bit_3 type;
+    bit_1 odd_ind;
+    std::vector< bit_4 > digits;
 };
 
 /*
@@ -213,22 +213,22 @@ Spare	Type of identity	octet 4 SUCI NAI	octet 5 - y
 
 struct suci_nmid_t {
     struct format_000_t {
-        bit3_t                                   type;
-        bit3_t                                   supi_format;
+        bit_3                                   type;
+        bit_3                                   supi_format;
         mcc_mnc_t                                mccmnc;
         octet_4                                  routing_indicator;
-        bit4_t                                   protection_scheme_id;
+        bit_4                                   protection_scheme_id;
         uint8_t                                  home_network_public_key_id;
         std::shared_ptr< octet_t >               scheme_output;
-        std::shared_ptr< std::vector< bit4_t > > msin; // null scheme
+        std::shared_ptr< std::vector< bit_4 > > msin; // null scheme
     };
     struct format_001_t {
-        bit3_t  type;
-        bit3_t  supi_format;
+        bit_3  type;
+        bit_3  supi_format;
         octet_t suci_nai;
     };
 
-    bit3_t                          supi_format;
+    bit_3                          supi_format;
     std::shared_ptr< format_001_t > nai;
     std::shared_ptr< format_000_t > imsi;
 };
@@ -245,9 +245,9 @@ identity	octet 4 AMF Set ID	octet 5 AMF Set ID (continued)	AMF Pointer	octet 6
 
 */
 struct stmsi_nmid_t {
-    bit3_t type;
-    bita_t amf_set_id;
-    bit6_t  amf_pointer;
+    bit_3 type;
+    bit_a amf_set_id;
+    bit_6  amf_pointer;
     octet_4 tmsi;
 };
 
@@ -260,7 +260,7 @@ of identity	octet 4
 
 */
 struct noid_nmid_t {
-    bit3_t type;
+    bit_3 type;
 };
 
 /* MAC address
@@ -269,12 +269,12 @@ mobile identity contents	octet 2  octet 3 0 spare	Type of identity	octet 4 MAC
 address	octet 5  octet 10
 */
 struct mac_nmid_t {
-    bit3_t  type;
+    bit_3  type;
     octet_6 mac;
 };
 
 struct nmid_t {
-    bit3_t type;
+    bit_3 type;
     std::shared_ptr< guti_nmid_t >   guti;
     std::shared_ptr< imeisv_nmid_t > imei;
     std::shared_ptr< suci_nmid_t >   suci;
@@ -295,19 +295,19 @@ MPSI	IWK N26	EMF	EMC	IMS- VoPS-N3GPP	IMS- VoPS-3GPP
 Spare
 */
 struct nnetwork_feature_support_t {
-    bit1_t ims_vops_3gpp;
-    bit1_t ims_vops_n3gpp;
-    bit2_t emc;
-    bit2_t emf;
-    bit1_t iwk_n26;
-    bit1_t mpsi;
-    bit1_t emcn3;
-    bit1_t mcsi;
-    bit1_t restrict_ec;
-    bit1_t ncp_ciot;
-    bit1_t n3data;
-    bit1_t nhc_cp_ciot;
-    bit1_t nup_ciot;
+    bit_1 ims_vops_3gpp;
+    bit_1 ims_vops_n3gpp;
+    bit_2 emc;
+    bit_2 emf;
+    bit_1 iwk_n26;
+    bit_1 mpsi;
+    bit_1 emcn3;
+    bit_1 mcsi;
+    bit_1 restrict_ec;
+    bit_1 ncp_ciot;
+    bit_1 n3data;
+    bit_1 nhc_cp_ciot;
+    bit_1 nup_ciot;
 };
 
 /* 9.11.3.6 5GS registration result
@@ -317,15 +317,15 @@ Length of 5GS registration result contents	octet 2
 0 Spare	SMS allowed	5GS registration result value
 */
 struct nregistration_result_t {
-    bit3_t result;
-    bit1_t sms_allowed;
+    bit_3 result;
+    bit_1 sms_allowed;
 };
 
 /* 9.11.3.7 5GS registration type
 8	7	6	5	4	3	2	1
 5GS registration type IEI	FOR	5GS registration type value	octet 1
 */
-using nregistration_type_t = bit3_t;
+using nregistration_type_t = bit_3;
 
 /* 9.11.3.8 5GS tracking area identity
 8	7	6	5	4	3	2	1
@@ -344,20 +344,20 @@ struct ntracking_area_id_t {
 };
 
 struct ntai_list_00_t {
-    bit4_t                 number; // +1
-    bit2_t                 type; // 00
+    bit_4                 number; // +1
+    bit_2                 type; // 00
     mcc_mnc_t              mccmnc;
     std::vector< octet_3 > tac;
 };
 struct ntai_list_01_t {
-    bit4_t                 number; // +1
-    bit2_t                 type; // 01
+    bit_4                 number; // +1
+    bit_2                 type; // 01
     mcc_mnc_t              mccmnc;
     octet_3                tac;
 };
 struct ntai_list_10_t {
-    bit4_t                             number; // +1
-    bit2_t                             type;   // 01
+    bit_4                             number; // +1
+    bit_2                             type;   // 01
     std::vector< ntracking_area_id_t > ids;
 };
 /* 9.11.3.9 5GS tracking area identity list
@@ -370,7 +370,7 @@ Partial tracking area identity list 2	octet i+1*  octet l*
 Partial tracking area identity list p	octet m+1*  octet n*
 */
 struct ntracking_area_id_list_t {
-    bit2_t                            type;
+    bit_2                            type;
     std::shared_ptr< ntai_list_00_t > l_00;
     std::shared_ptr< ntai_list_01_t > l_01;
     std::shared_ptr< ntai_list_10_t > l_10;
@@ -435,9 +435,9 @@ Length of 5GS update type	octet 2
 0 Spare	PNB-CIoT	NG-RAN-RCU	SMS requested
 */
 struct nupdate_type_t {
-    bit1_t sms_requested;
-    bit1_t nran_rcu;
-    bit2_t pnb_ciot;
+    bit_1 sms_requested;
+    bit_1 nran_rcu;
+    bit_2 pnb_ciot;
 };
 
 /*
@@ -454,7 +454,7 @@ using abba_t = octet_t;
 8	7	6	5	4	3	2	1
 Access type IEI	0 spare	Access type	octet 1
 */
-using access_type_t = bit2_t;
+using access_type_t = bit_2;
 
 /*
 9.11.3.12	Additional 5G security information
@@ -464,8 +464,8 @@ Length of Additional 5G security parameters contents	octet 2
 0 Spare	RINMR	HDP
 */
 struct additional_5g_security_inforation_t {
-    bit1_t hdp;
-    bit1_t rinmr;
+    bit_1 hdp;
+    bit_1 rinmr;
 };
 
 /*
@@ -505,13 +505,13 @@ using authentication_response_parameter_t = octet_t;
 Configuration update indication IEI	0 Spare	RED	ACK	octet 1
 */
 struct configuration_update_indication_t {
-    bit1_t ack;
-    bit1_t red;
+    bit_1 ack;
+    bit_1 red;
 };
 
 // 9.11.3.19 Daylight saving time
 // 10.5.3.12 in TS 24.008 g10
-using daylight_saving_time_t = bit2_t;
+using daylight_saving_time_t = bit_2;
 
 
 /*
@@ -520,9 +520,9 @@ using daylight_saving_time_t = bit2_t;
 De-registration type IEI	Switch off	Re-registration required	Access type	octet 1
 */
 struct deregistration_type_t {
-    bit2_t access_type;
-    bit1_t reregistration_required;
-    bit1_t switch_off;
+    bit_2 access_type;
+    bit_1 reregistration_required;
+    bit_1 switch_off;
 };
 
 // 9.11.3.21 void
@@ -532,8 +532,8 @@ struct deregistration_type_t {
 // 10.5.3.13 in TS 24.008 g10
 struct emergency_number_list_t {
     struct number_t {
-        bit5_t service_category;
-        std::vector< bit4_t > digits;
+        bit_5 service_category;
+        std::vector< bit_4 > digits;
     };
 
     std::vector< number_t > numbers;
@@ -551,10 +551,10 @@ using eps_nas_message_t = octet_t;
 // 9.11.3.25 EPS NAS security algorithms
 // 9.9.3.23 in TS 24.301 g11
 struct eps_nas_security_algorighms_t {
-    bit3_t integirty_algo;
-    bit1_t spare_1;
-    bit3_t ciphering_algo;
-    bit1_t spare_2;
+    bit_3 integirty_algo;
+    bit_1 spare_1;
+    bit_3 ciphering_algo;
+    bit_1 spare_2;
 };
 
 // 9.11.3.26 Extended emergency number list
@@ -566,14 +566,14 @@ struct extened_emergency_number_list_t {
         octet_t                 sub_service_field;
     };
 
-    bit1_t                  eenlv;
+    bit_1                  eenlv;
 };
 
 // 9.11.3.27 void
 
 // 9.11.3.28 imeisv request
 // 10.5.5.10 in TS 24.008 g10
-using imeisv_request_t = bit3_t;
+using imeisv_request_t = bit_3;
 
 
 /*
@@ -621,8 +621,8 @@ DNN value	octet 5  octet m
 MICO indication IEI	0 Spare	SPRTI	RAAI	octet 1
 */
 struct mico_indication_t {
-    bit1_t raai;
-    bit1_t sprti;
+    bit_1 raai;
+    bit_1 sprti;
 };
 
 /*
@@ -631,8 +631,8 @@ struct mico_indication_t {
 NAS key set identifier IEI	TSC	NAS key set identifier	octet 1
 */
 struct nas_key_set_identifier_t {
-    bit3_t nksi;
-    bit1_t tsc;
+    bit_3 nksi;
+    bit_1 tsc;
 };
 
 struct nas_message_t;
@@ -655,17 +655,17 @@ NAS security algorithms IEI	octet 1
 Type of ciphering algorithm	Type of integrity protection algorithm	octet 2
 */
 struct nas_security_algorithm_t {
-    bit4_t integrity_algo;
-    bit4_t ciphering_algo;
+    bit_4 integrity_algo;
+    bit_4 ciphering_algo;
 };
 
 // 9.11.3.35 Network name
 // 10.5.3.5a in TS 24.008 g10
 struct network_name_t {
-    bit3_t unused_bits;
-    bit1_t add_ci;
-    bit3_t coding_scheme;
-    bit1_t ext;
+    bit_3 unused_bits;
+    bit_1 add_ci;
+    bit_3 coding_scheme;
+    bit_1 ext;
     octet_t text;
 };
 
@@ -675,8 +675,8 @@ struct network_name_t {
 Network slicing indication IEI	0 Spare	DCNI	NSSCI	octet 1
 */
 struct network_slicing_indication_t {
-    bit1_t nssci;
-    bit1_t dcni;
+    bit_1 nssci;
+    bit_1 dcni;
 };
 
 /*
@@ -698,7 +698,7 @@ struct nssai_t {
 8	7	6	5	4	3	2	1
 NSSAI inclusion mode IEI	0 spare	NSSAI inclusion mode	octet 1
 */
-using nssai_includion_mode_t = bit2_t;
+using nssai_includion_mode_t = bit_2;
 
 /*
 9.11.3.38	Operator-defined access category definitions
@@ -721,11 +721,11 @@ Criteria	octet 8  octet a-1
 */
 struct operator_defined_access_category_definition_t {
     uint8_t         precedence;
-    bit5_t          number;
-    bit2_t          spare;
-    bit1_t          psac;
+    bit_5          number;
+    bit_2          spare;
+    bit_1          psac;
     octet_t         criteria;
-    opt_t< bit5_t > standardized_access_category;
+    opt_t< bit_5 > standardized_access_category;
 };
 
 /*
@@ -742,8 +742,8 @@ using payload_container_t = octet_t;
 struct payload_container_multiple_t {
     using optional_ie_t = octet_t;
     struct entry_t {
-        bit4_t type;
-        // bit4_t                       optional_ie_number;
+        bit_4 type;
+        // bit_4                       optional_ie_number;
         std::vector< optional_ie_t > optional_ies;
         octet_t                      content;
     };
@@ -780,7 +780,7 @@ Value of optional IE	octet xi +6  octet y2
 8	7	6	5	4	3	2	1
 Payload container type IEI	Payload container type value
 */
-using payload_container_type_t = bit4_t;
+using payload_container_type_t = bit_4;
 
 /*
 9.11.3.41	PDU session identity 2
@@ -862,7 +862,7 @@ SD	octet 3*  octet 5*
 */
 struct rejected_nssai_t {
     struct nssai_t {
-        bit4_t           cause;
+        bit_4           cause;
         uint8_t          sst;
         opt_t< uint8_t > sd;
     };
@@ -874,7 +874,7 @@ struct rejected_nssai_t {
 8	7	6	5	4	3	2	1
 Request type IEI	0 spare	Request type value	octet 1
 */
-using request_type_t = bit3_t;
+using request_type_t = bit_3;
 
 // 9.11.3.48 S1 UE network capability
 // 9.9.3.34 in TS 24.301 g11
@@ -883,32 +883,32 @@ struct s1_ue_network_capability_t {
     uint8_t eia;
     uint8_t uea_present;
     uint8_t uea;
-    bit7_t  uia;
-    bit1_t  ucs2;
-    bit1_t  nf;
-    bit1_t  srvcc;
-    bit1_t  lcs;
-    bit1_t  lpp;
-    bit1_t  acc_csfb;
-    bit1_t  h245_ash;
-    bit1_t  prose;
-    bit1_t  prose_dd;
-    bit1_t  prose_dc;
-    bit1_t  prose_relay;
-    bit1_t  cp_ciot;
-    bit1_t  up_ciot;
-    bit1_t  s1u_data;
-    bit1_t  erwo_pdn;
-    bit1_t  hc_cp_ciot;
-    bit1_t  epco;
-    bit1_t  multiple_drb;
-    bit1_t  v2x_pc5;
-    bit1_t  restrict_ec;
-    bit1_t  cp_backoff;
-    bit1_t  dcnr;
-    bit1_t  n1mode;
-    bit1_t  sgc;
-    bit1_t  f_bearers;
+    bit_7  uia;
+    bit_1  ucs2;
+    bit_1  nf;
+    bit_1  srvcc;
+    bit_1  lcs;
+    bit_1  lpp;
+    bit_1  acc_csfb;
+    bit_1  h245_ash;
+    bit_1  prose;
+    bit_1  prose_dd;
+    bit_1  prose_dc;
+    bit_1  prose_relay;
+    bit_1  cp_ciot;
+    bit_1  up_ciot;
+    bit_1  s1u_data;
+    bit_1  erwo_pdn;
+    bit_1  hc_cp_ciot;
+    bit_1  epco;
+    bit_1  multiple_drb;
+    bit_1  v2x_pc5;
+    bit_1  restrict_ec;
+    bit_1  cp_backoff;
+    bit_1  dcnr;
+    bit_1  n1mode;
+    bit_1  sgc;
+    bit_1  f_bearers;
 };
 
 // 9.11.3.48a S1 UE security capability
@@ -980,16 +980,16 @@ MNC digit 3	MCC digit 3	octet 3
 MNC digit 2	MNC digit 1	octet 4
 */
 struct service_area_00_t {
-    bit5_t number; // +1
-    bit2_t type; //
-    bit1_t allowed_type;//
+    bit_5 number; // +1
+    bit_2 type; //
+    bit_1 allowed_type;//
     mcc_mnc_t mccmnc;
     std::vector< octet_3 > tac;
 };
 struct service_area_01_t {
-    bit5_t                 number;       //
-    bit2_t                 type;         //
-    bit1_t                 allowed_type; //
+    bit_5                 number;       //
+    bit_2                 type;         //
+    bit_1                 allowed_type; //
     mcc_mnc_t              mccmnc;
     octet_3  tac;
 };
@@ -999,20 +999,20 @@ struct service_area_10_t {
         octet_3   tac;
     };
 
-    bit5_t                number;       //
-    bit2_t                type;         //
-    bit1_t                allowed_type; //
+    bit_5                number;       //
+    bit_2                type;         //
+    bit_1                allowed_type; //
     std::vector< area_t > value;
 };
 struct service_area_11_t {
-    bit5_t    number;       // +1
-    bit2_t    type;         //
-    bit1_t    allowed_type; //
+    bit_5    number;       // +1
+    bit_2    type;         //
+    bit_1    allowed_type; //
     mcc_mnc_t mccmnc;
 };
 
 struct service_area_t {
-    bit2_t                               type;
+    bit_2                               type;
     std::shared_ptr< service_area_00_t > l_00;
     std::shared_ptr< service_area_01_t > l_01;
     std::shared_ptr< service_area_10_t > l_10;
@@ -1027,14 +1027,14 @@ struct service_area_list_t {
 8	7	6	5	4	3	2	1
 Service type IEI	Service type value	octet 1
 */
-using service_type_t = bit4_t;
+using service_type_t = bit_4;
 
 /*
 9.11.3.50A	SMS indication
 8	7	6	5	4	3	2	1
 SMS indication IEI	0 Spare	SAI	octet 1
 */
-using sms_indication_t = bit1_t;
+using sms_indication_t = bit_1;
 
 /*
 9.11.3.51	SOR transparent container
@@ -1077,10 +1077,10 @@ struct sor_transparent_container_0_t{
     };
 
     // uint8_t                   header;
-    bit1_t                                      sor_data_type;
-    bit1_t                                      list_ind;
-    bit1_t                                      list_type;
-    bit1_t                                      ack;
+    bit_1                                      sor_data_type;
+    bit_1                                      list_ind;
+    bit_1                                      list_type;
+    bit_1                                      ack;
     octet_16                                    maci;
     uint16_t counter;
     std::shared_ptr<octet_t>  packet;    // plmn-id
@@ -1089,7 +1089,7 @@ struct sor_transparent_container_0_t{
 
 struct sor_transparent_container_1_t {
     //uint8_t                                     header;
-    bit1_t   sor_data_type;
+    bit_1   sor_data_type;
     octet_16 maci;
 };
 
@@ -1142,20 +1142,20 @@ value "0" 8	7	6	5	4	3	2	1 0 Spare	UPU data type	octet 4
 */
 struct ue_parameter_update_container_0_t {
     struct item_t {
-        bit4_t  type;
+        bit_4  type;
         octet_t dataset;
     };
 
     // uint8_t                   header;
-    bit1_t                                      upu_data_type;
-    bit1_t                                      reg;
+    bit_1                                      upu_data_type;
+    bit_1                                      reg;
     octet_16                                    upu_maci;
     uint16_t                                    counter;
     std::shared_ptr< std::vector< item_t > > access_technology;
 };
 struct ue_parameter_update_container_1_t {
     // uint8_t                                     header;
-    bit1_t   upu_data_type;
+    bit_1   upu_data_type;
     octet_16 upu_maci;
 };
 
@@ -1180,13 +1180,13 @@ struct ue_security_capability_t {
 
 // 9.11.3.55 UE's usage setting
 struct ue_usage_setting_t {
-    bit1_t setting;
+    bit_1 setting;
 };
 
 // 9.11.3.56 UE status
 struct ue_status_t {
-    bit1_t s1_mode_reg;
-    bit1_t n1_mode_reg;
+    bit_1 s1_mode_reg;
+    bit_1 n1_mode_reg;
 };
 
 // 9.11.3.57 Uplink data status
@@ -1198,7 +1198,7 @@ struct uplink_data_status_t {
 // 9.11.3.58 Non-3gpp NW provided policies
 // 10.5.5.37 in TS 24.008 g10
 struct n3gpp_nw_provided_policies_t {
-    bit1_t n3en_ind;
+    bit_1 n3en_ind;
 };
 
 // 9.11.3.59 EPS bearer context status
@@ -1211,33 +1211,33 @@ struct eps_bearer_context_status_t {
 // 9.11.3.60 Extended DRX parameters
 // 10.5.5.32 in TS 24.008 g10
 struct extended_drx_parameters_t {
-    bit4_t edrx;
-    bit4_t paging_time_window;
+    bit_4 edrx;
+    bit_4 paging_time_window;
 };
 
 // 9.11.3.61 Mobile station classmark 2
 // 10.5.1.6 in TS 24.008 g10
 struct mobile_station_classmark2_t {
-    bit3_t rf_power_capability;
-    bit1_t a51;
-    bit1_t es_ind;
-    bit2_t revision_level;
-    bit1_t spare;
-    bit1_t fc;
-    bit1_t vgcs;
-    bit1_t vbs;
-    bit1_t sm_capability;
-    bit2_t ss_screen_ind;
-    bit1_t ps_capability;
-    bit1_t spare_1;
-    bit1_t a52;
-    bit1_t a53;
-    bit1_t cmsp;
-    bit1_t solsa;
-    bit1_t ucs2;
-    bit1_t lcsvacap;
-    bit1_t spare_2;
-    bit1_t cm3;
+    bit_3 rf_power_capability;
+    bit_1 a51;
+    bit_1 es_ind;
+    bit_2 revision_level;
+    bit_1 spare;
+    bit_1 fc;
+    bit_1 vgcs;
+    bit_1 vbs;
+    bit_1 sm_capability;
+    bit_2 ss_screen_ind;
+    bit_1 ps_capability;
+    bit_1 spare_1;
+    bit_1 a52;
+    bit_1 a53;
+    bit_1 cmsp;
+    bit_1 solsa;
+    bit_1 ucs2;
+    bit_1 lcsvacap;
+    bit_1 spare_2;
+    bit_1 cm3;
 };
 
 // 9.11.3.62 Supported codec list
@@ -1255,7 +1255,7 @@ struct supported_codec_list_t {
 MA PD>U session information IEI	MA PDU session information value	octet 1
 */
 
-using ma_pdu_session_information_t = bit4_t;
+using ma_pdu_session_information_t = bit_4;
 
 
 
@@ -1270,11 +1270,11 @@ using ma_pdu_session_information_t = bit4_t;
   Spare	octet 4* -15*
 */
 struct nsm_capability_t {
-    bit1_t rqos;
-    bit1_t mh6_pdu;
-    bit1_t ept_s1;
-    bit1_t ats_ll;
-    bit1_t mptcp;
+    bit_1 rqos;
+    bit_1 mh6_pdu;
+    bit_1 ept_s1;
+    bit_1 ats_ll;
+    bit_1 mptcp;
 };
 
 /*
@@ -1291,7 +1291,7 @@ using nsm_cause_t = uint8_t;
   Always-on PDU session indication IEI	0 Spare	APSI	octet 1
 */
 struct always_on_pdu_session_indication_t {
-    bit1_t apsi;
+    bit_1 apsi;
 };
 
 /*
@@ -1300,7 +1300,7 @@ struct always_on_pdu_session_indication_t {
   Always-on PDU session requested IEI	0 Spare	APSR	octet 1
 */
 struct always_on_pdu_session_requested_t {
-    bit1_t apsr;
+    bit_1 apsr;
 };
 
 /*
@@ -1308,7 +1308,7 @@ struct always_on_pdu_session_requested_t {
   8	7	6	5	4	3	2	1
   Allowed SSC mode IEI	0 Spare	SSC3	SSC2	SSC1	octet 1
 */
-using allowed_ssc_mode_t = bit3_t;
+using allowed_ssc_mode_t = bit_3;
 
 // 9.11.4.6 Extended protocol configuration options
 // 10.5.6.3A ts24008-16.10
@@ -1318,9 +1318,9 @@ struct extended_pco_t {
         octet_t content;
     };
 
-    bit3_t                  configuration_protocol;
-    bit4_t spare;
-    bit1_t ext;
+    bit_3                  configuration_protocol;
+    bit_4 spare;
+    bit_1 ext;
     std::vector< option_t > options;
 };
 
@@ -1345,10 +1345,10 @@ struct mapped_eps_bearer_contexts_t {
     struct context_t {
         uint8_t id;
         // uint8_t length;
-        bit4_t  parameters_n;
-        bit1_t  ebit;
-        bit1_t  spare;
-        bit2_t  operation_code;
+        bit_4  parameters_n;
+        bit_1  ebit;
+        bit_1  spare;
+        bit_2  operation_code;
         std::vector< octet_t > parameters;
     };
 
@@ -1368,7 +1368,7 @@ using supported_packet_filters_maximum_number_t = bit_b;
 using octet_c = uint8_t[12];
 // 9.11.4.10 PDU address
 struct pdu_address_t {
-    bit3_t type;
+    bit_3 type;
     octet_c address;
 };
 
@@ -1377,7 +1377,7 @@ struct pdu_address_t {
   8	7	6	5	4	3	2	1
   PDU session type IEI	0 Spare	PDU session type value	octet 1
 */
-using pdu_session_type_t = bit3_t;
+using pdu_session_type_t = bit_3;
 
 /*
   9.11.4.12	QoS flow descriptions
@@ -1415,9 +1415,9 @@ struct qos_flow_descriptions_t {
         octet_t content;
     };
     struct entry_t {
-        bit6_t qfi;
-        bit3_t opcode;
-        bit1_t ebit;
+        bit_6 qfi;
+        bit_3 opcode;
+        bit_1 ebit;
         std::vector< parameter_t > parameters;
     };
     std::vector< entry_t > descs;
@@ -1426,12 +1426,12 @@ struct qos_flow_descriptions_t {
 // 9.11.4.13	QoS rules
 struct qos_rule_t {
     struct packet_filter_delete_t {
-        bit4_t id;
-        bit4_t spare;
+        bit_4 id;
+        bit_4 spare;
     };
     struct packet_filter_add_t{
-        bit4_t id;
-        bit2_t direction;
+        bit_4 id;
+        bit_2 direction;
         // uint8_t length;
         octet_t content;
     };
@@ -1442,13 +1442,13 @@ struct qos_rule_t {
 
     uint8_t                        id;
     uint16_t                       length;
-    bit4_t                         packet_filters_n;
-    bit1_t                         dqr;
-    bit3_t                         rule_operation_code;
+    bit_4                         packet_filters_n;
+    bit_1                         dqr;
+    bit_3                         rule_operation_code;
     std::vector< packet_filter_t > packet_filters;
     opt_t< uint8_t >               precedence;
-    opt_t< bit6_t >                qos_flow_id;
-    opt_t< bit1_t >                segregation;
+    opt_t< bit_6 >                qos_flow_id;
+    opt_t< bit_1 >                segregation;
 };
 struct qos_rules_t {
     std::vector< qos_rule_t > rules;
@@ -1484,7 +1484,7 @@ using sm_pdu_dn_request_container_t = octet_t;
   8	7	6	5	4	3	2	1
   SSC mode IEI	0 Spare	SSC mode value	octet 1
 */
-using ssc_mode_t = bit3_t;
+using ssc_mode_t = bit_3;
 
 /*
   9.11.4.17	Re-attempt indicator
@@ -1494,8 +1494,8 @@ using ssc_mode_t = bit3_t;
   0 Spare	EPLMNC	RATC
 */
 struct reattempt_indicator_t {
-    bit1_t ratc;
-    bit1_t eplmnc;
+    bit_1 ratc;
+    bit_1 eplmnc;
 };
 
 /*
@@ -1507,7 +1507,7 @@ struct reattempt_indicator_t {
   0	octet 4* -15*
   Spare	octet 4* -15*
 */
-using nsm_network_feature_support_t = bit1_t;
+using nsm_network_feature_support_t = bit_1;
 
 /*
   9.11.4.19	Session-TMBR
@@ -1544,7 +1544,7 @@ using serving_plmn_rate_control_t = uint16_t;
   Length of 5GSM congestion re-attempt indicator contents
   0 Spare	ABO
 */
-using nsm_congestion_reattempt_indicator_t = bit1_t;
+using nsm_congestion_reattempt_indicator_t = bit_1;
 
 /*
   9.11.4.22	ATSSS container
@@ -1560,4 +1560,4 @@ using atsss_container_t = octet_t;
   8	7	6	5	4	3	2	1
   Control plane only indication IEI	0 Spare	CPOI value	octet 1
 */
-using control_plane_only_indication_t = bit1_t;
+using control_plane_only_indication_t = bit_1;

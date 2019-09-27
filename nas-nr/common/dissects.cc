@@ -3,26 +3,15 @@
 #include "message.hh"
 #include "nas.hh"
 #include "ber.hh"
+#include "definitions.hh"
+#include "dissects.hh"
+#include "ies.hh"
+#include "messages.hh"
 
 int dissect_nsm_message(dissector d, context* ctx, nsm_message_t* v);
 int dissect_nmm_message(dissector d, context* ctx, nmm_message_t* v);
 
-int dissect_authentication_request(dissector                 d,
-                                   context*                  ctx,
-                                   authentication_request_t* ret) {
-    auto consumed = dissect_nmm_header(d, ctx, &ret->header);
-    d.step(consumed);
 
-    ret->ng_ksi = d.uint8() & 0x0fu;
-
-    d.step(dissect_lv(d, ctx, &ret->abba, dissect_octet));
-
-    d.step(dissect_tv(d.slice(17),
-                      ctx,
-                      &ret->rand,
-                      dissect_octet));
-    return d.length;
-}
 int dissect_nas_plain(dissector d, context* ctx, nas_message_plain_t* v);
 int dissect_nas_protected(dissector d, context* ctx, nas_message_protected_t* v);
 
@@ -95,15 +84,32 @@ struct message_desc_t {
     dissect_t   dissect;
 };
 
+#define DISSECT(mt, X)                              \
+    case mt:                                        \
+        v->##X = std::make_shared< X##_t >({});     \
+        (void) dissect_##X(d, ctx, (v->##X).get()); \
+        break;
+
 int dissect_nsm_message(dissector d, context* ctx, nsm_message_t* v) {
     const use_context uc(&d, ctx, "session-management-message", 0);
 
     dissect_nsm_header(d, ctx, &v->header);
 
     switch (v->header.message_type) {
-    case 0xc1u:
-
-        break;
+        DISSECT(0xc1u, pdu_session_establishment_request);
+        DISSECT(0xc2u, pdu_session_establishment_accept);
+        DISSECT(0xc3u, pdu_session_establishment_reject);
+        DISSECT(0xc5u, pdu_session_authentication_command);
+        DISSECT(0xc6u, pdu_session_authentication_complete);
+        DISSECT(0xc9u, pdu_session_modification_request);
+        DISSECT(0xcau, pdu_session_modification_reject);
+        DISSECT(0xccu, pdu_session_modification_complete);
+        DISSECT(0xcdu, pdu_session_modification_command_reject);
+        DISSECT(0xd1u, pdu_session_release_request);
+        DISSECT(0xd2u, pdu_session_release_reject);
+        DISSECT(0xd3u, pdu_session_release_command);
+        DISSECT(0xd4u, pdu_session_release_complete);
+        DISSECT(0xd6u, nsm_status);
     default:
         break;
     }
@@ -115,11 +121,38 @@ extern const message_desc_t nmm_messages[];
 int dissect_nmm_message(dissector d, context* ctx, nmm_message_t* v) {
     const use_context uc(&d, ctx, "mobile-management-message", 0);
 
-    for (auto i = nmm_messages; i->name != nullptr;) {
-        if(i->type == v->header.message_type){
-
-        }
-        ++i;
+    dissect_nmm_header(d, ctx, &v->header);
+    switch(v->header.message_type){
+        DISSECT(0x41, registration_request);
+        DISSECT(0x42, registration_accept);
+        DISSECT(0x43, registration_complete);
+        DISSECT(0x44, registration_reject);
+        DISSECT(0x45, deregistration_request_ue_orig);
+        DISSECT(0x46, deregistration_accept_ue_orig);
+        DISSECT(0x47, deregistration_request_ue_term);
+        DISSECT(0x48, deregistration_accept_ue_term);
+        DISSECT(0x4c, service_request);
+        DISSECT(0x4d, service_reject);
+        DISSECT(0x4e, service_accept);
+        DISSECT(0x54, configuration_update_command);
+        DISSECT(0x55, configuration_update_complete);
+        DISSECT(0x56, authentication_request);
+        DISSECT(0x57, authentication_response);
+        DISSECT(0x58, authentication_reject);
+        DISSECT(0x59, authentication_failure);
+        DISSECT(0x5a, authentication_result);
+        DISSECT(0x5b, identity_request);
+        DISSECT(0x5c, identity_response);
+        DISSECT(0x5d, security_mode_command);
+        DISSECT(0x5e, security_mode_complete);
+        DISSECT(0x5f, security_mode_reject);
+        DISSECT(0x64, nmm_status);
+        DISSECT(0x65, notification);
+        DISSECT(0x66, notification_response);
+        DISSECT(0x67, ul_nas_transport);
+        DISSECT(0x68, dl_nas_transport);
+    default:
+        break;
     }
     return 0;
 }
@@ -138,197 +171,3 @@ int dissect_nsm_header(dissector d, context* ctx, nsm_header_t* ret) {
     ret->message_type   = d.uint8();
     return 4;
 }
-
-extern const message_desc_t nmm_messages[] = {
-    {0x41, "Registration request", dissect_registration_request},
-    {0x42, "Registration accept", dissect_registration_accept},
-    {0x43, "Registration complete", dissect_registration_complete},
-    {0x44, "Registration reject", dissect_registration_reject},
-
-    {
-        0x45,
-        "Deregistration request (UE originating)",
-        dissect_deregistration_request_ue_origin,
-    },
-    {
-        0x46,
-        "Deregistration accept (UE originating)",
-        dissect_deregistration_accept_ue_origin,
-    },
-    {
-        0x47,
-        "Deregistration request (UE terminated)",
-        dissect_deregistration_request_ue_terminate,
-
-    },
-    {
-        0x48,
-        "Deregistration accept (UE terminated)",
-        dissect_deregistration_accept_ue_terminate,
-
-    },
-
-    {0x49, "Not used in current version", no_dissect},
-    {0x4a, "Not used in current version", no_dissect},
-    {0x4b, "Not used in current version", no_dissect},
-
-    {0x4c, "Service request", dissect_service_request},
-    {0x4d, "Service reject", dissect_service_reject},
-    {0x4e, "Service accept", dissect_service_accept},
-
-    {0x4f, "Not used in current version", no_dissect},
-    {0x50, "Not used in current version", no_dissect},
-    {0x51, "Not used in current version", no_dissect},
-    {0x52, "Not used in current version", no_dissect},
-    {0x53, "Not used in current version", no_dissect},
-
-    {0x54, "Configuration update command", dissect_configuration_update_command},
-    {0x55, "Configuration update complete", dissect_configuration_update_complete},
-
-    {0x56, "Authentication request", dissect_authentication_request},
-    {0x57, "Authentication response", dissect_authentication_response},
-    {0x58, "Authentication reject", dissect_authentication_reject},
-    {0x59, "Authentication failure", dissect_authentication_failure},
-    {0x5a, "Authentication result", dissect_authentication_result},
-
-    {0x5b, "Identity request", dissect_identity_request},
-    {0x5c, "Identity response", dissect_identity_response},
-    {0x5d, "Security mode command", dissect_security_mode_command},
-    {0x5e, "Security mode complete", dissect_security_mode_complete},
-    {0x5f, "Security mode reject", dissect_security_mode_reject},
-
-    {0x60, "Not used in current version", no_dissect},
-    {0x61, "Not used in current version", no_dissect},
-    {0x62, "Not used in current version", no_dissect},
-    {0x63, "Not used in current version", no_dissect},
-
-    {0x64, "5GMM status", dissect_mm_status},
-    {0x65, "Notification", dissect_notification},
-    {0x66, "Notification response", dissect_notification_response},
-    {0x67, "UL NAS transport", dissect_ul_nas_transport},
-    {0x68, "DL NAS transport", dissect_dl_nas_transparent},
-    {0, nullptr, nullptr},
-};
-
-extern const message_metamessage_desc_t nsm_messages[] = {
-    {
-        0xc1,
-        "PDU session establishment request",
-        dissect_pdu_session_establishment_request,
-    },
-    {
-        0xc2,
-        "PDU session establishment accept",
-        dissect_pdu_session_establishment_accept,
-    },
-    {
-        0xc3,
-        "PDU session establishment reject",
-        dissect_pdu_session_establishment_reject,
-
-    },
-
-    {
-        0xc4,
-        "Not used in current version",
-        no_dissect,
-    },
-    {
-        0xc5,
-        "PDU session authentication command",
-        dissect_pdu_session_authentication_command,
-    },
-
-    {
-        0xc6,
-        "PDU session authentication complete",
-        dissect_pdu_session_authentication_complete,
-    },
-    {
-        0xc7,
-        "PDU session authentication result",
-        no_dissect,
-    },
-    {
-        0xc8,
-        "Not used in current version",
-        no_dissect,
-    },
-
-    {
-        0xc9,
-        "PDU session modification request",
-        dissect_pdu_session_modification_request,
-    },
-    {
-        0xca,
-        "PDU session modification reject",
-        dissect_pdu_session_modification_reject,
-    },
-    {
-        0xcb,
-        "PDU session modification command",
-        dissect_pdu_session_modification_command,
-    },
-    {
-        0xcc,
-        "PDU session modification complete",
-        dissect_pdu_session_modification_complete,
-    },
-    {
-        0xcd,
-        "PDU session modification command reject",
-        dissect_pdu_session_modification_command_reject,
-    },
-
-    {
-        0xce,
-        "Not used in current version",
-        no_dissect,
-    },
-    {
-        0xcf,
-        "Not used in current version",
-        no_dissect,
-
-    },
-    {
-        0xd0,
-        "Not used in current version",
-        no_dissect,
-    },
-
-    {
-        0xd1,
-        "PDU session release request",
-        dissect_pdu_session_release_request,
-    },
-    {
-        0xd2,
-        "PDU session release reject",
-        dissect_pdu_session_release_reject,
-    },
-    {
-        0xd3,
-        "PDU session release command",
-        dissect_pdu_session_release_command,
-    },
-    {
-        0xd4,
-        "PDU session release complete",
-        dissect_pdu_session_release_complete,
-    },
-
-    {
-        0xd5,
-        "Not used in current version",
-        no_dissect,
-    },
-
-    {
-        0xd6,
-        "5GSM status",
-        dissect_sm_status,
-    },
-    {0, nullptr, nullptr},
-};

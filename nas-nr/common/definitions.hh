@@ -109,6 +109,39 @@ struct security_mode_reject_t;
 
 struct nmm_status_t;
 
+struct nmm_message_t {
+    nmm_header_t                                       header;
+
+    std::shared_ptr< authentication_request_t >        authentication_request;
+    std::shared_ptr< authentication_response_t >       authentication_response;
+    std::shared_ptr< authentication_result_t >         authentication_result;
+    std::shared_ptr< authentication_failure_t >        authentication_failure;
+    std::shared_ptr< authentication_reject_t >         authentication_reject;
+    std::shared_ptr< registration_request_t >          registration_request;
+    std::shared_ptr< registration_accept_t >           registration_accept;
+    std::shared_ptr< registration_complete_t >         registration_complete;
+    std::shared_ptr< registration_reject_t >           registration_reject;
+    std::shared_ptr< ul_nas_transport_t >              ul_nas_transport;
+    std::shared_ptr< dl_nas_transport_t >              dl_nas_transport;
+    std::shared_ptr< deregistration_request_t >        deregistration_request;
+    std::shared_ptr< deregistration_accept_t >         deregistration_accept;
+    std::shared_ptr< deregistration_request_t >        deregistration_request;
+    std::shared_ptr< deregistration_accept_t >         deregistration_accept;
+    std::shared_ptr< service_request_t >               service_request;
+    std::shared_ptr< service_accept_t >                service_accept;
+    std::shared_ptr< service_reject_t >                service_reject;
+    std::shared_ptr< configuration_update_command_t >  configuration_update_command;
+    std::shared_ptr< configuration_update_complete_t > configuration_update_complete;
+    std::shared_ptr< identity_request_t >              identity_request;
+    std::shared_ptr< identity_response_t >             identity_response;
+    std::shared_ptr< notification_t >                  notification;
+    std::shared_ptr< notification_response_t >         notification_response;
+    std::shared_ptr< s1_ue_network_capability_t >      s1_ue_network_capability;
+    std::shared_ptr< security_mode_command_t >         security_mode_command;
+    std::shared_ptr< security_mode_complete_t >        security_mode_complete;
+    std::shared_ptr< security_mode_reject_t >          security_mode_reject;
+    std::shared_ptr< nmm_status_t >                    nmm_status;
+};
 // sm message
 
 struct pdu_session_establishment_request_t;
@@ -132,6 +165,32 @@ struct pdu_session_release_complete_t;
 
 struct nsm_status_t;
 
+struct nsm_message_t {
+    using std::shared_ptr;
+    nsm_header_t header;
+
+    shared_ptr< pdu_session_establishment_request_t > pdu_session_establishment_request;
+    shared_ptr< pdu_session_establishment_accept_t >  pdu_session_establishment_accept;
+    shared_ptr< pdu_session_establishment_reject_t >  pdu_session_establishment_reject;
+
+    shared_ptr< pdu_session_authentication_command_t > pdu_session_authentication_command;
+    shared_ptr< pdu_session_authentication_complete_t >
+                                                      pdu_session_authentication_complete;
+    shared_ptr< pdu_session_authentication_result_t > pdu_session_authentication_result;
+
+    shared_ptr< pdu_session_modification_request_t >  pdu_session_modification_request;
+    shared_ptr< pdu_session_modification_reject_t >   pdu_session_modification_reject;
+    shared_ptr< pdu_session_modification_command_t >  pdu_session_modification_command;
+    shared_ptr< pdu_session_modification_complete_t > pdu_session_modification_complete;
+    shared_ptr< pdu_session_modification_command_reject_t >
+        pdu_session_modification_command_reject;
+
+    shared_ptr< pdu_session_release_request_t >  pdu_session_release_request;
+    shared_ptr< pdu_session_release_reject_t >   pdu_session_release_reject;
+    shared_ptr< pdu_session_release_command_t >  pdu_session_release_command;
+    shared_ptr< pdu_session_release_complete_t > pdu_session_release_complete;
+    shared_ptr< nsm_status_t >                   nsm_status;
+};
 
 // ies
 using nmm_cause_t                               = uint8_t;
