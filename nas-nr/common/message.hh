@@ -8,12 +8,6 @@
 #include <vector>
 #include "definitions.hh"
 
-struct nas_message_t;
-struct nas_message_plain_t;
-struct nas_message_protected_t;
-struct nsm_message_t;
-struct nmm_message_t;
-
 
 struct nas_message_plain_t {
     std::shared_ptr< nmm_message_t > nmm = {};
@@ -30,7 +24,7 @@ struct nas_message_protected_t {
 
 struct nas_message_t {
     std::shared_ptr< nas_message_plain_t >     plain;
-    std::shared_ptr< nas_message_protected_t > sec;
+    std::shared_ptr< nas_message_protected_t > protect;
 };
 
 struct protocol_t {

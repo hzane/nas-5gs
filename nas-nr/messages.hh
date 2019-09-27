@@ -23,11 +23,11 @@ IEI	Information Element	Type/Reference	Presence	Format	Length
 */
 struct authenticaion_request_t {
     nmm_header_t      header = {};
-    bit4_t            nksi;
-    octet_t           abba;
-    opt_t< octet_16 > rand;
-    opt_t< octet_16 > autn;
-    opt_t< octet_t >  eap;
+    bit4_t            nksi   = {};
+    octet_t           abba   = {};
+    opt_t< octet_16 > rand   = {};
+    opt_t< octet_16 > autn   = {};
+    opt_t< octet_t >  eap    = {};
 };
 /*
 Table 8.2.2.1.1: AUTHENTICATION RESPONSE message content
@@ -59,12 +59,11 @@ IEI	Information Element	Type/Reference	Presence	Format	Length
 */
 struct authentication_result_t {
     nmm_header_t     header = {};
-    bit4_t           nksi;
-    octet_t          eap;
-    opt_t< octet_t > abba;
+    bit4_t           nksi   = {};
+    octet_t          eap    = {};
+    opt_t< octet_t > abba   = {};
 };
 
-using octet_14 = uint8_t[14];
 
 /*
 Table 8.2.4.1.1: AUTHENTICATION FAILURE message content
@@ -77,9 +76,9 @@ IEI	Information Element	Type/Reference	Presence	Format	Length
 30	Authentication failure parameter	Authentication failure parameter	9.11.3.14 O TLV	16
 */
 struct authentication_failure_t {
-    nmm_header_t header = {};
-    uint8_t      cause;
-    opt_t< octet_14 > parameter;// octet_16?
+    nmm_header_t      header    = {};
+    uint8_t           cause     = {};
+    opt_t< octet_e > parameter = {}; // octet_16?
 };
 
 /*
@@ -95,9 +94,6 @@ struct authentication_reject_t {
     nmm_header_t     header;
     opt_t< octet_t > eap;
 };
-
-using octet_6 = uint8_t[6];
-using octet_b = uint8_t[11];
 
 /*
 Table 8.2.6.1.1: REGISTRATION REQUEST message content
@@ -244,7 +240,6 @@ struct registration_accept_t {
     opt_t< uint8_t >  t3324;
 };
 
-using octet_17 = uint8_t[17];
 
 /*
 Table 8.2.8.1.1: REGISTRATION COMPLETE message content
@@ -397,8 +392,6 @@ struct deregistration_accept_t {
     nmm_header_t header;
 };
 
-using octet_8 = uint8_t[8];
-using octet_7 = uint8_t[7];
 
 /*
 Table 8.2.16.1.1: SERVICE REQUEST message content
@@ -422,7 +415,7 @@ struct service_request_t {
     bit4_t       nksi;
     bit4_t       type;
     octet_7      tmsi_nmid;
-    opt_t< data_status_t >        uplink_data_status;
+    opt_t< uplink_data_status_t >        uplink_data_status;
     opt_t< pdu_session_status_t > pdu_session_status;
     opt_t< allowed_pdu_session_status_t > allowed_pdu_session_status;
     opt_t< octet_t >                      message;
@@ -741,7 +734,7 @@ XX	Control plane only indication	Control plane only indication	9.11.4.23	O	TV	1
 */
 // clang-format on
 struct pdu_session_establishment_accept_t {
-    nms_header_t header;
+    nsm_header_t header;
     bit4_t       selected_pdu_session_type;
     bit4_t       ssc_mode;
     octet_t      authorized_qos_rules;
@@ -952,7 +945,7 @@ IEI	Information Element	Type/Reference	Presence	Format	Length
     5GSM cause	5GSM cause	9.11.4.2	M	V	1
 7B	Extended protocol configuration options	Extended protocol configuration options	9.11.4.6	O	TLV-E	4-65538
 */
-struct pdu_session_modification_command_t {
+struct pdu_session_modification_command_reject_t {
     nsm_header_t header;
     uint8_t      cause;
     opt_t< extended_pco_t > extended_pco;

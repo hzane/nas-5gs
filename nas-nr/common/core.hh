@@ -4,11 +4,6 @@
 #include "packet.hh"
 #include "use_context.hh"
 
-struct nmm_header_t;
-struct nsm_header_t;
-
-int dissect_nmm_header(dissector d, context* ctx, nmm_header_t* ret);
-int dissect_nsm_header(dissector d, context* ctx, nsm_header_t* ret);
 
 extern void diag(const char* format, ...);
 
@@ -67,6 +62,8 @@ inline uint64_t n2uint8(const uint8_t* data) { return data[0]; }
 unsigned int ws_ctz(uint64_t mask);
 uint8_t ws_ctz8(uint8_t mask);
 
+uint8_t mask_u8(uint8_t v, uint8_t mask);
+
 struct authentication_vector {
     uint8_t kasme[32] ;                // ASME key
     uint8_t rand[16] ;                 // random challenge parameter
@@ -74,10 +71,3 @@ struct authentication_vector {
     uint8_t xresult_size ;             //
     uint8_t              xresult[16] ; // expected authentication response parameter
 } unused;
-
-
-// Extended protocol discriminator
-namespace epd {
-inline const uint8_t nmm = 0x7e; // TGPP_PD_5GMM
-inline const uint8_t nsm = 0x2e; // TGPP_PD_5GSM
-} // namespace EPD

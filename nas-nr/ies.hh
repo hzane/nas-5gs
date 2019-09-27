@@ -1,14 +1,7 @@
 #pragma once
 #include <cstdint>
 #include <vector>
-#include "common/nas.hh"
-
-using octet_t = std::vector< uint8_t >;
-using bit4_t  = uint8_t;
-using bit1_t  = uint8_t;
-using bit3_t  = uint8_t;
-using bit2_t  = uint8_t;
-
+#include "common/definitions.hh"
 
 /*
 9.11.2.1A	DNN
@@ -492,7 +485,6 @@ using allowed_pdu_session_status_t = octet_2;
 // 10.5.3.2.2 in TS 24.008 g10
 using authentication_parameter_failure_t = uint8_t[14];
 
-using octet_g = uint16_t[16];
 // 9.11.3.15 Authentication parameter AUTN
 // 10.5.3.1.1
 using authentication_parameter_autn_t = octet_g;
@@ -608,7 +600,6 @@ LADN 2	octet a+1*  octet b*
 …	octet b+1*  octet g*
 LADN n	octet g+1*  octet h*
 */
-
 struct ladn_information_t {
     struct ladn_t {
         dnn_t                    dnn;
@@ -1371,8 +1362,8 @@ struct mapped_eps_bearer_contexts_t {
   Maximum number of supported packet filters
   Maximum number of supported packet filters (continued)	0 Spare
 */
-using bit11_t                                   = uint16_t;
-using supported_packet_filters_maximum_number_t = bit11_t;
+using bit1_b                                   = uint16_t;
+using supported_packet_filters_maximum_number_t = bit_b;
 
 using octet_c = uint8_t[12];
 // 9.11.4.10 PDU address
@@ -1418,7 +1409,7 @@ using pdu_session_type_t = bit3_t;
   Length of parameter contents	octet 8
   Parameter contents	octet 9  octet m
 */
-struct qos_flow_description_t {
+struct qos_flow_descriptions_t {
     struct parameter_t {
         uint8_t id;
         octet_t content;
@@ -1429,7 +1420,7 @@ struct qos_flow_description_t {
         bit1_t ebit;
         std::vector< parameter_t > parameters;
     };
-    std::vector< entry_t > fds;
+    std::vector< entry_t > descs;
 };
 
 // 9.11.4.13	QoS rules
