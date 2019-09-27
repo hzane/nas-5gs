@@ -978,6 +978,9 @@ struct ue_security_capability_t {
 
 using ma_pdu_session_information_t = bit4_t;
 
+// 9.11.3.57
+struct data_status_t {};
+
 /*
   9.11.4.1	5GSM capability
   8	7	6	5	4	3	2	1
