@@ -19,11 +19,11 @@ void dissect(const fs::path& entry) {
     buff_view   tvb = {buf.data(), static_cast< int >(buf.size())};
     context     ctx = {};
     packet      pinfo{};
-    proto_node  node{};
-    dissector   d{&pinfo, &node, &tvb, 0, static_cast< int >(buf.size()), nullptr};
+    node_t        n =std::make_shared<node>();
+    dissector   d{&pinfo, n, &tvb, 0, static_cast< int >(buf.size()), nullptr};
     nas_5gs_module.dissector(d, &ctx);
 
-    print_node(std::cout, &node, -1);
+    print_node(std::cout, n, -1);
     cout << endl;
 }
 

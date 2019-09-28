@@ -7,7 +7,7 @@
 #include "core.hh"
 #include "field_meta.hh"
 
-void proto_node::set_length(int len) { length = len; }
+void node::set_length(int len) { length = len; }
 
 std::string print_text(const field_meta* meta,
                        const uint8_t*    data,
@@ -15,14 +15,14 @@ std::string print_text(const field_meta* meta,
 
 std::string print_text(const field_meta* meta, uint64_t v);
 
-proto_item* proto_node::add_item(packet*      pinfo,
+node_t node::add_item(packet*      pinfo,
                                  buff_view*           buf,
                                  int               start,
                                  int               len,
                                  const field_meta* field) {
     (void) pinfo;
 
-    auto item    = new proto_node(buf->data, start, len, field);
+    auto item    = std::make_shared<node>(buf->data, start, len, field);
 
     children.push_back(item);
 
@@ -34,7 +34,7 @@ proto_item* proto_node::add_item(packet*      pinfo,
     return item;
 }
 
-proto_item* proto_node::set_item(int len, const field_meta* field) {
+void node::set_item(int len, const field_meta* field) {
 
     if (field && ft::is_integer(field->typi)) {
         auto v = n2_uint(data, len);
@@ -46,7 +46,7 @@ proto_item* proto_node::set_item(int len, const field_meta* field) {
     } else
         text = print_text(field, data, len);
 
-    return this;
+    return ;
 }
 
 const field_meta hf_expert = {
@@ -58,8 +58,7 @@ const field_meta hf_expert = {
     nullptr,
     0,
 };
-
-proto_item* proto_node::add_expert(packet* pinfo,
+node_t  node::add_expert(packet* pinfo,
                                    buff_view*      buf,
                                    int          start,
                                    int          len,
@@ -73,14 +72,14 @@ proto_item* proto_node::add_expert(packet* pinfo,
     return item;
 }
 
-proto_tree* proto_node::add_subtree(packet* ,
+node_t node::add_subtree(packet* ,
                                     buff_view*      buf,
                                     int          start,
                                     int          len,
                                     const char*  format,
                                     ...) {
     using namespace std;
-    auto item    = new proto_tree(buf->data, start, len, nullptr);
+    auto item    = std::make_shared<node>(buf->data, start, len, nullptr);
 
     va_list args;
     va_start(args, format);
@@ -91,14 +90,7 @@ proto_tree* proto_node::add_subtree(packet* ,
     return item;
 }
 
-proto_node::~proto_node() {
-    for (auto node : children) {
-        delete node;
-    }
-    children.clear();
-}
-
-proto_node::proto_node(const uint8_t* buffer, int offset, int length, const field_meta* m)
+node::node(const uint8_t* buffer, int offset, int length, const field_meta* m)
     : meta(m), data(buffer + offset), length(length), offset(offset) {}
 
 std::string print_text(const field_meta* meta,
@@ -127,7 +119,7 @@ std::string print_text(const field_meta* meta, uint64_t v) {
     return meta->format(v);
 }
 
-void print_node(std::ostream& out, const proto_node* node, int indent) {
+void print_node(std::ostream& out, const node_t node, int indent) {
     if (!node->name.empty()) {
         const auto prefix = std::string(size_t(indent) + indent, char(' '));
         out << prefix << node->name ;

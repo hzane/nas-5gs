@@ -13,7 +13,7 @@ template <typename... Args> inline void unused(Args&&...) {}
 struct buff_view;
 
 struct packet;
-struct proto_node;
+struct node;
 struct context;
 
 struct protocol_meta;
@@ -24,8 +24,8 @@ struct v_string;
 struct true_false_string;
 struct range_string;
 
-using proto_tree = proto_node;
-using proto_item = proto_node;
+using proto_tree = node;
+using proto_item = node;
 using string     = std::string;
 using payload_t  = std::vector< uint8_t >;
 using ustring    = std::vector< uint8_t >;
@@ -48,14 +48,14 @@ inline const uint32_t none = 4; // host order
 
 struct use_tree {
     dissector&  d;
-    proto_node* prev;
+    node_t prev;
 
     use_tree&   operator=(const use_tree&) = delete;
 
     use_tree()                             = delete;
     use_tree(const use_tree&)              = delete;
 
-    use_tree(dissector& d, proto_node* p) : d(d), prev(d.tree) { d.tree = p; }
+    use_tree(dissector& d, node_t p) : d(d), prev(d.tree) { d.tree = p; }
     ~use_tree() { d.tree = prev; }
 };
 

@@ -3,7 +3,7 @@
 
 struct buff_view;
 struct packet;
-struct proto_node;
+struct node;
 struct context;
 
 struct packet {

@@ -1,5 +1,6 @@
 #include <string>
-#include<cstring>
+#include <memory>
+#include <cstring>
 #include "nas-nr.hh"
 #include "common/dissect_nas5g.hh"
 #include "common/field_meta.hh"
@@ -63,7 +64,7 @@ void NASNRAPI nas_nr_message_free(nas_nr_message* p){
     delete ne;
 }
 
-nas_nr_message_imp* export_proto_node(proto_node const* node, int indent) {
+nas_nr_message_imp* export_proto_node(node_t const node, int indent) {
     auto ret = new nas_nr_message_imp();
     ret->tag = node->name;
     ret->val = node->text;
@@ -92,16 +93,16 @@ NASNRAPI int dissect_nas_nr(nas_nr_message** root,
     buff_view       tvb   = NASNR_LIST_INIT(tvbuff, data, length);
     context         alt   = NASNR_LIST_INIT(context);
     packet          pinfo = NASNR_LIST_INIT(packet_info);
-    proto_node      node  = NASNR_LIST_INIT(proto_node);
+    node_t            n  = std::make_shared<node>();
     *root                 = nullptr;
     pinfo.dir             = dir;
     context* ctx          = env ? static_cast< context* >(env) : &alt;
 
-    const dissector d = {&pinfo, &node, &tvb, 0, length, nullptr};
+    const dissector d = {&pinfo, n, &tvb, 0, length, nullptr};
 
     const auto ret = nas_5gs_module.dissector(d, ctx);
-    if (!node.children.empty()) {
-        *root = export_proto_node(node.children.front(), 0);
+    if (!n->children.empty()) {
+        *root = export_proto_node(n->children.front(), 0);
     }
 
     return ret;

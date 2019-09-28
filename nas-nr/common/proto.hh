@@ -1,36 +1,40 @@
 #pragma once
 #include <iostream>
-#include <list>
+#include <vector>
 #include <string>
+#include <memory>
 
 #include "config.hh"
 
-struct proto_node { // NOLINT: special-member-functions
+struct node;
+using node_t = std::shared_ptr<node>;
+
+struct node { // NOLINT: special-member-functions
     void set_length(int len);
-    proto_item* add_item(packet*      pinfo,
+    node_t add_item(packet*      pinfo,
                          buff_view*           buf,
                          int               start,
                          int               len,
                          const field_meta* field);
 
-    proto_item* set_item(int len,
+    void set_item(int len,
                          const field_meta* field);
 
-    proto_item* add_expert(packet* pinfo,
+    node_t add_expert(packet* pinfo,
                            buff_view*      buf,
                            int          start,
                            int          len,
                            const char*  format,
                            ...);
 
-    proto_tree* add_subtree(packet* pinfo,
+    node_t add_subtree(packet* pinfo,
                             buff_view*      buf,
                             int          start,
                             int          len,
                             const char*  format,
                             ...);
 
-    std::list< proto_node* > children    = {};
+    std::vector< node_t > children    = {};
     std::string              name        = {};
     std::string              text        = {};
     uint64_t                 val         = 0;
@@ -42,13 +46,12 @@ struct proto_node { // NOLINT: special-member-functions
     uint8_t                  unused_bits = 0;
     uint8_t                  unit        = 0;
 
-    virtual ~proto_node();
-    proto_node()= default;
-    proto_node(const uint8_t*    buffer,
+    node()=default;
+    node(const uint8_t*    buffer,
                int               offset,
                int               length,
                const field_meta* m = nullptr);
 };
 
 
-void print_node(std::ostream& out, const proto_node* node, int indent = 0);
+void print_node(std::ostream& out, const node_t node, int indent = 0);

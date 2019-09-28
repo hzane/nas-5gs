@@ -214,7 +214,7 @@ int dissect_opt_tv(const field_meta *,
     if (iei != val_meta->type && val_meta->type != 0xffu)
         return not_present_diag(0, val_meta, ctx);
 
-    proto_node* subtree = nullptr;
+    node_t subtree = nullptr;
     if (val_meta->name) {
         subtree = d.add_item(-1, val_meta->name);
         d.tree  = subtree;

@@ -13,14 +13,14 @@ void dissector::add_bits(const field_meta* metas[]) const {
     }
 }
 
-proto_node* dissector::add_item(int len, const field_meta* meta) const {
+node_t dissector::add_item(int len, const field_meta* meta) const {
     return tree->add_item(packet, tvb, offset, len, meta);
 }
 
-proto_node *dissector::add_item(int len, const string&txt) const {
+node_t dissector::add_item(int len, const string&txt) const {
     return tree->add_subtree(packet, tvb, offset, len, txt.c_str());
 }
-proto_node *dissector::add_expert(int len, const string&txt) const {
+node_t dissector::add_expert(int len, const string&txt) const {
     return tree->add_subtree(packet, tvb, offset, len, txt.c_str());
 }
 
