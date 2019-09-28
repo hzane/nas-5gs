@@ -42,3 +42,9 @@ string bcd_string(const uint8_t* d, int length);
 string imei_string(const uint8_t* d, int length); // 0xf0 terminated if even
 
 string ipv6_link_local_string(const uint8_t* d, int length);
+
+string apn_string(const uint8_t* d, int len);
+
+string gprs_timer_string(uint8_t d) ;
+string gprs_timer_2_string(uint8_t d) ;
+string gprs_timer_3_string(uint8_t d);

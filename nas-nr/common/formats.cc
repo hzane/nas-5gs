@@ -324,3 +324,41 @@ string ipv6_string(const uint8_t* d, int len) {
     return ss.str();
 }
 
+string gprs_timer_string(uint8_t d) {
+    const auto  val   = static_cast< uint32_t >(d) & 0x1fu;
+    const auto  uf = static_cast< int >(d >> 5u);
+
+    const char*units[]={"sec", "min", "min", "min","min","min","min", "deactivated"};
+    const int muls[]={2, 1, 6, 1, 1,1,0};
+    auto        unit  = units[uf];
+    uint32_t    mul   = muls[uf];
+
+    return formats("%u %s (%u)", val * mul, unit, val);
+}
+
+
+/* * 3GPP TS 24.008 g10 10.5.7.4a */
+string gprs_timer_3_string(uint8_t oct) {
+    auto        uf   = oct >> 5u;
+    auto        val  = uint32_t(oct) & 0x1fu;
+
+    const char*units[]={"min", "hr","hr","sec","sec","min","hr","deactivated"};
+    uint32_t muls []={10, 1, 10, 2, 30, 1, 320, 0};
+
+    const char* unit = units[uf];
+    uint32_t    mul  = muls[uf];
+
+    return formats("%u %s (%u)", val * mul, unit, val);
+}
+
+/* * 3GPP TS 24.008 g10 10.5.7.4 */
+string gprs_timer_2_string(uint8_t oct) {
+    auto        val  = uint8_t(oct) & 0x1fu;
+    const char *units[]={"sec", "min", "min", "min","min","min","min","deactivated"};
+    const uint32_t muls[]={2, 1, 6, 1,1,1,1,0};
+
+    const char* unit = units[oct>>5u];
+    uint32_t    mul  = muls[oct>>5u];
+
+    return formats("%u %s (%u)", val * mul, unit, val);
+}

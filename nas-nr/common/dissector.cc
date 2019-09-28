@@ -40,7 +40,7 @@ dissector dissector::slice(int len) const {
     return ret;
 }
 
-const uint8_t* dissector::safe_ptr() const {
+const uint8_t* dissector::ptr() const {
     if (tvb->length < 0 || offset >= tvb->length) return nullptr;
     return tvb->data + offset;
 }
@@ -53,20 +53,20 @@ int dissector::safe_length(int len) const {
 }
 
 uint8_t dissector::uint8() const{
-    const auto p = safe_ptr();
+    const auto p = ptr();
     if (p) return *p;
     return 0;
 }
 
 uint16_t dissector::uint16() const {
-    const auto p = safe_ptr();
+    const auto p = ptr();
     const auto l = safe_length(2);
     if (p && l > 0) return n2uint16(p);
     return 0;
 }
 
 uint32_t dissector::uint32() const {
-    const auto p = safe_ptr();
+    const auto p = ptr();
     const auto l = safe_length(4);
     if (p && l > 0) return n2uint32(p);
     return 0;

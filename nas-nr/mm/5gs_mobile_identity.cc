@@ -313,7 +313,7 @@ const field_meta hf_amf_set_id = {
 
 const field_meta hf_amf_pointer = {
     "AMF Pointer",
-    "nas.nr.amf.pointer",
+    "nas.nr.amf.p",
     ft::ft_uint8,
     fd::base_dec,
     nullptr,

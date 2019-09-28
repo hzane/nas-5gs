@@ -4,13 +4,10 @@
 
 namespace cmn{
 /* 9.11.2.2    EAP message RFC2284 RFC3748 */
-extern const field_meta hf_eap;
+
 extern const element_meta eap_message;
 /* 9.11.2.2    EAP message RFC2284 RFC3748 */
 int dissect_eap_message(dissector d, context* ctx);
-
-/*  9.11.2.1A    DNN */
-extern const field_meta hf_dnn;
 
 /*  9.11.2.1A    DNN */
 int dissect_dnn(dissector d, context* ctx);

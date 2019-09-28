@@ -65,7 +65,7 @@ struct nr_security_context {
     uint8_t  activated         = 0;
     uint8_t  security_type     = 0; // 33.401
     uint8_t  nas_ksi           = 0; // NAS key set identifier for E-UTRAN
-    int      vector_index      = 0; // pointer of vector, -1 means invalid
+    int      vector_index      = 0; // p of vector, -1 means invalid
     uint8_t  cyphering_key[16] = {};
     uint8_t  integrity_key[16] = {};
     uint32_t dl_count_overflow = 0; // downlink count parameters
@@ -187,14 +187,6 @@ uint32_t get_ext_ambr_unit(uint32_t unit, const char** unit_str);
 
 string ambr_string(uint32_t val, uint32_t unit);
 
-string bstrn_string(const uint8_t* d, int len);
-
-string gprs_timer3_format(uint8_t oct);
-string gprs_timer2_format(uint8_t oct);
-
-string gprs_timer2_string(const uint8_t*d, int len);
-string gprs_timer3_string(const uint8_t* d, int len);
-string gprs_timer_string(const uint8_t* d, int len);
 
 string ipv6_string(const uint8_t*d, int length);
 

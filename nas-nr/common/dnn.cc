@@ -1,25 +1,13 @@
-#include "common.hh"
 #include "../common/use_context.hh"
-
-const field_meta cmn::hf_dnn = {
-    "DNN",
-    "nas.nr.cmn.dnn",
-    ft::ft_bytes,
-    fd::bstrn,
-    nullptr,
-    nullptr,
-    nullptr,
-    0x0,
-};
+#include "common.hh"
+#include "format.hh"
 
 /*  9.11.2.1A    DNN */
 int cmn::dissect_dnn(dissector d, context* ctx) {
     const use_context uc(ctx, "dnn", d, 0);
 
     /* A DNN value field contains an APN as defined in 3GPP TS 23.003 */
-
-    /* Highlight bytes including the first length byte */
-    (void) d.add_item(d.length, &hf_dnn);
+    d.set_item(d.length, apn_string(d.ptr(), d.length));
     d.step(d.length);
 
     return uc.length;

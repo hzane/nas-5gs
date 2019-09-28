@@ -81,8 +81,15 @@ string ambr_string(uint32_t val, uint32_t unit){
     return formats("%u %s (%u)", val * multi, unit_str, val);
 }
 
+/*
+ * The encoding of the APN shall follow the Name Syntax defined in RFC 2181 [18], RFC 1035 [19] and RFC 1123 [20].
+The APN consists of one or more labels. Each label is coded as a one octet length field followed by that number of
+octets coded as 8 bit ASCII characters. Following RFC 1035 [19] the labels shall consist only of the alphabetic
+characters (A-Z and a-z), digits (0-9) and the hyphen (-). Following RFC 1123 [20], the label shall begin and end with
+either an alphabetic character or a digit. The case of alphabetic characters is not significant. The APN is not terminated
+by a length byte of zero. */
 // ascii strings
-string bstrn_string(const uint8_t*d, int len){
+string apn_string(const uint8_t*d, int len){
     if (!d || !len) return string();
 
     string str(d, d + len);
@@ -95,100 +102,6 @@ string bstrn_string(const uint8_t*d, int len){
     return str;
 }
 
-string gprs_timer_string(const uint8_t*d, int len) {
-    if (!d || len <= 0) return string();
-
-    const auto  val   = static_cast< uint32_t >(d[0]) & 0x1fu;
-    const auto  unitf = static_cast< int >(d[0] >> 5u);
-    auto        unit  = "min";
-    uint32_t    mul   = 1;
-
-    if (unitf == 0) {
-        unit = "sec";
-        mul  = 2;
-    } else if (unitf == 1) {
-        unit = "min";
-    } else if (unitf == 2) {
-        unit = "min";
-        mul  = 6;
-    } else if (unitf == 7) {
-        unit = "deactivated";
-    }
-    return formats("%u %s (%u)", val * mul, unit, val);
-}
-
-string gprs_timer2_string(const uint8_t*d, int len) {
-    if (!d || !len) return string();
-    return gprs_timer2_format(d[0]);
-}
-
-string gprs_timer3_string(const uint8_t*d, int len) {
-    if (!d || !len) return string();
-    return gprs_timer3_format(d[0]);
-}
-
-/* * 3GPP TS 24.008 g10 10.5.7.4a */
-string gprs_timer3_format(uint8_t oct) {
-    auto        uf   = oct >> 5u;
-    auto        val  = uint32_t(oct) & 0x1fu;
-    const char* unit = "hr";
-    uint32_t    mul  = 1;
-
-    switch (uf) {
-    case 0:
-        unit = "min";
-        mul  = 10;
-        break;
-    case 1:
-        unit = "hr";
-        break;
-    case 2:
-        unit = "hr";
-        mul  = 10;
-        break;
-    case 3:
-        unit = "sec";
-        mul  = 2;
-        break;
-    case 4:
-        unit = "sec";
-        mul  = 30;
-        break;
-    case 5:
-        unit = "min";
-        break;
-    case 7:
-        break; // todo: what's timer is deactivated?
-    default:
-        break;
-    }
-    return formats("%u %s (%u)", val * mul, unit, val);
-}
-
-/* * 3GPP TS 24.008 g10 10.5.7.4 */
-string gprs_timer2_format(uint8_t oct) {
-    auto        val  = uint8_t(oct) & 0x1fu;
-    const char* unit = "min";
-    uint32_t    mul  = 1;
-    switch (oct >> 5u) {
-    case 0:
-        unit = "sec";
-        mul  = 2;
-        break;
-    case 1:
-        unit = "min";
-        break;
-    case 2:
-        unit = "min";
-        mul  = 6;
-        break;
-    case 7:
-        unit = "timer is deactivated";
-    default:
-        break;
-    }
-    return formats("%u %s (%u)", val * mul, unit, val);
-}
 
 // assure: iei != 0
 const message_meta* find_dissector(uint8_t iei, const message_meta* meta) {

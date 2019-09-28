@@ -26,7 +26,7 @@ struct dissector {
     node_t set_item(int len, const string&val)const;
     node_t add_expert(int len, const string& name) const;
     void   add_bits(const field_meta* metas[]) const;
-    auto   safe_ptr() const -> const uint8_t*;
+    auto   ptr() const -> const uint8_t*;
     auto   safe_length(int len) const -> int;
     auto   slice(int len) const -> dissector;
     auto   uint8() const -> uint8_t;

@@ -38,7 +38,7 @@ string field_meta::format(const uint8_t* p, int length) const {
         case fd::bcd:
             return bcd_string(p, length);
         case fd::bstrn:
-            return bstrn_string(p, length);
+            return apn_string(p, length);
         case fd::sep_space:
             return hstring(p, length, " ");
         case fd::bits7:
@@ -64,11 +64,11 @@ string field_meta::format(const uint8_t* p, int length) const {
         case fd::extl:
             return formats("%d", ext_length(p));
         case fd::timer:
-            return gprs_timer_string(p, length);
+            return gprs_timer_string(*p);
         case fd::timer3:
-            return gprs_timer3_string(p, length);
+            return gprs_timer_3_string(*p);
         case fd::timer2:
-            return gprs_timer2_string(p, length);
+            return gprs_timer_2_string(*p);
         default:
             return formats("data %d bytes", length);
     }
@@ -103,15 +103,15 @@ string field_meta::format(uint64_t v) const {
 
     if(display == fd::timer) {
         auto v8 = static_cast< uint8_t >(v);
-        return gprs_timer_string(&v8, 1);
+        return gprs_timer_string(v8);
     }
 
     if (display == fd::timer3) {
-        return gprs_timer3_format(uint8_t(v));
+        return gprs_timer_3_string(uint8_t(v));
     }
 
     if (display == fd::timer2){
-        return gprs_timer2_format(uint8_t(v));
+        return gprs_timer_2_string(uint8_t(v));
     }
 
     if (display == fd::right) {

@@ -1,14 +1,7 @@
 #include "common.hh"
 #include "config.hh"
 #include "field_meta.hh"
-
-using mcc = string;
-using mnc = string;
-
-namespace cmn {
-extern const field_meta   hf_e212_mcc;
-extern const field_meta   hf_e212_mnc;
-}
+#include "format.hh"
 
 
 /*
@@ -44,31 +37,9 @@ extern const field_meta   hf_e212_mnc;
  */
 int cmn::dissect_e212_mcc_mnc(dissector d, context*) {
 
-    (void) d.add_item(3, &hf_e212_mcc); // mcc
-    (void) d.add_item(3, &hf_e212_mnc); // mnc
-
+    d.add_item(3, "MCC", mcc_string(d.ptr()));
+    d.add_item(3, "MNC", mnc_string(d.ptr()));
     return 3;
 }
 
 
-const field_meta cmn::hf_e212_mcc = {
-    "MCC",
-    "mcc",
-    ft::ft_bytes,
-    fd::mcc,
-    nullptr,
-    nullptr,
-    nullptr,
-    0,
-};
-
-const field_meta cmn::hf_e212_mnc = {
-    "MNC",
-    "nas.nr.cmn.mnc",
-    ft::ft_bytes,
-    fd::mnc,
-    nullptr,
-    nullptr,
-    nullptr,
-    0,
-};
