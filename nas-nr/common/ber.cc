@@ -24,7 +24,7 @@ int dissect_elem_mandatory(const field_meta*   type_meta,
     if (consumed <= 0) {
         diag("Missing Mandatory element %s, rest of dissection is suspect %s\n",
              paths(ctx).c_str(), safe_str(val_meta->name));
-        d.tree->add_expert(d.pinfo, d.tvb, d.offset, d.length, "missing mandatory %s/%s", paths(ctx).c_str(), safe_str(val_meta->name));
+        d.tree->add_expert(d.packet, d.tvb, d.offset, d.length, "missing mandatory %s/%s", paths(ctx).c_str(), safe_str(val_meta->name));
         consumed = 0;
     }
 
@@ -285,7 +285,7 @@ int dissect_opt_telv(const field_meta *,
 
     if ((parm_len & 0x80u) == 0) {
         /* length in 2 octets */
-        parm_len     = d.tvb->ntohs(d.offset + 1);
+        parm_len     = d.tvb->uint16(d.offset + 1);
         len_length = 2;
     } else {
         parm_len = parm_len & 0x7Fu;
@@ -324,7 +324,7 @@ int dissect_opt_tlv_e(const field_meta *,
     if (iei != val_meta->type && val_meta->type != 0xffu)
         return not_present_diag(0, val_meta, ctx);
 
-    const auto parm_len = d.tvb->ntohs(d.offset + 1);
+    const auto parm_len = d.tvb->uint16(d.offset + 1);
 
     const auto subtree = d.add_item(1 + 2 + parm_len, val_meta->name);
     const use_tree ut(d, subtree);
@@ -345,7 +345,7 @@ int dissect_opt_tlv_e(const field_meta *,
 int dissect_msg_unknown_body(dissector d, context *ctx) {
     const use_context uc(ctx, "unknown message body", d, -1);
 
-    d.tree->add_item(d.pinfo, d.tvb, d.offset, d.length, nas::hf_msg_elem);
+    d.tree->add_item(d.packet, d.tvb, d.offset, d.length, nas::hf_msg_elem);
     return d.length;
 }
 

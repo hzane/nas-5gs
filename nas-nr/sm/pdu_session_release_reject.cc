@@ -8,7 +8,7 @@ int sm::dissect_pdu_session_release_reject(dissector d, context* ctx) {
     const use_context uc(ctx, "pdu-session-release-reject", d, 0);
 
     /* Direction: network to UE */
-    down_link(d.pinfo);
+    down_link(d.packet);
 
     /* 5GSM cause 9.11.4.2    M    V    1 */
     auto consumed = dissect_nrsm_cause(d, ctx);

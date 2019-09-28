@@ -8,7 +8,7 @@ using namespace nas;
 int mm::dissect_notification(dissector d, context* ctx) {
     const use_context uc(ctx, "notification", d, -1);
     // network to UE
-    down_link(d.pinfo);
+    down_link(d.packet);
 
     /* Access type    Access type 9.11.3.11    M    V    1/2  */
     const auto consumed = dissect_access_type(d, ctx);

@@ -14,14 +14,14 @@ void dissector::add_bits(const field_meta* metas[]) const {
 }
 
 proto_node* dissector::add_item(int len, const field_meta* meta) const {
-    return tree->add_item(pinfo, tvb, offset, len, meta);
+    return tree->add_item(packet, tvb, offset, len, meta);
 }
 
 proto_node *dissector::add_item(int len, const string&txt) const {
-    return tree->add_subtree(pinfo, tvb, offset, len, txt.c_str());
+    return tree->add_subtree(packet, tvb, offset, len, txt.c_str());
 }
 proto_node *dissector::add_expert(int len, const string&txt) const {
-    return tree->add_subtree(pinfo, tvb, offset, len, txt.c_str());
+    return tree->add_subtree(packet, tvb, offset, len, txt.c_str());
 }
 
 dissector dissector::slice(int len) const {
@@ -43,7 +43,7 @@ int dissector::safe_length(int len) const {
 }
 
 dissector dissector::use_elem(void* elem)const {
-    return dissector{pinfo, tree, tvb, offset, length, elem};
+    return dissector{packet, tree, tvb, offset, length, elem};
 }
 
 uint8_t dissector::uint8() const{

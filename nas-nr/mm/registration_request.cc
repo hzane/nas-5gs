@@ -13,7 +13,7 @@ int mm::dissect_registration_request(dissector d, context* ctx) {
     const use_context uc(ctx, "registration-request", d, -1);
 
     // UE to network
-    up_link(d.pinfo);
+    up_link(d.packet);
     // get private data
 
     /*   5GS registration type  9.11.3.7    M    V    1/2  H0*/

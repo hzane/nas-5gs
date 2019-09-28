@@ -8,7 +8,7 @@ using namespace nas;
 int mm::dissect_authentication_request(dissector d, context* ctx) {
     const use_context uc(ctx, "authentication-request", d, 0);
     // network to UE
-    down_link(d.pinfo);
+    down_link(d.packet);
 
     /* Spare half octet    Spare half octet     9.5    M    V    1/2 H1 */
 

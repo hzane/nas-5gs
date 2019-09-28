@@ -10,7 +10,7 @@ int mm::dissect_security_mode_command(dissector d, context* ctx) {
     const use_context uc(ctx, "security-mode-cmd", d, 0);
 
     /* Direction: network to UE */
-    down_link(d.pinfo);
+    down_link(d.packet);
 
     /*Selected NAS security algorithms NAS security algorithms 9.11.3.34 M V 1  */
     dissect_v(nullptr, &selected_security_algo, d, ctx);

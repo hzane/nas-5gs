@@ -6,7 +6,7 @@
 int mm::dissect_deregistration_request_ue_origin(dissector d, context* ctx) {
     const use_context uc(ctx, "de-reg-ue-orig", d, 0);
     // UE to network
-    up_link(d.pinfo);
+    up_link(d.packet);
 
     /* De-registration type   9.11.3.20   M   V   1/2 */
     (void) dissect_deregistration_type(d, ctx);

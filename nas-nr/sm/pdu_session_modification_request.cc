@@ -11,7 +11,7 @@ int sm::dissect_pdu_session_modification_request(dissector d, context* ctx) {
     const use_context uc(ctx, "pdu-session-modification-request", d, 0);
 
     /* Direction: UE to network */
-    up_link(d.pinfo);
+    up_link(d.packet);
 
     /* 28 5GSM capability 9.11.4.1    O    TLV    3-15 */
     auto consumed = dissect_opt_tlv(nullptr, &nrsm_capability, d, ctx);

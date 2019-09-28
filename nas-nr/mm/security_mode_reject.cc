@@ -5,7 +5,7 @@
 int mm::dissect_security_mode_reject(dissector d, context* ctx) {    
     use_context uc(ctx, "security-mode-reject", d, -1);
     // UE to network
-    up_link(d.pinfo);
+    up_link(d.packet);
 
     /* 5GMM cause 9.11.3.2    M    V    1 */
     (void) dissect_nrmm_cause(d, ctx);

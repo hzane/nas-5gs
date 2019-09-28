@@ -26,7 +26,7 @@ struct configuration_update_command_t{
 int mm::dissect_configuration_update_command(dissector d, context* ctx) {
     use_context uc(ctx, "configuration-update-command", d, 3);
     // network to UE
-    down_link(d.pinfo);
+    down_link(d.packet);
 
     /*D-    Configuration update indication 9.11.3.18 O    TV    1 */
     auto consumed = dissect_opt_tv_short(nullptr, &configure_update_indication, d, ctx);

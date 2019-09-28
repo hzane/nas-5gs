@@ -6,7 +6,7 @@
 int mm::dissect_authentication_failure(dissector d, context* ctx) {
     const use_context uc(ctx, "authentication-failure", d, 0);
     // UE to network
-    up_link(d.pinfo);
+    up_link(d.packet);
 
     /* 5GMM cause   5GMM cause     9.11.3.2  M   V   1 */
     auto consumed = dissect_nrmm_cause(d, ctx);

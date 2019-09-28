@@ -10,7 +10,7 @@ using namespace cmn;
 int mm::dissect_deregistration_request_ue_terminate(dissector d, context* ctx) {
     const use_context uc(ctx, "de-registration-request-ue-term", d, 0);
     // network to UE
-    down_link(d.pinfo);
+    down_link(d.packet);
 
     /* De-registration type    De-registration type 9.11.3.20   M   V   1 */
     auto consumed = dissect_deregistration_type(d, ctx);

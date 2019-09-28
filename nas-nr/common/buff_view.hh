@@ -7,13 +7,13 @@ struct buff_view { // NOLINT: typo
 
     buff_view(const uint8_t *data, int len) : data(data), length(len) {}
 
-    uint16_t ntohs(int offset) const;;
+    uint16_t uint16(int offset) const;;
     uint8_t uint8(int offset) const;
 
     int remain(int offset) const;
 };
 
-inline uint16_t buff_view::ntohs(int offset) const {
+inline uint16_t buff_view::uint16(int offset) const {
     return data && ((offset + 2) <= length) ? n2uint16(data + offset) : 0;
 }
 

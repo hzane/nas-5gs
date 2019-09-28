@@ -13,7 +13,7 @@ const element_meta mm::imeisv_mobile_id = {
 int mm::dissect_security_mode_complete(dissector d, context* ctx) {
     const use_context uc(ctx, "security-mode-complete", d, 0);
     // UE to network
-    up_link(d.pinfo);
+    up_link(d.packet);
 
     /* 77    IMEISV    5G mobile identity 9.11.3.4    O    TLV-E    11 */
     auto consumed = dissect_opt_tlv_e(nullptr, &imeisv_mobile_id, d, ctx);

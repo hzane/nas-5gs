@@ -9,7 +9,7 @@ using namespace nas;
 int mm::dissect_authentication_result(dissector d, context* ctx) {
     const use_context uc(ctx, "authentication-result", d, 0);
     // network to UE
-    down_link(d.pinfo);
+    down_link(d.packet);
 
     /* ngKSI    NAS key set identifier 9.11.3.32    M    V    1/2*/
     (void) dissect_v(nullptr, &nas_ksi, d, ctx);

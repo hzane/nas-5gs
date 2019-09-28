@@ -20,10 +20,10 @@ struct downlink_nas_transparent_t {
 int mm::dissect_dl_nas_transparent(dissector d, context* ctx) {
     const use_context uc(ctx, "dl-nas-transport", d, 0);
     // network to UE
-    down_link(d.pinfo);
+    down_link(d.packet);
 
     /* Initialize the private struct */
-    // nas5gs_get_private_data(pinfo);
+    // nas5gs_get_private_data(packet);
 
     /*Payload container type    Payload container type     9.11.3.40    M    V    1/2 H0*/
     (void) dissect_payload_container_type(d, ctx);

@@ -6,7 +6,7 @@
 int mm::dissect_registration_complete(dissector d, context* ctx) {
     const use_context uc(ctx, "registration-complete", d);
 
-    up_link(d.pinfo);
+    up_link(d.packet);
 
     /* 73    SOR transparent container 9.11.3.51    O TLV-E 20-2048 */
     const auto consumed = dissect_opt_tlv_e(nullptr, &sor_transparent_container, d, ctx);

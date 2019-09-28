@@ -8,7 +8,7 @@ int sm::dissect_pdu_session_authentication_complete(dissector d, context* ctx) {
     const use_context uc(ctx, "pdu-session-authentication-complete", d, 0);
 
     /* Direction: UE to network */
-    up_link(d.pinfo);
+    up_link(d.packet);
 
     /* EAP message 9.11.2.2    M    LV-E    6-1502 */
     auto consumed = dissect_lv_e(nullptr, &cmn::eap_message, d, ctx);

@@ -8,7 +8,7 @@ int sm::dissect_pdu_session_authentication_result(dissector d, context* ctx) {
     const use_context uc(ctx, "pdu-session-authentication-result", d, 0);
 
     /* Direction: network to UE */
-    down_link(d.pinfo);
+    down_link(d.packet);
 
     /*78  EAP message 9.10.2.2    O    TLV-E    7 - 1503*/
     auto consumed = dissect_opt_tlv_e(nullptr, &cmn::eap_message, d, ctx);

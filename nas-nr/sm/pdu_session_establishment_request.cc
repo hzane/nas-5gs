@@ -12,7 +12,7 @@ int sm::dissect_pdu_session_establishment_request(dissector d, context* ctx) {
     const use_context uc(ctx, "pdu-session-establishment-request", d, 0);
 
     /* Direction: UE to network*/
-    up_link(d.pinfo);
+    up_link(d.packet);
 
     /* Integrity protection maximum data rate   9.11.4.7    M    V    2 */
     auto consumed = dissect_v(nullptr, &integrity_protection_max_data_rate, d, ctx);

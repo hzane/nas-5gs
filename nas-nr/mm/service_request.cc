@@ -9,7 +9,7 @@ using namespace mm;
 int mm::dissect_service_request(dissector d, context* ctx) {
     const use_context uc(ctx, "service-request", d, 0);
     // UE to network
-    up_link(d.pinfo);
+    up_link(d.packet);
 
     /* ngKSI     NAS key set identifier 9.11.3.32    M    V    1/2 */
     dissect_v(nullptr, &nas_ksi, d, ctx);

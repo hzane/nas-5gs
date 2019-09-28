@@ -8,7 +8,7 @@ int sm::dissect_pdu_session_modification_complete(dissector d, context* ctx) {
     const use_context uc(ctx, "pdu-session-modification-complete", d, 2);
 
     /* Direction: UE to network */
-    up_link(d.pinfo);
+    up_link(d.packet);
 
     /*7B Extended protocol configuration options 9.11.4.6    O    TLV - E    4 - 65538*/
     const auto consumed = dissect_opt_tlv_e(nullptr, &extended_pco, d, ctx);

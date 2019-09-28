@@ -12,7 +12,7 @@ int sm::dissect_pdu_session_modification_command(dissector d, context* ctx) {
     const use_context uc(ctx, "pdu-session-modification-command", d, 8);
 
     /* Direction: network to UE */
-    down_link(d.pinfo);
+    down_link(d.packet);
 
     /* 59 5GSM cause 9.11.4.2    O    TV    2*/
     // ELEM_OPT_TV(0x59, , DE_NAS_5GS_SM_5Gnrsm_cause, NULL);

@@ -11,10 +11,10 @@ int mm::dissect_ul_nas_transport(dissector d, context* ctx) {
     const use_context uc(ctx, "ul-nas-transport", d, 1);
 
     /* Direction: UE to network */
-    up_link(d.pinfo);
+    up_link(d.packet);
 
     /* Initialize the private struct */
-    // nas5gs_get_private_data(pinfo);
+    // nas5gs_get_private_data(packet);
 
     /* Payload container type   9.11.3.40    M    V    1/2 */
     (void) dissect_payload_container_type(d, ctx);

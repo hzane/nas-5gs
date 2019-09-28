@@ -8,7 +8,7 @@ int sm::dissect_pdu_session_modification_command_reject(dissector d, context* ct
     const use_context uc(ctx, "pdu-session-modification-command-reject", d, 0);
 
     /* Direction: UE to network */
-    up_link(d.pinfo);
+    up_link(d.packet);
 
     /* 59 5GSM cause 9.11.4.2    O    TV    2 */
     auto consumed = dissect_opt_tv(nullptr, &nrsm_cause, d, ctx);

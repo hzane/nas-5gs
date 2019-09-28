@@ -13,7 +13,7 @@ int sm::dissect_pdu_session_establishment_accept(dissector d, context* ctx) {
     const use_context uc(ctx, "pdu-session-establishment-accept", d, -1);
 
     /* Direction: network to UE */
-    down_link(d.pinfo);
+    down_link(d.packet);
 
     /* Selected PDU session type    PDU session type 9.11.4.11    M    V    1/2 H0*/
     dissect_pdu_session_type(d, ctx);

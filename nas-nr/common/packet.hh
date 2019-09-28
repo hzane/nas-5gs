@@ -22,6 +22,3 @@ inline void down_link(packet*pinfo){
     if (pinfo) pinfo->dir = direction::dl;
 }
 
-inline void both_link(packet*pinfo) {
-    if (pinfo) pinfo->dir = direction::both;
-}
