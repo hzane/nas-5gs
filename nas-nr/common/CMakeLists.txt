@@ -41,12 +41,12 @@ set(COMMON_HEADERS ber.hh
         field_meta.hh
         gsm.hh
         nas-nr-compiler-detection.hh
-        packet_info.hh
+        packet.hh
         proto.hh
         range_string.hh
         tree_meta.hh
-        tvbuff.hh
-        val_string.hh
+        buff_view.hh
+        v_string.hh
         )
 
 add_library(nas-nr-common ${COMMON_SRCS} ${COMMON_HEADERS})

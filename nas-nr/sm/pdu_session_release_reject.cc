@@ -1,7 +1,7 @@
 #include "../common/ber.hh"
 #include "../common/dissect_sm_msg.hh"
-#include "../common/packet_info.hh"
 #include "../common/use_context.hh"
+#include "common/packet.hh"
 
 /*  8.3.13 PDU session release reject */
 int sm::dissect_pdu_session_release_reject(dissector d, context* ctx) {

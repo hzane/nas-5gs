@@ -1,11 +1,11 @@
 #pragma once
 #include "config.hh"
 
-struct tvbuff { // NOLINT: typo
+struct buff_view { // NOLINT: typo
     const uint8_t *data   = nullptr;
     int            length = 0;
 
-    tvbuff(const uint8_t *data, int len) : data(data), length(len) {}
+    buff_view(const uint8_t *data, int len) : data(data), length(len) {}
 
     uint16_t ntohs(int offset) const;;
     uint8_t uint8(int offset) const;
@@ -13,12 +13,12 @@ struct tvbuff { // NOLINT: typo
     int remain(int offset) const;
 };
 
-inline uint16_t tvbuff::ntohs(int offset) const {
+inline uint16_t buff_view::ntohs(int offset) const {
     return data && ((offset + 2) <= length) ? n2uint16(data + offset) : 0;
 }
 
-inline uint8_t tvbuff::uint8(int offset) const {
+inline uint8_t buff_view::uint8(int offset) const {
     return data && (offset < length) ? data[offset] : 0;
 }
 
-inline int tvbuff::remain(int offset) const { return length - offset; }
+inline int buff_view::remain(int offset) const { return length - offset; }

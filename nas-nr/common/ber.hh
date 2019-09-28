@@ -3,39 +3,6 @@
 
 #include "core.hh"
 
-struct optional_element_intra {
-    bool*    presence = nullptr;
-    uint8_t* iei      = nullptr;
-    int*     length   = nullptr;
-    void*    elem     = nullptr;
-};
-
-template < typename elem_t >
-struct optional_element {
-    bool    presence = false;
-    uint8_t iei      = 0;
-    int     length   = 0;
-    elem_t  elem     = {};
-
-    optional_element_intra to_internal() {
-        return optional_element_intra{&presence, &iei, &length, &elem};
-    }
-};
-
-using opt_tv_short = optional_element<uint8_t>;
-
-inline void elem_set_presence(optional_element_intra*self, bool presence){
-    if (self&&self->presence)*self->presence = presence;
-}
-inline void elem_set_length(optional_element_intra*self, int len){
-    if (self && self->length)*self->length = len;
-}
-inline void elem_set_id(optional_element_intra* self, uint8_t iei) {
-    if (self && self->iei) *self->iei = iei;
-}
-inline void* elem_get_data(optional_element_intra* self) {
-    return self ? self->elem : nullptr;
-}
 
 typedef int (*tlv_fnc_t)(const field_meta*   type_meta,
                          const element_meta* val_meta,

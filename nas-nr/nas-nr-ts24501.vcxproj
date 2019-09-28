@@ -175,7 +175,7 @@
     <ClInclude Include="mm\mm_element_meta.hh" />
     <ClInclude Include="mm\mm_field_meta.hh" />
     <ClInclude Include="nas-nr.hh" />
-    <ClInclude Include="packet_info.hh" />
+    <ClInclude Include="packet.hh" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="proto.hh" />
     <ClInclude Include="range_string.hh" />
@@ -183,7 +183,7 @@
     <ClInclude Include="sm\sm_element_meta.hh" />
     <ClInclude Include="sm\sm_field_meta.hh" />
     <ClInclude Include="tree_meta.hh" />
-    <ClInclude Include="tvbuff.hh" />
+    <ClInclude Include="buff_view.hh" />
     <ClInclude Include="v_string.hh" />
   </ItemGroup>
   <ItemGroup>

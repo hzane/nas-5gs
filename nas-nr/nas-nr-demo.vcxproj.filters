@@ -454,7 +454,7 @@
     <ClInclude Include="proto.hh" />
     <ClInclude Include="tree_meta.hh" />
     <ClInclude Include="ber.hh" />
-    <ClInclude Include="tvbuff.hh" />
+    <ClInclude Include="buff_view.hh" />
     <ClInclude Include="v_string.hh" />
     <ClInclude Include="mm\mm_dissects.hh">
       <Filter>nas</Filter>
@@ -462,7 +462,7 @@
     <ClInclude Include="mm\mm_element_meta.hh">
       <Filter>nas</Filter>
     </ClInclude>
-    <ClInclude Include="packet_info.hh">
+    <ClInclude Include="packet.hh">
       <Filter>nas</Filter>
     </ClInclude>
     <ClInclude Include="range_string.hh">

@@ -3,9 +3,9 @@
 #include <bitset>
 #include <cstdarg>
 
+#include "buff_view.hh"
 #include "core.hh"
 #include "field_meta.hh"
-#include "tvbuff.hh"
 
 void proto_node::set_length(int len) { length = len; }
 
@@ -15,8 +15,8 @@ std::string print_text(const field_meta* meta,
 
 std::string print_text(const field_meta* meta, uint64_t v);
 
-proto_item* proto_node::add_item(packet_info*      pinfo,
-                                 tvbuff*           buf,
+proto_item* proto_node::add_item(packet*      pinfo,
+                                 buff_view*           buf,
                                  int               start,
                                  int               len,
                                  const field_meta* field) {
@@ -59,8 +59,8 @@ const field_meta hf_expert = {
     0,
 };
 
-proto_item* proto_node::add_expert(packet_info* pinfo,
-                                   tvbuff*      buf,
+proto_item* proto_node::add_expert(packet* pinfo,
+                                   buff_view*      buf,
                                    int          start,
                                    int          len,
                                    const char*  format,
@@ -73,8 +73,8 @@ proto_item* proto_node::add_expert(packet_info* pinfo,
     return item;
 }
 
-proto_tree* proto_node::add_subtree(packet_info* ,
-                                    tvbuff*      buf,
+proto_tree* proto_node::add_subtree(packet* ,
+                                    buff_view*      buf,
                                     int          start,
                                     int          len,
                                     const char*  format,

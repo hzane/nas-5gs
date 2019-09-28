@@ -530,10 +530,10 @@
     <ClInclude Include="v_string.hh">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="tvbuff.hh">
+    <ClInclude Include="buff_view.hh">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="packet_info.hh">
+    <ClInclude Include="packet.hh">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="dissect_sm_msg.hh">

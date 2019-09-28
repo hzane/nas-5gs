@@ -1,8 +1,8 @@
 #include "../common/ber.hh"
 #include "../common/common.hh"
 #include "../common/dissect_sm_msg.hh"
-#include "../common/packet_info.hh"
 #include "../common/use_context.hh"
+#include "common/packet.hh"
 
 using namespace cmn;
 using namespace nas;

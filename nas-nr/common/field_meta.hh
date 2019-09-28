@@ -3,7 +3,7 @@
 #include <string>
 
 #include "config.hh"
-#include "val_string.hh"
+#include "v_string.hh"
 
 using tf_string    = true_false_string;
 using value_string = v_string;

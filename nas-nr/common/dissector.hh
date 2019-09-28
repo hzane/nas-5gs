@@ -1,17 +1,17 @@
 #pragma once
 #include <string>
 
-struct packet_info;
+struct packet;
 struct proto_node;
-struct tvbuff;
+struct buff_view;
 struct field_meta;
 struct context;
 using string = std::string;
 
 struct dissector {
-    packet_info* pinfo  = nullptr;
+    packet* pinfo  = nullptr;
     proto_node*  tree   = nullptr;
-    tvbuff*      tvb    = nullptr;
+    buff_view*      tvb    = nullptr;
     int          offset = 0;
     int          length = 0;
     void*        data   = nullptr;

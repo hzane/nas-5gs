@@ -10,9 +10,9 @@
 
 template <typename... Args> inline void unused(Args&&...) {}
 
-struct tvbuff;
+struct buff_view;
 
-struct packet_info;
+struct packet;
 struct proto_node;
 struct context;
 
