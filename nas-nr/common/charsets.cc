@@ -1,179 +1,179 @@
 #include "config.hh"
+#include <cstring>
 
-const uint32_t UNREP = 0x00fffd;
 
-size_t u32utf8(uint32_t ch, uint8_t *dest) {
-    if (ch < 0x80) {
-        dest[0] = static_cast< char >(ch);
-        return 1;
-    }
-    if (ch < 0x800) {
-        dest[0] = uint8_t(ch >> 6u) | 0xC0u;
-        dest[1] = uint8_t(ch & 0x3Fu) | 0x80u;
-        return 2;
-    }
-    if (ch < 0x10000) {
-        dest[0] = uint8_t(ch >> 12u) | 0xE0u;
-        dest[1] = uint8_t((ch >> 6u) & 0x3Fu) | 0x80u;
-        dest[2] = uint8_t(ch & 0x3Fu) | 0x80u;
-        return 3;
-    }
-    if (ch < 0x110000) {
-        dest[0] = uint8_t(ch >> 18u) | 0xF0u;
-        dest[1] = ((ch >> 12u) & 0x3Fu) | 0x80u;
-        dest[2] = ((ch >> 6u) & 0x3Fu) | 0x80u;
-        dest[3] = (ch & 0x3Fu) | 0x80u;
-        return 4;
+#define GSM_DEF_ALPHABET_SIZE 128
+#define GSM_EXT_ALPHABET_SIZE 10
+
+typedef struct GsmUtf8Mapping {
+    u_char chars[3];
+    uint8_t len;
+    uint8_t gsm;  /* only used for extended GSM charset */
+} GsmUtf8Mapping;
+
+#define EONE(a, g)        { {a, 0x00, 0x00}, 1, g }
+#define ETHR(a, b, c, g)  { {a, b,    c},    3, g }
+
+static const GsmUtf8Mapping gsm_ext_utf8_alphabet[GSM_EXT_ALPHABET_SIZE] = {
+    /* form feed      ^                 {                 }  */
+    EONE(0x0c, 0x0a), EONE(0x5e, 0x14), EONE(0x7b, 0x28), EONE(0x7d, 0x29),
+    /* \              [                 ~                 ]  */
+    EONE(0x5c, 0x2f), EONE(0x5b, 0x3c), EONE(0x7e, 0x3d), EONE(0x5d, 0x3e),
+    /* |              €                                      */
+    EONE(0x7c, 0x40), ETHR(0xe2, 0x82, 0xac, 0x65)
+};
+
+uint8_t gsm_ext_char_to_utf8 (const uint8_t gsm, uint8_t out_utf8[3])
+{
+    int i;
+    for (i = 0; i < GSM_EXT_ALPHABET_SIZE; i++) {
+        if (gsm == gsm_ext_utf8_alphabet[i].gsm) {
+            std::memcpy (&out_utf8[0], &gsm_ext_utf8_alphabet[i].chars[0], gsm_ext_utf8_alphabet[i].len);
+            return gsm_ext_utf8_alphabet[i].len;
+        }
     }
     return 0;
 }
 
-void ustring_append_utf8(ustring &s, const uint32_t c) {
-    uint8_t buf[6] = {};
+#define ONE(a)     { {a, 0x00, 0x00}, 1, 0 }
+#define TWO(a, b)  { {a, b,    0x00}, 2, 0 }
 
-    const size_t nchar = u32utf8(c, buf);
-    s.insert(s.end(), buf, buf + nchar);
+/**
+ * gsm_def_utf8_alphabet:
+ *
+ * Mapping from GSM default alphabet to UTF-8.
+ *
+ * ETSI GSM 03.38, version 6.0.1, section 6.2.1; Default alphabet. Mapping to UCS-2.
+ * Mapping according to http://unicode.org/Public/MAPPINGS/ETSI/GSM0338.TXT
+ */
+static const GsmUtf8Mapping gsm_def_utf8_alphabet[GSM_DEF_ALPHABET_SIZE] = {
+    /* @             £                $                ¥   */
+    ONE(0x40),       TWO(0xc2, 0xa3), ONE(0x24),       TWO(0xc2, 0xa5),
+    /* è             é                ù                ì   */
+    TWO(0xc3, 0xa8), TWO(0xc3, 0xa9), TWO(0xc3, 0xb9), TWO(0xc3, 0xac),
+    /* ò             Ç                \n               Ø   */
+    TWO(0xc3, 0xb2), TWO(0xc3, 0x87), ONE(0x0a),       TWO(0xc3, 0x98),
+    /* ø             \r               Å                å   */
+    TWO(0xc3, 0xb8), ONE(0x0d),       TWO(0xc3, 0x85), TWO(0xc3, 0xa5),
+    /* Δ             _                Φ                Γ   */
+    TWO(0xce, 0x94), ONE(0x5f),       TWO(0xce, 0xa6), TWO(0xce, 0x93),
+    /* Λ             Ω                Π                Ψ   */
+    TWO(0xce, 0x9b), TWO(0xce, 0xa9), TWO(0xce, 0xa0), TWO(0xce, 0xa8),
+    /* Σ             Θ                Ξ                Escape Code */
+    TWO(0xce, 0xa3), TWO(0xce, 0x98), TWO(0xce, 0x9e), ONE(0xa0),
+    /* Æ             æ                ß                É   */
+    TWO(0xc3, 0x86), TWO(0xc3, 0xa6), TWO(0xc3, 0x9f), TWO(0xc3, 0x89),
+    /* ' '           !                "                #   */
+    ONE(0x20),       ONE(0x21),       ONE(0x22),       ONE(0x23),
+    /* ¤             %                &                '   */
+    TWO(0xc2, 0xa4), ONE(0x25),       ONE(0x26),       ONE(0x27),
+    /* (             )                *                +   */
+    ONE(0x28),       ONE(0x29),       ONE(0x2a),       ONE(0x2b),
+    /* ,             -                .                /   */
+    ONE(0x2c),       ONE(0x2d),       ONE(0x2e),       ONE(0x2f),
+    /* 0             1                2                3   */
+    ONE(0x30),       ONE(0x31),       ONE(0x32),       ONE(0x33),
+    /* 4             5                6                7   */
+    ONE(0x34),       ONE(0x35),       ONE(0x36),       ONE(0x37),
+    /* 8             9                :                ;   */
+    ONE(0x38),       ONE(0x39),       ONE(0x3a),       ONE(0x3b),
+    /* <             =                >                ?   */
+    ONE(0x3c),       ONE(0x3d),       ONE(0x3e),       ONE(0x3f),
+    /* ¡             A                B                C   */
+    TWO(0xc2, 0xa1), ONE(0x41),       ONE(0x42),       ONE(0x43),
+    /* D             E                F                G   */
+    ONE(0x44),       ONE(0x45),       ONE(0x46),       ONE(0x47),
+    /* H             I                J                K   */
+    ONE(0x48),       ONE(0x49),       ONE(0x4a),       ONE(0x4b),
+    /* L             M                N                O   */
+    ONE(0x4c),       ONE(0x4d),       ONE(0x4e),       ONE(0x4f),
+    /* P             Q                R                S   */
+    ONE(0x50),       ONE(0x51),       ONE(0x52),       ONE(0x53),
+    /* T             U                V                W   */
+    ONE(0x54),       ONE(0x55),       ONE(0x56),       ONE(0x57),
+    /* X             Y                Z                Ä   */
+    ONE(0x58),       ONE(0x59),       ONE(0x5a),       TWO(0xc3, 0x84),
+    /* Ö             Ñ                Ü                §   */
+    TWO(0xc3, 0x96), TWO(0xc3, 0x91), TWO(0xc3, 0x9c), TWO(0xc2, 0xa7),
+    /* ¿             a                b                c   */
+    TWO(0xc2, 0xbf), ONE(0x61),       ONE(0x62),       ONE(0x63),
+    /* d             e                f                g   */
+    ONE(0x64),       ONE(0x65),       ONE(0x66),       ONE(0x67),
+    /* h             i                j                k   */
+    ONE(0x68),       ONE(0x69),       ONE(0x6a),       ONE(0x6b),
+    /* l             m                n                o   */
+    ONE(0x6c),       ONE(0x6d),       ONE(0x6e),       ONE(0x6f),
+    /* p             q                r                s   */
+    ONE(0x70),       ONE(0x71),       ONE(0x72),       ONE(0x73),
+    /* t             u                v                w   */
+    ONE(0x74),       ONE(0x75),       ONE(0x76),       ONE(0x77),
+    /* x             y                z                ä   */
+    ONE(0x78),       ONE(0x79),       ONE(0x7a),       TWO(0xc3, 0xa4),
+    /* ö             ñ                ü                à   */
+    TWO(0xc3, 0xb6), TWO(0xc3, 0xb1), TWO(0xc3, 0xbc), TWO(0xc3, 0xa0)
+};
+
+uint8_t gsm_def_char_to_utf8 (const uint8_t gsm, uint8_t out_utf8[2])
+{
+    memcpy (&out_utf8[0], &gsm_def_utf8_alphabet[gsm].chars[0], gsm_def_utf8_alphabet[gsm].len);
+    return gsm_def_utf8_alphabet[gsm].len;
 }
 
-bool char_is_escape(unsigned char value) {
-    static const uint8_t GN_CHAR_ESCAPE = 0x1b;
-    return (value == GN_CHAR_ESCAPE);
-}
-
-uint32_t GSMe2UNICHAR(uint8_t c) {
-    switch (c) {
-    case 0x0a:
-        return 0x0c; /* form feed */
-    case 0x14:
-        return '^';
-    case 0x28:
-        return '{';
-    case 0x29:
-        return '}';
-    case 0x2f:
-        return '\\';
-    case 0x3c:
-        return '[';
-    case 0x3d:
-        return '~';
-    case 0x3e:
-        return ']';
-    case 0x40:
-        return '|';
-    case 0x65:
-        return 0x20ac; /* euro */
-    default:
-        return UNREP;/* invalid character */
-    }
-}
-
-/* ETSI GSM 03.38, version 6.0.1, section 6.2.1; Default alphabet */
-static const uint16_t gsm_default_alphabet[0x80] = {
-    '@',   0xa3,  '$',   0xa5, 0xe8,  0xe9, 0xf9,  0xec,  0xf2,  0xc7,  '\n',  0xd8,
-    0xf8,  '\r',  0xc5,  0xe5, 0x394, '_',  0x3a6, 0x393, 0x39b, 0x3a9, 0x3a0, 0x3a8,
-    0x3a3, 0x398, 0x39e, 0xa0, 0xc6,  0xe6, 0xdf,  0xc9,  ' ',   '!',   '\"',  '#',
-    0xa4,  '%',   '&',   '\'', '(',   ')',  '*',   '+',   ',',   '-',   '.',   '/',
-    '0',   '1',   '2',   '3',  '4',   '5',  '6',   '7',   '8',   '9',   ':',   ';',
-    '<',   '=',   '>',   '?',  0xa1,  'A',  'B',   'C',   'D',   'E',   'F',   'G',
-    'H',   'I',   'J',   'K',  'L',   'M',  'N',   'O',   'P',   'Q',   'R',   'S',
-    'T',   'U',   'V',   'W',  'X',   'Y',  'Z',   0xc4,  0xd6,  0xd1,  0xdc,  0xa7,
-    0xbf,  'a',   'b',   'c',  'd',   'e',  'f',   'g',   'h',   'i',   'j',   'k',
-    'l',   'm',   'n',   'o',  'p',   'q',  'r',   's',   't',   'u',   'v',   'w',
-    'x',   'y',   'z',   0xe4, 0xf6,  0xf1, 0xfc,  0xe0};
-
-static uint32_t GSM2UNICHAR(uint8_t c) {
-    if (c < std::size(gsm_default_alphabet)) return gsm_default_alphabet[c];
-
-    return UNREP;
-}
-
-bool handle_ts_23_038_char(ustring &s, uint8_t code_point, bool saw_escape) {
-    uint32_t uchar;
-
-    if (char_is_escape(code_point)) {
-        /*
-         * XXX - if saw_escape is TRUE here, then this is
-         * the case where we escape to "another extension table",
-         * but TS 128 038 V11.0 doesn't specify such an extension
-         * table.
-         */
-        saw_escape = true;
-    } else {
-        if (saw_escape) {
-            saw_escape = false;
-            uchar      = GSMe2UNICHAR(code_point);
-        } else {
-            uchar = GSM2UNICHAR(code_point);
-        }
-        ustring_append_utf8(s, uchar);
-    }
-    return saw_escape;
-}
-
+#define GSM_ESCAPE_CHAR 0x1b
 // copied from ue-lte
-ustring ts_23_038_7bits_string(const uint8_t *ptr, int bit_offset, int no_of_chars) {
-    if (!ptr) return ustring();
+string gsm_unpacked_to_utf8(const uint8_t *gsm, int len) {
+    string ret={};
+    if (!gsm) return ret;
 
-    int           char_count; /* character counter for string */
-    uint8_t        in_byte, out_byte, rest = 0x00;
-    const uint8_t *start_ptr  = ptr;
-    bool           saw_escape = false;
-
-    ustring ret;
-
-    auto bits = static_cast< uint32_t >(bit_offset) & 0x07u;
-    if (!bits) {
-        bits = 7;
-    }
-
-    for (char_count = 0; char_count < no_of_chars; ptr++) {
-        /* Get the next byte from the string. */
-        in_byte = *ptr;
-
-        /*
-         * Combine the bits we've accumulated with bits from
-         * that byte to make a 7-bit code point.
-         */
-        out_byte = ((in_byte & ((1u << bits) - 1u)) << (7u - bits)) | rest;
-
-        /*
-         * Leftover bits used in that code point.
-         */
-        rest = in_byte >> bits;
-
-        /*
-         * If we don't start from 0th bit, we shouldn't go to the
-         * next char. Under *out_num we have now 0 and under Rest -
-         * _first_ part of the char.
-         */
-        if ((start_ptr != ptr) || (bits == 7)) {
-            saw_escape = handle_ts_23_038_char(ret, out_byte, saw_escape);
-            char_count++;
-        }
-
-        /*
-         * After reading 7 octets we have read 7 full characters
-         * but we have 7 bits as well. This is the next character.
-         */
-        if ((bits == 1) && (char_count < no_of_chars)) {
-            saw_escape = handle_ts_23_038_char(ret, rest, saw_escape);
-            char_count++;
-            bits = 7;
-            rest = 0x00;
+    for (auto i = 0; i < len; i++) {
+        uint8_t uchars[4];
+        uint8_t ulen;
+        if (gsm[i] == GSM_ESCAPE_CHAR) {
+            /* Extended alphabet, decode next char */
+            ulen = gsm_ext_char_to_utf8 (gsm[i+1], uchars);
+            if (ulen)
+                i += 1;
         } else {
-            bits--;
+            /* Default alphabet */
+            ulen = gsm_def_char_to_utf8 (gsm[i], uchars);
         }
-    }
-
-    if (saw_escape) {
-        /*
-         * Escape not followed by anything.
-         *
-         * XXX - for now, show the escape as a REPLACEMENT
-         * CHARACTER.
-         */
-        ustring_append_utf8(ret, UNREP);
+        if (ulen)
+            ret.append((const char*)&uchars[0], ulen);
+        else ret.push_back('?');
     }
 
     return ret;
 }
+string sms_string(const uint8_t*gsm, int len){
+    return gsm_unpacked_to_utf8(gsm, len);
+}
+
+static char sms_bcd_chars[] = "0123456789*#abc\0\0";
+
+string sms_semi_octets_to_bcd_string (const uint8_t *octets, int num_octets) {
+    string ret;
+    for (auto i = 0 ; i < num_octets; i++) {
+        ret.push_back(sms_bcd_chars[octets[i] & 0xf]);
+        ret.push_back(sms_bcd_chars[(octets[i] >> 4) & 0xf]);
+    }
+    return std::move(ret);
+}
+
+
+string sms_decode_timestamp (const uint8_t *timestamp) {
+    /* YYMMDDHHMMSS+ZZ */
+
+    int quarters, hours;
+
+    auto timestr = sms_semi_octets_to_bcd_string (timestamp, 6);
+
+    quarters = ((timestamp[6] & 0x7) * 10) + ((timestamp[6] >> 4) & 0xf);
+    hours = quarters / 4;
+    timestr.push_back((timestamp[6] & 0x08) ?        '-' : '+');
+
+    timestr.push_back( (hours / 10) + '0');
+    timestr.push_back( (hours % 10) + '0');
+    /* TODO(njw): Change timestamp rep to something that includes quarter-hours */
+    return std::move(timestr);
+}
+

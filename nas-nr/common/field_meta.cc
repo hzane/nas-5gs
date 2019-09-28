@@ -26,11 +26,11 @@ string field_meta::format(const uint8_t* p, int length) const {
 
     switch (display) {
         case fd::base_string: return string(reinterpret_cast< const char* >(p), length);
-        case fd::base_bin: return format_bit(p, length, " ");
-        case fd::base_hex: return format_hex(p, length, " ");
-        case fd::sep_colon: return format_hex(p, length, ";");
-        case fd::sep_dash: return format_hex(p, length, "-");
-        case fd::sep_dot: return format_hex(p, length, ".");
+        case fd::base_bin: return bitstring(p, length<<3, " ");
+        case fd::base_hex: return hstring(p, length, " ");
+        case fd::sep_colon: return hstring(p, length, ";");
+        case fd::sep_dash: return hstring(p, length, "-");
+        case fd::sep_dot: return hstring(p, length, ".");
         case fd::base_char:
             return formats("%c", static_cast< char >(*p));
         case fd::imei:
@@ -40,9 +40,9 @@ string field_meta::format(const uint8_t* p, int length) const {
         case fd::bstrn:
             return bstrn_string(p, length);
         case fd::sep_space:
-            return format_hex(p, length, " ");
+            return hstring(p, length, " ");
         case fd::bits7:
-            return bits7_string(p, length);
+            return sms_string(p, length);
         case fd::ipv4:
             return formats("%u.%u.%u.%u", p[0], p[1], p[2], p[3]);
         case fd::link_local_address:
@@ -50,15 +50,15 @@ string field_meta::format(const uint8_t* p, int length) const {
         case fd::ipv6:
             return ipv6_string(p, length);
         case fd::mac:
-            return format_hex(p, length, ":");
+            return hstring(p, length, ":");
         case fd::mcc:
             return mcc_string(p, length);
         case fd::mnc:
-            return mcc_mnc_string(p, length);
+            return mnc_string(p, length);
         case fd::timezone_time:
-            return timezone_time_string(p, length);
+            return utc_string(p, length);
         case fd::timezone:
-            return timezone_string(p);
+            return gmt_string(p);
         case fd::ambr:
             return ambr_string(p, length);
         case fd::extl:

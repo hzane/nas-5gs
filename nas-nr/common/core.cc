@@ -1,9 +1,12 @@
 #include "core.hh"
-#include <cstdio>
-#include <vector>
-#include <ctime>
+
 #include <cstdarg>
+#include <cstdio>
+#include <ctime>
 #include <sstream>
+#include <vector>
+
+#include "format.hh"
 
 #if defined(_WIN32) || defined (_WIN64)
 #define WIN32_LEAN_AND_MEAN
@@ -33,33 +36,6 @@ void diag(const char* format, ...) {
 }
 
 string context::path() const { return join(paths, "/"); }
-
-string bits7_string(const uint8_t* data, int len){
-    int nch = int(uint32_t(len)<<3u)/7;
-    auto d = ts_23_038_7bits_string(data, 0, nch); // NOLINT
-    return string(d.begin(), d.end());
-}
-
-string   ipv6_link_local_string(const uint8_t* data, const int len) {
-    if (!data || !len) return string();
-
-    std::stringstream ss;
-    ss << "fe80:";
-    for (int i = 0; i < len; ++i) {
-        ss << ":" << std::hex << data[i];
-    }
-    return ss.str();
-}
-
-string ipv6_string(const uint8_t* d, int len) {
-    if (!d || !len) return string();
-    std::stringstream ss;
-    ss << d[0];
-    for (int i = 1; i<len; i++) {
-        ss << ":" << std::hex << d[i];
-    }
-    return ss.str();
-}
 
 uint32_t get_ext_ambr_unit(uint32_t unit, const char** unit_str) {
     uint32_t mul = 1;
@@ -224,86 +200,7 @@ const message_meta* find_dissector(uint8_t iei, const message_meta* meta) {
 }
 
 
-static char digit_tbcd[] =
-    {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '?', 'B', 'C', '*', '#', '?'};
 
-inline char d2asc(uint8_t v) { return v < 9 ? digit_tbcd[v] : char(v + 55); }
-
-// Decode the MCC/MNC from 3 octets in 'octs'
-string mcc_aux(const uint8_t* d, int length) {
-    if (length < 3) return string();
-
-    char mcc[4]={0};
-
-    mcc[0] = d2asc(d[0] & 0x0fu);
-    mcc[1] = d2asc((d[0] & 0xf0u) >> 4u);
-    mcc[2] = d2asc(d[1] & 0x0fu);
-    mcc[3] = '\0';
-
-    return string(static_cast< const char* >(mcc));
-}
-/* Little Endian
- * MNC of length 3:
- *
- *   8   7   6   5   4   3   2   1
- * +---+---+---+---+---+---+---+---+
- * |  MCC digit 2  |  MCC digit 1  |  octet x
- * +---------------+---------------+
- * |  MNC digit 3  |  MCC digit 3  |  octet x+1
- * +---------------+---------------+
- * |  MNC digit 2  |  MNC digit 1  |  octet x+2
- * +---------------+---------------+
- * */
-string mnc_aux(const uint8_t* d, int length) {
-    if (length < 3) return string();
-
-    char mnc[4]={0};
-    mnc[2]     = d2asc((d[1] & 0xf0u) >> 4u);
-    mnc[0]     = d2asc(d[2] & 0x0fu);
-    mnc[1]     = d2asc((d[2] & 0xf0u) >> 4u);
-
-    if (mnc[1]=='F') // only 1 digit MNC
-        mnc[1]='\0';
-    else if (mnc[2]=='F') // only 2 digit MNC
-        mnc[2] = '\0';
-    else mnc[3] = '\0';
-
-    return string(static_cast< const char* >(mnc));
-}
-
-static const char digits_bcd[] =
-    {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '?', '?', '?', '?', '?', '?'};
-// BCD number
-string bcd_string(const uint8_t*d, int length){
-    if (length<=0 || !d) return string();
-
-    string ret = {};
-    for(auto i =0; i < length; i++){
-        const auto a   = d[i] & 0x0fu;
-        ret.push_back(digits_bcd[a]);
-
-        auto b   = (d[i] & 0xf0u) >> 4u;
-
-        // if the last octet's lower-order nibble is 0x0f
-        // ignore it
-        if (i != length - 1 || b != 0x0fu) ret.push_back(digits_bcd[b]);
-    }
-    return ret;
-}
-
-string imei_string(const uint8_t*d, int length){
-    if (length <= 0 || !d) return string();
-    string ret={};
-
-    ret.push_back(digits_bcd[(d[0] & 0xf0u) >> 4u]);
-    for (auto i = 1; i < length; ++i) {
-        ret.push_back(digits_bcd[d[i] & 0x0fu]);
-        if (i!=length-1||(d[i]&0xf0u)!=0xf0u){
-            ret.push_back(digits_bcd[(d[i] & 0xf0u) >> 4u]);
-        }
-    }
-    return ret;
-}
 
 int ext_length(const uint8_t* d) {
     const auto msb = d[0];
@@ -312,68 +209,4 @@ int ext_length(const uint8_t* d) {
     return int(msb & 0x7fu);
 }
 
-string asc_time(const tm* t) {
-#if defined(_WIN32) || defined(_WIN64)
-    char buf[128] = {0};
-    auto e = asctime_s(buf, std::size(buf), t);
-    return !e ? string(buf) : string();
-#else
-    auto x = asctime(t);
-    return x ? string(x) : string();
-#endif
-}
 
-string timezone_time_string(const uint8_t*d, int length){
-    if (length < 7) return string();
-
-    tm t = {0, 0, 0, 0, 0, 0, 0, 0, -1};
-
-    int o = int(d[0]);
-    t.tm_year = ((o & 0xf0) >> 4) + 100 + (o & 0x0f) * 10;
-
-    o = d[1];
-    t.tm_mon = (o & 0x0f) * 10 + ((o & 0xf0) >> 4) - 1;
-
-    o = d[2];
-    t.tm_mday = (o & 0x0f) * 10 + ((o & 0xf0) >> 4);
-
-    o = d[3];
-    t.tm_hour = (o & 0x0f) * 10 + ((o & 0xf0) >> 4);
-
-    o = d[4];
-    t.tm_min = (o & 0x0f) * 10 + ((o & 0xf0) >> 4);
-
-    o= d[5];
-    t.tm_sec = (o & 0x0f) * 10 + ((o & 0xf0) >> 4);
-
-    auto ts = asc_time(&t);
-    if (ts.empty()) return ts;
-
-    const auto sign     = (d[6] & 0x08u) ? '-' : '+';
-    auto       quarters = (d[6] >> 4u) + (d[6] & 0x07u) * 10;
-    const auto h        = quarters / 4;
-    quarters            = quarters % 4 * 15;
-    return formats("%s GMT %c %d hours %d minutes", ts.c_str(), sign, h, quarters);
-}
-
-string timezone_string(const uint8_t*d){
-    const auto sign     = (d[0] & 0x08u) ? '-' : '+';
-    auto       quarters = (d[0] >> 4u) + (d[0] & 0x07u) * 10;
-    const auto h        = quarters / 4;
-    quarters            = quarters % 4 * 15;
-    return formats("GMT %c %d hours %d minutes", sign, h, quarters);
-}
-
-string w2utf8(const wchar_t* s) {
-#if defined(_WIN32) || defined(_WIN64)
-    const auto sz  = wcslen(s);
-    const auto out = new char[sz * 4 + 1]; // large enough
-    (void) WideCharToMultiByte(
-        CP_UTF8, 0, s, -1, out, static_cast< int >(sz), nullptr, nullptr);
-    string ret(out);
-    delete[]out;
-    return ret;
-#else
-    return string();
-#endif
-}

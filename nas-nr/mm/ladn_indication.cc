@@ -21,7 +21,3 @@ int mm::dissect_ladn_indication(dissector d, context* ctx) {
     return uc.length;
 }
 
-
-struct ladn_indication_t {
-    std::vector< payload_t > dnn;
-};

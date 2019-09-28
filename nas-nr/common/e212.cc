@@ -5,16 +5,6 @@
 extern const value_string e212_codes[];
 extern const value_string mnc_codes[];
 
-/* *   8   7   6   5   4   3   2   1
- * +---+---+---+---+---+---+---+---+
- * |  MCC digit 2  |  MCC digit 1  |  octet x
- * +---------------+---------------+
- * |  MNC digit 3  |  MCC digit 3  |  octet x+1
- * +---------------+---------------+
- * |  MNC digit 2  |  MNC digit 1  |  octet x+2
- * +---------------+---------------+
- *
- */
 string mcc_string(const uint8_t* d, int length) {
     if (!d || length < 3) return string();
     auto       octet = static_cast< uint32_t >(d[0]);
@@ -32,7 +22,7 @@ string mcc_string(const uint8_t* d, int length) {
     return vstring(e212_codes, mcc);
 }
 
-string mcc_mnc_string(const uint8_t* d, int length) {
+string mnc_string(const uint8_t* d, int length) {
     if (!d || length < 3) return string();
     auto octet = d[1];
 

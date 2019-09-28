@@ -178,33 +178,13 @@ inline uint64_t n2_uint(const uint8_t* data, int len) {
     }
 }
 
-string format_bit(const uint8_t* data, int len, const char* sep = " ");
-
-string format_bits(const uint8_t* data, int bits, const char* sep = nullptr);
-
-string format_int_bit_mask(uint32_t    ftype,
-                           uint64_t    v,
-                           uint64_t    mask,
-                           const char* sep = nullptr);
-
-string format_int(uint64_t v, uint32_t ftype, uint32_t display);
-string format_int_hex(uint64_t v, uint32_t ftype);
-string format_int_dec(uint64_t v, uint32_t ftype);
-
 string formats(const char* format, ...);
 string vformat(const char* format, va_list);
-
-string join(const std::vector< string >& strings, const char* sep = " ");
-
-string bits7_string(const uint8_t* data, int len);
-
-ustring ts_23_038_7bits_string(const uint8_t* ptr, int bit_offset, int no_of_chars);
 
 unsigned int ws_ctz(uint64_t mask);
 
 uint32_t get_ext_ambr_unit(uint32_t unit, const char** unit_str);
 
-string ambr_string(const uint8_t* d, int length);
 string ambr_string(uint32_t val, uint32_t unit);
 
 string bstrn_string(const uint8_t* d, int len);
@@ -217,21 +197,8 @@ string gprs_timer3_string(const uint8_t* d, int len);
 string gprs_timer_string(const uint8_t* d, int len);
 
 string ipv6_string(const uint8_t*d, int length);
-string ipv6_link_local_string(const uint8_t* d, int length);
-
-//  [3] 10.5.1.13 PLMN list TS24.008
-string mcc_string(const uint8_t* d, int length = 3);
-string mcc_mnc_string(const uint8_t* d, int length = 3);
-
-// BCD number
-string bcd_string(const uint8_t* d, int length);
-string imei_string(const uint8_t* d, int length); // 0xf0 terminated if even
-string timezone_time_string(const uint8_t* d, int length);
-string timezone_string(const uint8_t* d);
 
 int ext_length(const uint8_t* d);
-
-string w2utf8(const wchar_t*str);
 
 struct authentication_vector {
     uint8_t kasme[32];    // ASME key
