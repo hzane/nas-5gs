@@ -1,7 +1,5 @@
 #pragma once
 
-#ifdef __cplusplus
-
 # define NASNR_COMPILER_IS_Clang 0
 # define NASNR_COMPILER_IS_GNU 0
 # define NASNR_COMPILER_IS_MSVC 0
@@ -23,138 +21,35 @@
 #endif
 
 #  if NASNR_COMPILER_IS_GNU
-
-#    if !((__GNUC__ * 100 + __GNUC_MINOR__) >= 404)
-#      error Unsupported compiler version
-#    endif
-
-# if defined(__GNUC__)
-#  define NASNR_COMPILER_VERSION_MAJOR (__GNUC__)
-# else
-#  define NASNR_COMPILER_VERSION_MAJOR (__GNUG__)
-# endif
-# if defined(__GNUC_MINOR__)
-#  define NASNR_COMPILER_VERSION_MINOR (__GNUC_MINOR__)
-# endif
-# if defined(__GNUC_PATCHLEVEL__)
-#  define NASNR_COMPILER_VERSION_PATCH (__GNUC_PATCHLEVEL__)
-# endif
-
-#    if (__GNUC__ * 100 + __GNUC_MINOR__) >= 404 && (__cplusplus >= 201103L || (defined(__GXX_EXPERIMENTAL_CXX0X__) && __GXX_EXPERIMENTAL_CXX0X__))
 #      define NASNR_COMPILER_CXX_VARIADIC_TEMPLATES 1
-#    else
-#      define NASNR_COMPILER_CXX_VARIADIC_TEMPLATES 0
-#    endif
-
-#    if (__GNUC__ * 100 + __GNUC_MINOR__) >= 406 && (__cplusplus >= 201103L || (defined(__GXX_EXPERIMENTAL_CXX0X__) && __GXX_EXPERIMENTAL_CXX0X__))
 #      define NASNR_COMPILER_CXX_CONSTEXPR 1
-#    else
-#      define NASNR_COMPILER_CXX_CONSTEXPR 0
-#    endif
 
-#    if (__GNUC__ * 100 + __GNUC_MINOR__) >= 407 && __cplusplus >= 201103L
 #      define NASNR_COMPILER_CXX_FINAL 1
-#    else
-#      define NASNR_COMPILER_CXX_FINAL 0
-#    endif
 
-#    if (__GNUC__ * 100 + __GNUC_MINOR__) >= 406 && (__cplusplus >= 201103L || (defined(__GXX_EXPERIMENTAL_CXX0X__) && __GXX_EXPERIMENTAL_CXX0X__))
 #      define NASNR_COMPILER_CXX_NOEXCEPT 1
-#    else
-#      define NASNR_COMPILER_CXX_NOEXCEPT 0
-#    endif
 
-#    if (__GNUC__ * 100 + __GNUC_MINOR__) >= 407 && __cplusplus >= 201103L
 #      define NASNR_COMPILER_CXX_OVERRIDE 1
-#    else
-#      define NASNR_COMPILER_CXX_OVERRIDE 0
-#    endif
 
-#    if (__GNUC__ * 100 + __GNUC_MINOR__) >= 404 && (__cplusplus >= 201103L || (defined(__GXX_EXPERIMENTAL_CXX0X__) && __GXX_EXPERIMENTAL_CXX0X__))
 #      define NASNR_COMPILER_CXX_EXTERN_TEMPLATES 1
-#    else
-#      define NASNR_COMPILER_CXX_EXTERN_TEMPLATES 0
-#    endif
 
-#    if (__GNUC__ * 100 + __GNUC_MINOR__) >= 404 && (__cplusplus >= 201103L || (defined(__GXX_EXPERIMENTAL_CXX0X__) && __GXX_EXPERIMENTAL_CXX0X__))
 #      define NASNR_COMPILER_CXX_DELETED_FUNCTIONS 1
-#    else
-#      define NASNR_COMPILER_CXX_DELETED_FUNCTIONS 0
-#    endif
 
-#    if (__GNUC__ * 100 + __GNUC_MINOR__) >= 408 && __cplusplus >= 201103L
 #      define NASNR_COMPILER_CXX_ALIGNAS 1
-#    else
-#      define NASNR_COMPILER_CXX_ALIGNAS 0
-#    endif
 
-#    if (__GNUC__ * 100 + __GNUC_MINOR__) >= 406 && (__cplusplus >= 201103L || (defined(__GXX_EXPERIMENTAL_CXX0X__) && __GXX_EXPERIMENTAL_CXX0X__))
 #      define NASNR_COMPILER_CXX_NULLPTR 1
-#    else
-#      define NASNR_COMPILER_CXX_NULLPTR 0
-#    endif
 
-#    if (__GNUC__ * 100 + __GNUC_MINOR__) >= 408 && __cplusplus >= 201103L
 #      define NASNR_COMPILER_CXX_ALIGNOF 1
-#    else
-#      define NASNR_COMPILER_CXX_ALIGNOF 0
-#    endif
 
-#    if (__GNUC__ * 100 + __GNUC_MINOR__) >= 404 && (__cplusplus >= 201103L || (defined(__GXX_EXPERIMENTAL_CXX0X__) && __GXX_EXPERIMENTAL_CXX0X__))
 #      define NASNR_COMPILER_CXX_STATIC_ASSERT 1
-#    else
-#      define NASNR_COMPILER_CXX_STATIC_ASSERT 0
-#    endif
-
-#    if (__GNUC__ * 100 + __GNUC_MINOR__) >= 409 && __cplusplus > 201103L
 #      define NASNR_COMPILER_CXX_ATTRIBUTE_DEPRECATED 1
-#    else
-#      define NASNR_COMPILER_CXX_ATTRIBUTE_DEPRECATED 0
-#    endif
 
-#    if (__GNUC__ * 100 + __GNUC_MINOR__) >= 409 && __cplusplus > 201103L
 #define NASNR_COMPILER_CXX_ATTRIBUTE_NODISCARD 1
-#else
-#define NASNR_COMPILER_CXX_ATTRIBUTE_NODISCARD 0
-#endif
-
-#    if (__GNUC__ * 100 + __GNUC_MINOR__) >= 409 && __cplusplus > 201103L
 #define NASNR_COMPILER_CXX_ATTRIBUTE_INLINE 1
-#else
-#define NASNR_COMPILER_CXX_ATTRIBUTE_INLINE 0
-#endif
-
-#    if (__GNUC__ * 100 + __GNUC_MINOR__) >= 409 && __cplusplus > 201103L
 #define NASNR_COMPILER_CXX_BRACE_OR_EQUAL_INITIALIZER 1
-#else
-#define NASNR_COMPILER_CXX_BRACE_OR_EQUAL_INITIALIZER 0
-#endif
-
 #define NASNR_COMPILER_CXX_TYPE_DEDUCE 1
-
 #define NASNR_COMPILER_CXX_17_FEATURE 1
 
 #  elif NASNR_COMPILER_IS_MSVC
-
-#    if !(_MSC_VER >= 1500)
-#      error Unsupported compiler version
-#    endif
-
-  /* _MSC_VER = VVRR */
-# define NASNR_COMPILER_VERSION_MAJOR (_MSC_VER / 100)
-# define NASNR_COMPILER_VERSION_MINOR (_MSC_VER % 100)
-# if defined(_MSC_FULL_VER)
-#  if _MSC_VER >= 1400
-    /* _MSC_FULL_VER = VVRRPPPPP */
-#   define NASNR_COMPILER_VERSION_PATCH (_MSC_FULL_VER % 100000)
-#  else
-    /* _MSC_FULL_VER = VVRRPPPP */
-#   define NASNR_COMPILER_VERSION_PATCH (_MSC_FULL_VER % 10000)
-#  endif
-# endif
-# if defined(_MSC_BUILD)
-#  define NASNR_COMPILER_VERSION_TWEAK (_MSC_BUILD)
-# endif
 
 #    if _MSC_VER >= 1800
 #      define NASNR_COMPILER_CXX_VARIADIC_TEMPLATES 1
@@ -261,109 +156,21 @@
 #endif
 
 #  elif NASNR_COMPILER_IS_Clang
-
-#    if !(((__clang_major__ * 100) + __clang_minor__) >= 301)
-#      error Unsupported compiler version
-#    endif
-
-# define NASNR_COMPILER_VERSION_MAJOR (__clang_major__)
-# define NASNR_COMPILER_VERSION_MINOR (__clang_minor__)
-# define NASNR_COMPILER_VERSION_PATCH (__clang_patchlevel__)
-# if defined(_MSC_VER)
-   /* _MSC_VER = VVRR */
-#  define NASNR_SIMULATE_VERSION_MAJOR (_MSC_VER / 100)
-#  define NASNR_SIMULATE_VERSION_MINOR (_MSC_VER % 100)
-# endif
-
-#    if ((__clang_major__ * 100) + __clang_minor__) >= 301 && __has_feature(cxx_variadic_templates)
 #      define NASNR_COMPILER_CXX_VARIADIC_TEMPLATES 1
-#    else
-#      define NASNR_COMPILER_CXX_VARIADIC_TEMPLATES 0
-#    endif
-
-#    if ((__clang_major__ * 100) + __clang_minor__) >= 301 && __has_feature(cxx_constexpr)
 #      define NASNR_COMPILER_CXX_CONSTEXPR 1
-#    else
-#      define NASNR_COMPILER_CXX_CONSTEXPR 0
-#    endif
-
-#    if ((__clang_major__ * 100) + __clang_minor__) >= 301 && __has_feature(cxx_override_control)
 #      define NASNR_COMPILER_CXX_FINAL 1
-#    else
-#      define NASNR_COMPILER_CXX_FINAL 0
-#    endif
-
-#    if ((__clang_major__ * 100) + __clang_minor__) >= 301 && __has_feature(cxx_noexcept)
 #      define NASNR_COMPILER_CXX_NOEXCEPT 1
-#    else
-#      define NASNR_COMPILER_CXX_NOEXCEPT 0
-#    endif
-
-#    if ((__clang_major__ * 100) + __clang_minor__) >= 301 && __has_feature(cxx_override_control)
 #      define NASNR_COMPILER_CXX_OVERRIDE 1
-#    else
-#      define NASNR_COMPILER_CXX_OVERRIDE 0
-#    endif
-
-#    if ((__clang_major__ * 100) + __clang_minor__) >= 301 && __cplusplus >= 201103L
 #      define NASNR_COMPILER_CXX_EXTERN_TEMPLATES 1
-#    else
-#      define NASNR_COMPILER_CXX_EXTERN_TEMPLATES 0
-#    endif
-
-#    if ((__clang_major__ * 100) + __clang_minor__) >= 301 && __has_feature(cxx_deleted_functions)
 #      define NASNR_COMPILER_CXX_DELETED_FUNCTIONS 1
-#    else
-#      define NASNR_COMPILER_CXX_DELETED_FUNCTIONS 0
-#    endif
-
-#    if ((__clang_major__ * 100) + __clang_minor__) >= 301 && __has_feature(cxx_alignas)
 #      define NASNR_COMPILER_CXX_ALIGNAS 1
-#    else
-#      define NASNR_COMPILER_CXX_ALIGNAS 0
-#    endif
-
-#    if ((__clang_major__ * 100) + __clang_minor__) >= 301 && __has_feature(cxx_nullptr)
 #      define NASNR_COMPILER_CXX_NULLPTR 1
-#    else
-#      define NASNR_COMPILER_CXX_NULLPTR 0
-#    endif
-
-#    if ((__clang_major__ * 100) + __clang_minor__) >= 301 && __has_feature(cxx_alignas)
 #      define NASNR_COMPILER_CXX_ALIGNOF 1
-#    else
-#      define NASNR_COMPILER_CXX_ALIGNOF 0
-#    endif
-
-#    if ((__clang_major__ * 100) + __clang_minor__) >= 301 && __has_feature(cxx_static_assert)
 #      define NASNR_COMPILER_CXX_STATIC_ASSERT 1
-#    else
-#      define NASNR_COMPILER_CXX_STATIC_ASSERT 0
-#    endif
-
-#    if ((__clang_major__ * 100) + __clang_minor__) >= 304 && __cplusplus > 201103L
 #      define NASNR_COMPILER_CXX_ATTRIBUTE_DEPRECATED 1
-#    else
-#      define NASNR_COMPILER_CXX_ATTRIBUTE_DEPRECATED 0
-#    endif
-
-#    if ((__clang_major__ * 100) + __clang_minor__) >= 304 && __cplusplus > 201103L
 #define NASNR_COMPILER_CXX_ATTRIBUTE_NODISCARD 1
-#else
-#define NASNR_COMPILER_CXX_ATTRIBUTE_NODISCARD 0
-#endif
-
-#    if ((__clang_major__ * 100) + __clang_minor__) >= 304 && __cplusplus > 201103L
 #define NASNR_COMPILER_CXX_ATTRIBUTE_INLINE 1
-#else
-#define NASNR_COMPILER_CXX_ATTRIBUTE_INLINE 0
-#endif
-
-#    if ((__clang_major__ * 100) + __clang_minor__) >= 304 && __cplusplus > 201103L
 #define NASNR_COMPILER_CXX_BRACE_OR_EQUAL_INITIALIZER 1
-#else
-#define NASNR_COMPILER_CXX_BRACE_OR_EQUAL_INITIALIZER 0
-#endif
 
 #define NASNR_COMPILER_CXX_TYPE_DEDUCE 1
 #define NASNR_COMPILER_CXX_17_FEATURE 1
@@ -505,100 +312,5 @@ template<> struct NASNRStaticAssert<true>{};
 #    endif
 #  endif
 
-#endif
 
-#ifndef __cplusplus
-# define NASNR_COMPILER_IS_Clang 0
-# define NASNR_COMPILER_IS_GNU 0
-# define NASNR_COMPILER_IS_MSVC 0
 
-#if defined(__clang__)
-# undef NASNR_COMPILER_IS_Clang
-# define NASNR_COMPILER_IS_Clang 1
-
-#elif defined(__GNUC__)
-# undef NASNR_COMPILER_IS_GNU
-# define NASNR_COMPILER_IS_GNU 1
-
-#elif defined(_MSC_VER)
-# undef NASNR_COMPILER_IS_MSVC
-# define NASNR_COMPILER_IS_MSVC 1
-
-#endif
-
-#  if NASNR_COMPILER_IS_GNU
-
-#    if !((__GNUC__ * 100 + __GNUC_MINOR__) >= 304)
-#      error Unsupported compiler version
-#    endif
-
-# define NASNR_COMPILER_VERSION_MAJOR (__GNUC__)
-# if defined(__GNUC_MINOR__)
-#  define NASNR_COMPILER_VERSION_MINOR (__GNUC_MINOR__)
-# endif
-# if defined(__GNUC_PATCHLEVEL__)
-#  define NASNR_COMPILER_VERSION_PATCH (__GNUC_PATCHLEVEL__)
-# endif
-
-#    if (__GNUC__ * 100 + __GNUC_MINOR__) >= 304 && defined(__STDC_VERSION__) && __STDC_VERSION__ >= 199901L
-#      define NASNR_COMPILER_C_RESTRICT 1
-#    else
-#      define NASNR_COMPILER_C_RESTRICT 0
-#    endif
-
-#  elif NASNR_COMPILER_IS_MSVC
-
-#    if !(_MSC_VER >= 1500)
-#      error Unsupported compiler version
-#    endif
-
-  /* _MSC_VER = VVRR */
-# define NASNR_COMPILER_VERSION_MAJOR (_MSC_VER / 100)
-# define NASNR_COMPILER_VERSION_MINOR (_MSC_VER % 100)
-# if defined(_MSC_FULL_VER)
-#  if _MSC_VER >= 1400
-    /* _MSC_FULL_VER = VVRRPPPPP */
-#   define NASNR_COMPILER_VERSION_PATCH (_MSC_FULL_VER % 100000)
-#  else
-    /* _MSC_FULL_VER = VVRRPPPP */
-#   define NASNR_COMPILER_VERSION_PATCH (_MSC_FULL_VER % 10000)
-#  endif
-# endif
-# if defined(_MSC_BUILD)
-#  define NASNR_COMPILER_VERSION_TWEAK (_MSC_BUILD)
-# endif
-
-#    define NASNR_COMPILER_C_RESTRICT 0
-
-#  elif NASNR_COMPILER_IS_Clang
-
-#    if !(((__clang_major__ * 100) + __clang_minor__) >= 304)
-#      error Unsupported compiler version
-#    endif
-
-# define NASNR_COMPILER_VERSION_MAJOR (__clang_major__)
-# define NASNR_COMPILER_VERSION_MINOR (__clang_minor__)
-# define NASNR_COMPILER_VERSION_PATCH (__clang_patchlevel__)
-# if defined(_MSC_VER)
-   /* _MSC_VER = VVRR */
-#  define NASNR_SIMULATE_VERSION_MAJOR (_MSC_VER / 100)
-#  define NASNR_SIMULATE_VERSION_MINOR (_MSC_VER % 100)
-# endif
-
-#    if ((__clang_major__ * 100) + __clang_minor__) >= 304 && defined(__STDC_VERSION__) && __STDC_VERSION__ >= 199901L
-#      define NASNR_COMPILER_C_RESTRICT 1
-#    else
-#      define NASNR_COMPILER_C_RESTRICT 0
-#    endif
-
-#  else
-#    error Unsupported compiler
-#  endif
-
-#  if defined(NASNR_COMPILER_C_RESTRICT) && NASNR_COMPILER_C_RESTRICT
-#    define NASNR_RESTRICT restrict
-#  else
-#    define NASNR_RESTRICT
-#  endif
-
-#endif

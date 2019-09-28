@@ -97,10 +97,6 @@ struct context : nr_security_context {
 };
 
 
-inline void store_payload_content_type(context* ctx, uint8_t pct) {
-    if (ctx) ctx->payload_content_type = pct;
-}
-
 inline uint8_t retrieve_payload_content_type(context* ctx) {
     return ctx ? ctx->payload_content_type : 0;
 }

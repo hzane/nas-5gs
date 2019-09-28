@@ -1,3 +1,5 @@
+#include <common/format.hh>
+
 #include "../common/ber.hh"
 #include "../common/dissect_mm_msg.hh"
 #include "../common/use_context.hh"
@@ -6,14 +8,6 @@ using namespace cmn;
 using namespace nas;
 using namespace mm;
 
-struct payload_container_t {
-    std::vector< uint8_t > _;
-};
-struct downlink_nas_transparent_t {
-    uint8_t             type;
-    payload_container_t container;
-    // optional< pdu_session_id_t > pdu_session_id;
-};
 
 /*  8.2.11 DL NAS transport */
 int mm::dissect_dl_nas_transparent(dissector d, context* ctx) {
@@ -25,7 +19,7 @@ int mm::dissect_dl_nas_transparent(dissector d, context* ctx) {
     // nas5gs_get_private_data(packet);
 
     /*Payload container type    Payload container type     9.11.3.40    M    V    1/2 H0*/
-    (void) dissect_payload_container_type(d, ctx);
+    d.add_item(1, "Payload container type", istring(d.uint8()&0x0fu));
 
     /*Spare half octet    Spare half octet    9.5    M    V    1/2 H1*/
     d.step(1);

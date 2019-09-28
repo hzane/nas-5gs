@@ -44,7 +44,6 @@ extern const v_string     enc_algo_type_values[];
 
 namespace cmn {
 extern const field_meta hf_authentication_code;
-extern const field_meta hf_sequence_no;
 extern const field_meta hf_integrity_algo_type;
 extern const field_meta hf_ciphering_algo_type;
 extern const field_meta hf_ksi_5g;

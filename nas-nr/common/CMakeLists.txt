@@ -20,7 +20,6 @@ set(COMMON_SRCS additional_information.cc
         gprs_timer3.cc
         gprs_timer.cc
         intra_n1_mode_nas_container.cc
-        mcc_mnc.cc
         n1_mode_s1_mode_nas_container.cc
         nas_decrypt.cc
         proto.cc

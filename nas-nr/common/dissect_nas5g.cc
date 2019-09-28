@@ -3,6 +3,7 @@
 #include "core.hh"
 #include "dissect_mm_msg.hh"
 #include "dissect_sm_msg.hh"
+#include "format.hh"
 #include "use_context.hh"
 
 using namespace cmn;
@@ -41,8 +42,7 @@ int dissect_nas5g_security_protected(dissector d, context* ctx){
     d.step(4);
 
     /* 9.10 Sequence number    octet 7 */
-    (void) d.add_item(1, nas::hf_sequence_no);
-    d.step(1);
+    d.add_item(1, "Sequence number", istring(d.uint8()));
 
     // TODO: decrypt the body
     // This should work when the NAS ciphering algorithm is NULL (128-EEA0)

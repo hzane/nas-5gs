@@ -1,3 +1,5 @@
+#include <common/format.hh>
+
 #include "../common/ber.hh"
 #include "../common/dissect_mm_msg.hh"
 #include "../common/use_context.hh"
@@ -17,7 +19,7 @@ int mm::dissect_ul_nas_transport(dissector d, context* ctx) {
     // nas5gs_get_private_data(packet);
 
     /* Payload container type   9.11.3.40    M    V    1/2 */
-    (void) dissect_payload_container_type(d, ctx);
+    d.add_item(1, "Payload container type", istring(d.uint8()));
 
     /*Spare half octet  9.5    M    V    1/2*/
     d.step(1);

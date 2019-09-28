@@ -1,3 +1,5 @@
+#include <common/format.hh>
+
 #include "../common/dissect_mm_msg.hh"
 #include "../common/use_context.hh"
 
@@ -18,8 +20,8 @@ int mm::dissect_pld_container_entry(dissector d, context* ctx) {
     const use_context uc(ctx, "pld-content-entry", d, -1);
 
     const auto len = static_cast< int >(d.uint16());
-
-    (void) d.add_item(1, &hf_payload_container_type);
+    
+    d.add_item(1, "Payload container type", istring(d.uint8()&0x0fu));
 
     uint8_t nie = (d.uint8() & 0xf0u) >> 4u;
     (void) d.add_item(1, &hf_pld_cont_entry_nie);
@@ -49,7 +51,7 @@ int mm::dissect_payload_container(dissector d, context* ctx) {
     } break;
     case 2: {
         // SMS
-        (void) d.add_item(d.length, &hf_payload_container_type);
+        d.add_item(1, "Payload container type", istring(d.uint8()&0x0fu));
         d.step(d.length);
         /*
         If the payload container type is set to "SMS", the payload container contents
@@ -74,7 +76,7 @@ int mm::dissect_payload_container(dissector d, context* ctx) {
     } break;
     case 3: {
         // LPP
-        (void) d.add_item(d.length, &hf_payload_container_type);
+        d.add_item(1, "Payload container type", istring(d.uint8()&0x0fu));
         d.step(d.length);
     } break;
     case 5: {
@@ -115,7 +117,7 @@ int mm::dissect_payload_container(dissector d, context* ctx) {
         according to figure 9.11.3.39.3 and figure 9.11.3.39.4.*/
     }
     default: {
-        (void) d.add_item(d.length, &hf_payload_container_type);
+        d.add_item(1, "Payload container type", istring(d.uint8()&0x0fu));
         d.step(d.length);
     }
     }

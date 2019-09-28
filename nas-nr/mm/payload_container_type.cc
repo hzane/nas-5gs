@@ -1,3 +1,5 @@
+#include <common/format.hh>
+
 #include "../common/dissect_mm_msg.hh"
 #include "../common/use_context.hh"
 
@@ -18,11 +20,8 @@ const element_meta mm::payload_container_type = {
 int mm::dissect_payload_container_type(dissector d, context* ctx) {
     const use_context uc(ctx, "payload-container-type", d, -1);
 
-    const uint8_t oct = d.tvb->uint8(d.offset) & 0x0fu;
-    store_payload_content_type(ctx, oct);
+    d.set_item(1, vstring(payload_container_type_values, d.uint8()&0x0fu));
 
-    auto i = d.add_item(1, &mm::hf_payload_container_type);
-    unused(i);
     return 1;
 }
 
@@ -38,16 +37,3 @@ extern const value_string mm::payload_container_type_values[] = {
     {0x0f, "Multiple payloads"},
     {0, nullptr},
 };
-
-/*  9.11.3.40    Payload container type */
-extern const field_meta mm::hf_payload_container_type = {
-    "Payload container type",
-    "nas.nr.mm.payload.type",
-    ft::ft_uint8,
-    fd::base_dec,
-    payload_container_type_values,
-    nullptr,
-    nullptr,
-    0x0f,
-};
-

@@ -1,4 +1,5 @@
 #include "common.hh"
+#include "format.hh"
 #include "use_context.hh"
 
 // 9.11.2.6 Intra N1 mode NAS transparent container page.349
@@ -7,7 +8,7 @@ int cmn::dissect_intra_n1_mode_container(dissector d, context* ctx) {
 
     /*The value part of the Intra N1 mode NAS transparent container information element is
 included in specific information elements within some RRC messages sent to the UE.*/
-    (void) d.add_item(4, &hf_authentication_code);
+    d.add_item(4, hstring(d.ptr(), 4));
     d.step(4);
 
     (void) d.add_item(1, &hf_integrity_algo_type);
@@ -19,8 +20,7 @@ included in specific information elements within some RRC messages sent to the U
     (void) d.add_item(1, &hf_kacf);
     d.step(1);
 
-    (void) d.add_item(1, &hf_sequence_no);
-
+    d.add_item(1, "Sequence number", istring(d.uint8()));
     return uc.length;
 }
 

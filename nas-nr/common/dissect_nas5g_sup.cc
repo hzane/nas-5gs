@@ -84,18 +84,6 @@ field_meta hfm_msg_auth_code = {
 };
 const field_meta* nas::hf_msg_auth_code = &hfm_msg_auth_code;
 
-field_meta hfm_sequence_no = {
-    "Sequence number",
-    "nas.nr.seq.number",
-    ft::ft_uint8,
-    fd::base_dec,
-    nullptr,
-    nullptr,
-    nullptr,
-    0x0,
-};
-const field_meta* nas::hf_sequence_no = &hfm_sequence_no;
-
 /* 5GS session management messages */
 const v_string sm_message_type_values[] = {
 
