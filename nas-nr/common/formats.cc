@@ -37,10 +37,10 @@ string bits_string(const v_string* strings, uint32_t bits) {
     return join(ret, " | ");
 }
 
-string bstring(uint8_t v, const true_false_string *desc ){
-    static true_false_string dft = {"FALSE", "TRUE"};
-    if (desc == nullptr) desc = &dft;
-    return v ? desc->true_string : desc->false_string;
+string bstring(uint8_t v, const char* f, const char*t ){
+    if (!f) f= "FALSE";
+    if (!t) t = "TRUE";
+    return formats("%s (%d)", v ? t : f, v);
 }
 
 string bitstring(const uint8_t* data, int bits, const char* sep) {

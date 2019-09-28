@@ -16,7 +16,7 @@ const element_meta mm::update_type = {
 int mm::dissect_update_type(dissector d, context* ctx) {
     const use_context        uc(ctx, "5gs-update-type", d, -1);
 
-    static const field_meta* flags[] = {
+    static const bool_field* flags[] = {
         // &nas::hf_spare_b3,
         &hf_preferred_network_behaviour,
         &hf_ngran_radio_capability_update,

@@ -10,7 +10,7 @@ struct node;
 using node_t = std::shared_ptr< node >;
 
 struct v_string;
-struct true_false_string;
+struct tf_string;
 
 struct node {
     inline static string none = string();

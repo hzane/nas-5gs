@@ -111,12 +111,6 @@ int sm::dissect_qos_parameters(dissector d, int j, context* ctx) {
 int sm::dissect_authorized_qos_flow_description(dissector d, context* ctx) {
     const use_context uc(ctx, "authorized-qos-flow-desc", d, 0);
 
-    static const field_meta* param_flags[] = {
-        &hf_qos_flow_ebit,
-        &hf_sm_parameters_number,
-        nullptr,
-    };
-
     auto i = 1;
     while (d.length > 0) {
         /* QoS fow description */
@@ -133,7 +127,8 @@ int sm::dissect_authorized_qos_flow_description(dissector d, context* ctx) {
 
         /* 0 Spare    E    Number of parameters */
         auto num_param = d.uint8() & 0x3fu;
-        d.add_bits(param_flags);
+        d.add_item(&hf_qos_flow_ebit);
+        d.add_item(&hf_sm_parameters_number);
         d.step(1);
 
         auto j = 1;

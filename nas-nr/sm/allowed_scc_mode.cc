@@ -7,7 +7,7 @@ using namespace nas;
 int sm::dissect_allowed_ssc_mode(dissector d, context* ctx) {
     const use_context        uc(ctx, "allowed-scc-mode", d, -1);
 
-    static const field_meta* flags[] = {
+    static const bool_field* flags[] = {
         &hf_ssc_mode_3,
         &hf_ssc_mode_2,
         &hf_ssc_mode_1,

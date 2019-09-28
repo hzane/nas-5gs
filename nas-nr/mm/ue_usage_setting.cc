@@ -15,7 +15,7 @@ int mm::dissect_usage_setting(dissector d, context* ctx) {
 }
 
 // UE's usage setting    UE's usage setting         9.11.3.55
-const true_false_string tfs_ue_usage_setting = {
+const tf_string tfs_ue_usage_setting = {
     "Data centric",
     "Voice centric",
 };

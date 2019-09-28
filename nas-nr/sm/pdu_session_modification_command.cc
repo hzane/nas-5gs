@@ -75,24 +75,12 @@ int dissect_requested_qos_rules(dissector d, context* ctx) {
     return dissect_qos_rules(d, ctx);
 }
 
-const field_meta hf_qos_flow_ebit = {
+const bool_field hf_qos_flow_ebit = {
     "E bit",
-    "nas.nr.sm.qos.flow.ebit",
-    ft::ft_uint8,
-    fd::base_dec,
-    nullptr,
-    nullptr,
-    nullptr,
     0x40,
 };
-const field_meta hf_sm_parameters_number = {
+const uint8_field hf_sm_parameters_number = {
     "Number of parameters",
-    "nas.nr.sm.number.parameters",
-    ft::ft_uint8,
-    fd::base_dec,
-    nullptr,
-    nullptr,
-    nullptr,
     0x3f,
 };
 
@@ -116,18 +104,7 @@ const field_meta hf_sm_parameter_identifier = {
     nullptr,
     0x0,
 };
-#if 0
-const field_meta hf_sm_param_len = {
-    "Length",
-    "nas.nr.sm.param_len",
-    ft::ft_uint8,
-    fd::base_dec,
-    nullptr,
-    nullptr,
-    nullptr,
-    0x0,
-};
-#endif
+
 
 const field_meta hf_sm_parameters_content = {
     "Parameters content",

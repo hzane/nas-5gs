@@ -85,7 +85,7 @@ extern const value_string nas_5gs_mm_sal_t_li_values[] = {
     {0, nullptr},
 };
 
-const true_false_string tfs_tai_or_not = {
+const tf_string tfs_tai_or_not = {
     "TAIs in the list are in the non-allowed area",
     "TAIs in the list are in the allowed area",
 };

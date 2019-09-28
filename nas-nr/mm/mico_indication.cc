@@ -31,7 +31,7 @@ struct mico_indication_t {
     uint8_t sprti;
 };
 
-const true_false_string tfs_raai = {
+const tf_string tfs_raai = {
     "all PLMN registration area allocated",
     "all PLMN registration area not allocated",
 };
@@ -48,7 +48,7 @@ const field_meta mm::hfm_mm_raai_b0 = {
 };
 
 // In the network to UE and the UE to network direction:
-const true_false_string tfs_sprti = {
+const tf_string tfs_sprti = {
     "strictly periodic registration timer supported",
     "strictly periodic registration timer not supported",
 };

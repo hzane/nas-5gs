@@ -24,12 +24,12 @@ struct deregistration_type_t {
 };
 
 /* 9.11.3.20    De-registration type */
-const true_false_string nas_5gs_mm_switch_off_tfs = {
+const tf_string nas_5gs_mm_switch_off_tfs = {
     "Switch off",
     "Normal de-registration",
 };
 
-const true_false_string tfs_reregistration_required = {
+const tf_string tfs_reregistration_required = {
     "re-registration required",
     "re-registration not required"};
 

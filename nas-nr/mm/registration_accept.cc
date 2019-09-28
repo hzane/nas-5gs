@@ -227,7 +227,7 @@ const element_meta negotiated_drx_parameter = {
 };
 
 /* [14] 10.5.5.37 Non-3GPP NW provided policies */
-const true_false_string gsm_a_gm_n3en_ind_value = {
+const tf_string gsm_a_gm_n3en_ind_value = {
     "Use of non-3GPP emergency numbers permitted",
     "Use of non-3GPP emergency numbers not permitted",
 };
@@ -280,7 +280,7 @@ const field_meta hf_mobile_network_code = {
 
 
 /* 9.9.3.37a Extended Emergency Number List TS24.301*/
-static true_false_string tfs_ext_emergency_number_list = {
+static tf_string tfs_ext_emergency_number_list = {
     "Valid only in the PLMN from which this IE is received",
     "Valid in the country of the PLMN from which this IE is received",
 };
@@ -408,17 +408,17 @@ const field_meta hf_sub_services_field = {
 
 
 /* 9.11.3.51    SOR transparent container */
-const true_false_string tfs_nas_5gs_list_type = {
+const tf_string tfs_nas_5gs_list_type = {
     "PLMN ID and access technology list",
     "Secured packet",
 };
 
-const true_false_string tfs_sor_list_indication = {
+const tf_string tfs_sor_list_indication = {
     "List of preferred PLMN/access technology combinations is provided",
     "No list of preferred PLMN/access technology combinations is provided",
 };
 
-const true_false_string tfs_nas_5gs_sor_data_type = {
+const tf_string tfs_nas_5gs_sor_data_type = {
     "Carries acknowledgement of successful reception of the steering of roaming "
     "information",
     "Carries steering of roaming information",
@@ -466,7 +466,7 @@ const field_meta hf_sor_hdr0_sor_data_type = {
     0x01,
 };
 
-const true_false_string tfs_selected_not_selected = {"Selected", "Not Selected",};
+const tf_string tfs_selected_not_selected = {"Selected", "Not Selected",};
 
 const field_meta        hf_access_tech_utran      = {
     "Access technology UTRAN",

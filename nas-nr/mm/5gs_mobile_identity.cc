@@ -57,7 +57,7 @@ int mm::dissect_mobile_id(dissector d, context* ctx) {
         d.step(7);
         break;
     default:
-        (void) d.add_item(d.length, &hf_identity_type);
+        (void) d.add_item(&hf_identity_type);
         diag("unknown mobile type id %d\n", type_id);
         break;
     }
@@ -69,7 +69,7 @@ int mm::dissect_mobile_id(dissector d, context* ctx) {
 int mm::dissect_mobile_id_mac(dissector d, context* ctx) {
     const use_context uc(ctx, "mobile-id-mac", d, 0);
 
-    (void) d.add_item(1, &hf_identity_type);
+    (void) d.add_item(&hf_identity_type);
     d.step(1);
 
     (void) d.add_item(6, &hf_mac_address);
@@ -78,16 +78,12 @@ int mm::dissect_mobile_id_mac(dissector d, context* ctx) {
     return 7;
 }
 
-static const field_meta* flags_odd_even_id_type[] = {
-    &hf_odd_even_indication,
-    &hf_identity_type,
-    nullptr,
-};
 // type_id = 0, no identity
 int mm::dissect_mobile_id_noid(dissector d, context* ctx) {
     const use_context uc(ctx, "mobile-no-identity", d, -1);
 
-    d.add_bits(flags_odd_even_id_type);
+    d.add_item(&hf_odd_even_indication);
+    d.add_item(&hf_identity_type);
     d.step(1);
 
     return 1;
@@ -97,7 +93,7 @@ int mm::dissect_mobile_id_noid(dissector d, context* ctx) {
 int mm::dissect_mobile_id_5gstmsi(dissector d, context* ctx) {
     const use_context uc(ctx, "mobile-id-5gs-tmis", d, 0);
 
-    (void) d.add_item(1, &hf_identity_type);
+    (void) d.add_item(&hf_identity_type);
     d.step(1);
 
     /* AMF Set ID */
@@ -120,15 +116,9 @@ int mm::dissect_mobile_id_suci(dissector d, context* ctx) {
 
     const auto oct = d.uint8();
 
-    static const field_meta* flags_supi_fmt_tid[] = {
-        // &hf_spare_b7,
-        &hf_supi_format,
-        // &hf_spare_b3,
-        &hf_identity_type,
-        nullptr,
-    };
+    d.add_item(&hf_supi_format);
+    d.add_item(&hf_identity_type);
 
-    d.add_bits(flags_supi_fmt_tid);
     d.step(1);
 
     const auto supi_fmt = oct & 0x70u;
@@ -171,7 +161,7 @@ int mm::dissect_mobile_id_suci(dissector d, context* ctx) {
 int mm::dissect_mobile_id_5gguti(dissector d, context* ctx) {
     const use_context uc(ctx, "mobile-id-5g-guti", d, 0);
 
-    (void) d.add_item(1, &hf_identity_type);
+    (void) d.add_item( &hf_identity_type);
     d.step(1);
 
     const auto consumed = dissect_e212_mcc_mnc(d, ctx);
@@ -199,7 +189,8 @@ int mm::dissect_mobile_id_5gguti(dissector d, context* ctx) {
 int mm::dissect_mobile_id_imei(dissector d, context* ctx) {
     const use_context uc(ctx, "mobile-id-imei", d, 0);
 
-    d.add_bits(flags_odd_even_id_type);
+    d.add_item(&hf_odd_even_indication);
+    d.add_item(&hf_identity_type);
 
     // The format of the IMEI is described in 3GPP TS 23.003
     (void) d.add_item(d.length, &hf_imei);
@@ -212,7 +203,9 @@ int mm::dissect_mobile_id_imei(dissector d, context* ctx) {
 int mm::dissect_mobile_id_imeisv(dissector d, context* ctx) {
     const use_context uc(ctx, "mobile-id-imeisv", d, 0);
 
-    d.add_bits(flags_odd_even_id_type);
+    d.add_item(&hf_odd_even_indication);
+    d.add_item(&hf_identity_type);
+
 
     // The format of the IMEISV is described in 3GPP TS 23.003
     (void) d.add_item(d.length, &hf_imeisv);
@@ -221,15 +214,10 @@ int mm::dissect_mobile_id_imeisv(dissector d, context* ctx) {
     return uc.length;
 }
 
-extern const field_meta mm::hf_odd_even_indication = {
+extern const bool_field mm::hf_odd_even_indication = {
     "Odd/even indication",
-    "nas.nr.odd.even",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &tfs_odd_even,
-    nullptr,
     0x08,
+    tfs_odd_even,
 };
 
 // 5GS mobile identity  9.11.3.4
@@ -252,20 +240,15 @@ const field_meta hf_mac_address = {
     nullptr,
     0,
 };
-const v_string supi_fmt_values[] = {
-    {0x0, "IMSI"},
-    {0x1, "Network Specific Identifier"},
-    {0, nullptr},
-};
-const field_meta hf_supi_format = {
+
+const tag_field hf_supi_format = {
     "SUPI format",
-    "nas.nr.suci.supi.format",
-    ft::ft_uint8,
-    fd::base_dec,
-    supi_fmt_values,
-    nullptr,
-    nullptr,
     0x70,
+    (const v_string[]){
+        {0x0, "IMSI"},
+        {0x1, "Network Specific Identifier"},
+        {0, nullptr},
+    },
 };
 
 const field_meta hf_suci_nai = {

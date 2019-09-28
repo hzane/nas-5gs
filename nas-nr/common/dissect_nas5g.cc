@@ -21,6 +21,7 @@ int dissect_nas5g(dissector d, context* ctx){
     return dissect_nas5g_security_protected(d, ctx);
 }
 
+
 int dissect_nas5g_security_protected(dissector d, context* ctx){
     const auto        subtree = d.add_item(7, "Security protected NAS 5GS message");
     use_tree    ut(d, subtree);
@@ -42,7 +43,8 @@ int dissect_nas5g_security_protected(dissector d, context* ctx){
     d.step(4);
 
     /* 9.10 Sequence number    octet 7 */
-    d.add_item(1, "Sequence number", istring(d.uint8()));
+    d.add_item(&hf_sequence_no);
+    d.step(1);
 
     // TODO: decrypt the body
     // This should work when the NAS ciphering algorithm is NULL (128-EEA0)

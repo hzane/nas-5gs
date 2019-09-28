@@ -5,11 +5,11 @@
 #include "config.hh"
 #include "v_string.hh"
 
-using tf_string    = true_false_string;
+using tf_string    = tf_string;
 using value_string = v_string;
 
 
-inline const true_false_string true_false = {"true", "false"};
+inline const tf_string true_false = {"true", "false"};
 
 namespace ft {
 inline const uint32_t none        = 0;

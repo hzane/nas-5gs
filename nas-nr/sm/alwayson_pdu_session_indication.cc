@@ -1,7 +1,7 @@
 #include "../common/dissect_sm_msg.hh"
 #include "../common/use_context.hh"
 
-const true_false_string tfs_pdu_alwayson_session_ind = {
+const tf_string tfs_pdu_alwayson_session_ind = {
     "Always-on PDU session allowed",
     "Always-on PDU session not allowed"};
 

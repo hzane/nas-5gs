@@ -21,7 +21,7 @@ struct field_meta;
 struct tree_meta;
 
 struct v_string;
-struct true_false_string;
+struct tf_string;
 struct range_string;
 
 using proto_tree = node;

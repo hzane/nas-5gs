@@ -3,7 +3,7 @@
 
 typedef unsigned char octet;
 struct v_string;
-struct true_false_string;
+struct tf_string;
 struct range_string;
 
 // NOLINTNEXTLINE
@@ -13,7 +13,7 @@ struct description {
     unsigned int             typi;          // field_type::
     unsigned int             display;       // one of base_
     const v_string*        v_strings;   //
-    const true_false_string* tf_strings;    //
+    const tf_string* tf_strings;    //
     const range_string*      range_strings; //
     unsigned long long       bitmask;       // bitmask of interesting bits
 };
@@ -23,7 +23,7 @@ struct v_string {
     const char* text;
 };
 
-struct true_false_string {
+struct tf_string {
     const char* true_string;
     const char* false_string;
 };

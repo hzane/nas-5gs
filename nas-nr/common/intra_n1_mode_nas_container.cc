@@ -23,6 +23,11 @@ const tag_field hf_ciphering_algo_type = {
         {0, nullptr},
     },
 };
+// Type of security context flag (TSC)
+const bool_field n1_tsc_flag = {
+    "Type of security context flag (TSC)",
+    0x04u,
+};
 // 9.11.2.6 Intra N1 mode NAS transparent container page.349
 int cmn::dissect_intra_n1_mode_container(dissector d, context* ctx) {
     use_context uc(ctx, "intra-n1-mode-nas-transparent-container", d, 0);
@@ -32,61 +37,41 @@ included in specific information elements within some RRC messages sent to the U
     d.add_item(4, hstring(d.ptr(), 4));
     d.step(4);
 
-    hf_integrity_algo_type.add(d, ctx);
-    hf_ciphering_algo_type.add(d, ctx);
+    d.add_item(&hf_integrity_algo_type, false);
+    d.add_item(&hf_ciphering_algo_type, false);
     d.step(1);
 
-    (void) d.add_item(1, &hf_ksi_5g);
-    (void) d.add_item(1, &hf_security_context_type);
-    (void) d.add_item(1, &hf_kacf);
+    (void) d.add_item(&hf_ksi_5g);
+    (void) d.add_item(&n1_tsc_flag);
+    (void) d.add_item(&hf_kacf);
     d.step(1);
 
-    d.add_item(1, "Sequence number", istring(d.uint8()));
+    d.add_item(&hf_sequence_no);
+    d.step(1);
+
     return uc.length;
 }
+// K_AMF_change_flag
+const bool_field hf_kacf = {
+    "K-AMF change flag (KACF)",
+    0x10u,
 
+    "a new KAMF has not been calculated by the network",
+    "a new KAMF has been calculated by the network",
+};
 
 namespace cmn {
 
 
-// Type of security context flag (TSC)
-const field_meta hf_security_context_type = {
-    "Type of security context flag (TSC)",
-    "nas.nr.cmn.tsc",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    nullptr,
-    nullptr,
-    0x04u,
-};
-const true_false_string tfs_kacf = {
+const tf_string tfs_kacf = {
     "a new KAMF has been calculated by the network",
     "a new KAMF has not been calculated by the network",
 };
 
-// K_AMF_change_flag
-const field_meta hf_kacf = {
-    "K-AMF change flag (KACF)",
-    "nas.nr.cmn.kacf",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &tfs_kacf,
-    nullptr,
-    0x10u,
-};
 
-const field_meta hf_ksi_5g             = {
+
+} // namespace cmn
+const uint8_field hf_ksi_5g = {
     "Key set identifier in 5G",
-    "nas.nr.cmn.ksi",
-    ft::ft_uint8,
-    fd::base_dec,
-    nullptr,
-    nullptr,
-    nullptr,
     0x07u,
 };
-
-
-}

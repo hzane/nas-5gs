@@ -12,6 +12,27 @@ struct context;
 using string = std::string;
 using node_t = std::shared_ptr< node >;
 
+struct v_string;
+struct tf_string;
+
+struct uint8_field {
+    const char* name = nullptr;
+    uint8_t     mask = 0;
+};
+struct tag_field {
+    const char*     name = nullptr;
+    uint8_t         mask = 0;
+    const v_string* tags = nullptr;
+};
+struct bool_field {
+    const char* name         = nullptr;
+    uint8_t     mask         = 0;
+    tf_string values = {};
+};
+struct octet_field {
+    const char* name = nullptr;
+};
+
 struct dissector {
     inline static string none = string();
 
@@ -24,42 +45,18 @@ struct dissector {
 
     void   step(int consumed);
     node_t add_item(int len, const field_meta* fm) const;
+    int    add_item(const uint8_field* fm, bool step = false);
+    int    add_item(const tag_field* fm, bool step = false);
+    int    add_item(const octet_field* fm, int len, bool step = false);
+    int    add_item(const bool_field* fm, bool step = false);
     node_t add_item(int len, const string& name, const string& val = none) const;
     node_t set_item(int len, const string& val) const;
     node_t add_expert(int len, const string& name) const;
-    void   add_bits(const field_meta* metas[]) const;
+    void   add_bits(const bool_field* metas[], bool step=false) ;
     auto   ptr() const -> const uint8_t*;
     auto   safe_length(int len) const -> int;
     auto   slice(int len) const -> dissector;
     auto   uint8(bool step = false) -> uint8_t;
     auto   uint16(bool step = false) -> uint16_t;
     auto   uint32() const -> uint32_t;
-};
-
-struct v_string;
-struct true_false_string;
-
-struct uint8_field {
-    const char* name = nullptr;
-    uint8_t     mask = 0;
-    int         add(dissector d, context*) const;
-};
-struct tag_field {
-    const char*     name = nullptr;
-    uint8_t         mask = 0;
-    const v_string* tags = nullptr;
-
-    int add(dissector d, context*) const;
-};
-struct tf_field {
-    const char*              name      = nullptr;
-    uint8_t                  mask      = 0;
-    const true_false_string* indicator = nullptr;
-
-    int add(dissector d, context*) const;
-};
-struct octet_field {
-    const char* name = nullptr;
-
-    int add(dissector d, context*, int len) const;
 };

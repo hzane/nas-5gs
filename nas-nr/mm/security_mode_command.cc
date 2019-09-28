@@ -460,7 +460,7 @@ const field_meta hf_retransmission_of_initial_nas_request = {
     nullptr,
     0x02,
 };
-const true_false_string tfs_required_not_required = {
+const tf_string tfs_required_not_required = {
     "Required",
     "Not required",
 };

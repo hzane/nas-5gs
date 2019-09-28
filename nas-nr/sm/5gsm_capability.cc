@@ -8,7 +8,7 @@ using namespace sm;
 int sm::dissect_nrsm_capability(dissector d, context* ctx) {
     const use_context        uc(ctx, "5gsm-capability", d, -1);
 
-    static const field_meta* flags[] = {
+    static const bool_field* flags[] = {
         &hf_reflective_qos,
         nullptr,
     };
@@ -29,13 +29,8 @@ const element_meta sm::nrsm_capability = {
     dissect_nrsm_capability,
     nullptr,
 };
-const field_meta sm::hf_reflective_qos = {
+const bool_field sm::hf_reflective_qos = {
     "Reflective QoS(RqoS)",
-    "nas.nr.sm.reflective.qos",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &nas::tfs_supported_not_supported,
-    nullptr,
     0x01,
+    tfs_supported_not_supported,
 };

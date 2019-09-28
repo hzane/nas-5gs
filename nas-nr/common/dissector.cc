@@ -12,10 +12,12 @@ void dissector::step(int consumed) {
     length -= consumed;
 }
 
-void dissector::add_bits(const field_meta* metas[]) const {
-    for (const field_meta** meta = metas; *meta != nullptr; meta++) {
-        (void) add_item(1, *meta); // NOLINT
+void dissector::add_bits(const bool_field* metas[], bool step)  {
+    for (const bool_field** meta = metas; *meta != nullptr; ) {
+        (void) add_item(*meta); // NOLINT
+        ++meta;
     }
+    if (step) this->step(1);
 }
 
 node_t dissector::add_item(int len, const field_meta* meta) const {
@@ -25,6 +27,7 @@ node_t dissector::add_item(int len, const field_meta* meta) const {
 node_t dissector::add_item(int len, const string& name, const string& val) const {
     return tree->add_item(offset, len, name, val);
 }
+
 node_t dissector::set_item(int len, const string& val) const {
     tree->set_item(offset, len, val);
     return tree;
@@ -73,27 +76,30 @@ uint32_t dissector::uint32() const {
 }
 
 
-int     uint8_field::    add(dissector d, context*) const {
-    d.add_item(1, name, istring(umask(d.uint8(), mask)));
+int     dissector::add_item( const uint8_field* f, bool step)  {
+    add_item(1, f->name, istring(umask(uint8(step), f->mask)));
+
     return 1;
 }
 
 
-int tag_field::add(dissector d, context*) const {
-    auto tag = vstring(tags, umask(d.uint8(), mask));
-    d.add_item(1, name, tag);
+int dissector::add_item(const tag_field*f, bool step)  {
+    auto tag = vstring(f->tags, umask(uint8(step), f->mask));
+    add_item(1, f->name, tag);
     return 1;
 }
 
 
-int tf_field::add(dissector d, context*) const {
-    auto v = bstring(umask(d.uint8(), mask), indicator);
-    d.add_item(1, name, v);
+int dissector::add_item(const bool_field*f, bool step)  {
+    auto v = bstring(umask(uint8(step), f->mask), f->values.false_string, f->values.true_string);
+    add_item(1, f->name, v);
+
     return 1;
 }
 
 
-int octet_field::add(dissector d, context*, int len) const {
-    d.add_item(len, name, hstring(d.ptr(), d.safe_length(len)));
+int dissector::add_item(const octet_field*f, int len, bool step)  {
+    add_item(len, f->name, hstring(ptr(), safe_length(len)));
+    if(step) this->step(len);
     return len;
 }

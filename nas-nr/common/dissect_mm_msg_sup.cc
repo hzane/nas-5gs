@@ -3,7 +3,7 @@
 using namespace mm;
 using namespace nas;
 
-const true_false_string mm::tfs_sms_requested = {
+const tf_string mm::tfs_sms_requested = {
     "SMS over NAS supported",
     "SMS over NAS not supported",
 };
@@ -19,21 +19,6 @@ const field_meta mm::hf_sms_requested = {
 };
 
 
-extern const true_false_string mm::tfs_security_context_types = {
-    "Mapped security context (for KSIASME)",
-    "Native security context (for KSIAMF)",
-};
-
-const field_meta mm::hf_security_context_type = {
-    "Type of security context flag (TSC)",
-    "nas.nr.mm.tsc",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &tfs_security_context_types,
-    nullptr,
-    0x08,
-};
 
 const field_meta mm::hf_element_number = {
     "Number of elements",
@@ -183,16 +168,7 @@ extern const element_meta mm::pdu_session_status = {
     nullptr,
 };
 
-extern const field_meta mm::hf_eps_nas_ksi = { // NOLINT
-    "NAS key set identifier",
-    "nas.mm.nas.key.set.id",
-    ft::ft_uint8,
-    fd::base_dec,
-    nas_ksi_values,
-    nullptr,
-    nullptr,
-    0x07,
-};
+
 
 // NAS message container 9.11.3.33
 extern const element_meta mm::nas_msg_container = {
@@ -233,7 +209,7 @@ const field_meta mm::hf_slice_service_type = {
     0x0,
 };
 
-const true_false_string mm::tfs_follow_on_request = {
+const tf_string mm::tfs_follow_on_request = {
     "Follow-on request pending",
     "No follow-on request pending",
 };

@@ -138,7 +138,7 @@ int dissect_packet_filters(dissector d, int rop, context* ctx) {
 
     return d.offset - uc.offset;
 }
-const true_false_string tfs_segregation = {
+const tf_string tfs_segregation = {
     "Segregation requested",
     "Segregation not requested",
 };
@@ -156,13 +156,6 @@ const field_meta hf_segregation = {
 int sm::dissect_qos_rules(dissector d, context* ctx) {
     const use_context uc(ctx, "authorized-qos-rules", d);
 
-    static const field_meta* pkt_flt_flags[] = {
-        &hf_sm_rule_operation_code,
-        &hf_default_qos_rule,
-        &hf_sm_packet_filters,
-        nullptr,
-    };
-
     auto i = 1;
     while (d.length > 0) {
         /* QoS Rule */
@@ -170,7 +163,7 @@ int sm::dissect_qos_rules(dissector d, context* ctx) {
         use_tree ut(d, subtree);
 
         /* QoS rule identifier Octet 4*/
-        (void) d.add_item(1, &hf_sm_qos_rule_id);
+        (void) d.add_item(&hf_sm_qos_rule_id);
         d.step(1);
 
         /* Length of QoS rule Octet 5 - 6*/
@@ -184,7 +177,9 @@ int sm::dissect_qos_rules(dissector d, context* ctx) {
         auto n_filters = d.uint8();
         const auto rop       = n_filters >> 5u;
         n_filters            = n_filters & 0x0fu;
-        d.add_bits(pkt_flt_flags);
+        d.add_item(&hf_sm_rule_operation_code);
+            d.add_item(&hf_default_qos_rule);
+            d.add_item(&hf_sm_packet_filters);
         d.step(1);
 
         /* For the "delete existing QoS rule" operation and for the "modify existing QoS
@@ -228,7 +223,7 @@ int sm::dissect_qos_rules(dissector d, context* ctx) {
          * QoS rule precedence value field shall be included.
          */
         if (rop != 2) { /* Delete existing QoS rule */
-            (void) d.add_item(1, &hf_sm_qos_rule_precedence);
+            (void) d.add_item(&hf_sm_qos_rule_precedence);
             d.step(1);
         }
         /* QoS flow identifier (QFI) (bits 6 to 1 of octet z+2)
@@ -266,20 +261,13 @@ extern const element_meta sm::requested_qos_rules = {
 
 };
 /*  9.11.4.13    QoS rules */
-const true_false_string sm::tfs_default_qos_rule = {
-    "The QoS rule is the default QoS rule",
-    "The QoS rule is not the default QoS rule",
-};
-
-const field_meta sm::hf_default_qos_rule = {
+const bool_field sm::hf_default_qos_rule = {
     "Default Qos rule (DQR)",
-    "nas.nr.sm.dqr",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &tfs_default_qos_rule,
-    nullptr,
     0x10,
+    {
+        "The QoS rule is not the default QoS rule",
+        "The QoS rule is the default QoS rule",
+    },
 };
 
 extern const value_string nas_5gs_rule_operation_code_values[] = {
@@ -303,58 +291,34 @@ const element_meta sm::authorized_qos_rules = {
 };
 
 
-extern const value_string sm::rule_operation_code_values[] = {
-    {0x0, "Reserved"},
-    {0x1, "Create new QoS rule"},
-    {0x2, "Delete existing QoS rule"},
-    {0x3, "Modify existing QoS rule and add packet filters"},
-    {0x4, "Modify existing QoS rule and replace packet filters"},
-    {0x5, "Modify existing QoS rule and delete packet filters"},
-    {0x6, "Modify existing QoS rule without modifying packet filters"},
-    {0x7, "Reserved"},
-    {0, nullptr},
-};
 
-const field_meta sm::hf_sm_rule_operation_code = {
+const tag_field sm::hf_sm_rule_operation_code = {
     "Rule operation code",
-    "nas.nr.sm.rop",
-    ft::ft_uint8,
-    fd::base_dec,
-    rule_operation_code_values,
-    nullptr,
-    nullptr,
     0xe0,
+    (const v_string[]){
+        {0x0, "Reserved"},
+        {0x1, "Create new QoS rule"},
+        {0x2, "Delete existing QoS rule"},
+        {0x3, "Modify existing QoS rule and add packet filters"},
+        {0x4, "Modify existing QoS rule and replace packet filters"},
+        {0x5, "Modify existing QoS rule and delete packet filters"},
+        {0x6, "Modify existing QoS rule without modifying packet filters"},
+        {0x7, "Reserved"},
+        {0, nullptr},
+    },
 };
-const field_meta sm::hf_sm_packet_filters = {
+const uint8_field sm::hf_sm_packet_filters = {
     "Number of packet filters",
-    "nas.nr.sm.nof_pkt_filters",
-    ft::ft_uint8,
-    fd::base_dec,
-    nullptr,
-    nullptr,
-    nullptr,
     0x0f,
 };
 
-const field_meta sm::hf_sm_qos_rule_id = {
+const uint8_field sm::hf_sm_qos_rule_id = {
     "QoS rule identifier",
-    "nas.nr.sm.qos_rule_id",
-    ft::ft_uint8,
-    fd::base_dec,
-    nullptr,
-    nullptr,
-    nullptr,
     0x0,
 };
 
 
-const field_meta sm::hf_sm_qos_rule_precedence = {
+const uint8_field sm::hf_sm_qos_rule_precedence = {
     "QoS rule precedence",
-    "nas.nr.sm.qos_rule_precedence",
-    ft::ft_uint8,
-    fd::base_dec,
-    nullptr,
-    nullptr,
-    nullptr,
     0x0,
 };

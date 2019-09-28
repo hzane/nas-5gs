@@ -57,19 +57,6 @@ struct mapped_eps_bearer_contexts_t {
 int sm::dissect_mapped_eps_bearer_contexts(dissector d, context* ctx) {
     const use_context uc(ctx, "mapped-eps-bearer-contexts", d, 0);
 
-    static const field_meta* mapd_eps_b_cont_flags[] = {
-        &hf_sm_bearer_content_operation_code,
-        &hf_bearer_ebit,
-        &hf_eps_parameters_numbers,
-        nullptr,
-    };
-
-    static const field_meta* mapd_eps_b_cont_flags_modify[] = {
-        &hf_sm_bearer_content_operation_code,
-        &hf_eps_ebit_modify,
-        &hf_eps_parameters_numbers,
-        nullptr,
-    };
     auto n = 1;
     /* The IE contains a number of Mapped EPS bearer context */
     while (d.length > 0) {
@@ -96,9 +83,13 @@ int sm::dissect_mapped_eps_bearer_contexts(dissector d, context* ctx) {
 
         /* operation code = 3 Modify existing EPS bearer */
         if (opt_code == 3) {
-            d.add_bits(mapd_eps_b_cont_flags_modify);
+            d.add_item(&hf_sm_bearer_content_operation_code);
+            d.add_item(&hf_bearer_ebit);
+            d.add_item(&hf_eps_parameters_numbers);
         } else {
-            d.add_bits(mapd_eps_b_cont_flags);
+            d.add_item(&hf_sm_bearer_content_operation_code);
+            d.add_item(&hf_eps_ebit_modify);
+            d.add_item(&hf_eps_parameters_numbers);
         }
         d.step(1);
 
@@ -161,15 +152,16 @@ extern const value_string sm::eps_parameter_identity_values[] = {
     {0, nullptr},
 };
 
-const field_meta sm::hf_sm_bearer_content_operation_code = {
+const tag_field sm::hf_sm_bearer_content_operation_code = {
     "Operation code",
-    "nas.nr.sm.mapd_eps_b_cont_opt_code",
-    ft::ft_uint8,
-    fd::base_dec,
-    operation_code_values,
-    nullptr,
-    nullptr,
     0xc0,
+    (const v_string[]){
+        {0x0, "Reserved"},
+        {0x01, "Create new EPS bearer"},
+        {0x02, "Delete existing EPS bearer"},
+        {0x03, "Modify existing EPS bearer"},
+        {0, nullptr},
+    },
 };
 const field_meta sm::hf_eps_bearer_deb = {
     "DEB bit",
@@ -181,35 +173,20 @@ const field_meta sm::hf_eps_bearer_deb = {
     nullptr,
     0x20,
 };
-const field_meta sm::hf_bearer_ebit = {
+const bool_field sm::hf_bearer_ebit = {
     "E bit",
-    "nas.nr.sm.e-bit",
-    ft::ft_uint8,
-    fd::base_dec,
-    e_bit_values,
-    nullptr,
-    nullptr,
     0x10,
+    "parameters list is included",
+    "parameters list is not included",
 };
-const field_meta sm::hf_eps_parameters_numbers = {
+const uint8_field sm::hf_eps_parameters_numbers = {
     "Number of EPS parameters",
-    "nas.nr.eps.parameters",
-    ft::ft_uint8,
-    fd::base_dec,
-    nullptr,
-    nullptr,
-    nullptr,
     0x0f,
 };
-const field_meta sm::hf_eps_ebit_modify = {
+const bool_field sm::hf_eps_ebit_modify = {
     "E bit",
-    "nas.nr.sm.e-bit.modify",
-    ft::ft_uint8,
-    fd::base_dec,
-    e_bit_modify_values,
-    nullptr,
-    nullptr,
     0x10,
+    hf_bearer_ebit.values
 };
 
 const field_meta sm::hf_eps_bearer_content_id = {

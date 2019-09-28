@@ -16,7 +16,7 @@ string rstring(const range_string* strings,
                uint32_t            id,
                const char*         missing = "Unknown");
 
-string bstring(uint8_t v, const true_false_string *desc = nullptr);
+string bstring(uint8_t v, const char* f = nullptr, const char*t=nullptr);
 
 using uint24_t = uint32_t;
 using int24_t = int32_t;

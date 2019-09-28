@@ -142,7 +142,7 @@ int mm::dissect_registration_request(dissector d, context* ctx) {
 }
 
 namespace mm {
-const true_false_string tfs_supp_or_not = {
+const tf_string tfs_supp_or_not = {
     "Supported",
     "Not supported",
 };
@@ -193,7 +193,7 @@ const field_meta hf_ea3 = {
 
 namespace mm {
 // S1 UE network capability 9.11.3.48
-const true_false_string nas_eps_emm_ucs2_supp_flg_value = {
+const tf_string nas_eps_emm_ucs2_supp_flg_value = {
     "The UE has no preference between the use of the default alphabet and the use of "
     "UCS2",
     "The UE has a preference for the default alphabet",
@@ -783,19 +783,19 @@ const field_meta hf_nas_eps_spare_bits = {
 } // namespace mm
 
 
-const true_false_string tfs_nas_5gs_mm_n1_mod = { // NOLINT
+const tf_string tfs_nas_5gs_mm_n1_mod = { // NOLINT
     "UE is in 5GMM-REGISTERED state",
     "UE is not in 5GMM-REGISTERED state",
 };
 
 
 /* 9.11.3.9A    5GS update type */
-const true_false_string tfs_nas5gs_sms_requested = { // NOLINT
+const tf_string tfs_nas5gs_sms_requested = { // NOLINT
     "SMS over NAS supported",
     "SMS over NAS not supported",
 };
 
-const true_false_string tfs_needed_not_needed = {
+const tf_string tfs_needed_not_needed = {
     "Needed",
     "Not Needed",
 };
@@ -811,21 +811,14 @@ const field_meta        mm::hf_ngran_radio_capability_update = {
     0x02,
 };
 
-const v_string pnb_ciot_values[] = {
-    {0, "no additional information"},
-    {1, "control plane CIot 5GS optimization"},
-    {2, "user plane CIot 5GS optimization"},
-    {3, "reserved"},
-    {0, nullptr},
-};
-
-const field_meta mm::hf_preferred_network_behaviour = {
+const tag_field mm::hf_preferred_network_behaviour = {
     "Preferred CIoT network behaviour (PNB-CIoT)",
-    "nas.nr.pnb.ciot",
-    ft::ft_uint8,
-    fd::base_dec,
-    pnb_ciot_values,
-    nullptr,
-    nullptr,
     0,
+    (const v_string[]){
+        {0, "no additional information"},
+        {1, "control plane CIot 5GS optimization"},
+        {2, "user plane CIot 5GS optimization"},
+        {3, "reserved"},
+        {0, nullptr},
+    },
 };

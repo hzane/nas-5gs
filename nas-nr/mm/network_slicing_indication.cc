@@ -38,7 +38,7 @@ extern const element_meta mm::network_slicing_indication = {
 };
 
 /* 9-  Network slicing indication  Network slicing indication 9.11.3.36  O  TV 1 */
-const true_false_string tfs_dcni = {
+const tf_string tfs_dcni = {
     "Requested NSSAI created from default configured NSSAI",
     "Requested NSSAI not created from default configured NSSAI",
 };
@@ -54,7 +54,7 @@ const field_meta hf_dcni = {
     0x02,
 };
 
-const true_false_string tfs_changed_not_changed = {
+const tf_string tfs_changed_not_changed = {
     "Changed",
     "Not Changed",
 };

@@ -29,35 +29,20 @@ const v_string ssc_mode_values[] = {
 };
 
 
-const field_meta sm::hf_ssc_mode_3 = {
+const bool_field sm::hf_ssc_mode_3 = {
     "SSC mode 3",
-    "nas.nr.sm.all.ssc.mode.3",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &nas::tfs_allowed_not_allowed,
-    nullptr,
     0x04,
+    nas::tfs_allowed_not_allowed,
 };
-const field_meta sm::hf_ssc_mode_2 = {
+const bool_field sm::hf_ssc_mode_2 = {
     "SSC mode 2",
-    "nas.nr.sm.all.ssc.mode.2",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &nas::tfs_allowed_not_allowed,
-    nullptr,
     0x02,
+    nas::tfs_allowed_not_allowed,
 };
-const field_meta sm::hf_ssc_mode_1 = {
+const bool_field sm::hf_ssc_mode_1 = {
     "SSC mode 1",
-    "nas.nr.sm.all.ssc.mode.1",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &sm::tfs_allowed_not_allowed,
-    nullptr,
     0x01,
+    sm::tfs_allowed_not_allowed,
 };
 
 /*  9.11.4.16    SSC mode */

@@ -160,7 +160,7 @@ static const value_string gsm_network_name_values[] = {
     {0, nullptr},
 };
 
-const true_false_string tfs_add_ci = {
+const tf_string tfs_add_ci = {
     "The MS should add the letters for the Country's Initials and a separator (e.g. a "
     "space) to the text string",
     "The MS should not add the letters for the Country's Initials to the text string",
@@ -181,7 +181,7 @@ const value_string gsm_coding_scheme_values[] = {
     {0, nullptr},
 };
 
-const true_false_string extension_value = {"No Extension", "Extended"};
+const tf_string extension_value = {"No Extension", "Extended"};
 
 const field_meta hf_extension = {
     "Extension",

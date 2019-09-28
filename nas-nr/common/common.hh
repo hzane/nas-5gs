@@ -27,7 +27,6 @@ int dissect_gprs_timer3_set(dissector d, context* ctx); /* TS 24.008 g10 [10] 10
 
 int dissect_e212_mcc_mnc(dissector d, context*); // implemented in e212_mcc_mnc.cc
 
-extern const field_meta hf_5gmm_registration_status;
 extern const field_meta hf_emm_registration_status;
 
 int dissect_n1_to_s1_mode_container(dissector d, context* ctx); // 9.11.2.7
@@ -47,13 +46,12 @@ inline const octet_field hf_authentication_code = {
 };
 extern const uint8_field hf_integrity_algo_type;
 extern const tag_field hf_ciphering_algo_type;
+extern const uint8_field hf_next_hop_chaining_counter;
+extern const bool_field hf_kacf;
+extern const uint8_field hf_ksi_5g;
 
-namespace cmn {
-extern const field_meta hf_ksi_5g;
-extern const field_meta hf_security_context_type;
-extern const field_meta hf_kacf;
-extern const field_meta hf_next_hop_chaining_counter;
 
-extern const true_false_string tfs_ue_status_n1_mode;
-extern const true_false_string tfs_emm_registration_status;
-} // namespace cmn
+inline const uint8_field hf_sequence_no={
+    "Sequence number",
+    0x00u,
+};
