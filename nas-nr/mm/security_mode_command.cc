@@ -13,11 +13,11 @@ int mm::dissect_security_mode_command(dissector d, context* ctx) {
     down_link(d.packet);
 
     /*Selected NAS security algorithms NAS security algorithms 9.11.3.34 M V 1  */
-    dissect_v(nullptr, &selected_security_algo, d, ctx);
+    dissect_v( &selected_security_algo, d, ctx);
     d.step(1);
 
     /*ngKSI     NAS key set identifier 9.11.3.32    M    V    1/2  */
-    dissect_v(nullptr, &nas_ksi, d, ctx);
+    dissect_v( &nas_ksi, d, ctx);
 
     /* Spare half octet    Spare half octet     9.5    M    V    1/2 */
     d.step(1);
@@ -25,38 +25,38 @@ int mm::dissect_security_mode_command(dissector d, context* ctx) {
     /* Replayed UE security capabilities    UE security capability   9.11.3.54  M  LV
      * 3-5*/
     // ELEM_MAND_LV(,DE_NAS_5GS_MM_UE_SEC_CAP," - Replayed UE security capabilities",);
-    auto consumed = dissect_lv(nullptr, &replayed_ue_security_capability, d, ctx);
+    auto consumed = dissect_lv( &replayed_ue_security_capability, d, ctx);
     d.step(consumed);
 
     /*E-    IMEISV request    IMEISV request     9.11.3.28    O    TV    1*/
-    consumed = dissect_opt_tv_short(nullptr, &imeisv_request, d, ctx);
+    consumed = dissect_opt_tv_short( &imeisv_request, d, ctx);
     d.step(consumed);
 
     /*57 Selected EPS NAS security algorithms EPS NAS security algorithms 9.11.3.25  O TV
      * 2 */
     // ELEM_OPT_TV(0x57, , DE_EMM_NAS_SEC_ALGS, " - Selected EPS NAS security
     // algorithms");
-    consumed = dissect_opt_tv(nullptr, &selected_eps_security_algo, d, ctx);
+    consumed = dissect_opt_tv( &selected_eps_security_algo, d, ctx);
     d.step(consumed);
 
     /*36    Additional 5G security information  9.11.3.12    O    TLV    3 */
     // ELEM_OPT_TLV(0x36, , DE_NAS_5GS_MM_ADD_5G_SEC_INF, NULL);
-    consumed = dissect_opt_tlv(nullptr, &additional_security_info, d, ctx);
+    consumed = dissect_opt_tlv( &additional_security_info, d, ctx);
     d.step(consumed);
 
     /*78    EAP message  9.11.2.2    O    TLV-E    7*/
-    consumed = dissect_opt_tlv_e(nullptr, &cmn::eap_message, d, ctx);
+    consumed = dissect_opt_tlv_e( &cmn::eap_message, d, ctx);
     d.step(consumed);
 
     /*38  ABBA 9.11.3.10    O    TLV    4-n */
     // ELEM_OPT_TLV(0x38, , DE_NAS_5GS_MM_ABBA, NULL);
-    consumed = dissect_opt_tlv(nullptr, &abba, d, ctx);
+    consumed = dissect_opt_tlv( &abba, d, ctx);
     d.step(consumed);
 
     /*19 Replayed S1 UE security capabilities    S1 UE security capability 9.11.3.48A
      * O    TLV    4-7 */
     // ELEM_OPT_TLV(0x19, DE_EMM_UE_SEC_CAP, " - Replayed S1 UE security capabilities");
-    consumed = dissect_opt_tlv(nullptr, &replayed_s1_ue_security_capability, d, ctx);
+    consumed = dissect_opt_tlv( &replayed_s1_ue_security_capability, d, ctx);
     d.step(consumed);
 
     return uc.length;

@@ -17,16 +17,16 @@ int mm::dissect_registration_reject(dissector d, context* ctx) {
 
     /* 5F  T3346 value GPRS timer 2     9.11.2.4   O   TLV 3 */
     // ELEM_OPT_TLV(0x5F, , DE_GPRS_TIMER_2, " - T3346 value");
-    consumed = dissect_opt_tlv(nullptr, &t3346_gprs_timer2, d, ctx);
+    consumed = dissect_opt_tlv( &t3346_gprs_timer2, d, ctx);
     d.step(consumed);
 
     /* 16    T3502 value    GPRS timer 2 9.11.2.4    O    TLV    3 */
     // ELEM_OPT_TLV(0x16, , DE_GPRS_TIMER_2, " - T3502 value");
-    consumed = dissect_opt_tlv(nullptr, &t3502_gprs_timer_2, d, ctx);
+    consumed = dissect_opt_tlv( &t3502_gprs_timer_2, d, ctx);
     d.step(consumed);
 
     /* 78    EAP message  9.11.2.2    O    TLV-E    7-1503 */
-    consumed = dissect_opt_tlv_e(nullptr, &eap_message, d, ctx);
+    consumed = dissect_opt_tlv_e( &eap_message, d, ctx);
     d.step(consumed);
 
     return uc.length;

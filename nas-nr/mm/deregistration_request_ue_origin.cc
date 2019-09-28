@@ -12,11 +12,11 @@ int mm::dissect_deregistration_request_ue_origin(dissector d, context* ctx) {
     (void) dissect_deregistration_type(d, ctx);
 
     /* ngKSI    NAS key set identifier 9.11.3.32    M    V    1/2 H1 */
-    (void) dissect_v(nullptr, &nas_ksi, d, ctx);
+    (void) dissect_v( &nas_ksi, d, ctx);
     d.step(1);
 
     /* 5GS mobile identity  9.11.3.4    M    LV-E    6-n */
-    const auto consumed = dissect_lv_e(nullptr, &mobile_id, d, ctx);
+    const auto consumed = dissect_lv_e( &mobile_id, d, ctx);
     d.step(consumed);
 
     return uc.length;

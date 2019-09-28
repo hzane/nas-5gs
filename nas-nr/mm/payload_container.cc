@@ -20,7 +20,7 @@ int mm::dissect_pld_container_entry(dissector d, context* ctx) {
     const use_context uc(ctx, "pld-content-entry", d, -1);
 
     const auto len = static_cast< int >(d.uint16());
-    
+
     d.add_item(1, "Payload container type", istring(d.uint8()&0x0fu));
 
     uint8_t nie = (d.uint8() & 0xf0u) >> 4u;

@@ -12,30 +12,30 @@ int mm::dissect_service_request(dissector d, context* ctx) {
     up_link(d.packet);
 
     /* ngKSI     NAS key set identifier 9.11.3.32    M    V    1/2 */
-    dissect_v(nullptr, &nas_ksi, d, ctx);
+    dissect_v( &nas_ksi, d, ctx);
 
     // Service type 9.11.3.50 M V 1 / 2
     (void) dissect_service_type(d, ctx);
     d.step(1);
 
     /* 5G-S-TMSI    5GS mobile identity 9.11.3.4    M    LV    9 */
-    auto consumed = dissect_lv_e(nullptr, &s_tmsi, d, ctx);
+    auto consumed = dissect_lv_e( &s_tmsi, d, ctx);
     d.step(consumed);
 
     /*40 Uplink data status  9.11.3.57   O   TLV  4 - 34*/
-    consumed = dissect_opt_tlv(nullptr, &uplink_data_status, d, ctx);
+    consumed = dissect_opt_tlv( &uplink_data_status, d, ctx);
     d.step(consumed);
 
     /*50 PDU session status  9.11.3.44  O  TLV   4 - 34*/
-    consumed = dissect_opt_tlv(nullptr, &pdu_session_status, d, ctx);
+    consumed = dissect_opt_tlv( &pdu_session_status, d, ctx);
     d.step(consumed);
 
     /*25 Allowed PDU session status  9.11.3.13  O    TLV    4 - 34*/
-    consumed = dissect_opt_tlv(nullptr, &allowed_pdu_session_status, d, ctx);
+    consumed = dissect_opt_tlv( &allowed_pdu_session_status, d, ctx);
     d.step(consumed);
 
     /* 71  NAS message container 9.11.3.33    O    TLV-E    4-n */
-    consumed = dissect_opt_tlv_e(nullptr, &nas_msg_container, d, ctx);
+    consumed = dissect_opt_tlv_e( &nas_msg_container, d, ctx);
     d.step(consumed);
 
     return uc.length;

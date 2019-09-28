@@ -12,11 +12,11 @@ int sm::dissect_pdu_session_authentication_command(dissector d, context* ctx) {
     down_link(d.packet);
 
     /* EAP message 9.11.2.2    M    LV-E    6-1502 */
-    auto consumed = dissect_lv_e(nullptr, &cmn::eap_message, d, ctx);
+    auto consumed = dissect_lv_e( &cmn::eap_message, d, ctx);
     d.step(consumed);
 
     /*7B    Extended protocol configuration options  9.11.4.6 O TLV-E 4-65538*/
-    consumed = dissect_opt_tlv_e(nullptr, &extended_pco, d, ctx);
+    consumed = dissect_opt_tlv_e( &extended_pco, d, ctx);
     d.step(consumed);
 
     return uc.length;

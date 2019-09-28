@@ -91,4 +91,3 @@ struct field_meta : description {
     string format(const uint8_t* p, int len) const;
     [[nodiscard]] string format(uint64_t val) const;
 };
-

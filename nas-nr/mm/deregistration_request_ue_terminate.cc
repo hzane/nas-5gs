@@ -18,12 +18,12 @@ int mm::dissect_deregistration_request_ue_terminate(dissector d, context* ctx) {
     /* Spare half octet    Spare half octet 9.5    M    V    1/2 */
 
     /* 58 5GMM cause  9.11.3.2  O   TV   2 */
-    consumed = dissect_opt_tv(nullptr, &nrmm_cause, d, ctx);
+    consumed = dissect_opt_tv( &nrmm_cause, d, ctx);
     d.step(consumed);
 
     /* 5F  T3346 value GPRS timer 2     9.11.2.4   O   TLV 3 */
     // ELEM_OPT_TLV(0x5F, , DE_GPRS_TIMER_2, " - T3346 value");
-    consumed = dissect_opt_tlv(nullptr, &t3346_gprs_timer2, d, ctx);
+    consumed = dissect_opt_tlv( &t3346_gprs_timer2, d, ctx);
     d.step(consumed);
 
     return uc.length;

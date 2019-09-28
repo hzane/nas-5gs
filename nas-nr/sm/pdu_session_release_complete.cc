@@ -11,11 +11,11 @@ int sm::dissect_pdu_session_release_complete(dissector d, context* ctx) {
     up_link(d.packet);
 
     /* 59 5GSM cause 9.11.4.2    O    TV    2 */
-    auto consumed = dissect_opt_tv(nullptr, &nrsm_cause, d, ctx);
+    auto consumed = dissect_opt_tv( &nrsm_cause, d, ctx);
     d.step(consumed);
 
     /* 7B    Extended protocol configuration options  9.11.4.6 O TLV-E    4 - 65538*/
-    consumed = dissect_opt_tlv_e(nullptr, &extended_pco, d, ctx);
+    consumed = dissect_opt_tlv_e( &extended_pco, d, ctx);
     d.step(consumed);
 
     return uc.length;

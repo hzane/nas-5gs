@@ -9,7 +9,7 @@ int mm::dissect_notification_response(dissector d, context* ctx) {
     up_link(d.packet);
 
     /* 50 PDU session status 9.11.3.44    O    TLV    4-34 */
-    const auto consumed = dissect_opt_tlv(nullptr, &pdu_session_status, d, ctx);
+    const auto consumed = dissect_opt_tlv( &pdu_session_status, d, ctx);
     d.step(consumed);
 
     return uc.length;

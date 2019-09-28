@@ -4,93 +4,77 @@
 #include "core.hh"
 
 
-typedef int (*tlv_fnc_t)(const field_meta*   type_meta,
-                         const element_meta* val_meta,
+typedef int (*tlv_fnc_t)(const element_meta* val_meta,
                          dissector           d,
                          context*            ctx);
 
-int dissect_elem_mandatory(const field_meta*   type_meta,
-                                const element_meta* val_meta,
+int dissect_elem_mandatory(const element_meta* val_meta,
                                 dissector           d,
                                 tlv_fnc_t           fnc,
                                 context*            ctx) ;
 
 // * Type (T) element dissector
-int dissect_opt_t(const field_meta*   type_meta,
-                       const element_meta* val_meta,
+int dissect_opt_t(const element_meta* val_meta,
                        dissector           d,
                        context*            ctx);
 
-int dissect_t(const field_meta*   type_meta,
-                          const element_meta* val_meta,
+int dissect_t(const element_meta* val_meta,
                           dissector           d,
                           context*            ctx) ;
 
 // * Length Value (LV) element dissector
-int dissect_opt_lv(const field_meta*   type_meta, // == nullptr
-                        const element_meta* val_meta,
+int dissect_opt_lv(const element_meta* val_meta,
                         dissector           d,
                         context*            ctx);
 
-int dissect_lv(const field_meta*   type_meta,
-                           const element_meta* val_meta,
+int dissect_lv(const element_meta* val_meta,
                            dissector           d,
                            context*            ctx) ;
 
 // * Length Value Extended(LV-E) element dissector
-int dissect_opt_lv_e(const field_meta*   type_meta,
-                          const element_meta* val_meta,
+int dissect_opt_lv_e(const element_meta* val_meta,
                           dissector           d,
                           context*            ctx);
 
-int dissect_lv_e(const field_meta*   type_meta,
-                             const element_meta* val_meta,
+int dissect_lv_e(const element_meta* val_meta,
                              dissector           d,
                              context*            ctx) ;
 
 //  Value (V) element dissector
-int dissect_opt_v(const field_meta*   type_meta,
-                       const element_meta* val_meta,
+int dissect_opt_v(const element_meta* val_meta,
                        dissector           d,
                        context*            ctx);
 
 // should use val_meta->fnc directly
-int dissect_v(const field_meta*   type_meta,
-                          const element_meta* val_meta,
+int dissect_v(const element_meta* val_meta,
                           dissector           d,
                           context*            ctx) ;
 
 // Type Value (TV) element dissector
 // Where top half nibble is IEI and bottom half nibble is value.
-int dissect_opt_tv_short(const field_meta*   type_meta,
-                              const element_meta* val_meta,
+int dissect_opt_tv_short(const element_meta* val_meta,
                               dissector           d,
                               context*            ctx);
 
-int dissect_tv_short(const field_meta*   type_meta,
-                                 const element_meta* val_meta,
+int dissect_tv_short(const element_meta* val_meta,
                                  dissector           d,
                                  context*            ctx) ;
 
 // Type Value (TV) element dissector
-int dissect_opt_tv(const field_meta* type_meta,
-                        const element_meta*,
+int dissect_opt_tv(const element_meta*,
                         dissector d,
                         context*  ctx);
 
-int dissect_tv(const field_meta*   type_meta,
-                           const element_meta* val_meta,
+int dissect_tv(const element_meta* val_meta,
                            dissector           d,
                            context*            ctx) ;
 
 // Type Length Value (TLV) element dissector
-int dissect_opt_tlv(const field_meta*   type_meta,
-                         const element_meta* val_meta,
+int dissect_opt_tlv(const element_meta* val_meta,
                          dissector           d,
                          context*            ctx);
 
-int dissect_tlv(const field_meta*   type_meta,
-                            const element_meta* val_meta,
+int dissect_tlv(const element_meta* val_meta,
                             dissector           d,
                             context*            ctx) ;
 
@@ -102,16 +86,14 @@ int dissect_tlv(const field_meta*   type_meta,
  * octet 2 0/1 ext  length
  * octet 2a length
  */
-int dissect_opt_telv(const field_meta*   type_meta,
-                          const element_meta* val_meta,
+int dissect_opt_telv(const element_meta* val_meta,
                           dissector           d,
                           context*            ctx);
 
-inline int dissect_telv(const field_meta*   type_meta,
-                             const element_meta* val_meta,
+inline int dissect_telv(const element_meta* val_meta,
                              dissector           d,
                              context*            ctx) {
-    return dissect_elem_mandatory(type_meta, val_meta, d, dissect_opt_telv, ctx);
+    return dissect_elem_mandatory(val_meta, d, dissect_opt_telv, ctx);
 }
 
 /*
@@ -121,14 +103,12 @@ inline int dissect_telv(const field_meta*   type_meta,
  * one or more octets and a maximum of 65535 octets (type 6). This category is used in EPS
  * only.
  */
-int dissect_opt_tlv_e(const field_meta*   type_meta,
-                           const element_meta* val_meta,
+int dissect_opt_tlv_e(const element_meta* val_meta,
                            dissector           d,
                            context*            ctx);
 
-int dissect_tlv_e(const field_meta*   type_meta,
-                  const element_meta* val_meta,
+int dissect_tlv_e(const element_meta* val_meta,
                   dissector           d,
                   context*            ctx);
 
-int dissect_msg_unknown_body(dissector d, context* ctx);
+int dissect_unknown(dissector d, context* ctx);

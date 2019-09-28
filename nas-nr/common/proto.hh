@@ -20,7 +20,7 @@ struct node {
     void   set_item(int len, const field_meta* field);
     node_t add_item(int start, int len, const field_meta* field);
     node_t add_item(int start, int len, const string& name, const string& text = none);
-    node_t add_expert(int start, int len, const char* format, ...);
+    node_t add_expert(int start, int len, const string&text);
 
     int                   offset   = 0;
     int                   length   = 0;

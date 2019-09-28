@@ -11,11 +11,11 @@ int sm::dissect_pdu_session_modification_complete(dissector d, context* ctx) {
     up_link(d.packet);
 
     /*7B Extended protocol configuration options 9.11.4.6    O    TLV - E    4 - 65538*/
-    const auto consumed = dissect_opt_tlv_e(nullptr, &extended_pco, d, ctx);
+    const auto consumed = dissect_opt_tlv_e( &extended_pco, d, ctx);
     d.step(consumed);
 
     /*59    5GSM cause    5GSM cause 9.11.4.2    O    TV    2*/
-    // consumed = dissect_opt_tv(nullptr, &nrsm_cause, d, ctx);
+    // consumed = dissect_opt_tv( &nrsm_cause, d, ctx);
     // d.step(consumed);
 
     /*It is possible for UEs compliant with earlier versions of this specification to
