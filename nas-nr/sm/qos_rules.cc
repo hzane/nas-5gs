@@ -1,4 +1,5 @@
 #include "../common/dissect_sm_msg.hh"
+#include "../common/use_context.hh"
 
 using namespace sm;
 
@@ -33,27 +34,27 @@ int dissect_packet_filter(dissector d, int pf_type, context* ctx) {
          * component value field shall be encoded as defined for
          * "IPv4 remote address type"
          */
-        (void) d.add_item(4, &hf_pdu_address_ipv4, enc::be);
+        (void) d.add_item(4, &hf_pdu_address_ipv4);
         d.step(4);
-        (void) d.add_item(4, &nas::hf_pdu_ipv4_mask, enc::be);
+        (void) d.add_item(4, &nas::hf_pdu_ipv4_mask);
         d.step(4);
         len = 8;
         break;
     case 33:  // IPv6 remote address/prefix length type
 
     case 35:  // IPv6 local address/prefix length type
-        // d.add_item(16, &hf_pdu_address_ipv6, enc::be);
+        // d.add_item(16, &hf_pdu_address_ipv6);
         d.step(16);
-        // d.add_item(1, &hf_pdu_addr_ipv6_prefix, enc::be);
+        // d.add_item(1, &hf_pdu_addr_ipv6_prefix);
         d.step(1);
         break;
     case 48:  // Protocol identifier/Next header type
-        (void) d.add_item(1, &nas::hf_pid_next_hd, enc::be);
+        (void) d.add_item(1, &nas::hf_pid_next_hd);
         d.step(1);
         len = 1;
         break;
     case 64:  /* Single local port type */
-        (void) d.add_item(2, &nas::hf_single_port_type, enc::be);
+        (void) d.add_item(2, &nas::hf_single_port_type);
         d.step(2);
         len = 2;
         break;
@@ -66,7 +67,7 @@ int dissect_packet_filter(dissector d, int pf_type, context* ctx) {
     case 80:  /* Single remote port type */
 
     case 0x41:  // Local port range type
-        (void) d.add_item(2, &nas::hf_single_port_type, enc::be);
+        (void) d.add_item(2, &nas::hf_single_port_type);
         d.step(2);
         len = 2;
         break;
@@ -100,13 +101,13 @@ int dissect_packet_filters(dissector d, int rop, context* ctx) {
      * filters" or "modify existing QoS rule and replace packet filters"
      */
     /* 0    0    Packet filter direction 1    Packet filter identifier 1*/
-    (void) d.add_item(1, &hf_sm_packet_filter_direction, enc::be);
-    (void) d.add_item(1, &hf_sm_packet_filter_id, enc::be);
+    (void) d.add_item(1, &hf_sm_packet_filter_direction);
+    (void) d.add_item(1, &hf_sm_packet_filter_id);
     d.step(1);
 
     /* Length of packet filter contents */
     auto pfclen = static_cast< int >(d.uint8());
-    // (void) d.add_item(1, &hf_sm_pf_len, enc::be);
+    // (void) d.add_item(1, &hf_sm_pf_len);
     d.step(1);
 
     d.step(pfclen);
@@ -116,7 +117,7 @@ int dissect_packet_filters(dissector d, int rop, context* ctx) {
     /* Packet filter contents */
     while (pfclen > 0) {
         const auto start   = d.offset;
-        auto       subtree = d.add_item(-1, "Packet filter component %u", k);
+        auto       subtree = d.add_item(-1, formats("Packet filter component %u", k));
         use_tree   ut(d, subtree);
         /* Each packet filter component shall be encoded as a sequence of a
          * one octet packet filter component type identifier and a fixed
@@ -124,7 +125,7 @@ int dissect_packet_filters(dissector d, int rop, context* ctx) {
          * component type identifier shall be transmitted first.
          */
         const auto pf_type = d.uint8();
-        (void) d.add_item(1, &hf_sm_packet_filter_type, enc::be);
+        (void) d.add_item(1, &hf_sm_packet_filter_type);
         d.step(1);
         /* Packet filter length contains the length of component type and
          * content */
@@ -165,16 +166,16 @@ int sm::dissect_qos_rules(dissector d, context* ctx) {
     auto i = 1;
     while (d.length > 0) {
         /* QoS Rule */
-        auto     subtree = d.add_item(-1, "QoS rule %u", i++);
+        auto     subtree = d.add_item(-1, formats("QoS rule %u", i++));
         use_tree ut(d, subtree);
 
         /* QoS rule identifier Octet 4*/
-        (void) d.add_item(1, &hf_sm_qos_rule_id, enc::be);
+        (void) d.add_item(1, &hf_sm_qos_rule_id);
         d.step(1);
 
         /* Length of QoS rule Octet 5 - 6*/
-        const auto length = static_cast< int >(d.ntohs());
-        // (void) d.add_item(2, &hf_sm_length, enc::be);
+        const auto length = static_cast< int >(d.uint16());
+        // (void) d.add_item(2, &hf_sm_length);
         d.step(2);
 
         subtree->set_length(length + 3);
@@ -207,13 +208,13 @@ int sm::dissect_qos_rules(dissector d, context* ctx) {
         }
         /* Packet filter list */
         for (auto j = 1; j <= n_filters; j++) {
-            const auto     st2 = d.add_item(-1, "Packet filter %u", j);
+            const auto     st2 = d.add_item(-1, formats("Packet filter %u", j));
             use_tree ut2(d, st2);
             auto           start = d.offset;
             if (rop == 5) {
                 /* modify existing QoS rule and delete packet filters */
                 /* 0    0    0    0    Packet filter identifier x*/
-                (void) d.add_item(1, &hf_sm_packet_filter_id, enc::be);
+                (void) d.add_item(1, &hf_sm_packet_filter_id);
                 d.step(1);
             } else {
                 const auto consumed = dissect_packet_filters(d, rop, ctx);
@@ -227,7 +228,7 @@ int sm::dissect_qos_rules(dissector d, context* ctx) {
          * QoS rule precedence value field shall be included.
          */
         if (rop != 2) { /* Delete existing QoS rule */
-            (void) d.add_item(1, &hf_sm_qos_rule_precedence, enc::be);
+            (void) d.add_item(1, &hf_sm_qos_rule_precedence);
             d.step(1);
         }
         /* QoS flow identifier (QFI) (bits 6 to 1 of octet z+2)
@@ -236,8 +237,8 @@ int sm::dissect_qos_rules(dissector d, context* ctx) {
          * QoS flow identifier value field shall be included.
          */
         /* Segregation bit (bit 7 of octet z+2) */
-        (void) d.add_item(1, &hf_sm_qos_flow_identity, enc::be);
-        (void) d.add_item(1, &hf_segregation, enc::be);
+        (void) d.add_item(1, &hf_sm_qos_flow_identity);
+        (void) d.add_item(1, &hf_segregation);
         d.step(1);
 
     } // while(d.offset)

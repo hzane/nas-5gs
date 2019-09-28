@@ -1,4 +1,5 @@
 #include "../common/dissect_mm_msg.hh"
+#include "../common/use_context.hh"
 
 using namespace cmn;
 using namespace mm;
@@ -8,7 +9,7 @@ int mm::dissect_authentication_response_parameter(dissector d, context* ctx) {
     const use_context uc(ctx, "auth-response-param", d, -1);
     //  9.9.3.4 in 3GPP TS 24.301 [15].
     /* This IE contains either the SRES or the 4 most significant octets of the RES */
-    auto i = d.add_item(4, &hf_sres, enc::be);
+    auto i = d.add_item(4, &hf_sres);
     d.step(4);
 
     unused(i);

@@ -1,4 +1,5 @@
 #include "../common/dissect_sm_msg.hh"
+#include "../common/use_context.hh"
 
 using namespace nas;
 using namespace sm;
@@ -28,9 +29,9 @@ const field_meta hf_max_supported_packet_filters_c = {
 int sm::dissect_max_number_supported_packet_filter(dissector d, context* ctx) {
     const use_context uc(ctx, "max-nof-supported-packet-filters", d, -1);
 
-    (void) d.add_item(1, &hf_max_supported_packet_filters, enc::be);
+    (void) d.add_item(1, &hf_max_supported_packet_filters);
     d.step(1);
-    (void) d.add_item(1, &hf_max_supported_packet_filters_c, enc::be);
+    (void) d.add_item(1, &hf_max_supported_packet_filters_c);
     d.step(1);
 
     return 2;

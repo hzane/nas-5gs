@@ -1,4 +1,5 @@
 #include "common.hh"
+#include "use_context.hh"
 
 // 9.11.2.6 Intra N1 mode NAS transparent container page.349
 int cmn::dissect_intra_n1_mode_container(dissector d, context* ctx) {
@@ -6,19 +7,19 @@ int cmn::dissect_intra_n1_mode_container(dissector d, context* ctx) {
 
     /*The value part of the Intra N1 mode NAS transparent container information element is
 included in specific information elements within some RRC messages sent to the UE.*/
-    (void) d.add_item(4, &hf_authentication_code, enc::be);
+    (void) d.add_item(4, &hf_authentication_code);
     d.step(4);
 
-    (void) d.add_item(1, &hf_integrity_algo_type, enc::be);
-    (void) d.add_item(1, &hf_ciphering_algo_type, enc::be);
+    (void) d.add_item(1, &hf_integrity_algo_type);
+    (void) d.add_item(1, &hf_ciphering_algo_type);
     d.step(1);
 
-    (void) d.add_item(1, &hf_ksi_5g, enc::be);
-    (void) d.add_item(1, &hf_security_context_type, enc::be);
-    (void) d.add_item(1, &hf_kacf, enc::be);
+    (void) d.add_item(1, &hf_ksi_5g);
+    (void) d.add_item(1, &hf_security_context_type);
+    (void) d.add_item(1, &hf_kacf);
     d.step(1);
 
-    (void) d.add_item(1, &hf_sequence_no, enc::be);
+    (void) d.add_item(1, &hf_sequence_no);
 
     return uc.length;
 }
@@ -76,7 +77,7 @@ const field_meta hf_ksi_5g             = {
     0x07u,
 };
 
-const val_string enc_algo_type_values[] = {
+const v_string enc_algo_type_values[] = {
     {0x0, "5G-EA0 (null ciphering algorithm)"},
     {0x1, "128-5G-EA1"},
     {0x2, "128-5G-EA2"},

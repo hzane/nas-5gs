@@ -1,4 +1,5 @@
 #include "common.hh"
+#include "../common/use_context.hh"
 
 const field_meta cmn::hf_eap = {
     "EAP",
@@ -17,7 +18,7 @@ int cmn::dissect_eap_message(dissector d, context* ctx) {
     const use_context uc(ctx, "EAP", d, 0);
 
     /* EAP message as specified in IETF RFC 3748 */
-    (void) d.add_item(d.length, &hf_eap, enc::na);
+    (void) d.add_item(d.length, &hf_eap);
     d.step(d.length);
 
     return uc.length;

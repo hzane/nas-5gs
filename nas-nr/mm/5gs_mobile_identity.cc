@@ -1,5 +1,6 @@
 #include "../common/common.hh"
 #include "../common/dissect_mm_msg.hh"
+#include "../common/use_context.hh"
 
 using namespace cmn;
 using namespace mm;
@@ -56,7 +57,7 @@ int mm::dissect_mobile_id(dissector d, context* ctx) {
         d.step(7);
         break;
     default:
-        (void) d.add_item(d.length, &hf_identity_type, enc::be);
+        (void) d.add_item(d.length, &hf_identity_type);
         diag("unknown mobile type id %d\n", type_id);
         break;
     }
@@ -68,10 +69,10 @@ int mm::dissect_mobile_id(dissector d, context* ctx) {
 int mm::dissect_mobile_id_mac(dissector d, context* ctx) {
     const use_context uc(ctx, "mobile-id-mac", d, 0);
 
-    (void) d.add_item(1, &hf_identity_type, enc::be);
+    (void) d.add_item(1, &hf_identity_type);
     d.step(1);
 
-    (void) d.add_item(6, &hf_mac_address, enc::be);
+    (void) d.add_item(6, &hf_mac_address);
     d.step(6);
 
     return 7;
@@ -96,18 +97,18 @@ int mm::dissect_mobile_id_noid(dissector d, context* ctx) {
 int mm::dissect_mobile_id_5gstmsi(dissector d, context* ctx) {
     const use_context uc(ctx, "mobile-id-5gs-tmis", d, 0);
 
-    (void) d.add_item(1, &hf_identity_type, enc::be);
+    (void) d.add_item(1, &hf_identity_type);
     d.step(1);
 
     /* AMF Set ID */
-    (void) d.add_item(2, &hf_amf_set_id, enc::be);
+    (void) d.add_item(2, &hf_amf_set_id);
     d.step(1);
 
     /* AMF Pointer AMF */
-    (void) d.add_item(1, &hf_amf_pointer, enc::be);
+    (void) d.add_item(1, &hf_amf_pointer);
     d.step(1);
 
-    (void) d.add_item(4, &hf_5g_tmsi, enc::be);
+    (void) d.add_item(4, &hf_5g_tmsi);
     d.step(4);
 
     return 7;
@@ -137,30 +138,30 @@ int mm::dissect_mobile_id_suci(dissector d, context* ctx) {
         d.step(consumed);
 
         /* Routing indicator octet 8-9 */
-        (void) d.add_item(2, &hf_routing_indication, enc::be);
+        (void) d.add_item(2, &hf_routing_indication);
         d.step(2);
 
         /* Protection scheme id octet 10 */
         const auto scheme_id = d.uint8() & 0x0fu;
-        (void) d.add_item(1, &hf_protection_scheme_id, enc::be);
+        (void) d.add_item(1, &hf_protection_scheme_id);
         d.step(1);
 
         /* Home network public key identifier octet 11 */
-        (void) d.add_item(1, &hf_public_key_identifier, enc::be);
+        (void) d.add_item(1, &hf_public_key_identifier);
         d.step(1);
 
         /* Scheme output octet 12-x */
         // Null scheme
         if (scheme_id == 0)
-            (void) d.add_item(d.length, &hf_msin, enc::be);
+            (void) d.add_item(d.length, &hf_msin);
         else
-            (void) d.add_item(d.length, &hf_mm_scheme_output, enc::na);
+            (void) d.add_item(d.length, &hf_mm_scheme_output);
 
         d.step(d.length);
     }
     if (supi_fmt == 1) {
         // nai, network specific identifier
-        (void) d.add_item(d.length, &hf_suci_nai, enc::be);
+        (void) d.add_item(d.length, &hf_suci_nai);
         d.step(d.length);
     }
     return uc.length;
@@ -170,25 +171,25 @@ int mm::dissect_mobile_id_suci(dissector d, context* ctx) {
 int mm::dissect_mobile_id_5gguti(dissector d, context* ctx) {
     const use_context uc(ctx, "mobile-id-5g-guti", d, 0);
 
-    (void) d.add_item(1, &hf_identity_type, enc::be);
+    (void) d.add_item(1, &hf_identity_type);
     d.step(1);
 
     const auto consumed = dissect_e212_mcc_mnc(d, ctx);
     d.step(consumed);
 
     /* AMF Region ID octet 7 */
-    (void) d.add_item(1, &hf_amf_region_id, enc::be);
+    (void) d.add_item(1, &hf_amf_region_id);
     d.step(1);
 
     /* AMF Set ID octet 8-9 10bits */
-    (void) d.add_item(2, &hf_amf_set_id, enc::be);
+    (void) d.add_item(2, &hf_amf_set_id);
     d.step(1);
 
     /* AMF AMF Pointer*/
-    (void) d.add_item(1, &hf_amf_pointer, enc::be);
+    (void) d.add_item(1, &hf_amf_pointer);
     d.step(1);
 
-    (void) d.add_item(4, &hf_5g_tmsi, enc::be);
+    (void) d.add_item(4, &hf_5g_tmsi);
     d.step(4);
 
     return 11;
@@ -201,7 +202,7 @@ int mm::dissect_mobile_id_imei(dissector d, context* ctx) {
     d.add_bits(flags_odd_even_id_type);
 
     // The format of the IMEI is described in 3GPP TS 23.003
-    (void) d.add_item(d.length, &hf_imei, enc::be);
+    (void) d.add_item(d.length, &hf_imei);
     d.step(d.length);
 
     return uc.length;
@@ -214,7 +215,7 @@ int mm::dissect_mobile_id_imeisv(dissector d, context* ctx) {
     d.add_bits(flags_odd_even_id_type);
 
     // The format of the IMEISV is described in 3GPP TS 23.003
-    (void) d.add_item(d.length, &hf_imeisv, enc::be);
+    (void) d.add_item(d.length, &hf_imeisv);
     d.step(d.length);
 
     return uc.length;
@@ -251,7 +252,7 @@ const field_meta hf_mac_address = {
     nullptr,
     0,
 };
-const val_string supi_fmt_values[] = {
+const v_string supi_fmt_values[] = {
     {0x0, "IMSI"},
     {0x1, "Network Specific Identifier"},
     {0, nullptr},

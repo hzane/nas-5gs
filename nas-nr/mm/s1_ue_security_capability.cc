@@ -1,4 +1,5 @@
 #include "../common/dissect_mm_msg.hh"
+#include "../common/use_context.hh"
 
 /* 9.11.3.54    UE security capability*/
 int mm::dissect_ue_security_capability(dissector d, context* ctx) {

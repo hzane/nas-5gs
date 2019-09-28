@@ -1,4 +1,5 @@
 #include "../common/dissect_mm_msg.hh"
+#include "../common/use_context.hh"
 
 using namespace cmn;
 using namespace nas;
@@ -19,11 +20,11 @@ int mm::dissect_plmn_list(dissector d, context* ctx) {
     // See subclause 10.5.1.13 in 3GPP TS 24.008 [12].
     auto num = 1;
     while (d.length >= 3) {
-        const auto subtree = d.add_item(3, "PLMN[%u]", num++);
+        const auto subtree = d.add_item(3, formats("PLMN[%u]", num++));
         use_tree ut(d, subtree);
 
-        (void) d.add_item(3, &hf_mobile_country_code, enc::na);
-        (void) d.add_item(3, &hf_mobile_network_code, enc::na);
+        (void) d.add_item(3, &hf_mobile_country_code);
+        (void) d.add_item(3, &hf_mobile_network_code);
 
         d.step(3);
     }

@@ -1,4 +1,5 @@
 #include "../common/dissect_mm_msg.hh"
+#include "../common/use_context.hh"
 
 using namespace nas;
 
@@ -143,7 +144,7 @@ int mm::dissect_s1_ue_net_capability(dissector d, context* ctx) {
     d.step(1);
 
     while (d.length > 0) {
-        (void) d.add_item(1, &hf_nas_eps_spare_bits, enc::be);
+        (void) d.add_item(1, &hf_nas_eps_spare_bits);
         d.step(1);
     }
 

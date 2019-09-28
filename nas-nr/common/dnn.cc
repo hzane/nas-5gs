@@ -1,4 +1,5 @@
 #include "common.hh"
+#include "../common/use_context.hh"
 
 const field_meta cmn::hf_dnn = {
     "DNN",
@@ -18,7 +19,7 @@ int cmn::dissect_dnn(dissector d, context* ctx) {
     /* A DNN value field contains an APN as defined in 3GPP TS 23.003 */
 
     /* Highlight bytes including the first length byte */
-    (void) d.add_item(d.length, &hf_dnn, enc::be);
+    (void) d.add_item(d.length, &hf_dnn);
     d.step(d.length);
 
     return uc.length;

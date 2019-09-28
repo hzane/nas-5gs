@@ -1,6 +1,7 @@
 #include "../common/ber.hh"
 #include "../common/common.hh"
 #include "../common/dissect_sm_msg.hh"
+#include "../common/use_context.hh"
 
 // Selected PDU session type    PDU session type 9.11.4.11
 extern const element_meta sm::selected_pdu_session_type = {
@@ -41,13 +42,13 @@ const field_meta sm::hf_pdu_session_type = {
 int sm::dissect_pdu_session_type(dissector d, context* ctx) {
     const use_context uc(ctx, "selected-pdu-session-type", d, -1);
 
-    (void) d.add_item(1, &hf_pdu_session_type, enc::be);
+    (void) d.add_item(1, &hf_pdu_session_type);
     d.step(1);
 
     return 1;
 }
 
-const val_string pdu_session_id_values[] = {
+const v_string pdu_session_id_values[] = {
     {0x00, "No PDU session identity assigned"},
     {0x01, "Reserved"},
     {0x02, "Reserved"},

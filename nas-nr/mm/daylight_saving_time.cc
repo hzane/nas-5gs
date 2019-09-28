@@ -1,4 +1,5 @@
 #include "../common/dissect_mm_msg.hh"
+#include "../common/use_context.hh"
 
 using namespace cmn;
 using namespace mm;
@@ -8,7 +9,7 @@ using namespace mm;
 int mm::dissect_daylight_saving_time(dissector d, context* ctx) {
     const use_context uc(ctx, "daylight-saving-time", d, -1);
 
-    (void) d.add_item(1, &hf_dst_adjustment, enc::be);
+    (void) d.add_item(1, &hf_dst_adjustment);
     d.step(1);
 
     return 1;

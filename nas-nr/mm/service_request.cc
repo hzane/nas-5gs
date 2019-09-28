@@ -1,5 +1,6 @@
 #include "../common/ber.hh"
 #include "../common/dissect_mm_msg.hh"
+#include "../common/use_context.hh"
 
 using namespace nas;
 using namespace mm;

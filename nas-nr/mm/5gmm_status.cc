@@ -1,5 +1,6 @@
 #include "../common/config.hh"
 #include "../common/dissect_mm_msg.hh"
+#include "../common/use_context.hh"
 
 /*  8.2.29 5GMM status */
 int mm::dissect_mm_status(dissector d, context* ctx) {

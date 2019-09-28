@@ -372,7 +372,7 @@
     <ClInclude Include="tree_meta.hh" />
     <ClInclude Include="ber.hh" />
     <ClInclude Include="tvbuff.hh" />
-    <ClInclude Include="val_string.hh" />
+    <ClInclude Include="v_string.hh" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -102,7 +102,7 @@ std::string format_int_dec(uint64_t v, uint32_t ftype) {
     return ret;
 }
 
-const char* find_val_string(const val_string* vstr, uint32_t id, const char* missing) {
+const char* find_val_string(const v_string* vstr, uint32_t id, const char* missing) {
     for (auto v = vstr; v->text; v++) {
         if (v->id == id) return v->text;
     }
@@ -117,7 +117,7 @@ const char* find_r_string(const range_string* rstr, uint32_t id, const char* mis
     return missing;
 }
 
-std::vector< std::string > find_bits_string(const val_string* strings, uint32_t bits) {
+std::vector< std::string > find_bits_string(const v_string* strings, uint32_t bits) {
     std::vector< std::string > ret;
     for (auto vstr = strings; vstr->id; vstr++) {
         if ((vstr->id & bits) == vstr->id) {

@@ -1,4 +1,5 @@
 #include "../common/dissect_mm_msg.hh"
+#include "../common/use_context.hh"
 
 using namespace cmn;
 using namespace nas;
@@ -27,7 +28,7 @@ const field_meta hf_timezone_time = {
 int mm::dissect_timezone_time_set(dissector d, context* ctx) {
     const use_context uc(ctx, "time-zone-time", d, -1);
 
-    d.tree->set_item(7, &hf_timezone_time, enc::be);
+    d.tree->set_item(7, &hf_timezone_time);
     d.step(7);
 
     /* no length check possible */

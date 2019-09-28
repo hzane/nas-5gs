@@ -3,6 +3,7 @@
 #include "core.hh"
 #include "dissect_mm_msg.hh"
 #include "dissect_sm_msg.hh"
+#include "use_context.hh"
 
 using namespace cmn;
 using namespace nas;
@@ -25,22 +26,22 @@ int dissect_nas5g_security_protected(dissector d, context* ctx){
     const use_context uc(ctx, subtree->name.c_str(), d, 0);
 
     /* 9.2 Extended protocol discriminator  octet 1 */
-    (void) d.add_item(1, hf_epd, enc::be);
+    (void) d.add_item(1, hf_epd);
     d.step(1);
 
     /* 9.3 Security header type associated    1/2 */
-    (void) d.add_item(1, hf_security_header_type, enc::be);
+    (void) d.add_item(1, hf_security_header_type);
     // 9.5 Spare half octet 1/2
 
     d.step(1);
 
     /* 9.8 Message authentication code octet 3 - 6 */
     store_msg_auth_code(ctx, d.uint32());
-    (void) d.add_item(4, nas::hf_msg_auth_code, enc::be);
+    (void) d.add_item(4, nas::hf_msg_auth_code);
     d.step(4);
 
     /* 9.10 Sequence number    octet 7 */
-    (void) d.add_item(1, nas::hf_sequence_no, enc::be);
+    (void) d.add_item(1, nas::hf_sequence_no);
     d.step(1);
 
     // TODO: decrypt the body
@@ -78,20 +79,20 @@ int dissect_sm_msg(dissector d, context* ctx) {
     use_tree    ut(d, subtree);
 
     /* Extended protocol discriminator  octet 1 */
-    (void) d.add_item(1, hf_epd, enc::be);
+    (void) d.add_item(1, hf_epd);
     d.step(1);
 
     /* PDU session ID	PDU session identity 9.4	M	V	1     */
-    (void) d.add_item(1, hf_pdu_session_id, enc::be);
+    (void) d.add_item(1, hf_pdu_session_id);
     d.step(1);
 
     /* PTI	Procedure transaction identity 9.6	M	V	1     */
-    (void) d.add_item(1, hf_procedure_transaction_id, enc::be);
+    (void) d.add_item(1, hf_procedure_transaction_id);
     d.step(1);
 
     /* Message type 9.7	M	V	1*/
     const auto iei = d.uint8(); // offset == 2
-    (void) d.add_item(1, hf_sm_msg_type, enc::be);
+    (void) d.add_item(1, hf_sm_msg_type);
     d.step(1);
 
     const auto meta  = find_dissector(iei, sm::msgs);
@@ -108,18 +109,18 @@ int dissect_mm_msg(dissector d, context* ctx) {
     use_tree    ut(d, subtree);
 
     /* Extended protocol discriminator 9.2 octet 1 */
-    (void) d.add_item(1, hf_epd, enc::be);
+    (void) d.add_item(1, hf_epd);
     d.step(1);
 
     /*Security header type 9.3	M	V	1/2 */
-    (void) d.add_item(1, hf_security_header_type, enc::be);
+    (void) d.add_item(1, hf_security_header_type);
 
     /*Spare half octet	Spare half octet 9.5	M	V	1/2*/
     d.step(1);
 
     /* Authentication request message identity	Message type 9.7	M	V	1*/
     const auto iei = d.uint8();
-    (void) d.add_item(1, hf_mm_msg_type, enc::be);
+    (void) d.add_item(1, hf_mm_msg_type);
     d.step(1);
 
     const auto meta = find_dissector(iei, mm::msgs);

@@ -1,4 +1,5 @@
 #include "../common/dissect_mm_msg.hh"
+#include "../common/use_context.hh"
 
 using namespace nas;
 // 9.11.3.37A NSSAI inclusion mode page.381

@@ -1,4 +1,5 @@
 #include "../common/dissect_mm_msg.hh"
+#include "../common/use_context.hh"
 
 using namespace cmn;
 
@@ -11,7 +12,7 @@ int mm::dissect_last_visited_tai(dissector d, context* ctx) {
     d.step(3);
 
     /* TAC Octet 5 - 7 */
-    (void) d.add_item(3, &hf_tracking_area_code, enc::na);
+    (void) d.add_item(3, &hf_tracking_area_code);
 
     return 6;
 }

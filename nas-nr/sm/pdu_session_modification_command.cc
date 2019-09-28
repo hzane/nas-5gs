@@ -2,6 +2,7 @@
 #include "../common/dissect_nas5g.hh"
 #include "../common/dissect_sm_msg.hh"
 #include "../common/packet_info.hh"
+#include "../common/use_context.hh"
 
 using namespace nas;
 using namespace sm;

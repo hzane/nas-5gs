@@ -1,4 +1,5 @@
 #include "../common/dissect_mm_msg.hh"
+#include "../common/use_context.hh"
 
 using namespace cmn;
 using namespace nas;
@@ -21,34 +22,34 @@ int mm::dissect_operator_defined_access_category_definitions(dissector d, contex
         const auto length  = static_cast< int >(d.tvb->uint8(d.offset));
         auto       sd      = d.slice(length + 1);
         const auto subtree = d.add_item(
-            length + 1, "Operator-defined access category definition  %u", i++);
+            length + 1, formats("Operator-defined access category definition  %u", i++));
         use_tree    ut(sd, subtree);
         use_context suc(ctx, "operator-defined-access-category-definition", sd, 0);
 
-        // auto n = sd.add_item(1, &hf_mm_length, enc::be);
+        // auto n = sd.add_item(1, &hf_mm_length);
         sd.step(1);
 
         /* Precedence value */
-        (void) sd.add_item(1, &hf_precedence, enc::be);
+        (void) sd.add_item(1, &hf_precedence);
         sd.step(1);
 
         /* PSAC    0 Spare    0 Spare    Operator-defined access category number */
         const auto psac = (sd.uint8() & 0x80u);
-        (void) sd.add_item(1, &hf_access_cat_n, enc::be);
-        (void) sd.add_item(1, &hf_psac, enc::be);
+        (void) sd.add_item(1, &hf_access_cat_n);
+        (void) sd.add_item(1, &hf_psac);
         sd.step(1);
 
         /* Length of criteria */
         const auto cl = static_cast< int >(sd.uint8());
-        // n             = sd.add_item(1, &hf_criteria_length, enc::be);
+        // n             = sd.add_item(1, &hf_criteria_length);
         sd.step(1);
 
         /* Criteria */
-        (void) sd.add_item(cl, &hf_criteria, enc::na);
+        (void) sd.add_item(cl, &hf_criteria);
 
         /* Spare Spare Spare    Standardized access category a* */
         if (psac) {
-            (void) sd.add_item(1, &hf_standardize_access_cat, enc::be);
+            (void) sd.add_item(1, &hf_standardize_access_cat);
             sd.step(1);
         }
 

@@ -1,6 +1,7 @@
 #include "../common/ber.hh"
 #include "../common/dissect_mm_msg.hh"
 #include "../common/gsm.hh"
+#include "../common/use_context.hh"
 
 using namespace cmn;
 using namespace mm;
@@ -811,7 +812,7 @@ const field_meta        mm::hf_ngran_radio_capability_update = {
     0x02,
 };
 
-const val_string pnb_ciot_values[] = {
+const v_string pnb_ciot_values[] = {
     {0, "no additional information"},
     {1, "control plane CIot 5GS optimization"},
     {2, "user plane CIot 5GS optimization"},

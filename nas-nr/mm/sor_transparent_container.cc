@@ -1,4 +1,5 @@
 #include "../common/dissect_mm_msg.hh"
+#include "../common/use_context.hh"
 
 using namespace cmn;
 using namespace nas;
@@ -78,21 +79,21 @@ int mm::dissect_sor_transparent_container(dissector d, context* ctx) {
 
         const auto list_type = (oct & 0x4u) >> 2u;
         /* SOR-MAC-IAUSF    octet 5-20 */
-        (void) d.add_item(16, &hf_sor_mac_iausf, enc::na);
+        (void) d.add_item(16, &hf_sor_mac_iausf);
         d.step(16);
 
         /* CounterSOR    octet 21-22 */
-        (void) d.add_item(2, &hf_counter_sor, enc::be);
+        (void) d.add_item(2, &hf_counter_sor);
         d.step(2);
 
         if (list_type == 0) {
             /* Secured packet    octet 23* - 2048* */
-            (void) d.add_item(d.length, &hf_sor_sec_pkt, enc::na);
+            (void) d.add_item(d.length, &hf_sor_sec_pkt);
             d.step(d.length);
         } else {
             /* PLMN ID and access technology list    octet 23*-102* */
             while (d.length > 0) {
-                const auto subtree = d.add_item(-1, "List item %u", i);
+                const auto subtree = d.add_item(-1, formats("List item %u", i));
                 use_tree ut(d, subtree);
                 /* The PLMN ID and access technology list consists of PLMN ID and access
                  * technology identifier and are coded as specified in 3GPP TS 31.102 [22]
@@ -120,7 +121,7 @@ int mm::dissect_sor_transparent_container(dissector d, context* ctx) {
         d.add_bits(flags_dt1);
         d.step(1);
         /* SOR-MAC-IUE    octet 5 - 20*/
-        (void) d.add_item(16, &hf_sor_mac_iue, enc::na);
+        (void) d.add_item(16, &hf_sor_mac_iue);
         d.step(16);
     }
 

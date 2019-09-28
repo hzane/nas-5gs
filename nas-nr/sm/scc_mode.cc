@@ -1,10 +1,11 @@
 #include "../common/dissect_sm_msg.hh"
+#include "../common/use_context.hh"
 
 /*  9.11.4.16    SSC mode */
 int sm::dissect_ssc_mode(dissector d, context* ctx) {
     const use_context uc(ctx, "ssc-mode", d, -1);
 
-    (void) d.add_item(1, &hf_ssc_mode, enc::be);
+    (void) d.add_item(1, &hf_ssc_mode);
 
     return 1;
 }
@@ -17,7 +18,7 @@ extern const element_meta sm::ssc_mode = {
 };
 
 /*  9.11.4.16    SSC mode */
-const val_string ssc_mode_values[] = {
+const v_string ssc_mode_values[] = {
     {0x1, "SSC mode 1"},
     {0x2, "SSC mode 2"},
     {0x3, "SSC mode 3"},

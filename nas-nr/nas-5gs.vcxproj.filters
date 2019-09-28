@@ -527,7 +527,7 @@
     <ClInclude Include="tree_meta.hh">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="val_string.hh">
+    <ClInclude Include="v_string.hh">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="tvbuff.hh">

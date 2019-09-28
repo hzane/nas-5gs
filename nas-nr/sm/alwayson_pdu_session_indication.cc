@@ -1,4 +1,5 @@
 #include "../common/dissect_sm_msg.hh"
+#include "../common/use_context.hh"
 
 const true_false_string tfs_pdu_alwayson_session_ind = {
     "Always-on PDU session allowed",
@@ -19,7 +20,7 @@ const field_meta hf_pdu_alwayson_session_ind = {
 int sm::dissect_always_on_pdu_session_indication(dissector d, context* ctx) {
     const use_context uc(ctx, "always-on-pdu-session-indication", d, -1);
 
-    (void) d.add_item(1, &hf_pdu_alwayson_session_ind, enc::be);
+    (void) d.add_item(1, &hf_pdu_alwayson_session_ind);
     d.step(1);
 
     return 1;

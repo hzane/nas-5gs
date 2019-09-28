@@ -1,4 +1,5 @@
 #include "../common/dissect_sm_msg.hh"
+#include "../common/use_context.hh"
 
 // This bit indicates network's capability for Ethernet PDN type in S1 mode.
 const tf_string tfs_epts1 = {
@@ -21,7 +22,7 @@ const field_meta hf_epts1 = {
 int dissect_sm_network_feature_support(dissector d, context* ctx){
     const use_context uc(ctx, "5gsm-network-feature-support", d, 12);
 
-    (void) d.add_item(1, &hf_epts1, enc::be);
+    (void) d.add_item(1, &hf_epts1);
     d.step(1);
 
     return uc.length;

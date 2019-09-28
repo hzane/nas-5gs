@@ -2,6 +2,7 @@
 
 #include "dissect_nas5g.hh"
 #include "field_meta.hh"
+#include "use_context.hh"
 
 inline int not_present_diag(int length, const element_meta* meta, context* ctx) {
     if (!meta || !meta->name) return length;
@@ -120,7 +121,7 @@ int dissect_opt_lv(const field_meta *,
     const auto subtree = d.add_item(1 + parm_len, val_meta->name);
     const use_tree ut(d, subtree);
 
-    // auto l = d.add_item(1, hf_gsm_a_length, enc::be);
+    // auto l = d.add_item(1, hf_gsm_a_length);
     d.step(1);
 
     if (parm_len == 0) return 1;
@@ -142,14 +143,14 @@ int dissect_opt_lv_e(const field_meta *,
 
     if (d.length <= 0) return not_present_diag(0, val_meta, ctx);
 
-    const auto parm_len = d.ntohs();
+    const auto parm_len = d.uint16();
     elem_set_presence(e, true);
     elem_set_length(e, parm_len);
 
     const auto subtree = d.add_item(2 + parm_len, val_meta->name);
     use_tree ut(d, subtree);
 
-    // (void) d.add_item(2, hf_gsm_e_length, enc::be);
+    // (void) d.add_item(2, hf_gsm_e_length);
     d.step(2);
 
     const auto fnc      = val_meta->fnc ? val_meta->fnc : dissect_msg_unknown_body;
@@ -279,7 +280,7 @@ int dissect_opt_tlv(const field_meta *,
     d.step(1);
     const use_tree ut(d, subtree);
 
-    // auto t = d.add_item(1, hf_gsm_a_length, enc::be);
+    // auto t = d.add_item(1, hf_gsm_a_length);
     d.step(1);
 
     if (parm_len == 0) return 2;
@@ -374,7 +375,7 @@ int dissect_opt_tlv_e(const field_meta *,
     const use_tree ut(d, subtree);
     d.step(1);
 
-    // (void) d.add_item(2, hf_gsm_e_length, enc::be);
+    // (void) d.add_item(2, hf_gsm_e_length);
     d.step(2);
 
     if (parm_len == 0) return 1 + 2;
@@ -390,7 +391,7 @@ int dissect_opt_tlv_e(const field_meta *,
 int dissect_msg_unknown_body(dissector d, context *ctx) {
     const use_context uc(ctx, "unknown message body", d, -1);
 
-    d.tree->add_item(d.pinfo, d.tvb, d.offset, d.length, nas::hf_msg_elem, enc::na);
+    d.tree->add_item(d.pinfo, d.tvb, d.offset, d.length, nas::hf_msg_elem);
     return d.length;
 }
 

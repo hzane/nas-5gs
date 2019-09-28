@@ -1,5 +1,6 @@
 #include "../common/dissect_sm_msg.hh"
 #include "../common/range_string.hh"
+#include "../common/use_context.hh"
 
 const field_meta hf_gsm_sm_extension = {
     "Extension",
@@ -42,8 +43,8 @@ int sm::dissect_extended_protocol_configuration_options(dissector d, context* ct
     // See subclause 10.5.6.3A in 3GPP TS 24.008
 
     /* 1 ext 0 0 0 0 Spare  Configuration protocol */
-    (void) d.add_item(1, &hf_gsm_sm_extension, enc::be);
-    (void) d.add_item(1, &hf_gsm_configuration_protocol, enc::be);
+    (void) d.add_item(1, &hf_gsm_sm_extension);
+    (void) d.add_item(1, &hf_gsm_configuration_protocol);
     d.step(1);
 
     return uc.length;

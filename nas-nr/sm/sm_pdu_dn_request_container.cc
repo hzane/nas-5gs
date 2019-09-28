@@ -1,4 +1,5 @@
 #include "../common/dissect_sm_msg.hh"
+#include "../common/use_context.hh"
 
 // SM PDU DN request container 9.11.4.15
 const element_meta sm::sm_pdu_dn_request_container = {
@@ -24,7 +25,7 @@ int sm::dissect_pdu_dn_request_container(dissector d, context* ctx) {
 
     // A DN-specific identity of the UE in the network access identifier (NAI)
     // format according to IETF RFC 7542 [37], encoded as UTF-8 string.
-    d.add_item(d.length, &hf_dn_specific_identity, enc::be);
+    d.add_item(d.length, &hf_dn_specific_identity);
     d.step(d.length);
 
     return uc.length;

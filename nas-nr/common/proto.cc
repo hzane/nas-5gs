@@ -11,8 +11,7 @@ void proto_node::set_length(int len) { length = len; }
 
 std::string print_text(const field_meta* meta,
                        const uint8_t*    data,
-                       int               len,
-                       uint32_t          enc);
+                       int               len);
 
 std::string print_text(const field_meta* meta, uint64_t v);
 
@@ -20,26 +19,22 @@ proto_item* proto_node::add_item(packet_info*      pinfo,
                                  tvbuff*           buf,
                                  int               start,
                                  int               len,
-                                 const field_meta* field,
-                                 uint32_t          encoding) {
+                                 const field_meta* field) {
     (void) pinfo;
 
     auto item    = new proto_node(buf->data, start, len, field);
-    item->enc    = encoding;
+
     children.push_back(item);
 
     if (field && field->tag) {
         item->name = field->tag;
     }
-    item->set_item(len, field, encoding);
+    item->set_item(len, field);
 
     return item;
 }
 
-proto_item* proto_node::set_item(int len, const field_meta* field, uint32_t encoding) {
-    enc = encoding;
-
-    if (encoding == enc::na || encoding == enc::none) return this;
+proto_item* proto_node::set_item(int len, const field_meta* field) {
 
     if (field && ft::is_integer(field->typi)) {
         auto v = n2_uint(data, len);
@@ -49,7 +44,7 @@ proto_item* proto_node::set_item(int len, const field_meta* field, uint32_t enco
         val  = v;
         text = print_text(field, v);
     } else
-        text = print_text(field, data, len, encoding);
+        text = print_text(field, data, len);
 
     return this;
 }
@@ -70,7 +65,7 @@ proto_item* proto_node::add_expert(packet_info* pinfo,
                                    int          len,
                                    const char*  format,
                                    ...) {
-    auto item = add_item(pinfo, buf, start, len, &hf_expert, enc::na);
+    auto item = add_item(pinfo, buf, start, len, &hf_expert);
     va_list args;
     va_start(args, format);
     item->text = vformat(format, args);
@@ -108,8 +103,7 @@ proto_node::proto_node(const uint8_t* buffer, int offset, int length, const fiel
 
 std::string print_text(const field_meta* meta,
                        const uint8_t*    data,
-                       int               len,
-                       uint32_t          enc) {
+                       int               len) {
     if (meta == nullptr) {
         return formats("%d bytes", len);
     }
@@ -121,7 +115,7 @@ std::string print_text(const field_meta* meta,
         }
         return meta->format(v);
     }
-    return meta->format(data, len, enc);
+    return meta->format(data, len);
 }
 
 

@@ -2,4 +2,4 @@
 #include "config.hh"
 #include "description.hh"
 
-using v_string = val_string;
+using v_string = v_string;

@@ -1,4 +1,5 @@
 #include "../common/dissect_mm_msg.hh"
+#include "../common/use_context.hh"
 
 using namespace nas;
 using namespace mm;
@@ -7,7 +8,7 @@ using namespace mm;
 int mm::dissect_identity_type(dissector d, context* ctx) {
     const use_context uc(ctx, "5gs-identity-type", d, -1);
 
-    (void) d.add_item(1, &hf_identity_type, enc::be);
+    (void) d.add_item(1, &hf_identity_type);
     d.step(1);
 
     return 1;
@@ -15,7 +16,7 @@ int mm::dissect_identity_type(dissector d, context* ctx) {
 
 
 /*5GS mobile identity     5GS mobile identity 9.11.3.4    */
-const val_string mm::identity_type_values[] = {
+const v_string mm::identity_type_values[] = {
     {0x0, "No identity"},
     {0x1, "SUCI"},
     {0x2, "5G-GUTI"},

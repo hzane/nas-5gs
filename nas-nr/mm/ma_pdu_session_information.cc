@@ -1,5 +1,6 @@
 #include "../common/field_meta.hh"
 #include "mm_dissects.hh"
+#include "../common/use_context.hh"
 
 const v_string ma_pdu_session_information_values[]={
     {0x01, "MA PDU session network upgrade is allowed"},
@@ -14,6 +15,6 @@ const field_meta hf_ma_pdu_session_information = {
 int mm::dissect_ma_pdu_session_information(dissector d, context* ctx){
     const use_context uc(ctx, "ma-pdu-session-information", d, -1);
 
-    d.add_item(1, &hf_ma_pdu_session_information, enc::be);
+    d.add_item(1, &hf_ma_pdu_session_information);
     return 1;
 }

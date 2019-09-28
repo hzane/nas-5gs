@@ -16,7 +16,7 @@ const field_meta hfm_msg_elements = {
 };
 const field_meta* nas::hf_msg_elem = &hfm_msg_elements;
 
-extern const val_string epd_values[] = {
+extern const v_string epd_values[] = {
     {0x00, "Group call control"},
     {0x01, "Broadcast call control"},
     {0x02, "EPS session management messages"},
@@ -51,7 +51,7 @@ const field_meta hfm_epd = {
 };
 const field_meta* nas::hf_epd = &hfm_epd;
 
-const val_string security_header_type_values[] = {
+const v_string security_header_type_values[] = {
     {0, "Plain NAS message, not security protected"},
     {1, "Integrity protected"},
     {2, "Integrity protected and ciphered"},
@@ -97,7 +97,7 @@ field_meta hfm_sequence_no = {
 const field_meta* nas::hf_sequence_no = &hfm_sequence_no;
 
 /* 5GS session management messages */
-const val_string sm_message_type_values[] = {
+const v_string sm_message_type_values[] = {
 
     {0xc1, "PDU session establishment request"},
     {0xc2, "PDU session establishment accept"},
@@ -159,7 +159,7 @@ const field_meta* nas::hf_procedure_transaction_id = &hfm_proc_trans_id;
 /* 9.7  Message type */
 
 /* 5GS mobility management messages */
-const val_string mm_message_type_values[] = {
+const v_string mm_message_type_values[] = {
     {0x41, "Registration request"},
     {0x42, "Registration accept"},
     {0x43, "Registration complete"},

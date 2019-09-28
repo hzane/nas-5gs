@@ -1,4 +1,5 @@
 #include "../common/dissect_mm_msg.hh"
+#include "../common/use_context.hh"
 
 using namespace cmn;
 using namespace nas;
@@ -8,7 +9,7 @@ using namespace mm;
 int mm::dissect_service_type(dissector d, context* ctx) {
     const use_context uc(ctx, "service-type", d, -1);
 
-    (void) d.add_item(1, &hf_service_type, enc::be);
+    (void) d.add_item(1, &hf_service_type);
     d.step(1);
 
     return 1;
@@ -16,7 +17,7 @@ int mm::dissect_service_type(dissector d, context* ctx) {
 
 /* *     9.11.3.50    Service type page.396 */
 /* Used inline as H1 (Upper nibble)*/
-const val_string mm::service_type_values[] = {
+const v_string mm::service_type_values[] = {
     {0x00, "Signalling"},
     {0x01, "Data"},
     {0x02, "Mobile terminated services"},

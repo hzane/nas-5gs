@@ -1,4 +1,5 @@
 #include "../common/dissect_mm_msg.hh"
+#include "../common/use_context.hh"
 
 using namespace cmn;
 using namespace nas;
@@ -16,7 +17,7 @@ extern const element_meta mm::nrmm_cause = {
 int mm::dissect_nrmm_cause(dissector d, context* ctx) {
     const use_context uc(ctx, "5gmm-cause", d, -1);
 
-    (void) d.add_item(1, &hf_nrmm_cause, enc::be);
+    (void) d.add_item(1, &hf_nrmm_cause);
     d.step(1);
 
     return 1;
@@ -25,7 +26,7 @@ int mm::dissect_nrmm_cause(dissector d, context* ctx) {
 
 namespace mm {
 /* * 9.11.3.2 5GMM cause */
-extern const val_string nrmm_cause_values[] = {
+extern const v_string nrmm_cause_values[] = {
     {0x03, "Illegal UE"},
     {0x05, "PEI not accepted"},
     {0x06, "Illegal ME"},

@@ -1,4 +1,5 @@
 #include "../common/dissect_mm_msg.hh"
+#include "../common/use_context.hh"
 
 using namespace cmn;
 
@@ -16,7 +17,7 @@ int mm::dissect_service_area_list(dissector d, context* ctx) {
     /*Partial service area list*/
     while (d.length > 0) {
         const auto     start   = d.offset;
-        const auto     subtree = d.add_item(-1, "Partial service area list  %u", n++);
+        const auto     subtree = d.add_item(-1, formats("Partial service area list  %u", n++));
         use_tree ut(d, subtree);
 
         /*Head of Partial service area list*/
@@ -33,7 +34,7 @@ int mm::dissect_service_area_list(dissector d, context* ctx) {
             dissect_e212_mcc_mnc(d, ctx);
             d.step(3);
             while (sal_num_e > 0) {
-                (void) d.add_item(3, &hf_tracking_area_code, enc::be);
+                (void) d.add_item(3, &hf_tracking_area_code);
                 d.step(3);
                 --sal_num_e;
             }
@@ -44,7 +45,7 @@ int mm::dissect_service_area_list(dissector d, context* ctx) {
             d.step(3);
 
             /*octet 5  TAC 1*/
-            (void) d.add_item(3, &hf_tracking_area_code, enc::be);
+            (void) d.add_item(3, &hf_tracking_area_code);
             d.step(3);
         } break;
         case 2: {
@@ -54,7 +55,7 @@ int mm::dissect_service_area_list(dissector d, context* ctx) {
                 d.step(3);
 
                 /*octet 5  TAC 1*/
-                (void) d.add_item(3, &hf_tracking_area_code, enc::be);
+                (void) d.add_item(3, &hf_tracking_area_code);
                 d.step(3);
                 --sal_num_e;
             }

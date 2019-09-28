@@ -1,6 +1,7 @@
 #include "../common/ber.hh"
 #include "../common/common.hh"
 #include "../common/dissect_sm_msg.hh"
+#include "../common/use_context.hh"
 
 /*  8.3.5 PDU session authentication complete */
 int sm::dissect_pdu_session_authentication_complete(dissector d, context* ctx) {

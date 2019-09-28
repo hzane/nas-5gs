@@ -2,6 +2,7 @@
 #include "../common/common.hh"
 #include "../common/dissect_sm_msg.hh"
 #include "../common/packet_info.hh"
+#include "../common/use_context.hh"
 
 using namespace cmn;
 using namespace nas;
@@ -18,7 +19,7 @@ int sm::dissect_pdu_session_establishment_accept(dissector d, context* ctx) {
     dissect_pdu_session_type(d, ctx);
 
     /* Selected SSC mode    SSC mode 9.11.4.16    M    V    1/2 H1*/
-    (void) d.add_item(1, &hfm_selected_ssc_mode, enc::be);
+    (void) d.add_item(1, &hfm_selected_ssc_mode);
     d.step(1);
 
     /* Authorized QoS rules QoS rules 9.11.4.13 M LV-E 2-65537  */

@@ -1,5 +1,6 @@
 #include "../common/ber.hh"
 #include "../common/dissect_mm_msg.hh"
+#include "../common/use_context.hh"
 
 const element_meta mm::imeisv_mobile_id = {
     0x77,

@@ -1,4 +1,5 @@
 #include "common.hh"
+#include "../common/use_context.hh"
 
 // 3GPP TS 24.008 g10
 namespace{
@@ -29,7 +30,7 @@ const field_meta hf_gprs_timer = {
 int cmn::dissect_gprs_timer_set(dissector d, context *ctx) {
     const use_context uc(ctx, "gprs-timer", d, -1);
 
-    (void) d.tree->set_item(1, &hf_gprs_timer, enc::be);
+    (void) d.tree->set_item(1, &hf_gprs_timer);
     d.step(1);
 
     /* no length check possible */

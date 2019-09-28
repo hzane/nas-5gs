@@ -1,4 +1,5 @@
 #include "../common/dissect_mm_msg.hh"
+#include "../common/use_context.hh"
 
 using namespace cmn;
 using namespace nas;
@@ -36,10 +37,10 @@ int mm::dissect_emergency_number_list(dissector d, context* ctx) {
          * Emergency Service Category Value and the Number digits.
          */
         auto       elen    = d.uint8();
-        const auto subtree = d.add_item(elen + 1, &hf_emergency_number_info, enc::be);
+        const auto subtree = d.add_item(elen + 1, &hf_emergency_number_info);
         use_tree   ut(d, subtree);
 
-        (void) d.add_item(1, &hf_emergency_number_length, enc::be);
+        (void) d.add_item(1, &hf_emergency_number_length);
         d.step(1);
 
         /* 0 0 0 Emergency Service Category Value
@@ -48,7 +49,7 @@ int mm::dissect_emergency_number_list(dissector d, context* ctx) {
         d.add_bits(flags);
         d.step(1);
         --elen;
-        (void) d.add_item(elen, &hf_emergency_bcd_num, enc::be);
+        (void) d.add_item(elen, &hf_emergency_bcd_num);
 
         d.step(elen);
     }

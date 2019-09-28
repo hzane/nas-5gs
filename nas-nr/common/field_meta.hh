@@ -6,7 +6,7 @@
 #include "val_string.hh"
 
 using tf_string    = true_false_string;
-using value_string = val_string;
+using value_string = v_string;
 
 
 inline const true_false_string true_false = {"true", "false"};
@@ -88,7 +88,7 @@ inline uint32_t get(uint32_t d) { return d & 0xff; }
 using string = std::string;
 
 struct field_meta : description {
-    string format(const uint8_t* p, int len, uint32_t enc) const;
+    string format(const uint8_t* p, int len) const;
     [[nodiscard]] string format(uint64_t val) const;
 };
 

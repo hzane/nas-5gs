@@ -1,4 +1,5 @@
 #include "../common/dissect_mm_msg.hh"
+#include "../common/use_context.hh"
 
 using namespace cmn;
 using namespace mm;
@@ -7,8 +8,8 @@ int mm::dissect_registration_result(dissector d, context* ctx) {
     use_context uc(ctx, "5gs-registration-result", d, -1);
 
     /* 0 Spare 0 Spare 0 Spare 0 Spare SMS allowed 5GS registration result value */
-    auto i = d.add_item(1, &hf_reg_res_sms_allowed, enc::be);
-    i = d.add_item(1, &hf_registration_result, enc::be);
+    auto i = d.add_item(1, &hf_reg_res_sms_allowed);
+    i = d.add_item(1, &hf_registration_result);
     d.step(1);
 
     unused(i);

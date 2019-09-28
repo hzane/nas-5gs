@@ -1,4 +1,5 @@
 #include "../common/dissect_mm_msg.hh"
+#include "../common/use_context.hh"
 
 /* 9.11.3.33    NAS message container */
 int mm::dissect_nas_message_container(dissector d, context* ctx) {

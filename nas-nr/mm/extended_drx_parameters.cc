@@ -1,4 +1,5 @@
 #include "../common/dissect_mm_msg.hh"
+#include "../common/use_context.hh"
 
 // 9.11.3.60	Extended DRX parameters
 // See subclause 10.5.5.32 in 3GPP TS 24.008 [12].
@@ -68,8 +69,8 @@ const field_meta hf_edrx_value = {
 int mm::dissect_extended_drx_parameters(dissector d, context* ctx) {
     const use_context uc(ctx, "extended-drx-parameters", d, -1);
 
-    d.add_item(1, &hf_paging_time_window, enc::be);
-    d.add_item(1, &hf_edrx_value, enc::be);
+    d.add_item(1, &hf_paging_time_window);
+    d.add_item(1, &hf_edrx_value);
     d.step(1);
 
     return 1;

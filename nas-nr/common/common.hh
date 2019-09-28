@@ -42,7 +42,7 @@ int dissect_intra_n1_mode_container(dissector d, context* ctx);// 9.11.2.6
 // S-NSSAI   9.11.2.8
 int dissect_s_nssai(dissector d, context* ctx);
 extern const element_meta s_nssai;
-extern const val_string        enc_algo_type_values[];
+extern const v_string     enc_algo_type_values[];
 }
 
 namespace cmn {

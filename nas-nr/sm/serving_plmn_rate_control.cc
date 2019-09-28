@@ -1,4 +1,5 @@
 #include "../common/dissect_sm_msg.hh"
+#include "../common/use_context.hh"
 
 const field_meta hf_serving_plmn_rate_control = {
     "Serving PLMN rate control value",
@@ -16,7 +17,7 @@ const field_meta hf_serving_plmn_rate_control = {
 int dissect_serving_plmn_rate_control(dissector d, context*ctx) {
     const use_context uc(ctx, "serving-plmn-rate-control", d, -1);
 
-    (void) d.add_item(2, &hf_serving_plmn_rate_control, enc::be);
+    (void) d.add_item(2, &hf_serving_plmn_rate_control);
     return 2;
 }
 

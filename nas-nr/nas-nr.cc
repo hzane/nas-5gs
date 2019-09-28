@@ -1,9 +1,8 @@
-#include "nas-nr.hh"
-
-#include <cstring>
 #include <string>
-
+#include<cstring>
+#include "nas-nr.hh"
 #include "common/dissect_nas5g.hh"
+#include "common/field_meta.hh"
 
 using string = std::string;
 
@@ -119,7 +118,7 @@ char NASNRAPI *pretty_format(const description* m, const octet* data, int length
     const auto fm   = static_cast< const field_meta* >(m); // NOLINT
     if (!fm) return nullptr;
 
-    const auto  text = fm->format(data, length, enc::be);
+    const auto  text = fm->format(data, length);
     return xstrdup (text.c_str());
 }
 

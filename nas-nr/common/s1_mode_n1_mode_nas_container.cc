@@ -1,20 +1,21 @@
 #include "common.hh"
+#include "../common/use_context.hh"
 
 int cmn::dissect_s1_to_n1_mode_container(dissector d, context* ctx) {
     const use_context uc(ctx, "s1-mode-to-n1-mode-transparent-container", d, 2);
 
     /*The value part of the Intra N1 mode NAS transparent container information element is
 included in specific information elements within some RRC messages sent to the UE.*/
-    (void) d.add_item(4, &hf_authentication_code, enc::be);
+    (void) d.add_item(4, &hf_authentication_code);
     d.step(4);
 
-    (void) d.add_item(1, &hf_integrity_algo_type, enc::be);
-    (void) d.add_item(1, &hf_ciphering_algo_type, enc::be);
+    (void) d.add_item(1, &hf_integrity_algo_type);
+    (void) d.add_item(1, &hf_ciphering_algo_type);
     d.step(1);
 
-    (void) d.add_item(1, &hf_ksi_5g, enc::be);
-    (void) d.add_item(1, &hf_security_context_type, enc::be);
-    (void) d.add_item(1, &hf_next_hop_chaining_counter, enc::be);
+    (void) d.add_item(1, &hf_ksi_5g);
+    (void) d.add_item(1, &hf_security_context_type);
+    (void) d.add_item(1, &hf_next_hop_chaining_counter);
     d.step(1);
 
     // oct 9-10 is spare

@@ -44,8 +44,8 @@ extern const field_meta   hf_e212_mnc;
  */
 int cmn::dissect_e212_mcc_mnc(dissector d, context*) {
 
-    (void) d.add_item(3, &hf_e212_mcc, enc::be); // mcc
-    (void) d.add_item(3, &hf_e212_mnc, enc::be); // mnc
+    (void) d.add_item(3, &hf_e212_mcc); // mcc
+    (void) d.add_item(3, &hf_e212_mnc); // mnc
 
     return 3;
 }

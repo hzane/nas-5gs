@@ -1,4 +1,5 @@
 #include "../common/dissect_sm_msg.hh"
+#include "../common/use_context.hh"
 
 const tf_string tfs_cpoi = {
     "PDU session can be used for control plane CIoT 5GS optimization only",
@@ -20,7 +21,7 @@ const field_meta hf_cpoi = {
 int sm::dissect_control_plane_only_indication(dissector d, context*ctx){
     const use_context uc(ctx, "control-plane-only-indication", d, -1);
 
-    (void) d.add_item(1, &hf_cpoi, enc::be);
+    (void) d.add_item(1, &hf_cpoi);
     d.step(1);
 
     return 1;

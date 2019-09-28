@@ -2,12 +2,10 @@
 
 #include "tvbuff.hh"
 
-string field_meta::format(const uint8_t* p, int length, uint32_t enc) const {
+string field_meta::format(const uint8_t* p, int length) const {
 
     if (!p || length <= 0) return string();
-    if (enc == enc::na || enc == enc::none) {
-        return string();
-    }
+
     if (ft::is_integer(typi)) {
         auto v = n2_uint(p, length);
         return format(v);
@@ -91,13 +89,13 @@ string field_meta::format(uint64_t v) const {
         return formats("%c", static_cast< char >(v));
     }
 
-    if (val_strings && display == fd::base_bit) {
-        const auto flags = find_bits_string(val_strings, static_cast< uint32_t >(v));
+    if (v_strings && display == fd::base_bit) {
+        const auto flags = find_bits_string(v_strings, static_cast< uint32_t >(v));
         return join(flags, " | ");
     }
 
-    if (val_strings) {
-        auto s = find_val_string(val_strings, uint32_t(v));
+    if (v_strings) {
+        auto s = find_val_string(v_strings, uint32_t(v));
         return formats("%s (%#x)", s, uint32_t(v));
     }
 

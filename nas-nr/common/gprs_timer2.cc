@@ -1,5 +1,6 @@
 #include "common.hh"
 #include "tvbuff.hh"
+#include "../common/use_context.hh"
 
 namespace{
 /* [9] 10.5.7.3 GPRS Timer */
@@ -51,7 +52,7 @@ const field_meta hf_gprs_timer2_value = {
 int cmn::dissect_gprs_timer2_set(dissector d, context *ctx) {
     const use_context uc(ctx, "gprs-timer2", d, -1);
 
-    (void) d.tree->set_item(1, &hf_gprs_timer2, enc::be);
+    (void) d.tree->set_item(1, &hf_gprs_timer2);
     d.step(1);
 
     return 1;

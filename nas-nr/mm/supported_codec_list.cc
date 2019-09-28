@@ -1,4 +1,5 @@
 #include "../common/dissect_mm_msg.hh"
+#include "../common/use_context.hh"
 
 // 9.11.3.62	Supported codec list
 const value_string system_id_values[] = {
@@ -200,7 +201,7 @@ const field_meta hf_gsm_a_dtap_codec_pdc_efr     = {{
 int dissect_codec_bitmap(dissector d, int idx, context* ctx) {
     const use_context uc(ctx, "codec-bitmap", d, 0);
 
-    const auto     subtree = d.add_item(-1, "Codec Bitmap for SysID %u", idx);
+    const auto     subtree = d.add_item(-1, formats("Codec Bitmap for SysID %u", idx));
     const use_tree ut(d, subtree);
 
     static const field_meta* flags1[] = {
@@ -241,11 +242,11 @@ int dissect_supported_codec_list(dissector d, context* ctx) {
 
     auto              i = 1;
     while(d.length>0) {
-        (void) d.add_item(1, &hf_system_indentification, enc::be);
+        (void) d.add_item(1, &hf_system_indentification);
         d.step(1);
 
         const auto blen = static_cast< int >(d.uint8());
-        (void) d.add_item(1, &hf_bitmap_length, enc::be);
+        (void) d.add_item(1, &hf_bitmap_length);
         d.step(1);
 
         if (blen > 0) {

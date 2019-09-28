@@ -1,4 +1,5 @@
 #include "../common/dissect_mm_msg.hh"
+#include "../common/use_context.hh"
 
 // no body
 int mm::dissect_deregistration_accept_ue_terminate(dissector d, context* ctx) {

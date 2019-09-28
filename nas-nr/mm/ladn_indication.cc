@@ -1,4 +1,5 @@
 #include "../common/dissect_mm_msg.hh"
+#include "../common/use_context.hh"
 
 /*  9.11.3.29    LADN indication  */
 int mm::dissect_ladn_indication(dissector d, context* ctx) {
@@ -6,7 +7,7 @@ int mm::dissect_ladn_indication(dissector d, context* ctx) {
 
     auto i = 1;
     while (d.length > 0) {
-        auto     subtree = d.add_item(2, "LADN DNN value %u", i++);
+        auto     subtree = d.add_item(2, formats("LADN DNN value %u", i++));
         use_tree ut(d, subtree);
         /*LADN DNN value is coded as the length and value part of DNN information element
          * as specified in subclause 9.11.2.1A starting with the second octet*/

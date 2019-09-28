@@ -1,4 +1,5 @@
 #include "common.hh"
+#include "../common/use_context.hh"
 
 // S-NSSAI   9.11.2.8
 extern const element_meta cmn::s_nssai = {
@@ -63,23 +64,23 @@ int cmn::dissect_s_nssai(dissector d, context* ctx) {
      * This field contains the 8 bit SST value. The coding of the SST value part is
      * defined in 3GPP TS 23.003
      */
-    (void) d.add_item(1, &hf_slice_service_type, enc::be);
+    (void) d.add_item(1, &hf_slice_service_type);
     d.step(1);
     if (d.length<=0) return uc.length;
 
     /* SD    octet 4 - octet 6* */
-    (void) d.add_item(3, &hf_slice_differentiator, enc::be);
+    (void) d.add_item(3, &hf_slice_differentiator);
     d.step(3);
 
     if (d.length <= 0) return uc.length;
 
     /* Mapped configured SST    octet 7* */
-    (void) d.add_item(1, &hf_mapped_conf_sst, enc::be);
+    (void) d.add_item(1, &hf_mapped_conf_sst);
     d.step(1);
     if (d.length <= 0) return uc.length;
 
     /* Mapped configured SD    octet 8 - octet 10* */
-    (void) d.add_item(3, &hf_mapped_conf_sd, enc::be);
+    (void) d.add_item(3, &hf_mapped_conf_sd);
     d.step(3);
 
     return uc.length;

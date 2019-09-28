@@ -1,4 +1,5 @@
 #include "../common/dissect_mm_msg.hh"
+#include "../common/use_context.hh"
 
 /*0	indicates establishment of user-plane resources of the PDU session
  *was not requested in the Uplink data status IE

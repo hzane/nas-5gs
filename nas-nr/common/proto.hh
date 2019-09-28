@@ -11,12 +11,10 @@ struct proto_node { // NOLINT: special-member-functions
                          tvbuff*           buf,
                          int               start,
                          int               len,
-                         const field_meta* field,
-                         uint32_t          encoding);
+                         const field_meta* field);
 
     proto_item* set_item(int len,
-                         const field_meta* field,
-                         uint32_t          encoding);
+                         const field_meta* field);
 
     proto_item* add_expert(packet_info* pinfo,
                            tvbuff*      buf,

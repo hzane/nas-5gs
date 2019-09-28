@@ -1,4 +1,5 @@
 #include "../common/dissect_mm_msg.hh"
+#include "../common/use_context.hh"
 
 using namespace cmn;
 using namespace nas;
@@ -27,7 +28,7 @@ struct nas_ksi_t {
 };
 
 /* NAS key set identifier (octet 1) Bits 3  2   1 */
-extern const val_string mm::nas_ksi_values[] = {
+extern const v_string mm::nas_ksi_values[] = {
     {0, "0"},
     {1, "1"},
     {2, "2"},

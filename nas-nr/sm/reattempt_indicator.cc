@@ -1,4 +1,5 @@
 #include "../common/dissect_sm_msg.hh"
+#include "../common/use_context.hh"
 
 const tf_string tfs_ratc = {
     "UE is not allowed to re-attempt the procedure in S1 mode",
@@ -35,8 +36,8 @@ const field_meta hf_eplmnc = {
 int sm::dissect_reattempt_indicator(dissector d, context* ctx) {
     const use_context uc(ctx, "reattempt-indicator", d, -1);
 
-    (void) d.add_item(1, &hf_ratc, enc::be);
-    (void) d.add_item(1, &hf_eplmnc, enc::be);
+    (void) d.add_item(1, &hf_ratc);
+    (void) d.add_item(1, &hf_eplmnc);
     d.step(1);
 
     return 1;

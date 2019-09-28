@@ -1,4 +1,5 @@
 #include "../common/dissect_sm_msg.hh"
+#include "../common/use_context.hh"
 
 using namespace sm;
 using namespace nas;
@@ -11,17 +12,17 @@ struct eps_parameters_t {
 int dissect_eps_parameters(dissector d, int i, context* ctx) {
     const use_context uc(ctx, "mapped-eps-bearer-contexts", d, 0);
 
-    auto     subtree = d.add_item(-1, "EPS parameter %u", i);
+    auto     subtree = d.add_item(-1, formats("EPS parameter %u", i));
     use_tree ut(d, subtree);
 
     /* EPS parameter identifier */
     const auto param_id = static_cast< uint32_t >(d.uint8());
-    (void) d.add_item(1, &hf_eps_parameter_id, enc::be);
+    (void) d.add_item(1, &hf_eps_parameter_id);
     d.step(1);
 
     /*length of the EPS parameter contents field */
     const auto length = static_cast< int >(d.uint8());
-    // (void) d.add_item(1, &hf_sm_length, enc::be);
+    // (void) d.add_item(1, &hf_sm_length);
     d.step(1);
 
     subtree->set_length(length + 2);
@@ -33,7 +34,7 @@ int dissect_eps_parameters(dissector d, int i, context* ctx) {
     case 4: /* 04H (APN-AMBR) */
     case 5: /* 05H (extended APN-AMBR). */
     default:
-        (void) d.add_item(length, &hf_eps_parameter_contents, enc::be);
+        (void) d.add_item(length, &hf_eps_parameter_contents);
         d.step(length);
     }
     return d.offset - uc.offset;
@@ -73,16 +74,16 @@ int sm::dissect_mapped_eps_bearer_contexts(dissector d, context* ctx) {
     /* The IE contains a number of Mapped EPS bearer context */
     while (d.length > 0) {
         /* Figure 9.11.4.5.2: Mapped EPS bearer context */
-        auto     subtree = d.add_item(-1, "Mapped EPS bearer context %u", n);
+        auto     subtree = d.add_item(-1, formats("Mapped EPS bearer context %u", n));
         use_tree ut(d, subtree);
 
         /* EPS bearer identity */
-        (void) d.add_item(1, &hf_eps_bearer_content_id, enc::be);
+        (void) d.add_item(1, &hf_eps_bearer_content_id);
         d.step(1);
 
         /* Length of Mapped EPS bearer context*/
-        const auto length = static_cast< int >(d.ntohs());
-        // (void) d.add_item(2, &hf_sm_length, enc::be);
+        const auto length = static_cast< int >(d.uint16());
+        // (void) d.add_item(2, &hf_sm_length);
         d.step(2);
 
         subtree->set_length(length + 3);

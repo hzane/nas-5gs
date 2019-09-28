@@ -1,4 +1,5 @@
 #include "../common/dissect_mm_msg.hh"
+#include "../common/use_context.hh"
 
 using namespace cmn;
 using namespace nas;
@@ -37,7 +38,7 @@ int mm::dissect_timezone_set(dissector d, context* ctx) {
      * the first bit (bit 3 of the seventh octet of the TP-Service-Centre-Time-Stamp
      * field) represents the algebraic sign of this difference (0: positive, 1: negative).
      */
-    d.tree->set_item(1, &hf_timezone, enc::be);
+    d.tree->set_item(1, &hf_timezone);
     d.step(1);
 
     /* no length check possible */

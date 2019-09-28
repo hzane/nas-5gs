@@ -1,4 +1,5 @@
 #include "../common/dissect_mm_msg.hh"
+#include "../common/use_context.hh"
 
 using namespace cmn;
 using namespace nas;
@@ -16,11 +17,11 @@ extern const element_meta mm::mico_indication = {
 int mm::dissect_mico_ind(dissector d, context* ctx) {
     const use_context uc(ctx, "mico-indication", d, -1);
 
-    auto i = d.add_item(1, &hfm_mm_raai_b0, enc::be);
+    auto i = d.add_item(1, &hfm_mm_raai_b0);
 
     // In the UE to network direction bit 1 is spare. The UE shall set this bit to
     // zero. In the network to UE and the UE to network direction:
-    (void) d.add_item(1, &hf_mm_sprti, enc::be);
+    (void) d.add_item(1, &hf_mm_sprti);
 
     return 1;
 }

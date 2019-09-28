@@ -1,4 +1,5 @@
 #include "../common/dissect_mm_msg.hh"
+#include "../common/use_context.hh"
 
 using namespace cmn;
 using namespace mm;
@@ -10,7 +11,7 @@ int mm::dissect_abba_set(dissector d, context* ctx) {
     // [24].
     const use_context uc(ctx, "abba", d, 0);
 
-    d.tree->set_item(d.length, &hf_abba, enc::be);
+    d.tree->set_item(d.length, &hf_abba);
     d.step(d.length);
 
     return uc.length;

@@ -1,4 +1,5 @@
 #include "../common/dissect_mm_msg.hh"
+#include "../common/use_context.hh"
 
 /*  8.2.27 Security mode reject */
 int mm::dissect_security_mode_reject(dissector d, context* ctx) {    

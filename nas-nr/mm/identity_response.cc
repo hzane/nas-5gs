@@ -1,5 +1,6 @@
 #include "../common/ber.hh"
 #include "../common/dissect_mm_msg.hh"
+#include "../common/use_context.hh"
 
 /* 8.2.22 Identity response  */
 int mm::dissect_identity_response(dissector d, context* ctx) {

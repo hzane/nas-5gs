@@ -184,7 +184,7 @@
     <ClInclude Include="sm\sm_field_meta.hh" />
     <ClInclude Include="tree_meta.hh" />
     <ClInclude Include="tvbuff.hh" />
-    <ClInclude Include="val_string.hh" />
+    <ClInclude Include="v_string.hh" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ber.cc" />

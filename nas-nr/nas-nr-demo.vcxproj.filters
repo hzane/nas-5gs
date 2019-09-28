@@ -455,7 +455,7 @@
     <ClInclude Include="tree_meta.hh" />
     <ClInclude Include="ber.hh" />
     <ClInclude Include="tvbuff.hh" />
-    <ClInclude Include="val_string.hh" />
+    <ClInclude Include="v_string.hh" />
     <ClInclude Include="mm\mm_dissects.hh">
       <Filter>nas</Filter>
     </ClInclude>

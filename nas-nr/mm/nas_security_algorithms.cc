@@ -1,4 +1,5 @@
 #include "../common/dissect_mm_msg.hh"
+#include "../common/use_context.hh"
 
 using namespace cmn;
 using namespace nas;
@@ -23,7 +24,7 @@ struct security_algorithm_t {
 };
 
 /* *   9.11.3.34    NAS security algorithms */
-extern const val_string mm::integrity_protection_algo_type_values[] = {
+extern const v_string mm::integrity_protection_algo_type_values[] = {
     {0x0, "5G-IA0 (null integrity protection algorithm)"},
     {0x1, "128-5G-IA1"},
     {0x2, "128-5G-IA2"},

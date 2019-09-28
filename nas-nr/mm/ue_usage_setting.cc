@@ -1,4 +1,5 @@
 #include "../common/dissect_mm_msg.hh"
+#include "../common/use_context.hh"
 
 using namespace nas;
 
@@ -7,7 +8,7 @@ int mm::dissect_usage_setting(dissector d, context* ctx) {
     const use_context        uc(ctx, "ue-usage-setting", d, -1);
 
     /*   Spare	UE's usage setting    */
-    (void) d.add_item(1, &hf_ue_usage_setting, enc::be);
+    (void) d.add_item(1, &hf_ue_usage_setting);
     d.step(1);
 
     return 1;

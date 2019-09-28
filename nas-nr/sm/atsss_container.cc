@@ -1,4 +1,5 @@
 #include "../common/dissect_sm_msg.hh"
+#include "../common/use_context.hh"
 
 // 9.11.4.22	ATSSS container
 const field_meta hf_atsss_container = {
@@ -16,7 +17,7 @@ const field_meta hf_atsss_container = {
 int dissect_atsss_container(dissector d, context*ctx){
     const use_context uc(ctx, "atsss-container", d, -1);
 
-    (void) d.add_item(d.length, &hf_atsss_container, enc::na);
+    (void) d.add_item(d.length, &hf_atsss_container);
     d.step(d.length);
 
     return uc.length;

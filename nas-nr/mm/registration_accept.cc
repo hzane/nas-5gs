@@ -1,5 +1,6 @@
 #include "../common/ber.hh"
 #include "../common/dissect_mm_msg.hh"
+#include "../common/use_context.hh"
 
 using namespace cmn;
 using namespace mm;
@@ -683,21 +684,21 @@ int dissect_operator_defined_acd(dissector d, context* ctx) {
     auto i = 1;
     while(d.length>0){
         auto subtree =
-            d.add_item(2, "Operator-defined access category definition  %u", i++);
+            d.add_item(2, formats("Operator-defined access category definition  %u", i++));
         use_tree ut(d, subtree);
 
         // Length of operator-defined access category definition contents oct4
         const auto length = static_cast< int >(d.uint8());
-        // d.add_item(1, &hf_mm_length, enc::be);
+        // d.add_item(1, &hf_mm_length);
         d.step(1);
 
         auto sd = d.slice(length);
         /* Precedence value oct5*/
-        (void) sd.add_item(1, &hf_mm_precedence, enc::be);
+        (void) sd.add_item(1, &hf_mm_precedence);
         sd.step(1);
 
         /* PSAC    0 Spare    0 Spare    Operator-defined access category number  oct6*/
-        (void) sd.add_item(1, &hf_mm_op_defined_acd_oct6, enc::be);
+        (void) sd.add_item(1, &hf_mm_op_defined_acd_oct6);
         sd.step(1);
 
         /* Length of criteria oct7*/
@@ -705,7 +706,7 @@ int dissect_operator_defined_acd(dissector d, context* ctx) {
         sd.step(1);
 
         /* Criteria 8 - a-1*/
-        (void) sd.add_item(clen, &hf_mm_op_defined_acd_criteria, enc::be);
+        (void) sd.add_item(clen, &hf_mm_op_defined_acd_criteria);
         sd.step(clen);
 
         /* 0 Spare    0 Spare    0 Spare    Standardized access category */

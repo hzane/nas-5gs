@@ -1,4 +1,5 @@
 #include "../common/dissect_mm_msg.hh"
+#include "../common/use_context.hh"
 
 /* Mobile Station Classmark Revision level */
 static const value_string revision_values[] = {
@@ -298,32 +299,32 @@ const field_meta hf_a52_algorithm_support = {{
 int dissect_mobile_station_classmark2(dissector d, context* ctx) {
     const use_context uc(ctx, "mobile-station-classmark2", d, 0);
 
-    (void) d.add_item(1, &hf_msc_revision_level, enc::be);
-    (void) d.add_item(1, &hf_es_indication, enc::be);
-    (void) d.add_item(1, &hf_a51_algorithm_support, enc::be);
-    (void) d.add_item(1, &hf_rf_power_capability, enc::be);
+    (void) d.add_item(1, &hf_msc_revision_level);
+    (void) d.add_item(1, &hf_es_indication);
+    (void) d.add_item(1, &hf_a51_algorithm_support);
+    (void) d.add_item(1, &hf_rf_power_capability);
 
     d.step(1);
 
     if (d.length <= 0) return uc.length;
 
-    (void) d.add_item(1, &hf_ps_support_capability, enc::be);
-    (void) d.add_item(1, &hf_ss_screening_indicator, enc::be);
-    (void) d.add_item(1, &hf_nrsm_capability, enc::be);
-    (void) d.add_item(1, &hf_vbs_notification_rec, enc::be);
-    (void) d.add_item(1, &hf_vgcs_notification_reception, enc::be);
-    (void) d.add_item(1, &hf_fc_frequency_capability, enc::be);
+    (void) d.add_item(1, &hf_ps_support_capability);
+    (void) d.add_item(1, &hf_ss_screening_indicator);
+    (void) d.add_item(1, &hf_nrsm_capability);
+    (void) d.add_item(1, &hf_vbs_notification_rec);
+    (void) d.add_item(1, &hf_vgcs_notification_reception);
+    (void) d.add_item(1, &hf_fc_frequency_capability);
 
     d.step(1);
     if (d.length <= 0) return uc.length;
 
-    d.add_item(1, &hf_cm3, enc::be);
-    d.add_item(1, &hf_lcs_va_capability, enc::be);
-    d.add_item(1, &hf_ucs2_treatmeant,enc::be);
-    d.add_item(1, &hf_solsa, enc::be);
-    d.add_item(1, &hf_cmsp, enc::be);
-    d.add_item(1, &hf_a53_algorighm_support, enc::be);
-    d.add_item(1, &hf_a52_algorithm_support, enc::be);
+    d.add_item(1, &hf_cm3);
+    d.add_item(1, &hf_lcs_va_capability);
+    d.add_item(1, &hf_ucs2_treatmeant);
+    d.add_item(1, &hf_solsa);
+    d.add_item(1, &hf_cmsp);
+    d.add_item(1, &hf_a53_algorighm_support);
+    d.add_item(1, &hf_a52_algorithm_support);
 
     d.step(1);
     return d.offset - uc.offset;

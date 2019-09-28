@@ -1,4 +1,5 @@
 #include "../common/dissect_mm_msg.hh"
+#include "../common/use_context.hh"
 
 using namespace cmn;
 using namespace nas;
@@ -9,11 +10,11 @@ int mm::dissect_pdu_session_id_set(dissector d, context* ctx) {
     const use_context uc(ctx, "pdu-session-identity2", d, -1);
 
     // identity value as defined in 3GPP TS 24.007 [11]
-    (void) d.tree->set_item(1, &hf_pdu_session_id, enc::be);
+    (void) d.tree->set_item(1, &hf_pdu_session_id);
     return 1;
 }
 
-static const val_string pdu_session_id_values[] = {
+static const v_string pdu_session_id_values[] = {
     {0x00, "No PDU session identity assigned"},
     {0x01, "Reserved"},
     {0x02, "Reserved"},
