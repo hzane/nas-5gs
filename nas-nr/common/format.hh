@@ -48,3 +48,5 @@ string apn_string(const uint8_t* d, int len);
 string gprs_timer_string(uint8_t d) ;
 string gprs_timer_2_string(uint8_t d) ;
 string gprs_timer_3_string(uint8_t d);
+
+uint8_t umask(uint8_t v, uint8_t mask);

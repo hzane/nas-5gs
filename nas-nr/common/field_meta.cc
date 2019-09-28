@@ -122,4 +122,3 @@ string field_meta::format(uint64_t v) const {
     }
     return formats("%d (%x)", v);
 }
-

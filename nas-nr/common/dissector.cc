@@ -52,17 +52,17 @@ int dissector::safe_length(int len) const {
     return 0;
 }
 
-uint8_t dissector::uint8() const{
+uint8_t dissector::uint8(bool step) {
     const auto p = ptr();
-    if (p) return *p;
-    return 0;
+    if(step) this->step(1);
+    return p ? *p : 0;
 }
 
-uint16_t dissector::uint16() const {
+uint16_t dissector::uint16(bool step)  {
     const auto p = ptr();
     const auto l = safe_length(2);
-    if (p && l > 0) return n2uint16(p);
-    return 0;
+    if (step) this->step(2);
+    return (p && l > 0) ? n2uint16(p) : 0;
 }
 
 uint32_t dissector::uint32() const {
@@ -70,4 +70,30 @@ uint32_t dissector::uint32() const {
     const auto l = safe_length(4);
     if (p && l > 0) return n2uint32(p);
     return 0;
+}
+
+
+int     uint8_field::    add(dissector d, context*) const {
+    d.add_item(1, name, istring(umask(d.uint8(), mask)));
+    return 1;
+}
+
+
+int tag_field::add(dissector d, context*) const {
+    auto tag = vstring(tags, umask(d.uint8(), mask));
+    d.add_item(1, name, tag);
+    return 1;
+}
+
+
+int tf_field::add(dissector d, context*) const {
+    auto v = bstring(umask(d.uint8(), mask), indicator);
+    d.add_item(1, name, v);
+    return 1;
+}
+
+
+int octet_field::add(dissector d, context*, int len) const {
+    d.add_item(len, name, hstring(d.ptr(), d.safe_length(len)));
+    return len;
 }

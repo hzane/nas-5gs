@@ -6,11 +6,11 @@ int cmn::dissect_s1_to_n1_mode_container(dissector d, context* ctx) {
 
     /*The value part of the Intra N1 mode NAS transparent container information element is
 included in specific information elements within some RRC messages sent to the UE.*/
-    (void) d.add_item(4, &hf_authentication_code);
+    hf_authentication_code.add(d, ctx, 4);
     d.step(4);
 
-    (void) d.add_item(1, &hf_integrity_algo_type);
-    (void) d.add_item(1, &hf_ciphering_algo_type);
+    hf_integrity_algo_type.add(d, ctx);
+    hf_ciphering_algo_type.add(d, ctx);
     d.step(1);
 
     (void) d.add_item(1, &hf_ksi_5g);
@@ -30,7 +30,7 @@ const true_false_string tfs_emm_registration_status = {
     "UE is not in EMM-REGISTERED state",
 };
 
-const field_meta hf_authentication_code = {
+extern const field_meta hf_authentication_code = {
     "Message authentication code",
     "nas.nr.cmn.mac",
     ft::ft_uint32,
@@ -42,7 +42,7 @@ const field_meta hf_authentication_code = {
 };
 
 // Next hop chaining counter (see 3GPP TS 33.501 [24])
-const field_meta hf_next_hop_chaining_counter = {
+extern const field_meta hf_next_hop_chaining_counter = {
     "Next hop chaining counter (NCC)",
     "nas.nr.cmn.ncc",
     ft::ft_boolean,

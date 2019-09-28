@@ -42,10 +42,13 @@ extern const element_meta s_nssai;
 extern const v_string     enc_algo_type_values[];
 }
 
+inline const octet_field hf_authentication_code = {
+    "Message authentication code",
+};
+extern const uint8_field hf_integrity_algo_type;
+extern const tag_field hf_ciphering_algo_type;
+
 namespace cmn {
-extern const field_meta hf_authentication_code;
-extern const field_meta hf_integrity_algo_type;
-extern const field_meta hf_ciphering_algo_type;
 extern const field_meta hf_ksi_5g;
 extern const field_meta hf_security_context_type;
 extern const field_meta hf_kacf;
