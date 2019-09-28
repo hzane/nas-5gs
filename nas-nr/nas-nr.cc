@@ -68,11 +68,11 @@ nas_nr_message_imp* export_proto_node(node_t const node, int indent) {
     auto ret = new nas_nr_message_imp();
     ret->tag = node->name;
     ret->val = node->text;
-    ret->dat = node->data;
+
     ret->len = node->length;
     ret->start = node->offset;
     ret->level = indent;
-    ret->meta  = node->meta;
+
 
     nas_nr_message_imp* next = nullptr;
     for (const auto n : node->children) {

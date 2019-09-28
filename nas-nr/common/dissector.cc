@@ -4,8 +4,13 @@
 #include "config.hh"
 #include "field_meta.hh"
 #include "proto.hh"
+#include "dissector.hh"
 
-// struct dissector defined in config.hh
+
+void dissector::step(int consumed) {
+    offset += consumed;
+    length -= consumed;
+}
 
 void dissector::add_bits(const field_meta* metas[]) const {
     for (const field_meta** meta = metas; *meta != nullptr; meta++) {
@@ -14,14 +19,22 @@ void dissector::add_bits(const field_meta* metas[]) const {
 }
 
 node_t dissector::add_item(int len, const field_meta* meta) const {
-    return tree->add_item(packet, tvb, offset, len, meta);
+    return tree->add_item(offset, len, meta);
 }
 
 node_t dissector::add_item(int len, const string&txt) const {
-    return tree->add_subtree(packet, tvb, offset, len, txt.c_str());
+    return tree->add_item(offset, len, txt);
 }
+node_t dissector::add_item(int len, const string& name, const string& val) const {
+    return tree->add_item(offset, len, name, val);
+}
+node_t dissector::set_item(int len, const string& val) const {
+    tree->set_item(offset, len, val);
+    return tree;
+}
+
 node_t dissector::add_expert(int len, const string&txt) const {
-    return tree->add_subtree(packet, tvb, offset, len, txt.c_str());
+    return tree->add_item(offset, len, txt);
 }
 
 dissector dissector::slice(int len) const {
@@ -40,10 +53,6 @@ int dissector::safe_length(int len) const {
     if (len < 0) len = length - offset;
     if (offset + len <= length) return len;
     return 0;
-}
-
-dissector dissector::use_elem(void* elem)const {
-    return dissector{packet, tree, tvb, offset, length, elem};
 }
 
 uint8_t dissector::uint8() const{

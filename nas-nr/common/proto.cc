@@ -15,14 +15,10 @@ std::string print_text(const field_meta* meta,
 
 std::string print_text(const field_meta* meta, uint64_t v);
 
-node_t node::add_item(packet*      pinfo,
-                                 buff_view*           buf,
-                                 int               start,
+node_t node::add_item(                                 int               start,
                                  int               len,
                                  const field_meta* field) {
-    (void) pinfo;
-
-    auto item    = std::make_shared<node>(buf->data, start, len, field);
+    auto item    = std::make_shared<node>(node{start, len});
 
     children.push_back(item);
 
@@ -36,17 +32,6 @@ node_t node::add_item(packet*      pinfo,
 
 void node::set_item(int len, const field_meta* field) {
 
-    if (field && ft::is_integer(field->typi)) {
-        auto v = n2_uint(data, len);
-        if (field->bitmask) {
-            v = (v & field->bitmask) >> ws_ctz(field->bitmask);
-        }
-        val  = v;
-        text = print_text(field, v);
-    } else
-        text = print_text(field, data, len);
-
-    return ;
 }
 
 const field_meta hf_expert = {
@@ -58,13 +43,11 @@ const field_meta hf_expert = {
     nullptr,
     0,
 };
-node_t  node::add_expert(packet* pinfo,
-                                   buff_view*      buf,
-                                   int          start,
+node_t  node::add_expert(int          start,
                                    int          len,
                                    const char*  format,
                                    ...) {
-    auto item = add_item(pinfo, buf, start, len, &hf_expert);
+    auto item = add_item(start, len, &hf_expert);
     va_list args;
     va_start(args, format);
     item->text = vformat(format, args);
@@ -72,26 +55,19 @@ node_t  node::add_expert(packet* pinfo,
     return item;
 }
 
-node_t node::add_subtree(packet* ,
-                                    buff_view*      buf,
-                                    int          start,
-                                    int          len,
-                                    const char*  format,
-                                    ...) {
-    using namespace std;
-    auto item    = std::make_shared<node>(buf->data, start, len, nullptr);
 
-    va_list args;
-    va_start(args, format);
-    if (format) item->name = vformat(format, args);
-    va_end(args);
-
-    children.push_back(item);
-    return item;
+node_t node::add_item(int start, int len, const string& name, const string& val) {
+    auto sub = std::make_shared<node>(node{offset, length, name, val});
+    children.push_back(sub);
+    return sub;
 }
 
-node::node(const uint8_t* buffer, int offset, int length, const field_meta* m)
-    : meta(m), data(buffer + offset), length(length), offset(offset) {}
+
+void node::set_item(int start, int len, const string& text) {
+    this->text = text;
+    this->offset = start;
+    this->length = len;
+}
 
 std::string print_text(const field_meta* meta,
                        const uint8_t*    data,
