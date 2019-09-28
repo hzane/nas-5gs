@@ -11,3 +11,6 @@ build/
 *.suo
 *.ncb
 *.user
+.ccls-cache/
+compile_commands.json
+*/#*.*#
