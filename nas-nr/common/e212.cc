@@ -1,5 +1,6 @@
 #include "config.hh"
 #include "field_meta.hh"
+#include "format.hh"
 
 extern const value_string e212_codes[];
 extern const value_string mnc_codes[];
@@ -28,7 +29,7 @@ string mcc_string(const uint8_t* d, int length) {
     if (mcc == 460) {
         return "China (460)";
     }
-    return formats("%s (%d)", find_val_string(e212_codes, mcc), mcc);
+    return vstring(e212_codes, mcc);
 }
 
 string mcc_mnc_string(const uint8_t* d, int length) {
@@ -46,7 +47,7 @@ string mcc_mnc_string(const uint8_t* d, int length) {
 
     if (mnc3 > 9) mnc = mnc1 * 10 + mnc2; // 2 digits
 
-    return formats("%s (%d)", find_val_string(mnc_codes, mnc), mnc);
+    return vstring(mnc_codes, mnc);
 }
 
 // https://en.wikipedia.org/wiki/Mobile_Network_Codes_in_ITU_region_4xx_(Asia)#China_-_CN

@@ -35,6 +35,3 @@ struct range_string {
     const char*  text;
 };
 
-inline std::string vstring_format(uint64_t v, uint64_t mask, const v_string* vals){
-    return std::string{};
-}

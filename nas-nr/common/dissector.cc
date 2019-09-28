@@ -22,9 +22,6 @@ node_t dissector::add_item(int len, const field_meta* meta) const {
     return tree->add_item(offset, len, meta);
 }
 
-node_t dissector::add_item(int len, const string&txt) const {
-    return tree->add_item(offset, len, txt);
-}
 node_t dissector::add_item(int len, const string& name, const string& val) const {
     return tree->add_item(offset, len, name, val);
 }

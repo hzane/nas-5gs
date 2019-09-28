@@ -1,5 +1,5 @@
 #include "field_meta.hh"
-
+#include "format.hh"
 #include "buff_view.hh"
 
 string field_meta::format(const uint8_t* p, int length) const {
@@ -90,18 +90,15 @@ string field_meta::format(uint64_t v) const {
     }
 
     if (v_strings && display == fd::base_bit) {
-        const auto flags = find_bits_string(v_strings, static_cast< uint32_t >(v));
-        return join(flags, " | ");
+        return bits_string(v_strings, static_cast< uint32_t >(v));
     }
 
     if (v_strings) {
-        auto s = find_val_string(v_strings, uint32_t(v));
-        return formats("%s (%#x)", s, uint32_t(v));
+        return vstring(v_strings, uint32_t(v));
     }
 
     if (range_strings){
-        const auto s = find_r_string(range_strings, uint32_t(v));
-        return formats("%s (%#x)", s, uint32_t(v));
+        return rstring(range_strings, uint32_t(v));
     }
 
     if(display == fd::timer) {
@@ -117,17 +114,12 @@ string field_meta::format(uint64_t v) const {
         return gprs_timer2_format(uint8_t(v));
     }
 
-    if (display == fd::base_bin) {
-        return format_int_bit_mask(typi, v, bitmask, nullptr);
-    }
-
     if (display == fd::right) {
         return formats("%1x", (v & 0x0fu));
     }
     if (display == fd::left) {
         return formats("%1x", (v & 0xf0u) >> 4u);
     }
-
-    return format_int(v, typi, display);
+    return formats("%d (%x)", v);
 }
 

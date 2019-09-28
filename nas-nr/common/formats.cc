@@ -102,64 +102,31 @@ std::string format_int_dec(uint64_t v, uint32_t ftype) {
     return ret;
 }
 
-const char* find_val_string(const v_string* vstr, uint32_t id, const char* missing) {
+string vstring(const v_string* vstr, uint32_t id, const char* missing) {
     for (auto v = vstr; v->text; v++) {
-        if (v->id == id) return v->text;
+        if (v->id == id) return formats("%s (%d)", v->text, id);
     }
-    return missing;
+    return formats("%s (%d)", missing, id);
 }
-const char* find_r_string(const range_string* rstr, uint32_t id, const char* missing) {
+string rstring(const range_string* rstr, uint32_t id, const char* missing) {
     for (auto v = rstr; v->text; v++) {
         if (v->val_min <= id && v->val_max >= id) {
-            return v->text;
+            return formats("%s (%d)", v->text, id);
         }
     }
-    return missing;
+    return formats("%s (%d)", missing, id);
 }
 
-std::vector< std::string > find_bits_string(const v_string* strings, uint32_t bits) {
+string bits_string(const v_string* strings, uint32_t bits) {
     std::vector< std::string > ret;
     for (auto vstr = strings; vstr->id; vstr++) {
         if ((vstr->id & bits) == vstr->id) {
             ret.emplace_back(vstr->text);
         }
     }
-    return ret;
+    return join(ret, " | ");
 }
 
-string format_int_bit_mask(uint32_t ftype, uint64_t v, uint64_t mask, const char* ) {
-    size_t cnt = 0;
-    if (mask) {
-        v = (v & mask) >> ws_ctz(mask);
-        cnt = ws_ctz(~(mask >> ws_ctz(mask)));
-    }
-    stringstream ss;
-    switch (ftype) {
-    case ft::ft_int64:
-    case ft::ft_uint64:
-        ss << bitset< 8 >((v & 0xff00'0000'0000'0000u) >> 56u) ;
-    case ft::ft_int48:
-    case ft::ft_uint48:
-        ss << bitset< 8 >((v & 0xff00'0000'0000u) >> 40u) ;
-    case ft::ft_int32:
-    case ft::ft_uint32:
-        ss << bitset< 8 >((v & 0xff00'0000u) >> 24u) ;
-    case ft::ft_int24:
-    case ft::ft_uint24:
-        ss << bitset< 8 >((v & 0xff'0000u) >> 16u) ;
-    case ft::ft_int16:
-    case ft::ft_uint16:
-        ss << bitset< 8 >((v & 0xff00u) >> 8u) ;
-    case ft::ft_int8:
-    case ft::ft_uint8:
-        ss << bitset< 8 >(v & 0xffu) ;
-    default:
-        break;
-    }
-    auto ret = ss.str();
-    if (cnt) ret = ret.substr(0, cnt);
-    return ret;
-}
 
 string format_bit(const uint8_t* data, int len, const char* sep) {
     stringstream ss;
@@ -207,11 +174,14 @@ std::string formats(const char* format, ...) {
 }
 
 using namespace std;
-string join(const vector< string >& strs, const char* sep) {
+
+string join(const vector< string >& strings, const char* sep) {
+    if (sep==nullptr) sep="";
+
     stringstream ss;
 
-    auto i = strs.begin();
-    auto e = strs.end();
+    auto i = strings.begin();
+    auto e = strings.end();
     if (i != e) ss << *i++;
     while (i != e) {
         ss << sep << *i++;
@@ -219,26 +189,19 @@ string join(const vector< string >& strs, const char* sep) {
     return ss.str();
 }
 
-std::string format_int(uint64_t v, uint32_t ftype, uint32_t display) {
-    if (display == fd::base_dec) return format_int_dec(v, ftype);
-    if (display == fd::base_hex) return format_int_hex(v, ftype);
-    return formats("%d", v);
-}
-
 // without prefix and separator
 string format_bcd(const uint8_t* data, int len) {
     stringstream ss;
-    ss << hex << setfill('0');
+
     for (int i = 0; i < len; i++) {
-        ss << setw(2) << uint32_t(data[i]);
+        auto l = data[i]&0x0fu, h = (data[i]&0xf0u)>>4u;
+        if (l<10) ss<<char(l+'0');
+        if (h<10) ss<<char(h+'0');
     }
     return ss.str();
 }
 
-string format_hex(const uint8_t* data, int len, const char* sep, const char* lf) {
-    if (sep == nullptr) sep = "";
-    if (lf == nullptr) lf = "";
-
+string format_hex(const uint8_t* data, int len, std::string const&sep, std::string const&lf) {
     stringstream ss;
     ss << hex << setfill('0');
 
@@ -252,7 +215,7 @@ string format_hex(const uint8_t* data, int len, const char* sep, const char* lf)
     return ss.str();
 }
 
-static inline int ws_ctz32(uint32_t x) {
+inline int ws_ctz32(uint32_t x) {
     /* From http://graphics.stanford.edu/~seander/bithacks.html#ZerosOnRightMultLookup */
     static const uint8_t table[32] = {
         0,  1,  28, 2,  29, 14, 24, 3, 30, 22, 20, 15, 25, 17, 4,  8,
@@ -260,6 +223,19 @@ static inline int ws_ctz32(uint32_t x) {
     };
 
     return table[((uint32_t)((x & (uint32_t)(0u - x)) * 0x077CB531U)) >> 27u];
+}
+
+uint8_t ws_ctz8(uint8_t x) {
+    /* From http://graphics.stanford.edu/~seander/bithacks.html#ZerosOnRightMultLookup */
+    static const uint8_t table[32] = {
+        0,  1,  28, 2,  29, 14, 24, 3, 30, 22, 20, 15, 25, 17, 4,  8,
+        31, 27, 13, 23, 21, 19, 16, 7, 26, 12, 18, 6,  11, 5,  10, 9,
+    };
+
+    return table[((uint32_t)((x & (uint32_t)(0u - x)) * 0x077CB531U)) >> 27u];
+}
+uint8_t umask(uint8_t v, uint8_t mask){
+    return mask ? (unsigned(v&mask)>>ws_ctz8(mask)) : v;
 }
 
 unsigned int ws_ctz(uint64_t x) {

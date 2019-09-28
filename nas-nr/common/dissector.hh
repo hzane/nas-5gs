@@ -11,6 +11,8 @@ using string = std::string;
 using node_t = std::shared_ptr< node >;
 
 struct dissector {
+    inline static string none = string();
+
     packet*    packet = nullptr;
     node_t     tree   = nullptr;
     buff_view* tvb    = nullptr;
@@ -20,8 +22,7 @@ struct dissector {
 
     void step(int consumed);
     node_t add_item(int len, const field_meta* fm) const;
-    node_t add_item(int len, const string& name) const;
-    node_t add_item(int len, const string&name, const string&val)const;
+    node_t add_item(int len, const string&name, const string&val=none)const;
     node_t set_item(int len, const string&val)const;
     node_t add_expert(int len, const string& name) const;
     void   add_bits(const field_meta* metas[]) const;
@@ -31,4 +32,5 @@ struct dissector {
     auto   uint8() const -> uint8_t;
     auto   uint16() const -> uint16_t;
     auto   uint32() const -> uint32_t;
+
 };

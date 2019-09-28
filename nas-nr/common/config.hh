@@ -178,11 +178,6 @@ inline uint64_t n2_uint(const uint8_t* data, int len) {
     }
 }
 
-string format_hex(const uint8_t* data,
-                  int            len,
-                  const char*    sep = " ",
-                  const char*    lf  = nullptr);
-
 string format_bit(const uint8_t* data, int len, const char* sep = " ");
 
 string format_bits(const uint8_t* data, int bits, const char* sep = nullptr);
@@ -198,15 +193,6 @@ string format_int_dec(uint64_t v, uint32_t ftype);
 
 string formats(const char* format, ...);
 string vformat(const char* format, va_list);
-
-const char* find_val_string(const v_string* strings,
-                            uint32_t          id,
-                            const char*       missing = "Unknown");
-const char* find_r_string(const range_string* strings,
-                          uint32_t            id,
-                          const char*         missing = "Unknown");
-
-std::vector< std::string > find_bits_string(const v_string* strings, uint32_t bits);
 
 string join(const std::vector< string >& strings, const char* sep = " ");
 

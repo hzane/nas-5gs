@@ -44,7 +44,6 @@ set(COMMON_HEADERS ber.hh
         packet.hh
         proto.hh
         range_string.hh
-        tree_meta.hh
         buff_view.hh
         v_string.hh
         )

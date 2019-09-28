@@ -4,7 +4,6 @@
 #include "field_meta.hh"
 #include "packet.hh"
 #include "proto.hh"
-#include "tree_meta.hh"
 
 struct protocol_meta {
     const char*   name;
