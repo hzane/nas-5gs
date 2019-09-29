@@ -153,8 +153,8 @@ static char sms_bcd_chars[] = "0123456789*#abc\0\0";
 string sms_semi_octets_to_bcd_string (const uint8_t *octets, int num_octets) {
     string ret;
     for (auto i = 0 ; i < num_octets; i++) {
-        ret.push_back(sms_bcd_chars[octets[i] & 0xf]);
-        ret.push_back(sms_bcd_chars[(octets[i] >> 4) & 0xf]);
+        ret.push_back(sms_bcd_chars[octets[i] & 0xfu]);
+        ret.push_back(sms_bcd_chars[unsigned(octets[i] >> 4u) & 0xfu]);
     }
     return std::move(ret);
 }
@@ -167,9 +167,9 @@ string sms_decode_timestamp (const uint8_t *timestamp) {
 
     auto timestr = sms_semi_octets_to_bcd_string (timestamp, 6);
 
-    quarters = ((timestamp[6] & 0x7) * 10) + ((timestamp[6] >> 4) & 0xf);
+    quarters = ((timestamp[6] & 0x7u) * 10) + ((timestamp[6] >> 4u) & 0xf);
     hours = quarters / 4;
-    timestr.push_back((timestamp[6] & 0x08) ?        '-' : '+');
+    timestr.push_back((timestamp[6] & 0x08u) ?        '-' : '+');
 
     timestr.push_back( (hours / 10) + '0');
     timestr.push_back( (hours % 10) + '0');

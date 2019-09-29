@@ -23,21 +23,15 @@ struct registration_result_t{
 namespace mm {
 
 /* 9.11.3.6    5GS registration result */
-const value_string nas_5gs_mm_reg_res_values[] = {
-    {0x1, "3GPP access"},
-    {0x2, "Non-3GPP access"},
-    {0x3, "3GPP access and non-3GPP access"},
-    {0, nullptr},
-};
-const field_meta hf_registration_result = {
+const tag_field hf_registration_result = {
     "5GS registration result",
-    "nas.nr.mm.registration.result",
-    ft::ft_uint8,
-    fd::base_dec,
-    nas_5gs_mm_reg_res_values,
-    nullptr,
-    nullptr,
     0x07,
+    (const v_string[]){
+        {0x1, "3GPP access"},
+        {0x2, "Non-3GPP access"},
+        {0x3, "3GPP access and non-3GPP access"},
+        {0, nullptr},
+    },
 };
 }
 
@@ -45,5 +39,4 @@ const element_meta mm::registration_result = {
     0xff,
     "5GS registration result",
     dissect_registration_result,
-    nullptr,
 };

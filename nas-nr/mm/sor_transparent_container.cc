@@ -10,7 +10,6 @@ const element_meta mm::sor_transparent_container = {
     0x73,
     "SOR transparent container",
     dissect_sor_transparent_container,
-    nullptr,
 };
 
 using namespace cmn;
@@ -21,11 +20,7 @@ int mm::dissect_sor_transparent_container(dissector d, context* ctx) {
     const use_context uc(ctx, "sor-transparent-container", d, 0);
 
     /* Layout differs depending on SOR data type*/
-    static const field_meta* flags_dt0[] = {
-//        &hf_spare_b7,
-//        &hf_spare_b6,
-//        &hf_spare_b5,
-//        &hf_spare_b4,
+    static const bool_field* flags_dt0[] = {
         &hf_sor_hdr_ack,
         &hf_sor_hdr_list_type,
         &hf_sor_hdr_list_indication,
@@ -33,19 +28,12 @@ int mm::dissect_sor_transparent_container(dissector d, context* ctx) {
         nullptr,
     };
 
-    static const field_meta* flags_dt1[] = {
-//        &hf_spare_b7,
-//        &hf_spare_b6,
-//        &hf_spare_b5,
-//        &hf_spare_b4,
-//        &hf_spare_b3,
-//        &hf_spare_b2,
-//        &hf_spare_b1,
+    static const bool_field* flags_dt1[] = {
         &hf_sor_hdr0_sor_data_type,
         nullptr,
     };
     /* 3GPP TS 31.102 [22] subclause 4.2.5 */
-    static const field_meta* flags_access_technology_1[] = {
+    static const bool_field* flags_access_technology_1[] = {
         &hf_access_tech_utran,
         &hf_access_tech_eutran,
         &hf_access_tech_eutran_wb,
@@ -57,7 +45,7 @@ int mm::dissect_sor_transparent_container(dissector d, context* ctx) {
         nullptr,
     };
 
-    static const field_meta* flags_access_technology_2[] = {
+    static const bool_field* flags_access_technology_2[] = {
         &hf_access_tech_o2_b7,
         &hf_access_tech_o2_b6,
         &hf_access_tech_o2_b5,

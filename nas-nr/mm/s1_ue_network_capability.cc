@@ -9,7 +9,7 @@ using namespace nas;
 int mm::dissect_s1_ue_net_capability(dissector d, context* ctx) {
     const use_context        uc(ctx, "s1-ue-network-capablility", d, 0);
 
-    static const field_meta* oct3_flags[] = {
+    static const bool_field* oct3_flags[] = {
         &hf_nas_eps_emm_eea0,
         &hf_nas_eps_emm_128eea1,
         &hf_nas_eps_emm_128eea2,
@@ -21,7 +21,7 @@ int mm::dissect_s1_ue_net_capability(dissector d, context* ctx) {
         nullptr,
     };
 
-    static const field_meta* oct4_flags[] = {
+    static const bool_field* oct4_flags[] = {
         &hf_nas_eps_emm_eia0,
         &hf_nas_eps_emm_128eia1,
         &hf_nas_eps_emm_128eia2,
@@ -33,7 +33,7 @@ int mm::dissect_s1_ue_net_capability(dissector d, context* ctx) {
         nullptr,
     };
 
-    static const field_meta* oct5_flags[] = {
+    static const bool_field* oct5_flags[] = {
         &hf_nas_eps_emm_uea0,
         &hf_nas_eps_emm_uea1,
         &hf_nas_eps_emm_uea2,
@@ -45,7 +45,7 @@ int mm::dissect_s1_ue_net_capability(dissector d, context* ctx) {
         nullptr,
     };
 
-    static const field_meta* oct6_flags[] = {
+    static const bool_field* oct6_flags[] = {
         &hf_nas_eps_emm_ucs2_supp,
         &hf_nas_eps_emm_uia1,
         &hf_nas_eps_emm_uia2,
@@ -57,7 +57,7 @@ int mm::dissect_s1_ue_net_capability(dissector d, context* ctx) {
         nullptr,
     };
 
-    static const field_meta* oct7_flags[] = {
+    static const bool_field* oct7_flags[] = {
         &hf_nas_eps_emm_prose_dd_cap,
         &hf_nas_eps_emm_prose_cap,
         &hf_nas_eps_emm_h245_ash_cap,
@@ -69,7 +69,7 @@ int mm::dissect_s1_ue_net_capability(dissector d, context* ctx) {
         nullptr,
     };
 
-    static const field_meta* oct8_flags[] = {
+    static const bool_field* oct8_flags[] = {
         &hf_nas_eps_emm_epco_cap,
         &hf_nas_eps_emm_hc_cp_ciot_cap,
         &hf_nas_eps_emm_er_wo_pdn_cap,
@@ -81,7 +81,7 @@ int mm::dissect_s1_ue_net_capability(dissector d, context* ctx) {
         nullptr,
     };
 
-    static const field_meta* oct9_flags[] = {
+    static const bool_field* oct9_flags[] = {
         &hf_nas_eps_15_bearers_cap,
         &hf_nas_eps_sgc_cap,
         &hf_nas_eps_n1mode_cap,
@@ -155,7 +155,7 @@ int mm::dissect_s1_ue_net_capability(dissector d, context* ctx) {
 int mm::dissect_reported_s1_ue_security_capability(dissector d, context* ctx) {
     const use_context uc(ctx, "s1-ue-security-capability", d, 0);
 
-    static const field_meta* oct3_flags[] = {
+    static const bool_field* oct3_flags[] = {
         &hf_mm_eea0,
         &hf_mm_128eea1,
         &hf_mm_128eea2,
@@ -167,7 +167,7 @@ int mm::dissect_reported_s1_ue_security_capability(dissector d, context* ctx) {
         nullptr,
     };
 
-    static const field_meta* oct4_flags[] = {
+    static const bool_field* oct4_flags[] = {
         &hf_emm_eia0,
         &hf_emm_128eia1,
         &hf_emm_128eia2,
@@ -179,7 +179,7 @@ int mm::dissect_reported_s1_ue_security_capability(dissector d, context* ctx) {
         nullptr,
     };
 
-    static const field_meta* oct5_flags[] = {
+    static const bool_field* oct5_flags[] = {
         &hf_emm_uea0,
         &hf_emm_uea1,
         &hf_emm_uea2,
@@ -191,7 +191,7 @@ int mm::dissect_reported_s1_ue_security_capability(dissector d, context* ctx) {
         nullptr,
     };
 
-    static const field_meta* oct6_flags[] = {
+    static const bool_field* oct6_flags[] = {
 //        &hf_spare_b7,
         &hf_emm_uia1,
         &hf_emm_uia2,
@@ -203,7 +203,7 @@ int mm::dissect_reported_s1_ue_security_capability(dissector d, context* ctx) {
         nullptr,
     };
 
-    static const field_meta* oct7_flags[] = {
+    static const bool_field* oct7_flags[] = {
 //        &hf_spare_b7,
         &hf_emm_gea1,
         &hf_emm_gea2,

@@ -26,18 +26,15 @@ node_t node::add_item(int start, int len, const field_meta* field) {
     return item;
 }
 
-void node::set_item(int len, const field_meta* field) {}
+void node::set_item(int len, const field_meta* field) {
+    (void)offset;
+    diag("remove this function later\n");
+}
 
-const field_meta hf_expert = {
+inline const element_field hf_expert = {
     "Expert",
-    "expert",
-    ft::ft_expert,
-    fd::base_none,
-    nullptr,
-    nullptr,
-    nullptr,
-    0,
 };
+
 node_t node::add_expert(int start, int len, const string& text) {
     return add_item(start, len, "Expert", text);
 }

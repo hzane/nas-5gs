@@ -10,7 +10,6 @@ extern const element_meta mm::full_name_network = {
     0x43,
     "Network name - Full Name",
     dissect_full_name_network,
-    nullptr,
 
 };
 
@@ -19,7 +18,6 @@ extern const element_meta mm::short_name_network = {
     0x45,
     "Network Name - Short Name",
     dissect_short_name_network,
-    nullptr,
 
 };
 
@@ -61,9 +59,3 @@ int mm::dissect_full_name_network(dissector d, context* ctx) {
     return uc.length;
 }
 
-struct network_name_t {
-    uint8_t extension;
-    uint8_t code_scheme;
-    uint8_t add_ci;
-    string  text;
-};

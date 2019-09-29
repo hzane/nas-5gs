@@ -9,4 +9,3 @@ int mm::dissect_deregistration_accept_ue_terminate(dissector d, context* ctx) {
 
     return 0;
 }
-struct deregistration_accept_ue_terminate_t{};

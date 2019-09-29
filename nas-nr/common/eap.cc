@@ -17,5 +17,4 @@ const element_meta cmn::eap_message = {
     0x78,
     "EAP message",
     cmn::dissect_eap_message,
-    nullptr,
 };

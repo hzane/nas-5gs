@@ -14,7 +14,3 @@ int mm::dissect_identity_response(dissector d, context* ctx) {
 
     return uc.length;
 }
-
-struct identity_response_t {
-    payload_t mobile_id;
-};

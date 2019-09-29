@@ -11,18 +11,9 @@ int mm::dissect_sms_indication(dissector d, context* ctx) {
     return 1;
 }
 
-static const tf_string tfs_sms_sai = {
-    "SMS over NAS available",
-    "SMS over NAS not available",
-};
-
-const field_meta mm::hf_sms_over_nas_ind = {
+const bool_field mm::hf_sms_over_nas_ind = {
     "SMS over NAS",
-    "nas.nr.mm.sms.indication.sai",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &tfs_sms_sai,
-    nullptr,
     0x01,
+    "SMS over NAS not available",
+    "SMS over NAS available",
 };

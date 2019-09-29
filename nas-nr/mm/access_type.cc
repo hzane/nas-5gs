@@ -13,9 +13,6 @@ int mm::dissect_access_type(dissector d, context* ctx) {
 
     return 1;
 }
-struct access_type_t {
-    uint8_t _;
-};
 
 /*  9.11.3.11    Access type */
 const value_string access_type_values[] = {
@@ -25,13 +22,8 @@ const value_string access_type_values[] = {
     {0, nullptr},
 };
 
-const field_meta mm::hf_access_type = {
+const tag_field mm::hf_access_type = {
     "Access type",
-    "nas.nr.mm.access.type",
-    ft::ft_uint8,
-    fd::base_dec,
-    access_type_values,
-    nullptr,
-    nullptr,
     0x03,
+    access_type_values,
 };

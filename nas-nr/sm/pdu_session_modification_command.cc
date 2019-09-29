@@ -57,20 +57,6 @@ int sm::dissect_pdu_session_modification_command(dissector d, context* ctx) {
 }
 namespace sm {
 
-const value_string nas_5gs_rule_param_cont[] = {
-    {0x0, "Reserved"},
-    {0x01, "5QI 1"},
-    {0x02, "5QI 2"},
-    {0x03, "5QI 3"},
-    {0x04, "5QI 4"},
-    {0x05, "5QI 5"},
-    {0x06, "5QI 6"},
-    {0x07, "5QI 7"},
-    {0x08, "5QI 8"},
-    {0x09, "5QI 9"},
-    {0, nullptr},
-};
-
 int dissect_requested_qos_rules(dissector d, context* ctx) {
     return dissect_qos_rules(d, ctx);
 }
@@ -84,58 +70,44 @@ const uint8_field hf_sm_parameters_number = {
     0x3f,
 };
 
-static const value_string nas_5gs_sm_param_id_values[] = {
-    {0x01, "5QI"},
-    {0x02, "GFBR uplink"},
-    {0x03, "GFBR downlink"},
-    {0x04, "MFBR uplink"},
-    {0x05, "MFBR downlink"},
-    {0x06, "Averaging window"},
-    {0x07, "EPS bearer identity"},
-    {0, nullptr},
-};
-const field_meta hf_sm_parameter_identifier = {
+const tag_field hf_sm_parameter_identifier = {
     "Parameter identifier",
-    "nas.nr.sm.param_id",
-    ft::ft_uint8,
-    fd::base_dec,
-    nas_5gs_sm_param_id_values,
-    nullptr,
-    nullptr,
     0x0,
+    (const v_string[]){
+        {0x01, "5QI"},
+        {0x02, "GFBR uplink"},
+        {0x03, "GFBR downlink"},
+        {0x04, "MFBR uplink"},
+        {0x05, "MFBR downlink"},
+        {0x06, "Averaging window"},
+        {0x07, "EPS bearer identity"},
+        {0, nullptr},
+    },
 };
 
-
-const field_meta hf_sm_parameters_content = {
+const tag_field hf_sm_parameters_content = {
     "Parameters content",
-    "nas.nr.sm.parameter.content",
-    ft::ft_uint8,
-    fd::base_dec,
-    nas_5gs_rule_param_cont,
-    nullptr,
-    nullptr,
     0x0,
+    (const v_string[]){
+        {0x0, "Reserved"},
+        {0x01, "5QI 1"},
+        {0x02, "5QI 2"},
+        {0x03, "5QI 3"},
+        {0x04, "5QI 4"},
+        {0x05, "5QI 5"},
+        {0x06, "5QI 6"},
+        {0x07, "5QI 7"},
+        {0x08, "5QI 8"},
+        {0x09, "5QI 9"},
+        {0, nullptr},
+    },
 };
-const field_meta hf_averaging_window = {
+const uint16_field hf_averaging_window = {
     "Average Window",
-    "nas.nr.sm.qos.param",
-    ft::ft_uint16,
-    fd::base_bin,
-    nullptr,
-    nullptr,
-    nullptr,
     0,
 };
-const field_meta hf_eps_bearer_identity = {
+const uint8_field hf_eps_bearer_identity = {
     "EPS bearer identity",
-    "nas.nr.sm.qos.eps.bearid",
-    ft::ft_uint8,
-    fd::base_hex,
-    nullptr,
-    nullptr,
-    nullptr,
     0,
 };
-
-
 }

@@ -12,7 +12,3 @@ int mm::dissect_nas_message_container(dissector d, context* ctx) {
     dissect_nas5g(d, ctx);
     return uc.length;
 }
-
-struct nas_message_container_t {
-    payload_t _;
-};

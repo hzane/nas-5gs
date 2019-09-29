@@ -10,7 +10,6 @@ const element_meta mm::ladn_information = {
     0x79,
     "LADN information",
     dissect_ladn_information,
-    nullptr,
 };
 
 
@@ -52,10 +51,3 @@ int mm::dissect_ladn_information(dissector d, context* ctx) {
 
     return uc.length;
 }
-struct ladn_t {
-    payload_t dnn;
-    // tracking_area_id_list_t tai;
-};
-struct ladn_information_t {
-    std::vector< ladn_t > ladn;
-};

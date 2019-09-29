@@ -1,7 +1,7 @@
+#include <utility>
+
 #include "ber.hh"
 
-#include "dissect_nas5g.hh"
-#include "field_meta.hh"
 #include "format.hh"
 #include "use_context.hh"
 
@@ -32,35 +32,35 @@ int dissect_elem_mandatory(const element_meta* val_meta,
 int dissect_t(const element_meta* val_meta,
                           dissector           d,
                           context*            ctx) {
-    return dissect_elem_mandatory( val_meta, d, dissect_opt_t, ctx);
+    return dissect_elem_mandatory( val_meta, std::move(d), dissect_opt_t, ctx);
 }
 
 
 int dissect_lv(const element_meta* val_meta,
                            dissector           d,
                            context*            ctx) {
-    return dissect_elem_mandatory( val_meta, d, dissect_opt_lv, ctx);
+    return dissect_elem_mandatory( val_meta, std::move(d), dissect_opt_lv, ctx);
 }
 int dissect_lv_e(const element_meta* val_meta,
                              dissector           d,
                              context*            ctx) {
-    return dissect_elem_mandatory( val_meta, d, dissect_opt_lv_e, ctx);
+    return dissect_elem_mandatory( val_meta, std::move(d), dissect_opt_lv_e, ctx);
 }
 int dissect_v(const element_meta* val_meta,
                           dissector           d,
                           context*            ctx) {
-    return dissect_elem_mandatory( val_meta, d, dissect_opt_v, ctx);
+    return dissect_elem_mandatory( val_meta, std::move(d), dissect_opt_v, ctx);
 }
 int dissect_tv_short(const element_meta* val_meta,
                                  dissector           d,
                                  context*            ctx) {
-    return dissect_elem_mandatory( val_meta, d, dissect_opt_tv_short, ctx);
+    return dissect_elem_mandatory( val_meta, std::move(d), dissect_opt_tv_short, ctx);
 }
 int dissect_tv(const element_meta* val_meta,
                            dissector           d,
                            context*            ctx) {
     unused(dissect_tv);
-    return dissect_elem_mandatory( val_meta, d, dissect_opt_tv, ctx);
+    return dissect_elem_mandatory( val_meta, std::move(d), dissect_opt_tv, ctx);
 }
 
 
@@ -68,14 +68,13 @@ int dissect_tlv(const element_meta* val_meta,
                             dissector           d,
                             context*            ctx) {
     unused(dissect_tlv);
-    return dissect_elem_mandatory( val_meta, d, dissect_opt_tlv, ctx);
+    return dissect_elem_mandatory( val_meta, std::move(d), dissect_opt_tlv, ctx);
 }
 
 /*  Type (T) element dissector */
 int dissect_opt_t(const element_meta *val_meta,
                        dissector           d,
                        context *           ctx) {
-    (void) ctx;
 
     if (d.length <= 0) return not_present_diag(0, val_meta, ctx);
 
@@ -104,7 +103,6 @@ int dissect_opt_lv(const element_meta *val_meta,
     // auto l = d.add_item(1, hf_gsm_a_length);
     d.step(1);
 
-    if (parm_len == 0) return 1;
     const auto fnc = val_meta->fnc ? val_meta->fnc : dissect_unknown;
 
     const auto consumed = fnc(d.slice(parm_len), ctx);
@@ -318,9 +316,12 @@ int dissect_opt_tlv_e(const element_meta *val_meta,
 
 int dissect_unknown(dissector d, context *ctx) {
     if (d.length<=0) return 0;
+
     const use_context uc(ctx, "unknown message body", d, -1);
+
     d.add_item(d.length, "Unknown", formats("%d:%d", d.offset, d.length));
     d.step(d.length);
+
     return uc.length;
 }
 
@@ -328,5 +329,5 @@ int dissect_unknown(dissector d, context *ctx) {
 int dissect_tlv_e(const element_meta* val_meta,
                   dissector           d,
                   context*            ctx) {
-    return dissect_elem_mandatory( val_meta, d, dissect_opt_tlv_e, ctx);
+    return dissect_elem_mandatory( val_meta, std::move(d), dissect_opt_tlv_e, ctx);
 }

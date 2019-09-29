@@ -16,11 +16,7 @@ int mm::dissect_last_visited_tai(dissector d, context* ctx) {
 
     return 6;
 }
-struct last_visit_tracking_area_identity_t{
-    string mcc;
-    string mnc;
-    uint8_t tac[3];
-};
+
 
 /*  9.11.3.9     5GS tracking area identity list */
 extern const value_string tracking_area_identity_list_values[] = {
@@ -49,35 +45,19 @@ extern const value_string tracking_area_list_number_values[] = {
     {0x0f, "16 elements"},
     {0, nullptr},
 };
-const field_meta mm::hf_tracking_area_list_type = {
+const tag_field mm::hf_tracking_area_list_type = {
     "Type of list",
-    "nas.nr.mm.tracking.area.type",
-    ft::ft_uint8,
-    fd::base_dec,
-    tracking_area_identity_list_values,
-    nullptr,
-    nullptr,
     0x60,
+    tracking_area_identity_list_values,
 };
-const field_meta mm::hf_tracking_area_list_number = {
+const tag_field mm::hf_tracking_area_list_number = {
     "Number of elements",
-    "nas.nr.number",
-    ft::ft_uint8,
-    fd::base_dec,
-    tracking_area_list_number_values,
-    nullptr,
-    nullptr,
     0x1f,
+    tracking_area_list_number_values,
 };
 
 // TAC, Tracking area code
-const field_meta mm::hf_tracking_area_code = {
+const uint24_field mm::hf_tracking_area_code = {
     "TAC, Tracking area code",
-    "nas.nr.tac",
-    ft::ft_uint24,
-    fd::base_hex,
-    nullptr,
-    nullptr,
-    nullptr,
     0x0,
 };

@@ -6,7 +6,6 @@ const element_meta mm::imeisv_mobile_id = {
     0x77,
     "5G mobile identity - IMEISV",
     mm::dissect_mobile_id,
-    nullptr,
 };
 
 /*  8.2.26 Security mode complete */

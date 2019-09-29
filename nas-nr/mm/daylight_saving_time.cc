@@ -20,10 +20,6 @@ extern const element_meta mm::daylight_saving_time = {
     0x49,
     "Network daylight saving time",
     dissect_daylight_saving_time,
-    nullptr,
 
 };
 
-struct daylight_saving_time_t {
-    uint8_t adjustment;
-};

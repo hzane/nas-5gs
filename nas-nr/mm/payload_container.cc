@@ -12,7 +12,6 @@ const element_meta mm::payload_container = {
     0x7B,
     "Payload container",
     dissect_payload_container,
-    nullptr,
 };
 
 int mm::dissect_pld_container_entry(dissector d, context* ctx) {
@@ -148,78 +147,38 @@ int mm::dissect_ue_policy_delivery_procedure(dissector d, context* ctx) {
 
 using namespace mm;
 
-const field_meta mm::hf_pld_cont_entry_nie = {
+const uint8_field mm::hf_pld_cont_entry_nie = {
     "Number of optional IEs",
-    "nas.nr.mm.payload_container.n_optional_ies",
-    ft::ft_uint8,
-    fd::base_dec,
-    nullptr,
-    nullptr,
-    nullptr,
     0xf0u,
 };
-const field_meta mm::hf_pld_cont_entry_contents = {
+const octet_field mm::hf_pld_cont_entry_contents = {
     "Payload container entry contents",
-    "nas.nr.mm.payload_container.pcec",
-    ft::ft_bytes,
-    fd::base_none,
-    nullptr,
-    nullptr,
-    nullptr,
-    0x0,
 };
-const field_meta mm::hf_pld_optional_ie = {
+const octet_field mm::hf_pld_optional_ie = {
     "Optional IE",
-    "nas.nr.mm.payload_container.optional_ie",
-    ft::ft_bytes,
-    fd::base_none,
-    nullptr,
-    nullptr,
-    nullptr,
-    0x0,
 };
 
-
-const value_string pld_optional_ie_type_values[] = {
-    {0x12, "PDU session ID"},         // see subclause 9.11.3.41
-    {0x24, "Additional information"}, // 9.11.2.1
-    {0x58, "5GMM cause"},             // 9.11.3.2
-    {0x37, "Back-off timer value"},   // 9.11.2.5
-    {0x59, "Old PDU session ID"},     // 9.11.3.41
-    {0x80, "Request type"},           // 9.11.3.47
-    {0x22, "S-NSSAI"},                // 9.11.2.8
-    {0x25, "DNN"},                    // 9.11.2.1A
-    {0, nullptr},
-};
-const field_meta hf_pld_optional_ie_type = {
+const tag_field hf_pld_optional_ie_type = {
     "Type of Optional IE",
-    "nas.nr.mm.payload_container.optional_ie.type",
-    ft::ft_uint8,
-    fd::base_hex,
-    pld_optional_ie_type_values,
-    nullptr,
-    nullptr,
     0x0,
+    (const v_string[]){
+        {0x12, "PDU session ID"},         // see subclause 9.11.3.41
+        {0x24, "Additional information"}, // 9.11.2.1
+        {0x58, "5GMM cause"},             // 9.11.3.2
+        {0x37, "Back-off timer value"},   // 9.11.2.5
+        {0x59, "Old PDU session ID"},     // 9.11.3.41
+        {0x80, "Request type"},           // 9.11.3.47
+        {0x22, "S-NSSAI"},                // 9.11.2.8
+        {0x25, "DNN"},                    // 9.11.2.1A
+        {0, nullptr},
+    },
 };
-const field_meta hf_pld_optional_ie_length = {
+const uint8_field hf_pld_optional_ie_length = {
     "Length of Optional IE",
-    "nas.nr.mm.payload_container.optional_ie.length",
-    ft::ft_uint8,
-    fd::base_dec,
-    nullptr,
-    nullptr,
-    nullptr,
     0x0,
 };
-const field_meta hf_pld_optional_ie_value = {
+const octet_field hf_pld_optional_ie_value = {
     "Value of Optional IE",
-    "nas.nr.mm.payload_container.optional_ie.value",
-    ft::ft_bytes,
-    fd::base_none,
-    nullptr,
-    nullptr,
-    nullptr,
-    0x0,
 };
 
 int mm::dissect_optional_ie(dissector d, context* ctx) {
@@ -228,14 +187,14 @@ int mm::dissect_optional_ie(dissector d, context* ctx) {
     const auto subtree = d.add_item(-1, &hf_pld_optional_ie);
     use_tree   ut(d, subtree);
 
-    (void) d.add_item(1, &hf_pld_optional_ie_type);
+    (void) d.add_item( &hf_pld_optional_ie_type);
     d.step(1);
 
     const auto len = static_cast< int >(d.uint8());
-    (void) d.add_item(1, &hf_pld_optional_ie_length);
+    (void) d.add_item( &hf_pld_optional_ie_length);
     d.step(1);
 
-    (void) d.add_item(len, &hf_pld_optional_ie_value);
+    (void) d.add_item( &hf_pld_optional_ie_value, len);
     subtree->set_length(d.offset - uc.offset);
 
     return d.offset - uc.offset;

@@ -22,16 +22,8 @@ extern const element_meta mm::authentication_response_parameter = {
     0x2d,
     "Authentication response parameter",
     dissect_authentication_response_parameter,
-    nullptr,
 };
 
-extern const field_meta mm::hf_sres = {
+extern const octet_field mm::hf_sres = {
     "SRES value",
-    "gsm.sres",
-    ft::ft_bytes,
-    fd::base_hex,
-    nullptr,
-    nullptr,
-    nullptr,
-    0x00,
 };

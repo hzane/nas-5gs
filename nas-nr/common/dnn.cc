@@ -18,5 +18,4 @@ extern const element_meta cmn::dnn = {
     0x25,
     "DNN",
     cmn::dissect_dnn,
-    nullptr,
 };

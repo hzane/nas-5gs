@@ -19,6 +19,18 @@ string mcc_string(const uint8_t* d, int length) {
     if (mcc == 460) {
         return "China (460)";
     }
+    if (mcc == 461){
+        return "China (People's Republic of)";
+    }
+    if (mcc == 454){
+        return "Hongkong, China";
+    }
+    if (mcc == 455){
+        return "Macao, China";
+    }
+    if (mcc == 466){
+        return "Taiwan, China";
+    }
     return vstring(e212_codes, mcc);
 }
 

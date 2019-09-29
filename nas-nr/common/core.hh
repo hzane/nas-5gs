@@ -32,7 +32,6 @@ struct message_meta {
     uint8_t           type; // iei
     const char*       name;
     dissect_msg_fnc_t fnc;
-    const char*       alias;
 };
 
 typedef message_meta element_meta;

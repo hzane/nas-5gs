@@ -7,7 +7,7 @@ using namespace cmn;
 int mm::dissect_service_area_list(dissector d, context* ctx) {
     const use_context        uc(ctx, "service-area-list", d, 0);
 
-    static const field_meta* flags[] = {
+    static const bool_field* flags[] = {
         &hf_sal_allowed_type,
         &hf_sal_list_type,
         &hf_element_number,
@@ -75,6 +75,12 @@ int mm::dissect_service_area_list(dissector d, context* ctx) {
     }
     return uc.length;
 }
+const bool_field mm::hf_sal_allowed_type= {
+    "Allowed type",
+    0x80,
+    "TAIs in the list are in the allowed area",
+    "TAIs in the list are in the non-allowed area",
+};
 
 /*  9.11.3.49    Service area list */
 extern const value_string nas_5gs_mm_sal_t_li_values[] = {
@@ -85,28 +91,8 @@ extern const value_string nas_5gs_mm_sal_t_li_values[] = {
     {0, nullptr},
 };
 
-const tf_string tfs_tai_or_not = {
-    "TAIs in the list are in the non-allowed area",
-    "TAIs in the list are in the allowed area",
-};
 
-const field_meta mm::hf_sal_allowed_type= {
-    "Allowed type",
-    "nas.nr.mm.sal_al_t",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &tfs_tai_or_not,
-    nullptr,
-    0x80,
-};
-const field_meta mm::hf_sal_list_type = {
+const tag_field mm::hf_sal_list_type = {
     "Type of list",
-    "nas.nr.mm.sal_t_li",
-    ft::ft_uint8,
-    fd::base_dec,
-    nas_5gs_mm_sal_t_li_values,
-    nullptr,
-    nullptr,
-    0x60,
+    0x60,nas_5gs_mm_sal_t_li_values
 };

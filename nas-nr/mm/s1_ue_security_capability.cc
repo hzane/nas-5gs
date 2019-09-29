@@ -5,7 +5,7 @@
 int mm::dissect_ue_security_capability(dissector d, context* ctx) {
     const use_context uc(ctx, "ue-security-capability", d, 4);
 
-    static const field_meta* oct3_flags[] = {
+    static const bool_field* oct3_flags[] = {
         &hf_ea0,
         &hf_ea1, // 128-
         &hf_ea2, // 128-
@@ -17,7 +17,7 @@ int mm::dissect_ue_security_capability(dissector d, context* ctx) {
         nullptr,
     };
 
-    static const field_meta* oct4_flags[] = {
+    static const bool_field* oct4_flags[] = {
         &hf_mm_5g_ia0,
         &hf_mm_128_5g_ia1,     // 128-
         &hf_mm_128_5g_ia2, // 128-
@@ -29,7 +29,7 @@ int mm::dissect_ue_security_capability(dissector d, context* ctx) {
         nullptr,
     };
 
-    static const field_meta* oct5_flags[] = {
+    static const bool_field* oct5_flags[] = {
         &hf_mm_eea0,
         &hf_mm_128eea1, // 128-
         &hf_mm_128eea2, // 128-
@@ -41,7 +41,7 @@ int mm::dissect_ue_security_capability(dissector d, context* ctx) {
         nullptr,
     };
 
-    static const field_meta* oct6_flags[] = {
+    static const bool_field* oct6_flags[] = {
         &hf_mm_eia0,
         &hf_mm_128eia1, // 128-
         &hf_mm_128eia2, // 128-
@@ -86,7 +86,7 @@ int mm::dissect_ue_security_capability(dissector d, context* ctx) {
 int mm::dissect_replayed_ue_security_capability(dissector d, context* ctx) {
     const use_context uc(ctx, "ue-security-capability", d, 0);
 
-    static const field_meta* oct3_flags[] = {
+    static const bool_field* oct3_flags[] = {
         &hf_ea0,
         &hf_mm_128_5g_ea1,
         &hf_mm_128_5g_ea2,
@@ -98,7 +98,7 @@ int mm::dissect_replayed_ue_security_capability(dissector d, context* ctx) {
         nullptr,
     };
 
-    static const field_meta* oct4_flags[] = {
+    static const bool_field* oct4_flags[] = {
         &hf_mm_5g_ia0,
         &hf_mm_128_5g_ia1,
         &hf_mm_128_5g_ia2,
@@ -110,7 +110,7 @@ int mm::dissect_replayed_ue_security_capability(dissector d, context* ctx) {
         nullptr,
     };
 
-    static const field_meta* oct5_flags[] = {
+    static const bool_field* oct5_flags[] = {
         &hf_mm_eea0,
         &hf_mm_128eea1,
         &hf_mm_128eea2,
@@ -122,7 +122,7 @@ int mm::dissect_replayed_ue_security_capability(dissector d, context* ctx) {
         nullptr,
     };
 
-    static const field_meta* oct6_flags[] = {
+    static const bool_field* oct6_flags[] = {
         &hf_mm_eia0,
         &hf_mm_128eia1,
         &hf_mm_128eia2,

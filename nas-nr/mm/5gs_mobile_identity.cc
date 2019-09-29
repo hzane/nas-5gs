@@ -203,6 +203,7 @@ int mm::dissect_mobile_id_imei(dissector d, context* ctx) {
 int mm::dissect_mobile_id_imeisv(dissector d, context* ctx) {
     const use_context uc(ctx, "mobile-id-imeisv", d, 0);
 
+    nullptr,
     d.add_item(&hf_odd_even_indication);
     d.add_item(&hf_identity_type);
 
@@ -225,20 +226,12 @@ const element_meta mm::mobile_id = {
     0x77,
     "5GS mobile identity",
     dissect_mobile_id,
-    nullptr,
 };
 
 namespace mm {
 
-const field_meta hf_mac_address = {
+const mac_field hf_mac_address = {
     "MAC address",
-    "nas.nr.mac",
-    ft::ft_bytes,
-    fd::sep_colon,
-    nullptr,
-    nullptr,
-    nullptr,
-    0,
 };
 
 const tag_field hf_supi_format = {
@@ -251,142 +244,61 @@ const tag_field hf_supi_format = {
     },
 };
 
-const field_meta hf_suci_nai = {
+const string_field hf_suci_nai = {
     "NAI",
-    "nas.nr.suci.nai",
-    ft::ft_bytes,
-    fd::base_string,
-    nullptr,
-    nullptr,
-    nullptr,
-    0,
 };
-const field_meta hf_imei = {
+const imei_field hf_imei = {
     "IMEI",
-    "nas.nr.imei",
-    ft::ft_bytes,
-    fd::imei,
-    nullptr,
-    nullptr,
-    nullptr,
-    0,
 };
 
-const field_meta hf_imeisv = {
+const imei_field hf_imeisv = {
     "IMEISV",
-    "nas.nr.imeisv",
-    ft::ft_bytes,
-    fd::imei,
-    nullptr,
-    nullptr,
-    nullptr,
-    0,
 };
 
-const field_meta hf_amf_set_id = {
+const uint16_field hf_amf_set_id = {
     "AMF Set ID",
-    "nas.nr.amf",
-    ft::ft_uint16,
-    fd::base_dec,
-    nullptr,
-    nullptr,
-    nullptr,
     0xffc0,
 };
 
-const field_meta hf_amf_pointer = {
+const uint8_field hf_amf_pointer = {
     "AMF Pointer",
-    "nas.nr.amf.p",
-    ft::ft_uint8,
-    fd::base_dec,
-    nullptr,
-    nullptr,
-    nullptr,
     0x3f,
 };
 
 
-const field_meta hf_5g_tmsi = {
+const octet_field hf_5g_tmsi = {
     "5G-TMSI",
-    "nas.nr.5g.tmsi",
-    ft::ft_bytes,
-    fd::base_hex,
-    nullptr,
-    nullptr,
-    nullptr,
-    0x0,
 };
 
-const field_meta hf_routing_indication = {
+const bcd_field hf_routing_indication = {
     "Routing indicator",
-    "nas.nr.suci.routing.ind",
-    ft::ft_bytes,
-    fd::bcd,
-    nullptr,
-    nullptr,
-    nullptr,
-    0,
 };
 
-static const value_string prot_scheme_id_vals[] = {
-    {0x0, "NULL scheme"},
-    {0x1, "ECIES scheme profile A"},
-    {0x2, "ECIES scheme profile B"},
-    {0, nullptr},
-};
-
-const field_meta hf_protection_scheme_id = {
+const tag_field hf_protection_scheme_id = {
     "Protection scheme Id",
-    "nas.nr.suci.scheme.id",
-    ft::ft_uint8,
-    fd::base_dec,
-    prot_scheme_id_vals,
-    nullptr,
-    nullptr,
     0x0f,
+    (const v_string[]){
+        {0x0, "NULL scheme"},
+        {0x1, "ECIES scheme profile A"},
+        {0x2, "ECIES scheme profile B"},
+        {0, nullptr},
+    },
 };
-const field_meta hf_public_key_identifier = {
+const uint8_field hf_public_key_identifier = {
     "Home network public key identifier",
-    "nas.nr.suci.pki",
-    ft::ft_uint8,
-    fd::base_dec,
-    nullptr,
-    nullptr,
-    nullptr,
     0x0,
 };
 
-const field_meta hf_msin = {
+const bcd_field hf_msin = {
     "Scheme output - MSIN",
-    "nas.nr.scheme.msin",
-    ft::ft_bytes,
-    fd::bcd,
-    nullptr,
-    nullptr,
-    nullptr,
-    0,
 };
 
-const field_meta hf_mm_scheme_output = {
+const octet_field hf_mm_scheme_output = {
     "Scheme output - Network specific identifier",
-    "nas.nr.scheme.network.specific.id",
-    ft::ft_bytes,
-    fd::base_none,
-    nullptr,
-    nullptr,
-    nullptr,
-    0x0,
 };
 
-const field_meta hf_amf_region_id = {
+const uint8_field hf_amf_region_id = {
     "AMF Region ID",
-    "nas.nr.amf.region",
-    ft::ft_uint8,
-    fd::base_dec,
-    nullptr,
-    nullptr,
-    nullptr,
-    0x0,
 };
 
 

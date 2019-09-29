@@ -35,7 +35,6 @@ set(COMMON_HEADERS ber.hh
         dissect_nas5g.hh
         dissect_sm_msg.hh
         eps.hh
-        expert_meta.hh
         field_meta.hh
         gsm.hh
         nas-nr-compiler-detection.hh

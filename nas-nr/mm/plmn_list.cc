@@ -9,7 +9,6 @@ const element_meta mm::plmn_list = {
     0x4a,
     "Equivalent PLMNs",
     dissect_plmn_list,
-    nullptr,
 };
 
 /*  [3] 10.5.1.13 PLMN list GSM-A */

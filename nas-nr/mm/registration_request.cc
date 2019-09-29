@@ -141,643 +141,331 @@ int mm::dissect_registration_request(dissector d, context* ctx) {
     return uc.length;
 }
 
+static const char* supported = "Supported";
+static const char* notsupported = "Not supported";
 namespace mm {
-const tf_string tfs_supp_or_not = {
-    "Supported",
-    "Not supported",
-};
-
-const field_meta hf_ea0 = {
+const bool_field hf_ea0 = {
     "5G-EA0",
-    "nas.nr.mm.5g.ea0",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &tfs_supp_or_not,
-    nullptr,
     0x80,
+    notsupported,supported,
 };
-const field_meta hf_ea1 = {
+const bool_field hf_ea1 = {
     "128-5G-EA1",
-    "nas.nr.mm.128.5g.ea1",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &tfs_supp_or_not,
-    nullptr,
     0x40,
+    notsupported,supported,
 };
-const field_meta hf_ea2 = {
+const bool_field hf_ea2 = {
     "128-5G-EA2",
-    "nas.nr.mm.128.5g.ea2",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &tfs_supp_or_not,
-    nullptr,
     0x20,
+    notsupported,supported,
 };
-const field_meta hf_ea3 = {
+const bool_field hf_ea3 = {
     "128-5G-EA3",
-    "nas.nr.mm.128.5g.ea3",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &tfs_supp_or_not,
-    nullptr,
     0x10,
+    notsupported,supported,
 };
 
 } // namespace mm
 
 
 namespace mm {
+const bool_field hf_nas_eps_emm_eea0 = {
+    "EEA0",
+    0x80,
+    notsupported,supported,
+};
+
+const bool_field hf_nas_eps_emm_128eea1 = {
+    "128-EEA1",
+    0x40,
+    notsupported,supported,
+};
+
+const bool_field hf_nas_eps_emm_128eea2 = {
+    "128-EEA2",
+    0x20,
+    notsupported,supported,
+};
+
+const bool_field hf_nas_eps_emm_eea3 = {
+    "128-EEA3",
+    0x10,
+    notsupported,supported,
+};
+const bool_field hf_nas_eps_emm_eea4 = {
+    "EEA4",
+    0x08,
+    notsupported,supported,
+};
+const bool_field hf_nas_eps_emm_eea5 = {
+    "EEA5",
+    0x04,
+    notsupported,supported,
+};
+const bool_field hf_nas_eps_emm_eea6 = {
+    "EEA6",
+    0x02,
+    notsupported,supported,
+};
+const bool_field hf_nas_eps_emm_eea7 = {
+    "EEA7",
+    0x01,
+    notsupported,supported,
+};
+
+const bool_field hf_nas_eps_emm_eia0 = {
+    "EIA0",
+    0x80,
+    notsupported,supported,
+};
+const bool_field hf_nas_eps_emm_128eia1 = {
+    "128-EIA1",
+    0x40,
+    notsupported,supported,
+};
+const bool_field hf_nas_eps_emm_128eia2 = {
+    "128-EIA2",
+    0x20,
+    notsupported,supported,
+};
+const bool_field hf_nas_eps_emm_eia3 = {
+    "128-EIA3",
+    0x10,
+    notsupported,supported,
+};
+const bool_field hf_nas_eps_emm_eia4 = {
+    "EIA4",
+    0x08,
+    notsupported,supported,
+};
+const bool_field hf_nas_eps_emm_eia5 = {
+    "EIA5",
+    0x04,
+    notsupported,supported,
+};
+const bool_field hf_nas_eps_emm_eia6 = {
+    "EIA6",
+    0x02,
+    notsupported,supported,
+};
+const bool_field hf_nas_eps_emm_eia7 = {
+    "EIA7",
+    0x01,
+    notsupported,supported,
+};
+
+const bool_field hf_nas_eps_emm_uea0 = {
+    "UEA0",
+    0x80,
+    notsupported,supported,
+};
+const bool_field hf_nas_eps_emm_uea1 = {
+    "UEA1",
+    0x40,
+    notsupported,supported,
+};
+const bool_field hf_nas_eps_emm_uea2 = {
+    "UEA2",
+    0x20,
+    notsupported,supported,
+};
+const bool_field hf_nas_eps_emm_uea3 = {
+    "UEA3",
+    0x10,
+    notsupported,supported,
+};
+const bool_field hf_nas_eps_emm_uea4 = {
+    "UEA4",
+    0x08,
+    notsupported,supported,
+};
+const bool_field hf_nas_eps_emm_uea5 = {
+    "UEA5",
+    0x04,
+    notsupported,supported,
+};
+const bool_field hf_nas_eps_emm_uea6 = {
+    "UEA6",
+    0x02,
+    notsupported,supported,
+};
+const bool_field hf_nas_eps_emm_uea7 = {
+    "UEA7",
+    0x01,
+    notsupported,supported,
+};
+
 // S1 UE network capability 9.11.3.48
-const tf_string nas_eps_emm_ucs2_supp_flg_value = {
+const bool_field hf_nas_eps_emm_ucs2_supp = {
+    "UCS2 support (UCS2)",
+    0x80,
+    "The UE has a preference for the default alphabet",
     "The UE has no preference between the use of the default alphabet and the use of "
     "UCS2",
-    "The UE has a preference for the default alphabet",
 };
-
-const field_meta hf_nas_eps_emm_eea0 = {
-    "EEA0",
-    "nas.mm.eea0",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &tfs_supp_or_not,
-    nullptr,
-    0x80,
-};
-
-const field_meta hf_nas_eps_emm_128eea1 = {
-    "128-EEA1",
-    "nas.mm.128eea1",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &tfs_supp_or_not,
-    nullptr,
-    0x40,
-};
-
-const field_meta hf_nas_eps_emm_128eea2 = {
-    "128-EEA2",
-    "nas.mm.128eea2",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &tfs_supp_or_not,
-    nullptr,
-    0x20,
-};
-
-const field_meta hf_nas_eps_emm_eea3 = {
-    "128-EEA3",
-    "nas.mm.eea3",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &tfs_supp_or_not,
-    nullptr,
-    0x10,
-};
-const field_meta hf_nas_eps_emm_eea4 = {
-    "EEA4",
-    "nas.mm.eea4",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &tfs_supp_or_not,
-    nullptr,
-    0x08,
-};
-const field_meta hf_nas_eps_emm_eea5 = {
-    "EEA5",
-    "nas.mm.eea5",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &tfs_supp_or_not,
-    nullptr,
-    0x04,
-};
-const field_meta hf_nas_eps_emm_eea6 = {
-    "EEA6",
-    "nas.mm.eea6",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &tfs_supp_or_not,
-    nullptr,
-    0x02,
-};
-const field_meta hf_nas_eps_emm_eea7 = {
-    "EEA7",
-    "nas.mm.eea7",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &tfs_supp_or_not,
-    nullptr,
-    0x01,
-};
-
-const field_meta hf_nas_eps_emm_eia0 = {
-    "EIA0",
-    "nas.mm.eia0",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &tfs_supp_or_not,
-    nullptr,
-    0x80,
-};
-const field_meta hf_nas_eps_emm_128eia1 = {
-    "128-EIA1",
-    "nas.mm.128eia1",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &tfs_supp_or_not,
-    nullptr,
-    0x40,
-};
-const field_meta hf_nas_eps_emm_128eia2 = {
-    "128-EIA2",
-    "nas.mm.128eia2",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &tfs_supp_or_not,
-    nullptr,
-    0x20,
-};
-const field_meta hf_nas_eps_emm_eia3 = {
-    "128-EIA3",
-    "nas.mm.eia3",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &tfs_supp_or_not,
-    nullptr,
-    0x10,
-};
-const field_meta hf_nas_eps_emm_eia4 = {
-    "EIA4",
-    "nas.mm.eia4",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &tfs_supp_or_not,
-    nullptr,
-    0x08,
-};
-const field_meta hf_nas_eps_emm_eia5 = {
-    "EIA5",
-    "nas.mm.eia5",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &tfs_supp_or_not,
-    nullptr,
-    0x04,
-};
-const field_meta hf_nas_eps_emm_eia6 = {
-    "EIA6",
-    "nas.mm.eia6",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &tfs_supp_or_not,
-    nullptr,
-    0x02,
-};
-const field_meta hf_nas_eps_emm_eia7 = {
-    "EIA7",
-    "nas.mm.eia7",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &tfs_supp_or_not,
-    nullptr,
-    0x01,
-};
-
-const field_meta hf_nas_eps_emm_uea0 = {
-    "UEA0",
-    "nas.mm.uea0",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &tfs_supp_or_not,
-    nullptr,
-    0x80,
-};
-const field_meta hf_nas_eps_emm_uea1 = {
-    "UEA1",
-    "nas.mm.uea1",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &tfs_supp_or_not,
-    nullptr,
-    0x40,
-};
-const field_meta hf_nas_eps_emm_uea2 = {
-    "UEA2",
-    "nas.mm.uea2",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &tfs_supp_or_not,
-    nullptr,
-    0x20,
-};
-const field_meta hf_nas_eps_emm_uea3 = {
-    "UEA3",
-    "nas.mm.uea3",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &tfs_supp_or_not,
-    nullptr,
-    0x10,
-};
-const field_meta hf_nas_eps_emm_uea4 = {
-    "UEA4",
-    "nas.mm.uea4",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &tfs_supp_or_not,
-    nullptr,
-    0x08,
-};
-const field_meta hf_nas_eps_emm_uea5 = {
-    "UEA5",
-    "nas.mm.uea5",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &tfs_supp_or_not,
-    nullptr,
-    0x04,
-};
-const field_meta hf_nas_eps_emm_uea6 = {
-    "UEA6",
-    "nas.mm.uea6",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &tfs_supp_or_not,
-    nullptr,
-    0x02,
-};
-const field_meta hf_nas_eps_emm_uea7 = {
-    "UEA7",
-    "nas.emm.uea7",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &tfs_supp_or_not,
-    nullptr,
-    0x01,
-};
-
-const field_meta hf_nas_eps_emm_ucs2_supp = {
-    "UCS2 support (UCS2)",
-    "nas.mm.emm.ucs2.support",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &nas_eps_emm_ucs2_supp_flg_value,
-    nullptr,
-    0x80,
-};
-const field_meta hf_nas_eps_emm_uia1 = {
+const bool_field hf_nas_eps_emm_uia1 = {
     "UMTS integrity algorithm UIA1",
-    "nas.emm.uia1",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &tfs_supp_or_not,
-    nullptr,
     0x40,
+    notsupported,supported,
 };
-const field_meta hf_nas_eps_emm_uia2 = {
+const bool_field hf_nas_eps_emm_uia2 = {
     "UMTS integrity algorithm UIA2",
-    "nas.mm.uia2",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &tfs_supp_or_not,
-    nullptr,
     0x20,
+    notsupported,supported,
 };
-const field_meta hf_nas_eps_emm_uia3 = {
+const bool_field hf_nas_eps_emm_uia3 = {
     "UMTS integrity algorithm UIA3",
-    "nas.mm.uia3",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &tfs_supp_or_not,
-    nullptr,
     0x10,
+    notsupported,supported,
 };
-const field_meta hf_nas_eps_emm_uia4 = {
+const bool_field hf_nas_eps_emm_uia4 = {
     "UMTS integrity algorithm UIA4",
-    "nas.mm.uia4",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &tfs_supp_or_not,
-    nullptr,
     0x08,
+    notsupported,supported,
 };
-const field_meta hf_nas_eps_emm_uia5 = {
+const bool_field hf_nas_eps_emm_uia5 = {
     "UMTS integrity algorithm UIA5",
-    "nas.mm.uia5",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &tfs_supp_or_not,
-    nullptr,
     0x04,
+    notsupported,supported,
 };
-const field_meta hf_nas_eps_emm_uia6 = {
+const bool_field hf_nas_eps_emm_uia6 = {
     "UMTS integrity algorithm UIA6",
-    "nas.mm.uia6",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &tfs_supp_or_not,
-    nullptr,
     0x02,
+    notsupported,supported,
 };
-const field_meta hf_nas_eps_emm_uia7 = {
+const bool_field hf_nas_eps_emm_uia7 = {
     "UMTS integrity algorithm UIA7",
-    "nas.mm.uia7",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &tfs_supp_or_not,
-    nullptr,
     0x01,
+    notsupported,supported,
 };
 
-const field_meta hf_nas_eps_emm_prose_dd_cap = {
+const bool_field hf_nas_eps_emm_prose_dd_cap = {
     "ProSe direct discovery",
-    "nas.mm.prose.direct.discovery.capability",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &tfs_supp_or_not,
-    nullptr,
     0x80,
+    notsupported,supported,
 };
-const field_meta hf_nas_eps_emm_prose_cap = {
+const bool_field hf_nas_eps_emm_prose_cap = {
     "ProSe",
-    "nas.mm.prose.capability",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &tfs_supp_or_not,
-    nullptr,
     0x40,
+    notsupported,supported,
 };
-const field_meta hf_nas_eps_emm_h245_ash_cap = {
+const bool_field hf_nas_eps_emm_h245_ash_cap = {
     "H.245 After SRVCC Handover",
-    "nas.mm.h245.after.srvcc.handover",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &tfs_supp_or_not,
-    nullptr,
     0x20,
+    notsupported,supported,
 };
-const field_meta hf_access_class_control_csfb_cap = {
+const bool_field hf_access_class_control_csfb_cap = {
     "Access class control for CSFB",
-    "nas.mm.access.csfb.capability",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &tfs_supp_or_not,
-    nullptr,
     0x10,
+    notsupported,supported,
 };
-const field_meta hf_nas_eps_emm_lpp_cap = {
+const bool_field hf_nas_eps_emm_lpp_cap = {
     "LTE Positioning Protocol",
-    "nas.mm.lpp.capability",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &tfs_supp_or_not,
-    nullptr,
     0x08,
+    notsupported,supported,
 };
-const field_meta hf_nas_eps_emm_lcs_cap = {
+const bool_field hf_nas_eps_emm_lcs_cap = {
     "Location services (LCS) notification mechanisms",
-    "nas.mm.lcs.capability",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &tfs_supp_or_not,
-    nullptr,
     0x04,
+    notsupported,supported,
 };
-const field_meta hf_nas_eps_emm_1xsrvcc_cap = {
+const bool_field hf_nas_eps_emm_1xsrvcc_cap = {
     "SRVCC from E-UTRAN to cdma2000 1xCS",
-    "nas.mm.srvcc.capability",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &tfs_supp_or_not,
-    nullptr,
     0x02,
+    notsupported,supported,
 };
-const field_meta hf_nas_eps_emm_nf_cap = {
+const bool_field hf_nas_eps_emm_nf_cap = {
     "Notification procedure",
-    "nas.mm.nf.capability",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &tfs_supp_or_not,
-    nullptr,
     0x01,
+    notsupported,supported,
 };
 
-const field_meta hf_nas_eps_emm_epco_cap = {
+const bool_field hf_nas_eps_emm_epco_cap = {
     "Extended protocol configuration options",
-    "nas.mm.epco.capability",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &tfs_supp_or_not,
-    nullptr,
     0x80,
+    notsupported,supported,
 };
-const field_meta hf_nas_eps_emm_hc_cp_ciot_cap = {
+const bool_field hf_nas_eps_emm_hc_cp_ciot_cap = {
     "Header compression for control plane CIoT EPS optimization",
-    "nas.mm.hc.cp.ciot.capability",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &tfs_supp_or_not,
-    nullptr,
     0x40,
+    notsupported,supported,
 };
-const field_meta hf_nas_eps_emm_er_wo_pdn_cap = {
+const bool_field hf_nas_eps_emm_er_wo_pdn_cap = {
     "EMM-REGISTERED w/o PDN connectivity",
-    "nas.mm.er.wo.pdn.capability",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &tfs_supp_or_not,
-    nullptr,
     0x20,
+    notsupported,supported,
 };
-const field_meta hf_nas_eps_emm_s1u_data_cap = {
+const bool_field hf_nas_eps_emm_s1u_data_cap = {
     "S1-U data transfer",
-    "nas.mm.s1u.data.capability",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &tfs_supp_or_not,
-    nullptr,
     0x10,
+    notsupported,supported,
 };
-const field_meta hf_nas_eps_emm_up_ciot_cap = {
+const bool_field hf_nas_eps_emm_up_ciot_cap = {
     "User plane CIoT EPS optimization",
-    "nas.mm.up.ciot.capability",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &tfs_supp_or_not,
-    nullptr,
     0x08,
+    notsupported,supported,
 };
-const field_meta hf_nas_eps_emm_cp_ciot_cap = {
+const bool_field hf_nas_eps_emm_cp_ciot_cap = {
     "Control plane CIoT EPS optimization",
-    "nas.mm.cp.ciot.capability",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &tfs_supp_or_not,
-    nullptr,
     0x04,
+    notsupported,supported,
 };
-const field_meta hf_nas_eps_emm_prose_relay_cap = {
+const bool_field hf_nas_eps_emm_prose_relay_cap = {
     "ProSe UE-to-network relay",
-    "nas.mm.prose.relay.capability",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &tfs_supp_or_not,
-    nullptr,
     0x02,
+    notsupported,supported,
 };
-const field_meta hf_nas_eps_emm_prose_dc_cap = {
+const bool_field hf_nas_eps_emm_prose_dc_cap = {
     "ProSe direct communication",
-    "nas_eps.emm.prose_dc_cap",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &tfs_supp_or_not,
-    nullptr,
     0x01,
+    notsupported,supported,
 };
 
-const field_meta hf_nas_eps_15_bearers_cap = {
+const bool_field hf_nas_eps_15_bearers_cap = {
     "Signalling for a maximum number of 15 EPS bearer contexts",
-    "nas.mm.bearers.capability",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &tfs_supp_or_not,
-    nullptr,
     0x80,
+    notsupported,supported,
 };
-const field_meta hf_nas_eps_sgc_cap = {
+const bool_field hf_nas_eps_sgc_cap = {
     "Service gap control",
-    "nas.mm.sgc.capability",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &tfs_supp_or_not,
-    nullptr,
     0x40,
+    notsupported,supported,
 };
-const field_meta hf_nas_eps_n1mode_cap = {
+const bool_field hf_nas_eps_n1mode_cap = {
     "N1 mode",
-    "nas.mm.n1mode.capability",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &tfs_supp_or_not,
-    nullptr,
     0x20,
+    notsupported,supported,
 };
-const field_meta hf_nas_eps_dcnr_cap = {
+const bool_field hf_nas_eps_dcnr_cap = {
     "Dual connectivity with NR",
-    "nas.mm.dcnr.capability",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &tfs_supp_or_not,
-    nullptr,
     0x10,
+    notsupported,supported,
 };
-const field_meta hf_nas_eps_cp_backoff_cap = {
+const bool_field hf_nas_eps_cp_backoff_cap = {
     "Control plane data backoff",
-    "nas.mm.cp.backoff.capability",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &tfs_supp_or_not,
-    nullptr,
     0x08,
+    notsupported,supported,
 };
-const field_meta hf_nas_eps_restrict_ec_cap = {
+const bool_field hf_nas_eps_restrict_ec_cap = {
     "Restriction on use of enhanced coverage",
-    "nas.mm.restrict_ec.capability",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &tfs_supp_or_not,
-    nullptr,
     0x04,
+    notsupported,supported,
 };
-const field_meta hf_nas_eps_v2x_pc5_cap = {
+const bool_field hf_nas_eps_v2x_pc5_cap = {
     "V2X communication over PC5",
-    "nas.mm.v2x.pc5.capability",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &tfs_supp_or_not,
-    nullptr,
     0x02,
+    notsupported,supported,
 };
-const field_meta hf_nas_eps_multiple_drb_cap = {
+const bool_field hf_nas_eps_multiple_drb_cap = {
     "Multiple DRB",
-    "nas.mm.multiple.drb.capability",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &tfs_supp_or_not,
-    nullptr,
     0x01,
+    notsupported,supported,
 };
 
-const field_meta hf_nas_eps_spare_bits = {
+const uint8_field hf_nas_eps_spare_bits = {
     "Spare bit(s)",
-    "nas.spare.bits",
-    ft::ft_uint8,
-    fd::base_hex,
-    nullptr,
-    nullptr,
-    nullptr,
     0x0,
+    notsupported,supported,
 };
 
 } // namespace mm
@@ -795,20 +483,11 @@ const tf_string tfs_nas5gs_sms_requested = { // NOLINT
     "SMS over NAS not supported",
 };
 
-const tf_string tfs_needed_not_needed = {
-    "Needed",
-    "Not Needed",
-};
-
-const field_meta        mm::hf_ngran_radio_capability_update = {
+const bool_field        mm::hf_ngran_radio_capability_update = {
     "NG-RAN Radio Capability Update (NG-RAN-RCU)",
-    "nas.nr.mm.ng.ran.radio.capability.update",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &tfs_needed_not_needed,
-    nullptr,
     0x02,
+    "Not Needed",
+    "Needed",
 };
 
 const tag_field mm::hf_preferred_network_behaviour = {

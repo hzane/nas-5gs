@@ -12,7 +12,6 @@ const element_meta mm::payload_container_type = {
     0x80,
     "Payload container type",
     mm::dissect_payload_container_type,
-    nullptr,
 };
 
 

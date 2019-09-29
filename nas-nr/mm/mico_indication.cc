@@ -9,7 +9,6 @@ extern const element_meta mm::mico_indication = {
     0xb0,
     "MICO indication",
     dissect_mico_ind,
-    nullptr,
 };
 
 
@@ -26,41 +25,18 @@ int mm::dissect_mico_ind(dissector d, context* ctx) {
     return 1;
 }
 
-struct mico_indication_t {
-    uint8_t raai;
-    uint8_t sprti;
-};
 
-const tf_string tfs_raai = {
-    "all PLMN registration area allocated",
-    "all PLMN registration area not allocated",
-};
-
-const field_meta mm::hfm_mm_raai_b0 = {
+const bool_field mm::hfm_mm_raai_b0 = {
     "Registration Area Allocation Indication (RAAI)",
-    "nas.nr.mm.raai",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &tfs_raai,
-    nullptr,
     0x01,
+    "all PLMN registration area not allocated",
+    "all PLMN registration area allocated",
 };
 
 // In the network to UE and the UE to network direction:
-const tf_string tfs_sprti = {
-    "strictly periodic registration timer supported",
-    "strictly periodic registration timer not supported",
-};
-
-// In the network to UE and the UE to network direction:
-const field_meta mm::hf_mm_sprti = {
+const bool_field mm::hf_mm_sprti = {
     "Strictly Periodic Registration Timer Indication (SPRTI)",
-    "nas.nr.mm.sprti",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &tfs_sprti,
-    nullptr,
     0x02,
+    "strictly periodic registration timer not supported",
+    "strictly periodic registration timer supported",
 };

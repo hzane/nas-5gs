@@ -68,6 +68,13 @@ uint16_t dissector::uint16(bool step)  {
     return (p && l > 0) ? n2uint16(p) : 0;
 }
 
+uint24_t dissector::uint24(bool step){
+    const auto p = ptr();
+    const auto l = safe_length(3);
+    if (step) this->step(3);
+    return (p && l>0) ? n2uint24(p) : 0;
+}
+
 uint32_t dissector::uint32() const {
     const auto p = ptr();
     const auto l = safe_length(4);
@@ -76,30 +83,133 @@ uint32_t dissector::uint32() const {
 }
 
 
-int     dissector::add_item( const uint8_field* f, bool step)  {
-    add_item(1, f->name, istring(umask(uint8(step), f->mask)));
+node_t     dissector::add_item( const uint8_field* f, bool step)  {
+    return add_item(1, f->name, istring(umask(uint8(step), f->mask)));
+}
 
-    return 1;
+node_t dissector::add_item(const uint24_field*f, bool step){
+    return add_item(3, f->name, i24string(u24mask(uint24(step), f->mask)));
 }
 
 
-int dissector::add_item(const tag_field*f, bool step)  {
+node_t dissector::add_item(const tag_field*f, bool step)  {
     auto tag = vstring(f->tags, umask(uint8(step), f->mask));
-    add_item(1, f->name, tag);
-    return 1;
+    return add_item(1, f->name, tag);
 }
 
 
-int dissector::add_item(const bool_field*f, bool step)  {
+node_t dissector::add_item(const bool_field*f, bool step)  {
     auto v = bstring(umask(uint8(step), f->mask), f->values.false_string, f->values.true_string);
-    add_item(1, f->name, v);
-
-    return 1;
+    return add_item(1, f->name, v);
 }
 
 
-int dissector::add_item(const octet_field*f, int len, bool step)  {
-    add_item(len, f->name, hstring(ptr(), safe_length(len)));
+node_t dissector::add_item(const octet_field*f, int len, bool step)  {
+    auto ret = add_item(len, f->name, hstring(ptr(), safe_length(len)));
     if(step) this->step(len);
-    return len;
+    return ret;
+}
+
+node_t dissector::add_item(const element_field*f, int len, bool step){
+    auto ret= add_item(len, f->name);
+    if (len>=0 && step) this->step(len);
+}
+node_t dissector::add_item(const uint16_field* fm, bool step) {
+    return add_item(2, fm->name, istring(u16mask(uint16(step), fm->mask)));
+}
+node_t dissector::add_item(const ipv4_field*f, bool step){
+    auto p = ptr();
+    auto l = safe_length(4);
+
+    auto v = (p && l>0) ? formats("%u.%u.%u.%u", p[0], p[1], p[2], p[3]) : string();
+
+    auto ret= add_item(4, f->name, v);
+    if (step) this->step(4);
+
+    return ret;
+}
+node_t dissector::add_item(const mac_field* fm, bool step) {
+    auto v = hstring(ptr(), safe_length(6), ":");
+    auto ret = add_item(6, fm->name, v);
+
+    if (step) this->step(6);
+
+    return ret;
+}
+node_t dissector::add_item(const ipv6_field* fm, int len, bool step) {
+    auto v = hstring(ptr(), safe_length(len), ":");
+    auto ret = add_item(len, fm->name, v);
+
+    if (step) this->step(len);
+
+    return ret;
+}
+node_t dissector::add_item(const string_field* fm, int len, bool step) {
+    auto v = std::string((const char*)ptr(), safe_length(len));
+    auto ret = add_item(len, fm->name, v);
+
+    if(step) this->step(len);
+    return ret;
+}
+node_t dissector::add_item(const imei_field* fm, int len, bool step) {
+    auto v = imei_string(ptr(), safe_length(len));
+    auto ret = add_item(len, fm->name, v);
+
+    if(step) this->step(len);
+
+    return ret;
+}
+node_t dissector::add_item(const psi_field* fm, bool step) {
+    auto v = uint8(step);
+    auto mask = fm->mask ? fm->mask : 0xffu;
+    for(uint8_t i = 0; i<8;){
+        if (mask&(1u<<i)){
+            auto txt =  v&(1u<<i) ? fm->avail : fm->not_avail;
+            auto name = formats("%s(%d)", fm->name, i+fm->offset);
+            (void) add_item(1, name, txt);
+        }
+        ++i;
+    }
+    return tree;
+}
+
+node_t dissector::add_item(const bcd_field*f, int len, bool step){
+    auto v = bcd_string(ptr(), safe_length(len));
+    auto ret = add_item(len, f->name, v);
+    if (step) this->step(len);
+    return ret;
+}
+node_t dissector::add_item(const sms_field* fm, int len, bool step) {
+    auto v = sms_string(ptr(), safe_length(len));
+    auto ret = add_item(len, fm->name, v);
+
+    if(step) this->step(len);
+    return ret;
+}
+node_t dissector::add_item(const mccmnc_field* fm, bool step) {
+    auto mcc = mcc_string(ptr(), safe_length(3));
+    add_item(3, "MCC", mcc);
+
+    auto mnc = mnc_string(ptr(), safe_length(3));
+    add_item(3, "MNC", mnc);
+
+    if (step) this->step(3);
+
+    return tree;
+}
+node_t dissector::add_item(const timezone_field* fm, bool step) {
+    auto v = gmt_string(ptr());
+    auto ret = add_item(1, fm->name, v);
+
+    if(step) this->step(1);
+
+    return ret;
+}
+node_t dissector::add_item(const utc_field* fm, bool step) {
+    auto v= utc_string(ptr(), safe_length(7));
+    auto ret = add_item(7, fm->name, v);
+
+    if (step) this->step(7);
+
+    return ret;
 }

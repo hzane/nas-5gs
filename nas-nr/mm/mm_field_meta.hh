@@ -83,7 +83,7 @@ extern const field_meta hf_nssai_inc_mode;
 extern const field_meta hf_mm_precedence;
 extern const field_meta hf_mm_op_defined_acd_oct6;
 extern const field_meta hf_mm_op_defined_acd_criteria;
-extern const field_meta hf_registration_type;
+extern const tag_field hf_registration_type;
 extern const tag_field hf_nas_ksi;
 extern const field_meta hf_gsm_result;
 extern const field_meta hf_dtap_rand;
@@ -291,7 +291,7 @@ extern const field_meta hf_tracking_area_code;
 extern const field_meta hf_tracking_area_list_number;
 extern const field_meta hf_tracking_area_list_type;
 extern const field_meta hf_payload_container_type;
-extern const field_meta hf_follow_on_request;
+extern const bool_field hf_follow_on_request;
 extern const field_meta hf_abba;
 
 extern const field_meta hf_slice_service_type;

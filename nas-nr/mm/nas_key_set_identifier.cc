@@ -48,5 +48,4 @@ extern const element_meta mm::nas_ksi = {
     0xff,
     "NAS key set identifier - ngKSI",
     dissect_nas_ksi,
-    nullptr,
 };

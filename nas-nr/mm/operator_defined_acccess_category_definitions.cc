@@ -9,8 +9,6 @@ extern const element_meta mm::operator_defined_access_category_defs = {
     0x76,
     "Operator-defined access category definitions",
     dissect_operator_defined_access_category_definitions,
-    nullptr,
-
 };
 
 /*  9.11.3.38    Operator-defined access category definitions */
@@ -59,74 +57,28 @@ int mm::dissect_operator_defined_access_category_definitions(dissector d, contex
 }
 
 // Operator-defined access category number
-const field_meta mm::hf_access_cat_n = {
+const uint8_field mm::hf_access_cat_n = {
     "Operator-defined access category number",
-    "nas.nr.mm.conf.update.operator.access.category.number",
-    ft::ft_uint8,
-    fd::base_dec,
-    nullptr,
-    nullptr,
-    nullptr,
     0x1f,
 };
-const tf_string tfs_standardized_category_field = {
-    "Standardized access category field is included",
-    "Standardized access category field is not included",
-};
 
-const field_meta mm::hf_psac = {
+const bool_field mm::hf_psac = {
     "Presence of standardized access category (PSAC)",
-    "nas.nr.mm.conf.update.operator.access.category.psac",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &tfs_standardized_category_field,
-    nullptr,
     0x80,
+    "Standardized access category field is not included",
+    "Standardized access category field is included",
 };
 
-const field_meta mm::hf_precedence = {
+const uint8_field mm::hf_precedence = {
     "Precedence",
-    "nas.nr.mm.precedence",
-    ft::ft_uint8,
-    fd::base_dec,
-    nullptr,
-    nullptr,
-    nullptr,
     0x0,
 };
 
-#if 0
-const field_meta mm::hf_criteria_length = {
-    "Length",
-    "nas.nr.mm.conf.update.operator.access.criteria.length",
-    ft::ft_uint8,
-    fd::base_dec,
-    nullptr,
-    nullptr,
-    nullptr,
-    0,
-};
-#endif
-
-const field_meta mm::hf_criteria = {
+const octet_field mm::hf_criteria = {
     "Criteria",
-    "nas.nr.mm.conf.update.operator.access.criteria",
-    ft::ft_bytes,
-    fd::base_none,
-    nullptr,
-    nullptr,
-    nullptr,
-    0,
 };
 
-const field_meta mm::hf_standardize_access_cat = {
+const uint8_field mm::hf_standardize_access_cat = {
     "Standardized access category",
-    "nas.nr.mm.conf.update.operator.access.category.type",
-    ft::ft_uint8,
-    fd::base_hex,
-    nullptr,
-    nullptr,
-    nullptr,
     0x1f,
 };

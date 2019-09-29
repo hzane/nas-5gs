@@ -22,9 +22,3 @@ int mm::dissect_deregistration_request_ue_origin(dissector d, context* ctx) {
     return uc.length;
 }
 
-struct deregistration_type_t {};
-struct deregistration_request_ue_origin_t{
-    deregistration_type_t type;
-    uint8_t nas_ksi;
-    // mobile_id_t  mobile_id;
-};

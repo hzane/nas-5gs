@@ -117,5 +117,4 @@ const element_meta mm::nrmm_capability = {
     0x10,
     "5GMM capability",
     mm::dissect_mm_capability,
-    nullptr,
 };

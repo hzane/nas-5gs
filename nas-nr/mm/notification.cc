@@ -20,7 +20,3 @@ int mm::dissect_notification(dissector d, context* ctx) {
 
     return 1;
 }
-
-struct notification_t {
-    uint8_t access_type;
-};

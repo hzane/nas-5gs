@@ -23,24 +23,14 @@ int mm::dissect_abba_set(dissector d, context* ctx) {
      *the UE shall use the length and the contents of the ABBA IE as received from the network.
      */
 }
-struct abba_set_t{
-    payload_t content;
-};
+
 
 extern const element_meta mm::abba = {
     0x38,
     "ABBA",
     dissect_abba_set,
-    nullptr,
 };
 
-const field_meta mm::hf_abba = {
+const octet_field mm::hf_abba = {
     "ABBA Contents",
-    "nas.nr.mm.abba.contents",
-    ft::ft_bytes,
-    fd::base_hex,
-    nullptr,
-    nullptr,
-    nullptr,
-    0x00,
 };

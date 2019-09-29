@@ -212,5 +212,4 @@ const element_meta mm::network_feature_support = {
     0x21,
     "5GS network feature support",
     dissect_network_feature_support,
-    nullptr,
 };

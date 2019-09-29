@@ -101,29 +101,18 @@ extern const element_meta sms_indication = {
     0xF0,
     "SMS indication",
     dissect_sms_indication,
-    nullptr,
 
 };
 
-const field_meta hf_conf_upd_ind_reg_b1 = {
+const bool_field hf_conf_upd_ind_reg_b1 = {
     "Registration",
-    "nas.nr.configure.update.indication.reg",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &tfs_requested_or_not,
-    nullptr,
     0x02,
-};
-const field_meta hf_conf_upd_ind_ack_b0 = {
-    "Acknowledgement",
-    "nas.nr.mm.configure.update.indication.ack",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
     &tfs_requested_or_not,
-    nullptr,
+};
+const bool_field hf_conf_upd_ind_ack_b0 = {
+    "Acknowledgement",
     0x01,
+    &tfs_requested_or_not,
 };
 
 
@@ -135,105 +124,65 @@ static const value_string gsm_daylight_saving_adjustment_values[] = {
     {3, "Reserved"},
     {0, nullptr},
 };
-const field_meta hf_dst_adjustment = {
+const tag_field hf_dst_adjustment = {
     "DST Adjustment",
-    "gsm_a.dtap.dst_adjustment",
-    ft::ft_uint8,
-    fd::base_dec,
-    gsm_daylight_saving_adjustment_values,
-    nullptr,
-    nullptr,
     0x03,
+    gsm_daylight_saving_adjustment_values,
 };
 
 
-/* [3] 10.5.3.5a Network Name */
-static const value_string gsm_network_name_values[] = {
-    {0, "this field carries no information about the number of spare bits in octet n"},
-    {1, "bit 8 is spare and set to '0' in octet n"},
-    {2, "bits 7 and 8 are spare and set to '0' in octet n"},
-    {3, "bits 6 to 8(inclusive) are spare and set to '0' in octet n"},
-    {4, "bits 5 to 8(inclusive) are spare and set to '0' in octet n"},
-    {5, "bits 4 to 8(inclusive) are spare and set to '0' in octet n"},
-    {6, "bits 3 to 8(inclusive) are spare and set to '0' in octet n"},
-    {7, "bits 2 to 8(inclusive) are spare and set to '0' in octet n"},
-    {0, nullptr},
+const bool_field hf_extension = {
+    "Extension",
+    0x80,
+    "No Extension",
+    "Extended",
 };
 
-const tf_string tfs_add_ci = {
+const tag_field hf_coding_scheme = {
+    "Coding Scheme",
+    0x70,
+    (const v_string[]){
+        {0,
+            "Cell Broadcast data coding scheme, GSM default alphabet, language unspecified, "
+            "defined in 3GPP TS 23.038",
+        },
+        {1, "UCS2 (16 bit)"},
+        {2, "Reserved"},
+        {3, "Reserved"},
+        {4, "Reserved"},
+        {5, "Reserved"},
+        {6, "Reserved"},
+        {7, "Reserved"},
+        {0, nullptr},
+    },
+};
+
+const bool_field hf_add_ci = {
+    "Add CI",
+    0x08,
+    "The MS should not add the letters for the Country's Initials to the text string",
     "The MS should add the letters for the Country's Initials and a separator (e.g. a "
     "space) to the text string",
-    "The MS should not add the letters for the Country's Initials to the text string",
 };
 
-const value_string gsm_coding_scheme_values[] = {
-    {0,
-     "Cell Broadcast data coding scheme, GSM default alphabet, language unspecified, "
-        "defined in 3GPP TS 23.038",
-    },
-    {1, "UCS2 (16 bit)"},
-    {2, "Reserved"},
-    {3, "Reserved"},
-    {4, "Reserved"},
-    {5, "Reserved"},
-    {6, "Reserved"},
-    {7, "Reserved"},
-    {0, nullptr},
-};
-
-const tf_string extension_value = {"No Extension", "Extended"};
-
-const field_meta hf_extension = {
-    "Extension",
-    "gsm.extension",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &extension_value,
-    nullptr,
-    0x80,
-};
-
-const field_meta hf_coding_scheme = {
-    "Coding Scheme",
-    "gsm.coding.scheme",
-    ft::ft_uint8,
-    fd::base_dec,
-    gsm_coding_scheme_values,
-    nullptr,
-    nullptr,
-    0x70,
-};
-
-const field_meta hf_add_ci = {
-    "Add CI",
-    "gsm.add.ci",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &tfs_add_ci,
-    nullptr,
-    0x08,
-};
-
-const field_meta hf_number_of_spare_bits = {
+const tag_field hf_number_of_spare_bits = {
     "Number of spare bits in last octet",
-    "gsm.spare.number",
-    ft::ft_uint8,
-    fd::base_dec,
-    gsm_network_name_values,
-    nullptr,
-    nullptr,
     0x07,
+    (const v_string[]){
+        {0, "this field carries no information about the number of spare bits in octet n"},
+        {1, "bit 8 is spare and set to '0' in octet n"},
+        {2, "bits 7 and 8 are spare and set to '0' in octet n"},
+        {3, "bits 6 to 8(inclusive) are spare and set to '0' in octet n"},
+        {4, "bits 5 to 8(inclusive) are spare and set to '0' in octet n"},
+        {5, "bits 4 to 8(inclusive) are spare and set to '0' in octet n"},
+        {6, "bits 3 to 8(inclusive) are spare and set to '0' in octet n"},
+        {7, "bits 2 to 8(inclusive) are spare and set to '0' in octet n"},
+        {0, nullptr},
+    },
 };
 
-const field_meta hf_text_string = {
+const sms_field hf_text_string = {
     "Text String",
-    "gsm.text.string",
-    ft::ft_bytes,
-    fd::bits7,
-    nullptr,nullptr,nullptr,
-    0x0,
 };
 
 }

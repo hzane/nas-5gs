@@ -11,4 +11,3 @@ int mm::dissect_imeisv_request(dissector d, context* ctx) {
     return d.length;
 }
 
-struct imeisv_request_t {};

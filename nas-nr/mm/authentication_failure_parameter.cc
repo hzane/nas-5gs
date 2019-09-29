@@ -22,16 +22,8 @@ extern const element_meta mm::authentication_failure_parameter = {
     0x30,
     "Authentication failure parameter",
     dissect_authentication_failure_parameter,
-    nullptr,
 };
 
-const field_meta mm::hf_gsm_result = {
+const octet_field mm::hf_gsm_result = {
     "SRES value",
-    "gsm.sres.result",
-    ft::ft_bytes,
-    fd::base_none,
-    nullptr,
-    nullptr,
-    nullptr,
-    0x00,
 };

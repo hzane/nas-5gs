@@ -9,7 +9,6 @@ const element_meta mm::pdu_session_reactive_result_error_cause = {
     0x72,
     "PDU session reactivation result error cause",
     dissect_pdu_session_reactive_result_error_cause,
-    nullptr,
 };
 
 //  9.11.3.43    PDU session reactivation result error cause

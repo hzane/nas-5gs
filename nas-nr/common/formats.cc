@@ -169,6 +169,12 @@ uint8_t ws_ctz8(uint8_t x) {
 
     return table[((uint32_t)((x & (uint32_t)(0u - x)) * 0x077CB531U)) >> 27u];
 }
+uint16_t u16mask(uint16_t v, uint16_t mask){
+    return mask ? unsigned(v&mask)>>ws_ctz32(mask) : v;
+}
+uint24_t u24mask(uint24_t v, uint24_t mask){
+    return mask ?  unsigned(v&mask)>>ws_ctz32(mask):v;
+}
 uint8_t umask(uint8_t v, uint8_t mask) {
     return mask ? (unsigned(v & mask) >> ws_ctz8(mask)) : v;
 }

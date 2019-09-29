@@ -10,7 +10,6 @@ extern const element_meta mm::rejected_nssai = {
     0x11,
     "Rejected NSSAI",
     dissect_rejected_nssai,
-    nullptr,
 };
 
 
@@ -38,21 +37,15 @@ int mm::dissect_rejected_nssai(dissector d, context* ctx) {
     return uc.length;
 }
 
-static const v_string ref_nssai_cause_values[] = {
-    {0, "S-NSSAI not available in the current PLMN"},
-    {1,
-     "S-NSSAI not available in the current registration area All other values are "
-     "reserved."},
-    {0, nullptr},
-};
 
-const field_meta mm::hf_reject_nssai_cause = {
+const tag_field mm::hf_reject_nssai_cause = {
     "Cause",
-    "nas.nr.mm.cause",
-    ft::ft_uint8,
-    fd::base_dec,
-    ref_nssai_cause_values,
-    nullptr,
-    nullptr,
     0x0f,
+    (const v_string[]){
+        {0, "S-NSSAI not available in the current PLMN"},
+        {1,
+            "S-NSSAI not available in the current registration area All other values are "
+            "reserved."},
+        {0, nullptr},
+    },
 };

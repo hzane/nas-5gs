@@ -12,6 +12,3 @@ int mm::dissect_configuration_update_complete(dissector d, context* ctx) {
     return 0;
 }
 
-struct configuration_update_complete_t{
-
-};

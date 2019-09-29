@@ -40,114 +40,43 @@ int mm::dissect_authentication_request(dissector d, context* ctx) {
     return uc.length;
 }
 
-struct abba_t{
-    payload_t _;
-};
-struct authentication_parameter_rand_t{
-    uint8_t rand[16];
-};
-struct autn_t{
-    std::vector<uint8_t> _;
-};
-struct authentication_parameter_autn_t{
-    autn_t autn;
-    uint8_t sqn[6];
-    uint16_t amf;
-    uint8_t mac[8];
-};
-struct eap_message_t{
-    std::vector<uint8_t> _;
-};
-struct authentication_reject_t{
-    eap_message_t eap;
-};
-
-struct authentication_requset_t{
-    uint8_t nas_ksi;
-    abba_t abba;
-    std::optional<authentication_parameter_rand_t> rand;
-    std::optional<authentication_parameter_autn_t> autn;
-    std::optional<eap_message_t> eap;
-};
-struct authentication_response_parameter_t{
-    uint8_t sres[4];
-};
-
-struct authentication_response_t{
-    std::optional<authentication_response_parameter_t> parameter;
-    std::optional<eap_message_t> eap;
-};
-
-struct authentication_result_t {
-    uint8_t nas_ksi;
-    eap_message_t eap;
-    std::optional<abba_t> abba;
-};
-
 namespace mm {
 
 extern const element_meta authentication_parameter_rand = {
     0x21,
     "Authentication parameter RAND - 5G authentication challenge",
     dissect_authentication_parameter_rand,
-    nullptr,
 };
 
 extern const element_meta authentication_parameter_autn = {
     0x20,
     "Authentication parameter AUTN - 5G authentication challenge",
     dissect_authentication_parameter_autn,
-    nullptr,
 };
 
 
-extern const field_meta hf_dtap_rand = {
-    "RAND value",
-    "gsm.rand",
-    ft::ft_bytes,
-    fd::base_hex,
-    nullptr,
-    nullptr,
-    nullptr,
-    0x00,
+extern const octet_field hf_dtap_rand = {
+    "RAND value",nullptr,nullptr,
 };
 
 
-extern const field_meta hf_dtap_autn = {
+extern const octet_field hf_dtap_autn = {
     "AUTN value",
-    "gsm_a.dtap.autn",
-    ft::ft_bytes,
-    fd::base_hex,
     nullptr,
     nullptr,
-    nullptr,
-    0x00,
 };
-extern const field_meta hf_dtap_autn_sqn = {
+extern const octet_field hf_dtap_autn_sqn = {
     "SQN xor AK",
-    "gsm_a.dtap.autn.sqn_xor_ak",
-    ft::ft_bytes,
-    fd::base_hex,
     nullptr,
     nullptr,
-    nullptr,
-    0x00,
 };
-extern const field_meta hf_dtap_autn_amf= {
+extern const octet_field hf_dtap_autn_amf= {
     "AMF",
-    "gsm_a.dtap.autn.amf",
-    ft::ft_bytes,
-    fd::base_hex,
-    nullptr, nullptr, nullptr,
-    0x00,
+    nullptr, nullptr,
 };
-extern const field_meta hf_dtap_autn_mac = {
+extern const octet_field hf_dtap_autn_mac = {
     "MAC",
-    "gsm_a.dtap.autn.mac",
-    ft::ft_bytes,
-    fd::base_hex,
-    nullptr, nullptr, nullptr,
-    0x00,
+    ":", nullptr,
 };
 
 

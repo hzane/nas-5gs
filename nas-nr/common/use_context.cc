@@ -24,6 +24,7 @@ void use_context::extraneous_data_check() const {
 use_context::use_context(context* ctx, const char* path, dissector const& d, const int maxlen )
 : ctx(ctx), offset(d.offset), length(d.length), maxlen(maxlen), d(d) {
     if (!ctx) return;
+
     if (path == nullptr) path = ".";
     ctx->paths.emplace_back(path);
     diag("%s%s %d-%d\n",
@@ -33,6 +34,8 @@ use_context::use_context(context* ctx, const char* path, dissector const& d, con
          length);
 }
 use_context::~use_context() {
+    if(!ctx) return;
+
     extraneous_data_check();
     ctx->paths.pop_back();
 }

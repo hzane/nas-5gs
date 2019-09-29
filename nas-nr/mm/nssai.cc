@@ -10,7 +10,6 @@ extern const element_meta mm::configured_nssai = {
     0x31,
     "Configured NSSAI",
     dissect_configured_nssai,
-    nullptr,
 };
 
 /* 9.11.3.37    NSSAI */
@@ -36,10 +35,6 @@ int mm::dissect_configured_nssai(dissector d, context* ctx) {
     return uc.length;
 }
 
-struct nssai_t{};
-struct configured_nssai_t {
-    std::vector< nssai_t > _;
-};
 
 /* 9.11.3.37    NSSAI
  * S-NSSAI value is coded as the length and value part of S-NSSAI information element
@@ -65,9 +60,6 @@ int mm::dissect_allowed_nssai(dissector d, context* ctx) {
     return uc.length;
 }
 
-struct allowed_nssai_t {
-    std::vector< payload_t > nssai;
-};
 
 /* 9.11.3.37    NSSAI*/
 int mm::dissect_requested_nssai(dissector d, context* ctx) {
@@ -91,6 +83,3 @@ int mm::dissect_requested_nssai(dissector d, context* ctx) {
     return uc.length;
 }
 
-struct requested_nssai_t {
-    std::vector< payload_t > nssai;
-};

@@ -159,7 +159,6 @@ const element_meta service_area_list = {
     0x27,
     "Service area list",
     dissect_service_area_list,
-    nullptr,
 };
 
 
@@ -167,7 +166,6 @@ const element_meta t3512_gprs_timer_3 = {
     0x5E,
     "GPRS timer 3 - T3512 value",
     dissect_gprs_timer3_set,
-    nullptr,
 };
 
 
@@ -175,7 +173,6 @@ const element_meta n3g_deregistration_timer_gprs_timer2 = {
     0x5D,
     "GPRS timer 2 - Non-3GPP de-registration timer value",
     dissect_gprs_timer2_set,
-    nullptr,
 };
 
 
@@ -183,7 +180,6 @@ const element_meta t3502_gprs_timer_2 = {
     0x16,
     "GPRS timer 2 - T3502 value",
     dissect_gprs_timer2_set,
-    nullptr,
 };
 
 
@@ -195,7 +191,6 @@ const element_meta eap_message = {
     0x78,
     "EAP message",
     dissect_eap_message,
-    nullptr,
 };
 
 
@@ -204,7 +199,6 @@ const element_meta nssai_inclusion_mode = {
     0xA0,
     "NSSAI inclusion mode",
     dissect_nssai_inclusion_mode,
-    nullptr,
 };
 
 //  Operator-defined access category definitions 9.11.3.38
@@ -215,7 +209,6 @@ extern const element_meta operator_defined_acd = {
     0x76,
     "Operator-defined access category definitions",
     dissect_operator_defined_acd,
-    nullptr,
 };
 
 // Negotiated DRX parameters 9.11.3.2A
@@ -223,58 +216,35 @@ const element_meta negotiated_drx_parameter = {
     0x51,
     "Negotiated DRX parameters",
     dissect_drx_parameter,
-    nullptr,
 };
 
 /* [14] 10.5.5.37 Non-3GPP NW provided policies */
-const tf_string gsm_a_gm_n3en_ind_value = {
+static const tf_string tfind = {
     "Use of non-3GPP emergency numbers permitted",
     "Use of non-3GPP emergency numbers not permitted",
 };
 
-const field_meta hf_n3en_indicator = {
+const bool_field hf_n3en_indicator = {
     "N3EN indicator",
-    "gsm.gmm.n3en.indicator",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &gsm_a_gm_n3en_ind_value,
-    nullptr,
     0x01,
+    tfind.false_string,
+    tfind.true_string,
 };
 
 
-const field_meta hf_reg_res_sms_allowed = {
+const bool_field hf_reg_res_sms_allowed = {
     "SMS over NAS",
-    "nas.nr.mm.reg_res.sms_all",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &tfs_allowed_not_allowed,
-    nullptr,
     0x08,
+    tfind.false_string,
+    tfind.true_string,
 };
 
 
-const field_meta hf_mobile_country_code = {
+const octet_field hf_mobile_country_code = {
     "Mobile Country Code (MCC)",
-    "gsm_a.mobile_country_code",
-    ft::ft_bytes,
-    fd::mcc,
-    nullptr,
-    nullptr,
-    nullptr,
-    0x0,
 };
-const field_meta hf_mobile_network_code = {
+const octet_field hf_mobile_network_code = {
     "Mobile Network Code (MNC)",
-    "gsm_a.mobile_network_code",
-    ft::ft_bytes,
-    fd::mnc,
-    nullptr,
-    nullptr,
-    nullptr,
-    0x0,
 };
 
 
@@ -285,125 +255,60 @@ static tf_string tfs_ext_emergency_number_list = {
     "Valid in the country of the PLMN from which this IE is received",
 };
 
-const field_meta hf_emergency_number_info = {
+const bcd_field hf_emergency_number_info = {
     "Emergency Number Information",
-    "gsm.ext.emergency.number.information",
-    ft::ft_uint32,
-    fd::base_dec,
-    nullptr,nullptr,nullptr,
-    0x0,
 };
-const field_meta hf_emergency_number_length = {
+const uint8_field hf_emergency_number_length = {
     "Emergency Number Info length",
-    "gsm.emergency.number.length",
-    ft::ft_uint8,
-    fd::base_dec,
-    nullptr,
-    nullptr,
-    nullptr,
     0x0,
 };
 
-const field_meta hf_mountain_rescue = {
+const bool_field hf_mountain_rescue = {
     "Mountain Rescue",
-    "gsm.mountain.rescue",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,nullptr,nullptr,
     0x10,
 };
-const field_meta hf_marine_guard = {
+const bool_field hf_marine_guard = {
     "Marine Guard",
-    "gsm.marine.guard",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,nullptr,nullptr,
     0x08,
 };
-const field_meta hf_fire_brigade = {
+const bool_field hf_fire_brigade = {
     "Fire Brigade",
-    "gsm.fire.brigade",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,nullptr,nullptr,
     0x04,
 };
-const field_meta hf_ambulance = {
+const bool_field hf_ambulance = {
     "Ambulance",
-    "gsm.emergency.ambulance",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,nullptr,nullptr,
     0x02,
 };
-const field_meta hf_police = {
+const bool_field hf_police = {
     "Police",
-    "gsm.emergency.police",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,nullptr,nullptr,
     0x01,
 };
-const field_meta hf_emergency_bcd_num = {
+const bcd_field hf_emergency_bcd_num = {
     "Emergency BCD Number",
-    "gsm.emergency.bcd",
-    ft::ft_bytes,
-    fd::bcd,
-    nullptr,
-    nullptr,
-    nullptr,
-    0,
 };
 
 
-const field_meta hf_ext_emergency_number_list_validity = {
+const bool_field hf_ext_emergency_number_list_validity = {
     "Extended Emergency Number List Validity",
-    "nas.mm.emergency.validity",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &tfs_ext_emergency_number_list,
-    nullptr,
     0x01,
-};
-const field_meta hf_ext_emerge_num_len = {
-    "Emergency number information length",
-    "nas.mm.emergency",
-    ft::ft_uint8,
-    fd::base_dec,
-    nullptr,
-    nullptr,
-    nullptr,
-    0x0,
-};
-const field_meta hf_emergency_number = {
-    "Emergency number",
-    "nas.mm.emergency",
-    ft::ft_bytes,
-    fd::bcd,
-    nullptr,nullptr,nullptr,
-    0x0,
+    "Valid in the country of the PLMN from which this IE is received",
+    "Valid only in the PLMN from which this IE is received",
 };
 
-const field_meta hf_sub_services_field_length = {
-    "Sub-services field length",
-    "nas.mm.sub.services.field.length",
-    ft::ft_uint8,
-    fd::base_dec,
-    nullptr,
-    nullptr,
-    nullptr,
+const uint8_field hf_ext_emerge_num_len = {
+    "Emergency number information length",
     0x0,
 };
-const field_meta hf_sub_services_field = {
-    "Sub-services field",
-    "nas.mm.sub.service.field",
-    ft::ft_bytes,
-    fd::bits7,
-    nullptr,
-    nullptr,
-    nullptr,
+const bcd_field hf_emergency_number = {
+    "Emergency number",
+};
+
+const uint8_field hf_sub_services_field_length = {
+    "Sub-services field length",
     0x0,
+};
+const sms_field hf_sub_services_field = {
+    "Sub-services field",
 };
 
 
@@ -425,225 +330,119 @@ const tf_string tfs_nas_5gs_sor_data_type = {
 };
 
 
-const field_meta hf_sor_hdr_ack = { // NOLINT
+const bool_field hf_sor_hdr_ack = { // NOLINT
     "Acknowledgement (ACK)",
-    "nas.nr.sor.hdr.ack",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &tfs_requested_not_requested,
-    nullptr,
     0x08,
+    &tfs_requested_not_requested,
 };
-const field_meta hf_sor_hdr_list_type = {
+const bool_field hf_sor_hdr_list_type = {
     "List type",
-    "nas.nr.sor.hdr.type",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &tfs_nas_5gs_list_type,
-    nullptr,
     0x04,
+    &tfs_nas_5gs_list_type,
 };
-const field_meta hf_sor_hdr_list_indication = {
+
+const bool_field hf_sor_hdr_list_indication = {
     "List indication",
-    "nas.nr.sor.hdr",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &tfs_sor_list_indication,
-    nullptr,
     0x02,
+    &tfs_sor_list_indication,
 };
-const field_meta hf_sor_hdr0_sor_data_type = {
+
+const bool_field hf_sor_hdr0_sor_data_type = {
     "SOR data type",
-    "nas.nr.sor.data",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    (&tfs_nas_5gs_sor_data_type),
-    nullptr,
     0x01,
+    (&tfs_nas_5gs_sor_data_type),
 };
 
 const tf_string tfs_selected_not_selected = {"Selected", "Not Selected",};
 
-const field_meta        hf_access_tech_utran      = {
+const bool_field       hf_access_tech_utran      = {
     "Access technology UTRAN",
-    "nas.nr.access.technology.utran",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &tfs_selected_not_selected,
-    nullptr,
     0x80,
+    &tfs_selected_not_selected,
 };
-const field_meta hf_access_tech_eutran = {
+const bool_field hf_access_tech_eutran = {
     "Access technology E-UTRAN",
-    "nas.nr.access.technology.eutran",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &tfs_selected_not_selected,
-    nullptr,
     0x40,
+    &tfs_selected_not_selected,
 };
-const field_meta hf_access_tech_eutran_wb = {
+const bool_field hf_access_tech_eutran_wb = {
     "Access technology E-UTRAN in WB-S1 mode",
-    "nas.nr.access.technology.eutran.wb",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &tfs_selected_not_selected,
-    nullptr,
     0x20,
+    &tfs_selected_not_selected,
 };
-const field_meta hf_access_tech_eutran_nb = {
+const bool_field hf_access_tech_eutran_nb = {
     "Access technology E-UTRAN in NB-S1 mode",
-    "nas.nr.access.technology.eutran.nb",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &tfs_selected_not_selected,
-    nullptr,
     0x10,
+    &tfs_selected_not_selected,
 };
-const field_meta hf_access_tech_o1_b3 = {
+const bool_field hf_access_tech_o1_b3 = {
     "Access technology NG-RAN",
-    "nas.nr.access.technology.ran",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &tfs_selected_not_selected,
-    nullptr,
     0x08,
+    &tfs_selected_not_selected,
 };
 
-const field_meta hf_access_tech_o2_b7 = {
+const bool_field hf_access_tech_o2_b7 = {
     "Access technology GSM",
-    "nas.nr.access.technology.gsm",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &tfs_selected_not_selected,
-    nullptr,
     0x80,
+    &tfs_selected_not_selected,
 };
 
-const field_meta hf_access_tech_o2_b6 = {
+const bool_field hf_access_tech_o2_b6 = {
     "Access technology GSM COMPACT",
-    "nas.nr.acces.technology.gsm.compact",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &tfs_selected_not_selected,
-    nullptr,
     0x40,
+    &tfs_selected_not_selected,
 };
 
-const field_meta hf_access_tech_o2_b5 = {
+const bool_field hf_access_tech_o2_b5 = {
     "Access technology CDMA2000 HRPD",
-    "nas.nr.access.technology.cdma2000.hrpd",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &tfs_selected_not_selected,
-    nullptr,
     0x20,
+    &tfs_selected_not_selected,
 };
 
-const field_meta hf_access_tech_o2_b4 = {
+const bool_field hf_access_tech_o2_b4 = {
     "Access technology CDMA2000 1xRTT",
-    "nas.nr.access.technology.cdma2000.rtt",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &tfs_selected_not_selected,
-    nullptr,
     0x10,
+    &tfs_selected_not_selected,
 };
 
-const field_meta hf_access_tech_o2_b3 = {
+const bool_field hf_access_tech_o2_b3 = {
     "Access technology EC-GSM-IoT",
-    "nas.nr.access.technology.gsm.iot",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &tfs_selected_not_selected,
-    nullptr,
     0x08,
-};
-const field_meta hf_acces_tech_o2_b2 = {
-    "Access technology GSM ",
-    " nas_5gs.access.technology.gsm ",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
     &tfs_selected_not_selected,
-    nullptr,
-    0x04,
 };
 
-const field_meta hf_rfu_b2 = {
+const bool_field hf_acces_tech_o2_b2 = {
+    "Access technology GSM ",
+    0x04,
+    &tfs_selected_not_selected,
+};
+
+const uint8_field hf_rfu_b2 = {
     "Reserved for Future Use(RFU)",
-    "nas.nr.rfu.b2",
-    ft::ft_uint8,
-    fd::base_dec,
-    nullptr,nullptr,nullptr,
     0x04,
 };
-const field_meta hf_rfu_b1 = {
+const uint8_field hf_rfu_b1 = {
     "Reserved for Future Use(RFU)",
-    "nas.nr.rfu.b1",
-    ft::ft_uint8,
-    fd::base_dec,
-    nullptr,nullptr,nullptr,
     0x02,
 };
-const field_meta hf_rfu_b0 = {
+const bool_field hf_rfu_b0 = {
     "Reserved for Future Use(RFU)",
-    "nas.nr.rfu.b0",
-    ft::ft_uint8,
-    fd::base_dec,
-    nullptr,nullptr,nullptr,
     0x01,
 };
-const field_meta hf_sor_mac_iue = {
+const octet_field hf_sor_mac_iue = {
     "SOR-MAC-IUE",
-    "nas.nr.mm.sor_mac_iue",
-    ft::ft_bytes,
-    fd::base_none,
-    nullptr,
-    nullptr,
-    nullptr,
-    0x0,
 };
-const field_meta hf_sor_mac_iausf = {
+const octet_field hf_sor_mac_iausf = {
     "SOR-MAC-IAUSF",
-    "nas.nr.mm.sor.mac.iausf",
-    ft::ft_bytes,
-    fd::base_none,
-    nullptr,nullptr,nullptr,
-    0x0,
 };
 
-const field_meta hf_counter_sor = {
+const uint16_field hf_counter_sor = {
     "CounterSOR",
-    "nas.nr.mm.counter_sor",
-    ft::ft_uint16,
-    fd::base_dec,
-    nullptr,nullptr,nullptr,
     0x0,
 };
-const field_meta hf_sor_sec_pkt = {
+const octet_field hf_sor_sec_pkt = {
     "Secured packet",
-    "nas.nr.mm.sor_sec_pkt",
-    ft::ft_bytes,
-    fd::base_none,
-    nullptr,nullptr,nullptr,
-    0x0,
 };
-
 
 /* 9.10.2.2     EAP message*/
 /* EAP message as specified in IETF RFC 3748 */
@@ -654,28 +453,18 @@ int dissect_eap_message(dissector d, context* ctx) {
     return d.length;
 }
 
-const field_meta hf_mm_precedence = {
+const uint8_field hf_mm_precedence = {
     "Precedence",
-    "nas.nr.mm.precedence",
-    ft::ft_uint8,
-    fd::base_dec,
-    nullptr,
-    nullptr,
-    nullptr,
     0x0,
 };
-const field_meta hf_mm_op_defined_acd_oct6 = {
+const uint8_field hf_mm_op_defined_acd_oct6 = {
     "Operator-defined access category number",
-    "nas.nr.mm.opd_acc_cat",
-    ft::ft_uint8,
-    fd::base_dec,
-    nullptr,
-    nullptr,
-    nullptr,
     0x1f,
 };
 
-const field_meta hf_mm_op_defined_acd_criteria = {};
+const octet_field hf_mm_op_defined_acd_criteria = {
+    "Operator-defined access category criteria",
+};
 
 /* 9.11.3.38    Operator-defined access category definitions */
 int dissect_operator_defined_acd(dissector d, context* ctx) {

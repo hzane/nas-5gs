@@ -19,11 +19,3 @@ int mm::dissect_authentication_failure(dissector d, context* ctx) {
     return uc.length;
 }
 
-struct authentication_failure_parameter_t{
-    uint8_t result[4];
-};
-
-struct authentication_failure_t{
-    uint8_t cause;
-    authentication_failure_parameter_t parameter;
-};

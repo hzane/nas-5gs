@@ -50,3 +50,6 @@ string gprs_timer_2_string(uint8_t d) ;
 string gprs_timer_3_string(uint8_t d);
 
 uint8_t umask(uint8_t v, uint8_t mask);
+uint16_t u16mask(uint16_t v, uint16_t mask);
+uint24_t u24mask(uint24_t v, uint24_t mask);
+uint32_t u32mask(uint32_t v, uint32_t mask);
