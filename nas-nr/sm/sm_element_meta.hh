@@ -136,7 +136,7 @@ inline const element_meta extended_pco = {
 };
 
 // XX Control plane only indication 9.11.4.23	O	TV	1
-const element_meta control_plane_only_indication = {
+inline const element_meta control_plane_only_indication = {
     0xffu,
     "Control plane only indication",
     sm::dissect_control_plane_only_indication,
@@ -178,7 +178,7 @@ inline const element_meta nrsm_capability = {
 };
 
 // Authorized QoS rules QoS rules 9.11.4.13
-const element_meta authorized_qos_rules = {
+inline const element_meta authorized_qos_rules = {
     0x7A,
     "QoS rules - Authorized QoS rules",
     sm::dissect_authorized_qos_rules,

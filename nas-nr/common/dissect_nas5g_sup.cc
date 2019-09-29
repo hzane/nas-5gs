@@ -98,7 +98,7 @@ const uint8_field hf_proc_trans_id = {
 };
 
 /* 5GS mobility management messages */
-const tag_field hf_mm_msg_type = {
+extern const tag_field hf_mm_message_type = {
     "Message type",
     0x0,
     (const v_string[]){
@@ -155,7 +155,7 @@ const tag_field hf_mm_msg_type = {
 const tag_field hf_service_request_msg_id = {
     "Service request message identity",
     0x0,
-    hf_mm_msg_type.tags,
+    hf_mm_message_type.tags,
 };
 
 // GPRS timer 3 9.11.2.4

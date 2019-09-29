@@ -477,28 +477,28 @@ inline const element_meta mobile_id = {
 
 
 // Allowed NSSAI    NSSAI     9.11.3.37
-extern const element_meta allowed_nssai = {
+inline const element_meta allowed_nssai = {
     0x15,
     "Allowed NSSAI",
     mm::dissect_allowed_nssai,
 };
 
 // 9.11.3.9
-extern const element_meta tracking_area_id_list = {
+inline const element_meta tracking_area_id_list = {
     0x54,
     "5GS tracking area identity list - TAI list",
     mm::dissect_tracking_area_id_list,
 };
 
 // PDU session reactivation result   9.11.3.42
-extern const element_meta pdu_session_reactivation_result = {
+inline const element_meta pdu_session_reactivation_result = {
     0x26,
     "PDU session reactivation result",
     mm::dissect_pdu_session_reactive_result,
 };
 
 /* 9.11.3.44    PDU session status */
-extern const element_meta pdu_session_status = {
+inline const element_meta pdu_session_status = {
     0x50,
     "PDU session status",
     mm::dissect_pdu_session_status,
@@ -507,21 +507,21 @@ extern const element_meta pdu_session_status = {
 
 
 // NAS message container 9.11.3.33
-extern const element_meta nas_msg_container = {
+inline const element_meta nas_msg_container = {
     0x71,
     "NAS message container",
     mm::dissect_nas_message_container,
 };
 
 // EPS bearer context status	9.11.3.59
-extern const element_meta eps_bearer_context_status = {
+inline const element_meta eps_bearer_context_status = {
     0x60,
     "EPS bearer context status",
     mm::dissect_eps_bearer_context_status,
 };
 
 // NAS key set identifier 9.11.3.32
-extern const element_meta nas_ksi = {
+inline const element_meta nas_ksi = {
     0xff,
     "NAS key set identifier - ngKSI",
     mm::dissect_nas_ksi,
