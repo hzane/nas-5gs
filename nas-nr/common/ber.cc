@@ -13,9 +13,9 @@ inline int not_present_diag(int length, const element_meta* meta, context* ctx) 
     return length;
 }
 int dissect_elem_mandatory(const element_meta* val_meta,
-                                  dissector           d,
+                                    dissector           d,
                                   tlv_fnc_t           fnc,
-                                  context*            ctx) {
+                                  econtext*            ctx) {
     auto consumed = 0;
     if (d.length > 0) {
         consumed = fnc( val_meta, d, ctx);

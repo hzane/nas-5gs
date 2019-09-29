@@ -6,7 +6,6 @@ extern const element_meta sm::requested_qos_flow_desc = {
     0x79,
     "QoS flow descriptions - Requested",
     sm::dissect_authorized_qos_flow_description,
-    nullptr,
 };
 
 // Authorized QoS flow descriptions     QoS flow descriptions 9.11.4.12
@@ -14,17 +13,10 @@ extern const element_meta sm::authorized_qos_flow_desc = {
     0x79,
     "QoS flow descriptions - Authorized",
     sm::dissect_authorized_qos_flow_description,
-    nullptr,
 };
 
-const field_meta sm::hf_sm_qos_flow_identity = {
+const uint8_field sm::hf_sm_qos_flow_identity = {
     "Qos flow identifier",
-    "nas.nr.sm.qfi",
-    ft::ft_uint8,
-    fd::base_dec,
-    nullptr,
-    nullptr,
-    nullptr,
     0x3f,
 };
 
@@ -38,15 +30,10 @@ const value_string qos_flow_description_operation_code_values[] = {
     {0, nullptr},
 };
 
-const field_meta sm::hf_qos_flow_operation_code = {
+const tag_field sm::hf_qos_flow_operation_code = {
     "Operation code",
-    "nas.nr.sm.qos.flow.operation.code",
-    ft::ft_uint8,
-    fd::base_dec,
-    qos_flow_description_operation_code_values,
-    nullptr,
-    nullptr,
     0xe0,
+    qos_flow_description_operation_code_values,
 };
 
 int sm::dissect_qos_parameters(dissector d, int j, context* ctx) {
@@ -85,7 +72,7 @@ int sm::dissect_qos_parameters(dissector d, int j, context* ctx) {
     case 0x05:
         /* Unit for Session-AMBR for uplink */
         /* Session-AMBR for downlink*/
-        (void) d.add_item(3, &hf_session_ambr_downlink);
+        (void) d.add_item(&hf_session_ambr_downlink);
         d.step(3);
         break;
     case 06: // averaging window; and
@@ -118,11 +105,11 @@ int sm::dissect_authorized_qos_flow_description(dissector d, context* ctx) {
         use_tree   ut(d, subtree);
 
         /* 0 0 QFI */
-        (void) d.add_item(1, &hf_sm_qos_flow_identity);
+        (void) d.add_item( &hf_sm_qos_flow_identity);
         d.step(1);
 
         /* Operation code */
-        (void) d.add_item(1, &hf_qos_flow_operation_code);
+        (void) d.add_item( &hf_qos_flow_operation_code);
         d.step(1);
 
         /* 0 Spare    E    Number of parameters */

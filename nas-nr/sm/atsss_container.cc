@@ -2,15 +2,8 @@
 #include "../common/use_context.hh"
 
 // 9.11.4.22	ATSSS container
-const field_meta hf_atsss_container = {
+const octet_field hf_atsss_container = {
     "ATSSS container",
-    "nas.nr.atsss.container",
-    ft::ft_bytes,
-    fd::base_none,
-    nullptr,
-    nullptr,
-    nullptr,
-    0,
 };
 
 // 9.11.4.22	ATSSS container
@@ -22,6 +15,3 @@ int dissect_atsss_container(dissector d, context*ctx){
 
     return uc.length;
 }
-struct atsss_container_t {
-    payload_t _;
-};

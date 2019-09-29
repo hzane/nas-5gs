@@ -16,6 +16,3 @@ int sm::dissect_sm_status(dissector d, context* ctx) {
     return 1;
 }
 
-struct sm_status_t {
-    uint8_t cause;
-};

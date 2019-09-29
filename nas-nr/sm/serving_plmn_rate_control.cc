@@ -1,14 +1,8 @@
 #include "../common/dissect_sm_msg.hh"
 #include "../common/use_context.hh"
 
-const field_meta hf_serving_plmn_rate_control = {
+const uint16_field hf_serving_plmn_rate_control = {
     "Serving PLMN rate control value",
-    "nas.nr.serving.plmn.rate.control",
-    ft::ft_uint16,
-    fd::base_dec,
-    nullptr,
-    nullptr,
-    nullptr,
     0,
 };
 
@@ -17,7 +11,7 @@ const field_meta hf_serving_plmn_rate_control = {
 int dissect_serving_plmn_rate_control(dissector d, context*ctx) {
     const use_context uc(ctx, "serving-plmn-rate-control", d, -1);
 
-    (void) d.add_item(2, &hf_serving_plmn_rate_control);
+    (void) d.add_item(&hf_serving_plmn_rate_control);
     return 2;
 }
 
@@ -25,5 +19,4 @@ const element_meta serving_plmn_rate_control = {
     0xffu,
     "Serving PLMN rate control",
     dissect_serving_plmn_rate_control,
-    nullptr,
 };

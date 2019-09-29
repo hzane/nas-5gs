@@ -138,19 +138,12 @@ int dissect_packet_filters(dissector d, int rop, context* ctx) {
 
     return d.offset - uc.offset;
 }
-const tf_string tfs_segregation = {
-    "Segregation requested",
-    "Segregation not requested",
-};
-const field_meta hf_segregation = {
+
+const bool_field hf_segregation = {
     "Segregation",
-    "nas.nr.sm.qos_rule.segregation",
-    ft::ft_uint8,
-    fd::base_dec,
-    nullptr,
-    &tfs_segregation,
-    nullptr,
     0x40u,
+    "Segregation not requested",
+    "Segregation requested",
 };
 // Authorized QoS rules QoS rules 9.11.4.13
 int sm::dissect_qos_rules(dissector d, context* ctx) {
@@ -250,24 +243,21 @@ extern const element_meta qos_rules = {
     0xffu,
     "Qos rules",
     dissect_qos_rules,
-    nullptr,
 };
 
 extern const element_meta sm::requested_qos_rules = {
     0x7A,
     "QoS rules - Requested QoS rules",
     dissect_requested_qos_rules,
-    nullptr,
 
 };
 /*  9.11.4.13    QoS rules */
 const bool_field sm::hf_default_qos_rule = {
     "Default Qos rule (DQR)",
     0x10,
-    {
         "The QoS rule is not the default QoS rule",
         "The QoS rule is the default QoS rule",
-    },
+
 };
 
 extern const value_string nas_5gs_rule_operation_code_values[] = {
@@ -287,7 +277,6 @@ const element_meta sm::authorized_qos_rules = {
     0x7A,
     "QoS rules - Authorized QoS rules",
     dissect_authorized_qos_rules,
-    nullptr,
 };
 
 

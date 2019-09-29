@@ -86,6 +86,9 @@ struct psi_field{
     const char* not_avail = nullptr;
     const char* avail = nullptr;
 };
+struct ambr_field{
+    const char* name=nullptr;
+};
 struct timezone_field{
     const char* name = nullptr;
 };
@@ -113,7 +116,6 @@ struct dissector {
     void*      data   = nullptr;
 
     void   step(int consumed);
-    node_t add_item(int len, const field_meta* fm) const;
     node_t add_item(const uint8_field* fm, bool step = false);
     node_t add_item(const tag_field* fm, bool step = false);
     node_t add_item(const octet_field* fm, int len, bool step = false);
@@ -131,6 +133,7 @@ struct dissector {
     node_t add_item(const psi_field* fm, bool step = false);
     node_t add_item(const timezone_field* fm, bool step = false);
     node_t add_item(const utc_field* fm, bool step = false);
+    node_t add_item(const ambr_field* fm, bool step = false);
     node_t add_item(const mccmnc_field* fm, bool step = false);
     node_t add_item(int len, const string& name, const string& val = none) const;
     node_t set_item(int len, const string& val) const;

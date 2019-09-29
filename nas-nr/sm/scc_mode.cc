@@ -5,7 +5,7 @@
 int sm::dissect_ssc_mode(dissector d, context* ctx) {
     const use_context uc(ctx, "ssc-mode", d, -1);
 
-    (void) d.add_item(1, &hf_ssc_mode);
+    (void) d.add_item(&hf_ssc_mode);
 
     return 1;
 }
@@ -14,7 +14,6 @@ extern const element_meta sm::ssc_mode = {
     0xa0,
     "SSC mode",
     sm::dissect_ssc_mode,
-    nullptr,
 };
 
 /*  9.11.4.16    SSC mode */
@@ -53,13 +52,8 @@ extern const value_string sm::ssc_mode_values[] = {
     {0, nullptr},
 };
 
-const field_meta sm::hf_ssc_mode = {
+const tag_field sm::hf_ssc_mode = {
     "SSC mode",
-    "nas.nr.sm.ssc.mode",
-    ft::ft_uint8,
-    fd::base_dec,
-    sm::ssc_mode_values,
-    nullptr,
-    nullptr,
     0x0f,
+    sm::ssc_mode_values,
 };

@@ -20,9 +20,6 @@ void dissector::add_bits(const bool_field* metas[], bool step)  {
     if (step) this->step(1);
 }
 
-node_t dissector::add_item(int len, const field_meta* meta) const {
-    return tree->add_item(offset, len, meta);
-}
 
 node_t dissector::add_item(int len, const string& name, const string& val) const {
     return tree->add_item(offset, len, name, val);
@@ -210,6 +207,14 @@ node_t dissector::add_item(const utc_field* fm, bool step) {
     auto ret = add_item(7, fm->name, v);
 
     if (step) this->step(7);
+
+    return ret;
+}
+node_t dissector::add_item(const ambr_field* fm, bool step) {
+    auto v = ambr_string(ptr(), safe_length(3));
+    auto ret = add_item(1, fm->name, v);
+
+    if (step) this->step(3);
 
     return ret;
 }

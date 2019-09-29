@@ -96,13 +96,8 @@ int sm::dissect_pdu_session_establishment_accept(dissector d, context* ctx) {
 }
 
 // Selected SSC mode    SSC mode 9.11.4.16
-extern const field_meta sm::hfm_selected_ssc_mode = {
+extern const tag_field sm::hfm_selected_ssc_mode = {
     "SSC mode - Selected",
-    "nas.nr.sm.selected.ssc.mode",
-    ft::ft_uint8,
-    fd::base_dec,
-    ssc_mode_values,
-    nullptr,
-    nullptr,
     0xf0,
+    ssc_mode_values,
 };

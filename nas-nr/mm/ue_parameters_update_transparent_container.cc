@@ -21,73 +21,46 @@ int mm::dissect_ue_parameters_update_transparent_container(dissector d, context*
     return d.length;
 }
 
-const tf_string  tfs_upu_data_type = {
-    "The UE parameters update transparent container carries an acknowledgement of successful reception of a UE parameters update list",
-    "The UE parameters update transparent container carries a UE parameters update list",
-};
-const field_meta mm::hf_upu_data_type = {
+const bool_field mm::hf_upu_data_type = {
     "UPU data type",
-    "nas.nr.mm.ue.parameters.update.data.type",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &tfs_upu_data_type,
-    nullptr,
     0x01,
+    "The UE parameters update transparent container carries a UE parameters update list",
+    "The UE parameters update transparent container carries an acknowledgement of successful reception of a UE parameters update list",
 };
 
-const tf_string tfs_ack = {
+
+const bool_field mm::hf_ue_parameters_update_ack = {
+    "ACK",
+    0,
     "acknowledgement not requested",
     "acknowledgement requested",
 };
 
-const field_meta mm::hf_ue_parameters_update_ack = {
-    "ACK",
-    "nas.nr.mm.ue.parameters.update.ack",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &tfs_ack,
-    nullptr,
-    0,
+static const tf_string  reg_req_or_not               = {
+    "re-registration requested",
+    "re-registration not requested"
 };
-const tf_string  tfs_reregistration               = {
-    "re-registration requested","re-registration not requested"
-};
-const field_meta mm::hf_reregistration                = {
+const bool_field mm::hf_reregistration                = {
     "Re-registration (REG)",
-    "nas.nr.mm.ue.parameters.rereg",
-    ft::ft_boolean, fd::base_dec,
-    nullptr,
-    &tfs_reregistration,
-    nullptr,
     0,
+    reg_req_or_not.false_string,
+    reg_req_or_not.true_string,
 };
 
 // UPU-MAC-IAUSF, UPU-MAC-IUE and CounterUPU are coded as specified in 3GPP TS 33.501 [24]
-const field_meta mm::hf_upu_mac_i = {
+const bool_field mm::hf_upu_mac_i = {
     "UPU-MAC-I",
-    "nas.nr.upu",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    &tfs_reregistration,
-    nullptr,
     0,
-};
-extern const v_string ue_param_update_data_set_type_values[] = {
-    {1, "Routing indicator update data"},
-    {2, "Default configured NSSAI update data"},
-    {0, nullptr},
+    reg_req_or_not.false_string,
+    reg_req_or_not.true_string,
 };
 
-const field_meta hf_ue_param_update_data_set_type = {
+const tag_field hf_ue_param_update_data_set_type = {
     "UE parameters update data set type",
-    "nas.nr.mm.ue.parameters.update.data.set.type",
-    ft::ft_uint8,
-    fd::base_dec,
-    ue_param_update_data_set_type_values,
-    nullptr,
-    nullptr,
     0,
+    (const v_string[]){
+        {1, "Routing indicator update data"},
+        {2, "Default configured NSSAI update data"},
+        {0, nullptr},
+    },
 };

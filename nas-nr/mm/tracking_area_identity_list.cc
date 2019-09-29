@@ -8,12 +8,6 @@ using namespace cmn;
 int mm::dissect_tracking_area_id_list(dissector d, context* ctx) {
     const use_context uc(ctx, "5gs-tai-list", d, 0);
 
-    static const field_meta* flags[] = {
-        &hf_tracking_area_list_type,
-        &hf_tracking_area_list_number,
-        nullptr,
-    };
-
     auto consumed = 0;
     auto n        = 1;
     /*Partial tracking area list*/
@@ -27,7 +21,10 @@ int mm::dissect_tracking_area_id_list(dissector d, context* ctx) {
         const auto head  = d.tvb->uint8(d.offset);
         const auto li    = (head & 0x60u) >> 5u;
         auto       num_e = (head & 0x1fu) + 1;
-        d.add_bits(flags);
+
+        d.add_item(&hf_tracking_area_list_type);
+        d.add_item(&hf_tracking_area_list_number);
+
         d.step(1);
 
         switch (li) {

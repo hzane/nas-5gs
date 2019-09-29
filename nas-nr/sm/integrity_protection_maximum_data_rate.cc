@@ -6,7 +6,6 @@ extern const element_meta sm::integrity_protection_max_data_rate = {
     0x13,
     "Integrity protection maximum data rate",
     sm::dissect_integrity_protection_max_data_rate,
-    nullptr,
 
 };
 
@@ -25,11 +24,6 @@ int sm::dissect_integrity_protection_max_data_rate(dissector d, context* ctx) {
     return 2;
 }
 
-struct integrity_protection_max_data_rate_t {
-    uint8_t uplink_max_rate;
-    uint8_t downlink_max_rate;
-};
-
 // * 9.11.4.7 Integrity protection maximum data rate
 extern const value_string sm::integrity_protection_max_data_rate_values[] = {
     {0x0, "64 kbps"},
@@ -37,23 +31,13 @@ extern const value_string sm::integrity_protection_max_data_rate_values[] = {
     {0, nullptr},
 };
 
-const field_meta sm::hf_sm_integrity_protection_max_data_rate_ul = {
+const tag_field sm::hf_sm_integrity_protection_max_data_rate_ul = {
     "Integrity protection maximum data rate for uplink",
-    "nas.nr.sm.integrity.protection.maximum.data.rate.uplink",
-    ft::ft_uint8,
-    fd::base_dec,
-    sm::integrity_protection_max_data_rate_values,
-    nullptr,
-    nullptr,
     0x0,
+    sm::integrity_protection_max_data_rate_values,
 };
-const field_meta sm::hf_sm_integrity_protection_max_data_rate_dl = {
+const tag_field sm::hf_sm_integrity_protection_max_data_rate_dl = {
     "Integrity protection maximum data rate for downlink",
-    "nas.nr.sm.integrity.protection.maximum.data.rate.downlink",
-    ft::ft_uint8,
-    fd::base_dec,
-    sm::integrity_protection_max_data_rate_values,
-    nullptr,
-    nullptr,
     0x0,
+    sm::integrity_protection_max_data_rate_values,
 };

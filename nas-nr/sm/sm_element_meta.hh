@@ -1,5 +1,6 @@
 #pragma once
 #include "../common/core.hh"
+#include "sm_dissects.hh"
 
 namespace sm {
 extern const element_meta nrsm_cause;
@@ -25,4 +26,18 @@ extern const element_meta requested_qos_rules;
 extern const element_meta authorized_qos_flow_desc; // Authorized QoS flow descriptions QoS
 extern const element_meta requested_qos_flow_desc;  // Requested QoS flow descriptions QoS
 extern const element_meta control_plane_only_indication;
+
+// SM PDU DN request container 9.11.4.15
+inline const element_meta sm_pdu_dn_request_container = {
+    0x39u,
+    "PDU DN request container",
+    dissect_pdu_dn_request_container,
+};
+
+// Session-AMBR 9.11.4.14
+const element_meta sm::session_ambr = {
+    0x2A,
+    "Session AMBR",
+    sm::dissect_session_ambr,
+};
 }

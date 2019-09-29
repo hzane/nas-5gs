@@ -2,6 +2,7 @@
 #include "../common/core.hh"
 
 namespace sm{
+
 int dissect_sm_congestion_reattempt(dissector d, context* ctx);
 int dissect_alwayson_pdu_session_requested(dissector d, context* ctx);
 

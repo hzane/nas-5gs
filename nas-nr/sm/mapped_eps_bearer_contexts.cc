@@ -4,10 +4,6 @@
 using namespace sm;
 using namespace nas;
 
-struct eps_parameters_t {
-    uint8_t   identifier;
-    payload_t content;
-};
 /* 9.11.4.8 Mapped EPS bearer contexts */
 int dissect_eps_parameters(dissector d, int i, context* ctx) {
     const use_context uc(ctx, "mapped-eps-bearer-contexts", d, 0);
@@ -40,19 +36,7 @@ int dissect_eps_parameters(dissector d, int i, context* ctx) {
     return d.offset - uc.offset;
 }
 
-struct eps_parameter_t {
 
-};
-struct bearer_context_t {
-    uint8_t                        identity;
-    std::vector< eps_parameter_t > parameters;
-};
-struct mapped_eps_bearer_contexts_t {
-    uint8_t operation_code;
-    uint8_t ebit;
-    uint8_t parameters_number;
-    std::vector< bearer_context_t > contexts;
-};
 // Mapped EPS  bearer contexts     9.11.4.8
 int sm::dissect_mapped_eps_bearer_contexts(dissector d, context* ctx) {
     const use_context uc(ctx, "mapped-eps-bearer-contexts", d, 0);
@@ -112,7 +96,6 @@ const element_meta sm::mapped_eps_bearer_context = {
     0x75,
     "Mapped EPS bearer contexts",
     dissect_mapped_eps_bearer_contexts,
-    nullptr,
 };
 
 
@@ -163,15 +146,10 @@ const tag_field sm::hf_sm_bearer_content_operation_code = {
         {0, nullptr},
     },
 };
-const field_meta sm::hf_eps_bearer_deb = {
+const tag_field sm::hf_eps_bearer_deb = {
     "DEB bit",
-    "nas.nr.deb",
-    ft::ft_uint8,
-    fd::base_dec,
-    deb_bit_values,
-    nullptr,
-    nullptr,
     0x20,
+    deb_bit_values,
 };
 const bool_field sm::hf_bearer_ebit = {
     "E bit",
@@ -189,33 +167,15 @@ const bool_field sm::hf_eps_ebit_modify = {
     hf_bearer_ebit.values
 };
 
-const field_meta sm::hf_eps_bearer_content_id = {
+const uint8_field sm::hf_eps_bearer_content_id = {
     "EPS bearer identity",
-    "nas.nr.sm.bearer.identity",
-    ft::ft_uint8,
-    fd::base_dec,
-    nullptr,
-    nullptr,
-    nullptr,
     0xf0,
 };
-const field_meta sm::hf_eps_parameter_id = {
+const tag_field sm::hf_eps_parameter_id = {
     "EPS parameter identity",
-    "nas.nr.sm.eps.parameter",
-    ft::ft_uint8,
-    fd::base_dec,
+    0x0,
     eps_parameter_identity_values,
-    nullptr,
-    nullptr,
-    0x0,
 };
-const field_meta sm::hf_eps_parameter_contents = {
+const octet_field sm::hf_eps_parameter_contents = {
     "EPS parameter contents",
-    "nas.nr.sm.eps.parameter",
-    ft::ft_bytes,
-    fd::base_none,
-    nullptr,
-    nullptr,
-    nullptr,
-    0x0,
 };

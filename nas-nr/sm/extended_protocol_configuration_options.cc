@@ -2,37 +2,19 @@
 #include "../common/range_string.hh"
 #include "../common/use_context.hh"
 
-const field_meta hf_gsm_sm_extension = {
+const bool_field hf_gsm_sm_extension = {
     "Extension",
-    "nas.nr.sm.extension",
-    ft::ft_boolean,
-    fd::base_dec,
-    nullptr,
-    nullptr,
-    nullptr,
     0x80,
 };
-const field_meta hf_gsm_configuration_protocol = {
+const uint8_field hf_gsm_configuration_protocol = {
     "Configuration Protocol",
-    "nas.nr.sm.configuration_protocol",
-    ft::ft_uint8,
-    fd::base_dec,
-    nullptr,
-    nullptr,
-    nullptr,
     0x7,
 };
 
 extern const value_string ppp_protocol_values[];
 
-const field_meta hf_proto_id = {
+const uint16_field hf_proto_id = {
     "Protocol ID",
-    "nas.nr.protocol.id",
-    ft::ft_uint16,
-    fd::base_dec,
-    nullptr,
-    nullptr,
-    nullptr,
     0,
 };
 
@@ -43,24 +25,19 @@ int sm::dissect_extended_protocol_configuration_options(dissector d, context* ct
     // See subclause 10.5.6.3A in 3GPP TS 24.008
 
     /* 1 ext 0 0 0 0 Spare  Configuration protocol */
-    (void) d.add_item(1, &hf_gsm_sm_extension);
-    (void) d.add_item(1, &hf_gsm_configuration_protocol);
+    (void) d.add_item( &hf_gsm_sm_extension);
+    (void) d.add_item( &hf_gsm_configuration_protocol);
     d.step(1);
 
     return uc.length;
 }
 
-struct extended_protocol_configuration_options_t {
-    uint8_t options;
-    uint8_t protocol;
-};
 
 // Extended protocol configuration options  9.11.4.6
 const element_meta sm::extended_pco = {
     0x7B,
     "Extended protocol configuration options",
     sm::dissect_extended_protocol_configuration_options,
-    nullptr,
 };
 
 // only part

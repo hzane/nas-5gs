@@ -69,7 +69,7 @@ uint32_t get_ext_ambr_unit(uint32_t unit, const char** unit_str) {
 }
 
 string ambr_string(const uint8_t*d, int length) {
-    if (!d || length <= 0) return string();
+    if (!d || length <= 3) return string();
     const auto unit = uint32_t(d[0]);
     const auto val  = n2uint16(d + 1);
     return ambr_string(val, unit);

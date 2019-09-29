@@ -8,7 +8,6 @@ extern const element_meta sm::selected_pdu_session_type = {
     0x90,
     "Selected PDU session type",
     sm::dissect_pdu_session_type,
-    nullptr,
 };
 
 // PDU session type    PDU session type 9.11.4.11
@@ -16,7 +15,6 @@ extern const element_meta sm::pdu_session_type = {
     0x90,
     "PDU session type",
     sm::dissect_pdu_session_type,
-    nullptr,
 };
 
 /*  9.11.4.10    PDU address  */
@@ -27,22 +25,17 @@ const value_string pdu_session_type_values[] = {
     {0, nullptr},
 };
 
-const field_meta sm::hf_pdu_session_type = {
+const tag_field sm::hf_pdu_session_type = {
     "PDU session type",
-    "nas.nr.sm.pdu.session.type",
-    ft::ft_uint8,
-    fd::base_dec,
-    pdu_session_type_values,
-    nullptr,
-    nullptr,
     0x0f,
+    pdu_session_type_values,
 };
 
 // Selected PDU session type    PDU session type 9.11.4.11
 int sm::dissect_pdu_session_type(dissector d, context* ctx) {
     const use_context uc(ctx, "selected-pdu-session-type", d, -1);
 
-    (void) d.add_item(1, &hf_pdu_session_type);
+    (void) d.add_item(&hf_pdu_session_type);
     d.step(1);
 
     return 1;
@@ -67,14 +60,8 @@ const v_string pdu_session_id_values[] = {
     {0x0f, "PDU session identity value 15"},
     {0, nullptr},
 };
-const field_meta hfm_pdu_session_id = {
+const tag_field hfm_pdu_session_id = {
     "PDU session identity",
-    "nas.nr.pdu.session.id",
-    ft::ft_uint8,
-    fd::base_dec,
-    pdu_session_id_values,
-    nullptr,
-    nullptr,
     0x0,
+    pdu_session_id_values,
 };
-const field_meta* nas::hf_pdu_session_id = &hfm_pdu_session_id;

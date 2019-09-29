@@ -6,18 +6,11 @@ extern const element_meta sm::pdu_address = {
     0x29,
     "PDU address",
     sm::dissect_pdu_address,
-    nullptr,
 };
 
-const field_meta sm::hf_pdu_address_ipv6 = {
+const ipv6_field sm::hf_pdu_address_ipv6 = {
     "PDU address information",
-    "nas.nr.sm.pdu_addr_inf_ipv6",
-    ft::ft_bytes,
-    fd::ipv6,
-    nullptr,
-    nullptr,
-    nullptr,
-    0x0,
+
 };
 
 // PDU address 9.11.4.10 15 octets
@@ -58,27 +51,8 @@ int sm::dissect_pdu_address(dissector d, context* ctx) {
     return uc.length;
 }
 
-struct pdu_address_ipv4_t {};
-struct pdu_address_ipv6_t {};
-struct pdu_address_ip64_t {};
-struct pdu_address_unknown_t{};
 
-struct pdu_address_t {
-    uint8_t type;
-    std::variant< pdu_address_ipv4_t,
-                   pdu_address_ipv6_t,
-                   pdu_address_ip64_t,
-                   pdu_address_unknown_t >
-        address;
-};
-
-const field_meta sm::hf_pdu_address_ipv4 = {
+const ipv4_field sm::hf_pdu_address_ipv4 = {
     "PDU address information",
-    "nas.nr.sm.pdu_addr_inf_ipv4",
-    ft::ft_bytes, // FT_IPv4,
-    fd::ipv4,
-    nullptr,
-    nullptr,
-    nullptr,
-    0x0,
+
 };

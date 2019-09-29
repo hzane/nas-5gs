@@ -52,5 +52,4 @@ const element_meta sm::allowed_ssc_mode = {
     0xf0,
     "Allowed SSC mode",
     sm::dissect_allowed_ssc_mode,
-    nullptr,
 };
