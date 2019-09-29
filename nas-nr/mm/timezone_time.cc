@@ -5,12 +5,6 @@ using namespace cmn;
 using namespace nas;
 using namespace mm;
 
-// 9.11.3.53
-extern const element_meta mm::timezone_time= {
-    0x47,
-    "Time zone and time - Universal time and local time zone",
-    dissect_timezone_time_set,
-};
 const utc_field hf_timezone_time = {
     "Time Zone and Time",
 };

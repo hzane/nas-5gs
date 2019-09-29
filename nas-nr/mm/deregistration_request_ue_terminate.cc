@@ -28,10 +28,3 @@ int mm::dissect_deregistration_request_ue_terminate(dissector d, context* ctx) {
 
     return uc.length;
 }
-
-
-extern const element_meta mm::t3346_gprs_timer2 = {
-    0x5f,
-    "GPRS timer 2 - T3346 value",
-    dissect_gprs_timer2_set,
-};

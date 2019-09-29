@@ -34,7 +34,7 @@ int mm::dissect_authentication_request(dissector d, context* ctx) {
     d.step(consumed);
 
     /*78  EAP message 9.11.2.2    O    TLV-E    7-1503 */
-    consumed = dissect_opt_tlv_e( &cmn::eap_message, d, ctx);
+    consumed = dissect_opt_tlv_e( &eap_message, d, ctx);
     d.step(consumed);
 
     return uc.length;
@@ -42,42 +42,6 @@ int mm::dissect_authentication_request(dissector d, context* ctx) {
 
 namespace mm {
 
-extern const element_meta authentication_parameter_rand = {
-    0x21,
-    "Authentication parameter RAND - 5G authentication challenge",
-    dissect_authentication_parameter_rand,
-};
-
-extern const element_meta authentication_parameter_autn = {
-    0x20,
-    "Authentication parameter AUTN - 5G authentication challenge",
-    dissect_authentication_parameter_autn,
-};
-
-
-extern const octet_field hf_dtap_rand = {
-    "RAND value",nullptr,nullptr,
-};
-
-
-extern const octet_field hf_dtap_autn = {
-    "AUTN value",
-    nullptr,
-    nullptr,
-};
-extern const octet_field hf_dtap_autn_sqn = {
-    "SQN xor AK",
-    nullptr,
-    nullptr,
-};
-extern const octet_field hf_dtap_autn_amf= {
-    "AMF",
-    nullptr, nullptr,
-};
-extern const octet_field hf_dtap_autn_mac = {
-    "MAC",
-    ":", nullptr,
-};
 
 
 } // namespace

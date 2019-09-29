@@ -45,7 +45,7 @@ int mm::dissect_security_mode_command(dissector d, context* ctx) {
     d.step(consumed);
 
     /*78    EAP message  9.11.2.2    O    TLV-E    7*/
-    consumed = dissect_opt_tlv_e( &cmn::eap_message, d, ctx);
+    consumed = dissect_opt_tlv_e( &eap_message, d, ctx);
     d.step(consumed);
 
     /*38  ABBA 9.11.3.10    O    TLV    4-n */
@@ -63,49 +63,7 @@ int mm::dissect_security_mode_command(dissector d, context* ctx) {
 }
 
 namespace mm {
-extern const element_meta selected_security_algo = {
-    0xff,
-    "Selected NAS security algorithms",
-    dissect_security_algo,
-};
-extern const element_meta replayed_ue_security_capability = {
-    0xff,
-    "UE security capability - Replayed UE security capabilities",
-    dissect_replayed_ue_security_capability,
-};
-extern const element_meta imeisv_request = {
-    0xE0,
-    "IMEISV request",
-    dissect_imeisv_request,
-};
 
-extern const element_meta additional_security_info = {
-    0x36,
-    "Additional 5G security information",
-    dissect_additional_security_info,
-};
-
-extern const element_meta replayed_s1_ue_security_capability = {
-    0x19,
-    "S1 UE security capability - Replayed S1 UE security capabilities",
-    dissect_reported_s1_ue_security_capability,
-};
-
-const tag_field hf_security_ciphering_algo = {
-    "Type of ciphering algorithm",
-    0xf0,
-    (const v_string[]){
-        {0x0, "5G-EA0 (null ciphering algorithm)"},
-        {0x1, "128-5G-EA1"},
-        {0x2, "128-5G-EA2"},
-        {0x3, "128-5G-EA3"},
-        {0x4, "5G-EA4"},
-        {0x5, "5G-EA5"},
-        {0x6, "5G-EA6"},
-        {0x7, "5G-EA7"},
-        {0, nullptr},
-    },
-};
 
 static const char* s = tfs_supported_not_supported.true_string;
 static const char* ns = tfs_supported_not_supported.false_string;
@@ -237,20 +195,6 @@ const bool_field hf_mm_eia7 = {
     "EIA7",
     0x01,ns,s
 };
-
-const bool_field hf_retransmission_of_initial_nas_request = {
-    "Retransmission of initial NAS message request(RINMR)",
-    0x02,
-    "Not Requested",
-    "Requested",
-};
-
-const bool_field hf_horizontal_derivation_parameter = {
-    "Horizontal derivation parameter (HDP)",
-    0x01,
-    "Not required",
-    "Required",
-    };
 
 const bool_field hf_emm_eea5 = {
     "EEA5",

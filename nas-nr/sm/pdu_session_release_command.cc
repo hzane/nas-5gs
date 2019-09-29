@@ -7,6 +7,8 @@
 using namespace nas;
 using namespace sm;
 
+extern const element_meta eap_message;
+
 /* * 8.3.14 PDU session release command */
 int sm::dissect_pdu_session_release_command(dissector d, context* ctx) {
     const use_context uc(ctx, "pdu-session-release-command", d, 0);
@@ -25,7 +27,7 @@ int sm::dissect_pdu_session_release_command(dissector d, context* ctx) {
 
     /*78  EAP message 9.10.2.2    O    TLV-E    7 - 1503*/
     // ELEM_OPT_TLV_E(0x78, , DE_NAS_5GS_CMN_EAP_MESSAGE, NULL);
-    consumed = dissect_opt_tlv_e( &cmn::eap_message, d, ctx);
+    consumed = dissect_opt_tlv_e( &eap_message, d, ctx);
     d.step(consumed);
 
     /*61	5GSM congestion re-attempt indicator 9.11.4.21	O	TLV	3 */

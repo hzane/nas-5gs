@@ -1,21 +1,7 @@
 #include "../common/dissect_sm_msg.hh"
 #include "../common/use_context.hh"
 
-// Requested QoS flow descriptions     QoS flow descriptions 9.11.4.12
-extern const element_meta sm::requested_qos_flow_desc = {
-    0x79,
-    "QoS flow descriptions - Requested",
-    sm::dissect_authorized_qos_flow_description,
-};
-
-// Authorized QoS flow descriptions     QoS flow descriptions 9.11.4.12
-extern const element_meta sm::authorized_qos_flow_desc = {
-    0x79,
-    "QoS flow descriptions - Authorized",
-    sm::dissect_authorized_qos_flow_description,
-};
-
-const uint8_field sm::hf_sm_qos_flow_identity = {
+extern const uint8_field hf_sm_qos_flow_identity = {
     "Qos flow identifier",
     0x3f,
 };
@@ -30,10 +16,56 @@ const value_string qos_flow_description_operation_code_values[] = {
     {0, nullptr},
 };
 
-const tag_field sm::hf_qos_flow_operation_code = {
+const tag_field hf_qos_flow_operation_code = {
     "Operation code",
     0xe0,
     qos_flow_description_operation_code_values,
+};
+
+const tag_field hf_sm_parameter_identifier = {
+    "Parameter identifier",
+    0x0,
+    (const v_string[]){
+        {0x01, "5QI"},
+        {0x02, "GFBR uplink"},
+        {0x03, "GFBR downlink"},
+        {0x04, "MFBR uplink"},
+        {0x05, "MFBR downlink"},
+        {0x06, "Averaging window"},
+        {0x07, "EPS bearer identity"},
+        {0, nullptr},
+    },
+};
+
+const tag_field hf_sm_parameters_content = {
+    "Parameters content",
+    0x0,
+    (const v_string[]){
+        {0x0, "Reserved"},
+        {0x01, "5QI 1"},
+        {0x02, "5QI 2"},
+        {0x03, "5QI 3"},
+        {0x04, "5QI 4"},
+        {0x05, "5QI 5"},
+        {0x06, "5QI 6"},
+        {0x07, "5QI 7"},
+        {0x08, "5QI 8"},
+        {0x09, "5QI 9"},
+        {0, nullptr},
+    },
+};
+
+extern const ambr_field hf_session_ambr_uplink;
+extern const ambr_field hf_session_ambr_downlink;
+
+const uint16_field hf_averaging_window = {
+    "Average Window",
+    0,
+};
+
+const uint8_field hf_eps_bearer_identity = {
+    "EPS bearer identity",
+    0,
 };
 
 int sm::dissect_qos_parameters(dissector d, int j, context* ctx) {
@@ -45,7 +77,7 @@ int sm::dissect_qos_parameters(dissector d, int j, context* ctx) {
 
     /* Parameter identifier */
     const auto param_id = static_cast< uint32_t >(d.uint8());
-    (void) d.add_item(1, &hf_sm_parameter_identifier);
+    (void) d.add_item( &hf_sm_parameter_identifier);
     d.step(1);
 
     /* Length of parameter contents */
@@ -56,7 +88,7 @@ int sm::dissect_qos_parameters(dissector d, int j, context* ctx) {
     /*parameter content*/
     switch (param_id) {
     case 0x01: /* 01H (5QI)*/
-        (void) d.add_item(param_len, &hf_sm_parameters_content);
+        (void) d.add_item(&hf_sm_parameters_content, param_len);
         d.step(param_len);
         break;
         /* 02H (GFBR uplink);*/
@@ -64,7 +96,7 @@ int sm::dissect_qos_parameters(dissector d, int j, context* ctx) {
     case 0x04:  //  04H (MFBR uplink)
         /* Unit for Session-AMBR for uplink */
         /* Session-AMBR for downlink */
-        (void) d.add_item(3, &hf_session_ambr_uplink);
+        (void) d.add_item(&hf_session_ambr_uplink);
         d.step(3);
         break;
 
@@ -76,16 +108,16 @@ int sm::dissect_qos_parameters(dissector d, int j, context* ctx) {
         d.step(3);
         break;
     case 06: // averaging window; and
-        (void) d.add_item(2, &hf_averaging_window);
+        (void) d.add_item( &hf_averaging_window);
         d.step(2);
         break;
     case 07: // EPS bearer identity
         // coded as specified in subclause 9.3.2 of 3GPP TS 24.301 [15]
-        (void) d.add_item(1, &hf_eps_bearer_identity);
+        (void) d.add_item( &hf_eps_bearer_identity);
         d.step(1);
         break;
     default:
-        (void) d.add_item(param_len, &hf_sm_parameters_content);
+        (void) d.add_item(&hf_sm_parameters_content, param_len);
         d.step(param_len);
         break;
     }
@@ -93,6 +125,17 @@ int sm::dissect_qos_parameters(dissector d, int j, context* ctx) {
     d.tree->set_length(d.offset - uc.offset);
     return d.offset - uc.offset;
 }
+
+
+const bool_field hf_qos_flow_ebit = {
+    "E bit",
+    0x40,
+};
+
+const uint8_field hf_sm_parameters_number = {
+    "Number of parameters",
+    0x3f,
+};
 
 // Authorized QoS flow descriptions     QoS flow descriptions 9.11.4.12
 int sm::dissect_authorized_qos_flow_description(dissector d, context* ctx) {

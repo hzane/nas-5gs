@@ -24,10 +24,3 @@ int sm::dissect_max_number_supported_packet_filter(dissector d, context* ctx) {
 
     return 2;
 }
-
-// Maximum number of supported packet filter 9.11.4.9
-const element_meta sm::max_supported_packet_filters = {
-    0x55,
-    "Maximum number of supported packet filter",
-    dissect_max_number_supported_packet_filter,
-};

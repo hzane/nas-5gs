@@ -3,19 +3,6 @@
 #include "../common/dissect_sm_msg.hh"
 #include "../common/use_context.hh"
 
-// Selected PDU session type    PDU session type 9.11.4.11
-extern const element_meta sm::selected_pdu_session_type = {
-    0x90,
-    "Selected PDU session type",
-    sm::dissect_pdu_session_type,
-};
-
-// PDU session type    PDU session type 9.11.4.11
-extern const element_meta sm::pdu_session_type = {
-    0x90,
-    "PDU session type",
-    sm::dissect_pdu_session_type,
-};
 
 /*  9.11.4.10    PDU address  */
 const value_string pdu_session_type_values[] = {
@@ -25,7 +12,7 @@ const value_string pdu_session_type_values[] = {
     {0, nullptr},
 };
 
-const tag_field sm::hf_pdu_session_type = {
+extern const tag_field hf_pdu_session_type = {
     "PDU session type",
     0x0f,
     pdu_session_type_values,

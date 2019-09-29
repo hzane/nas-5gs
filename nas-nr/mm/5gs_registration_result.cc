@@ -3,24 +3,6 @@
 
 using namespace cmn;
 using namespace mm;
-// 9.11.3.6    5GS registration result
-int mm::dissect_registration_result(dissector d, context* ctx) {
-    use_context uc(ctx, "5gs-registration-result", d, -1);
-
-    /* 0 Spare 0 Spare 0 Spare 0 Spare SMS allowed 5GS registration result value */
-    auto i = d.add_item(1, &hf_reg_res_sms_allowed);
-    i = d.add_item(1, &hf_registration_result);
-    d.step(1);
-
-    unused(i);
-    return 1;
-}
-struct registration_result_t{
-    uint8_t sms_allowed;
-    uint8_t registration_result;
-};
-
-namespace mm {
 
 /* 9.11.3.6    5GS registration result */
 const tag_field hf_registration_result = {
@@ -33,10 +15,20 @@ const tag_field hf_registration_result = {
         {0, nullptr},
     },
 };
+extern const bool_field hf_reg_res_sms_allowed;
+
+// 9.11.3.6    5GS registration result
+int mm::dissect_registration_result(dissector d, context* ctx) {
+    use_context uc(ctx, "5gs-registration-result", d, -1);
+
+    /* 0 Spare 0 Spare 0 Spare 0 Spare SMS allowed 5GS registration result value */
+    auto i = d.add_item(&hf_reg_res_sms_allowed);
+    i = d.add_item( &hf_registration_result);
+    d.step(1);
+
+    unused(i);
+    return 1;
 }
 
-const element_meta mm::registration_result = {
-    0xff,
-    "5GS registration result",
-    dissect_registration_result,
-};
+
+

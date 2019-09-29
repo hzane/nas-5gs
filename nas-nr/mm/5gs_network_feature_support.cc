@@ -4,53 +4,6 @@
 using namespace cmn;
 using namespace mm;
 
-/* 9.11.3.5     5GS network feature support*/
-int mm::dissect_network_feature_support(dissector d, context* ctx) {
-    const use_context uc(ctx, "5gs-network-feature-support", d, 1);
-
-    /* MPSI    IWK N26    EMF    EMC    IMS VoPS    octet 3*/
-    d.add_item(&hf_mps_indicator);
-    d.add_item(&hf_interworking_without_n26);
-    d.add_item(&hf_emergency_service_fallback_indicator);
-    d.add_item(&hf_emergency_service_support_indicator);
-    d.add_item(&hf_ims_voice_over_ps_session_indicator);
-    d.step(1);
-
-    static const bool_field* oct4[] = {
-        &hf_emergency_service_support_n3gpp,
-        &hf_mcs_indicator,
-        &hf_restrict_ec,
-        &hf_nr_control_plane_ciot,
-        &hf_nwfs_n3data_b4,
-        &hf_header_compression_control_plane,
-        &hf_nwfs_5gup_ciot_b6,
-        nullptr,
-    };
-    // octet 4 may be non-exist
-    if (d.length > 0) {
-        d.add_bits(oct4);
-        d.step(1);
-    }
-
-    // oct 5 is optional
-    return uc.length; // 1-3
-}
-
-namespace mm {
-const value_string emergency_services_fallback_values[] = {
-    {0x0, "Emergency services fallback not supported"},
-    {0x1, "Emergency services fallback supported in NR connected to 5GCN only"},
-    {
-        0x2,
-        "Emergency services fallback supported in E-UTRA connected to 5GCN only",
-    },
-    {
-        0x3,
-        "emergency services fallback supported in NR "
-        "connected to 5GCN and E-UTRA connected  to 5GCN",
-    },
-    {0, nullptr},
-};
 
 const bool_field hf_mps_indicator = {
     "MPS indicator (MPSI)",
@@ -73,13 +26,13 @@ const tag_field hf_emergency_service_fallback_indicator = {
         {0x0, "Emergency services fallback not supported"},
         {0x1, "Emergency services fallback supported in NR connected to 5GCN only"},
         {
-            0x2,
-            "Emergency services fallback supported in E-UTRA connected to 5GCN only",
+         0x2,
+              "Emergency services fallback supported in E-UTRA connected to 5GCN only",
         },
         {
-            0x3,
-            "emergency services fallback supported in NR "
-            "connected to 5GCN and E-UTRA connected  to 5GCN",
+         0x3,
+              "emergency services fallback supported in NR "
+              "connected to 5GCN and E-UTRA connected  to 5GCN",
         },
         {0, nullptr},
     }
@@ -92,12 +45,12 @@ const tag_field hf_emergency_service_support_indicator = {
         {0x0, "Emergency services not supported"},
         {0x1, "Emergency services supported in NR connected to 5GCN only"},
         {
-            0x2,
-            "Emergency services supported in E-UTRA connected to 5GCN only",
+         0x2,
+              "Emergency services supported in E-UTRA connected to 5GCN only",
         },
         {0x3,
-         "Emergency services supported in NR connected "
-         "to 5GCN and E-UTRA connected to 5GCN",
+              "Emergency services supported in NR connected "
+              "to 5GCN and E-UTRA connected to 5GCN",
         },
         {0, nullptr},
     }
@@ -205,11 +158,52 @@ const bool_field hf_nwfs_5gup_ciot_b6 = {
         "User plane CIoT 5GS optimization supported",
     },
 };
+
+
+/* 9.11.3.5     5GS network feature support*/
+int mm::dissect_network_feature_support(dissector d, context* ctx) {
+    const use_context uc(ctx, "5gs-network-feature-support", d, 1);
+
+    /* MPSI    IWK N26    EMF    EMC    IMS VoPS    octet 3*/
+    d.add_item(&hf_mps_indicator);
+    d.add_item(&hf_interworking_without_n26);
+    d.add_item(&hf_emergency_service_fallback_indicator);
+    d.add_item(&hf_emergency_service_support_indicator);
+    d.add_item(&hf_ims_voice_over_ps_session_indicator);
+    d.step(1);
+
+    static const bool_field* oct4[] = {
+        &hf_emergency_service_support_n3gpp,
+        &hf_mcs_indicator,
+        &hf_restrict_ec,
+        &hf_nr_control_plane_ciot,
+        &hf_nwfs_n3data_b4,
+        &hf_header_compression_control_plane,
+        &hf_nwfs_5gup_ciot_b6,
+        nullptr,
+    };
+    // octet 4 may be non-exist
+    if (d.length > 0) {
+        d.add_bits(oct4);
+        d.step(1);
+    }
+
+    // oct 5 is optional
+    return uc.length; // 1-3
 }
 
-// 5GS network feature support   9.11.3.5
-const element_meta mm::network_feature_support = {
-    0x21,
-    "5GS network feature support",
-    dissect_network_feature_support,
+
+const value_string emergency_services_fallback_values[] = {
+    {0x0, "Emergency services fallback not supported"},
+    {0x1, "Emergency services fallback supported in NR connected to 5GCN only"},
+    {
+        0x2,
+        "Emergency services fallback supported in E-UTRA connected to 5GCN only",
+    },
+    {
+        0x3,
+        "emergency services fallback supported in NR "
+        "connected to 5GCN and E-UTRA connected  to 5GCN",
+    },
+    {0, nullptr},
 };

@@ -14,9 +14,3 @@ int dissect_serving_plmn_rate_control(dissector d, context*ctx) {
     (void) d.add_item(&hf_serving_plmn_rate_control);
     return 2;
 }
-
-const element_meta serving_plmn_rate_control = {
-    0xffu,
-    "Serving PLMN rate control",
-    dissect_serving_plmn_rate_control,
-};

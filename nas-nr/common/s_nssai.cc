@@ -8,7 +8,7 @@ extern const element_meta cmn::s_nssai = {
     cmn::dissect_s_nssai,
 };
 
-namespace {
+
 const uint8_field hf_slice_service_type = {
     "Slice/service type (SST)",
     0x0,
@@ -29,7 +29,7 @@ const uint24_field hf_mapped_conf_sd = {
     "Mapped configured SD",
     0x0,
 };
-}
+
 
 /* 9.11.2.8    S-NSSAI */
 int cmn::dissect_s_nssai(dissector d, context* ctx) {

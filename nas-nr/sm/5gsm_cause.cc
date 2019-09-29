@@ -1,27 +1,9 @@
 #include "../common/dissect_sm_msg.hh"
 #include "../common/use_context.hh"
 
-// 5GSM cause 9.11.4.2
-int sm::dissect_nrsm_cause(dissector d, context* ctx) {
-    const use_context uc(ctx, "5gsm-cause", d, -1);
-
-    (void) d.add_item( &hf_nrsm_cause);
-    d.step(1);
-
-    return 1;
-}
-
-
-// 5GSM cause 9.11.4.2
-const element_meta sm::nrsm_cause = {
-    0x59,
-    nullptr,
-    sm::dissect_nrsm_cause,
-};
 
 /* * 9.11.4.2    5GSM cause */
-
-const tag_field sm::hf_nrsm_cause = {
+const tag_field hf_nrsm_cause = {
     "5GSM cause",
     0x0,
     (const v_string[]){
@@ -62,3 +44,14 @@ const tag_field sm::hf_nrsm_cause = {
         {0, nullptr},
     },
 };
+
+// 5GSM cause 9.11.4.2
+int sm::dissect_nrsm_cause(dissector d, context* ctx) {
+    const use_context uc(ctx, "5gsm-cause", d, -1);
+
+    (void) d.add_item( &hf_nrsm_cause);
+    d.step(1);
+
+    return 1;
+}
+

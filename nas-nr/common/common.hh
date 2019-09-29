@@ -5,7 +5,6 @@
 namespace cmn{
 /* 9.11.2.2    EAP message RFC2284 RFC3748 */
 
-extern const element_meta eap_message;
 /* 9.11.2.2    EAP message RFC2284 RFC3748 */
 int dissect_eap_message(dissector d, context* ctx);
 
@@ -26,8 +25,6 @@ int dissect_gprs_timer2_set(dissector d, context* ctx); /* 3GPP TS 24.008 g10 10
 int dissect_gprs_timer3_set(dissector d, context* ctx); /* TS 24.008 g10 [10] 10.5.7.4a */
 
 int dissect_e212_mcc_mnc(dissector d, context*); // implemented in e212_mcc_mnc.cc
-
-extern const field_meta hf_emm_registration_status;
 
 int dissect_n1_to_s1_mode_container(dissector d, context* ctx); // 9.11.2.7
 

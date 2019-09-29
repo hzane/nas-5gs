@@ -3,6 +3,8 @@
 #include "../common/dissect_sm_msg.hh"
 #include "../common/use_context.hh"
 
+extern const element_meta eap_message;
+
 /*  8.3.5 PDU session authentication complete */
 int sm::dissect_pdu_session_authentication_complete(dissector d, context* ctx) {
     const use_context uc(ctx, "pdu-session-authentication-complete", d, 0);
@@ -11,7 +13,7 @@ int sm::dissect_pdu_session_authentication_complete(dissector d, context* ctx) {
     up_link(d.packet);
 
     /* EAP message 9.11.2.2    M    LV-E    6-1502 */
-    auto consumed = dissect_lv_e( &cmn::eap_message, d, ctx);
+    auto consumed = dissect_lv_e( &eap_message, d, ctx);
     d.step(consumed);
 
     /*7B    Extended protocol configuration options 9.11.4.6    O    TLV - E    4 - 65538*/

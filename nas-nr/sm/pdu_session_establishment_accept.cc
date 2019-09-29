@@ -8,6 +8,23 @@ using namespace cmn;
 using namespace nas;
 using namespace sm;
 
+// Selected SSC mode    SSC mode 9.11.4.16
+extern const tag_field hfm_selected_ssc_mode = {
+    "SSC mode - Selected",
+    0xf0,
+    (const v_string[]){
+        {0x1, "SSC mode 1"},
+        {0x2, "SSC mode 2"},
+        {0x3, "SSC mode 3"},
+        {0x4, "SSC mode 1"},
+        {0x5, "SSC mode 2"},
+        {0x6, "SSC mode 3"},
+        {0, nullptr},
+    },
+};
+
+extern const element_meta eap_message;
+
 /* 8.3.2 PDU session establishment accept */
 int sm::dissect_pdu_session_establishment_accept(dissector d, context* ctx) {
     const use_context uc(ctx, "pdu-session-establishment-accept", d, -1);
@@ -19,7 +36,7 @@ int sm::dissect_pdu_session_establishment_accept(dissector d, context* ctx) {
     dissect_pdu_session_type(d, ctx);
 
     /* Selected SSC mode    SSC mode 9.11.4.16    M    V    1/2 H1*/
-    (void) d.add_item(1, &hfm_selected_ssc_mode);
+    (void) d.add_item(&hfm_selected_ssc_mode);
     d.step(1);
 
     /* Authorized QoS rules QoS rules 9.11.4.13 M LV-E 2-65537  */
@@ -94,10 +111,3 @@ int sm::dissect_pdu_session_establishment_accept(dissector d, context* ctx) {
 
     return uc.length;
 }
-
-// Selected SSC mode    SSC mode 9.11.4.16
-extern const tag_field sm::hfm_selected_ssc_mode = {
-    "SSC mode - Selected",
-    0xf0,
-    ssc_mode_values,
-};

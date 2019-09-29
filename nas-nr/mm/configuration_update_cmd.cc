@@ -95,75 +95,12 @@ int mm::dissect_configuration_update_command(dissector d, context* ctx) {
     return uc.length;
 }
 
-namespace mm {
-
-extern const element_meta sms_indication = {
-    0xF0,
-    "SMS indication",
-    dissect_sms_indication,
-
-};
-
-const bool_field hf_conf_upd_ind_reg_b1 = {
-    "Registration",
-    0x02,
-    &tfs_requested_or_not,
-};
-const bool_field hf_conf_upd_ind_ack_b0 = {
-    "Acknowledgement",
-    0x01,
-    &tfs_requested_or_not,
-};
+static const char* req = "Requested";
+static const char* nreq = "Not requested";
 
 
-/*[3] 10.5.3.12 Daylight Saving Time */
-static const value_string gsm_daylight_saving_adjustment_values[] = {
-    {0, "No adjustment for Daylight Saving Time"},
-    {1, "+1 hour adjustment for Daylight Saving Time"},
-    {2, "+2 hours adjustment for Daylight Saving Time"},
-    {3, "Reserved"},
-    {0, nullptr},
-};
-const tag_field hf_dst_adjustment = {
-    "DST Adjustment",
-    0x03,
-    gsm_daylight_saving_adjustment_values,
-};
 
 
-const bool_field hf_extension = {
-    "Extension",
-    0x80,
-    "No Extension",
-    "Extended",
-};
-
-const tag_field hf_coding_scheme = {
-    "Coding Scheme",
-    0x70,
-    (const v_string[]){
-        {0,
-            "Cell Broadcast data coding scheme, GSM default alphabet, language unspecified, "
-            "defined in 3GPP TS 23.038",
-        },
-        {1, "UCS2 (16 bit)"},
-        {2, "Reserved"},
-        {3, "Reserved"},
-        {4, "Reserved"},
-        {5, "Reserved"},
-        {6, "Reserved"},
-        {7, "Reserved"},
-        {0, nullptr},
-    },
-};
-
-const bool_field hf_add_ci = {
-    "Add CI",
-    0x08,
-    "The MS should not add the letters for the Country's Initials to the text string",
-    "The MS should add the letters for the Country's Initials and a separator (e.g. a "
-    "space) to the text string",
-};
 
 const tag_field hf_number_of_spare_bits = {
     "Number of spare bits in last octet",
@@ -181,8 +118,3 @@ const tag_field hf_number_of_spare_bits = {
     },
 };
 
-const sms_field hf_text_string = {
-    "Text String",
-};
-
-}

@@ -3,21 +3,6 @@
 using namespace mm;
 using namespace nas;
 
-const bool_field mm::hf_sms_requested = {
-    "SMS requested",
-    0x01,
-    {
-        "SMS over NAS supported",
-        "SMS over NAS not supported",
-    },
-};
-
-
-
-const uint8_field mm::hf_element_number = {
-    "Number of elements",
-    0x1f,
-};
 
 /* *    9.11.3.48    S1 UE network capability */
 /* See subclause 9.9.3.34 in 3GPP TS 24.301 */
@@ -35,9 +20,6 @@ extern const v_string mm::tac_list_values[] = {
     {0, nullptr},
 };
 
-const octet_field mm::hf_element = {
-    "Message Elements",
-};
 
 extern const message_meta mm::msgs[] = {
     {0x41, "Registration request", dissect_registration_request, },
@@ -112,66 +94,14 @@ extern const message_meta mm::msgs[] = {
     {0, nullptr, nullptr, },
 };
 
-// Allowed NSSAI    NSSAI     9.11.3.37
-extern const element_meta mm::allowed_nssai = {
-    0x15,
-    "Allowed NSSAI",
-    dissect_allowed_nssai,
-};
-
-// 9.11.3.9
-extern const element_meta mm::tracking_area_id_list = {
-    0x54,
-    "5GS tracking area identity list - TAI list",
-    dissect_tracking_area_id_list,
-};
-
-// PDU session reactivation result   9.11.3.42
-extern const element_meta mm::pdu_session_reactivation_result = {
-    0x26,
-    "PDU session reactivation result",
-    dissect_pdu_session_reactive_result,
-};
-
-/* 9.11.3.44    PDU session status */
-extern const element_meta mm::pdu_session_status = {
-    0x50,
-    "PDU session status",
-    dissect_pdu_session_status,
-};
-
-
-
-// NAS message container 9.11.3.33
-extern const element_meta mm::nas_msg_container = {
-    0x71,
-    "NAS message container",
-    dissect_nas_message_container,
-};
-
-// EPS bearer context status	9.11.3.59
-extern const element_meta mm::eps_bearer_context_status = {
-    0x60,
-    "EPS bearer context status",
-    dissect_eps_bearer_context_status,
-};
-
-const uint24_field mm::hf_slice_differentiator = {
+extern const uint24_field hf_slice_differentiator = {
     "Slice differentiator (SD)",
     0x0,
 };
 
 // defined in 3GPP TS 23.003
-const uint8_field mm::hf_slice_service_type = {
+extern const uint8_field hf_slice_service_type = {
     "Slice/service type (SST)",
     0x0,
 };
 
-const bool_field mm::hf_follow_on_request = {
-    "Follow-On Request bit (FOR)",
-    0x08,
-    {
-        "Follow-on request pending",
-        "No follow-on request pending",
-    },
-};

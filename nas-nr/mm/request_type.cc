@@ -5,25 +5,8 @@ using namespace cmn;
 using namespace nas;
 using namespace mm;
 
-// 9.11.3.47 Request type page.390
-int mm::dissect_request_type(dissector d, context* ctx) {
-    const use_context uc(ctx, "request-type", d, -1);
-
-    (void) d.add_item(1, &hf_request_type);
-    d.step(1);
-
-    return 1;
-}
-
-// Request type  9.11.3.47
-extern const element_meta mm::request_type = {
-    0x80,
-    "Request type",
-    dissect_request_type,
-};
-
 /* *     9.11.3.47    Request type */
-const tag_field mm::hf_request_type = {
+const tag_field hf_request_type = {
     "Request type",
     0x0f,
     (const v_string[]){
@@ -36,3 +19,13 @@ const tag_field mm::hf_request_type = {
         {0, nullptr},
     },
 };
+
+// 9.11.3.47 Request type page.390
+int mm::dissect_request_type(dissector d, context* ctx) {
+    const use_context uc(ctx, "request-type", d, -1);
+
+    (void) d.add_item( &hf_request_type);
+    d.step(1);
+
+    return 1;
+}

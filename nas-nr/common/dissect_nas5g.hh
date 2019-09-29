@@ -13,20 +13,6 @@ const message_meta* find_dissector(uint8_t iei, const message_meta* meta);
 
 namespace nas {
 
-extern const element_meta t3348_gprs_timer3;
-extern const field_meta*  hf_msg_elem;
-extern const field_meta*  hf_epd;
-extern const field_meta*  hf_pdu_session_id;
-extern const field_meta*  hf_mm_msg_type;
-extern const field_meta*  hf_sm_msg_type;
-extern const field_meta*  hf_security_header_type;
-extern const field_meta*  hf_msg_auth_code;
-extern const field_meta   hf_pdu_ipv4_mask;
-extern const field_meta   hf_pid_next_hd;
-extern const field_meta   hf_single_port_type;
-extern const field_meta*  hf_procedure_transaction_id;
-extern const field_meta   hf_service_request_msg_id; // TODO: check the ie
-
 inline extern const tf_string tfs_supported_not_supported = {
     "Supported",
     "Not supported",

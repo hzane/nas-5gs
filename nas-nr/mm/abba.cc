@@ -4,6 +4,10 @@
 using namespace cmn;
 using namespace mm;
 
+const octet_field hf_abba = {
+    "ABBA Contents",
+};
+
 
 /* 9.11.3.10    ABBA */
 int mm::dissect_abba_set(dissector d, context* ctx) {
@@ -11,7 +15,7 @@ int mm::dissect_abba_set(dissector d, context* ctx) {
     // [24].
     const use_context uc(ctx, "abba", d, 0);
 
-    d.tree->set_item(d.length, &hf_abba);
+    d.add_item(&hf_abba, d.length);
     d.step(d.length);
 
     return uc.length;
@@ -25,12 +29,3 @@ int mm::dissect_abba_set(dissector d, context* ctx) {
 }
 
 
-extern const element_meta mm::abba = {
-    0x38,
-    "ABBA",
-    dissect_abba_set,
-};
-
-const octet_field mm::hf_abba = {
-    "ABBA Contents",
-};

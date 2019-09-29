@@ -1,4 +1,4 @@
-#include <common/format.hh>
+#include "../common/format.hh"
 
 #include "../common/ber.hh"
 #include "../common/dissect_mm_msg.hh"
@@ -48,11 +48,3 @@ int mm::dissect_dl_nas_transparent(dissector d, context* ctx) {
 
     return uc.length;
 }
-
-
-// Back-off timer value    GPRS timer 3 9.11.2.5
-extern const element_meta mm::backoff_gprs_timer3 = {
-    0x37,
-    "GPRS timer 3 - Back-off timer",
-    dissect_gprs_timer3_set,
-};

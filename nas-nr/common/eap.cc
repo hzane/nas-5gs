@@ -11,10 +11,3 @@ int cmn::dissect_eap_message(dissector d, context* ctx) {
     return uc.length;
 }
 
-// EAP message 9.11.2.2
-// as specified in IETF RFC 3748
-const element_meta cmn::eap_message = {
-    0x78,
-    "EAP message",
-    cmn::dissect_eap_message,
-};

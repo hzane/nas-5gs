@@ -1,8 +1,16 @@
+#include <utility>
+
 #include "../common/dissect_sm_msg.hh"
 #include "../common/use_context.hh"
 
 using namespace sm;
 
+extern const ipv4_field hf_pdu_address_ipv4;
+extern const ipv4_field hf_pdu_ipv4_mask;
+extern const uint8_field hf_pid_next_hd ;
+extern const uint16_field hf_single_port_type;
+extern const tag_field hf_sm_packet_filter_direction;
+extern const uint8_field hf_sm_packet_filter_id ;
 
 /*The description and valid combinations of packet filter component type identifiers in a
  * packet filter are defined in 3GPP TS 23.501 [8].*/
@@ -34,9 +42,9 @@ int dissect_packet_filter(dissector d, int pf_type, context* ctx) {
          * component value field shall be encoded as defined for
          * "IPv4 remote address type"
          */
-        (void) d.add_item(4, &hf_pdu_address_ipv4);
+        (void) d.add_item(&hf_pdu_address_ipv4);
         d.step(4);
-        (void) d.add_item(4, &nas::hf_pdu_ipv4_mask);
+        (void) d.add_item(&hf_pdu_ipv4_mask);
         d.step(4);
         len = 8;
         break;
@@ -49,12 +57,12 @@ int dissect_packet_filter(dissector d, int pf_type, context* ctx) {
         d.step(1);
         break;
     case 48:  // Protocol identifier/Next header type
-        (void) d.add_item(1, &nas::hf_pid_next_hd);
+        (void) d.add_item( &hf_pid_next_hd);
         d.step(1);
         len = 1;
         break;
     case 64:  /* Single local port type */
-        (void) d.add_item(2, &nas::hf_single_port_type);
+        (void) d.add_item(&hf_single_port_type);
         d.step(2);
         len = 2;
         break;
@@ -67,7 +75,7 @@ int dissect_packet_filter(dissector d, int pf_type, context* ctx) {
     case 80:  /* Single remote port type */
 
     case 0x41:  // Local port range type
-        (void) d.add_item(2, &nas::hf_single_port_type);
+        (void) d.add_item( &hf_single_port_type);
         d.step(2);
         len = 2;
         break;
@@ -89,6 +97,8 @@ int dissect_packet_filter(dissector d, int pf_type, context* ctx) {
     return len;
 }
 
+extern const tag_field hf_sm_packet_filter_type;
+
 // Figure 9.11.4.13.4 Packet filter list when the rule operation is "create new QoS rule",
 // or "modify existing QoS rule and add packet filters" or "modify existing QoS rule and
 // replace all packet filters"
@@ -101,8 +111,8 @@ int dissect_packet_filters(dissector d, int rop, context* ctx) {
      * filters" or "modify existing QoS rule and replace packet filters"
      */
     /* 0    0    Packet filter direction 1    Packet filter identifier 1*/
-    (void) d.add_item(1, &hf_sm_packet_filter_direction);
-    (void) d.add_item(1, &hf_sm_packet_filter_id);
+    (void) d.add_item( &hf_sm_packet_filter_direction);
+    (void) d.add_item( &hf_sm_packet_filter_id);
     d.step(1);
 
     /* Length of packet filter contents */
@@ -125,7 +135,7 @@ int dissect_packet_filters(dissector d, int rop, context* ctx) {
          * component type identifier shall be transmitted first.
          */
         const auto pf_type = d.uint8();
-        (void) d.add_item(1, &hf_sm_packet_filter_type);
+        (void) d.add_item(&hf_sm_packet_filter_type);
         d.step(1);
         /* Packet filter length contains the length of component type and
          * content */
@@ -145,6 +155,61 @@ const bool_field hf_segregation = {
     "Segregation not requested",
     "Segregation requested",
 };
+
+/*  9.11.4.13    QoS rules */
+const bool_field hf_default_qos_rule = {
+    "Default Qos rule (DQR)",
+    0x10,
+    "The QoS rule is not the default QoS rule",
+    "The QoS rule is the default QoS rule",
+
+};
+
+extern const value_string nas_5gs_rule_operation_code_values[] = {
+    {0x0, "Reserved"},
+    {0x1, "Create new QoS rule"},
+    {0x2, "Delete existing QoS rule"},
+    {0x3, "Modify existing QoS rule and add packet filters"},
+    {0x4, "Modify existing QoS rule and replace packet filters"},
+    {0x5, "Modify existing QoS rule and delete packet filters"},
+    {0x6, "Modify existing QoS rule without modifying packet filters"},
+    {0x7, "Reserved"},
+    {0, nullptr},
+};
+
+const tag_field hf_sm_rule_operation_code = {
+    "Rule operation code",
+    0xe0,
+    (const v_string[]){
+        {0x0, "Reserved"},
+        {0x1, "Create new QoS rule"},
+        {0x2, "Delete existing QoS rule"},
+        {0x3, "Modify existing QoS rule and add packet filters"},
+        {0x4, "Modify existing QoS rule and replace packet filters"},
+        {0x5, "Modify existing QoS rule and delete packet filters"},
+        {0x6, "Modify existing QoS rule without modifying packet filters"},
+        {0x7, "Reserved"},
+        {0, nullptr},
+    },
+};
+const uint8_field hf_sm_packet_filters = {
+    "Number of packet filters",
+    0x0f,
+};
+
+const uint8_field hf_sm_qos_rule_id = {
+    "QoS rule identifier",
+    0x0,
+};
+
+
+const uint8_field hf_sm_qos_rule_precedence = {
+    "QoS rule precedence",
+    0x0,
+};
+
+extern const uint8_field hf_sm_qos_flow_identity;
+
 // Authorized QoS rules QoS rules 9.11.4.13
 int sm::dissect_qos_rules(dissector d, context* ctx) {
     const use_context uc(ctx, "authorized-qos-rules", d);
@@ -202,7 +267,7 @@ int sm::dissect_qos_rules(dissector d, context* ctx) {
             if (rop == 5) {
                 /* modify existing QoS rule and delete packet filters */
                 /* 0    0    0    0    Packet filter identifier x*/
-                (void) d.add_item(1, &hf_sm_packet_filter_id);
+                (void) d.add_item( &hf_sm_packet_filter_id);
                 d.step(1);
             } else {
                 const auto consumed = dissect_packet_filters(d, rop, ctx);
@@ -225,8 +290,8 @@ int sm::dissect_qos_rules(dissector d, context* ctx) {
          * QoS flow identifier value field shall be included.
          */
         /* Segregation bit (bit 7 of octet z+2) */
-        (void) d.add_item(1, &hf_sm_qos_flow_identity);
-        (void) d.add_item(1, &hf_segregation);
+        (void) d.add_item(&hf_sm_qos_flow_identity);
+        (void) d.add_item(&hf_segregation);
         d.step(1);
 
     } // while(d.offset)
@@ -236,78 +301,6 @@ int sm::dissect_qos_rules(dissector d, context* ctx) {
 
 // Authorized QoS rules QoS rules 9.11.4.13
 int sm::dissect_authorized_qos_rules(dissector d, context* ctx) {
-    return dissect_qos_rules(d, ctx);
+    return dissect_qos_rules(std::move(d), ctx);
 }
 
-extern const element_meta qos_rules = {
-    0xffu,
-    "Qos rules",
-    dissect_qos_rules,
-};
-
-extern const element_meta sm::requested_qos_rules = {
-    0x7A,
-    "QoS rules - Requested QoS rules",
-    dissect_requested_qos_rules,
-
-};
-/*  9.11.4.13    QoS rules */
-const bool_field sm::hf_default_qos_rule = {
-    "Default Qos rule (DQR)",
-    0x10,
-        "The QoS rule is not the default QoS rule",
-        "The QoS rule is the default QoS rule",
-
-};
-
-extern const value_string nas_5gs_rule_operation_code_values[] = {
-    {0x0, "Reserved"},
-    {0x1, "Create new QoS rule"},
-    {0x2, "Delete existing QoS rule"},
-    {0x3, "Modify existing QoS rule and add packet filters"},
-    {0x4, "Modify existing QoS rule and replace packet filters"},
-    {0x5, "Modify existing QoS rule and delete packet filters"},
-    {0x6, "Modify existing QoS rule without modifying packet filters"},
-    {0x7, "Reserved"},
-    {0, nullptr},
-};
-
-// Authorized QoS rules QoS rules 9.11.4.13
-const element_meta sm::authorized_qos_rules = {
-    0x7A,
-    "QoS rules - Authorized QoS rules",
-    dissect_authorized_qos_rules,
-};
-
-
-
-const tag_field sm::hf_sm_rule_operation_code = {
-    "Rule operation code",
-    0xe0,
-    (const v_string[]){
-        {0x0, "Reserved"},
-        {0x1, "Create new QoS rule"},
-        {0x2, "Delete existing QoS rule"},
-        {0x3, "Modify existing QoS rule and add packet filters"},
-        {0x4, "Modify existing QoS rule and replace packet filters"},
-        {0x5, "Modify existing QoS rule and delete packet filters"},
-        {0x6, "Modify existing QoS rule without modifying packet filters"},
-        {0x7, "Reserved"},
-        {0, nullptr},
-    },
-};
-const uint8_field sm::hf_sm_packet_filters = {
-    "Number of packet filters",
-    0x0f,
-};
-
-const uint8_field sm::hf_sm_qos_rule_id = {
-    "QoS rule identifier",
-    0x0,
-};
-
-
-const uint8_field sm::hf_sm_qos_rule_precedence = {
-    "QoS rule precedence",
-    0x0,
-};

@@ -5,13 +5,6 @@ using namespace cmn;
 using namespace nas;
 using namespace mm;
 
-// See subclause 10.5.3.8 in 3GPP TS 24.008 [12].
-extern const element_meta mm::local_timezone = {
-    0x46,
-    "Local time zone",
-    dissect_timezone_set,
-
-};
 
 const timezone_field hf_timezone = {
     "Time Zone",

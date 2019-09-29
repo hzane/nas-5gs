@@ -3,6 +3,13 @@
 
 using namespace nas;
 
+// UE's usage setting    UE's usage setting         9.11.3.55
+const bool_field hf_ue_usage_setting = {
+    "UE's usage setting",
+    0x01,
+    "Voice centric",
+    "Data centric",
+};
 // 9.11.3.55
 int mm::dissect_usage_setting(dissector d, context* ctx) {
     const use_context        uc(ctx, "ue-usage-setting", d, -1);
@@ -14,10 +21,4 @@ int mm::dissect_usage_setting(dissector d, context* ctx) {
     return 1;
 }
 
-// UE's usage setting    UE's usage setting         9.11.3.55
-const bool_field mm::hf_ue_usage_setting = {
-    "UE's usage setting",
-    0x01,
-    "Voice centric",
-    "Data centric",
-};
+

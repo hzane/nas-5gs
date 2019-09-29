@@ -21,6 +21,9 @@ int dissect_nas5g(dissector d, context* ctx){
     return dissect_nas5g_security_protected(d, ctx);
 }
 
+extern const tag_field hf_epd;
+extern const tag_field hf_security_header_type;
+extern const octet_field hf_msg_auth_code;
 
 int dissect_nas5g_security_protected(dissector d, context* ctx){
     const auto        subtree = d.add_item(7, "Security protected NAS 5GS message");
@@ -28,18 +31,18 @@ int dissect_nas5g_security_protected(dissector d, context* ctx){
     const use_context uc(ctx, subtree->name.c_str(), d, 0);
 
     /* 9.2 Extended protocol discriminator  octet 1 */
-    (void) d.add_item(1, hf_epd);
+    (void) d.add_item(&hf_epd);
     d.step(1);
 
     /* 9.3 Security header type associated    1/2 */
-    (void) d.add_item(1, hf_security_header_type);
+    (void) d.add_item(&hf_security_header_type);
     // 9.5 Spare half octet 1/2
 
     d.step(1);
 
     /* 9.8 Message authentication code octet 3 - 6 */
     store_msg_auth_code(ctx, d.uint32());
-    (void) d.add_item(4, nas::hf_msg_auth_code);
+    (void) d.add_item(&hf_msg_auth_code, 4);
     d.step(4);
 
     /* 9.10 Sequence number    octet 7 */
@@ -74,6 +77,14 @@ int dissect_nas5g_plain(dissector d, context* ctx) {
     return uc.length;
 }
 
+extern const tag_field hf_pdu_session_id;
+
+extern const uint8_field hf_procedure_transaction_id = {
+    "PTI", 0,
+};
+
+extern const tag_field hf_sm_message_type ;
+
 int dissect_sm_msg(dissector d, context* ctx) {
     const use_context uc(ctx, "session-management-message", d, 0);
 
@@ -81,20 +92,20 @@ int dissect_sm_msg(dissector d, context* ctx) {
     use_tree    ut(d, subtree);
 
     /* Extended protocol discriminator  octet 1 */
-    (void) d.add_item(1, hf_epd);
+    (void) d.add_item(&hf_epd);
     d.step(1);
 
     /* PDU session ID	PDU session identity 9.4	M	V	1     */
-    (void) d.add_item(1, hf_pdu_session_id);
+    (void) d.add_item(&hf_pdu_session_id);
     d.step(1);
 
     /* PTI	Procedure transaction identity 9.6	M	V	1     */
-    (void) d.add_item(1, hf_procedure_transaction_id);
+    (void) d.add_item(&hf_procedure_transaction_id);
     d.step(1);
 
     /* Message type 9.7	M	V	1*/
     const auto iei = d.uint8(); // offset == 2
-    (void) d.add_item(1, hf_sm_msg_type);
+    (void) d.add_item(&hf_sm_message_type);
     d.step(1);
 
     const auto meta  = find_dissector(iei, sm::msgs);
@@ -104,6 +115,8 @@ int dissect_sm_msg(dissector d, context* ctx) {
     return uc.length;
 }
 
+extern const tag_field hf_mm_message_type;
+
 int dissect_mm_msg(dissector d, context* ctx) {
     const use_context uc(ctx, "mobile-management-message", d, 0);
 
@@ -111,18 +124,18 @@ int dissect_mm_msg(dissector d, context* ctx) {
     use_tree    ut(d, subtree);
 
     /* Extended protocol discriminator 9.2 octet 1 */
-    (void) d.add_item(1, hf_epd);
+    (void) d.add_item(&hf_epd);
     d.step(1);
 
     /*Security header type 9.3	M	V	1/2 */
-    (void) d.add_item(1, hf_security_header_type);
+    (void) d.add_item(&hf_security_header_type);
 
     /*Spare half octet	Spare half octet 9.5	M	V	1/2*/
     d.step(1);
 
     /* Authentication request message identity	Message type 9.7	M	V	1*/
     const auto iei = d.uint8();
-    (void) d.add_item(1, hf_mm_msg_type);
+    (void) d.add_item(&hf_mm_message_type);
     d.step(1);
 
     const auto meta = find_dissector(iei, mm::msgs);

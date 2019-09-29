@@ -5,13 +5,6 @@ using namespace cmn;
 using namespace nas;
 using namespace mm;
 
-// Configured NSSAI    NSSAI 9.11.3.37
-extern const element_meta mm::configured_nssai = {
-    0x31,
-    "Configured NSSAI",
-    dissect_configured_nssai,
-};
-
 /* 9.11.3.37    NSSAI */
 int mm::dissect_configured_nssai(dissector d, context* ctx) {
     const use_context uc(ctx, "configured-nssai", d, 0);
@@ -82,4 +75,3 @@ int mm::dissect_requested_nssai(dissector d, context* ctx) {
     }
     return uc.length;
 }
-

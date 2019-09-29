@@ -10,8 +10,7 @@ const octet_field hf_atsss_container = {
 int dissect_atsss_container(dissector d, context*ctx){
     const use_context uc(ctx, "atsss-container", d, -1);
 
-    (void) d.add_item(d.length, &hf_atsss_container);
-    d.step(d.length);
+    (void) d.add_item(&hf_atsss_container, d.length, true);
 
     return uc.length;
 }

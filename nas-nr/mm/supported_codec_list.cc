@@ -5,93 +5,92 @@
 const tag_field hf_system_indentification = {
     "System Identification (SysID)",
     0x0,
-    (const v_string[]{
+    (const v_string[]){
         {0x0, "GSM"},
         {0x4, "UMTS"},
         {0, nullptr},
-    }),
+    },
 };
 
 const uint8_field hf_bitmap_length = {
         "Bitmap Length",
         0x0,
-w
 };
 
-const bool_field hf_gsm_a_dtap_codec_tdma_efr   = {{
+const bool_field hf_gsm_a_dtap_codec_tdma_efr   = {
     "TDMA EFR",
     0x80,
-}};
+};
 
-const bool_field hf_umts_amr_2 = {{
+const bool_field hf_umts_amr_2 = {
     "UMTS AMR 2",
     0x40,
-}};
+};
 
-const bool_field hf_umts_amr   = {{
+const bool_field hf_umts_amr   = {
     "UMTS AMR",
     0x20,
-}};
+};
 
-const bool_field hf_gsm_a_dtap_codec_hr_amr     = {{
+const bool_field hf_gsm_a_dtap_codec_hr_amr     = {
     "HR AMR",
     0x10,
-}};
+};
 
-const bool_field hf_gsm_a_dtap_codec_fr_amr     = {{
+const bool_field hf_gsm_a_dtap_codec_fr_amr     = {
     "FR AMR",
     0x08,
-}};
+};
 
-const bool_field hf_gsm_a_dtap_codec_gsm_efr    = {{
+const bool_field hf_gsm_a_dtap_codec_gsm_efr    = {
     "GSM EFR",
     0x04,
-}};
+};
 
-const bool_field hf_gsm_a_dtap_codec_gsm_hr     = {{
+const bool_field hf_gsm_a_dtap_codec_gsm_hr     = {
     "GSM HR",
     0x02,
-}};
+};
 
-const bool_field hf_gsm_a_dtap_codec_gsm_fr     = {{
+const bool_field hf_gsm_a_dtap_codec_gsm_fr     = {
     "GSM FR",
     0x01,
-}};
+};
 
-const bool_field hf_gsm_a_dtap_codec_umts_evs    = {{
+const bool_field hf_gsm_a_dtap_codec_umts_evs    = {
     "UMTS EVS",
     0x40,
-}};
+};
 
-const bool_field hf_gsm_a_dtap_codec_ohr_amr_wb  = {{
+const bool_field hf_gsm_a_dtap_codec_ohr_amr_wb  = {
     "OHR AMR-WB",
     0x20,
-}};
+};
 
-const bool_field hf_gsm_a_dtap_codec_ofr_amr_wb  = {{
+const bool_field hf_gsm_a_dtap_codec_ofr_amr_wb  = {
     "OFR AMR-WB",
     0x10,
-}};
+};
 
-const bool_field hf_gsm_a_dtap_codec_ohr_amr     = {{
+const bool_field hf_gsm_a_dtap_codec_ohr_amr     = {
     "OHR AMR",
     0x08,
-}};
+};
 
-const bool_field hf_gsm_a_dtap_codec_umts_amr_wb = {{
+const bool_field hf_gsm_a_dtap_codec_umts_amr_wb = {
     "UMTS AMR-WB",
     0x04,
-}};
+};
 
-const bool_field hf_gsm_a_dtap_codec_fr_amr_wb   = {{
+const bool_field hf_gsm_a_dtap_codec_fr_amr_wb   = {
     "FR AMR-WB",
     0x02,
-}};
+};
 
-const bool_field hf_gsm_a_dtap_codec_pdc_efr     = {{
+const bool_field hf_gsm_a_dtap_codec_pdc_efr     = {
     "PDC EFR",
     0x01,
-}};
+};
 
 
 int dissect_codec_bitmap(dissector d, int idx, context* ctx) {

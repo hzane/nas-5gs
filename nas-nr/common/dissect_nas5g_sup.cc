@@ -8,7 +8,7 @@ const octet_field hf_msg_elements = {
     "Message Elements",
 };
 
-const tag_field hf_epd = {
+extern const tag_field hf_epd = {
     "Extended protocol discriminator",
     0x0,
     (const v_string[]){
@@ -35,7 +35,7 @@ const tag_field hf_epd = {
     },
 };
 
-const tag_field hf_security_header_type = {
+extern const tag_field hf_security_header_type = {
     "Security header type",
     0x0f,
     (const v_string[]){
@@ -48,12 +48,12 @@ const tag_field hf_security_header_type = {
     },
 };
 
-const octet_field hf_msg_auth_code = {
+extern const octet_field hf_msg_auth_code = {
     "Message authentication code",
 };
 
 /* 5GS session management messages */
-const tag_field hf_sm_message_type = {
+extern const tag_field hf_sm_message_type = {
     "Message type",
     0x0,
     (const v_string[]){
@@ -159,22 +159,22 @@ const tag_field hf_service_request_msg_id = {
 };
 
 // GPRS timer 3 9.11.2.4
-const element_meta nas::t3348_gprs_timer3{
+const element_meta t3348_gprs_timer3{
     0xff,
     "GPRS timer3 - T4448 value",
     dissect_gprs_timer3_set,
 };
 
 
-const ipv4_field hf_pdu_ipv4_mask = {
+extern const ipv4_field hf_pdu_ipv4_mask = {
     "IPv4 address mask",
 };
 
-const uint8_field nas::hf_pid_next_hd = {
+extern const uint8_field hf_pid_next_hd = {
     "Protocol identifier/Next header type",
     0x0,
 };
-const uint16_field nas::hf_single_port_type = {
+extern const uint16_field hf_single_port_type = {
     "Port type",
     0x0,
 };

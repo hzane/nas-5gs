@@ -2,11 +2,6 @@
 #include "../common/dissect_mm_msg.hh"
 #include "../common/use_context.hh"
 
-const element_meta mm::imeisv_mobile_id = {
-    0x77,
-    "5G mobile identity - IMEISV",
-    mm::dissect_mobile_id,
-};
 
 /*  8.2.26 Security mode complete */
 int mm::dissect_security_mode_complete(dissector d, context* ctx) {

@@ -6,6 +6,7 @@
 #include <optional>
 #include <variant>
 #include <array>
+#include "description.hh"
 #include "dissector.hh"
 
 template <typename... Args> inline void unused(Args&&...) {}

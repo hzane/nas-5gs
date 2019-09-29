@@ -5,26 +5,8 @@ using namespace cmn;
 using namespace nas;
 using namespace mm;
 
-// 9.11.3.2	5GMM cause
-extern const element_meta mm::nrmm_cause = {
-    0x58,
-    nullptr,
-    mm::dissect_nrmm_cause,
-};
-
-// 9.11.3.2	5GMM cause
-int mm::dissect_nrmm_cause(dissector d, context* ctx) {
-    const use_context uc(ctx, "5gmm-cause", d, -1);
-
-    (void) d.add_item(&hf_nrmm_cause);
-    d.step(1);
-
-    return 1;
-}
-
-
 // 5GMM cause   9.11.3.2
-const tag_field mm::hf_nrmm_cause = {
+extern const tag_field hf_nrmm_cause = {
     "5GMM cause",
     0x0,
     (const v_string[]){
@@ -67,3 +49,15 @@ const tag_field mm::hf_nrmm_cause = {
         {0, nullptr},
     },
 };
+
+// 9.11.3.2	5GMM cause
+int mm::dissect_nrmm_cause(dissector d, context* ctx) {
+    const use_context uc(ctx, "5gmm-cause", d, -1);
+
+    (void) d.add_item(&hf_nrmm_cause);
+    d.step(1);
+
+    return 1;
+}
+
+

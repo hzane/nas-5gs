@@ -5,18 +5,7 @@ using namespace cmn;
 using namespace nas;
 using namespace mm;
 
-// PDU session ID 2 9.11.3.41
-int mm::dissect_pdu_session_id_set(dissector d, context* ctx) {
-    const use_context uc(ctx, "pdu-session-identity2", d, -1);
-
-    // identity value as defined in 3GPP TS 24.007 [11]
-    auto v = vstring(hf_pdu_session_id.tags, d.uint8());
-    d.set_item(1, v);
-    // (void) d.tree->set_item(1, &hf_pdu_session_id);
-    return 1;
-}
-
-const tag_field mm::hf_pdu_session_id = {
+extern const tag_field hf_pdu_session_id = {
     "PDU session identity 2",
     0x0,
     (const v_string[]){
@@ -41,16 +30,13 @@ const tag_field mm::hf_pdu_session_id = {
 };
 
 // PDU session ID 2 9.11.3.41
-extern const element_meta mm::pdu_session_id = {
-    0x12,
-    "PDU session identity 2 - PDU session ID",
-    dissect_pdu_session_id_set,
-};
+int mm::dissect_pdu_session_id_set(dissector d, context* ctx) {
+    const use_context uc(ctx, "pdu-session-identity2", d, -1);
 
+    // identity value as defined in 3GPP TS 24.007 [11]
+    auto v = vstring(hf_pdu_session_id.tags, d.uint8());
+    d.set_item(1, v);
+    // (void) d.tree->set_item(1, &hf_pdu_session_id);
+    return 1;
+}
 
-// PDU session identity 2 9.11.3.41
-extern const element_meta mm::old_pdu_session_id = {
-    0x59,
-    "PDU session identity 2 - Old PDU session ID",
-    dissect_pdu_session_id_set,
-};

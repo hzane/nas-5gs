@@ -18,7 +18,7 @@ int mm::dissect_authentication_result(dissector d, context* ctx) {
     d.step(1);
 
     /* EAP message  9.11.2.2    M    LV-E    7-1503 */
-    auto consumed = dissect_lv_e( &cmn::eap_message, d, ctx);
+    auto consumed = dissect_lv_e( &eap_message, d, ctx);
     d.step(consumed);
 
     /* 38 ABBA 9.11.3.10    O    TLV    4-n */

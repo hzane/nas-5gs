@@ -43,9 +43,3 @@ int mm::dissect_nas_ksi(dissector d, context* ctx) {
 }
 
 
-// NAS key set identifier 9.11.3.32
-extern const element_meta mm::nas_ksi = {
-    0xff,
-    "NAS key set identifier - ngKSI",
-    dissect_nas_ksi,
-};

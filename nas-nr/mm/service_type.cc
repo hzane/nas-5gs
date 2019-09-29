@@ -5,19 +5,9 @@ using namespace cmn;
 using namespace nas;
 using namespace mm;
 
-/* 9.11.3.50    Service type page.396 */
-int mm::dissect_service_type(dissector d, context* ctx) {
-    const use_context uc(ctx, "service-type", d, -1);
-
-    (void) d.add_item(1, &hf_service_type);
-    d.step(1);
-
-    return 1;
-}
-
 /* *     9.11.3.50    Service type page.396 */
 /* Used inline as H1 (Upper nibble)*/
-const tag_field mm::hf_service_type = {
+const tag_field hf_service_type = {
     "Service type",
     0xF0,
     (const v_string[]){
@@ -36,3 +26,14 @@ const tag_field mm::hf_service_type = {
         {0, nullptr},
     },
 };
+
+/* 9.11.3.50    Service type page.396 */
+int mm::dissect_service_type(dissector d, context* ctx) {
+    const use_context uc(ctx, "service-type", d, -1);
+
+    (void) d.add_item( &hf_service_type);
+    d.step(1);
+
+    return 1;
+}
+

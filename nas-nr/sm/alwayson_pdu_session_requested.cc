@@ -1,15 +1,9 @@
 #include "../common/dissect_sm_msg.hh"
 #include "../common/use_context.hh"
 
-//  Always-on PDU session requested  9.11.4.4
-extern const element_meta sm::alwayson_pdu_session_requested = {
-    0xB0,
-    "Always-on PDU session requested",
-    sm::dissect_alwayson_pdu_session_requested,
-};
 
 const bool_field hf_alwayson_pdu_session_requested = {
-    "APSR","nas.nr.sm.alwayson.pdu.session.requested",
+    "APSR",
     0x01,
     "Always-on PDU session not requested",
     "Always-on PDU session requested",

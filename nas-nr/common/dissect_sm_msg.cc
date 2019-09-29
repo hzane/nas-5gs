@@ -131,25 +131,25 @@ extern const message_meta sm::msgs[] = {
 
 
 // Back-off timer value    GPRS timer 3 9.11.2.25
-const element_meta sm::backoff_gprs_timer3 = {
+extern const element_meta backoff_gprs_timer3 = {
     0x37,
     "GPRS timer 3 - Back-off timer value",
     dissect_gprs_timer3_set,
 };
 
 // RQ timer value    GPRS timer 9.11.2.3
-const element_meta sm::rq_gprs_timer = {
+extern const element_meta rq_gprs_timer = {
     0x56,
     "GPRS timer- RQ timer time",
     dissect_gprs_timer_set,
 };
 
-const uint8_field sm::hf_sm_packet_filter_id = {
+extern const uint8_field hf_sm_packet_filter_id = {
     "Packet filter identifier",
     0x0f,
 };
 
-const tag_field sm::hf_sm_packet_filter_direction = {
+extern const tag_field hf_sm_packet_filter_direction = {
     "Packet filter direction",
     0x30,
     (const v_string[]){
@@ -162,7 +162,7 @@ const tag_field sm::hf_sm_packet_filter_direction = {
 };
 
 
-const tag_field sm::hf_sm_packet_filter_type = {
+extern const tag_field hf_sm_packet_filter_type = {
     "Packet filter component type",
     0x0,
     (const v_string[]){

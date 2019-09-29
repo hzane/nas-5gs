@@ -33,13 +33,6 @@ int sm::dissect_extended_protocol_configuration_options(dissector d, context* ct
 }
 
 
-// Extended protocol configuration options  9.11.4.6
-const element_meta sm::extended_pco = {
-    0x7B,
-    "Extended protocol configuration options",
-    sm::dissect_extended_protocol_configuration_options,
-};
-
 // only part
 extern const value_string ppp_protocol_values[] = {
     {1, "Padding Protocol"},

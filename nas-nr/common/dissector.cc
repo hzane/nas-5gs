@@ -110,6 +110,7 @@ node_t dissector::add_item(const octet_field*f, int len, bool step)  {
 node_t dissector::add_item(const element_field*f, int len, bool step){
     auto ret= add_item(len, f->name);
     if (len>=0 && step) this->step(len);
+    return ret;
 }
 node_t dissector::add_item(const uint16_field* fm, bool step) {
     return add_item(2, fm->name, istring(u16mask(uint16(step), fm->mask)));

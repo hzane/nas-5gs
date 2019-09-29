@@ -61,53 +61,8 @@ int dissect_requested_qos_rules(dissector d, context* ctx) {
     return dissect_qos_rules(d, ctx);
 }
 
-const bool_field hf_qos_flow_ebit = {
-    "E bit",
-    0x40,
-};
-const uint8_field hf_sm_parameters_number = {
-    "Number of parameters",
-    0x3f,
-};
 
-const tag_field hf_sm_parameter_identifier = {
-    "Parameter identifier",
-    0x0,
-    (const v_string[]){
-        {0x01, "5QI"},
-        {0x02, "GFBR uplink"},
-        {0x03, "GFBR downlink"},
-        {0x04, "MFBR uplink"},
-        {0x05, "MFBR downlink"},
-        {0x06, "Averaging window"},
-        {0x07, "EPS bearer identity"},
-        {0, nullptr},
-    },
-};
 
-const tag_field hf_sm_parameters_content = {
-    "Parameters content",
-    0x0,
-    (const v_string[]){
-        {0x0, "Reserved"},
-        {0x01, "5QI 1"},
-        {0x02, "5QI 2"},
-        {0x03, "5QI 3"},
-        {0x04, "5QI 4"},
-        {0x05, "5QI 5"},
-        {0x06, "5QI 6"},
-        {0x07, "5QI 7"},
-        {0x08, "5QI 8"},
-        {0x09, "5QI 9"},
-        {0, nullptr},
-    },
-};
-const uint16_field hf_averaging_window = {
-    "Average Window",
-    0,
-};
-const uint8_field hf_eps_bearer_identity = {
-    "EPS bearer identity",
-    0,
-};
+
+
 }

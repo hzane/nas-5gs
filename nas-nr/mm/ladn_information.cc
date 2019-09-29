@@ -5,14 +5,6 @@ using namespace cmn;
 using namespace nas;
 using namespace mm;
 
-// LADN information   9.11.3.30
-const element_meta mm::ladn_information = {
-    0x79,
-    "LADN information",
-    dissect_ladn_information,
-};
-
-
 /* 9.11.3.30    LADN information  */
 int mm::dissect_ladn_information(dissector d, context* ctx) {
     const use_context uc(ctx, "ladn-information", d, 0);

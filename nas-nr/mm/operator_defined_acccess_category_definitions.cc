@@ -5,10 +5,31 @@ using namespace cmn;
 using namespace nas;
 using namespace mm;
 
-extern const element_meta mm::operator_defined_access_category_defs = {
-    0x76,
-    "Operator-defined access category definitions",
-    dissect_operator_defined_access_category_definitions,
+// Operator-defined access category number
+const uint8_field hf_access_cat_n = {
+    "Operator-defined access category number",
+    0x1f,
+};
+
+const bool_field hf_psac = {
+    "Presence of standardized access category (PSAC)",
+    0x80,
+    "Standardized access category field is not included",
+    "Standardized access category field is included",
+};
+
+const uint8_field hf_precedence = {
+    "Precedence",
+    0x0,
+};
+
+const octet_field hf_criteria = {
+    "Criteria",
+};
+
+const uint8_field hf_standardize_access_cat = {
+    "Standardized access category",
+    0x1f,
 };
 
 /*  9.11.3.38    Operator-defined access category definitions */
@@ -28,13 +49,13 @@ int mm::dissect_operator_defined_access_category_definitions(dissector d, contex
         sd.step(1);
 
         /* Precedence value */
-        (void) sd.add_item(1, &hf_precedence);
+        (void) sd.add_item(&hf_precedence);
         sd.step(1);
 
         /* PSAC    0 Spare    0 Spare    Operator-defined access category number */
         const auto psac = (sd.uint8() & 0x80u);
-        (void) sd.add_item(1, &hf_access_cat_n);
-        (void) sd.add_item(1, &hf_psac);
+        (void) sd.add_item( &hf_access_cat_n);
+        (void) sd.add_item( &hf_psac);
         sd.step(1);
 
         /* Length of criteria */
@@ -43,11 +64,11 @@ int mm::dissect_operator_defined_access_category_definitions(dissector d, contex
         sd.step(1);
 
         /* Criteria */
-        (void) sd.add_item(cl, &hf_criteria);
+        (void) sd.add_item(&hf_criteria, cl);
 
         /* Spare Spare Spare    Standardized access category a* */
         if (psac) {
-            (void) sd.add_item(1, &hf_standardize_access_cat);
+            (void) sd.add_item( &hf_standardize_access_cat);
             sd.step(1);
         }
 
@@ -56,29 +77,3 @@ int mm::dissect_operator_defined_access_category_definitions(dissector d, contex
     return uc.length;
 }
 
-// Operator-defined access category number
-const uint8_field mm::hf_access_cat_n = {
-    "Operator-defined access category number",
-    0x1f,
-};
-
-const bool_field mm::hf_psac = {
-    "Presence of standardized access category (PSAC)",
-    0x80,
-    "Standardized access category field is not included",
-    "Standardized access category field is included",
-};
-
-const uint8_field mm::hf_precedence = {
-    "Precedence",
-    0x0,
-};
-
-const octet_field mm::hf_criteria = {
-    "Criteria",
-};
-
-const uint8_field mm::hf_standardize_access_cat = {
-    "Standardized access category",
-    0x1f,
-};

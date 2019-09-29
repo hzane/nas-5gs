@@ -12,6 +12,13 @@ inline const bool_field hf_5gmm_registration_status = {
     "UE is in 5GMM-REGISTERED state",
 };
 
+const bool_field hf_emm_registration_status = {
+    "EMM registration status (S1 mode reg)",
+    0x01,
+    "UE is not in EMM-REGISTERED state",
+    "UE is in EMM-REGISTERED state",
+};
+
 // 9.11.3.56
 int mm::dissect_ue_status(dissector d, context* ctx) {
     const use_context        uc(ctx, "ue-status", d, -1);
@@ -24,9 +31,4 @@ int mm::dissect_ue_status(dissector d, context* ctx) {
 }
 
 
-const bool_field cmn::hf_emm_registration_status = {
-    "EMM registration status (S1 mode reg)",
-    0x01,
-    "UE is not in EMM-REGISTERED state",
-    "UE is in EMM-REGISTERED state",
-};
+

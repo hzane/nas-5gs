@@ -4,6 +4,52 @@
 using namespace sm;
 using namespace nas;
 
+
+/* 9.11.4.8 Mapped EPS bearer contexts */
+extern const value_string sm::operation_code_values[] = {
+    {0x0, "Reserved"},
+    {0x01, "Create new EPS bearer"},
+    {0x02, "Delete existing EPS bearer"},
+    {0x03, "Modify existing EPS bearer"},
+    {0, nullptr},
+};
+
+extern const value_string sm::deb_bit_values[] = {
+    {0x0, "the EPS bearer is not the default EPS bearer."},
+    {0x01, "the EPS bearer is the default EPS bearer"},
+    {0, nullptr},
+};
+
+extern const value_string sm::e_bit_values[] = {
+    {0x0, "parameters list is not included"},
+    {0x01, "parameters list is included"},
+    {0, nullptr},
+};
+
+extern const value_string sm::e_bit_modify_values[] = {
+    {0x0, "previously provided parameters list extension"},
+    {0x01, "previously provided parameters list replacement"},
+    {0, nullptr},
+};
+
+extern const value_string sm::eps_parameter_identity_values[] = {
+    {0x01, "Mapped EPS QoS parameters"},
+    {0x02, "Mapped extended EPS QoS parameters"},
+    {0x03, "Traffic flow template"},
+    {0x04, "APN-AMBR"},
+    {0x05, "extended APN-AMBR"},
+    {0, nullptr},
+};
+
+const tag_field hf_eps_parameter_id = {
+    "EPS parameter identity",
+    0x0,
+    eps_parameter_identity_values,
+};
+const octet_field hf_eps_parameter_contents = {
+    "EPS parameter contents",
+};
+
 /* 9.11.4.8 Mapped EPS bearer contexts */
 int dissect_eps_parameters(dissector d, int i, context* ctx) {
     const use_context uc(ctx, "mapped-eps-bearer-contexts", d, 0);
@@ -13,7 +59,7 @@ int dissect_eps_parameters(dissector d, int i, context* ctx) {
 
     /* EPS parameter identifier */
     const auto param_id = static_cast< uint32_t >(d.uint8());
-    (void) d.add_item(1, &hf_eps_parameter_id);
+    (void) d.add_item( &hf_eps_parameter_id);
     d.step(1);
 
     /*length of the EPS parameter contents field */
@@ -30,12 +76,52 @@ int dissect_eps_parameters(dissector d, int i, context* ctx) {
     case 4: /* 04H (APN-AMBR) */
     case 5: /* 05H (extended APN-AMBR). */
     default:
-        (void) d.add_item(length, &hf_eps_parameter_contents);
+        (void) d.add_item(&hf_eps_parameter_contents, length);
         d.step(length);
     }
     return d.offset - uc.offset;
 }
 
+const tag_field hf_sm_bearer_content_operation_code = {
+    "Operation code",
+    0xc0,
+    (const v_string[]){
+        {0x0, "Reserved"},
+        {0x01, "Create new EPS bearer"},
+        {0x02, "Delete existing EPS bearer"},
+        {0x03, "Modify existing EPS bearer"},
+        {0, nullptr},
+    },
+};
+
+const tag_field hf_eps_bearer_deb = {
+    "DEB bit",
+    0x20,
+    deb_bit_values,
+};
+
+const bool_field hf_bearer_ebit = {
+    "E bit",
+    0x10,
+    "parameters list is included",
+    "parameters list is not included",
+};
+
+const uint8_field hf_eps_parameters_numbers = {
+    "Number of EPS parameters",
+    0x0f,
+};
+
+const bool_field hf_eps_ebit_modify = {
+    "E bit",
+    0x10,
+    hf_bearer_ebit.values
+};
+
+const uint8_field hf_eps_bearer_content_id = {
+    "EPS bearer identity",
+    0xf0,
+};
 
 // Mapped EPS  bearer contexts     9.11.4.8
 int sm::dissect_mapped_eps_bearer_contexts(dissector d, context* ctx) {
@@ -49,7 +135,7 @@ int sm::dissect_mapped_eps_bearer_contexts(dissector d, context* ctx) {
         use_tree ut(d, subtree);
 
         /* EPS bearer identity */
-        (void) d.add_item(1, &hf_eps_bearer_content_id);
+        (void) d.add_item(&hf_eps_bearer_content_id);
         d.step(1);
 
         /* Length of Mapped EPS bearer context*/
@@ -91,91 +177,3 @@ int sm::dissect_mapped_eps_bearer_contexts(dissector d, context* ctx) {
 }
 
 
-// Mapped EPS  bearer contexts     9.11.4.5
-const element_meta sm::mapped_eps_bearer_context = {
-    0x75,
-    "Mapped EPS bearer contexts",
-    dissect_mapped_eps_bearer_contexts,
-};
-
-
-/* 9.11.4.8 Mapped EPS bearer contexts */
-extern const value_string sm::operation_code_values[] = {
-    {0x0, "Reserved"},
-    {0x01, "Create new EPS bearer"},
-    {0x02, "Delete existing EPS bearer"},
-    {0x03, "Modify existing EPS bearer"},
-    {0, nullptr},
-};
-
-extern const value_string sm::deb_bit_values[] = {
-    {0x0, "the EPS bearer is not the default EPS bearer."},
-    {0x01, "the EPS bearer is the default EPS bearer"},
-    {0, nullptr},
-};
-
-extern const value_string sm::e_bit_values[] = {
-    {0x0, "parameters list is not included"},
-    {0x01, "parameters list is included"},
-    {0, nullptr},
-};
-
-extern const value_string sm::e_bit_modify_values[] = {
-    {0x0, "previously provided parameters list extension"},
-    {0x01, "previously provided parameters list replacement"},
-    {0, nullptr},
-};
-
-extern const value_string sm::eps_parameter_identity_values[] = {
-    {0x01, "Mapped EPS QoS parameters"},
-    {0x02, "Mapped extended EPS QoS parameters"},
-    {0x03, "Traffic flow template"},
-    {0x04, "APN-AMBR"},
-    {0x05, "extended APN-AMBR"},
-    {0, nullptr},
-};
-
-const tag_field sm::hf_sm_bearer_content_operation_code = {
-    "Operation code",
-    0xc0,
-    (const v_string[]){
-        {0x0, "Reserved"},
-        {0x01, "Create new EPS bearer"},
-        {0x02, "Delete existing EPS bearer"},
-        {0x03, "Modify existing EPS bearer"},
-        {0, nullptr},
-    },
-};
-const tag_field sm::hf_eps_bearer_deb = {
-    "DEB bit",
-    0x20,
-    deb_bit_values,
-};
-const bool_field sm::hf_bearer_ebit = {
-    "E bit",
-    0x10,
-    "parameters list is included",
-    "parameters list is not included",
-};
-const uint8_field sm::hf_eps_parameters_numbers = {
-    "Number of EPS parameters",
-    0x0f,
-};
-const bool_field sm::hf_eps_ebit_modify = {
-    "E bit",
-    0x10,
-    hf_bearer_ebit.values
-};
-
-const uint8_field sm::hf_eps_bearer_content_id = {
-    "EPS bearer identity",
-    0xf0,
-};
-const tag_field sm::hf_eps_parameter_id = {
-    "EPS parameter identity",
-    0x0,
-    eps_parameter_identity_values,
-};
-const octet_field sm::hf_eps_parameter_contents = {
-    "EPS parameter contents",
-};

@@ -4,12 +4,6 @@
 using namespace cmn;
 using namespace mm;
 
-// Allowed PDU session status
-const element_meta mm::allowed_pdu_session_status = {
-    0x25,
-    "Allowed PDU session status",
-    dissect_allowed_pdu_session_status,
-};
 inline const psi_field hf_psi={
     "PSI",
     0,
@@ -44,4 +38,3 @@ int mm::dissect_allowed_pdu_session_status(dissector d, context* ctx) {
 
     return uc.length;
 }
-

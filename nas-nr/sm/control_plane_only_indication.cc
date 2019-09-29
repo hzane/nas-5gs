@@ -17,10 +17,3 @@ int sm::dissect_control_plane_only_indication(dissector d, context*ctx){
 
     return 1;
 }
-// XX Control plane only indication 9.11.4.23	O	TV	1
-const element_meta sm::control_plane_only_indication  = {
-    0xffu,
-    "Control plane only indication",
-    sm::dissect_control_plane_only_indication,
-};
-

@@ -1,24 +1,6 @@
 #include "../common/dissect_mm_msg.hh"
 #include "../common/use_context.hh"
 
-extern const field_meta hf_eps_emm_ebi7;
-extern const field_meta hf_eps_emm_ebi6;
-extern const field_meta hf_eps_emm_ebi5;
-extern const field_meta hf_eps_emm_ebi4;
-extern const field_meta hf_eps_emm_ebi3;
-extern const field_meta hf_eps_emm_ebi2;
-extern const field_meta hf_eps_emm_ebi1;
-extern const field_meta hf_eps_emm_ebi0;
-
-extern const field_meta hf_eps_emm_ebi15;
-extern const field_meta hf_eps_emm_ebi14;
-extern const field_meta hf_eps_emm_ebi13;
-extern const field_meta hf_eps_emm_ebi12;
-extern const field_meta hf_eps_emm_ebi11;
-extern const field_meta hf_eps_emm_ebi10;
-extern const field_meta hf_eps_emm_ebi9;
-extern const field_meta hf_eps_emm_ebi8;
-
 const tf_string ebitf = {
     "BEARER CONTEXT-ACTIVE",
     "BEARER CONTEXT-INACTIVE",
@@ -55,4 +37,3 @@ int mm::dissect_eps_bearer_context_status(dissector d, context* ctx) {
 
     return 2;
 }
-

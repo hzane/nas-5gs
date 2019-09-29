@@ -115,7 +115,7 @@ int mm::dissect_registration_accept(dissector d, context* ctx) {
 
     /*78    EAP message  9.11.2.2    O    TLV-E    7-1503 */
     // ELEM_OPT_TLV_E(0x78, , DE_NAS_5GS_CMN_EAP_MESSAGE, NULL);
-    consumed = dissect_opt_tlv_e( &eap_message, d, ctx);
+    consumed = dissect_opt_tlv_e( &::eap_message, d, ctx);
     d.step(consumed);
 
     /* A-    NSSAI inclusion mode  9.11.3.37A    O    TV    1 */
@@ -149,10 +149,6 @@ int mm::dissect_registration_accept(dissector d, context* ctx) {
 
     return uc.length;
 }
-namespace mm {
-
-
-
 
 //  Service area list   9.11.3.49
 const element_meta service_area_list = {
@@ -186,21 +182,6 @@ const element_meta t3502_gprs_timer_2 = {
 // EAP message  9.11.2.2
 int dissect_eap_message(dissector d, context* ctx = nullptr);
 
-// EAP message  9.11.2.2
-const element_meta eap_message = {
-    0x78,
-    "EAP message",
-    dissect_eap_message,
-};
-
-
-// NSSAI inclusion mode  9.11.3.37A
-const element_meta nssai_inclusion_mode = {
-    0xA0,
-    "NSSAI inclusion mode",
-    dissect_nssai_inclusion_mode,
-};
-
 //  Operator-defined access category definitions 9.11.3.38
 int dissect_operator_defined_acd(dissector d, context* ctx );
 
@@ -224,224 +205,18 @@ static const tf_string tfind = {
     "Use of non-3GPP emergency numbers not permitted",
 };
 
-const bool_field hf_n3en_indicator = {
-    "N3EN indicator",
-    0x01,
-    tfind.false_string,
-    tfind.true_string,
-};
 
-
-const bool_field hf_reg_res_sms_allowed = {
+extern const bool_field hf_reg_res_sms_allowed = {
     "SMS over NAS",
     0x08,
     tfind.false_string,
     tfind.true_string,
 };
 
-
-const octet_field hf_mobile_country_code = {
-    "Mobile Country Code (MCC)",
-};
-const octet_field hf_mobile_network_code = {
-    "Mobile Network Code (MNC)",
-};
-
-
-
 /* 9.9.3.37a Extended Emergency Number List TS24.301*/
 static tf_string tfs_ext_emergency_number_list = {
     "Valid only in the PLMN from which this IE is received",
     "Valid in the country of the PLMN from which this IE is received",
-};
-
-const bcd_field hf_emergency_number_info = {
-    "Emergency Number Information",
-};
-const uint8_field hf_emergency_number_length = {
-    "Emergency Number Info length",
-    0x0,
-};
-
-const bool_field hf_mountain_rescue = {
-    "Mountain Rescue",
-    0x10,
-};
-const bool_field hf_marine_guard = {
-    "Marine Guard",
-    0x08,
-};
-const bool_field hf_fire_brigade = {
-    "Fire Brigade",
-    0x04,
-};
-const bool_field hf_ambulance = {
-    "Ambulance",
-    0x02,
-};
-const bool_field hf_police = {
-    "Police",
-    0x01,
-};
-const bcd_field hf_emergency_bcd_num = {
-    "Emergency BCD Number",
-};
-
-
-const bool_field hf_ext_emergency_number_list_validity = {
-    "Extended Emergency Number List Validity",
-    0x01,
-    "Valid in the country of the PLMN from which this IE is received",
-    "Valid only in the PLMN from which this IE is received",
-};
-
-const uint8_field hf_ext_emerge_num_len = {
-    "Emergency number information length",
-    0x0,
-};
-const bcd_field hf_emergency_number = {
-    "Emergency number",
-};
-
-const uint8_field hf_sub_services_field_length = {
-    "Sub-services field length",
-    0x0,
-};
-const sms_field hf_sub_services_field = {
-    "Sub-services field",
-};
-
-
-/* 9.11.3.51    SOR transparent container */
-const tf_string tfs_nas_5gs_list_type = {
-    "PLMN ID and access technology list",
-    "Secured packet",
-};
-
-const tf_string tfs_sor_list_indication = {
-    "List of preferred PLMN/access technology combinations is provided",
-    "No list of preferred PLMN/access technology combinations is provided",
-};
-
-const tf_string tfs_nas_5gs_sor_data_type = {
-    "Carries acknowledgement of successful reception of the steering of roaming "
-    "information",
-    "Carries steering of roaming information",
-};
-
-
-const bool_field hf_sor_hdr_ack = { // NOLINT
-    "Acknowledgement (ACK)",
-    0x08,
-    &tfs_requested_not_requested,
-};
-const bool_field hf_sor_hdr_list_type = {
-    "List type",
-    0x04,
-    &tfs_nas_5gs_list_type,
-};
-
-const bool_field hf_sor_hdr_list_indication = {
-    "List indication",
-    0x02,
-    &tfs_sor_list_indication,
-};
-
-const bool_field hf_sor_hdr0_sor_data_type = {
-    "SOR data type",
-    0x01,
-    (&tfs_nas_5gs_sor_data_type),
-};
-
-const tf_string tfs_selected_not_selected = {"Selected", "Not Selected",};
-
-const bool_field       hf_access_tech_utran      = {
-    "Access technology UTRAN",
-    0x80,
-    &tfs_selected_not_selected,
-};
-const bool_field hf_access_tech_eutran = {
-    "Access technology E-UTRAN",
-    0x40,
-    &tfs_selected_not_selected,
-};
-const bool_field hf_access_tech_eutran_wb = {
-    "Access technology E-UTRAN in WB-S1 mode",
-    0x20,
-    &tfs_selected_not_selected,
-};
-const bool_field hf_access_tech_eutran_nb = {
-    "Access technology E-UTRAN in NB-S1 mode",
-    0x10,
-    &tfs_selected_not_selected,
-};
-const bool_field hf_access_tech_o1_b3 = {
-    "Access technology NG-RAN",
-    0x08,
-    &tfs_selected_not_selected,
-};
-
-const bool_field hf_access_tech_o2_b7 = {
-    "Access technology GSM",
-    0x80,
-    &tfs_selected_not_selected,
-};
-
-const bool_field hf_access_tech_o2_b6 = {
-    "Access technology GSM COMPACT",
-    0x40,
-    &tfs_selected_not_selected,
-};
-
-const bool_field hf_access_tech_o2_b5 = {
-    "Access technology CDMA2000 HRPD",
-    0x20,
-    &tfs_selected_not_selected,
-};
-
-const bool_field hf_access_tech_o2_b4 = {
-    "Access technology CDMA2000 1xRTT",
-    0x10,
-    &tfs_selected_not_selected,
-};
-
-const bool_field hf_access_tech_o2_b3 = {
-    "Access technology EC-GSM-IoT",
-    0x08,
-    &tfs_selected_not_selected,
-};
-
-const bool_field hf_acces_tech_o2_b2 = {
-    "Access technology GSM ",
-    0x04,
-    &tfs_selected_not_selected,
-};
-
-const uint8_field hf_rfu_b2 = {
-    "Reserved for Future Use(RFU)",
-    0x04,
-};
-const uint8_field hf_rfu_b1 = {
-    "Reserved for Future Use(RFU)",
-    0x02,
-};
-const bool_field hf_rfu_b0 = {
-    "Reserved for Future Use(RFU)",
-    0x01,
-};
-const octet_field hf_sor_mac_iue = {
-    "SOR-MAC-IUE",
-};
-const octet_field hf_sor_mac_iausf = {
-    "SOR-MAC-IAUSF",
-};
-
-const uint16_field hf_counter_sor = {
-    "CounterSOR",
-    0x0,
-};
-const octet_field hf_sor_sec_pkt = {
-    "Secured packet",
 };
 
 /* 9.10.2.2     EAP message*/
@@ -483,11 +258,11 @@ int dissect_operator_defined_acd(dissector d, context* ctx) {
 
         auto sd = d.slice(length);
         /* Precedence value oct5*/
-        (void) sd.add_item(1, &hf_mm_precedence);
+        (void) sd.add_item(&hf_mm_precedence);
         sd.step(1);
 
         /* PSAC    0 Spare    0 Spare    Operator-defined access category number  oct6*/
-        (void) sd.add_item(1, &hf_mm_op_defined_acd_oct6);
+        (void) sd.add_item(&hf_mm_op_defined_acd_oct6);
         sd.step(1);
 
         /* Length of criteria oct7*/
@@ -495,7 +270,7 @@ int dissect_operator_defined_acd(dissector d, context* ctx) {
         sd.step(1);
 
         /* Criteria 8 - a-1*/
-        (void) sd.add_item(clen, &hf_mm_op_defined_acd_criteria);
+        (void) sd.add_item(&hf_mm_op_defined_acd_criteria, clen);
         sd.step(clen);
 
         /* 0 Spare    0 Spare    0 Spare    Standardized access category */
@@ -509,5 +284,3 @@ int dissect_operator_defined_acd(dissector d, context* ctx) {
     return uc.length;
 }
 
-
-} // namespace mm_reg_accept

@@ -5,15 +5,144 @@ using namespace cmn;
 using namespace nas;
 using namespace mm;
 
-// SOR transparent container   9.11.3.51
-const element_meta mm::sor_transparent_container = {
-    0x73,
-    "SOR transparent container",
-    dissect_sor_transparent_container,
-};
-
 using namespace cmn;
 using namespace nas;
+
+const octet_field hf_sor_mac_iue = {
+    "SOR-MAC-IUE",
+};
+const bool_field hf_sor_hdr_ack = { // NOLINT
+    "Acknowledgement (ACK)",
+    0x08,
+    tfs_requested_not_requested,
+};
+/* 9.11.3.51    SOR transparent container */
+const tf_string tfs_nas_5gs_list_type = {
+    "PLMN ID and access technology list",
+    "Secured packet",
+};
+
+const bool_field hf_sor_hdr_list_type = {
+    "List type",
+    0x04,
+    tfs_nas_5gs_list_type,
+};
+
+const tf_string tfs_sor_list_indication = {
+    "List of preferred PLMN/access technology combinations is provided",
+    "No list of preferred PLMN/access technology combinations is provided",
+};
+
+const bool_field hf_sor_hdr_list_indication = {
+    "List indication",
+    0x02,
+    tfs_sor_list_indication,
+};
+
+const tf_string tfs_nas_5gs_sor_data_type = {
+    "Carries acknowledgement of successful reception of the steering of roaming "
+    "information",
+    "Carries steering of roaming information",
+};
+
+const bool_field hf_sor_hdr0_sor_data_type = {
+    "SOR data type",
+    0x01,
+    tfs_nas_5gs_sor_data_type,
+};
+
+const tf_string tfs_selected_not_selected = {"Selected", "Not Selected",};
+
+const bool_field       hf_access_tech_utran      = {
+    "Access technology UTRAN",
+    0x80,
+    tfs_selected_not_selected,
+};
+
+const bool_field hf_access_tech_eutran = {
+    "Access technology E-UTRAN",
+    0x40,
+    tfs_selected_not_selected,
+};
+
+
+const bool_field hf_access_tech_eutran_wb = {
+    "Access technology E-UTRAN in WB-S1 mode",
+    0x20,
+    tfs_selected_not_selected,
+};
+const bool_field hf_access_tech_eutran_nb = {
+    "Access technology E-UTRAN in NB-S1 mode",
+    0x10,
+    tfs_selected_not_selected,
+};
+const bool_field hf_access_tech_o1_b3 = {
+    "Access technology NG-RAN",
+    0x08,
+    tfs_selected_not_selected,
+};
+
+const bool_field hf_access_tech_o2_b7 = {
+    "Access technology GSM",
+    0x80,
+    tfs_selected_not_selected,
+};
+
+const bool_field hf_access_tech_o2_b6 = {
+    "Access technology GSM COMPACT",
+    0x40,
+    tfs_selected_not_selected,
+};
+
+const bool_field hf_access_tech_o2_b5 = {
+    "Access technology CDMA2000 HRPD",
+    0x20,
+    tfs_selected_not_selected,
+};
+
+const bool_field hf_access_tech_o2_b4 = {
+    "Access technology CDMA2000 1xRTT",
+    0x10,
+    tfs_selected_not_selected,
+};
+
+const bool_field hf_access_tech_o2_b3 = {
+    "Access technology EC-GSM-IoT",
+    0x08,
+    tfs_selected_not_selected,
+};
+
+const bool_field hf_acces_tech_o2_b2 = {
+    "Access technology GSM ",
+    0x04,
+    tfs_selected_not_selected,
+};
+
+const bool_field hf_rfu_b2 = {
+    "Reserved for Future Use(RFU)",
+    0x04,
+};
+const bool_field hf_rfu_b1 = {
+    "Reserved for Future Use(RFU)",
+    0x02,
+};
+const bool_field hf_rfu_b0 = {
+    "Reserved for Future Use(RFU)",
+    0x01,
+};
+
+
+const octet_field hf_sor_mac_iausf = {
+    "SOR-MAC-IAUSF",
+};
+
+const uint16_field hf_counter_sor = {
+    "CounterSOR",
+    0x0,
+};
+const octet_field hf_sor_sec_pkt = {
+    "Secured packet",
+};
 
 // SOR transparent container   9.11.3.51
 int mm::dissect_sor_transparent_container(dissector d, context* ctx) {
@@ -67,16 +196,16 @@ int mm::dissect_sor_transparent_container(dissector d, context* ctx) {
 
         const auto list_type = (oct & 0x4u) >> 2u;
         /* SOR-MAC-IAUSF    octet 5-20 */
-        (void) d.add_item(16, &hf_sor_mac_iausf);
+        (void) d.add_item( &hf_sor_mac_iausf, 16);
         d.step(16);
 
         /* CounterSOR    octet 21-22 */
-        (void) d.add_item(2, &hf_counter_sor);
+        (void) d.add_item( &hf_counter_sor);
         d.step(2);
 
         if (list_type == 0) {
             /* Secured packet    octet 23* - 2048* */
-            (void) d.add_item(d.length, &hf_sor_sec_pkt);
+            (void) d.add_item(&hf_sor_sec_pkt, d.length);
             d.step(d.length);
         } else {
             /* PLMN ID and access technology list    octet 23*-102* */
@@ -109,7 +238,7 @@ int mm::dissect_sor_transparent_container(dissector d, context* ctx) {
         d.add_bits(flags_dt1);
         d.step(1);
         /* SOR-MAC-IUE    octet 5 - 20*/
-        (void) d.add_item(16, &hf_sor_mac_iue);
+        (void) d.add_item( &hf_sor_mac_iue, 16);
         d.step(16);
     }
 

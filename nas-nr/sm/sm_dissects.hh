@@ -46,4 +46,5 @@ int dissect_ssc_mode(dissector d, context* ctx); //* 9.11.4.16    SSC mode
 int dissect_reattempt_indicator(dissector d, context*ctx);
 int dissect_control_plane_only_indication(dissector d, context*ctx);
 int dissect_sm_status(dissector d, context* ctx);
+int dissect_serving_plmn_rate_control(dissector d, context*ctx);
 } // namespace sm
