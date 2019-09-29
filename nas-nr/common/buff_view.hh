@@ -10,7 +10,6 @@ struct buff_view { // NOLINT: typo
     uint16_t uint16(int offset) const;;
     uint8_t uint8(int offset) const;
 
-    int remain(int offset) const;
 };
 
 inline uint16_t buff_view::uint16(int offset) const {
@@ -21,4 +20,3 @@ inline uint8_t buff_view::uint8(int offset) const {
     return data && (offset < length) ? data[offset] : 0;
 }
 
-inline int buff_view::remain(int offset) const { return length - offset; }
