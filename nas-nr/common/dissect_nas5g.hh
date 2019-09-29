@@ -13,12 +13,12 @@ const message_meta* find_dissector(uint8_t iei, const message_meta* meta);
 
 namespace nas {
 
-inline extern const tf_string tfs_supported_not_supported = {
+inline extern const tf_string tf_supported_or_not = {
     "Supported",
     "Not supported",
 };
 
-inline extern const tf_string tfs_allowed_not_allowed = {
+inline extern const tf_string tf_allowed_or_not = {
     "Allowed",
     "Not Allowed",
 };

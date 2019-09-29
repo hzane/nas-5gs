@@ -65,8 +65,8 @@ int mm::dissect_security_mode_command(dissector d, context* ctx) {
 namespace mm {
 
 
-static const char* s = tfs_supported_not_supported.true_string;
-static const char* ns = tfs_supported_not_supported.false_string;
+static const char* s = tf_supported_or_not.true_string;
+static const char* ns = tf_supported_or_not.false_string;
 
 const bool_field hf_mm_128_5g_ea1 = {
     "128-5G-EA1",

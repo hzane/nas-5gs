@@ -178,7 +178,7 @@ node_t dissector::add_item(const bcd_field*f, int len, bool step){
     return ret;
 }
 node_t dissector::add_item(const sms_field* fm, int len, bool step) {
-    auto v = sms_string(ptr(), safe_length(len));
+    auto v = gsm7_string(ptr(), safe_length(len));
     auto ret = add_item(len, fm->name, v);
 
     if(step) this->step(len);

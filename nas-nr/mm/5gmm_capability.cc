@@ -7,13 +7,13 @@ using namespace nas;
 const bool_field       hf_5gsrvcc_capability = {
     "5G-SRVCC from NG-RAN to UTRAN (5GSRVCC) capability",
     0,
-    tfs_supported_not_supported,
+    tf_supported_or_not,
 };
 
 const bool_field        hf_user_plane_5gs_optimization = {
     "User plane CIoT 5GS optimization (5G-UP CIoT) ",
     0,
-    tfs_supported_not_supported,
+    tf_supported_or_not,
 };
 
 const bool_field hf_service_gap_control = {

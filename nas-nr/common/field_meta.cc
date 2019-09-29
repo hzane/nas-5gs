@@ -1,5 +1,5 @@
 #include "field_meta.hh"
-#include "format.hh"
+#include "formats.hh"
 #include "buff_view.hh"
 
 string field_meta::format(const uint8_t* p, int length) const {
@@ -42,7 +42,7 @@ string field_meta::format(const uint8_t* p, int length) const {
         case fd::sep_space:
             return hstring(p, length, " ");
         case fd::bits7:
-            return sms_string(p, length);
+            return gsm7_string(p, length);
         case fd::ipv4:
             return formats("%u.%u.%u.%u", p[0], p[1], p[2], p[3]);
         case fd::link_local_address:

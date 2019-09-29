@@ -6,12 +6,12 @@ using namespace nas;
 const bool_field hf_ssc_mode_3 = {
     "SSC mode 3",
     0x04,
-    nas::tfs_allowed_not_allowed,
+    nas::tf_allowed_or_not,
 };
 const bool_field hf_ssc_mode_2 = {
     "SSC mode 2",
     0x02,
-    nas::tfs_allowed_not_allowed,
+    nas::tf_allowed_or_not,
 };
 const bool_field hf_ssc_mode_1 = {
     "SSC mode 1",

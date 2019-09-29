@@ -7,7 +7,7 @@ using namespace sm;
 const bool_field hf_reflective_qos = {
     "Reflective QoS(RqoS)",
     0x01,
-    tfs_supported_not_supported,
+    tf_supported_or_not,
 };
 
 /*  9.11.4.1    5GSM capability */

@@ -12,7 +12,7 @@ using namespace nas;
 
 /* *     9.11.3.49    Service area list */
 
-extern const v_string mm::tac_list_values[] = {
+extern const v_string tac_list_values[] = {
     {0x00, "list of TACs belonging to one PLMN, with non-consecutive TAC values"},
     {0x01, "list of TACs belonging to one PLMN, with consecutive TAC values"},
     {0x02, "list of TAIs belonging to different PLMNs"},

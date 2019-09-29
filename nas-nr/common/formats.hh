@@ -31,7 +31,7 @@ string bitstring(const uint8_t*data, int bits, const char*sep=nullptr);
 
 string gmt_string(const uint8_t*d);
 string utc_string(const uint8_t*d, int length);
-string sms_string(const uint8_t*gsm, int len);
+string gsm7_string(const uint8_t*gsm, int len);
 string ambr_string(const uint8_t* d, int length);
 
 //  [3] 10.5.1.13 PLMN list TS24.008
