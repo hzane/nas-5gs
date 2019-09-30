@@ -1,7 +1,7 @@
 #include "../common/dissect_mm_msg.hh"
 #include "../common/use_context.hh"
 
-using namespace cmn;
+
 using namespace nas;
 
 /* 9-  Network slicing indication  Network slicing indication 9.11.3.36  O  TV 1 */

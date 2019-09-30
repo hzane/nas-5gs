@@ -14,7 +14,7 @@ int mm::dissect_ladn_indication(dissector d, context* ctx) {
         const int length = static_cast< int >(d.uint8());
         d.step(1);
 
-        const auto consumed = cmn::dissect_dnn(d.slice(length), ctx);
+        const auto consumed = dissect_dnn(d.slice(length), ctx);
         d.step(consumed);
         subtree->set_length(length + 1);
     }

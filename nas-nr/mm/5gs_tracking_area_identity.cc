@@ -1,7 +1,7 @@
 #include "../common/dissect_mm_msg.hh"
 #include "../common/use_context.hh"
 
-using namespace cmn;
+
 
 // TAC, Tracking area code
 extern const uint24_field hf_tracking_area_code = {

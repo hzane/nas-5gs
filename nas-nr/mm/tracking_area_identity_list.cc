@@ -1,8 +1,6 @@
 #include "../common/dissect_mm_msg.hh"
 #include "../common/use_context.hh"
 
-using namespace cmn;
-
 
 /*  9.11.3.9     5GS tracking area identity list */
 extern const v_string tracking_area_identity_list_values[] = {

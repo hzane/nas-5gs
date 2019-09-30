@@ -35,7 +35,7 @@
  * Return MCC MNC in a packet scope allocated string that can be used in labels.
  * Little Endian encoded
  */
-int cmn::dissect_e212_mcc_mnc(dissector d, context*) {
+int dissect_e212_mcc_mnc(dissector d, context*) {
 
     d.add_item(3, "MCC", mcc_string(d.ptr()));
     d.add_item(3, "MNC", mnc_string(d.ptr()));

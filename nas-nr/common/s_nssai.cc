@@ -2,10 +2,10 @@
 #include "../common/use_context.hh"
 
 // S-NSSAI   9.11.2.8
-extern const element_meta cmn::s_nssai = {
+extern const element_meta s_nssai = {
     0x22,
     "S-NSSAI",
-    cmn::dissect_s_nssai,
+    dissect_s_nssai,
 };
 
 
@@ -32,7 +32,7 @@ const uint24_field hf_mapped_conf_sd = {
 
 
 /* 9.11.2.8    S-NSSAI */
-int cmn::dissect_s_nssai(dissector d, context* ctx) {
+int dissect_s_nssai(dissector d, context* ctx) {
     const use_context uc(ctx, "s-nssai", d, 0);
 
     /* SST    octet 3

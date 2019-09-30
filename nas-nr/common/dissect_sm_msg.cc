@@ -5,7 +5,7 @@
 
 /* 8.3 5GS session management messages */
 
-using namespace cmn;
+
 using namespace sm;
 
 extern const message_meta sm::msgs[] = {

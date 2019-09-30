@@ -1,7 +1,7 @@
 #include "common.hh"
 #include "dissect_nas5g.hh"
 
-using namespace cmn;
+
 using namespace nas;
 
 const octet_field hf_msg_elements = {

@@ -2,7 +2,7 @@
 #include "../common/dissect_mm_msg.hh"
 #include "../common/use_context.hh"
 
-using namespace cmn;
+
 using namespace nas;
 
 /*  8.2.9 Registration reject */

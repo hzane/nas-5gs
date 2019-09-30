@@ -2,7 +2,7 @@
 #include "../common/dissect_mm_msg.hh"
 #include "../common/use_context.hh"
 
-using namespace cmn;
+
 
 
 /*  8.2.14 De-registration request (UE terminated de-registration) */

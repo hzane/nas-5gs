@@ -1,11 +1,11 @@
 #include "../common/dissect_mm_msg.hh"
 #include "../common/use_context.hh"
 
-using namespace cmn;
+
 using namespace nas;
 using namespace mm;
 
-using namespace cmn;
+
 using namespace nas;
 
 const octet_field hf_sor_mac_iue = {

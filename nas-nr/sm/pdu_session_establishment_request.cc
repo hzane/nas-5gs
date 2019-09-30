@@ -3,7 +3,7 @@
 #include "../common/use_context.hh"
 #include "common/packet.hh"
 
-using namespace cmn;
+
 using namespace nas;
 using namespace sm;
 

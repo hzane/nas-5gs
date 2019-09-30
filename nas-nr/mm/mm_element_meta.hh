@@ -165,7 +165,7 @@ inline const element_meta rejected_nssai = {
 inline const element_meta eap_message = {
     0x78,
     "EAP message",
-    cmn::dissect_eap_message,
+    dissect_eap_message,
 };
 
 // NSSAI inclusion mode  9.11.3.37A
@@ -292,13 +292,13 @@ inline const element_meta emergency_number_list = {
 inline const element_meta backoff_gprs_timer3 = {
     0x37,
     "GPRS timer 3 - Back-off timer",
-    cmn::dissect_gprs_timer3_set,
+    dissect_gprs_timer3_set,
 };
 
 inline const element_meta t3346_gprs_timer2 = {
     0x5f,
     "GPRS timer 2 - T3346 value",
-    cmn::dissect_gprs_timer2_set,
+    dissect_gprs_timer2_set,
 };
 
 // 9.11.3.19

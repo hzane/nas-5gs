@@ -1,6 +1,6 @@
 #include "../common/dissect_mm_msg.hh"
 
-using namespace cmn;
+
 using namespace nas;
 using namespace mm;
 

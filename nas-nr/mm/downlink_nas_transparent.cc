@@ -4,7 +4,7 @@
 #include "../common/dissect_mm_msg.hh"
 #include "../common/use_context.hh"
 
-using namespace cmn;
+
 using namespace nas;
 using namespace mm;
 

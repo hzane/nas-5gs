@@ -1,7 +1,7 @@
 #include "../common/dissect_mm_msg.hh"
 #include "../common/use_context.hh"
 
-using namespace cmn;
+
 using namespace nas;
 using namespace mm;
 
@@ -21,7 +21,7 @@ int mm::dissect_configured_nssai(dissector d, context* ctx) {
         // auto n = d.add_item(1, &hf_mm_length);
         d.step(1);
 
-        const auto consumed = cmn::dissect_s_nssai(d.slice(length), ctx);
+        const auto consumed = dissect_s_nssai(d.slice(length), ctx);
         d.step(consumed);
 
     }

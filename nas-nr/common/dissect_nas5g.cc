@@ -6,7 +6,6 @@
 #include "formats.hh"
 #include "use_context.hh"
 
-using namespace cmn;
 using namespace nas;
 
 int dissect_nas5g(dissector d, context* ctx){

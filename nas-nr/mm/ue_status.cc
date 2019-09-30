@@ -1,7 +1,7 @@
 #include "../common/dissect_mm_msg.hh"
 #include "../common/use_context.hh"
 
-using namespace cmn;
+
 using namespace nas;
 
 // 5GMM registration status (N1 mode reg) (octet 3, bit 2)

@@ -2,7 +2,7 @@
 #include "../common/dissect_mm_msg.hh"
 #include "../common/use_context.hh"
 
-using namespace cmn;
+
 using namespace mm;
 
 extern const tag_field hf_identity_type;
