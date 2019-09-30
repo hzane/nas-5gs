@@ -9,7 +9,7 @@ using namespace mm;
 
 
 /*  9.11.3.40    Payload container type */
-extern const value_string payload_container_type_values[] = {
+extern const v_string payload_container_type_values[] = {
     {0x01, "N1 SM information"},
     {0x02, "SMS"},
     {0x03, "LTE Positioning Protocol (LPP) message container"},

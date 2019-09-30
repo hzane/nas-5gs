@@ -2,7 +2,7 @@
 #include "../common/use_context.hh"
 
 // * 9.11.4.7 Integrity protection maximum data rate
-extern const value_string integrity_protection_max_data_rate_values[] = {
+extern const v_string integrity_protection_max_data_rate_values[] = {
     {0x0, "64 kbps"},
     {0xff, "Full data rate"},
     {0, nullptr},

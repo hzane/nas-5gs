@@ -25,7 +25,6 @@ struct nas_nr_message {
     virtual int                   offset() const       = 0; // NOLINT -use-nodiscard
     virtual int                   length() const       = 0; // NOLINT -use-nodiscard
     virtual int                   indent() const       = 0; // NOLINT
-    virtual const description*    desc() const         = 0; // NOLINT
     virtual const nas_nr_message* first_child() const  = 0; // NOLINT
     virtual const nas_nr_message* next_sibling() const = 0; // NOLINT
 protected:    virtual ~nas_nr_message(){};                            // NOLINT
@@ -39,8 +38,6 @@ NASNRAPI int dissect_nas_nr(nas_nr_message** root,
                             int              length,
                             int   direction, // 1: uplink, 2: downlink, 0: unknow
                             void* env);
-
-NASNRAPI char* pretty_format(const description* m, const octet* data, int length);
 
 NASNRAPI void  pretty_format_free(char* p);
 

@@ -31,8 +31,8 @@ struct bool_field {
 };
 struct octet_field {
     const char* name = nullptr;
-    const char* sep = nullptr;
-    const char* lf = nullptr;
+    const char* sep  = nullptr;
+    const char* lf   = nullptr;
 };
 
 using uint24_t = uint32_t;
@@ -44,55 +44,55 @@ struct uint24_field {
 
 struct uint16_field {
     const char* name = nullptr;
-    uint16_t mask = 0;
+    uint16_t    mask = 0;
 };
 
-struct ipv4_field{
+struct ipv4_field {
     const char* name = nullptr;
 };
 
-struct mac_field{
-    const char*name = nullptr;
-};
-
-struct ipv6_field{
-    const char*name = nullptr;
-};
-
-struct string_field{
-    const char*name = nullptr;
-};
-
-struct imei_field{
-    const char*name = nullptr;
-};
-
-struct sms_field{
+struct mac_field {
     const char* name = nullptr;
 };
 
-struct bcd_field{
+struct ipv6_field {
     const char* name = nullptr;
 };
 
-struct mccmnc_field{
+struct string_field {
     const char* name = nullptr;
 };
 
-struct psi_field{
-    const char* name=nullptr;
-    uint8_t mask = 0;
-    uint8_t offset = 0;
+struct imei_field {
+    const char* name = nullptr;
+};
+
+struct sms_field {
+    const char* name = nullptr;
+};
+
+struct bcd_field {
+    const char* name = nullptr;
+};
+
+struct mccmnc_field {
+    const char* name = nullptr;
+};
+
+struct psi_field {
+    const char* name      = nullptr;
+    uint8_t     mask      = 0;
+    uint8_t     offset    = 0;
     const char* not_avail = nullptr;
-    const char* avail = nullptr;
+    const char* avail     = nullptr;
 };
-struct ambr_field{
-    const char* name=nullptr;
-};
-struct timezone_field{
+struct ambr_field {
     const char* name = nullptr;
 };
-struct utc_field{
+struct timezone_field {
+    const char* name = nullptr;
+};
+struct utc_field {
     const char* name = nullptr;
 };
 

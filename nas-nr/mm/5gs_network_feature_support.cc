@@ -193,7 +193,7 @@ int mm::dissect_network_feature_support(dissector d, context* ctx) {
 }
 
 
-const value_string emergency_services_fallback_values[] = {
+const v_string emergency_services_fallback_values[] = {
     {0x0, "Emergency services fallback not supported"},
     {0x1, "Emergency services fallback supported in NR connected to 5GCN only"},
     {

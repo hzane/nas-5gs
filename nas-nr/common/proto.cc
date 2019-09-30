@@ -9,6 +9,7 @@
 
 void node::set_length(int len) { length = len; }
 
+#if 0
 std::string print_text(const field_meta* meta, const uint8_t* data, int len);
 
 std::string print_text(const field_meta* meta, uint64_t v);
@@ -30,6 +31,7 @@ void node::set_item(int len, const field_meta* field) {
     (void)offset;
     diag("remove this function later\n");
 }
+#endif
 
 inline const element_field hf_expert = {
     "Expert",
@@ -51,6 +53,7 @@ void node::set_item(int start, int len, const string& text) {
     this->length = len;
 }
 
+#if 0
 std::string print_text(const field_meta* meta, const uint8_t* data, int len) {
     if (meta == nullptr) {
         return formats("%d bytes", len);
@@ -73,6 +76,7 @@ std::string print_text(const field_meta* meta, uint64_t v) {
 
     return meta->format(v);
 }
+#endif
 
 void print_node(std::ostream& out, const node_t node, int indent) {
     if (!node->name.empty()) {

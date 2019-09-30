@@ -14,7 +14,6 @@ struct nas_nr_message_imp final : nas_nr_message {
     int                 len     NASNR_EQUAL_INIT (0);
     int                 start   NASNR_EQUAL_INIT (0);
     int                 level   NASNR_EQUAL_INIT (0);
-    const description*  meta    NASNR_EQUAL_INIT (nullptr);
     nas_nr_message_imp* child   NASNR_EQUAL_INIT (nullptr);
     nas_nr_message_imp* sibling NASNR_EQUAL_INIT (nullptr);
 
@@ -24,7 +23,6 @@ struct nas_nr_message_imp final : nas_nr_message {
     [[nodiscard]] int                   offset() const override;
     [[nodiscard]] int                   length() const override;
     [[nodiscard]] int                   indent() const override;
-    [[nodiscard]] const description*    desc() const override;
     [[nodiscard]] const nas_nr_message* first_child() const override;
     [[nodiscard]] const nas_nr_message* next_sibling() const override;
 
@@ -35,8 +33,6 @@ struct nas_nr_message_imp final : nas_nr_message {
     nas_nr_message_imp& operator=(const nas_nr_message_imp&&) = delete;
     nas_nr_message_imp& operator=(const nas_nr_message_imp&) = delete;
 };
-
-const description* nas_nr_message_imp::desc() const { return meta; }
 
 const char* nas_nr_message_imp::value() const { return val.c_str(); }
 
@@ -92,13 +88,13 @@ NASNRAPI int dissect_nas_nr(nas_nr_message** root,
                             void*            env) {
     buff_view       tvb   = NASNR_LIST_INIT(tvbuff, data, length);
     context         alt   = NASNR_LIST_INIT(context);
-    packet          pinfo = NASNR_LIST_INIT(packet_info);
+    packet          pkt = NASNR_LIST_INIT(packet);
     node_t            n  = std::make_shared<node>();
     *root                 = nullptr;
-    pinfo.dir             = dir;
+    pkt.dir             = dir;
     context* ctx          = env ? static_cast< context* >(env) : &alt;
 
-    const dissector d = {&pinfo, n, &tvb, 0, length, nullptr};
+    const dissector d = {&pkt, n, &tvb, 0, length, nullptr};
 
     const auto ret = nas_5gs_module.dissector(d, ctx);
     if (!n->children.empty()) {
@@ -114,14 +110,6 @@ NASNRAPI int dissect_nas_nr(nas_nr_message** root,
 #else
 #define xstrdup strdup
 #endif
-
-char NASNRAPI *pretty_format(const description* m, const octet* data, int length) {
-    const auto fm   = static_cast< const field_meta* >(m); // NOLINT
-    if (!fm) return nullptr;
-
-    const auto  text = fm->format(data, length);
-    return xstrdup (text.c_str());
-}
 
 void NASNRAPI pretty_format_free(char* p) {
     free(p);

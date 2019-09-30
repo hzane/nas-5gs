@@ -5,12 +5,6 @@
 #include "config.hh"
 #include "v_string.hh"
 
-using tf_string    = tf_string;
-using value_string = v_string;
-
-
-inline const tf_string true_false = {"true", "false"};
-
 namespace ft {
 inline const uint32_t none        = 0;
 inline const uint32_t ft_signed   = 0x40;
@@ -80,15 +74,6 @@ inline const uint32_t base_char          = 32u;
 inline const uint32_t nibble             = 33u; // right half octet
 inline const uint32_t right              = 33u;
 inline const uint32_t left               = 35u; // left half octet
-
-inline uint32_t get(uint32_t d) { return d & 0xff; }
-
 } // namespace fd
 
-using string = std::string;
-
-struct field_meta : description {
-    string format(const uint8_t* p, int len) const;
-    [[nodiscard]] string format(uint64_t val) const;
-};
 

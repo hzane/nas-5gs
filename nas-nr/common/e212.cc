@@ -2,8 +2,8 @@
 #include "field_meta.hh"
 #include "formats.hh"
 
-extern const value_string e212_codes[];
-extern const value_string mnc_codes[];
+extern const v_string e212_codes[];
+extern const v_string mnc_codes[];
 
 string mcc_string(const uint8_t* d, int length) {
     if (!d || length < 3) return string();
@@ -54,7 +54,7 @@ string mnc_string(const uint8_t* d, int length) {
 
 // https://en.wikipedia.org/wiki/Mobile_Network_Codes_in_ITU_region_4xx_(Asia)#China_-_CN
 // only support chinese mnc
-extern const value_string mnc_codes[] = {
+extern const v_string mnc_codes[] = {
     {0, "China Mobile GSM"},
     {1, "China Unicom"},
     {2, "China Mobile GSM"},
@@ -80,7 +80,7 @@ extern const value_string mnc_codes[] = {
  * Find the bulletins here:
  * http://www.itu.int/en/publications/ITU-T/Pages/publications.aspx?parent=T-SP&view=T-SP1
  */
-extern const value_string e212_codes[] = {
+extern const v_string e212_codes[] = {
     {202, "Greece"},
     {203, "Unassigned"},
     {204, "Netherlands (Kingdom of the)"},

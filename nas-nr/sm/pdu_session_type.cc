@@ -5,7 +5,7 @@
 
 
 /*  9.11.4.10    PDU address  */
-const value_string pdu_session_type_values[] = {
+const v_string pdu_session_type_values[] = {
     {0x1, "IPv4"},
     {0x2, "IPv6"},
     {0x3, "IPv4v6"},

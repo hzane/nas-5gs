@@ -165,7 +165,7 @@ const bool_field hf_default_qos_rule = {
 
 };
 
-extern const value_string nas_5gs_rule_operation_code_values[] = {
+extern const v_string nas_5gs_rule_operation_code_values[] = {
     {0x0, "Reserved"},
     {0x1, "Create new QoS rule"},
     {0x2, "Delete existing QoS rule"},

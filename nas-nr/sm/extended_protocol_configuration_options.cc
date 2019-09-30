@@ -11,7 +11,7 @@ const uint8_field hf_gsm_configuration_protocol = {
     0x7,
 };
 
-extern const value_string ppp_protocol_values[];
+extern const v_string ppp_protocol_values[];
 
 const uint16_field hf_proto_id = {
     "Protocol ID",
@@ -34,7 +34,7 @@ int sm::dissect_extended_protocol_configuration_options(dissector d, context* ct
 
 
 // only part
-extern const value_string ppp_protocol_values[] = {
+extern const v_string ppp_protocol_values[] = {
     {1, "Padding Protocol"},
     {3, "ROHC small-CID"},
     {5, "ROHC large-CID"},
