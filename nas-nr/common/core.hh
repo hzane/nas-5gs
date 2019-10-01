@@ -1,7 +1,6 @@
 #pragma once
 #include "buff_view.hh"
 #include "config.hh"
-#include "field_meta.hh"
 #include "packet.hh"
 #include "proto.hh"
 

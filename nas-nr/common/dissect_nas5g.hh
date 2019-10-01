@@ -1,6 +1,5 @@
 #pragma once
 #include "core.hh"
-#include "field_meta.hh"
 
 // dissect_msg_fnc_t
 int dissect_sm_msg(dissector d, context* ctx);

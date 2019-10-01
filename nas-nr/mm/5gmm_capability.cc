@@ -1,16 +1,15 @@
 #include "../common/dissect_mm_msg.hh"
 #include "../common/use_context.hh"
 
-
 using namespace nas;
 
-const bool_field       hf_5gsrvcc_capability = {
+const bool_field hf_5gsrvcc_capability = {
     "5G-SRVCC from NG-RAN to UTRAN (5GSRVCC) capability",
     0,
     tf_supported_or_not,
 };
 
-const bool_field        hf_user_plane_5gs_optimization = {
+const bool_field hf_user_plane_5gs_optimization = {
     "User plane CIoT 5GS optimization (5G-UP CIoT) ",
     0,
     tf_supported_or_not,
@@ -33,8 +32,10 @@ const bool_field hf_header_compression_for_ctrl_plane = {
 const bool_field hf_n3data_5 = {
     "N3 data transfer",
     0x20,
-    {"N3 data transfer supported",
-     "N3 data transfer not supported",},
+    {
+        "N3 data transfer supported",
+        "N3 data transfer not supported",
+    },
 };
 
 const bool_field hf_control_plane = {
@@ -57,14 +58,14 @@ const bool_field hf_lpp_capability = {
     "LPP in N1 mode supported",
 };
 
-
 const bool_field hf_handover_attach = {
     "HO attach",
-    0x02,{
+    0x02,
+    {
         R"(handover attach not supported)",
-        R"(handover attach supported)",},
+        R"(handover attach supported)",
+    },
 };
-
 
 const bool_field hf_s1_mode_b0 = {
     "S1 mode",
@@ -72,7 +73,6 @@ const bool_field hf_s1_mode_b0 = {
     "S1 mode not supported",
     "S1 mode supported",
 };
-
 
 /* 9.11.3.1     5GMM capability*/
 int mm::dissect_mm_capability(dissector d, context* ctx) {
@@ -92,7 +92,7 @@ int mm::dissect_mm_capability(dissector d, context* ctx) {
     d.add_bits(flags);
     d.step(1);
 
-    if (d.length>0) {
+    if (d.length > 0) {
         static const bool_field* o4flags[] = {
             &hf_5gsrvcc_capability,
             &hf_user_plane_5gs_optimization,

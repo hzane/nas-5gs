@@ -112,3 +112,13 @@ int dissect_tlv_e(const element_meta* val_meta,
                   context*            ctx);
 
 int dissect_unknown(dissector d, context* ctx);
+
+template<typename field_t>
+int dissect_opt_tv(uint8_t ieid, field_t const* meta, dissector d, context* ctx, bool required=false){
+    auto ie = d.uint8(true);
+    if(ieid != ie && required) d.add_expert(-1, meta->name);
+    if (ieid != ie)         return 0;
+
+    auto n = d.add_item(meta);
+    return n->length>=0 ? n->length : 0;
+}

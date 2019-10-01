@@ -3,7 +3,6 @@
 #include <cstring>
 #include "nas-nr.hh"
 #include "common/dissect_nas5g.hh"
-#include "common/field_meta.hh"
 
 using string = std::string;
 

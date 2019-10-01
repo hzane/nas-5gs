@@ -2,7 +2,6 @@
 
 #include "buff_view.hh"
 #include "config.hh"
-#include "field_meta.hh"
 #include "proto.hh"
 #include "dissector.hh"
 

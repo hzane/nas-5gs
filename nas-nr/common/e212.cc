@@ -1,5 +1,4 @@
 #include "config.hh"
-#include "field_meta.hh"
 #include "formats.hh"
 
 extern const v_string e212_codes[];

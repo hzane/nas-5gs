@@ -14,7 +14,6 @@ set(COMMON_SRCS additional_information.cc
         e212.cc
         e212_mcc_mnc.cc
         eap.cc
-        field_meta.cc
         formats.cc
         gprs_timer2.cc
         gprs_timer3.cc
@@ -35,7 +34,6 @@ set(COMMON_HEADERS ber.hh
         dissect_nas5g.hh
         dissect_sm_msg.hh
         eps.hh
-        field_meta.hh
         gsm.hh
         nas-nr-compiler-detection.hh
         packet.hh
