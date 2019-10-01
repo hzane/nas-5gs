@@ -7,6 +7,8 @@ int dissect_eap_message(dissector d, context* ctx) {
     const use_context uc(ctx, "EAP", d, 0);
 
     /* EAP message as specified in IETF RFC 3748 */
+    d.set_item(d.length, hstring(d.ptr(), d.safe_length(d.length)));
+    d.step(d.length);
 
     return uc.length;
 }

@@ -144,6 +144,7 @@ string gsm_unpacked_to_utf8(const uint8_t *gsm, int len) {
 
     return ret;
 }
+
 string gsm7_string(const uint8_t*gsm, int len){
     return gsm_unpacked_to_utf8(gsm, len);
 }

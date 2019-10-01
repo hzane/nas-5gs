@@ -25,8 +25,6 @@ inline const psi_field status_psi_8 = {
 int mm::dissect_pdu_session_status(dissector d, context* ctx) {
     const use_context uc(ctx, "pdu-session-status", d, 30);
 
-
-
     d.add_item(&status_psi_1);
     d.step(1);
 

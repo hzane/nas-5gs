@@ -39,6 +39,10 @@ dissector dissector::slice(int len) const {
     return ret;
 }
 
+octet_t dissector::sub(int len)const{
+    return octet_t(ptr(), ptr()+safe_length(len));
+}
+
 const uint8_t* dissector::ptr() const {
     if (tvb->length < 0 || offset >= tvb->length) return nullptr;
     return tvb->data + offset;

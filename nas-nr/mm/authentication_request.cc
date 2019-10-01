@@ -2,8 +2,6 @@
 #include "../common/dissect_mm_msg.hh"
 #include "../common/use_context.hh"
 
-using namespace nas;
-
 /* 8.2.1.1    Authentication request */
 int mm::dissect_authentication_request(dissector d, context* ctx) {
     const use_context uc(ctx, "authentication-request", d, 0);
@@ -13,7 +11,6 @@ int mm::dissect_authentication_request(dissector d, context* ctx) {
     /* Spare half octet    Spare half octet     9.5    M    V    1/2 H1 */
 
     /*ngKSI     NAS key set identifier 9.11.3.32    M    V    1/2  */
-    // ELEM_MAND_V(DE_NAS_5GS_MM_NAS_KEY_SET_ID, " - ngKSI",);
     dissect_v( &nas_ksi, d, ctx);
     d.step(1);
 
@@ -21,15 +18,11 @@ int mm::dissect_authentication_request(dissector d, context* ctx) {
     auto consumed = dissect_lv( &abba, d, ctx);
     d.step(consumed);
 
-    /*21    Authentication parameter RAND (5G authentication challenge)    Authentication
-     * parameter RAND     9.11.3.16    O    TV    17*/
-    // ELEM_OPT_TV(0x21, , DE_AUTH_PARAM_RAND, " - 5G authentication challenge");
+    /* 21    Authentication parameter RAND (5G authentication challenge)  9.11.3.16    O    TV    17*/
     consumed = dissect_opt_tv( &authentication_parameter_rand, d, ctx);
     d.step(consumed);
 
-    /*20    Authentication parameter AUTN (5G authentication challenge)    Authentication
-     * parameter AUTN     9.11.3.15    O    TLV    18*/
-    // ELEM_OPT_TLV(0x20, , DE_AUTH_PARAM_AUTN, " - 5G authentication challenge");
+    /* 20    Authentication parameter AUTN (5G authentication challenge)    9.11.3.15    O    TLV    18*/
     consumed = dissect_opt_tlv( &authentication_parameter_autn, d, ctx);
     d.step(consumed);
 
@@ -39,9 +32,3 @@ int mm::dissect_authentication_request(dissector d, context* ctx) {
 
     return uc.length;
 }
-
-namespace mm {
-
-
-
-} // namespace

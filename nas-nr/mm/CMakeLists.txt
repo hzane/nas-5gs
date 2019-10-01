@@ -1,14 +1,14 @@
 
-set(MM_SRCS 5gmm_capability.cc
-    5gmm_cause.cc
-    5gmm_status.cc
-    5gs_identity_type.cc
-    5gs_mobile_identity.cc
-    5gs_network_feature_support.cc
-    5gs_registration_result.cc
-    5gs_registration_type.cc
-    5gs_tracking_area_identity.cc
-    5gs_update_type.cc
+set(MM_SRCS nrmm_capability.cc
+        nrmm_cause.cc
+        nrmm_status.cc
+        nr_identity_type.cc
+        nr_mobile_identity.cc
+        nr_network_feature_support.cc
+        nr_registration_result.cc
+        nr_registration_type.cc
+        nr_tracking_area_identity.cc
+        nr_update_type.cc
     abba.cc
     access_type.cc
     additional_5g_security_infomation.cc

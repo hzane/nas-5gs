@@ -6,6 +6,12 @@
 using namespace mm;
 using namespace nas;
 
+inline const element_meta configure_update_indication = {
+    0xD0,
+    "Configuration update indication",
+    mm::dissect_configuration_update_indication,
+};
+
 /* 8.2.19 Configuration update command */
 int mm::dissect_configuration_update_command(dissector d, context* ctx) {
     use_context uc(ctx, "configuration-update-command", d, 3);
@@ -25,7 +31,6 @@ int mm::dissect_configuration_update_command(dissector d, context* ctx) {
     d.step(consumed);
 
     /*15    Allowed NSSAI    NSSAI     9.11.3.37    O    TLV    4-74*/
-    // ELEM_OPT_TLV(0x15, , DE_NAS_5GS_MM_NSSAI, " - Allowed NSSAI");
     consumed = dissect_opt_tlv( &allowed_nssai, d, ctx);
     d.step(consumed);
 
@@ -34,22 +39,18 @@ int mm::dissect_configuration_update_command(dissector d, context* ctx) {
     d.step(consumed);
 
     /*43  Full name for network   Network name    9.11.3.35   O   TLV    3-n*/
-    // ELEM_OPT_TLV(0x43, , DE_NETWORK_NAME, " - Full name for network");
     consumed = dissect_opt_tlv( &full_name_network, d, ctx);
     d.step(consumed);
 
     /*45    Short name for network    Network name     9.11.3.35    O    TLV    3-n*/
-    // ELEM_OPT_TLV(0x45, , DE_NETWORK_NAME, " - Short Name");
     consumed = dissect_opt_tlv( &short_name_network, d, ctx);
     d.step(consumed);
 
     /*46    Local time zone    Time zone     9.11.3.52    O    TV    2*/
-    // ELEM_OPT_TV(0x46, , DE_TIME_ZONE, " - Local");
     consumed = dissect_opt_tv( &local_timezone, d, ctx);
     d.step(consumed);
 
     /*47  Universal time and local time zone  Time zone and time  9.11.3.53  O TV  8*/
-    /*ELEM_OPT_TV(0x47,,DE_TIME_ZONE_TIME," - Universal Time and Local Time Zone");*/
     consumed = dissect_opt_tv( &timezone_time, d, ctx);
     d.step(consumed);
 
@@ -117,4 +118,3 @@ const tag_field hf_number_of_spare_bits = {
         {0, nullptr},
     },
 };
-

@@ -12,5 +12,7 @@ int dissect_serving_plmn_rate_control(dissector d, context*ctx) {
     const use_context uc(ctx, "serving-plmn-rate-control", d, -1);
 
     (void) d.add_item(&hf_serving_plmn_rate_control);
+    d.step(2);
+
     return 2;
 }

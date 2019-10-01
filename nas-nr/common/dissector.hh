@@ -105,6 +105,8 @@ struct element_field {
     octet_field*  octet   = nullptr;
 };
 
+using octet_t = std::vector<uint8_t>;
+
 struct dissector {
     inline static string none = string();
 
@@ -140,6 +142,7 @@ struct dissector {
     node_t add_expert(int len, const string& name) const;
     void   add_bits(const bool_field* metas[], bool step = false);
     auto   ptr() const -> const uint8_t*;
+    auto sub(int len)const->octet_t;
     auto   safe_length(int len) const -> int;
     auto   slice(int len) const -> dissector;
     auto   uint8(bool step = false) -> uint8_t;

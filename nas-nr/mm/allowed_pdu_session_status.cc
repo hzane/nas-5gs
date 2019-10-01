@@ -4,23 +4,27 @@
 
 using namespace mm;
 
-inline const psi_field hf_psi={
+static const char * notallow =
+    "user-plane resources of corresponding PDU session "
+    "is not allowed to be re-established over 3GPP access"             ;
+static const char *allowed =
+    "user-plane resources of corresponding PDU session "
+    "can be re-established over 3GPP access";
+
+static const psi_field hf_psi = {
     "PSI",
     0,
     0,
-    "user-plane resources of corresponding PDU session "
-    "is not allowed to be re-established over 3GPP access",
-    "user-plane resources of corresponding PDU session "
-    "can be re-established over 3GPP access",
+    notallow,
+    allowed,
 };
-inline const psi_field hf_psi_b={
+
+static const psi_field hf_psi_b={
     "PSI",
     0,
     8,
-    "user-plane resources of corresponding PDU session "
-    "is not allowed to be re-established over 3GPP access",
-    "user-plane resources of corresponding PDU session "
-    "can be re-established over 3GPP access",
+    notallow,
+    allowed,
 };
 
 /*  9.11.3.13    Allowed PDU session status */

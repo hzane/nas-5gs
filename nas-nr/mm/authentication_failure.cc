@@ -9,13 +9,12 @@ int mm::dissect_authentication_failure(dissector d, context* ctx) {
     up_link(d.packet);
 
     /* 5GMM cause   5GMM cause     9.11.3.2  M   V   1 */
-    auto consumed = dissect_nrmm_cause(d, ctx);
-    d.step(consumed);
+    dissect_nrmm_cause(d, ctx);
+    d.step(1);
 
     /* 30    Authentication failure parameter   9.11.3.14    O    TLV    16 */
-    consumed = dissect_opt_tlv( &authentication_failure_parameter, d, ctx);
+    auto consumed = dissect_opt_tlv( &authentication_failure_parameter, d, ctx);
     d.step(consumed);
 
     return uc.length;
 }
-

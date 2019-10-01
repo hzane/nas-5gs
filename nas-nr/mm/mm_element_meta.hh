@@ -40,9 +40,8 @@ extern const element_meta n3gpp_nw_provided_policies;
 extern const element_meta registration_result;
 extern const element_meta authentication_failure_parameter;
 extern const element_meta authentication_parameter_rand;
-extern const element_meta authentication_parameter_autn;
+extern const element_meta authentication_parameter_autn_set;
 extern const element_meta authentication_response_parameter;
-extern const element_meta configure_update_indication;
 extern const element_meta daylight_saving_time;
 extern const element_meta full_name_network;
 extern const element_meta short_name_network;
@@ -138,7 +137,7 @@ inline const element_meta imeisv_request = {
 inline const element_meta additional_security_info = {
     0x36,
     "Additional 5G security information",
-    mm::dissect_additional_security_info,
+    mm::dissect_additional_5g_security_info,
 };
 
 inline const element_meta replayed_s1_ue_security_capability = {
@@ -158,10 +157,11 @@ inline const element_meta request_type = {
 inline const element_meta rejected_nssai = {
     0x11,
     "Rejected NSSAI",
-    mm::dissect_rejected_nssai,
+    mm::dissect_nssai,
 };
 
 // EAP message  9.11.2.2
+// IETF RFC 3748
 inline const element_meta eap_message = {
     0x78,
     "EAP message",
@@ -225,7 +225,7 @@ inline const element_meta operator_defined_access_category_defs = {
 inline const element_meta configured_nssai = {
     0x31,
     "Configured NSSAI",
-    mm::dissect_configured_nssai,
+    mm::dissect_nssai,
 };
 
 // Non-3GPP NW policies Non-3GPP NW provided policies 9.11.3.58
@@ -309,11 +309,6 @@ inline const element_meta daylight_saving_time = {
 
 };
 
-inline const element_meta configure_update_indication = {
-    0xD0,
-    "Configuration update indication",
-    mm::dissect_configuration_update_indication,
-};
 
 inline const element_meta sms_indication = {
     0xF0,
@@ -332,7 +327,7 @@ inline const element_meta authentication_response_parameter = {
 inline const element_meta authentication_parameter_rand = {
     0x21,
     "Authentication parameter RAND - 5G authentication challenge",
-    mm::dissect_authentication_parameter_rand,
+    mm::dissect_authentication_parameter_rand_set,
 };
 
 inline const element_meta authentication_parameter_autn = {
@@ -354,6 +349,8 @@ inline const element_meta allowed_pdu_session_status = {
     mm::dissect_allowed_pdu_session_status,
 };
 
+// 9.11.3.10 TS 24.501
+// TS 33.501
 inline const element_meta abba = {
     0x38,
     "ABBA",
@@ -451,7 +448,7 @@ inline const element_meta network_feature_support = {
 inline const element_meta guti_mobile_id = {
     0x77,
     "5GS mobile identity - 5G-GUTI",
-    mm::dissect_mobile_id,
+    mm::dissect_mobile_id_5gguti,
 };
 
 // 9.11.3.2	5GMM cause
@@ -480,7 +477,7 @@ inline const element_meta mobile_id = {
 inline const element_meta allowed_nssai = {
     0x15,
     "Allowed NSSAI",
-    mm::dissect_allowed_nssai,
+    mm::dissect_nssai,
 };
 
 // 9.11.3.9
@@ -503,7 +500,6 @@ inline const element_meta pdu_session_status = {
     "PDU session status",
     mm::dissect_pdu_session_status,
 };
-
 
 
 // NAS message container 9.11.3.33

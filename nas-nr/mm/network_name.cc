@@ -55,9 +55,10 @@ const sms_field hf_text_string = {
 int mm::dissect_full_name_network(dissector d, context* ctx) {
     const use_context uc(ctx, "network-name", d, 0);
 
-    const auto oct = d.tvb->uint8(d.offset);
+    const auto oct         = d.uint8();
+    const auto code_scheme = umask(oct, 0x70u);
+
     (void) d.add_item( &hf_extension);
-    const auto code_scheme = (oct & 0x70u) >> 4u;
     (void) d.add_item( &hf_coding_scheme);
     (void) d.add_item( &hf_add_ci);
 
@@ -73,11 +74,13 @@ int mm::dissect_full_name_network(dissector d, context* ctx) {
         d.step(d.length);
         // 3GPP TS 23.038 7 bits        alphabet
     }
-    if (code_scheme == 1) {
+
+    if (code_scheme == 1) { // UCS2
         (void) d.add_item(&hf_text_string, d.length);
         d.step(d.length);
     }
-    if (code_scheme != 0 && code_scheme !=1 ) {
+
+    if ( code_scheme != 0 && code_scheme !=1 ) {
         diag("invalid code scheme %d\n", code_scheme);
     }
 

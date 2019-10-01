@@ -35,12 +35,10 @@ int mm::dissect_registration_accept(dissector d, context* ctx) {
     d.step(consumed);
 
     /*11    Rejected NSSAI    Rejected NSSAI     9.11.3.46    O    TLV    4-42*/
-    // ELEM_OPT_TLV(0x11, , DE_NAS_5GS_MM_REJ_NSSAI, NULL);
     consumed = dissect_opt_tlv( &rejected_nssai, d, ctx);
     d.step(consumed);
 
     /*31    Configured NSSAI    NSSAI 9.11.3.37    O    TLV    4-146 */
-    // ELEM_OPT_TLV(0x31, , DE_NAS_5GS_MM_NSSAI, " - Configured NSSAI");
     consumed = dissect_opt_tlv( &configured_nssai, d, ctx);
     d.step(consumed);
 
@@ -50,7 +48,6 @@ int mm::dissect_registration_accept(dissector d, context* ctx) {
     d.step(consumed);
 
     /*50    PDU session status   9.10.3.44    O    TLV    */
-    // ELEM_OPT_TLV(0x50, , DE_NAS_5GS_MM_PDU_SES_STATUS, NULL);
     consumed = dissect_opt_tlv( &pdu_session_status, d, ctx);
     d.step(consumed);
 
@@ -58,8 +55,7 @@ int mm::dissect_registration_accept(dissector d, context* ctx) {
     consumed = dissect_opt_tlv( &pdu_session_reactivation_result, d, ctx);
     d.step(consumed);
 
-    /*72    PDU session reactivation result error cause 9.11.3.43  O TLV-E  5-515*/
-    // ELEM_OPT_TLV_E(0x72, , DE_NAS_5GS_MM_PDU_SES_REACT_RES_ERR_C, NULL);
+    /* 72    PDU session reactivation result error cause 9.11.3.43  O TLV-E  5-515*/
     consumed = dissect_opt_tlv_e( &pdu_session_reactive_result_error_cause, d, ctx);
     d.step(consumed);
 
@@ -283,4 +279,3 @@ int dissect_operator_defined_acd(dissector d, context* ctx) {
     }
     return uc.length;
 }
-

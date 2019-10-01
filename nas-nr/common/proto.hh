@@ -17,10 +17,6 @@ struct node {
 
     void   set_length(int len);
     void   set_item(int start, int len, const string& text);
-#if 0
-    void   set_item(int len, const field_meta* field);
-    node_t add_item(int start, int len, const field_meta* field);
-#endif
     node_t add_item(int start, int len, const string& name, const string& text = none);
     node_t add_expert(int start, int len, const string&text);
 

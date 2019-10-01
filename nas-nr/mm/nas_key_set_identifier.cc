@@ -14,7 +14,7 @@ const bool_field ksi_tsc_flag = {
 
 /* NAS key set identifier (octet 1) Bits 3  2   1 */
 
-const tag_field hf_eps_nas_ksi = { // NOLINT
+const tag_field hf_nas_ksi = {
     "NAS key set identifier",
     0x07,
     (const v_string[]){
@@ -35,7 +35,7 @@ int mm::dissect_nas_ksi(dissector d, context* ctx) {
 
     /* NAS key set identifier IEI   TSC     NAS key set identifier */
     d.add_item(&ksi_tsc_flag);
-    d.add_item(&hf_eps_nas_ksi);
+    d.add_item(&hf_nas_ksi);
 
     d.step(1);
 

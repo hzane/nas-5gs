@@ -14,8 +14,8 @@ extern const uint8_field hf_sm_packet_filter_id ;
 
 /*The description and valid combinations of packet filter component type identifiers in a
  * packet filter are defined in 3GPP TS 23.501 [8].*/
-int dissect_packet_filter(dissector d, int pf_type, context* ctx) {
-    const use_context uc(ctx, "packet-filter", d, -1);
+int dissect_packet_filter_component(dissector d, int pf_type, context* ctx) {
+    const use_context uc(ctx, "packet-filter-component", d, -1);
 
     auto len = d.length;
     switch (pf_type) {
@@ -102,10 +102,8 @@ extern const tag_field hf_sm_packet_filter_type;
 // Figure 9.11.4.13.4 Packet filter list when the rule operation is "create new QoS rule",
 // or "modify existing QoS rule and add packet filters" or "modify existing QoS rule and
 // replace all packet filters"
-int dissect_packet_filters(dissector d, int rop, context* ctx) {
-    (void) rop;
-
-    const use_context uc(ctx, "packet-filters", d, -1);
+int dissect_packet_filter(dissector d, context* ctx) {
+    const use_context uc(ctx, "packet-filter", d, -1);
 
     /* "create new QoS rule", or "modify existing QoS rule and add packet
      * filters" or "modify existing QoS rule and replace packet filters"
@@ -120,9 +118,6 @@ int dissect_packet_filters(dissector d, int rop, context* ctx) {
     // (void) d.add_item(1, &hf_sm_pf_len);
     d.step(1);
 
-    d.step(pfclen);
-    pfclen = 0; // skip dissect packet filter contents
-    // TODO: detail
     auto k = 1;
     /* Packet filter contents */
     while (pfclen > 0) {
@@ -139,7 +134,7 @@ int dissect_packet_filters(dissector d, int rop, context* ctx) {
         d.step(1);
         /* Packet filter length contains the length of component type and
          * content */
-        const auto consumed = dissect_packet_filter(d.slice(pfclen - 1), pf_type, ctx);
+        const auto consumed = dissect_packet_filter_component(d.slice(pfclen - 1), pf_type, ctx);
         d.step(consumed);
         subtree->set_length(d.offset - start);
 
@@ -210,6 +205,54 @@ const uint8_field hf_sm_qos_rule_precedence = {
 
 extern const uint8_field hf_sm_qos_flow_identity;
 
+int dissect_qos_rule(dissector d, context* ctx, uint8_t) {
+    const use_context uc(ctx, "qos-rule", d, 0);
+
+    /* Rule operation code    DQR bit    Number of packet filters */
+    const auto rop       = umask(d.uint8(), 0xe0);
+    auto n_filters            = d.uint8() & 0x0fu;
+
+    d.add_item(&hf_sm_rule_operation_code);
+    d.add_item(&hf_default_qos_rule);
+    d.add_item(&hf_sm_packet_filters);
+    d.step(1);
+
+    if (rop == 0 || rop == 7) { // reserved
+        return uc.length;
+    }
+    /* Packet filter list */
+    for (auto j = 1; j <= n_filters; j++) {
+        const auto st2 = d.add_item(-1, formats("Packet filter %u", j));
+        use_tree   ut2(d, st2);
+        auto       start = d.offset;
+        if (rop == 5) {
+            /* modify existing QoS rule and delete packet filters */
+            /* 0    0    0    0    Packet filter identifier x*/
+            (void) d.add_item(&hf_sm_packet_filter_id);
+            d.step(1);
+        } else {
+            const auto consumed = dissect_packet_filter(d, rop, ctx);
+            d.step(consumed);
+        }
+        st2->set_length(d.offset - start);
+    }
+    /* QoS rule precedence (octet z+1)
+     * For the "delete existing QoS rule" operation, the QoS rule precedence value
+     * field shall not be included. For the "create new QoS rule" operation, the
+     * QoS rule precedence value field shall be included.
+     */
+    if (d.length > 0) {
+        (void) d.add_item(&hf_sm_qos_rule_precedence);
+        d.step(1);
+
+        (void) d.add_item(&hf_sm_qos_flow_identity);
+        (void) d.add_item(&hf_segregation);
+        d.step(1);
+    }
+    if (rop != 2) { /* Delete existing QoS rule */
+    }
+}
+
 // Authorized QoS rules QoS rules 9.11.4.13
 int sm::dissect_qos_rules(dissector d, context* ctx) {
     const use_context uc(ctx, "authorized-qos-rules", d);
@@ -217,82 +260,16 @@ int sm::dissect_qos_rules(dissector d, context* ctx) {
     auto i = 1;
     while (d.length > 0) {
         /* QoS Rule */
-        auto     subtree = d.add_item(-1, formats("QoS rule %u", i++));
+        /* QoS rule identifier Octet 4*/
+        auto     ruleid   = d.uint8(true); // rule id
+        /* Length of QoS rule Octet 5 - 6*/
+        auto l        = d.uint16(true);
+
+        auto     subtree  = d.add_item(l + 3, formats("QoS rule %u", i++));
         use_tree ut(d, subtree);
 
-        /* QoS rule identifier Octet 4*/
-        (void) d.add_item(&hf_sm_qos_rule_id);
-        d.step(1);
-
-        /* Length of QoS rule Octet 5 - 6*/
-        const auto length = static_cast< int >(d.uint16());
-        // (void) d.add_item(2, &hf_sm_length);
-        d.step(2);
-
-        subtree->set_length(length + 3);
-
-        /* Rule operation code    DQR bit    Number of packet filters */
-        auto n_filters = d.uint8();
-        const auto rop       = n_filters >> 5u;
-        n_filters            = n_filters & 0x0fu;
-        d.add_item(&hf_sm_rule_operation_code);
-            d.add_item(&hf_default_qos_rule);
-            d.add_item(&hf_sm_packet_filters);
-        d.step(1);
-
-        /* For the "delete existing QoS rule" operation and for the "modify existing QoS
-         * rule without modifying packet filters" operation, the number of packet filters
-         * shall be coded as 0.
-         */
-        if (rop == 0 || rop == 7) {
-            // reserved
-            ++i;
-            d.step(length - 1);
-            continue;
-        }
-        // 6 Modify existing QoS rule without modifying packet filters
-        if (rop == 2 || rop == 6) { // 2 Delete existing QoS rule
-            if (n_filters != 0) {
-                diag("the number of packet filters shall be coded as 0\n");
-                d.step(length - 1);
-                ++i;
-                continue;
-            }
-        }
-        /* Packet filter list */
-        for (auto j = 1; j <= n_filters; j++) {
-            const auto     st2 = d.add_item(-1, formats("Packet filter %u", j));
-            use_tree ut2(d, st2);
-            auto           start = d.offset;
-            if (rop == 5) {
-                /* modify existing QoS rule and delete packet filters */
-                /* 0    0    0    0    Packet filter identifier x*/
-                (void) d.add_item( &hf_sm_packet_filter_id);
-                d.step(1);
-            } else {
-                const auto consumed = dissect_packet_filters(d, rop, ctx);
-                d.step(consumed);
-            }
-            st2->set_length(d.offset - start);
-        }
-        /* QoS rule precedence (octet z+1)
-         * For the "delete existing QoS rule" operation, the QoS rule precedence value
-         * field shall not be included. For the "create new QoS rule" operation, the
-         * QoS rule precedence value field shall be included.
-         */
-        if (rop != 2) { /* Delete existing QoS rule */
-            (void) d.add_item(&hf_sm_qos_rule_precedence);
-            d.step(1);
-        }
-        /* QoS flow identifier (QFI) (bits 6 to 1 of octet z+2)
-         * For the "delete existing QoS rule" operation, the QoS flow identifier value
-         * field shall not be included. For the "create new QoS rule" operation, the
-         * QoS flow identifier value field shall be included.
-         */
-        /* Segregation bit (bit 7 of octet z+2) */
-        (void) d.add_item(&hf_sm_qos_flow_identity);
-        (void) d.add_item(&hf_segregation);
-        d.step(1);
+        auto consumed = dissect_qos_rule(d.slice(l), ctx, ruleid);
+        d.step(consumed);
 
     } // while(d.offset)
 
@@ -303,4 +280,3 @@ int sm::dissect_qos_rules(dissector d, context* ctx) {
 int sm::dissect_authorized_qos_rules(dissector d, context* ctx) {
     return dissect_qos_rules(std::move(d), ctx);
 }
-

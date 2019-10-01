@@ -2,8 +2,6 @@
 #include "../common/dissect_mm_msg.hh"
 #include "../common/use_context.hh"
 
-using namespace nas;
-
 /* 8.2.5 Authentication reject */
 int mm::dissect_authentication_reject(dissector d, context* ctx) {
     const use_context uc(ctx, "authentication-reject", d, 0);
@@ -14,5 +12,3 @@ int mm::dissect_authentication_reject(dissector d, context* ctx) {
 
     return uc.length;
 }
-
-

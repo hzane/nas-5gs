@@ -3,7 +3,7 @@
 
 namespace mm {
 int dissect_authentication_failure_parameter(dissector d, context* ctx);
-int dissect_authentication_parameter_rand(dissector d, context* ctx);
+int dissect_authentication_parameter_rand_set(dissector d, context* ctx);
 int dissect_authentication_parameter_autn(dissector d, context* ctx);
 int dissect_authentication_response_parameter(dissector d, context* ctx);
 int dissect_deregistration_type(dissector d, context* ctx);
@@ -21,7 +21,7 @@ int dissect_security_algo(dissector d, context* ctx);
 int dissect_replayed_ue_security_capability(dissector d, context* ctx);
 int dissect_imeisv_request(dissector d, context* ctx);
 int dissect_selected_eps_security_algo(dissector d, context* ctx);
-int dissect_additional_security_info(dissector d, context* ctx);
+int dissect_additional_5g_security_info(dissector d, context* ctx);
 int dissect_reported_s1_ue_security_capability(dissector d, context* ctx);
 int dissect_service_type(dissector d, context* ctx);
 int dissect_uplink_data_status(dissector d, context* ctx);
@@ -80,7 +80,7 @@ int dissect_notification_response(dissector d, context* ctx);
 int dissect_ul_nas_transport(dissector d, context* ctx);
 int dissect_dl_nas_transparent(dissector d, context* ctx);
 
-int dissect_allowed_nssai(dissector d, context* ctx);
+int dissect_nssai(dissector d, context* ctx);
 int dissect_tracking_area_id_list(dissector d, context* ctx);
 
 //  9.11.3.46    Rejected NSSAI

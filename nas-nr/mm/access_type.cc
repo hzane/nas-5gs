@@ -20,8 +20,7 @@ extern const tag_field hf_access_type = {
 int mm::dissect_access_type(dissector d, context* ctx) {
     const use_context uc(ctx, "access-type", d, -1);
 
-    (void) d.add_item( &hf_access_type);
-    d.step(1);
+    (void) d.add_item( &hf_access_type, true);
 
     return 1;
 }

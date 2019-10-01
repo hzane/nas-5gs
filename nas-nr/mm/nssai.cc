@@ -33,8 +33,8 @@ int mm::dissect_configured_nssai(dissector d, context* ctx) {
  * S-NSSAI value is coded as the length and value part of S-NSSAI information element
 as specified in subclause 9.11.2.8 starting with the second octet.
  */
-int mm::dissect_allowed_nssai(dissector d, context* ctx) {
-    const use_context uc(ctx, "allowed-nssai", d, 0);
+int mm::dissect_nssai(dissector d, context* ctx) {
+    const use_context uc(ctx, "nssai", d, 0);
 
     auto i = 1;
     while (d.length > 0) {
@@ -42,7 +42,6 @@ int mm::dissect_allowed_nssai(dissector d, context* ctx) {
         use_tree   ut(d, subtree);
 
         const auto l    = d.uint8();
-        // auto       item = d.add_item(1, &hf_mm_length);
         d.step(1);
 
         const auto consumed = dissect_s_nssai(d.slice(l), ctx);
