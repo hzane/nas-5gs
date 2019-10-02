@@ -160,17 +160,17 @@ int dissect_nmm_message(dissector d, context* ctx, nmm_message_t* v) {
     return 0;
 }
 
-int dissect_nmm_header(dissector d, context* ctx, nmm_header_t* ret) {
-    ret->epd                  = d.uint8();
-    ret->security_header_type = d.uint8() & 0x0fu;
-    ret->message_type         = d.uint8();
-    return 3;
-}
-
 int dissect_nsm_header(dissector d, context* ctx, nsm_header_t* ret) {
     ret->epd            = d.uint8();
     ret->pdu_session_id = d.uint8();
     ret->pti            = d.uint8();
     ret->message_type   = d.uint8();
     return 4;
+}
+
+int dissect_nmm_header(dissector d, context* ctx, nmm_header_t* ret) {
+    ret->epd                  = d.uint8();
+    ret->security_header_type = d.uint8() & 0x0fu;
+    ret->message_type         = d.uint8();
+    return 3;
 }

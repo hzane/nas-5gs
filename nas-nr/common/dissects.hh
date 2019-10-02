@@ -1,11 +1,8 @@
 #include "dissector.hh"
+#include "definitions.hh"
+
 struct context;
 struct dissector;
-
-struct nmm_header_t;
-struct nsm_header_t;
-
-struct authentication_request_t;
 
 int dissect_nmm_header(dissector d, context* ctx, nmm_header_t* ret);
 int dissect_nsm_header(dissector d, context* ctx, nsm_header_t* ret);

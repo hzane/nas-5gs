@@ -21,8 +21,7 @@ int dissect_authentication_request(dissector                 d,
     auto c= dissect_lv(d, ctx, &ret->abba, dissect_octet);
     d.step(c);
 
-    d.step(1);
-    c = dissect_octet(d.slice(16), ctx, ret->rand);
+    c = dissect_t_octet(d.slice(17), ctx, 0xffu, ret->rand);
     d.step(c);
 
     return uc.length;

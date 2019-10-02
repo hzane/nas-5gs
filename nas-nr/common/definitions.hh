@@ -58,10 +58,16 @@ struct nsm_header_t {
     uint8_t message_type;   /* 9.7*/
 };
 
+struct dissector;
+struct result_t {
+    int consumed = 0;
+    int step(dissector& d) const;
+};
+
 // Extended protocol discriminator
 namespace epd {
-inline const uint8_t nmm = 0x7eu;
-inline const uint8_t nsm = 0x2eu;
+    inline const uint8_t nmm = 0x7eu;
+    inline const uint8_t nsm = 0x2eu;
 } // namespace epd
 
 struct nas_message_t;
