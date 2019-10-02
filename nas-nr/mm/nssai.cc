@@ -3,7 +3,7 @@
 
 /* 9.11.3.37    NSSAI */
 int dissect_configured_nssai(dissector d, context* ctx) {
-    const use_context uc(ctx, "configured-nssai", d, 0);
+    const use_context uc(&d, ctx, "configured-nssai", 0);
 
     return uc.length;
 }
@@ -13,13 +13,13 @@ int dissect_configured_nssai(dissector d, context* ctx) {
 as specified in subclause 9.11.2.8 starting with the second octet.
  */
 int dissect_allowed_nssai(dissector d, context* ctx) {
-    const use_context uc(ctx, "allowed-nssai", d, 0);
+    const use_context uc(&d, ctx, "allowed-nssai", 0);
     return uc.length;
 }
 
 /* 9.11.3.37    NSSAI*/
 int dissect_requested_nssai(dissector d, context* ctx) {
-    const use_context uc(ctx, "requested-nssai", d, 0);
+    const use_context uc(&d, ctx, "requested-nssai", 0);
 
     return uc.length;
 }

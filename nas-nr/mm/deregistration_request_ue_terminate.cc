@@ -4,7 +4,7 @@
 
 /*  8.2.14 De-registration request (UE terminated de-registration) */
 int dissect_deregistration_request_ue_terminate(dissector d, context* ctx) {
-    const use_context uc(ctx, "de-registration-request-ue-term", d, 0);
+    const use_context uc(&d, ctx, "de-registration-request-ue-term", 0);
     // network to UE
     down_link(d.pinfo);
 

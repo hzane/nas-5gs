@@ -3,7 +3,7 @@
 
 // no body
 int dissect_deregistration_accept_ue_terminate(dissector d, context* ctx) {
-    const use_context uc(ctx, "deregistration-accept-ue-terminated", d, -1);
+    const use_context uc(&d, ctx, "deregistration-accept-ue-terminated", -1);
     // UE to network
     up_link(d.pinfo);
 

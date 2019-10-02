@@ -3,7 +3,7 @@
 
 /*  9.11.4.3 Always-on PDU session indication */
 int dissect_always_on_pdu_session_indication(dissector d, context* ctx) {
-    const use_context uc(ctx, "always-on-pdu-session-indication", d, -1);
+    const use_context uc(&d, ctx, "always-on-pdu-session-indication",-1);
 
 
     return 1;

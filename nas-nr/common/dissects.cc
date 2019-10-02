@@ -27,8 +27,8 @@ int dissect_nas_message(dissector d, context* ctx, nas_message_t* v) {
         auto consumed = dissect_nas_plain(d, ctx, v->plain.get());
         return consumed;
     }
-    v->sec = std::make_shared<nas_message_protected_t>();
-    return dissect_nas_protected(d, ctx, v->sec.get());
+    v->protect = std::make_shared<nas_message_protected_t>();
+    return dissect_nas_protected(d, ctx, v->protect.get());
 }
 
 int dissect_nas_protected(dissector d, context* ctx, nas_message_protected_t* v) {
@@ -65,7 +65,7 @@ int dissect_nas_plain(dissector d, context* ctx, nas_message_plain_t* v) {
 
     if (epd == epd::nmm) {
         v->nmm = std::make_shared<nmm_message_t>();
-        consumed = dissect_nmm(d, ctx, v->nmm.get());
+        consumed = dissect_nmm_message(d, ctx, v->nmm.get());
     } else if (epd == epd::nsm) {
         v->nsm = std::make_shared<nsm_message_t>();
         consumed = dissect_nsm_message(d, ctx, v->nsm.get());
@@ -86,8 +86,8 @@ struct message_desc_t {
 
 #define DISSECT(mt, X)                              \
     case mt:                                        \
-        v->##X = std::make_shared< X##_t >({});     \
-        (void) dissect_##X(d, ctx, (v->##X).get()); \
+        v-> X = std::make_shared< X##_t >();     \
+        (void) dissect_##X(d, ctx, (v-> X).get()); \
         break;
 
 int dissect_nsm_message(dissector d, context* ctx, nsm_message_t* v) {
@@ -96,6 +96,9 @@ int dissect_nsm_message(dissector d, context* ctx, nsm_message_t* v) {
     dissect_nsm_header(d, ctx, &v->header);
 
     switch (v->header.message_type) {
+    case 0xc4:
+        v->pdu_session_establishment_request = std::make_shared<pdu_session_establishment_request_t>();
+        break;
         DISSECT(0xc1u, pdu_session_establishment_request);
         DISSECT(0xc2u, pdu_session_establishment_accept);
         DISSECT(0xc3u, pdu_session_establishment_reject);

@@ -3,7 +3,7 @@
 
 /* 8.2.19 Configuration update command */
 int dissect_configuration_update_command(dissector d, context* ctx) {
-    use_context uc(ctx, "configuration-update-command", d, 3);
+    use_context uc(&d, ctx, "configuration-update-command", 3);
     // network to UE
     down_link(d.pinfo);
 

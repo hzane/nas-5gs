@@ -2,7 +2,7 @@
 #include <cstdint>
 
 namespace direction {
-inline extern const int unknown unused = 0;
+inline extern const int unknown = 0;
 inline extern const int         ul     = 1;
 inline extern const int         dl     = 2;
 } // namespace direction

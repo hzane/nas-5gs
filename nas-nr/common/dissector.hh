@@ -22,6 +22,9 @@ struct dissector {
     auto octet(uint8_t* to, int len, bool step = true) -> int;
 };
 
+void up_link(packet*);
+void down_link(packet*);
+
 struct context;
 
 template < typename element_t >

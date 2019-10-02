@@ -3,6 +3,6 @@
 
 /* *   9.11.3.46    Rejected NSSAI page.389 */
 int dissect_rejected_nssai(dissector d, context* ctx) {
-    const use_context uc(ctx, "rejected-nssai", d, 0);
+    const use_context uc(&d, ctx, "rejected-nssai", 0);
     return uc.length;
 }

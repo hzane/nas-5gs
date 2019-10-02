@@ -1,5 +1,9 @@
 #include "use_context.hh"
 
+#include "context.hh"
+#include "core.hh"
+#include "definitions.hh"
+
 use_context::use_context(dissector const* d,
                          context*         ctx,
                          const char*      path,

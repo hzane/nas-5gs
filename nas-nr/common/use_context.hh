@@ -1,4 +1,5 @@
 #pragma once
+#include "context.hh"
 
 struct dissector;
 struct context;

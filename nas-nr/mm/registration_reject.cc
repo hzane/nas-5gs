@@ -3,7 +3,7 @@
 
 /*  8.2.9 Registration reject */
 int dissect_registration_reject(dissector d, context* ctx) {
-    const use_context uc(ctx, "registration-reject", d, 0);
+    const use_context uc(&d, ctx, "registration-reject", 0);
     //network to UE
     down_link(d.pinfo);
 

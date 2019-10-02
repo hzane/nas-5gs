@@ -3,7 +3,7 @@
 
 /* 8.3.6	PDU session authentication result */
 int dissect_pdu_session_authentication_result(dissector d, context* ctx) {
-    const use_context uc(ctx, "pdu-session-authentication-result", d, 0);
+    const use_context uc(&d, ctx, "pdu-session-authentication-result", 0);
 
     /* Direction: network to UE */
     down_link(d.pinfo);

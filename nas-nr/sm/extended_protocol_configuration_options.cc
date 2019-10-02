@@ -3,7 +3,7 @@
 
 // Extended protocol configuration options  9.11.4.6
 int dissect_extended_protocol_configuration_options(dissector d, context* ctx) {
-    const use_context uc(ctx, "extended-protocol-conf-options", d, -1);
+    const use_context uc(&d, ctx, "extended-protocol-conf-options", -1);
 
     // See subclause 10.5.6.3A in 3GPP TS 24.008
 

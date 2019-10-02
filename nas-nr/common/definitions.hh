@@ -23,6 +23,7 @@ using octet_d = uint8_t[13];
 using octet_e = uint8_t[14];
 using octet_g = uint8_t[16];
 using octet_h = uint8_t[17];
+using octet_c                                   = uint8_t[12];
 
 using uint24_t = uint32_t;
 using uint48_t = uint64_t;
@@ -59,8 +60,8 @@ struct nsm_header_t {
 
 // Extended protocol discriminator
 namespace epd {
-inline const uint8_t nmm = 0x7eu; // TGPP_PD_5GMM
-inline const uint8_t nsm = 0x2eu; // TGPP_PD_5GSM
+inline const uint8_t nmm = 0x7eu;
+inline const uint8_t nsm = 0x2eu;
 } // namespace epd
 
 struct nas_message_t;
@@ -87,6 +88,10 @@ struct deregistration_request_t;
 struct deregistration_accept_t;
 struct deregistration_request_t;
 struct deregistration_accept_t;
+struct deregistration_request_ue_orig_t;
+struct deregistration_request_ue_term_t;
+struct deregistration_accept_ue_orig_t;
+struct deregistration_accept_ue_term_t;
 
 struct service_request_t;
 struct service_accept_t;
@@ -125,8 +130,10 @@ struct nmm_message_t {
     std::shared_ptr< dl_nas_transport_t >              dl_nas_transport;
     std::shared_ptr< deregistration_request_t >        deregistration_request;
     std::shared_ptr< deregistration_accept_t >         deregistration_accept;
-    std::shared_ptr< deregistration_request_t >        deregistration_request;
-    std::shared_ptr< deregistration_accept_t >         deregistration_accept;
+    std::shared_ptr< deregistration_request_ue_orig_t >        deregistration_request_ue_orig;
+    std::shared_ptr< deregistration_accept_ue_orig_t >         deregistration_accept_ue_orig;
+    std::shared_ptr< deregistration_request_ue_term_t >        deregistration_request_ue_term;
+    std::shared_ptr< deregistration_accept_ue_term_t >         deregistration_accept_ue_term;
     std::shared_ptr< service_request_t >               service_request;
     std::shared_ptr< service_accept_t >                service_accept;
     std::shared_ptr< service_reject_t >                service_reject;
@@ -166,36 +173,35 @@ struct pdu_session_release_complete_t;
 struct nsm_status_t;
 
 struct nsm_message_t {
-    using std::shared_ptr;
     nsm_header_t header;
 
-    shared_ptr< pdu_session_establishment_request_t > pdu_session_establishment_request;
-    shared_ptr< pdu_session_establishment_accept_t >  pdu_session_establishment_accept;
-    shared_ptr< pdu_session_establishment_reject_t >  pdu_session_establishment_reject;
+    std::shared_ptr< pdu_session_establishment_request_t > pdu_session_establishment_request;
+    std::shared_ptr< pdu_session_establishment_accept_t >  pdu_session_establishment_accept;
+    std::shared_ptr< pdu_session_establishment_reject_t >  pdu_session_establishment_reject;
 
-    shared_ptr< pdu_session_authentication_command_t > pdu_session_authentication_command;
-    shared_ptr< pdu_session_authentication_complete_t >
+    std::shared_ptr< pdu_session_authentication_command_t > pdu_session_authentication_command;
+    std::shared_ptr< pdu_session_authentication_complete_t >
                                                       pdu_session_authentication_complete;
-    shared_ptr< pdu_session_authentication_result_t > pdu_session_authentication_result;
+    std::shared_ptr< pdu_session_authentication_result_t > pdu_session_authentication_result;
 
-    shared_ptr< pdu_session_modification_request_t >  pdu_session_modification_request;
-    shared_ptr< pdu_session_modification_reject_t >   pdu_session_modification_reject;
-    shared_ptr< pdu_session_modification_command_t >  pdu_session_modification_command;
-    shared_ptr< pdu_session_modification_complete_t > pdu_session_modification_complete;
-    shared_ptr< pdu_session_modification_command_reject_t >
+    std::shared_ptr< pdu_session_modification_request_t >  pdu_session_modification_request;
+    std::shared_ptr< pdu_session_modification_reject_t >   pdu_session_modification_reject;
+    std::shared_ptr< pdu_session_modification_command_t >  pdu_session_modification_command;
+    std::shared_ptr< pdu_session_modification_complete_t > pdu_session_modification_complete;
+    std::shared_ptr< pdu_session_modification_command_reject_t >
         pdu_session_modification_command_reject;
 
-    shared_ptr< pdu_session_release_request_t >  pdu_session_release_request;
-    shared_ptr< pdu_session_release_reject_t >   pdu_session_release_reject;
-    shared_ptr< pdu_session_release_command_t >  pdu_session_release_command;
-    shared_ptr< pdu_session_release_complete_t > pdu_session_release_complete;
-    shared_ptr< nsm_status_t >                   nsm_status;
+    std::shared_ptr< pdu_session_release_request_t >  pdu_session_release_request;
+    std::shared_ptr< pdu_session_release_reject_t >   pdu_session_release_reject;
+    std::shared_ptr< pdu_session_release_command_t >  pdu_session_release_command;
+    std::shared_ptr< pdu_session_release_complete_t > pdu_session_release_complete;
+    std::shared_ptr< nsm_status_t >                   nsm_status;
 };
 
 // ies
 using nmm_cause_t                               = uint8_t;
 using authentication_parameter_failure_t        = uint8_t[14];
-using octet_g                                   = uint16_t[16];
+using octet_g                                   = uint8_t[16];
 using dnn_t                                     = octet_t;
 using eap_t                                     = octet_t;
 using drx_parameters                            = bit_4;
@@ -229,7 +235,6 @@ using pdu_session_identity_2_t                  = uint8_t;
 using time_zone_t                               = uint8_t;
 using nsm_cause_t                               = uint8_t;
 using bit_b                                     = uint16_t;
-using octet_c                                   = uint8_t[12];
 using serving_plmn_rate_control_t               = uint16_t;
 using nas_message_container_t                   = nas_message_t;
 
@@ -247,8 +252,8 @@ struct suci_nmid_t;
 struct stmsi_nmid_t;
 struct noid_nmid_t;
 struct mac_nmid_t;
-struct nmobile_id_t;
-using nmid_t = mobile_id_t;
+struct nmid_t;
+using nmobile_id_t = nmid_t;
 
 struct nnetwork_feature_support_t;
 struct nregistration_result_t;

@@ -1,9 +1,10 @@
+#include "../common/core.hh"
 #include "../common/dissector.hh"
 #include "../common/use_context.hh"
 
 /* 8.2.7    Registration accept */
 int dissect_registration_accept(dissector d, context* ctx) {
-    const use_context uc(ctx, "registration-accept", d, 12);
+    const use_context uc(&d, ctx, "registration-accept", 12);
     return uc.length;
 }
 
@@ -17,7 +18,7 @@ int dissect_operator_defined_acd(dissector d, context* ctx );
 /* 9.10.2.2     EAP message*/
 /* EAP message as specified in IETF RFC 3748 */
 int dissect_eap_message(dissector d, context* ctx) {
-    const use_context uc(ctx, "eap", d, -1);
+    const use_context uc(&d, ctx, "eap", -1);
 
     diag("eap message specified in rfc 3748\n");
     return d.length;
@@ -25,6 +26,6 @@ int dissect_eap_message(dissector d, context* ctx) {
 
 /* 9.11.3.38    Operator-defined access category definitions */
 int dissect_operator_defined_acd(dissector d, context* ctx) {
-    const use_context uc(ctx, "operator-defined-access-category-definitions", d, 0);
+    const use_context uc(&d, ctx, "operator-defined-access-category-definitions", 0);
     return uc.length;
 }

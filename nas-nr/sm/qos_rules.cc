@@ -4,7 +4,7 @@
 /*The description and valid combinations of packet filter component type identifiers in a
  * packet filter are defined in 3GPP TS 23.501 [8].*/
 int dissect_packet_filter(dissector d, int pf_type, context* ctx) {
-    const use_context uc(ctx, "packet-filter", d, -1);
+    const use_context uc(&d, ctx, "packet-filter", -1);
 
     return 0;
 }
@@ -15,7 +15,7 @@ int dissect_packet_filter(dissector d, int pf_type, context* ctx) {
 int dissect_packet_filters(dissector d, int rop, context* ctx) {
     (void) rop;
 
-    const use_context uc(ctx, "packet-filters", d, -1);
+    const use_context uc(&d, ctx, "packet-filters", -1);
 
 
     return 0;
@@ -23,7 +23,7 @@ int dissect_packet_filters(dissector d, int rop, context* ctx) {
 
 // Authorized QoS rules QoS rules 9.11.4.13
 int dissect_qos_rules(dissector d, context* ctx) {
-    const use_context uc(ctx, "authorized-qos-rules", d);
+    const use_context uc(&d, ctx, "authorized-qos-rules",0);
 
 
     return uc.length;

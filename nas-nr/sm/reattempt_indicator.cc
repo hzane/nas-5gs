@@ -3,7 +3,7 @@
 
 // 9.11.4.17	Re-attempt indicator
 int dissect_reattempt_indicator(dissector d, context* ctx) {
-    const use_context uc(ctx, "reattempt-indicator", d, -1);
+    const use_context uc(&d, ctx, "reattempt-indicator", -1);
 
     return 1;
 }

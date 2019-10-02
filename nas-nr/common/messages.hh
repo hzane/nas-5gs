@@ -1,7 +1,7 @@
 #pragma once
 #include <cstdint>
-#include "common/nas.hh"
-#include "common/definitions.hh"
+#include "nas.hh"
+#include "definitions.hh"
 #include "ies.hh"
 
 using bit4_t = uint8_t;
@@ -28,6 +28,13 @@ struct authenticaion_request_t {
     opt_t< octet_16 > rand   = {};
     opt_t< octet_16 > autn   = {};
     opt_t< octet_t >  eap    = {};
+};
+
+struct authentication_request_t{
+    nmm_header_t header = {};
+    uint8_t ng_ksi;
+    octet_t abba;
+    octet_g rand;
 };
 /*
 Table 8.2.2.1.1: AUTHENTICATION RESPONSE message content
@@ -342,7 +349,7 @@ IEI	Information Element	Type/Reference	Presence	Format	Length
     ngKSI	NAS key set identifier	9.11.3.32	M	V	1/2
     5GS mobile identity		5GS mobile identity	9.11.3.4	M	LV-E	6-n
 */
-struct deregistration_request_t {
+struct deregistration_request_ue_orig_t {
     nmm_header_t header;
     bit4_t       type;
     bit4_t       nksi;
@@ -357,7 +364,7 @@ IEI	Information Element	Type/Reference	Presence	Format	Length
     Spare half octet	Spare half octet	9.5	M	V	1/2
     De-registration accept message identity	Message type	9.7	M	V	1
 */
-struct deregistration_accept_t {
+struct deregistration_accept_ue_orig_t {
     nmm_header_t header;
 };
 
@@ -373,7 +380,7 @@ IEI	Information Element	Type/Reference	Presence	Format	Length
 58	5GMM cause	5GMM cause	9.11.3.2	O	TV	2
 5F	T3346 value	GPRS timer 2	9.11.2.4	O	TLV	3
 */
-struct deregistration_request_t {
+struct deregistration_request_ue_term_t {
     nmm_header_t header;
     bit4_t       type;
     opt_t< uint8_t > cause;
@@ -388,7 +395,7 @@ IEI	Information Element	Type/Reference	Presence	Format	Length
     Spare half octet	Spare half octet	9.5	M	V	1/2
     De-registration accept message identity	Message type	9.7	M	V	1
 */
-struct deregistration_accept_t {
+struct deregistration_accept_ue_term_t {
     nmm_header_t header;
 };
 
@@ -586,8 +593,6 @@ struct notification_response_t {
     opt_t< pdu_session_status_t > pdu_session_status;
 };
 
-struct s1_ue_network_capability_t{};
-
 /*
 Table 8.2.25.1.1: SECURITY MODE COMMAND message content
 IEI	Information Element	Type/Reference	Presence	Format	Length
@@ -632,7 +637,8 @@ IEI	Information Element	Type/Reference	Presence	Format	Length
 struct security_mode_complete_t {
     nmm_header_t           header;
     opt_t< octet_b >       imeisv_nmid;
-    opt_t< nas_message_t > message;
+    // opt_t< octet_t > message;
+    std::shared_ptr<nas_message_t> message;
 };
 
 /*

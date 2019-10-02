@@ -3,7 +3,7 @@
 
 /* * 8.3.14 PDU session release command */
 int dissect_pdu_session_release_command(dissector d, context* ctx) {
-    const use_context uc(ctx, "pdu-session-release-command", d, 0);
+    const use_context uc(&d, ctx, "pdu-session-release-command", 0);
 
     /* Direction: network to UE */
     down_link(d.pinfo);

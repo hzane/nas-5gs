@@ -3,7 +3,7 @@
 
 /* 8.2.3 Authentication result */
 int dissect_authentication_result(dissector d, context* ctx) {
-    const use_context uc(ctx, "authentication-result", d, 0);
+    const use_context uc(&d, ctx, "authentication-result", 0);
     // network to UE
     down_link(d.pinfo);
 

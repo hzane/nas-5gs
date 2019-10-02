@@ -3,7 +3,7 @@
 
 // 9.11.3.32	NAS key set identifier
 int dissect_nas_ksi(dissector d, context* ctx) {
-    use_context uc(ctx, "NAS key set identifier", d, -1);
+    use_context uc(&d, ctx, "NAS key set identifier", -1);
 
     return 1;
 }

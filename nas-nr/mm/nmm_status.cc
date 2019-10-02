@@ -3,7 +3,7 @@
 
 /*  8.2.29 5GMM status */
 int dissect_mm_status(dissector d, context* ctx) {
-    const use_context uc(ctx, "5gmm-status", d, -1);
+    const use_context uc(&d, ctx, "5gmm-status", -1);
 
     /* Direction: both*/
 

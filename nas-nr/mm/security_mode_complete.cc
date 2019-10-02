@@ -3,7 +3,7 @@
 
 /*  8.2.26 Security mode complete */
 int dissect_security_mode_complete(dissector d, context* ctx) {
-    const use_context uc(ctx, "security-mode-complete", d, 0);
+    const use_context uc(&d, ctx, "security-mode-complete", 0);
     // UE to network
     up_link(d.pinfo);
 

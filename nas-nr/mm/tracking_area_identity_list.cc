@@ -4,7 +4,7 @@
 
 // 9.11.3.9	5GS tracking area identity list
 int dissect_tracking_area_id_list(dissector d, context* ctx) {
-    const use_context uc(ctx, "5gs-tai-list", d, 0);
+    const use_context uc(&d, ctx, "5gs-tai-list", 0);
 
     return uc.length;
 }

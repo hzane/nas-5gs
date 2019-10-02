@@ -3,7 +3,7 @@
 
 /*  8.2.23 Notification */
 int dissect_notification(dissector d, context* ctx) {
-    const use_context uc(ctx, "notification", d, -1);
+    const use_context uc(&d, ctx, "notification", -1);
     // network to UE
     down_link(d.pinfo);
 

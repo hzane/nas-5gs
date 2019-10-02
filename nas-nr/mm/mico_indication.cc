@@ -3,7 +3,7 @@
 
 /*  9.11.3.31    MICO indication */
 int dissect_mico_ind(dissector d, context* ctx) {
-    const use_context uc(ctx, "mico-indication", d, -1);
+    const use_context uc(&d, ctx, "mico-indication", -1);
 
     return 1;
 }

@@ -1,11 +1,13 @@
 #pragma once
-#include "nas.hh"
 #include "core.hh"
+#include "definitions.hh"
 #include "dissector.hh"
+#include "nas.hh"
 
 uint8_t ws_ctz8(uint8_t mask);
 
 int dissect_octet(dissector d, context* ctx, octet_t* ret);
+int dissect_octet(dissector d, context* ctx, uint8_t*v);
 
 int dissect_nibble(dissector d, context* ctx, uint8_t* ret);
 
@@ -26,7 +28,7 @@ int dissect_lv(dissector                   d,
                element_t*                  ret,
                dissect_func_t< element_t > func) {
     auto length = d.uint8();
-    (void) func(d.slice(length), ctx, ret).step(d);
+    (void) func(d.slice(length), ctx, ret);
     return length + 1;
 }
 
@@ -39,7 +41,7 @@ int dissect_tv(dissector                   d,
     if (iei != ret->iei && ret->iei != 0xffu) return 0;
     ret->present = true;
 
-    auto consumed = func(d, ctx, &ret->v).step(d);
+    auto consumed = func(d, ctx, &ret->v);
     return consumed + 1;
 }
 
@@ -57,7 +59,7 @@ int dissect_tlv(dissector                   d,
     ret->present = true;
 
     int length   = d.uint8();
-    (void) func(d.slice(length), ctx, &ret->v).step(d);
+    (void) func(d.slice(length), ctx, &ret->v);
     return length + 2;
 }
 
@@ -82,7 +84,7 @@ int dissect_telv(dissector                   d,
         len = len & 0x7fu;
     d.step(len_length);
 
-    (void) func(d.slice(len), ctx, &ret->v).step(d);
+    (void) func(d.slice(len), ctx, &ret->v);
     return 1 + len_length + len;
 }
 
@@ -98,7 +100,7 @@ int dissect_tlv_e(dissector                   d,
 
     const auto len = d.uint16();
 
-    (void) func(d.slice(len), ctx, &ret->v).step(d);
+    (void) func(d.slice(len), ctx, &ret->v);
 
     return 1 + 2 + len;
 }
@@ -112,6 +114,6 @@ int dissect_lv_e(dissector                   d,
     ret->present        = true;
     const auto len = d.uint16();
 
-    (void) func(d.slice(len), ctx, &ret->v).step(d);
+    (void) func(d.slice(len), ctx, &ret->v);
     return len + 2;
 }

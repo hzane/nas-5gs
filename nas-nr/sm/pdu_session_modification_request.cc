@@ -3,7 +3,7 @@
 
 /* 8.3.7 PDU session modification request */
 int dissect_pdu_session_modification_request(dissector d, context* ctx) {
-    const use_context uc(ctx, "pdu-session-modification-request", d, 0);
+    const use_context uc(&d, ctx, "pdu-session-modification-request", 0);
 
     /* Direction: UE to network */
     up_link(d.pinfo);

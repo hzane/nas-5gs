@@ -4,7 +4,7 @@
 
 /* * 8.2.6 Registration request */
 int dissect_registration_request(dissector d, context* ctx) {
-    const use_context uc(ctx, "registration-request", d, -1);
+    const use_context uc(&d, ctx, "registration-request", -1);
 
     // UE to network
     up_link(d.pinfo);

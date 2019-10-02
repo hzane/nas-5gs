@@ -3,7 +3,7 @@
 
 /*  8.3.5 PDU session authentication complete */
 int dissect_pdu_session_authentication_complete(dissector d, context* ctx) {
-    const use_context uc(ctx, "pdu-session-authentication-complete", d, 0);
+    const use_context uc(&d, ctx, "pdu-session-authentication-complete", 0);
 
     /* Direction: UE to network */
     up_link(d.pinfo);

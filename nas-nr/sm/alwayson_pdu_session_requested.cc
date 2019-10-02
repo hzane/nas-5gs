@@ -4,7 +4,7 @@
 
 // 9.11.4.4 Always-on PDU session requested
 int dissect_alwayson_pdu_session_requested(dissector d, context* ctx) {
-    const use_context uc(ctx, "alwayson-pdu-session-requested", d, -1);
+    const use_context uc(&d, ctx, "alwayson-pdu-session-requested", -1);
 
 
     return 1;

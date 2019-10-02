@@ -1,4 +1,6 @@
 #pragma once
+#include <vector>
+#include <string>
 #include "ber.hh"
 #include "dissector.hh"
 #include "packet.hh"
@@ -8,7 +10,7 @@
 extern void diag(const char* format, ...);
 
 
-string        join(const std::vector< string >& strings, const char* sep = " ");
+std::string        join(const std::vector< std::string >& strings, const char* sep = " ");
 // inline string paths(context* ctx) { return ctx ? join(ctx->paths, "/") : string(); }
 
 

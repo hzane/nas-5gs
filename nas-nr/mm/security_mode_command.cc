@@ -3,7 +3,7 @@
 
 /* 8.2.25 Security mode command  */
 int dissect_security_mode_command(dissector d, context* ctx) {
-    const use_context uc(ctx, "security-mode-cmd", d, 0);
+    const use_context uc(&d, ctx, "security-mode-cmd", 0);
 
     /* Direction: network to UE */
     down_link(d.pinfo);

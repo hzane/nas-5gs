@@ -3,7 +3,7 @@
 
 /* 8.2.22 Identity response  */
 int dissect_identity_response(dissector d, context* ctx) {
-    const use_context uc(ctx, "identity-response", d, 0);
+    const use_context uc(&d, ctx, "identity-response", 0);
     // UE to AMF
     up_link(d.pinfo);
 

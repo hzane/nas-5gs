@@ -3,7 +3,7 @@
 
 /* *   9.11.3.34    NAS security algorithms */
 int dissect_security_algo(dissector d, context* ctx) {
-    const use_context uc(ctx, "sec-algo", d, -1);
+    const use_context uc(&d, ctx, "sec-algo", -1);
 
     return 1;
 }

@@ -8,8 +8,8 @@ int dissect_nas_message_container(dissector d, context* ctx) {
      * encapsulate a plain 5GS NAS message. */
     /* a NAS message without NAS security header */
 
-    const use_context uc(ctx, "nas-msg-container", d, -1);
+    const use_context uc(&d, ctx, "nas-msg-container", -1);
 
-    dissect_nas5g(d, ctx);
+    // dissect_nas_message(d, ctx);
     return uc.length;
 }

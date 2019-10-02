@@ -3,7 +3,7 @@
 
 /* 8.3.16 5GSM status */
 int dissect_sm_status(dissector d, context* ctx) {
-    const use_context uc(ctx, "5gsm-status", d, -1);
+    const use_context uc(&d, ctx, "5gsm-status", -1);
 
     /* Direction: both */
     // both_link(d.pinfo);

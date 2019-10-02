@@ -1,12 +1,10 @@
 #include "../common/dissector.hh"
 #include "../common/use_context.hh"
-#include "../base/ber.hh"
-#include "../common/dissect_mm_msg.hh"
 
 
 /* 8.2.18 Service reject */
 int dissect_service_reject(dissector d, context* ctx) {
-    const use_context uc(ctx, "service-reject", d, 3);
+    const use_context uc(&d, ctx, "service-reject", 3);
     // network to UE
     down_link(d.pinfo);
 

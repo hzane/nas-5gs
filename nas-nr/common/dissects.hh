@@ -5,16 +5,17 @@ struct dissector;
 struct nmm_header_t;
 struct nsm_header_t;
 
+struct authentication_request_t;
+
 int dissect_nmm_header(dissector d, context* ctx, nmm_header_t* ret);
 int dissect_nsm_header(dissector d, context* ctx, nsm_header_t* ret);
 
 // using dissect_f_t = int (*)(dissector, context*, void*);
 
-int dissect_registration_request(dissector d,
-                                 context*  ctx)(dissector d, context* ctx, void* ret);
+int dissect_registration_request(dissector d, context* ctx, void* ret);
 int dissect_registration_accept(dissector d, context*ctx, void*ret);
 int dissect_registration_complete(dissector d, context*ctx, void*ret);
-int dissect_registration_reject<invented>(dissector d, context*ctx, void*ret);
+int dissect_registration_reject(dissector d, context*ctx, void*ret);
 int dissect_deregistration_request_ue_origin(dissector d, context*ctx, void*ret);
 int dissect_deregistration_accept_ue_origin(dissector d, context*ctx, void*ret);
 int dissect_deregistration_request_ue_terminate(dissector d, context*ctx, void*ret);
@@ -62,10 +63,10 @@ int dissect_registration_accept(dissector d, context* ctx, void* ret);
 int dissect_registration_complete(dissector d, context* ctx, void* ret);
 int dissect_registration_reject(dissector d, context* ctx, void* ret);
 int dissect_authentication_failure(dissector d, context* ctx, void* ret);
-int dissect_deregistration_request_ue_origin(dissector d, context* ctx, void* ret);
-int dissect_deregistration_accept_ue_origin(dissector d, context* ctx, void* ret);
-int dissect_deregistration_request_ue_terminate(dissector d, context* ctx, void* ret);
-int dissect_deregistration_accept_ue_terminate(dissector d, context* ctx, void* ret);
+int dissect_deregistration_request_ue_orig(dissector d, context* ctx, void* ret);
+int dissect_deregistration_accept_ue_orig(dissector d, context* ctx, void* ret);
+int dissect_deregistration_request_ue_term(dissector d, context* ctx, void* ret);
+int dissect_deregistration_accept_ue_term(dissector d, context* ctx, void* ret);
 int dissect_service_request(dissector d, context* ctx, void* ret);
 int dissect_service_reject(dissector d, context* ctx, void* ret);
 int dissect_service_accept(dissector d, context* ctx, void* ret);
@@ -85,4 +86,4 @@ int dissect_nmm_status(dissector d, context* ctx, void* ret);
 int dissect_notification(dissector d, context* ctx, void* ret);
 int dissect_notification_response(dissector d, context* ctx, void* ret);
 int dissect_ul_nas_transport(dissector d, context* ctx, void* ret);
-int dissect_dl_nas_transparent(dissector d, context* ctx, void* ret);
+int dissect_dl_nas_transport(dissector d, context* ctx, void* ret);

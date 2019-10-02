@@ -4,7 +4,7 @@
 /* 3GPP TS 23.040 version 6.6.0 Release 6
  * 10.5.3.8 Time Zone  in 3GPP TS 24.008 [12]*/
 int dissect_timezone_set(dissector d, context* ctx) {
-    const use_context uc(ctx, "local-time-zone", d, -1);
+    const use_context uc(&d, ctx, "local-time-zone", -1);
 
     /* 3GPP TS 23.040 version 6.6.0 Release 6
      * 9.2.3.11 TP-Service-Centre-Time-Stamp (TP-SCTS)
