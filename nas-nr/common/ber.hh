@@ -6,35 +6,29 @@
 
 uint8_t ws_ctz8(uint8_t mask);
 
+result_t de_uint8(dissector d, context* ctx, uint8_t* ret);
+
+result_t de_t_uint8(dissector         d,
+                    context*          ctx,
+                    uint8_t           ieid,
+                    opt_t< uint8_t >* ret,
+                    uint8_t           mask = 0);
+
+result_t de_tv_short(dissector d, context* ctx, uint8_t ieid, opt_t< uint8_t >* ret);
+
 result_t de_octet(dissector d, context* ctx, octet_t* ret);
+
 result_t de_t_octet(dissector d,
                     context*  ctx,
                     uint8_t   ieid,
-                    uint8_t*  v,
-                    bool*     present = nullptr);
+                    opt_t<octet_t>*ret);
 
 result_t de_tl_octet(dissector d, context* ctx, uint8_t ieid, opt_t< octet_t >* ret);
 
 result_t de_nibble(dissector d, context* ctx, uint8_t* ret);
 
-/* Type Value (TV) element dissector */
-result_t de_tv_short(dissector d, context* ctx, uint8_t ieid, opt_t< uint8_t >* ret);
-result_t de_t_uint8(dissector         d,
-                  context*          ctx,
-                  uint8_t           ieid,
-                  opt_t< uint8_t >* ret,
-                  uint8_t           mask = 0);
 
-result_t de_tl_uint8(dissector d, context* ctx, uint8_t ieid, uint8_t* v, bool *present);
-
-result_t de_tlve_uint8(dissector d,
-                       context*  ctx,
-                       uint8_t   ieid,
-                       uint8_t*  ret,
-                       bool*     present);
-
-result_t de_uint16(dissector d, context* ctx, uint8_t ieid, opt_t< uint16_t >* ret);
-
+result_t de_t_uint16(dissector d, context* ctx, uint8_t ieid, opt_t< uint16_t >* ret);
 
 template < typename element_t >
 result_t de_lv(dissector                   d,
@@ -72,7 +66,7 @@ result_t de_tlv(dissector                   d,
     if (iei != ret->iei && ret->iei != 0xffu) return 0;
     ret->present = true;
 
-    int length   = d.uint8();
+    int length = d.uint8();
     (void) func(d.slice(length), ctx, &ret->v);
     return length + 2;
 }
@@ -87,14 +81,14 @@ result_t de_telv(dissector                   d,
     if (iei != ret->iei && ret->iei != 0xffu) return 0;
     ret->present = true;
 
-    uint16_t      len   = d.uint8(false);
+    uint16_t len        = d.uint8(false);
     auto     len_length = 1;
 
     if ((len & 0x80u) == 0) {
         /* length in 2 octets */
-        len   = d.uint16(false);
+        len        = d.uint16(false);
         len_length = 2;
-    }else
+    } else
         len = len & 0x7fu;
     d.step(len_length);
 
@@ -104,7 +98,7 @@ result_t de_telv(dissector                   d,
 
 /* Type Length Value Extended(TLV-E) element dissector TS 24.007 */
 template < typename element_t >
-result_t de_tlv_e(dissector                   d,
+result_t de_tlve(dissector                   d,
                   context*                    ctx,
                   opt_t< element_t >*         ret,
                   dissect_func_t< element_t > func) {
@@ -120,14 +114,42 @@ result_t de_tlv_e(dissector                   d,
 }
 
 /* Length Value Extended(LV-E) element dissector */
-template<typename element_t>
-result_t de_lv_e(dissector                   d,
+template < typename element_t >
+result_t de_lve(dissector                   d,
                  context*                    ctx,
                  opt_t< element_t >*         ret,
                  dissect_func_t< element_t > func) {
-    ret->present        = true;
+    ret->present   = true;
     const auto len = d.uint16();
 
     (void) func(d.slice(len), ctx, &ret->v);
     return len + 2;
+}
+
+template < typename E >
+result_t de_t_fixed(dissector d, context* ctx, uint8_t ieid, opt_t< E >* ret) {
+    auto ie      = d.uint8(true);
+    ret->present = ie == ieid || ieid == 0xffu;
+    if (ie != ieid && ieid != 0xffu) return {0};
+    d.octet(ret->v, sizeof(ret->v));
+
+    return {1 + sizeof(ret->v)};
+}
+
+template < typename E >
+result_t de_tl_fixed(dissector d, context* ctx, uint8_t ieid, opt_t< E >* ret) {
+    auto ie  = d.uint8(true);
+    auto len = d.uint8(true);
+    if (ie != ieid || ieid != 0xffu) return {0};
+    ret->present = true;
+
+    d.octet(ret->v, sizeof(ret->v) > len ? len : sizeof(ret->v), true);
+
+    return {1 + 1 + len};
+}
+
+template < typename Slice >
+result_t de_fixed(dissector d, context*, Slice ret) {
+    auto l = d.octet(ret, sizeof(ret));
+    return {l};
 }

@@ -10,14 +10,15 @@ result_t de_octet(dissector d, context* ctx, octet_t* ret) {
 
     return result_t{ret->size()};
 }
-result_t de_t_octet(dissector d, context*, uint8_t ieid, uint8_t *v, bool *present){
+result_t de_t_octet(dissector d, context*, uint8_t ieid, opt_t< octet_t >* ret) {
     auto len = d.length;
     auto ie = d.uint8(true);
-    if (present) *present = (ie == ieid);
-    if (ie != ieid && ieid != 0xffu) return {0};
 
-    d.octet(v, d.length, true);
-    // std::memcpy(v, d.safe_ptr(), d.safe_length(d.length));
+    if (ie != ieid && ieid != 0xffu) return {0};
+    ret->present = true;
+
+    ret->v = std::move(octet_t(d.safe_ptr(), d.safe_ptr() + d.length));
+
     return {len};
 }
 
@@ -111,24 +112,7 @@ result_t de_tl_uint8(dissector d, context* ctx, uint8_t ieid, opt_t<uint8_t>*ret
     return {3};
 }
 
-template<typename E>
-result_t de_t_fixed(dissector d, context* ctx, uint8_t ieid, opt_t<E>*ret){
-    auto ie = d.uint8(true);
-    ret->present = ie == ieid || ieid == 0xffu;
-    if (ie != ieid && ieid != 0xffu) return {0};
-    d.octet(ret->v, sizeof(ret->v));
-
-    return {1 + sizeof(ret->v)};
-}
-
-template<typename E>
-result_t de_tl_fixed(dissector d, context* ctx, uint8_t ieid, opt_t<E>*ret){
-    auto ie = d.uint8(true);
-    auto len = d.uint8(true);
-    if (ie != ieid || ieid != 0xffu) return {0};
-    ret->present = true;
-
-    d.octet(ret->v, sizeof(ret->v) > len ? len : sizeof(ret->v), true);
-
-    return {1 + 1 + len};
+result_t de_uint8(dissector d, context* , uint8_t* ret) {
+    *ret = d.uint8(true);
+    return {1};
 }

@@ -237,6 +237,9 @@ struct suci_nmid_t {
     std::shared_ptr< format_001_t > nai;         //
     std::shared_ptr< format_000_t > imsi;        //
 };
+using suci_nmid_format_000_t = suci_nmid_t::format_000_t;
+using suci_nmid_format_001_t = suci_nmid_t::format_001_t;
+
 /*
 Figure 9.11.3.4.5: 5GS mobile identity information element for type of identity
 "5G-S-TMSI"
@@ -1419,6 +1422,9 @@ struct qos_flow_descriptions_t {
     std::vector< entry_t > descs; //
 };
 
+using qos_flow_description_parameter_t = qos_flow_descriptions_t::parameter_t;
+using qos_flow_description_t           = qos_flow_descriptions_t::entry_t;
+
 // 9.11.4.13	QoS rules
 struct qos_rule_t {
     struct packet_filter_delete_t {
@@ -1446,6 +1452,11 @@ struct qos_rule_t {
     opt_t< bit_6 >                 qos_flow_id;         //
     opt_t< bit_1 >                 segregation;         //
 };
+
+using qos_rule_packet_filter_delete_t = qos_rule_t::packet_filter_delete_t;
+using qos_rule_packet_filter_add_t = qos_rule_t::packet_filter_add_t;
+using qos_rule_packet_filter_t        = qos_rule_t::packet_filter_t;
+
 struct qos_rules_t {
     std::vector< qos_rule_t > rules; //
 };

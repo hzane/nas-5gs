@@ -53,11 +53,11 @@ result_t de_authentication_request(dissector                 d,
         // ABBA	ABBA	9.11.3.10	M	LV	3-n
         de_lv_octet(d, ctx, &ret->abba).step(d);
 
-    // 21	Authentication parameter RAND (5G authentication challenge)	9.11.3.16	O	TV	17
-    de_t_fixed(d, ctx, 0x21, &ret->rand.v).step(d);
+    // 21	Authentication parameter RAND (5G authentication challenge)	9.11.3.16	O TV
+    17 de_t_fixed(d, ctx, 0x21, &ret->rand.v).step(d);
 
-    // 20	Authentication parameter AUTN (5G authenticationchallenge)	9.11.3.15	O	TLV	18
-    de_tl_fixed(d, ctx, 0x20, &ret->autn).step(d);
+    // 20	Authentication parameter AUTN (5G authenticationchallenge)	9.11.3.15	O
+    TLV	18 de_tl_fixed(d, ctx, 0x20, &ret->autn).step(d);
 
     // 78	EAP message	EAP message	9.11.2.2	O	TLV-E	7-1503
     de_tlve_octet(d, ctx, 0x78, &ret->eap).step(d);
@@ -288,7 +288,7 @@ struct registration_request_t {
     opt_t< octet_t >  allowed_pdu_session_status        = {}; // 25 TLV 4+ 9.11.3.13
     opt_t< uint8_t >  ue_usage_setting                  = {}; // 18 TLV 3 9.11.3.55
     opt_t< uint8_t >  requested_drx_parameters          = {}; // 51 TLV 3 9.11.3.2A
-    opt_t< octet_t >  eps_nas_container                               = {}; // 70 TLV-E 4+
+    opt_t< octet_t >  eps_nas_container                 = {}; // 70 TLV-E 4+
     opt_t< octet_t >  ladn_ind                          = {}; // 74 TLV-E 3+
     opt_t< bit4_t >   payload_container_type            = {}; // 8- TV 1
     opt_t< octet_t >  payload_container                 = {}; // 7B TLV-E
@@ -554,7 +554,9 @@ struct registration_complete_t {
     opt_t< octet_t > sor_container; // 73 9.11.3.51 TLV-2
 };
 
-result_t de_registration_complet(dissector d, context* ctx, registration_complete_t*ret){
+result_t de_registration_complet(dissector                d,
+                                 context*                 ctx,
+                                 registration_complete_t* ret) {
     const use_context uc(&d, ctx, "registration-complete", 0);
 
     de_nmm_header(d, ctx, &ret->header).step(d);
@@ -591,7 +593,7 @@ struct registration_reject_t {
     opt_t< octet_t > eap;   // 78 TLV 7+
 };
 
-result_t de_registration_reject(dissector d, context* ctx, registration_reject_t* ret){
+result_t de_registration_reject(dissector d, context* ctx, registration_reject_t* ret) {
     const use_context uc(&d, ctx, "registration-reject", 0);
     de_nmm_header(d, ctx, &ret->header).step(d);
 
@@ -649,7 +651,7 @@ struct ul_nas_transport_t {
     opt_t< bit4_t >  ma_pdu_session_information; // Z TV 1
 };
 
-result_t de_ul_nas_transport(dissector d, context* ctx, ul_nas_transport_t* ret){
+result_t de_ul_nas_transport(dissector d, context* ctx, ul_nas_transport_t* ret) {
     const use_context uc(&d, ctx, "ul-nas-transport", 0);
     de_nmm_header(d, ctx, &ret->header).step(d);
 
@@ -716,7 +718,7 @@ struct dl_nas_transport_t {
     opt_t< uint8_t > backoff_timer;          // 37 TLV 3
 };
 
-result_t de_dl_nas_transport(dissector d, context* ctx, dl_nas_transport_t* ret){
+result_t de_dl_nas_transport(dissector d, context* ctx, dl_nas_transport_t* ret) {
     const use_context uc(&d, ctx, "dl-nas-transport", 0);
     /*
     Table 8.2.11.1.1: DL NAS TRANSPORT message content
@@ -766,7 +768,9 @@ struct deregistration_request_ue_orig_t {
     octet_t      nmid; // 9.11.3.4 LV-E 6+
 };
 
-result_t de_deregistration_request_ue_orig(dissector d, context*ctx, deregistration_request_ue_orig_t* ret){
+result_t de_deregistration_request_ue_orig(dissector                         d,
+                                           context*                          ctx,
+                                           deregistration_request_ue_orig_t* ret) {
     const use_context uc(&d, ctx, "deregistration-request-ue-orig", 0);
     de_nmm_header(d, ctx, &ret->header).step(d);
     /*
@@ -799,7 +803,9 @@ IEI	Information Element	Type/Reference	Presence	Format	Length
 struct deregistration_accept_ue_orig_t {
     nmm_header_t header;
 };
-result_t de_deregistration_accept_ue_orig(dissector d, context* ctx, deregistration_accept_ue_orig_t*ret){
+result_t de_deregistration_accept_ue_orig(dissector                        d,
+                                          context*                         ctx,
+                                          deregistration_accept_ue_orig_t* ret) {
     const use_context uc(&d, ctx, "deregistration-accept-ue-orig", 0);
     de_nmm_header(d, ctx, &ret->header).step(d);
 
@@ -824,7 +830,9 @@ struct deregistration_request_ue_term_t {
     opt_t< uint8_t > cause; // 58 TV 2
     opt_t< uint8_t > t3346; // 5F TLV 3
 };
-result_t de_deregistration_request_ue_term(dissector d, context* ctx, deregistration_request_ue_term_t* ret){
+result_t de_deregistration_request_ue_term(dissector                         d,
+                                           context*                          ctx,
+                                           deregistration_request_ue_term_t* ret) {
     const use_context uc(d, ctx, "deregistration-request-ue-term", 0);
     /*
     Table 8.2.14.1.1: DEREGISTRATION REQUEST message content
@@ -860,7 +868,9 @@ struct deregistration_accept_ue_term_t {
     nmm_header_t header;
 };
 
-result_t de_deregistration_accept_ue_term(dissector d, context*ctx, deregistration_accept_ue_term_t* ret){
+result_t de_deregistration_accept_ue_term(dissector                        d,
+                                          context*                         ctx,
+                                          deregistration_accept_ue_term_t* ret) {
     const use_context uc(&d, ctx, "deregistration-accept-ue-term", 0);
     de_nmm_header(d, ctx, &ret->header).step(d);
     return {uc.consumed()};
@@ -894,7 +904,7 @@ struct service_request_t {
     opt_t< octet_t >                      message;                    // 71 TLV-E 4+
 };
 
-result_t de_service_request(dissector d, context* ctx, service_request_t* ret){
+result_t de_service_request(dissector d, context* ctx, service_request_t* ret) {
     const use_context uc(&d, ctx, "service-request", 0);
     /*
     Table 8.2.16.1.1: SERVICE REQUEST message content
@@ -941,14 +951,14 @@ IEI	Information Element	Type/Reference	Presence	Format	Length
 XX	T3448 value	GPRS timer 3	9.11.2.4	O	TLV	3
 */
 struct service_accept_t {
-    nmm_header_t                               header;
-    opt_t< octet_t >              pdu_session_status;              // 50 TLV 4+
+    nmm_header_t     header;
+    opt_t< octet_t > pdu_session_status;              // 50 TLV 4+
     opt_t< octet_t > pdu_session_reactivation_result; // 26 TLV 4+
-    opt_t< octet_t > result_error_cause;  // 72 TLV-E 5+
-    opt_t< eap_t >                                         eap;                 // 78 TLV-E 7+
-    opt_t< uint8_t >                                       t3348;               // XX TLV 3
+    opt_t< octet_t > result_error_cause;              // 72 TLV-E 5+
+    opt_t< eap_t >   eap;                             // 78 TLV-E 7+
+    opt_t< uint8_t > t3348;                           // XX TLV 3
 };
-result_t de_service_accept(dissector d, context* ctx, service_accept_t* ret){
+result_t de_service_accept(dissector d, context* ctx, service_accept_t* ret) {
     const use_context uc(&d, ctx, "service-accept", 3);
     de_nmm_header(d, ctx, &ret->header).step(d);
 
@@ -991,15 +1001,15 @@ IEI	Information Element	Type/Reference	Presence	Format	Length
 XX	T3448 value	GPRS timer 3	9.11.2.4	O	TLV	3
 */
 struct service_reject_t {
-    nmm_header_t                  header;
-    uint8_t                       cause;              // 9.11.3.2
+    nmm_header_t     header;
+    uint8_t          cause;              // 9.11.3.2
     opt_t< octet_t > pdu_session_status; // 50 TLV 4+
-    opt_t< uint8_t >              t3346;              // 5F TLV 3
-    opt_t< eap_t >                eap;                // 78 TLV-E 7+
-    opt_t< uint8_t >              t3348;              // XX TLV 3
+    opt_t< uint8_t > t3346;              // 5F TLV 3
+    opt_t< eap_t >   eap;                // 78 TLV-E 7+
+    opt_t< uint8_t > t3348;              // XX TLV 3
 };
 
-result_t de_service_reject(dissector d, context*ctx, service_reject_t* ret){
+result_t de_service_reject(dissector d, context* ctx, service_reject_t* ret) {
     const use_context uc(&d, ctx, "service-reject", 0);
     de_nmm_header(d, ctx, &ret->header).step(d);
 
@@ -1055,27 +1065,29 @@ Tbd	T3447 value	GPRS timer 3	9.11.2.5	O	TLV	3
 */
 struct configuration_update_command_t {
     nmm_header_t                      header;
-    opt_t< uint8_t >                  ind;                                          // D- TV 1
-    opt_t< octet_b >                  nguti_nmid;                                   // 77 TLVE 14
-    opt_t< ntracking_area_id_list_t > taies;                                         // 54 TLV 9+
-    opt_t< nssai_t >                  allowed_nssai;                                // 15 TLV 4+
-    opt_t< service_area_list_t >      service_areas;                                // 27 TLV 6+
-    opt_t< octet_t >                  full_name;                                    // 43 TLV 3+
-    opt_t< octet_t >                  short_name;                                   // 45 TLV 3+
-    opt_t< uint8_t >                  local_time_zone;                              // 46 TV 2
-    opt_t< octet_7 >                  utc;                                          // 47 TV 8
-    opt_t< uint8_t >                  daylight_saving_time;                         // 49 TLV 3
-    opt_t< ladn_information_t >       ladn_information;                             // 79 TLVE 3+
-    opt_t< bit4_t >                   mico_ind;                                     // B- TV 1
-    opt_t< bit4_t >                   network_slicing_ind;                          // 9- TV 1
-    opt_t< nssai_t >                  configured_nssai;                             // 31 TLV 4+
-    opt_t< nssai_t >                  rejected_nssai;                               // 11 TLV 4+
-    opt_t< octet_t >                  access_definitions; // 76 TLVE 3+
-    opt_t< bit4_t >                   sms_ind;                                      // F- TV 1
-    opt_t< uint8_t >                  t3347;                                        // TBD TLV 3
+    opt_t< uint8_t >                  ind;                  // D- TV 1
+    opt_t< octet_b >                  nguti_nmid;           // 77 TLVE 14
+    opt_t< ntracking_area_id_list_t > taies;                // 54 TLV 9+
+    opt_t< nssai_t >                  allowed_nssai;        // 15 TLV 4+
+    opt_t< service_area_list_t >      service_areas;        // 27 TLV 6+
+    opt_t< octet_t >                  full_name;            // 43 TLV 3+
+    opt_t< octet_t >                  short_name;           // 45 TLV 3+
+    opt_t< uint8_t >                  local_time_zone;      // 46 TV 2
+    opt_t< octet_7 >                  utc;                  // 47 TV 8
+    opt_t< uint8_t >                  daylight_saving_time; // 49 TLV 3
+    opt_t< ladn_information_t >       ladn_information;     // 79 TLVE 3+
+    opt_t< bit4_t >                   mico_ind;             // B- TV 1
+    opt_t< bit4_t >                   network_slicing_ind;  // 9- TV 1
+    opt_t< nssai_t >                  configured_nssai;     // 31 TLV 4+
+    opt_t< nssai_t >                  rejected_nssai;       // 11 TLV 4+
+    opt_t< octet_t >                  access_definitions;   // 76 TLVE 3+
+    opt_t< bit4_t >                   sms_ind;              // F- TV 1
+    opt_t< uint8_t >                  t3347;                // TBD TLV 3
 };
 
-result_t de_configuration_update_command(dissector d, context*ctx, configuration_update_complete_t* ret){
+result_t de_configuration_update_command(dissector                        d,
+                                         context*                         ctx,
+                                         configuration_update_complete_t* ret) {
     const use_context uc(&d, ctx, "configuration-update-command", 0);
 
     /*
@@ -1153,7 +1165,9 @@ struct configuration_update_complete_t {
     nmm_header_t header;
 };
 
-result_t de_configuration_update_complete(dissector d, context_t* ctx, configuration_update_complete_t*){
+result_t de_configuration_update_complete(dissector  d,
+                                          context_t* ctx,
+                                          configuration_update_complete_t*) {
     const use_context uc(&d, ctx, "configuration-update-complete", 0);
     de_nmm_header(d, ctx, &ret->header).step(d);
 
@@ -1175,7 +1189,7 @@ struct identity_request_t {
     bit4_t       nidentity_type; // 9.11.3.3 1/2
 };
 
-result_t de_identity_request(dissector d, context* ctx, identity_request_t* ret){
+result_t de_identity_request(dissector d, context* ctx, identity_request_t* ret) {
     const use_context uc(&d, ctx, "identity-request", 0);
     /*
     Table 8.2.21.1.1: IDENTITY REQUEST message content
@@ -1207,7 +1221,7 @@ struct identity_response_t {
     octet_t      nmid; // 9.11.3.4 LV-E 3+
 };
 
-result_t de_identity_response(dissector d, context* ctx, identity_response_t* ret){
+result_t de_identity_response(dissector d, context* ctx, identity_response_t* ret) {
     const use_context uc(&d, ctx, "identity-response", 0);
     de_nmm_header(d, ctx, &ret->header).step(d);
     /*
@@ -1238,7 +1252,7 @@ struct notification_t {
     bit4_t       access_type; // 9.11.3.11 1/2
 };
 
-result_t de_notification(dissector d, context*ctx, notification_t* ret){
+result_t de_notification(dissector d, context* ctx, notification_t* ret) {
     const use_context uc(&d, ctx, "notification", 0);
     de_nmm_header(d, ctx, &ret->header).step(d);
 
@@ -1266,11 +1280,13 @@ IEI	Information Element	Type/Reference	Presence	Format	Length
 50	PDU session status	PDU session status	9.11.3.44	O	TLV	4-34
 */
 struct notification_response_t {
-    nmm_header_t                  header;
+    nmm_header_t     header;
     opt_t< octet_t > pdu_session_status; // 50
 };
 
-result_t de_notification_response(dissector d, context_t* ctx, notification_response_t*ret){
+result_t de_notification_response(dissector                d,
+                                  context_t*               ctx,
+                                  notification_response_t* ret) {
     const use_context uc(&d, ctx, "notification-response", 0);
     de_nmm_header(d, ctx, &ret->header).step(d);
 
@@ -1309,7 +1325,7 @@ struct security_mode_command_t {
     nmm_header_t                        header;
     uint8_t                             selected_security_algo; // 9.11.3.34
     bit4_t                              nksi;                   // 9.11.3.32 1/2
-    octet_t            replayed_ue_security_capabilities;    // LV 3
+    octet_t                             replayed_ue_security_capabilities;    // LV 3
     opt_t< bit4_t >                     imeisv_request;                       // E- TV 1
     opt_t< uint8_t >                    selected_eps_security_algo;           // 57 TV 2
     opt_t< uint8_t >                    additional_5g_security_information;   // 36 TLV 3
@@ -1318,7 +1334,9 @@ struct security_mode_command_t {
     opt_t< s1_ue_network_capability_t > replayed_s1_ue_security_capabilities; // 19 TLV 4-
 };
 
-result_t de_security_mode_command(dissector d, context* ctx, security_mode_complete_t* ret){
+result_t de_security_mode_command(dissector                 d,
+                                  context*                  ctx,
+                                  security_mode_complete_t* ret) {
     const use_context uc(&d, ctx, "security-mode-command", 0);
     de_nmm_header(d, ctx, &ret->header).step(d);
     /*
@@ -1375,6 +1393,26 @@ struct security_mode_complete_t {
     // opt_t< octet_t > message;
     std::shared_ptr< nas_message_t > message; // 71 9.11.3.33 TLV-E
 };
+result_t de_security_mode_complete(dissector                 d,
+                                   context*                  ctx,
+                                   security_mode_complete_t* ret) {
+    const use_context uc(&d, ctx, "security-mode-complete", 0);
+    de_nmm_header(d, ctx, &ret->header).step(d);
+    /*
+    Table 8.2.26.1.1: SECURITY MODE COMPLETE message content
+    IEI	Information Element	Type/Reference	Presence	Format	Length
+        Extended protocol discriminator	Extended protocol discriminator	9.2	M	V	1
+        Security header type	Security header type	9.3	M	V	1/2
+        Spare half octet	Spare half octet	9.5	M	V	1/2
+        Security mode complete message identity	Message type	9.6	M	V	1
+    */
+    // 77	IMEISV	5G mobile identity	9.11.3.4	O	TLV-E	12
+    de_tlve_octet(d, ctx, 0x77, &ret->imeisv_nmid).step(d);
+
+    // 71	NAS message container	9.11.3.33	O	TLV-E	4-n
+    de_tlve_octet(d, ctx, 0x71, &ret->message).step(d);
+    return {uc.consumed()};
+}
 
 /*
 Table 8.2.27.1.1: SECURITY MODE REJECT message content
@@ -1390,6 +1428,23 @@ struct security_mode_reject_t {
     uint8_t      cause; // 9.11.3.2 V
 };
 
+result_t de_security_mode_reject(dissector d, context* ctx, security_mode_reject_t* ret) {
+    const use_context uc(&d, ctx, "security-mode-reject", 0);
+    de_nmm_header(d, ctx, &ret->header).step(d);
+
+    /*
+    Table 8.2.27.1.1: SECURITY MODE REJECT message content
+    IEI	Information Element	Type/Reference	Presence	Format	Length
+        Extended protocol discriminator	Extended protocol discriminator	9.2	M	V	1
+        Security header type	Security header type	9.3	M	V	1/2
+        Spare half octet	Spare half octet	9.5	M	V	1/2
+        Security mode reject message identity	Message type	9.6	M	V	1
+    */
+    //        5GMM cause	5GMM cause	9.11.3.2	M	V	1
+    de_uint8(d, ctx, &ret->cause).step(d);
+
+    return {uc.consumed()};
+}
 /*
 Table 8.2.28.1.1: SECURITY PROTECTED 5GS NAS MESSAGE message content
 IEI	Information Element	Type/Reference	Presence	Format	Length
@@ -1400,8 +1455,42 @@ IEI	Information Element	Type/Reference	Presence	Format	Length
     Sequence number	Sequence number	9.10	M	V	1
     Plain 5GS NAS message	Plain 5GS NAS message	9.9	M	V	3-n
 */
-struct nas_message_protected_t;
+struct security_protected_nas_message_t {
+    uint8_t epd; //
+    bit4_t  security_header_type;
+    bit4_t  spare;
+    octet_4 auth_code;
+    uint8_t sequence_no; //
+    octet_t plain;
+};
 
+result_t de_security_protected_message(dissector                d,
+                                       context*                 ctx,
+                                       nas_message_protected_t* ret) {
+    const use_context uc(&d, ctx, "nas-security-protected-message", 0);
+    /*
+    Table 8.2.28.1.1: SECURITY PROTECTED 5GS NAS MESSAGE message content
+    IEI	Information Element	Type/Reference	Presence	Format	Length
+    */
+    //        Extended protocol discriminator	Extended protocol discriminator	9.2	M	V
+    //        1
+    ret->epd = d.uint8(true);
+
+    //        Security header type	Security header type	9.3	M	V	1/2
+    de_nibble(d, ctx, &ret->security_header_type).step(d);
+    // Spare half octet	Spare half octet	9.5	M	V	1/2
+
+    // Message authentication code	Message authentication code	9.8	M	V	4
+    d.octet(ret->auth_code, d.safe_length(sizeof(ret->auth_code)), true);
+
+    // Sequence number	Sequence number	9.10	M	V	1
+    ret->sequence_no = d.uint8(true);
+
+    // Plain 5GS NAS message	Plain 5GS NAS message	9.9	M	V	3-n
+    ret->octet = octet_t(d.safe_ptr(), d.safe_length(d.length));
+
+    return {uc.consumed()};
+}
 /*
 Table 8.2.29.1.1: 5GMM STATUS message content
 IEI	Information Element	Type/Reference	Presence	Format	Length
@@ -1415,6 +1504,24 @@ struct nmm_status_t {
     nmm_header_t header;
     uint8_t      cause; // 9.11.3.2 V 1
 };
+
+result_t de_nmm_status(dissector d, context* ctx, nmm_status_t* ret) {
+    const use_context uc(&d, ctx, "security-mode-reject", 0);
+    de_nmm_header(d, ctx, &ret->header).step(d);
+
+    /*
+    Table 8.2.29.1.1: 5GMM STATUS message content
+    IEI	Information Element	Type/Reference	Presence	Format	Length
+        Extended protocol discriminator	Extended protocol discriminator	9.2	M	V	1
+        Security header type	Security header type	9.3	M	V	1/2
+        Spare half octet	Spare half octet	9.5	M	V	1/2
+        5GMM STATUS message identity	Message type	9.7	M	V	1
+    */
+    //        5GMM cause	5GMM cause	9.11.3.2	M	V	1
+    de_uint8(d, ctx, &ret->cause).step(d);
+
+    return {uc.consumed()};
+}
 
 /*
 Table 8.3.1.1.1: PDU SESSION ESTABLISHMENT REQUEST message content
@@ -1433,16 +1540,55 @@ B-	Always-on PDU session requested	O	TV	1
 7B	Extended protocol configuration options 	9.11.4.6	O	TLV-E	4-65538
 */
 struct pdu_session_establishment_request_t {
-    nsm_header_t              header;
-    uint16_t                  integrity_max_data_rate;         // 9.11.4.7 V 2
-    opt_t< bit4_t >           pdu_sssion_type;                 // 9-
-    opt_t< bit4_t >           ssc_mode;                        // A-
-    opt_t< nsm_capability_t > nsm_capabilities;                // 28 TLV
-    opt_t< uint16_t >         supported_packet_filters_max_n;  // 55 TV 3
-    opt_t< bit4_t >           always_on_pdu_session_requested; // B- TV 1
-    opt_t< octet_t >          sm_pdu_dn_request_container;     // 39 TLV 3+
-    opt_t< octet_t >          extended_pco;                    // 7B TLVE 4+
+    nsm_header_t      header;
+    uint16_t          integrity_max_data_rate;         // 9.11.4.7 V 2
+    opt_t< bit4_t >   pdu_sssion_type;                 // 9-
+    opt_t< bit4_t >   ssc_mode;                        // A-
+    opt_t< octet_t >  nsm_capabilities;                // 28 TLV
+    opt_t< uint16_t > supported_packet_filters_max_n;  // 55 TV 3
+    opt_t< bit4_t >   always_on_pdu_session_requested; // B- TV 1
+    opt_t< octet_t >  sm_pdu_dn_request_container;     // 39 TLV 3+
+    opt_t< octet_t >  extended_pco;                    // 7B TLVE 4+
 };
+
+result_t de_pdu_session_establishment_request(dissector                            d,
+                                              context*                             ctx,
+                                              pdu_session_establishment_request_t* ret) {
+    const use_context uc(&d, ctx, "pdu-session-establishment-request", 0);
+    de_nmm_header(d, ctx, &ret->header).step(d);
+    /*
+    Table 8.3.1.1.1: PDU SESSION ESTABLISHMENT REQUEST message content
+    IEI	Information Element	Type/Reference	Presence	Format	Length
+        Extended protocol discriminator	Extended protocol discriminator	9.2	M	V	1
+        PDU session ID	PDU session identity	9.4	M	V	1
+        PTI	Procedure transaction identity	9.6	M	V	1
+        PDU SESSION ESTABLISHMENT REQUEST message identity	Message type	9.7	M	V	1
+    */
+    //        Integrity protection maximum data rate	 9.11.4.7	M	V	2
+    de_uint16(d, ctx, &ret->integrity_max_data_rate).step(d);
+
+    // 9-	PDU session type	PDU session type	9.11.4.11	O	TV	1
+    de_tv_short(d, ctx, 0x90, &ret->session_type).step(d);
+
+    // A-	SSC mode	SSC mode	9.11.4.16	O	TV	1
+    de_tv_short(d, ctx, 0xA0, &ret->ssc_mode);
+
+    // 28	5GSM capability	5GSM capability	9.11.4.1	O	TLV	3-15
+    de_tl_octet(d, ctx, 0x28, &ret->nsm_capabilities).step(d);
+
+    // 55	Maximum number of supported packet filters	 9.11.4.9	O	TV	3
+    de_t_uint16(d, ctx, 0x55, &ret->supported_packet_filters_max_n).step(d);
+
+    // B-	Always-on PDU session requested	O	TV	1
+    de_tv_short(d, ctx, 0xb0, &ret->always_on_pdu_session_requested).step(d);
+
+    // 39	SM PDU DN request container	9.11.4.15	O	TLV	3-255
+    de_tl_octet(d, ctx, 0x39, &ret->sm_pdu_dn_request_container).step(d);
+
+    // 7B	Extended protocol configuration options 	9.11.4.6	O	TLV-E	4-65538
+    de_tlve_octet(d, ctx, 0x7b, &ret->extended_pco).step(d);
+    return {uc.consumed()};
+}
 
 // clang-format off
 /*
@@ -1476,7 +1622,7 @@ XX	Control plane only indication	9.11.4.23	O	TV	1
 struct pdu_session_establishment_accept_t {
     nsm_header_t                           header;
     bit4_t                                 selected_pdu_session_type; // 9.11.4.11 V
-    bit4_t                                 ssc_mode;                  // 9.11.4.16 V 1/2
+    bit4_t                                 selected_ssc_mode;         // 9.11.4.16 V 1/2
     octet_t                                authorized_qos_rules;      // 9.11.4.13 LV-E 6+
     octet_6                                session_ambr;              // 9.11.4.14 LV 7
     opt_t< uint8_t >                       cause;                     // 59 TV 2
@@ -1496,6 +1642,67 @@ struct pdu_session_establishment_accept_t {
     opt_t< bit4_t >                        control_plane_only_indi;     // XX TV 1
 };
 
+result_t de_pdu_session_establishment_accept(dissector                           d,
+                                             context*                            ctx,
+                                             pdu_session_establishment_accept_t* ret) {
+    const use_context uc(&d, ctx, "pdu-session-establishment-accept", 0);
+    /*
+    Table 8.3.2.1.1: PDU SESSION ESTABLISHMENT ACCEPT message content
+    IEI	Information Element	Type/Reference	Presence	Format	Length
+        Extended protocol discriminator	Extended protocol discriminator	9.2	M	V	1
+        PDU session ID	PDU session identity	9.4	M	V	1
+        PTI	Procedure transaction identity	9.6	M	V	1
+        PDU SESSION ESTABLISHMENT ACCEPT message identity	Message type	9.7	M	V	1
+    */
+    // Selected PDU session type	PDU session type	9.11.4.11	M	V	1/2
+    de_nibble(d, ctx, &ret->selected_pdu_session_type);
+
+    // Selected SSC mode	SSC mode	9.11.4.16	M	V	1/2
+    de_nibble(d, ctx, &ret->selected_ssc_mode).step(d);
+
+    // Authorized QoS rules	QoS rules	9.11.4.13	M	LV-E	6-65538
+    de_lve_octet(d, ctx, &ret->authorized_qos_flow_descs).step(d);
+
+    // Session AMBR	Session-AMBR	9.11.4.14	M	LV	7
+    de_lv_octet(d, ctx, &ret->session_ambr).step(d);
+
+    // 59	5GSM cause	5GSM cause	9.11.4.2	O	TV	2
+    de_t_uint8(d, ctx, 0x59, &ret->cause).step(d);
+
+    // 29	PDU address	PDU address	9.11.4.10	O	TLV	7, 11 or 15
+    de_tl_octet(d, ctx, 0x29, &ret->pdu_address).step(d);
+
+    // 56	RQ timer value	GPRS timer	9.11.2.3	O	TV	2
+    de_t_uint8(d, ctx, 0x56, &ret->rq_timer).step(d);
+
+    // 22	S-NSSAI	S-NSSAI	9.11.2.8	O	TLV	3-10
+    de_tl_octet(d, ctx, 0x22, &ret->s_nssai).step(d);
+
+    // 8-	Always-on PDU session indication	9.11.4.3 O TV 1
+    de_tv_short(d, ctx, 0x80, &ret->always_on_pdu_session_ind).step(d);
+
+    // 75	Mapped EPS bearer contexts	9.11.4.8	O	TLV-E 7-65538
+    de_tlve_octet(d, ctx, 0x75, &ret->mapped_eps_bearer_contexts).step(d);
+
+    // 78	EAP message	EAP message	9.11.2.2	O	TLV-E	7-1503
+    de_tlve_octet(d, ctx, 0x78, &ret->eap).step(d);
+
+    // 79	Authorized QoS flow descriptions	9.11.4.12	O	TLV-E 6-65538
+    de_tlve_octet(d, ctx, 0x79, &ret->authorized_qos_flow_descs).step(d);
+
+    // 7B	Extended protocol configuration options	9.11.4.6	O	TLV-E	4-65538
+    de_tlve_octet(d, ctx, 0x7b, &ret->extended_pco).step(d);
+
+    // 25	DNN	DNN	9.11.2.1A	O	TLV	3-102
+    de_tl_octet(d, ctx, 0x25, &ret->dnn).step(d);
+
+    // xx	5GSM network feature support	9.11.4.18	O	TLV	3-15
+    // xx Session-TMBR	Session-TMBR	9.11.4.19	O	TLV	8
+    // TBD	Serving PLMN rate control Serving PLMN rate control	9.11.4.20	O	TLV	4
+    // XX	ATSSS container	ATSSS container	9.11.4.22	O	TLV-E	3-65538
+    // XX	Control plane only indication	9.11.4.23	O	TV	1
+    return {uc.consumed()};
+}
 // clang-format off
 /*
 Table 8.3.3.1.1: PDU SESSION ESTABLISHMENT REJECT message content
@@ -1524,6 +1731,39 @@ struct pdu_session_establishment_reject_t {
     opt_t< uint8_t >        nsm_congestion_reattempt_ind; // 61 TLV 3
 };
 
+result_t de_pdu_session_establishment_reject(dissector                           d,
+                                             context*                            ctx,
+                                             pdu_session_establishment_reject_t* ret) {
+    const use_context uc(&d, ctx, "pdu-session-establishment-reject", 0);
+    /*
+    Table 8.3.3.1.1: PDU SESSION ESTABLISHMENT REJECT message content
+    IEI	Information Element	Type/Reference	Presence	Format	Length
+        Extended protocol discriminator	Extended protocol discriminator	9.2	M	V	1
+        PDU session ID	PDU session identity	9.4	M	V	1
+        PTI	Procedure transaction identity	9.6	M	V	1
+        PDU SESSION ESTABLISHMENT REJECT message identity	Message type	9.7	M	V	1
+    */
+    // 5GSM cause	5GSM cause	9.11.4.2	M	V	1
+    de_uint8(d, ctx, &ret->cause);
+
+    // 37	Back-off timer value	GPRS timer 3	9.11.2.5	O	TLV	3
+    de_tl_uint8(d, ctx, 0x37, &ret->backoff_timer).step(d);
+
+    // F-	Allowed SSC mode	Allowed SSC mode	9.11.4.5	O	TV	1
+    de_tv_short(d, ctx, 0xf0, &ret->allowed_ssc_mode).step(d);
+
+    // 78	EAP message	EAP message	9.11.2.2	O	TLV-E	7-1503
+    de_tlve_octet(d, ctx, 0x78, &ret->eap).step(d);
+
+    // 7B	Extended protocol configuration options	9.11.4.6	O	TLV-E	4-65538
+    de_tlve_octet(d, ctx, 0x7b, &ret->extended_pco).step(d);
+
+    // TBD	Re-attempt indicator	9.11.4.17	O	TLV	3
+    // 61	5GSM congestion re-attempt indicator	9.11.4.21	O	TLV	3
+    de_tl_uint8(d, ctx, 0x61, &ret->reattempt_ind).step(d);
+    return {uc.consumed()};
+}
+
 /*
 Table 8.3.4.1.1: PDU SESSION AUTHENTICATION COMMAND message content
 IEI	Information Element	Type/Reference	Presence	Format	Length
@@ -1539,6 +1779,27 @@ struct pdu_session_authentication_command_t {
     eap_t                   eap;          // 9.11.2.2 LV-E 6+
     opt_t< extended_pco_t > extended_pco; // 7B 9.11.4.6 TLV-E
 };
+
+result_t de_pdu_session_authentication_command(
+    dissector                             d,
+    context*                              ctx,
+    pdu_session_authentication_command_t* ret) {
+    const use_context uc(&d, ctx, "pdu-session-authentication-command", 0);
+    /*
+    Table 8.3.4.1.1: PDU SESSION AUTHENTICATION COMMAND message content
+    IEI	Information Element	Type/Reference	Presence	Format	Length
+        Extended protocol discriminator	Extended protocol discriminator	9.2	M	V	1
+        PDU session ID	PDU session identity	9.4	M	V	1
+        PTI	Procedure transaction identity	9.6	M	V	1
+        PDU SESSION AUTHENTICATION COMMAND message identity	Message type	9.7	M	V	1
+    */
+    //  EAP message	EAP message	9.11.2.2	M	LV-E	6-1502
+    de_lve_octet(d, ctx, &ret->eap).step(d);
+
+    // 7B	Extended protocol configuration options	9.11.4.6	O	TLV-E	4-65538
+    de_tlve_octet(d, ctx, 0x7b, &ret->extended_pco).step(d);
+    return {uc.consumed()};
+}
 
 // clang-format off
 /*
@@ -1558,6 +1819,28 @@ struct pdu_session_authentication_complete_t {
     opt_t< extended_pco_t > extended_pco; // 7B 9.11.4.6 TLV-E
 };
 
+result_t de_pdu_session_authentication_complete(
+    dissector                              d,
+    context*                               ctx,
+    pdu_session_authentication_complete_t* ret) {
+    const use_context uc(&d, ctx, "pdu-session-authentication-complete", 0);
+    /*
+    Table 8.3.5.1.1: PDU SESSION AUTHENTICATION COMPLETE message content
+    IEI	Information Element	Type/Reference	Presence	Format	Length
+        Extended protocol discriminator	Extended protocol discriminator	9.2	M	V	1
+        PDU session ID	PDU session identity	9.4	M	V	1
+        PTI	Procedure transaction identity	9.6	M	V	1
+        PDU SESSION AUTHENTICATION COMPLETE message identity	Message type	9.7	M V	1
+    */
+    // EAP message	EAP message	9.11.2.2	M	LV-E	6-1502
+    de_lve_octet(d, ctx, &ret->eap).step(d);
+
+    // 7B	Extended protocol configuration options	9.11.4.6	O	TLV-E	4-65538
+    de_tlve_octet(d, ctx, 0x7b, &ret->extended_pco).step(d);
+
+    return {uc.consumed()};
+}
+
 // clang-format off
 /*
 Table 8.3.6.1.1: PDU SESSION AUTHENTICATION RESULT message content
@@ -1572,9 +1855,30 @@ IEI	Information Element	Type/Reference	Presence	Format	Length
 // clang-format on
 struct pdu_session_authentication_result_t {
     nsm_header_t            header;
-  eap_t                   eap; // 78 TLVE 7+
+    eap_t                   eap;          // 78 TLVE 7+
     opt_t< extended_pco_t > extended_pco; // 7B 9.11.4.6 TLV-E
 };
+
+result_t de_pdu_session_authentication_result(dissector                            d,
+                                              context*                             ctx,
+                                              pdu_session_authentication_result_t* ret) {
+    const use_context uc(&d, ctx, "pdu-session-authentication-result", 0);
+    /*
+    Table 8.3.6.1.1: PDU SESSION AUTHENTICATION RESULT message content
+    IEI	Information Element	Type/Reference	Presence	Format	Length
+        Extended protocol discriminator	Extended protocol discriminator	9.2	M	V	1
+        PDU session ID	PDU session identity	9.4	M	V	1
+        PTI	Procedure transaction identity	9.6	M	V	1
+        PDU SESSION AUTHENTICATION RESULT message identity	Message type	9.7	M	V	1
+    */
+    // 78	EAP message	EAP message	9.11.2.2	O	TLV-E	7-1503
+    de_tlve_octet(d, ctx, 0x78, &ret->eap).step(d);
+
+    // 7B	Extended protocol configuration options	9.11.4.6	O	TLV-E	4-65538
+    de_tlve_octet(d, ctx, 0x7b, &ret->extended_pco).step(d);
+
+    return {uc.consumed()};
+}
 
 // clang-format off
 /*
@@ -1607,6 +1911,47 @@ struct pdu_session_modification_request_t {
     opt_t< mapped_eps_bearer_contexts_t > mapped_eps_bearer_contexts;      // 75 TLVE
     opt_t< extended_pco_t >               extended_pco;                    // 7B TLVE
 };
+
+result_t de_pdu_session_modification_request(dissector                           d,
+                                             context*                            ctx,
+                                             pdu_session_modification_request_t* ret) {
+    const use_context uc(&d, ctx, "pdu-session-modification-request", 0);
+    /*
+    Table 8.3.7.1.1: PDU SESSION MODIFICATION REQUEST message content
+    IEI	Information Element	Type/Reference	Presence	Format	Length
+        Extended protocol discriminator	Extended protocol discriminator	9.2	M	V	1
+        PDU session ID	PDU session identity	9.4	M	V	1
+        PTI	Procedure transaction identity	9.6	M	V	1
+        PDU SESSION MODIFICATION REQUEST message identity	Message type	9.7	M	V	1
+    */
+    // 28	5GSM capability	5GSM capability	9.11.4.1	O	TLV	3-15
+    de_tl_octet(d, ctx, 0x28, &ret->capabilities).step(d);
+
+    // 59	5GSM cause	5GSM cause	9.11.4.2	O	TV	2
+    de_t_uint8(d, ctx, 0x59, &ret->cause).step(d);
+
+    // 55	Maximum number of supported packet filters	9.11.4.9	O	TV	3
+    de_t_uint16(d, ctx, 0x55, &ret->supported_packet_filters_max_n).step(d);
+
+    // B-	Always-on PDU session requested	9.11.4.4	O	TV	1
+    de_tv_short(d, ctx, 0xb0, &ret->always_on_pdu_session_requested).step(d);
+
+    // 13	Integrity protection maximum data rate	9.11.4.7	O	TV	3
+    de_t_uint16(d, ctx, 0x13, &ret->integrity_max_data_rate).step(d);
+
+    // 7A	Requested QoS rules	QoS rules	9.11.4.13	O	TLV-E	7-65538
+    de_tlve_octet(d, ctx, 0x7a, &ret->requested_qos_rules).step(d);
+
+    // 79	Requested QoS flow descriptions	9.11.4.12	O	TLV-E	6-65538
+    de_tlve_octet(d, ctx, 0x79, &ret->requested_qos_flow_descs).step(d);
+
+    // 75	Mapped EPS bearer contexts	9.11.4.8	O	TLV-E	7-65538
+    de_tlve_octet(d, ctx, 0x75, &ret->mapped_eps_bearer_contexts).step(d);
+
+    // 7B	Extended protocol configuration options	9.11.4.6	O	TLV-E	4-65538
+    de_tlve_octet(d, ctx, 0x7b, &ret->extended_pco).step(d);
+    return {uc.consumed()};
+}
 
 // clang-format off
 /*
@@ -1676,6 +2021,16 @@ struct pdu_session_modification_complete_t {
     opt_t< extended_pco_t > extended_pco; // 7B TLVE
 };
 
+result_t de_pdu_session_modification_complete(dissector                            d,
+                                              context*                             ctx,
+                                              pdu_session_modification_complete_t* ret) {
+    const use_context uc(&d, ctx, "pdu-session-modification-complete", 0);
+    de_nsm_header(d, ctx, &ret->header);
+
+    de_tlve_octet(d, ctx, 0x7b, &ret->extended_pco).step(d);
+    return {uc.consumed()};
+}
+
 /*
 Table 8.3.11.1.1: PDU SESSION MODIFICATION COMMAND REJECT message content
 IEI	Information Element	Type/Reference	Presence	Format	Length
@@ -1692,6 +2047,17 @@ struct pdu_session_modification_command_reject_t {
     opt_t< extended_pco_t > extended_pco; // 7B TLVE
 };
 
+result_t de_pdu_session_modification_command_reject(
+    dissector                                  d,
+    context*                                   ctx,
+    pdu_session_modification_command_reject_t* ret) {
+    const use_context uc(&d, ctx, "pdu-session-modification-command-reject", 0);
+    de_nsm_header(d, ctx, &ret->header);
+
+    de_uint8(d, ctx, &ret->cause).step(d);
+    de_tlve_octet(d, ctx, 0x7b, &ret->extended_pco).step(d);
+    return {uc.consumed()};
+}
 /*
 Table 8.3.12.1.1: PDU SESSION RELEASE REQUEST message content
 IEI	Information Element	Type/Reference	Presence	Format	Length
@@ -1707,6 +2073,17 @@ struct pdu_session_release_request_t {
     opt_t< extended_pco_t > extended_pco; // 7B TLVE
 };
 
+result_t de_pdu_session_release_request(dissector                      d,
+                                        context*                       ctx,
+                                        pdu_session_release_request_t* ret) {
+    const use_context uc(&d, ctx, "pdu-session-release-rquest", 0);
+    de_nsm_header(d, ctx, &ret->header);
+
+    de_t_uint8(d, ctx, 0x59, &ret->cause).step(d);
+    de_tlve_octet(d, ctx, 0x7b, &ret->extended_pco).step(d);
+    return {uc.consumed()};
+}
+
 /*
 Table 8.3.13.1.1: PDU SESSION RELEASE REJECT message content
 IEI	Information Element	Type/Reference	Presence	Format	Length
@@ -1721,6 +2098,17 @@ struct pdu_session_release_reject_t {
     uint8_t                 cause;        // V 1
     opt_t< extended_pco_t > extended_pco; // 7B TLVE
 };
+
+result_t de_pdu_session_release_reject(dissector                     d,
+                                       context*                      ctx,
+                                       pdu_session_release_reject_t* ret) {
+    const use_context uc(&d, ctx, "pdu-session-release-reject", 0);
+    de_nsm_header(d, ctx, &ret->header);
+
+    de_uint8(d, ctx, &ret->cause).step(d);
+    de_tlve_octet(d, ctx, 0x7b, &ret->extended_pco).step(d);
+    return {uc.consumed()};
+}
 
 /*
 Table 8.3.14.1.1: PDU SESSION RELEASE COMMAND message content
@@ -1743,6 +2131,35 @@ struct pdu_session_release_command_t {
     opt_t< extended_pco_t > extended_pco;                 // 7B TLVE
 };
 
+result_t de_pdu_session_release_command(dissector                      d,
+                                        context*                       ctx,
+                                        pdu_session_release_command_t* ret) {
+    const use_context uc(&d, ctx, "pdu-session-release-command", 0);
+    /*
+    Table 8.3.14.1.1: PDU SESSION RELEASE COMMAND message content
+    IEI	Information Element	Type/Reference	Presence	Format	Length
+        Extended protocol discriminator	Extended protocol discriminator	9.2	M	V	1
+        PDU session ID	PDU session identity	9.4	M	V	1
+        PTI	Procedure transaction identity	9.6	M	V	1
+        PDU SESSION RELEASE COMMAND message identity	Message type	9.7	M	V	1
+    */
+    // 5GSM cause	5GSM cause	9.11.4.2	M	V	1
+    de_uint8(d, ctx, &ret->cause).step(d);
+
+    // 37	Back-off timer value	GPRS timer 3	9.11.2.5	O	TLV	3
+    de_tl_uint8(d, ctx, 0x37, &ret->backoff_timer).step(d);
+
+    // 78	EAP message	EAP message	9.11.2.2	O	TLV-E	7-1503
+    de_tlve_octet(d, ctx, 0x78, &ret->eap).step(d);
+
+    // 61	5GSM congestion re-attempt indicator	9.11.4.21	O	TLV	3
+    de_tl_uint8(d, ctx, 0x61, &ret->nsm_congestion_reattempt_ind).step(d);
+
+    // 7B	Extended protocol configuration options	9.11.4.6	O	TLV-E	4-65538
+    de_tlve_octet(d, ctx, 0x7b, &ret->extended_pco).step(d);
+    return {uc.consumed()};
+}
+
 /*
 Table 8.3.15.1.1: PDU SESSION RELEASE COMPLETE message content
 IEI	Information Element	Type/Reference	Presence	Format	Length
@@ -1759,6 +2176,27 @@ struct pdu_session_release_complete_t {
     opt_t< extended_pco_t > extended_pco; // 7B TLVE
 };
 
+result_t de_pdu_session_release_complete(dissector                       d,
+                                         context*                        ctx,
+                                         pdu_session_release_complete_t* ret) {
+    const use_context uc(&d, ctx, "pdu-session-release-complete", 0);
+    /*
+    Table 8.3.15.1.1: PDU SESSION RELEASE COMPLETE message content
+    IEI	Information Element	Type/Reference	Presence	Format	Length
+        Extended protocol discriminator	Extended protocol discriminator	9.2	M	V	1
+        PDU session ID	PDU session identity	9.4	M	V	1
+        PTI	Procedure transaction identity	9.6	M	V	1
+        PDU SESSION RELEASE COMPLETE message identity	Message type	9.7	M	V	1
+    59	5GSM cause	5GSM cause	9.11.4.2	O	TV	2
+    7B	Extended protocol configuration options	9.11.4.6	O	TLV-E	4-65538
+    */
+    de_nsm_header(d, ctx, &ret->header);
+
+    de_t_uint8(d, ctx, 0x59, &ret->cause).step(d);
+    de_tlve_octet(d, ctx, 0x7b, &ret->extended_pco).step(d);
+    return {uc.consumed()};
+}
+
 /*
 Table 8.3.16.1.1: 5GSM STATUS message content
 IEI	Information Element	Type/Reference	Presence	Format	Length
@@ -1772,3 +2210,10 @@ struct nsm_status_t {
     nsm_header_t header;
     uint8_t      cause; // V 1 9.11.4.2
 };
+
+result_t de_nsm_status(dissector d, context* ctx, nsm_status_t* ret) {
+    de_nsm_header(d, ctx, &ret->header);
+
+    de_uint8(d, ctx, &ret->cause).step(d);
+    return {uc.consumed()};
+}
