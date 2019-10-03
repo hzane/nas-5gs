@@ -1,4 +1,6 @@
-#include "dissector.hh"
+#pragma once
+#include "definitions.hh"
+
 struct context;
 struct dissector;
 
@@ -7,7 +9,6 @@ struct nsm_header_t;
 
 struct authentication_request_t;
 
-namespace dissectors{
 result_t de_nmm_header(dissector d, context* ctx, nmm_header_t* ret);
 result_t de_nsm_header(dissector d, context* ctx, nsm_header_t* ret);
 
@@ -86,7 +87,7 @@ result_t de_notification(dissector d, context* ctx, void* ret);
 result_t de_notification_response(dissector d, context* ctx, void* ret);
 result_t de_ul_nas_transport(dissector d, context* ctx, void* ret);
 result_t de_dl_nas_transport(dissector d, context* ctx, void* ret);
-}
+
 
 /*
 Table 8.2.1.1.1: AUTHENTICATION REQUEST message content

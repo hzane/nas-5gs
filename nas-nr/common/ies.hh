@@ -369,6 +369,7 @@ struct ntai_list_10_t {
     bit_2                              type;   // 01
     std::vector< ntracking_area_id_t > ids;    //
 };
+
 /* 9.11.3.9 5GS tracking area identity list
 8	7	6	5	4	3	2	1
 5GS tracking area identity list IEI	octet 1
