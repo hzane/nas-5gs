@@ -31,3 +31,5 @@ void use_context::extraneous_data_check() {
 
     diag("extraneous data %d bytes, %s\n", d->length, join(ctx->paths).c_str());
 }
+
+int use_context::consumed() const { return d->offset - offset; }

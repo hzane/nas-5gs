@@ -17,4 +17,5 @@ struct use_context {
     use_context(dissector const* d, context* ctx, const char* path, int maxlen = 0);
     ~use_context();
     void extraneous_data_check();
+    int  consumed() const;
 };

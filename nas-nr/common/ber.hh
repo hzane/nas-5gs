@@ -19,11 +19,19 @@ result_t de_nibble(dissector d, context* ctx, uint8_t* ret);
 
 /* Type Value (TV) element dissector */
 result_t de_tv_short(dissector d, context* ctx, uint8_t ieid, opt_t< uint8_t >* ret);
-result_t de_uint8(dissector         d,
+result_t de_t_uint8(dissector         d,
                   context*          ctx,
                   uint8_t           ieid,
                   opt_t< uint8_t >* ret,
                   uint8_t           mask = 0);
+
+result_t de_tl_uint8(dissector d, context* ctx, uint8_t ieid, uint8_t* v, bool *present);
+
+result_t de_tlve_uint8(dissector d,
+                       context*  ctx,
+                       uint8_t   ieid,
+                       uint8_t*  ret,
+                       bool*     present);
 
 result_t de_uint16(dissector d, context* ctx, uint8_t ieid, opt_t< uint16_t >* ret);
 
