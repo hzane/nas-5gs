@@ -61,7 +61,7 @@ result_t de_nibble(dissector d, context* ctx, uint8_t* ret) {
     return {1};
 }
 
-result_t de_uint16(dissector d, context* ctx, uint8_t ieid, opt_t< uint16_t >* ret) {
+result_t de_t_uint16(dissector d, context* ctx, uint8_t ieid, opt_t< uint16_t >* ret) {
     auto iei = d.uint8();
     if (iei != ieid && ieid != 0xffu) return {0};
 
@@ -112,7 +112,12 @@ result_t de_tl_uint8(dissector d, context* ctx, uint8_t ieid, opt_t<uint8_t>*ret
     return {3};
 }
 
-result_t de_uint8(dissector d, context* , uint8_t* ret) {
-    *ret = d.uint8(true);
+result_t de_uint8(dissector d, context* , uint8_t* ret, uint8_t mask) {
+    *ret = mask_u8(d.uint8(true), mask);
     return {1};
+}
+
+result_t de_uint16(dissector d, context* ctx, uint16_t*ret, uint16_t mask){
+    *ret = mask_u16(d.uint16(true), mask);
+    return {2};
 }

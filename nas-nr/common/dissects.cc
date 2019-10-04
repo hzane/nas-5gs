@@ -7,9 +7,9 @@
 #include "definitions.hh"
 #include "dissects.hh"
 #include "ies.hh"
-#include "message.hh"
 #include "messages.hh"
 #include "nas.hh"
+#include "protocol.hh"
 
 int result_t::step(dissector&d)const{
     d.step(consumed);

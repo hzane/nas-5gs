@@ -1,8 +1,10 @@
 #include "core.hh"
+
 #include <sstream>
-#include "message.hh"
-#include "dissector.hh"
+
 #include "context.hh"
+#include "dissector.hh"
+#include "protocol.hh"
 
 inline int ws_ctz32(uint32_t x) {
     /* From http://graphics.stanford.edu/~seander/bithacks.html#ZerosOnRightMultLookup */

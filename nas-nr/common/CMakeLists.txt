@@ -13,7 +13,7 @@ set(BASE_SRCS ber.cc
         eap.cc
         ies.hh
         intra_n1_mode_nas_container.cc
-        message.hh
+        protocol.hh
         messages.hh
         n1_mode_s1_mode_nas_container.cc
         nas.hh

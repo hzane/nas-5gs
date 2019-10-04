@@ -2,6 +2,7 @@
 #include <cstdint>
 #include <vector>
 
+#include "ber.hh"
 #include "definitions.hh"
 
 /*
@@ -43,6 +44,32 @@ struct intra_n1_mode_container_t {
 };
 
 /*
+9.11.2.6	Intra N1 mode NAS transparent container
+*/
+result_t die_intra_n1_mode_container(dissector                  d,
+                                     context*                   ctx,
+                                     intra_n1_mode_container_t* ret) {
+    const use_context uc(&d, ctx, "intra-n1-mode-container", 0);
+
+    // Message authentication code	octet 3  octet 6
+    de_fixed(d, ctx, ret->auth_code).step(d);
+
+    // Type of ciphering algorithm	Type of integrity protection algorithm	octet 7
+    de_nibble(d, ctx, ret->integrity_algo);
+    de_nibble(d, ctx, ret->ciphering_algo, 0xf0u).step(d);
+
+    // 0	0 Spare	0	KACF	TSC	Key set identifier in 5G	octet 8
+    de_nibble(d, ctx, &ret->kacf, 0x10u);
+    de_nibble(d, ctx, &ret->tsc, 0x10u);
+    de_nibble(d, ctx, &ret->nksi, 0x07u).step(d);
+
+    // Sequence number	octet 9
+    de_uint8(d, ctx, &ret->seq_no).step(d);
+
+    return {uc.consumed()};
+}
+
+/*
 9.11.2.7	N1 mode to S1 mode NAS transparent container
 8	7	6	5	4	3	2	1
 N1 mode to S1 mode NAS transparent container IEI	octet 1
@@ -51,6 +78,16 @@ Sequence number	octet 2
 struct n1_mode_to_s1_mode_container_t {
     uint8_t seq_no; // Sequence number	octet 2
 };
+
+// 9.11.2.7	N1 mode to S1 mode NAS transparent container
+result_t die_n1_mode_to_s1_mode_container(dissector                       d,
+                                          context*                        ctx,
+                                          n1_mode_to_s1_mode_container_t* ret) {
+    const use_context uc(&d, ctx, "n1-mode-to-s1-mode-container", 0);
+
+    de_uint8(d, ctx, &ret->seq_no).step(d);
+    return {uc.consumed()};
+}
 
 /*
 9.11.2.8	S-NSSAI
@@ -69,7 +106,34 @@ struct s_nssai_t {
     opt_t< octet_3 > mapped_hplmn_sd  = {}; // Mapped HPLMN SD	octet 8-10*
 };
 
-/*
+//    9.11.2.8	S-NSSAI
+result die_s_nssai(dissector d, context* ctx, s_nssai_t* ret) {
+    auto              len = d.length;
+    const use_context uc(&d, ctx, "s-nssai", 0);
+
+    // SST	octet 3
+    de_uint8(d, ctx, &ret->sst).step(d);
+
+    if (len == 0x02) { // sst and mapped hplmn sst
+        ret->mapped_hplmn_sst.present = true;
+        de_uint8(d, ctx, &ret->mapped_hplmn_sst.v).step(d);
+    }
+    if (len >= 0x04) { // sst and sd
+        ret->sd.present = true;
+        de_fixed(d, ctx, &ret->sd.v).step(d);
+    }
+    if (len >= 0x05) { // sst, sd and mapped hplmn sst
+        ret->mapped_hplmn_sst.present = true;
+        de_uint8(d, ctx, &ret->mapped_hplmn_sst.v).step(d);
+    }
+    if (len == 0x08) { // sst, sd, mapped hplmn sst and hplmn sd
+        ret->mapped_hplmn_sd.present = true;
+        de_fixed(d, ctx, &ret->mapped_hplmn_sd.v).step(d);
+    }
+    return {uc.consumed()};
+}
+
+/* 9.11.2.9
 8	7	6	5	4	3	2	1
 S1 mode to N1 mode NAS transparent container IEI	octet 1
 Length of S1 mode to N1 mode NAS transparent container contents	octet 2
@@ -85,9 +149,28 @@ struct s1_mode_to_n1_mode_container_t {
     bit_4   ciphering_algo = {}; // Type of ciphering algorithm
     bit_3   nksi           = {}; // Key set identifier in 5G	octet 8
     bit_1   tsc            = {}; // TSC
-    bit_4   ncc            = {}; // NCC
-    uint8_t spare          = {}; // octet 9
+    bit_3   ncc            = {}; // NCC
+    uint8_t spare_9        = {}; // octet 9
+    uint8_t spare_a        = {};
 };
+
+// 9.11.2.9
+result_t die_s1_mode_to_n1_mode_containers(dissector                       d,
+                                           context*                        ctx,
+                                           s1_mode_to_n1_mode_container_t* ret) {
+    const use_context uc(&d, ctx, "s1-mode-to-n1-mode-container", 2);
+
+    de_fixed(d, ctx, &ret->auth_code).step(d);
+
+    de_nibble(d, ctx, &ret->integrity_algo, 0x0f);
+    de_nibble(d, ctx, &ret->ciphering_algo, 0xf0u).step(d);
+
+    de_nibble(d, ctx, &ret->nksi, 0x07u);
+    de_nibble(d, ctx, &ret->tsc, 0x04);
+    de_nibble(d, ctx, &0x70u).step(d);
+
+    return {uc.length};
+}
 
 /*
 9.11.3.1	5GMM capability
@@ -112,6 +195,28 @@ struct nmm_capability_t {
     bit_1 nsrvcc       = {}; // 5GSRVCC	octet 4*
     bit_1 nup_ciot     = {}; // 5G-UP CIoT
 };
+
+// 9.11.3.1	5GMM capability
+result_t die_nmm_capability(dissector d, context* ctx, nmm_capability_t* ret) {
+    const use_context uc(&d, ctx, "nmm-capability", 11);
+    auto              o3 = d.uint8(true);
+    ret->s1_mode         = mask_u8(o3, 0x01);
+    ret->ho_attach       = mask_u8(o3, 0x02);
+    ret->lpp             = mask_u8(o3, 0x04);
+    ret->restrict_ec     = mask_u8(o3, 0x08);
+    ret->ncp_ciot        = mask_u8(o3, 0x10);
+    ret->n3data          = mask_u8(o3, 0x20);
+    ret->nhccp_ciot      = mask_u8(o3, 0x40);
+    ret->sgc             = mask_u8(o3, 0x80u);
+
+    if (d.length > 0) {
+        auto o4       = d.uint8(true);
+        ret->nsrvcc   = mask_u8(o4, 0x01);
+        ret->nup_ciot = mask_u8(o4, 0x02);
+    }
+
+    return {uc.length};
+}
 
 /*
 9.11.3.2	5GMM cause
@@ -142,6 +247,23 @@ struct mcc_mnc_t {
     uint16_t mnc; //
 };
 
+result_t die_mcc_mnc(dissector d, context* ctx, mcc_mnc_t*ret){
+    const use_context uc(&d, ctx, "mcc-mnc", 0);
+    auto              a = d.uint8(true), b = d.uint8(true), c = d.uint8(true);
+
+    ret->mcc = (a & 0x0fu) * 100 + ((a & 0xf0u) >> 4u) * 10 + (b & 0x0fu);
+
+    /* MNC, Mobile network code (octet 3 bits 5 to 8, octet 4)  */
+    const auto mnc3 = b >> 4u;
+    const auto mnc1 = c & 0x0fu;
+    const auto mnc2 = c >> 4u;
+
+    ret->mnc = 10 * mnc1 + mnc2;
+    if (mnc3 != 0xf) ret->mnc = ret->mnc * 10 + mnc3;
+
+    return {uc.consumed()};
+}
+
 /*
 9.11.3.4	5GS mobile identity
 Figure 9.11.3.4.1: 5GS mobile identity information element for type of identity "5G-GUTI"
@@ -164,11 +286,27 @@ AMF Set ID (continued)	AMF Pointer	octet 10
 struct guti_nmid_t {
     bit_3     type          = {}; // octet 4
     mcc_mnc_t mccmnc        = {}; // octet 5-7
-    uint8_t   afm_region_id = {}; // octet 8
-    bit_a     afm_set_id    = {}; // octet 9
+    uint8_t   amf_region_id = {}; // octet 8
+    bit_a     amf_set_id    = {}; // octet 9
     bit_6     amf_pointer   = {}; // octet 10
     octet_4   tmsi          = {}; // octet 11-14
 };
+
+result_t die_guti_nmid(dissector d, context* ctx, guti_nmid_t*ret){
+    const use_context uc(&d, ctx, "guti-nr-mobile-id", 0);
+
+    de_uint8(d, ctx, &ret->type, 0x07).step(d);
+    die_mcc_mnc(d, ctx, &ret->mccmnc).step(d);
+
+    ret->amf_region_id = d.uint8(true);
+    ret->amf_set_id    = mask_u16(d.uint16(false), 0xffc0u);
+    ret->amf_pointer   = mask_u8(d.uint8(true, skip = 1), 0x3f);
+
+    de_fixed(d, ctx, &ret->tmsi).step(d);
+
+    return {uc.consumed()};
+}
+
 /*
 Figure 9.11.3.4.2: 5GS mobile identity information element for type of identity or "IMEI"
 or "IMEISV"
@@ -181,8 +319,26 @@ Identity digit p+1	Identity digit p	octet 5*
 struct imeisv_nmid_t {
     bit_3                type;    // Type of identity	octet 4
     bit_1                odd_ind; // odd/ even indic
-    std::vector< bit_4 > digits;  // octet 5*
+    std::string          digits; // octet 5*
 };
+
+using imei_nmid_t = imeisv_nmid_t;
+
+result_t die_imeisv_nmid(dissector d, context* ctx, imeisv_nmid_t*ret){
+    const use_context uc(&d, ctx, "imeisv-nr-mobile-id", 0);
+
+    static const char bcds[] = "0123456789????\0";
+    ret->type                = umask_u8(d.uint8(false), 0x07);
+    ret->odd_ind = mask_u8(d.uint8(false) , 0x08);
+    ret->digits.push_back(bcds[mask_u8(d.uint8(true), 0xf0u)]);
+    while(d.length>0){
+        auto i = d.uint8(true);
+        ret->digits.push_back(bcds[mask_u8(i, 0x0fu)]);
+        ret->digits.push_back(bcds[mask_u8(i, 0xf0u)]);
+    }
+
+    return {uc.consumed()};
+}
 
 /*
 Figure 9.11.3.4.3: 5GS mobile identity information element for type of identity "SUCI" and
@@ -217,28 +373,75 @@ Spare	Type of identity	octet 4 SUCI NAI	octet 5 - y
 */
 
 struct suci_nmid_t {
-    struct format_000_t {
+    struct imsi_t {
         bit_3                                   type;        // Type of identity	octet 4
         bit_3                                   supi_format; //
         mcc_mnc_t                               mccmnc;      //
-        octet_4                                 routing_indicator;          //
+        octet_2                                 routing_indicator;          //
         bit_4                                   protection_scheme_id;       //
         uint8_t                                 home_network_public_key_id; //
         std::shared_ptr< octet_t >              scheme_output;              //
         std::shared_ptr< std::vector< bit_4 > > msin;                       // null scheme
     };
-    struct format_001_t {
+    struct nai_t {
         bit_3   type;        //
         bit_3   supi_format; //
         octet_t suci_nai;    //
     };
 
     bit_3                           supi_format = {}; //
-    std::shared_ptr< format_001_t > nai         = {}; //
-    std::shared_ptr< format_000_t > imsi        = {}; //
+    std::shared_ptr< nai_t > nai         = {}; // supi_format = 000
+    std::shared_ptr< imsi_t > imsi        = {}; // supi_format = 001
 };
-using suci_nmid_format_000_t = suci_nmid_t::format_000_t;
-using suci_nmid_format_001_t = suci_nmid_t::format_001_t;
+using suci_imsi_nmid_t = suci_nmid_t::imsi_t;
+using suci_nai_nmid_t = suci_nmid_t::nai_t;
+
+result_t die_suci_nai_nmid(dissector d, context* ctx, suci_nmid_t::nai_t*ret){
+    const use_context uc(&d, ctx, "suci-nmid-nai", 0);
+
+    de_uint8(d, ctx, &ret->type, 0x07);
+    de_uint8(d, ctx, &ret->supi_format, 0x70u).step(d);
+    de_octet(d, ctx, &ret->suci_nai).step(d);
+
+    return {uc.consumed()};
+}
+result die_suci_imsi_nmid(dissector d, context, suci_nmid_t::imsi_t*ret){
+    const use_context uc(&d, ctx, "suci-nmid-imsi", 0);
+
+    de_uint8(d, ctx, &ret->type, 0x07);
+    de_uint8(d, ctx, &ret->supi_format, 0x70u).step(d);
+    die_mcc_mnc(d, ctx, &ret->mccmnc).step(d);
+    de_fixed(d, ctx, &ret->routing_indicator).step(d);
+    de_nibble(d, ctx, &ret->protection_scheme_id).step(d);
+    de_uint8(d, ctx, &ret->home_network_public_key_id).step(d);
+
+    if (ret->protection_scheme_id == 0){ // null scheme
+        ret->msin = std::make_shared< std::vector< bit_4 > >();
+        while (d.length > 0) {
+            auto a = d.uint8(true);
+            ret->msin->push_back(mask_u8(a, 0x0fu));
+            ret->msin->push_back(mask_u8(a, 0xf0u));
+        }
+    }else{
+        ret->scheme_output = std::move(octet_t(d.safe_ptr(), d.safe_ptr() + d.length));
+        d.step(d.length);
+    }
+    return {uc.consumed()};
+}
+
+result_t die_suci_nmid(dissector d, context* ctx, suci_nmid_t*ret){
+    const use_context uc(&d, ctx, "suci-nr-mobile-id", 0);
+    ret->supi_format = mask_u8(d.uint8(false), 0x70u);
+    if (ret->supi_format == 0) { // imsi
+        ret->imsi = std::make_shared< imsi_t >();
+        die_suci_imsi_nmid(d, ctx, ret->imsi.get()).step(d);
+    }
+    if (ret->supi_format == 1) { // network specific identifier
+        ret->nai = std::make_shared< suci_nai_nmid_t >();
+        die_suci_nai_nmid(d, ctx, ret->nai.get()).step(d);
+    }
+    return {uc.consumed()};
+}
 
 /*
 Figure 9.11.3.4.5: 5GS mobile identity information element for type of identity
@@ -253,12 +456,23 @@ identity	octet 4 AMF Set ID	octet 5 AMF Set ID (continued)	AMF Pointer	octet 6
 5G-TMSI (continued)	octet 10
 
 */
-struct stmsi_nmid_t {
+struct s_tmsi_nmid_t {
     bit_3   type        = {}; //
     bit_a   amf_set_id  = {}; //
     bit_6   amf_pointer = {}; //
     octet_4 tmsi        = {}; //
 };
+
+result_t die_s_tmsi_nmi(dissector d, context* ctx, s_tmsi_nmid_t*ret){
+    const use_context uc(&d, ctx, "s-tmsi-nr-mobile-id", 0);
+
+    ret->type = mask_u8(d.uint8(true), 0x07u);
+    ret->amf_set_id = mask_u16(d.uint16(false), 0xffc0u);
+    ret->amf_pointer = mask_u8(d.uint8(true, 1), 0x3fu);
+    de_fixed(d, ctx, &ret->tmsi).step(d);
+
+    return {uc.consumed()};
+}
 
 /*
 Figure 9.11.3.4.6: 5GS mobile identity information element for type of identity "No
@@ -272,6 +486,11 @@ struct noid_nmid_t {
     bit_3 type = {}; //
 };
 
+result_t die_noid_nmid(dissector d, context* ctx, noid_nmid_t*ret){
+    ret->type = mask_u8(d.uint8(true), 0x07u);
+    return {1};
+}
+
 /* MAC address
 8	7	6	5	4	3	2	1 5GS mobile identity IEI	octet 1 Length of 5GS
 mobile identity contents	octet 2  octet 3 0 spare	Type of identity	octet 4 MAC
@@ -281,6 +500,13 @@ struct mac_nmid_t {
     bit_3   type = {}; //
     octet_6 mac  = {}; //
 };
+
+result_t die_mac_nmid(dissector d, context* ctx, mac_nmid_t*ret){
+    ret->type = mask_u8(d.uint8(true), 0x07u);
+    de_fixed(d, ctx, ret->mac).step(d);
+
+    return {7};
+}
 
 struct nmid_t {
     bit_3                            type;  //
@@ -293,6 +519,34 @@ struct nmid_t {
 };
 using nmobile_id_t = nmid_t;
 
+result_t die_nmid(dissector d, context* ctx, nmid_t*ret){
+    ret->type = d.uint8(false)& 0x07u;
+    switch (ret->type) {
+    case 0: // no id
+        ret->noid = std::make_shared<noid_nmid_t>();
+        return die_noid_nmid(d, ctx, ret->noid.get());
+    case 1: // suci
+        ret->suci = std::make_shared< suci_nmid_t >();
+        return die_suci_nmid(d, ctx, ret->suci.get());
+    case 2: // nr-guti
+        ret->guti = std::make_shared< guti_nmid_t >();
+        return die_guti_nmid(d, ctx, ret->guti.get());
+    case 3: // imei
+        ret->imei = std::make_shared< imei_nmid_t >();
+        return die_imeisv_nmid(d, ctx, ret->imei.get());
+    case 4: // nr-s-tmsi
+        ret->stmsi=std::make_shared< stmsi_nmid_t >();
+        return die_s_tmsi_nmi(d, ctx, ret->stmsi.get());
+    case 5: // imeisv
+        ret->imei = std::make_shared< imei_nmid_t >();
+        return die_imeisv_nmid(d, ctx, ret->imei.get());
+    case 6: // mac
+        ret->mac = std::make_shared< mac_nmid_t >();
+        return die_mac_nmid(d, ctx, ret->mac.get());
+    }
+    return {d.length};
+}
+
 /*
 9.11.3.5	5GS network feature support
 8	7	6	5	4	3	2
@@ -303,7 +557,8 @@ MPSI	IWK N26	EMF	EMC	IMS- VoPS-N3GPP	IMS- VoPS-3GPP
 
 Spare
 */
-struct nnetwork_feature_support_t {
+// 9.11.3.5	5GS network feature support
+struct nr_network_feature_support_t {
     bit_1 ims_vops_3gpp  = {}; //
     bit_1 ims_vops_n3gpp = {}; //
     bit_2 emc            = {}; //
@@ -317,7 +572,32 @@ struct nnetwork_feature_support_t {
     bit_1 n3data         = {}; //
     bit_1 nhc_cp_ciot    = {}; //
     bit_1 nup_ciot       = {}; //
+    uint8_t spare          = {};
 };
+
+result_t die_nr_network_feature_support(dissector d, context* ctx, nr_network_feature_support_t*ret){
+    const use_context uc(&d, ctx, "nr-network-feature-support", 1);
+    auto              o3 = d.uint8(true), o4 = d.uint8(true);
+
+    ret->ims_vops_3gpp = mask_u8(o3, 0x01);
+    ret->ims_vops_n3gpp       = mask_u8(o3, 0x02);
+    ret->emc = mask_u8(o3, 0x0c);
+
+    ret->emf                  = mask_u8(o3, 0x30u);
+    ret->iwk_n26              = mask_u8(o3, 0x40u);
+    ret->mpsi                 = mask_u8(o3, 0x80u);
+
+    ret->emcn3 = mask_u8(o4, 0x01);
+    ret->mcsi  = mask_u8(o4, 0x02);
+    ret->restrict_ec = mask_u8(o4, 0x04);
+    ret->ncp_ciot    = mask_u8(o4, 0x08);
+
+    ret->n3data = mask_u8(o4, 0x10);
+    ret->nhc_cp_ciot = mask_u8(o4, 0x20);
+    ret->nup_ciot    = mask_u8(o4, 0x40);
+
+    return {uc.length};
+}
 
 /* 9.11.3.6 5GS registration result
 8	7	6	5	4	3	2	1
@@ -325,7 +605,7 @@ struct nnetwork_feature_support_t {
 Length of 5GS registration result contents	octet 2
 0 Spare	SMS allowed	5GS registration result value
 */
-struct nregistration_result_t {
+struct nr_registration_result_t {
     bit_3 result      = {}; //
     bit_1 sms_allowed = {}; //
 };
@@ -346,30 +626,96 @@ TAC	octet 5
 TAC (continued)	octet 6
 TAC (continued)	octet 7
 */
-
-struct ntracking_area_id_t {
-    mcc_mnc_t mcc_mnc = {}; //
+struct nr_tracking_area_id_t {
+    mcc_mnc_t mccmnc = {}; //
     octet_3   tac     = {}; //
 };
 
-struct ntai_list_00_t {
-    bit_4                  number = {}; // +1
+result_t die_nr_tracking_area_id(dissector d, context* ctx, nr_tracking_area_id_t*ret){
+
+    die_mcc_mnc(d, ctx, ret->mccmnc).step(d);
+    de_fixed(d, ctx, ret->tac).step(d);
+
+    return {6};
+}
+
+struct partial_tai_list_00_t {
+    bit_5                  number = {}; // +1
     bit_2                  type   = {}; // 00
     mcc_mnc_t              mccmnc = {}; //
-    std::vector< octet_3 > tac    = {}; //
+    std::vector< octet_3 > taces    = {}; //
 };
-struct ntai_list_01_t {
-    bit_4     number = {}; // +1
+
+result_t die_partial_tai_list_00(dissector d, context* ctx, partial_tai_list_00_t*ret){
+    const use_context uc(&d, ctx, "partial-tai-id", 0);
+
+    de_uint8(d, ctx, &ret->number, 0x1fu);
+    de_uint8(d, ctx, &ret->type, 0x60u).step(d);
+
+    die_mcc_mnc(d, ctx, &ret->mccmnc).step(d);
+
+    for (auto n = ret->number; n > 0;) {
+        octet_3 o3 = {};
+        de_fixed(d, ctx, o3).step(d);
+        ret->taces.push_back(o3);
+        --n;
+    }
+    return {uc.consumed()};
+}
+
+struct partial_tai_list_01_t {
+    bit_5     number = {}; // +1
     bit_2     type   = {}; // 01
     mcc_mnc_t mccmnc = {}; //
     octet_3   tac    = {}; //
-};
-struct ntai_list_10_t {
-    bit_4                              number; // +1
-    bit_2                              type;   // 01
-    std::vector< ntracking_area_id_t > ids;    //
+    std::vector< octet_3 > others = {};
 };
 
+result_t die_partial_tai_list_01(dissector d, context* ctx, partial_tai_list_01_t* ret) {
+    const use_context uc(&d, ctx, "partial-tai-id", 0);
+
+    de_uint8(d, ctx, &ret->number, 0x1fu);
+    de_uint8(d, ctx, &ret->type, 0x60u).step(d);
+
+    die_mcc_mnc(d, ctx, &ret->mccmnc).step(d);
+    de_fixed(d, ctx, ret->tac).step(d);
+
+    for (auto n = ret->number; n > 1; --n) {
+        octet_3 o3 = {};
+        de_fixed(d, ctx, o3).step(d);
+        ret->others.push_back(o3);
+    }
+
+    return {uc.consumed()};
+}
+
+struct partial_tai_list_10_t {
+    bit_5                              number; // +1
+    bit_2                              type;   // 01
+    std::vector< nr_tracking_area_id_t > ids;    //
+};
+
+result_t die_partial_tai_list_10(dissector d, context* ctx, partial_tai_list_10_t* ret) {
+    const use_context uc(&d, ctx, "partial-tai-id", 0);
+
+    de_uint8(d, ctx, &ret->number, 0x1fu);
+    de_uint8(d, ctx, &ret->type, 0x60u).step(d);
+
+    for (auto n = ret->number; n > 0;) {
+        nr_tracking_area_id_t tai = {};
+        die_nr_tracking_area_id(d, ctx, &tai).step(d);
+        ret->ids.push_back(tai);
+        --n;
+    }
+    return {uc.consumed()};
+}
+
+struct partial_tai_t {
+    bit_2 type;
+    std::shared_ptr< partial_tai_list_00_t > l00;
+    std::shared_ptr< partial_tai_list_01_t > l01;
+    std::shared_ptr< partial_tai_list_10_t > l10;
+};
 /* 9.11.3.9 5GS tracking area identity list
 8	7	6	5	4	3	2	1
 5GS tracking area identity list IEI	octet 1
@@ -379,75 +725,37 @@ Partial tracking area identity list 2	octet i+1*  octet l*
 …	octet l+1*  octet m*
 Partial tracking area identity list p	octet m+1*  octet n*
 */
-struct ntracking_area_id_list_t {
-    bit_2                             type; //
-    std::shared_ptr< ntai_list_00_t > l_00; //
-    std::shared_ptr< ntai_list_01_t > l_01; //
-    std::shared_ptr< ntai_list_10_t > l_10; //
+struct nr_tracking_area_id_list_t {
+    std::vector< partial_tai_t > partials; //
 };
 
-/*
-8	7	6	5	4	3	2	1
-0 Spare	Type of list	Number of elements	octet 1
-MCC digit 2	MCC digit 1	octet 2
-MNC digit 3	MCC digit 3	octet 3
-MNC digit 2	MNC digit 1	octet 4
-TAC 1	octet 5
-TAC 1 (continued)	octet 6
-TAC 1 (continued)	octet 7
-…
-…
-TAC k	octet 3k+2*
-TAC k (continued)	octet 3k+3*
-TAC k (continued)	octet 3k+4*
+result_t die_nr_tracking_id_list(dissector d, context* ctx, nr_tracking_area_id_t*ret){
+    const use_context uc(&d, ctx, "nr-tracking-area-id-list", 0);
 
+    return {uc.consumed()};
+}
 
-8	7	6	5	4	3	2	1
-0 Spare	Type of list	Number of elements	octet 1
-MCC digit 2	MCC digit 1	octet 2
-MNC digit 3	MCC digit 3	octet 3
-MNC digit 2	MNC digit 1	octet 4
-TAC 1	octet 5
-TAC 1 (continued)	octet 6
-TAC 1 (continued)	octet 7
-
-
-8	7	6	5	4	3	2	1
-0 Spare	Type of list	Number of elements	octet 1
-MCC digit 2	MCC digit 1	octet 2
-MNC digit 3	MCC digit 3	octet 3
-MNC digit 2	MNC digit 1	octet 4
-TAC 1	octet 5
-TAC 1 (continued)	octet 6
-TAC 1 (continued)	octet 7
-MCC digit 2	MCC digit 1	octet 8*
-MNC digit 3	MCC digit 3	octet 9*
-MNC digit 2	MNC digit 1	octet 10*
-TAC 2	octet 11*
-TAC 2 (continued)	octet 12*
-TAC 2 (continued)	octet 13*
-…
-…
-MCC digit 2	MCC digit 1	octet 6k-4*
-MNC digit 3	MCC digit 3	octet 6k-3*
-MNC digit 2	MNC digit 1	octet 6k-2*
-TAC k	octet 6k-1*
-TAC k (continued)	octet 6k*
-TAC k (continued)	octet 6k+1*
-*/
 
 /*
 9.11.3.9A	5GS update type
-8	7	6	5	4	3	2	1
-5GS update type IEI	octet 1
-Length of 5GS update type	octet 2
-0 Spare	PNB-CIoT	NG-RAN-RCU	SMS requested
 */
-struct nupdate_type_t {
+struct nr_update_type_t {
     bit_1 sms_requested = {}; //
     bit_1 nran_rcu      = {}; //
     bit_2 pnb_ciot      = {}; //
 };
+
+/*
+9.11.3.9A	5GS update type
+*/
+result_t die_nr_update_type(dissector d, context* ctx, nr_update_type_t* ret) {
+    const use_context uc(&d, ctx, "nr-update-type", 0);
+    de_uint8(d, ctx, &ret->sms_requested, 0x01);
+    de_uint8(d, ctx, &ret->nran_rcu, 0x02);
+    de_uint8(d, ctx, &ret->pnb_ciot, 0x0c).step(d);
+
+    return {1};
+}
 
 /*
 9.11.3.10	ABBA
@@ -472,10 +780,21 @@ Additional 5G security parameters IEI	octet 1
 Length of Additional 5G security parameters contents	octet 2
 0 Spare	RINMR	HDP
 */
-struct additional_5g_security_inforation_t {
+struct additional_nr_security_information_t {
     bit_1 hdp;   //
     bit_1 rinmr; //
 };
+
+result_t die_additional_nr_security_infomation(
+    dissector                             d,
+    context*                              ctx,
+    additional_nr_security_information_t* ret) {
+
+    de_uint8(d, ctx, &ret->hdp, 0x01);
+    de_uint8(d, ctx, &ret->rinmr, 0x02).step(d);
+
+    return {1};
+}
 
 /*
 9.11.3.13	Allowed PDU session status
@@ -517,6 +836,16 @@ struct configuration_update_indication_t {
     bit_1 red; //
 };
 
+result_t die_configuration_update_indication(
+    dissector                             d,
+    context*                              ctx,
+    configuration_update_indication_t* ret) {
+    de_uint8(d, ctx, &ret->ack, 0x01);
+    de_uint8(d, ctx, &ret->red, 0x02).step(d);
+
+    return {1};
+}
+
 // 9.11.3.19 Daylight saving time
 // 10.5.3.12 in TS 24.008 g10
 using daylight_saving_time_t = bit_2;
@@ -532,6 +861,16 @@ struct deregistration_type_t {
     bit_1 switch_off;              //
 };
 
+result_t die_deregistration_type(dissector                          d,
+                                             context*                           ctx,
+                                             deregistration_type_t* ret) {
+    de_uint8(d, ctx, &ret->access_type, 0x03);
+    de_uint8(d, ctx, &ret->reregistration_required, 0x04);
+    de_uint8(d, ctx, reg->switch, 0x08).step(d);
+
+    return {1};
+}
+
 // 9.11.3.21 void
 // 9.11.9.22 void
 
@@ -546,6 +885,27 @@ struct emergency_number_list_t {
     std::vector< number_t > numbers; //
 };
 
+result_t die_number(dissector d, context* ctx, number_t*ret){
+    static char bcds[] = "0123456789????\0";
+    auto        len    = d.length;
+    de_uint8(d, ctx, &ret->service_category).step(d);
+    while(d.length>0){
+        auto o = d.uint8(true);
+        ret->digits.push_back(bcds[mask_u8(o, 0x0f)]);
+        ret->digits.push_back(bcds[mask_u8(0, 0xf0u)]);
+    }
+    return {len};
+}
+result_t die_emergency_number_list(dissector d, context* ctx, emergency_number_list* ret) {
+    const use_context uc(&d, ctx, "emergency-number-list", 0);
+    while(d.length>0){
+        auto len = d.uint8(true);
+        number_t n   = {};
+        die_number(d.slice(len), ctx, &n).step(d);
+        ret->numbers.push_back(n);
+    }
+    return {uc.length};
+}
 /*
 9.11.3.24	EPS NAS message container
 8	7	6	5	4	3	2	1

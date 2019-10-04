@@ -9,9 +9,9 @@ using dissect_func_t = result_t (*)(dissector, context*, element_t *);
 
 uint8_t ws_ctz8(uint8_t mask);
 
-result_t de_uint8(dissector d, context* ctx, uint8_t* ret);
+result_t de_uint8(dissector d, context* ctx, uint8_t* ret, uint8_t mask = 0);
 
-result_t de_uint16(dissector d, context* ctx, uint16_t* ret);
+result_t de_uint16(dissector d, context* ctx, uint16_t* ret, uint16_t mask = 0);
 
 result_t de_l_uint8(dissector d, context* ctx, uint8_t* ret);
 
