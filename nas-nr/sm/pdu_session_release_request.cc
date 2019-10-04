@@ -12,7 +12,7 @@ result_t de_pdu_session_release_request(dissector                      d,
 
     de_nsm_header(d, ctx, &ret->header);
 
-    de_t_uint8(d, ctx, 0x59, &ret->cause).step(d);
+    de_t_uint8(d, ctx, 0x59, &ret->nsm_cause).step(d);
     de_tle_octet(d, ctx, 0x7b, &ret->extended_pco).step(d);
     return {uc.consumed()};
 }

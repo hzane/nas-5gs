@@ -21,13 +21,13 @@ result_t de_registration_request(dissector d, context* ctx, registration_request
     */
 
     // 5GS registration type	5GS registration type	9.11.3.7	M	V	1/2
-    de_nibble(d, ctx, &ret->nregistration_type);
+    de_nibble(d, ctx, &ret->nr_registration_type);
 
     // ngKSI	NAS key set identifier	9.11.3.32	M	V	1/2
     de_nibble(d, ctx, &ret->nksi).step(d);
 
     // 5GS mobile identity	5GS mobile identity	9.11.3.4	M	LV-E	6-n
-    de_le_octet(d, ctx, &ret->nmid).step(d);
+    de_le_octet(d, ctx, &ret->nr_mid).step(d);
 
     // C-	Non-current native NAS key set identifier	9.11.3.32 O	TV	1
     de_tv_short(d, ctx, 0xc0, &ret->native_nksi).step(d);
@@ -87,7 +87,7 @@ result_t de_registration_request(dissector d, context* ctx, registration_request
     de_tv_short(d, ctx, 0x90, &ret->network_slicing_ind).step(d);
 
     // 53	5GS update type	9.11.3.9A	O	TLV	3
-    de_tl_uint8(d, ctx, 0x53, &ret->nupdate_type).step(d);
+    de_tl_uint8(d, ctx, 0x53, &ret->nr_update_type).step(d);
 
     // TBD	Mobile station classmark 2	9.11.3.61	O	TLV	5
     // TBD	Supported codecs	9.11.3.62	O	TLV	5-n

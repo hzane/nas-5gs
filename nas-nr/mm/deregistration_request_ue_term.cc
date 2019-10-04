@@ -28,7 +28,7 @@ result_t de_deregistration_request_ue_term(dissector                         d,
     // Spare half octet	Spare half octet	9.5	M	V	1/2
 
     // 58	5GMM cause	5GMM cause	9.11.3.2	O	TV	2
-    de_t_uint8(d, ctx, 0x58, &ret->cause).step(d);
+    de_t_uint8(d, ctx, 0x58, &ret->nmm_cause).step(d);
 
     // 5F T3346 value GPRS timer 2 9.11.2.4 O TLV 3
     de_tl_uint8(d, ctx, 0x5f, &ret->t3346);

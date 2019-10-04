@@ -20,10 +20,10 @@ result_t de_pdu_session_modification_request(dissector                          
         PDU SESSION MODIFICATION REQUEST message identity	Message type	9.7	M	V	1
     */
     // 28	5GSM capability	5GSM capability	9.11.4.1	O	TLV	3-15
-    de_tl_octet(d, ctx, 0x28, &ret->capabilities).step(d);
+    de_tl_octet(d, ctx, 0x28, &ret->nsm_capabilities).step(d);
 
     // 59	5GSM cause	5GSM cause	9.11.4.2	O	TV	2
-    de_t_uint8(d, ctx, 0x59, &ret->cause).step(d);
+    de_t_uint8(d, ctx, 0x59, &ret->nsm_cause).step(d);
 
     // 55	Maximum number of supported packet filters	9.11.4.9	O	TV	3
     de_t_uint16(d, ctx, 0x55, &ret->supported_packet_filters_max_n).step(d);
@@ -38,7 +38,7 @@ result_t de_pdu_session_modification_request(dissector                          
     de_tle_octet(d, ctx, 0x7a, &ret->requested_qos_rules).step(d);
 
     // 79	Requested QoS flow descriptions	9.11.4.12	O	TLV-E	6-65538
-    de_tle_octet(d, ctx, 0x79, &ret->requested_qos_flow_descs).step(d);
+    de_tle_octet(d, ctx, 0x79, &ret->requested_qos_flow_desces).step(d);
 
     // 75	Mapped EPS bearer contexts	9.11.4.8	O	TLV-E	7-65538
     de_tle_octet(d, ctx, 0x75, &ret->mapped_eps_bearer_contexts).step(d);

@@ -16,7 +16,7 @@ result_t de_nmm_status(dissector d, context* ctx, nmm_status_t* ret) {
         5GMM STATUS message identity	Message type	9.7	M	V	1
     */
     //        5GMM cause	5GMM cause	9.11.3.2	M	V	1
-    de_uint8(d, ctx, &ret->cause).step(d);
+    de_uint8(d, ctx, &ret->nmm_cause).step(d);
 
     return {uc.consumed()};
 }

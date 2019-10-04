@@ -13,7 +13,7 @@ result_t de_pdu_session_modification_command_reject(
 
     de_nsm_header(d, ctx, &ret->header);
 
-    de_uint8(d, ctx, &ret->cause).step(d);
+    de_uint8(d, ctx, &ret->nsm_cause).step(d);
     de_tle_octet(d, ctx, 0x7b, &ret->extended_pco).step(d);
     return {uc.consumed()};
 }

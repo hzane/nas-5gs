@@ -20,7 +20,7 @@ result_t de_pdu_session_release_command(dissector                      d,
         PDU SESSION RELEASE COMMAND message identity	Message type	9.7	M	V	1
     */
     // 5GSM cause	5GSM cause	9.11.4.2	M	V	1
-    de_uint8(d, ctx, &ret->cause).step(d);
+    de_uint8(d, ctx, &ret->nsm_cause).step(d);
 
     // 37	Back-off timer value	GPRS timer 3	9.11.2.5	O	TLV	3
     de_tl_uint8(d, ctx, 0x37, &ret->backoff_timer).step(d);

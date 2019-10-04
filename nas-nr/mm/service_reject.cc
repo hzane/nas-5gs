@@ -19,7 +19,7 @@ result_t de_service_reject(dissector d, context* ctx, service_reject_t* ret) {
         Service reject message identity	Message type	9.7	M	V	1
     */
     // 5GMM cause	5GMM cause	9.11.3.2	M	V	1
-    de_uint8(d, ctx, &ret->cause).step(d);
+    de_uint8(d, ctx, &ret->nmm_cause).step(d);
 
     // 50	PDU session status	PDU session status	9.11.3.44	O	TLV	4-34
     de_tl_octet(d, ctx, 0x50, &ret->pdu_session_status).step(d);

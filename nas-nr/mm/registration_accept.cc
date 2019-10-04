@@ -19,10 +19,10 @@ result_t de_registration_accept(dissector d, context* ctx, registration_accept_t
         Registration accept message identity	Message type	9.7	M	V	1
     */
     // 5GS registration result	5GS registration result	9.11.3.6	M	LV	2
-    de_l_uint8(d, ctx, &ret->nregistration_result).step(d);
+    de_l_uint8(d, ctx, &ret->nr_registration_result).step(d);
 
     // 77	5G-GUTI	5GS mobile identity	9.11.3.4	O	TLV-E	14
-    de_tle_fixed(d, ctx, 0x77, &ret->guti_nmid).step(d);
+    de_tle_fixed(d, ctx, 0x77, &ret->guti_nr_mid).step(d);
 
     // 4A	Equivalent PLMNs	PLMN list	9.11.3.45	O	TLV	5-47
     de_tl_octet(d, ctx, 0x4a, &ret->equivalent_plmns).step(d);
@@ -40,7 +40,7 @@ result_t de_registration_accept(dissector d, context* ctx, registration_accept_t
     de_tl_octet(d, ctx, 0x31, &ret->configured_nssai).step(d);
 
     // 21	5GS network feature support	9.11.3.5	O	TLV	3-5
-    de_tl_octet(d, ctx, 0x21, &ret->nnetwork_feature_support).step(d);
+    de_tl_octet(d, ctx, 0x21, &ret->nr_network_feature_support).step(d);
 
     // 50	PDU session status	PDU session status	9.11.3.44	O	TLV	4-34
     de_tl_octet(d, ctx, 0x50, &ret->pdu_session_status).step(d);

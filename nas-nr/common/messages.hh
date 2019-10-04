@@ -23,7 +23,7 @@ IEI	Information Element	Type/Reference	Presence	Format	Length
 */
 struct authentication_request_t {
     nmm_header_t     header = {};
-    bit_4           nksi   = {}; // 9.11.3.32	M	V
+    bit_4            nksi   = {}; // 9.11.3.32	M	V
     octet_t          abba   = {}; // ABBA	9.11.3.10	M	LV	3-n
     opt_t< octet_g > rand   = {}; // 21 9.11.3.16 O TV 17
     opt_t< octet_g > autn   = {}; // 20 9.11.3.15	TLV	18
@@ -60,11 +60,10 @@ IEI	Information Element	Type/Reference	Presence	Format	Length
 */
 struct authentication_result_t {
     nmm_header_t     header = {};
-    bit_4           nksi   = {}; // 9.11.3.32 M V 1/2
+    bit_4            nksi   = {}; // 9.11.3.32 M V 1/2
     octet_t          eap    = {}; // 9.11.2.2 LV-E 6+
     opt_t< octet_t > abba   = {}; // 38 9.11.3.10 TLV 4
 };
-
 
 /*
 Table 8.2.4.1.1: AUTHENTICATION FAILURE message content
@@ -81,7 +80,6 @@ struct authentication_failure_t {
     uint8_t          cause     = {}; // 9.11.3.2 V 1
     opt_t< octet_e > parameter = {}; // 30 9.11.3.14 TLV 16
 };
-
 
 /*
 Table 8.2.5.1.1: AUTHENTICATION REJECT message content
@@ -136,10 +134,10 @@ TBD	T3324 value	GPRS timer 3	9.11.2.5	O	TLV	3
 */
 struct registration_request_t {
     nmm_header_t      header                            = {};
-    bit_4            nregistration_type                = {}; // 9.11.3.7 V 1/2
-    bit_4            nksi                              = {}; // 9.11.3.32 V 1/2
-    octet_t           nmid                              = {}; // 9.11.3.5 LV-E 6+
-    opt_t< bit_4 >   native_nksi                       = {}; // C- 9.11.3.32 TV 1
+    bit_4             nr_registration_type              = {}; // 9.11.3.7 V 1/2
+    bit_4             nksi                              = {}; // 9.11.3.32 V 1/2
+    octet_t           nr_mid                            = {}; // 9.11.3.5 LV-E 6+
+    opt_t< bit_4 >    native_nksi                       = {}; // C- 9.11.3.32 TV 1
     opt_t< octet_t >  nmm_capability                    = {}; // 10 9.11.3.1 TLV 3+
     opt_t< octet_t >  security_capability               = {}; // 2E 9.11.3.54 TLV 4+
     opt_t< octet_t >  requested_nssai                   = {}; // 2F TLV 4+ 9.11.3.37
@@ -147,7 +145,7 @@ struct registration_request_t {
     opt_t< octet_t >  s1_ue_network_capability          = {}; // 17 TLV 4+ 9.11.3.48
     opt_t< octet_t >  uplink_data_status                = {}; // 40 TLV 4+ 9.11.3.57
     opt_t< octet_t >  pdu_session_status                = {}; // 50 TLV 4+ 9.11.3.44
-    opt_t< bit_4 >   mico_ind                          = {}; // B- TV 1 9.11.3.31
+    opt_t< bit_4 >    mico_ind                          = {}; // B- TV 1 9.11.3.31
     opt_t< uint8_t >  ue_status                         = {}; // 2B TLV 3 9.11.3.56
     opt_t< octet_b >  additional_guti_mid               = {}; // 77 TLV-E 14 9.11.3.4
     opt_t< octet_t >  allowed_pdu_session_status        = {}; // 25 TLV 4+ 9.11.3.13
@@ -155,10 +153,10 @@ struct registration_request_t {
     opt_t< uint8_t >  requested_drx_parameters          = {}; // 51 TLV 3 9.11.3.2A
     opt_t< octet_t >  eps_nas_container                 = {}; // 70 TLV-E 4+
     opt_t< octet_t >  ladn_ind                          = {}; // 74 TLV-E 3+
-    opt_t< bit_4 >   payload_container_type            = {}; // 8- TV 1
+    opt_t< bit_4 >    payload_container_type            = {}; // 8- TV 1
     opt_t< octet_t >  payload_container                 = {}; // 7B TLV-E
-    opt_t< bit_4 >   network_slicing_ind               = {}; // 9- TV 1
-    opt_t< uint8_t >  nupdate_type                      = {}; // 53 TLV 3
+    opt_t< bit_4 >    network_slicing_ind               = {}; // 9- TV 1
+    opt_t< uint8_t >  nr_update_type                    = {}; // 53 TLV 3
     opt_t< octet_3 >  mobile_station_classmark2         = {}; // TBD TLV 5
     opt_t< octet_t >  supported_codecs                  = {}; // TBD TLV 5+
     opt_t< octet_t >  nas_message_container             = {}; // 71 TLV-E 4+
@@ -168,38 +166,38 @@ struct registration_request_t {
 };
 
 struct registration_accept_t {
-    nmm_header_t      header = {};
-    uint8_t           nregistration_result = {};                        // LV 2
-    opt_t< octet_b >  guti_nmid = {};                                   // 77 TLV-E 14
-    opt_t< octet_t >  equivalent_plmns = {};                            // 4A TLV 5+
-    opt_t< octet_t >  tai_list = {};                                    // 54 TLV 9+
-    opt_t< octet_t >  allowed_nssai = {};                               // 15 TLV 4+
-    opt_t< octet_t >  rejected_nssai = {};                              // 11 TLV 4+
-    opt_t< octet_t >  configured_nssai = {};                            // 31 TLV 4+
-    opt_t< octet_t >  nnetwork_feature_support = {};                    // 21 TLV 3+
-    opt_t< octet_t >  pdu_session_status = {};                          // 50 TLV 4+
-    opt_t< octet_t >  pdu_session_reactivation_result = {};             // 26 TLV 4+
+    nmm_header_t      header                                      = {};
+    uint8_t           nr_registration_result                      = {}; // LV 2
+    opt_t< octet_b >  guti_nr_mid                                 = {}; // 77 TLV-E 14
+    opt_t< octet_t >  equivalent_plmns                            = {}; // 4A TLV 5+
+    opt_t< octet_t >  tai_list                                    = {}; // 54 TLV 9+
+    opt_t< octet_t >  allowed_nssai                               = {}; // 15 TLV 4+
+    opt_t< octet_t >  rejected_nssai                              = {}; // 11 TLV 4+
+    opt_t< octet_t >  configured_nssai                            = {}; // 31 TLV 4+
+    opt_t< octet_t >  nr_network_feature_support                  = {}; // 21 TLV 3+
+    opt_t< octet_t >  pdu_session_status                          = {}; // 50 TLV 4+
+    opt_t< octet_t >  pdu_session_reactivation_result             = {}; // 26 TLV 4+
     opt_t< octet_t >  pdu_session_reactivation_result_error_cause = {}; // 72 TLV-E 5+
-    opt_t< octet_t >  ladn_information = {};                            // 79 TLV-E 12+
-    opt_t< bit_4 >   mico_ind = {};                                    // B- TV 1
-    opt_t< bit_4 >   network_slicing_ind = {};                         // 9- TV 1
-    opt_t< octet_t >  service_area_list = {};                           // 27 TLV 6+
-    opt_t< uint8_t >  t3512 = {};                                       // 5E TLV 3
-    opt_t< uint8_t >  n3_deregistration_timer = {};                     // 5D TLV 3
-    opt_t< uint8_t >  t3502 = {};                                       // 16 TLV 3
-    opt_t< octet_t >  emergency_numbers = {};                           // 34 TLV 5+
-    opt_t< octet_t >  extended_emergency_numbers = {};                  // 7A TLV-E 7+
-    opt_t< octet_t >  sor_container = {};                               // 73 TLV-E 20+
-    opt_t< octet_t >  eap = {};                                         // 78 TLV-E 7+
-    opt_t< bit_4 >   nssai_inclusion_mode = {};                        // A- TV 1
-    opt_t< octet_t >  access_categories = {};                           // 76 TLV-E
-    opt_t< uint8_t >  negotiated_drx_parameters = {};                   // 51 TLV 3
-    opt_t< bit_4 >   n3_nw_provided_policies = {};                     // D- TV 1
-    opt_t< uint16_t > eps_bearer_context_status = {};                   // 60 TLV 4
-    opt_t< uint8_t >  negotiated_extended_drx_parameters = {};          // XX TLV 3
-    opt_t< uint8_t >  t3447 = {};                                       // TBD TVL 3
-    opt_t< uint8_t >  t3348 = {};                                       // XX TLV 3
-    opt_t< uint8_t >  t3324 = {};                                       // TBD TLV 3
+    opt_t< octet_t >  ladn_information                            = {}; // 79 TLV-E 12+
+    opt_t< bit_4 >    mico_ind                                    = {}; // B- TV 1
+    opt_t< bit_4 >    network_slicing_ind                         = {}; // 9- TV 1
+    opt_t< octet_t >  service_area_list                           = {}; // 27 TLV 6+
+    opt_t< uint8_t >  t3512                                       = {}; // 5E TLV 3
+    opt_t< uint8_t >  n3_deregistration_timer                     = {}; // 5D TLV 3
+    opt_t< uint8_t >  t3502                                       = {}; // 16 TLV 3
+    opt_t< octet_t >  emergency_numbers                           = {}; // 34 TLV 5+
+    opt_t< octet_t >  extended_emergency_numbers                  = {}; // 7A TLV-E 7+
+    opt_t< octet_t >  sor_container                               = {}; // 73 TLV-E 20+
+    opt_t< octet_t >  eap                                         = {}; // 78 TLV-E 7+
+    opt_t< bit_4 >    nssai_inclusion_mode                        = {}; // A- TV 1
+    opt_t< octet_t >  access_categories                           = {}; // 76 TLV-E
+    opt_t< uint8_t >  negotiated_drx_parameters                   = {}; // 51 TLV 3
+    opt_t< bit_4 >    n3_nw_provided_policies                     = {}; // D- TV 1
+    opt_t< uint16_t > eps_bearer_context_status                   = {}; // 60 TLV 4
+    opt_t< uint8_t >  negotiated_extended_drx_parameters          = {}; // XX TLV 3
+    opt_t< uint8_t >  t3447                                       = {}; // TBD TVL 3
+    opt_t< uint8_t >  t3348                                       = {}; // XX TLV 3
+    opt_t< uint8_t >  t3324                                       = {}; // TBD TLV 3
 };
 
 /*
@@ -255,18 +253,17 @@ IEI	Information Element	Type/Reference	Presence	Format	Length
 Z	MA PDU session information	MA PDU session information	O	TV	1
 */
 struct ul_nas_transport_t {
-    nmm_header_t     header;
-    bit_4           payload_container_type;     // V 1/2
-    octet_t          payload_container;          // LV-E
-    uint8_t          pdu_session_id;             // 12 C TV 2
-    opt_t< uint8_t > old_pdu_session_id;         // 59 TV 2
-    opt_t< bit_4 >  request_type;               // 8- TV 1
-    opt_t< octet_t > s_nssai;                    // 22 TLV 3+
-    opt_t< octet_t > dnn;                        // 25 TLV 3+
-    opt_t< octet_t > additional_information;     // 24 TLV 3+
-    opt_t< bit_4 >  ma_pdu_session_information; // Z TV 1
+    nmm_header_t     header                     = {};
+    bit_4            payload_container_type     = {}; // V 1/2
+    octet_t          payload_container          = {}; // LV-E
+    uint8_t          pdu_session_id             = {}; // 12 C TV 2
+    opt_t< uint8_t > old_pdu_session_id         = {}; // 59 TV 2
+    opt_t< bit_4 >   request_type               = {}; // 8- TV 1
+    opt_t< octet_t > s_nssai                    = {}; // 22 TLV 3+
+    opt_t< octet_t > dnn                        = {}; // 25 TLV 3+
+    opt_t< octet_t > additional_information     = {}; // 24 TLV 3+
+    opt_t< bit_4 >   ma_pdu_session_information = {}; // Z TV 1
 };
-
 
 /*
 Table 8.2.11.1.1: DL NAS TRANSPORT message content
@@ -284,13 +281,13 @@ IEI	Information Element	Type/Reference	Presence	Format	Length
 37	Back-off timer value	GPRS timer 3	9.11.2.5	O	TLV	3
 */
 struct dl_nas_transport_t {
-    nmm_header_t     header;
-    bit_4           payload_container_type; // 1/2
-    octet_t          payload_container;      // LV-E
-    opt_t< uint8_t > pdu_session_id;         // 12 C TV 2
-    opt_t< octet_t > additional_information; // 24 TLV 3+
-    opt_t< uint8_t > cause;                  // 58 TV 2
-    opt_t< uint8_t > backoff_timer;          // 37 TLV 3
+    nmm_header_t     header                 = {};
+    bit_4            payload_container_type = {}; // 1/2
+    octet_t          payload_container      = {}; // LV-E
+    opt_t< uint8_t > pdu_session_id         = {}; // 12 C TV 2
+    opt_t< octet_t > additional_information = {}; // 24 TLV 3+
+    opt_t< uint8_t > nmm_cause                  = {}; // 58 TV 2
+    opt_t< uint8_t > backoff_timer          = {}; // 37 TLV 3
 };
 
 /*
@@ -305,10 +302,10 @@ IEI	Information Element	Type/Reference	Presence	Format	Length
     5GS mobile identity		5GS mobile identity	9.11.3.4	M	LV-E	6-n
 */
 struct deregistration_request_ue_orig_t {
-    nmm_header_t header;
-    bit_4       type; // 9.11.3.20 1/2
-    bit_4       nksi; // 9.11.3.32 1/2
-    octet_t      nmid; // 9.11.3.4 LV-E 6+
+    nmm_header_t header = {};
+    bit_4        type   = {}; // 9.11.3.20 1/2
+    bit_4        nksi   = {}; // 9.11.3.32 1/2
+    octet_t      nr_mid = {}; // 9.11.3.4 LV-E 6+
 };
 
 /*
@@ -320,9 +317,8 @@ IEI	Information Element	Type/Reference	Presence	Format	Length
     De-registration accept message identity	Message type	9.7	M	V	1
 */
 struct deregistration_accept_ue_orig_t {
-    nmm_header_t header;
+    nmm_header_t header = {};
 };
-
 
 /*
 Table 8.2.14.1.1: DEREGISTRATION REQUEST message content
@@ -338,8 +334,8 @@ IEI	Information Element	Type/Reference	Presence	Format	Length
 */
 struct deregistration_request_ue_term_t {
     nmm_header_t     header = {};
-    bit_4           type   = {}; // 9.11.3.20
-    opt_t< uint8_t > cause  = {}; // 58 TV 2
+    bit_4            type   = {}; // 9.11.3.20
+    opt_t< uint8_t > nmm_cause  = {}; // 58 TV 2
     opt_t< uint8_t > t3346  = {}; // 5F TLV 3
 };
 
@@ -352,7 +348,7 @@ IEI	Information Element	Type/Reference	Presence	Format	Length
     De-registration accept message identity	Message type	9.7	M	V	1
 */
 struct deregistration_accept_ue_term_t {
-    nmm_header_t header;
+    nmm_header_t header = {};
 };
 
 /*
@@ -374,8 +370,8 @@ struct nas_message_t;
 
 struct service_request_t {
     nmm_header_t     header                     = {};
-    bit_4           nksi                       = {}; // 9.11.3.32 1/2
-    bit_4           type                       = {}; // 9.11.3.50 1/2
+    bit_4            nksi                       = {}; // 9.11.3.32 1/2
+    bit_4            type                       = {}; // 9.11.3.50 1/2
     octet_7          tmsi_nmid                  = {}; // 9.11.3.4 LV-E 9
     opt_t< octet_t > uplink_data_status         = {}; // 40 TLV 4+
     opt_t< octet_t > pdu_session_status         = {}; // 50 TLV 4+
@@ -397,12 +393,12 @@ IEI	Information Element	Type/Reference	Presence	Format	Length
 XX	T3448 value	GPRS timer 3	9.11.2.4	O	TLV	3
 */
 struct service_accept_t {
-    nmm_header_t     header;
-    opt_t< octet_t > pdu_session_status;              // 50 TLV 4+
-    opt_t< octet_t > pdu_session_reactivation_result; // 26 TLV 4+
-    opt_t< octet_t > result_error_cause;              // 72 TLV-E 5+
-    opt_t< eap_t >   eap;                             // 78 TLV-E 7+
-    opt_t< uint8_t > t3348;                           // XX TLV 3
+    nmm_header_t     header                          = {};
+    opt_t< octet_t > pdu_session_status              = {}; // 50 TLV 4+
+    opt_t< octet_t > pdu_session_reactivation_result = {}; // 26 TLV 4+
+    opt_t< octet_t > result_error_cause              = {}; // 72 TLV-E 5+
+    opt_t< eap_t >   eap                             = {}; // 78 TLV-E 7+
+    opt_t< uint8_t > t3348                           = {}; // XX TLV 3
 };
 
 /*
@@ -419,12 +415,12 @@ IEI	Information Element	Type/Reference	Presence	Format	Length
 XX	T3448 value	GPRS timer 3	9.11.2.4	O	TLV	3
 */
 struct service_reject_t {
-    nmm_header_t     header;
-    uint8_t          cause;              // 9.11.3.2
-    opt_t< octet_t > pdu_session_status; // 50 TLV 4+
-    opt_t< uint8_t > t3346;              // 5F TLV 3
-    opt_t< eap_t >   eap;                // 78 TLV-E 7+
-    opt_t< uint8_t > t3348;              // XX TLV 3
+    nmm_header_t     header             = {};
+    uint8_t          nmm_cause              = {}; // 9.11.3.2
+    opt_t< octet_t > pdu_session_status = {}; // 50 TLV 4+
+    opt_t< uint8_t > t3346              = {}; // 5F TLV 3
+    opt_t< eap_t >   eap                = {}; // 78 TLV-E 7+
+    opt_t< uint8_t > t3348              = {}; // XX TLV 3
 };
 
 /*
@@ -466,12 +462,12 @@ struct configuration_update_command_t {
     opt_t< octet_7 > utc                  = {}; // 47 TV 8
     opt_t< uint8_t > daylight_saving_time = {}; // 49 TLV 3
     opt_t< octet_t > ladn_information     = {}; // 79 TLVE 3+
-    opt_t< bit_4 >  mico_ind             = {}; // B- TV 1
-    opt_t< bit_4 >  network_slicing_ind  = {}; // 9- TV 1
+    opt_t< bit_4 >   mico_ind             = {}; // B- TV 1
+    opt_t< bit_4 >   network_slicing_ind  = {}; // 9- TV 1
     opt_t< octet_t > configured_nssai     = {}; // 31 TLV 4+
     opt_t< octet_t > rejected_nssai       = {}; // 11 TLV 4+
     opt_t< octet_t > access_definitions   = {}; // 76 TLVE 3+
-    opt_t< bit_4 >  sms_ind              = {}; // F- TV 1
+    opt_t< bit_4 >   sms_ind              = {}; // F- TV 1
     opt_t< uint8_t > t3347                = {}; // TBD TLV 3
 };
 
@@ -484,7 +480,7 @@ IEI	Information Element	Type/Reference	Presence	Format	Length
     Configuration update complete message identity	Message type	9.7	M	V	1
 */
 struct configuration_update_complete_t {
-    nmm_header_t header;
+    nmm_header_t header = {};
 };
 
 result_t de_configuration_update_complete(dissector                        d,
@@ -507,27 +503,9 @@ IEI	Information Element	Type/Reference	Presence	Format	Length
     Spare half octet	Spare half octet 	9.5	M	V	1/2
 */
 struct identity_request_t {
-    nmm_header_t header;
-    bit_4       nidentity_type; // 9.11.3.3 1/2
+    nmm_header_t header         = {};
+    bit_4        nr_identity_type = {}; // 9.11.3.3 1/2
 };
-
-result_t de_identity_request(dissector d, context* ctx, identity_request_t* ret) {
-    const use_context uc(&d, ctx, "identity-request", 0);
-    /*
-    Table 8.2.21.1.1: IDENTITY REQUEST message content
-    IEI	Information Element	Type/Reference	Presence	Format	Length
-        Extended protocol discriminator	Extended protocol discriminator	9.2	M	V	1
-        Security header type	Security header type	9.3	M	V	1/2
-        Spare half octet	Spare half octet	9.5	M	V	1/2
-        Identity request message identity	Message type	9.7	M	V	1
-    */
-
-    // Identity type	5GS identity type	9.11.3.3	M	V	1/2
-    de_nibble(d, ctx, &ret->nidentity_type).step(d);
-
-    // Spare half octet Spare half octet 9.5 M V 1 / 2;
-    return {uc.consumed()};
-}
 
 /*
 Table 8.2.22.1.1: IDENTITY RESPONSE message content
@@ -539,8 +517,8 @@ IEI	Information Element	Type/Reference	Presence	Format	Length
     Mobile identity	5GS mobile identity	9.11.3.4	M	LV-E	3-n
 */
 struct identity_response_t {
-    nmm_header_t header;
-    octet_t      nmid; // 9.11.3.4 LV-E 3+
+    nmm_header_t header = {};
+    octet_t      nmid   = {}; // 9.11.3.4 LV-E 3+
 };
 
 /*
@@ -555,7 +533,7 @@ IEI	Information Element	Type/Reference	Presence	Format	Length
 */
 struct notification_t {
     nmm_header_t header;
-    bit_4       access_type; // 9.11.3.11 1/2
+    bit_4        access_type; // 9.11.3.11 1/2
 };
 
 /*
@@ -568,8 +546,8 @@ IEI	Information Element	Type/Reference	Presence	Format	Length
 50	PDU session status	PDU session status	9.11.3.44	O	TLV	4-34
 */
 struct notification_response_t {
-    nmm_header_t     header;
-    opt_t< octet_t > pdu_session_status; // 50
+    nmm_header_t     header             = {};
+    opt_t< octet_t > pdu_session_status = {}; // 50
 };
 
 /*
@@ -591,16 +569,16 @@ E-	IMEISV request	IMEISV request	9.11.3.28	O	TV	1
 19	Replayed S1 UE security capability	9.11.3.48A	O	TLV	4-7
 */
 struct security_mode_command_t {
-    nmm_header_t     header;
-    uint8_t          selected_security_algo;               // 9.11.3.34
-    bit_4           nksi;                                 // 9.11.3.32 1/2
-    octet_t          replayed_ue_security_capabilities;    // LV 3
-    opt_t< bit_4 >  imeisv_request;                       // E- TV 1
-    opt_t< uint8_t > selected_eps_security_algo;           // 57 TV 2
-    opt_t< uint8_t > additional_5g_security_information;   // 36 TLV 3
-    opt_t< eap_t >   eap;                                  // 78 TLVE
-    opt_t< abba_t >  abba;                                 // 38 TLV 4-
-    opt_t< octet_t > replayed_s1_ue_security_capabilities; // 19 TLV 4-
+    nmm_header_t     header                               = {};
+    uint8_t          selected_security_algo               = {}; // 9.11.3.34
+    bit_4            nksi                                 = {}; // 9.11.3.32 1/2
+    octet_t          replayed_ue_security_capabilities    = {}; // LV 3
+    opt_t< bit_4 >   imeisv_request                       = {}; // E- TV 1
+    opt_t< uint8_t > selected_eps_security_algo           = {}; // 57 TV 2
+    opt_t< uint8_t > additional_5g_security_information   = {}; // 36 TLV 3
+    opt_t< eap_t >   eap                                  = {}; // 78 TLVE
+    opt_t< abba_t >  abba                                 = {}; // 38 TLV 4-
+    opt_t< octet_t > replayed_s1_ue_security_capabilities = {}; // 19 TLV 4-
 };
 
 /*
@@ -614,10 +592,9 @@ IEI	Information Element	Type/Reference	Presence	Format	Length
 71	NAS message container	9.11.3.33	O	TLV-E	4-n
 */
 struct security_mode_complete_t {
-    nmm_header_t     header      = {};
-    opt_t< octet_b > imeisv_nmid = {}; // 77 TLVE
-    opt_t< nas_message_plain_t > message     = {};
-    // std::shared_ptr< nas_message_t > message; // 71 9.11.3.33 TLV-E
+    nmm_header_t                 header      = {};
+    opt_t< octet_b >             imeisv_nmid = {}; // 77 TLVE
+    opt_t< nas_message_plain_t > message     = {}; // 71 9.11.3.33 TLV-E
 };
 
 /*
@@ -630,8 +607,8 @@ IEI	Information Element	Type/Reference	Presence	Format	Length
     5GMM cause	5GMM cause	9.11.3.2	M	V	1
 */
 struct security_mode_reject_t {
-    nmm_header_t header;
-    uint8_t      cause; // 9.11.3.2 V
+    nmm_header_t header = {};
+    uint8_t      cause  = {}; // 9.11.3.2 V
 };
 
 /*
@@ -656,8 +633,8 @@ IEI	Information Element	Type/Reference	Presence	Format	Length
     5GMM cause	5GMM cause	9.11.3.2	M	V	1
 */
 struct nmm_status_t {
-    nmm_header_t header;
-    uint8_t      cause; // 9.11.3.2 V 1
+    nmm_header_t header = {};
+    uint8_t      nmm_cause  = {}; // 9.11.3.2 V 1
 };
 
 /*
@@ -677,17 +654,16 @@ B-	Always-on PDU session requested	O	TV	1
 7B	Extended protocol configuration options 	9.11.4.6	O	TLV-E	4-65538
 */
 struct pdu_session_establishment_request_t {
-    nsm_header_t      header;
-    uint16_t          integrity_max_data_rate;         // 9.11.4.7 V 2
-    opt_t< bit_4 >   pdu_session_type;                // 9-
-    opt_t< bit_4 >   ssc_mode;                        // A-
-    opt_t< octet_t >  nsm_capabilities;                // 28 TLV
-    opt_t< uint16_t > supported_packet_filters_max_n;  // 55 TV 3
-    opt_t< bit_4 >   always_on_pdu_session_requested; // B- TV 1
-    opt_t< octet_t >  sm_pdu_dn_request_container;     // 39 TLV 3+
-    opt_t< octet_t >  extended_pco;                    // 7B TLVE 4+
+    nsm_header_t      header                          = {};
+    uint16_t          integrity_max_data_rate         = {}; // 9.11.4.7 V 2
+    opt_t< bit_4 >    pdu_session_type                = {}; // 9-
+    opt_t< bit_4 >    ssc_mode                        = {}; // A-
+    opt_t< octet_t >  nsm_capabilities                = {}; // 28 TLV
+    opt_t< uint16_t > supported_packet_filters_max_n  = {}; // 55 TV 3
+    opt_t< bit_4 >    always_on_pdu_session_requested = {}; // B- TV 1
+    opt_t< octet_t >  sm_pdu_dn_request_container     = {}; // 39 TLV 3+
+    opt_t< octet_t >  extended_pco                    = {}; // 7B TLVE 4+
 };
-
 
 // clang-format off
 /*
@@ -719,26 +695,26 @@ XX	Control plane only indication	9.11.4.23	O	TV	1
 */
 // clang-format on
 struct pdu_session_establishment_accept_t {
-    nsm_header_t                           header;
-    bit_4                                 selected_pdu_session_type; // 9.11.4.11 V
-    bit_4                                 selected_ssc_mode;         // 9.11.4.16 V 1/2
-    octet_t                                authorized_qos_rules;      // 9.11.4.13 LV-E 6+
-    octet_6                                session_ambr;              // 9.11.4.14 LV 7
-    opt_t< uint8_t >                       cause;                     // 59 TV 2
-    opt_t< octet_t >                       pdu_address;               // 29 TLV 7+
-    opt_t< uint8_t >                       rq_timer;                  // 56 TV 2
-    opt_t< octet_t >                       s_nssai;                   // 22 TLV 3+
-    opt_t< bit_4 >                        always_on_pdu_session_ind; // 8- TV 1
-    opt_t< octet_t >                       mapped_eps_bearer_contexts;  // 75
-    opt_t< eap_t >                         eap;                         // 78 TLVE
-    opt_t< octet_t >                       authorized_qos_flow_descs;   // 79 TLVE
-    opt_t< octet_t >                       extended_pco;                // 7B TLVE
-    opt_t< dnn_t >                         dnn;                         // 25 TLV
-    opt_t< nsm_network_feature_support_t > nsm_network_feature_support; // XX TLV
-    opt_t< session_tmbr_t >                session_tmbr_t;              // XX TLV
-    opt_t< uint16_t >                      serving_plmn_rate_control;   // TBD TLV
-    opt_t< atsss_container_t >             atsss_container;             // XX TLVE
-    opt_t< bit_4 >                        control_plane_only_indi;     // XX TV 1
+    nsm_header_t                           header                    = {};
+    bit_4                                  selected_pdu_session_type = {}; // 9.11.4.11 V
+    bit_4                                  selected_ssc_mode    = {}; // 9.11.4.16 V 1/2
+    octet_t                                authorized_qos_rules = {}; // 9.11.4.13 LV-E 6+
+    octet_6                                session_ambr         = {}; // 9.11.4.14 LV 7
+    opt_t< uint8_t >                       nsm_cause                = {}; // 59 TV 2
+    opt_t< octet_t >                       pdu_address          = {}; // 29 TLV 7+
+    opt_t< uint8_t >                       rq_timer             = {}; // 56 TV 2
+    opt_t< octet_t >                       s_nssai              = {}; // 22 TLV 3+
+    opt_t< bit_4 >                         always_on_pdu_session_ind   = {}; // 8- TV 1
+    opt_t< octet_t >                       mapped_eps_bearer_contexts  = {}; // 75
+    opt_t< eap_t >                         eap                         = {}; // 78 TLVE
+    opt_t< octet_t >                       authorized_qos_flow_descs   = {}; // 79 TLVE
+    opt_t< octet_t >                       extended_pco                = {}; // 7B TLVE
+    opt_t< dnn_t >                         dnn                         = {}; // 25 TLV
+    opt_t< nsm_network_feature_support_t > nsm_network_feature_support = {}; // XX TLV
+    opt_t< session_tmbr_t >                session_tmbr_t              = {}; // XX TLV
+    opt_t< uint16_t >                      serving_plmn_rate_control   = {}; // TBD TLV
+    opt_t< atsss_container_t >             atsss_container             = {}; // XX TLVE
+    opt_t< bit_4 >                         control_plane_only_ind     = {}; // XX TV 1
 };
 
 // clang-format off
@@ -760,47 +736,14 @@ TBD	Re-attempt indicator	9.11.4.17	O	TLV	3
 // clang-format on
 struct pdu_session_establishment_reject_t {
     nsm_header_t     header                       = {};
-    uint8_t          cause                        = {}; // 9.11.4.2
+    uint8_t          nsm_cause                        = {}; // 9.11.4.2
     opt_t< uint8_t > backoff_timer                = {}; // 37 TLV
-    opt_t< bit_4 >  allowed_ssc_mode             = {}; // F- TV 1
+    opt_t< bit_4 >   allowed_ssc_mode             = {}; // F- TV 1
     opt_t< eap_t >   eap                          = {}; // 78 TLVE
     opt_t< octet_t > extended_pco                 = {}; // 7B TLVE
     opt_t< uint8_t > reattempt_ind                = {}; // TBD TLV 3
     opt_t< uint8_t > nsm_congestion_reattempt_ind = {}; // 61 TLV 3
 };
-
-result_t de_pdu_session_establishment_reject(dissector                           d,
-                                             context*                            ctx,
-                                             pdu_session_establishment_reject_t* ret) {
-    const use_context uc(&d, ctx, "pdu-session-establishment-reject", 0);
-    /*
-    Table 8.3.3.1.1: PDU SESSION ESTABLISHMENT REJECT message content
-    IEI	Information Element	Type/Reference	Presence	Format	Length
-        Extended protocol discriminator	Extended protocol discriminator	9.2	M	V	1
-        PDU session ID	PDU session identity	9.4	M	V	1
-        PTI	Procedure transaction identity	9.6	M	V	1
-        PDU SESSION ESTABLISHMENT REJECT message identity	Message type	9.7	M	V	1
-    */
-    // 5GSM cause	5GSM cause	9.11.4.2	M	V	1
-    de_uint8(d, ctx, &ret->cause);
-
-    // 37	Back-off timer value	GPRS timer 3	9.11.2.5	O	TLV	3
-    de_tl_uint8(d, ctx, 0x37, &ret->backoff_timer).step(d);
-
-    // F-	Allowed SSC mode	Allowed SSC mode	9.11.4.5	O	TV	1
-    de_tv_short(d, ctx, 0xf0, &ret->allowed_ssc_mode).step(d);
-
-    // 78	EAP message	EAP message	9.11.2.2	O	TLV-E	7-1503
-    de_tle_octet(d, ctx, 0x78, &ret->eap).step(d);
-
-    // 7B	Extended protocol configuration options	9.11.4.6	O	TLV-E	4-65538
-    de_tle_octet(d, ctx, 0x7b, &ret->extended_pco).step(d);
-
-    // TBD	Re-attempt indicator	9.11.4.17	O	TLV	3
-    // 61	5GSM congestion re-attempt indicator	9.11.4.21	O	TLV	3
-    de_tl_uint8(d, ctx, 0x61, &ret->reattempt_ind).step(d);
-    return {uc.consumed()};
-}
 
 /*
 Table 8.3.4.1.1: PDU SESSION AUTHENTICATION COMMAND message content
@@ -813,9 +756,9 @@ IEI	Information Element	Type/Reference	Presence	Format	Length
 7B	Extended protocol configuration options	9.11.4.6	O	TLV-E	4-65538
 */
 struct pdu_session_authentication_command_t {
-    nsm_header_t     header;
-    eap_t            eap;          // 9.11.2.2 LV-E 6+
-    opt_t< octet_t > extended_pco; // 7B 9.11.4.6 TLV-E
+    nsm_header_t     header       = {};
+    eap_t            eap          = {}; // 9.11.2.2 LV-E 6+
+    opt_t< octet_t > extended_pco = {}; // 7B 9.11.4.6 TLV-E
 };
 
 // clang-format off
@@ -831,9 +774,9 @@ IEI	Information Element	Type/Reference	Presence	Format	Length
 */
 // clang-format on
 struct pdu_session_authentication_complete_t {
-    nsm_header_t     header;
-    eap_t            eap;
-    opt_t< octet_t > extended_pco; // 7B 9.11.4.6 TLV-E
+    nsm_header_t     header       = {};
+    eap_t            eap          = {};
+    opt_t< octet_t > extended_pco = {}; // 7B 9.11.4.6 TLV-E
 };
 
 // clang-format off
@@ -849,9 +792,9 @@ IEI	Information Element	Type/Reference	Presence	Format	Length
 */
 // clang-format on
 struct pdu_session_authentication_result_t {
-    nsm_header_t     header;
-    opt_t< eap_t >   eap;          // 78 TLVE 7+
-    opt_t< octet_t > extended_pco; // 7B 9.11.4.6 TLV-E
+    nsm_header_t     header       = {};
+    opt_t< eap_t >   eap          = {}; // 78 TLVE 7+
+    opt_t< octet_t > extended_pco = {}; // 7B 9.11.4.6 TLV-E
 };
 
 // clang-format off
@@ -875,13 +818,13 @@ B-	Always-on PDU session requested	9.11.4.4	O	TV	1
 // clang-format on
 struct pdu_session_modification_request_t {
     nsm_header_t      header                          = {};
-    opt_t< octet_t >  capabilities                    = {}; // 28 TLV 3+
-    opt_t< uint8_t >  cause                           = {}; // 59 TV 2
+    opt_t< octet_t >  nsm_capabilities                    = {}; // 28 TLV 3+
+    opt_t< uint8_t >  nsm_cause                           = {}; // 59 TV 2
     opt_t< uint16_t > supported_packet_filters_max_n  = {}; // 55 TV 3
-    opt_t< bit_4 >   always_on_pdu_session_requested = {}; // B- TV 1
+    opt_t< bit_4 >    always_on_pdu_session_requested = {}; // B- TV 1
     opt_t< uint16_t > integrity_max_data_rate         = {}; // 13 TV 3
     opt_t< octet_t >  requested_qos_rules             = {}; // 7A TLVE
-    opt_t< octet_t >  requested_qos_flow_descs        = {}; // 79 TLVE
+    opt_t< octet_t >  requested_qos_flow_desces        = {}; // 79 TLVE
     opt_t< octet_t >  mapped_eps_bearer_contexts      = {}; // 75 TLVE
     opt_t< octet_t >  extended_pco                    = {}; // 7B TLVE
 };
@@ -903,7 +846,7 @@ TBD	Re-attempt indicator	9.11.4.17	O	TLV	3
 // clang-format on
 struct pdu_session_modification_reject_t {
     nsm_header_t            header                       = {};
-    uint8_t                 cause                        = {}; // 9.11.4.2 V 1
+    uint8_t                 nsm_cause                        = {}; // 9.11.4.2 V 1
     opt_t< uint8_t >        backoff_timer                = {}; // 37 TLV
     opt_t< extended_pco_t > extended_pco                 = {}; // 7B 9.11.4.6 TLV-E
     opt_t< uint8_t >        reattempt_ind                = {}; // TBD TLV
@@ -929,10 +872,10 @@ xx	Session-TMBR	Session-TMBR	9.11.4.19	O	TLV	8
 */
 struct pdu_session_modification_command_t {
     nsm_header_t                          header                     = {};
-    opt_t< uint8_t >                      cause                      = {}; // 59 TV
+    opt_t< uint8_t >                      nsm_cause                      = {}; // 59 TV
     opt_t< octet_6 >                      session_ambr               = {}; // 2A TLV
     opt_t< uint8_t >                      rq_timer                   = {}; // 56 TV 2
-    opt_t< bit_4 >                       always_on_pdu_session_ind  = {}; // 8- TV 1
+    opt_t< bit_4 >                        always_on_pdu_session_ind  = {}; // 8- TV 1
     opt_t< qos_rules_t >                  authorized_qos_rules       = {}; // 7A TLVE
     opt_t< mapped_eps_bearer_contexts_t > mapped_eps_bearer_contexts = {}; // 75 TLVE
     opt_t< qos_flow_descriptions_t >      authorized_qos_flow_descs  = {}; // 79 TLVE
@@ -966,7 +909,7 @@ IEI	Information Element	Type/Reference	Presence	Format	Length
 */
 struct pdu_session_modification_command_reject_t {
     nsm_header_t     header       = {};
-    uint8_t          cause        = {}; // 9.11.4.2
+    uint8_t          nsm_cause        = {}; // 9.11.4.2
     opt_t< octet_t > extended_pco = {}; // 7B TLVE
 };
 
@@ -982,7 +925,7 @@ IEI	Information Element	Type/Reference	Presence	Format	Length
 */
 struct pdu_session_release_request_t {
     nsm_header_t     header       = {};
-    opt_t< uint8_t > cause        = {}; // 59 TV 2
+    opt_t< uint8_t > nsm_cause        = {}; // 59 TV 2
     opt_t< octet_t > extended_pco = {}; // 7B TLVE
 };
 
@@ -998,7 +941,7 @@ IEI	Information Element	Type/Reference	Presence	Format	Length
 */
 struct pdu_session_release_reject_t {
     nsm_header_t     header       = {};
-    uint8_t          cause        = {}; // V 1
+    uint8_t          nsm_cause        = {}; // V 1
     opt_t< octet_t > extended_pco = {}; // 7B TLVE
 };
 
@@ -1016,8 +959,8 @@ IEI	Information Element	Type/Reference	Presence	Format	Length
 7B	Extended protocol configuration options	9.11.4.6	O	TLV-E	4-65538
 */
 struct pdu_session_release_command_t {
-    nsm_header_t header = {};
-    uint8_t          cause                        = {}; // 9.11.4.2 V 1
+    nsm_header_t     header                       = {};
+    uint8_t          nsm_cause                        = {}; // 9.11.4.2 V 1
     opt_t< uint8_t > backoff_timer                = {}; // 37 TLV
     opt_t< octet_t > eap                          = {}; // 78 TLVE
     opt_t< uint8_t > nsm_congestion_reattempt_ind = {}; // 61 TLV
@@ -1036,10 +979,9 @@ IEI	Information Element	Type/Reference	Presence	Format	Length
 */
 struct pdu_session_release_complete_t {
     nsm_header_t     header       = {};
-    opt_t< uint8_t > cause        = {}; // 59 TV 2 9.11.4.2
+    opt_t< uint8_t > nsm_cause        = {}; // 59 TV 2 9.11.4.2
     opt_t< octet_t > extended_pco = {}; // 7B TLVE
 };
-
 
 /*
 Table 8.3.16.1.1: 5GSM STATUS message content
@@ -1051,7 +993,6 @@ IEI	Information Element	Type/Reference	Presence	Format	Length
     5GSM cause	5GSM cause	9.11.4.2	M	V	1
 */
 struct nsm_status_t {
-    nsm_header_t header;
-    uint8_t      cause; // V 1 9.11.4.2
+    nsm_header_t header = {};
+    uint8_t      nsm_cause  = {}; // V 1 9.11.4.2
 };
-

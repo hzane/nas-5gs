@@ -33,7 +33,7 @@ result_t de_pdu_session_establishment_accept(dissector                          
     de_l_fixed(d, ctx, ret->session_ambr).step(d);
 
     // 59	5GSM cause	5GSM cause	9.11.4.2	O	TV	2
-    de_t_uint8(d, ctx, 0x59, &ret->cause).step(d);
+    de_t_uint8(d, ctx, 0x59, &ret->nsm_cause).step(d);
 
     // 29	PDU address	PDU address	9.11.4.10	O	TLV	7, 11 or 15
     de_tl_octet(d, ctx, 0x29, &ret->pdu_address).step(d);

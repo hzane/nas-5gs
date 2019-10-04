@@ -32,7 +32,7 @@ result_t de_dl_nas_transport(dissector d, context* ctx, dl_nas_transport_t* ret)
     de_tl_octet(d, ctx, 0x24, &ret->additional_information).step(d);
 
     // 58	5GMM cause	5GMM cause	9.11.3.2	O	TV	2
-    de_t_uint8(d, ctx, 0x58, &ret->cause).step(d);
+    de_t_uint8(d, ctx, 0x58, &ret->nmm_cause).step(d);
 
     // 37	Back-off timer value	GPRS timer 3	9.11.2.5	O	TLV	3
     de_tl_uint8(d, ctx, 0x37, &ret->backoff_timer).step(d);
