@@ -4,6 +4,9 @@
 #include "dissector.hh"
 #include "nas.hh"
 
+template < typename element_t >
+using dissect_func_t = result_t (*)(dissector, context*, element_t *);
+
 uint8_t ws_ctz8(uint8_t mask);
 
 result_t de_uint8(dissector d, context* ctx, uint8_t* ret);
@@ -12,7 +15,7 @@ result_t de_uint16(dissector d, context* ctx, uint16_t* ret);
 
 result_t de_l_uint8(dissector d, context* ctx, uint8_t* ret);
 
-result_t de_tl_uint8(dissector d, context* ctx, uint8_t ieid, opt_t<uint8_t>* ret);
+result_t de_tl_uint8(dissector d, context* ctx, uint8_t ieid, opt_t< uint8_t >* ret);
 
 result_t de_t_uint8(dissector         d,
                     context*          ctx,
@@ -20,31 +23,27 @@ result_t de_t_uint8(dissector         d,
                     opt_t< uint8_t >* ret,
                     uint8_t           mask = 0);
 
-result_t de_t_uint8(dissector         d,
-                    context*          ctx,
-                    uint8_t           ieid,
-                    uint8_t* ret,
-                    uint8_t           mask = 0);
+result_t de_t_uint8(dissector d,
+                    context*  ctx,
+                    uint8_t   ieid,
+                    uint8_t*  ret,
+                    uint8_t   mask = 0);
 
 result_t de_tv_short(dissector d, context* ctx, uint8_t ieid, opt_t< uint8_t >* ret);
 
 result_t de_octet(dissector d, context* ctx, octet_t* ret);
 
-result_t de_t_octet(dissector d,
-                    context*  ctx,
-                    uint8_t   ieid,
-                    opt_t<octet_t>*ret);
+result_t de_t_octet(dissector d, context* ctx, uint8_t ieid, opt_t< octet_t >* ret);
 
 result_t de_tl_octet(dissector d, context* ctx, uint8_t ieid, opt_t< octet_t >* ret);
 
 result_t de_tle_octet(dissector d, context* ctx, uint8_t ieid, opt_t< octet_t >* ret);
 
-result_t de_le_octet(dissector d, context* ctx, octet_t*ret);
+result_t de_le_octet(dissector d, context* ctx, octet_t* ret);
 
-result_t de_l_octet(dissector d, context* ctx, octet_t*ret);
+result_t de_l_octet(dissector d, context* ctx, octet_t* ret);
 
 result_t de_nibble(dissector d, context* ctx, uint8_t* ret);
-
 
 result_t de_t_uint16(dissector d, context* ctx, uint8_t ieid, opt_t< uint16_t >* ret);
 
@@ -52,9 +51,9 @@ result_t de_tl_uint16(dissector d, context* ctx, uint8_t ieid, opt_t< uint16_t >
 
 template < typename element_t >
 result_t de_l(dissector                   d,
-               context*                    ctx,
-               element_t*                  ret,
-               dissect_func_t< element_t > func) {
+              context*                    ctx,
+              element_t*                  ret,
+              dissect_func_t< element_t > func) {
     auto length = d.uint8();
     (void) func(d.slice(length), ctx, ret);
 
@@ -63,9 +62,9 @@ result_t de_l(dissector                   d,
 
 template < typename element_t >
 result_t de_t(dissector                   d,
-               context*                    ctx,
-               opt_t< element_t >*         ret,
-               dissect_func_t< element_t > func) {
+              context*                    ctx,
+              opt_t< element_t >*         ret,
+              dissect_func_t< element_t > func) {
     auto iei = d.uint8();
     if (iei != ret->iei && ret->iei != 0xffu) return {0};
     ret->present = true;
@@ -80,9 +79,9 @@ result_t de_t(dissector d, context* ctx, uint8_t ieid, uint8_t* ret);
 /* Type Length Value (TLV) element dissector */
 template < typename element_t >
 result_t de_tl(dissector                   d,
-                context*                    ctx,
-                opt_t< element_t >*         ret,
-                dissect_func_t< element_t > func) {
+               context*                    ctx,
+               opt_t< element_t >*         ret,
+               dissect_func_t< element_t > func) {
     auto iei = d.uint8();
     if (iei != ret->iei && ret->iei != 0xffu) return {0};
     ret->present = true;
@@ -95,9 +94,9 @@ result_t de_tl(dissector                   d,
 /* Type Extendable Length Value (TELV) element dissector */
 template < typename element_t >
 result_t de_tel(dissector                   d,
-                 context*                    ctx,
-                 opt_t< element_t >*         ret,
-                 dissect_func_t< element_t > func) {
+                context*                    ctx,
+                opt_t< element_t >*         ret,
+                dissect_func_t< element_t > func) {
     auto iei = d.uint8();
     if (iei != ret->iei && ret->iei != 0xffu) return {0};
     ret->present = true;
@@ -120,11 +119,12 @@ result_t de_tel(dissector                   d,
 /* Type Length Value Extended(TLV-E) element dissector TS 24.007 */
 template < typename element_t >
 result_t de_tle(dissector                   d,
-                  context*                    ctx,
-                  opt_t< element_t >*         ret,
-                  dissect_func_t< element_t > func) {
+                context*                    ctx,
+                uint8_t ieid,
+                opt_t< element_t >*         ret,
+                dissect_func_t< element_t > func) {
     auto iei = d.uint8();
-    if (iei != ret->iei && ret->iei != 0xffu) return {0};
+    if (iei != ieid && ieid != 0xffu) return {0};
     ret->present = true;
 
     const auto len = d.uint16();
@@ -137,9 +137,9 @@ result_t de_tle(dissector                   d,
 /* Length Value Extended(LV-E) element dissector */
 template < typename element_t >
 result_t de_le(dissector                   d,
-                 context*                    ctx,
-                 opt_t< element_t >*         ret,
-                 dissect_func_t< element_t > func) {
+               context*                    ctx,
+               opt_t< element_t >*         ret,
+               dissect_func_t< element_t > func) {
     ret->present   = true;
     const auto len = d.uint16();
 
@@ -164,7 +164,7 @@ result_t de_tl_fixed(dissector d, context* ctx, uint8_t ieid, opt_t< E >* ret) {
     if (ie != ieid || ieid != 0xffu) return {0};
 
     ret->present = true;
-    d.octet(ret->v, d.safe_length(len > sizeof(ret->v)? sizeof(ret->v): len));
+    d.octet(ret->v, d.safe_length(len > sizeof(ret->v) ? sizeof(ret->v) : len));
 
     return {1 + 1 + len};
 }
@@ -179,26 +179,26 @@ template < typename Slice >
 result_t de_le_fixed(dissector d, context*, Slice ret) {
     auto len = d.uint16(true);
 
-    auto l = d.octet(ret, sizeof(ret)>len ? len : sizeof(ret));
-    return {2+ len};
+    auto l = d.octet(ret, sizeof(ret) > len ? len : sizeof(ret));
+    return {2 + len};
 }
 
 template < typename Slice >
 result_t de_l_fixed(dissector d, context*, Slice ret) {
     auto len = d.uint8(true);
 
-    auto l = d.octet(ret, sizeof(ret)>len ? len : sizeof(ret));
-    return {1+ len};
+    auto l = d.octet(ret, sizeof(ret) > len ? len : sizeof(ret));
+    return {1 + len};
 }
 
-template<typename E>
-result_t de_tle_fixed(dissector d, context*ctx,uint8_t ieid, opt_t<E> *ret) {
+template < typename E >
+result_t de_tle_fixed(dissector d, context* ctx, uint8_t ieid, opt_t< E >* ret) {
     auto ie  = d.uint8(true);
     auto len = d.uint16(true);
     if (ie != ieid || ieid != 0xffu) return {0};
 
     ret->present = true;
-    d.octet(ret->v, d.safe_length(len > sizeof(ret->v)? sizeof(ret->v): len));
+    d.octet(ret->v, d.safe_length(len > sizeof(ret->v) ? sizeof(ret->v) : len));
 
     return {1 + 2 + len};
 }

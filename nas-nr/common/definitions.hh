@@ -3,8 +3,8 @@
 #include <optional>
 #include <variant>
 #include <vector>
+#include <memory>
 
-#include "nas.hh"
 struct packet;
 struct context;
 
@@ -119,6 +119,24 @@ struct security_mode_complete_t;
 struct security_mode_reject_t;
 
 struct nmm_status_t;
+
+struct nas_message_plain_t {
+    std::shared_ptr< nmm_message_t > nmm = {};
+    std::shared_ptr< nsm_message_t > nsm = {};
+};
+
+struct nas_message_protected_t {
+    uint8_t             epd                  = 0;  // 9.2
+    uint8_t             security_header_type = 0;  // 9.3
+    octet_4             auth_code            = {}; // 9.8
+    uint8_t             sequence_no          = 0;  // 9.10	Sequence number
+    nas_message_plain_t plain                = {}; // 9.9
+};
+
+struct nas_message_t {
+    std::shared_ptr< nas_message_plain_t >     plain;
+    std::shared_ptr< nas_message_protected_t > protect;
+};
 
 struct nmm_message_t {
     nmm_header_t                                       header;

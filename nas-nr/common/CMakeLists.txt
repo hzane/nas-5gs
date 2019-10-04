@@ -8,7 +8,6 @@ set(BASE_SRCS ber.cc
         dissector.cc
         dissector.hh
         dissects.cc
-        dissects.hh
         dnn.cc
         e212.cc
         eap.cc

@@ -1,21 +1,22 @@
+#include "dissects.hh"
+
 #include <cstring>
-#include "core.hh"
-#include "message.hh"
-#include "nas.hh"
+
 #include "ber.hh"
+#include "core.hh"
 #include "definitions.hh"
 #include "dissects.hh"
 #include "ies.hh"
+#include "message.hh"
 #include "messages.hh"
+#include "nas.hh"
 
-int dissect_nsm_message(dissector d, context* ctx, nsm_message_t* v);
-int dissect_nmm_message(dissector d, context* ctx, nmm_message_t* v);
+int result_t::step(dissector&d)const{
+    d.step(consumed);
+    return consumed;
+}
 
-
-int dissect_nas_plain(dissector d, context* ctx, nas_message_plain_t* v);
-int dissect_nas_protected(dissector d, context* ctx, nas_message_protected_t* v);
-
-int dissect_nas_message(dissector d, context* ctx, nas_message_t* v) {
+result_t de_nas_message(dissector d, context* ctx, nas_message_t* v) {
     /* 9.2 Extended protocol discriminator  octet 1 */
     auto epd = d.uint8(false);
 
@@ -24,14 +25,13 @@ int dissect_nas_message(dissector d, context* ctx, nas_message_t* v) {
 
     if (epd == epd::nsm || security_type == 0) {
         v->plain=std::make_shared<nas_message_plain_t>();
-        auto consumed = dissect_nas_plain(d, ctx, v->plain.get());
-        return consumed;
+        return de_nas_plain(d, ctx, v->plain.get());
     }
     v->protect = std::make_shared<nas_message_protected_t>();
-    return dissect_nas_protected(d, ctx, v->protect.get());
+    return de_nas_protected(d, ctx, v->protect.get());
 }
 
-int dissect_nas_protected(dissector d, context* ctx, nas_message_protected_t* v) {
+result_t dissect_nas_protected(dissector d, context* ctx, nas_message_protected_t* v) {
     const use_context uc(&d, ctx, "security protected nas message", 0);
 
     /* 9.2 Extended protocol discriminator  octet 1 */
@@ -49,32 +49,29 @@ int dissect_nas_protected(dissector d, context* ctx, nas_message_protected_t* v)
 
     // TODO: decrypt the body
     // This should work when the NAS ciphering algorithm is NULL (128-EEA0)
-    const auto consumed = dissect_nas_plain(d, ctx, &v->plain);
-    d.step(consumed);
+    de_nas_plain(d, ctx, &v->plain).step(d);
 
-    return uc.length;
+    return {uc.length};
 }
 
 /* Plain NAS 5GS Message */
-int dissect_nas_plain(dissector d, context* ctx, nas_message_plain_t* v) {
+result_t dissect_nas_plain(dissector d, context* ctx, nas_message_plain_t* v) {
     const use_context uc(&d, ctx, "plain-nas-message", 0);
 
     /* Extended protocol discriminator  octet 1 */
     const auto epd = d.uint8(false);
-    auto       consumed = 0;
 
     if (epd == epd::nmm) {
         v->nmm = std::make_shared<nmm_message_t>();
-        consumed = dissect_nmm_message(d, ctx, v->nmm.get());
+        de_nmm_message(d, ctx, v->nmm.get()).step(d);
     } else if (epd == epd::nsm) {
         v->nsm = std::make_shared<nsm_message_t>();
-        consumed = dissect_nsm_message(d, ctx, v->nsm.get());
+        de_nsm_message(d, ctx, v->nsm.get()).step(d);
     } else {
         diag("unknown epd %d\n", epd);
     }
-    d.step(consumed);
 
-    return uc.length;
+    return {uc.length};
 }
 
 struct message_desc_t {
@@ -87,13 +84,13 @@ struct message_desc_t {
 #define DISSECT(mt, X)                              \
     case mt:                                        \
         v-> X = std::make_shared< X##_t >();     \
-        (void) dissect_##X(d, ctx, (v-> X).get()); \
+        (void) de_##X(d, ctx, (v-> X).get()); \
         break;
 
-int dissect_nsm_message(dissector d, context* ctx, nsm_message_t* v) {
+result_t dissect_nsm_message(dissector d, context* ctx, nsm_message_t* v) {
     const use_context uc(&d, ctx, "session-management-message", 0);
 
-    dissect_nsm_header(d, ctx, &v->header);
+    de_nsm_header(d, ctx, &v->header);
 
     switch (v->header.message_type) {
     case 0xc4:
@@ -117,14 +114,14 @@ int dissect_nsm_message(dissector d, context* ctx, nsm_message_t* v) {
         break;
     }
 
-    return uc.length;
+    return {uc.length};
 }
 
 extern const message_desc_t nmm_messages[];
-int dissect_nmm_message(dissector d, context* ctx, nmm_message_t* v) {
+result_t dissect_nmm_message(dissector d, context* ctx, nmm_message_t* v) {
     const use_context uc(&d, ctx, "mobile-management-message", 0);
 
-    dissect_nmm_header(d, ctx, &v->header);
+    de_nmm_header(d, ctx, &v->header);
     switch(v->header.message_type){
         DISSECT(0x41, registration_request);
         DISSECT(0x42, registration_accept);
@@ -157,20 +154,20 @@ int dissect_nmm_message(dissector d, context* ctx, nmm_message_t* v) {
     default:
         break;
     }
-    return 0;
+    return {0};
 }
 
-int dissect_nsm_header(dissector d, context* ctx, nsm_header_t* ret) {
+result_t de_nsm_header(dissector d, context* ctx, nsm_header_t* ret) {
     ret->epd            = d.uint8();
     ret->pdu_session_id = d.uint8();
     ret->pti            = d.uint8();
     ret->message_type   = d.uint8();
-    return 4;
+    return {4};
 }
 
-int dissect_nmm_header(dissector d, context* ctx, nmm_header_t* ret) {
+result_t de_nmm_header(dissector d, context* ctx, nmm_header_t* ret) {
     ret->epd                  = d.uint8();
     ret->security_header_type = d.uint8() & 0x0fu;
     ret->message_type         = d.uint8();
-    return 3;
+    return {3};
 }

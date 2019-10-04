@@ -1,5 +1,4 @@
 #include <cstring>
-#include "nas.hh"
 #include "dissector.hh"
 
 dissector dissector::slice(int len) const {

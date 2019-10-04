@@ -13,15 +13,15 @@ set(MM_SRCS  abba.cc
         authentication_response_parameter.cc
         authentication_result.cc
         configuration_update_cmd.cc
-        configuration_update_cmpl.cc
+        configuration_update_complete.cc
         configuration_update_indication.cc
         daylight_saving_time.cc
-        deregistration_accept_ue_origin.cc
-        deregistration_accept_ue_terminate.cc
-        deregistration_request_ue_origin.cc
-        deregistration_request_ue_terminate.cc
+        deregistration_accept_ue_orig.cc
+        deregistration_accept_ue_term.cc
+        deregistration_request_ue_orig.cc
+        deregistration_request_ue_term.cc
         deregistration_type.cc
-        downlink_nas_transparent.cc
+        dl_nas_transport.cc
         drx_parameters.cc
         emergency_number_list.cc
         eps_bearer_context_status.cc
@@ -81,7 +81,7 @@ set(MM_SRCS  abba.cc
         security_mode_command.cc
         security_mode_complete.cc
         security_mode_reject.cc
-        security_protected_5gs_nas_message.cc
+        security_protected_nr_nas_message.cc
         service_accept.cc
         service_area_list.cc
         service_reject.cc
@@ -97,7 +97,7 @@ set(MM_SRCS  abba.cc
         ue_status.cc
         ue_usage_setting.cc
         uplink_data_status.cc
-        uplink_nas_transport.cc    )
+        ul_nas_transport.cc)
 
 add_library(nas-nr-mm ${MM_SRCS})
 # set_property(TARGET nas-nr-mm PROPERTY POSITION_INDEPENDENT_CODE TRUE)

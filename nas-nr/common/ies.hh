@@ -36,10 +36,10 @@ struct intra_n1_mode_container_t {
     octet_4 auth_code;      // Message authentication code	octet 3-6
     bit_4   integrity_algo; // Type of integrity protection algorithm	octet 7
     bit_4   ciphering_algo; // Type of ciphering algorithm
-    bit_3 nksi;             // TSC	Key set identifier in 5G	octet 8
-    bit_1   tsc;              // TSC
-    bit_1   kacf;             // KACF
-    uint8_t seq_no;           // Sequence number	octet 9
+    bit_3   nksi;           // TSC	Key set identifier in 5G	octet 8
+    bit_1   tsc;            // TSC
+    bit_1   kacf;           // KACF
+    uint8_t seq_no;         // Sequence number	octet 9
 };
 
 /*
@@ -63,10 +63,10 @@ Mapped HPLMN SST	octet 7*
 Mapped HPLMN SD	octet 8*  octet 10*
 */
 struct s_nssai_t {
-    uint8_t          sst;              // SST	octet 3
-    opt_t< octet_3 > sd;               // SD	octet 4-6*
-    opt_t< uint8_t > mapped_hplmn_sst; // Mapped HPLMN SST	octet 7*
-    opt_t< octet_3 > mapped_hplmn_sd;  // Mapped HPLMN SD	octet 8-10*
+    uint8_t          sst              = {}; // SST	octet 3
+    opt_t< octet_3 > sd               = {}; // SD	octet 4-6*
+    opt_t< uint8_t > mapped_hplmn_sst = {}; // Mapped HPLMN SST	octet 7*
+    opt_t< octet_3 > mapped_hplmn_sd  = {}; // Mapped HPLMN SD	octet 8-10*
 };
 
 /*
@@ -80,13 +80,13 @@ NCC	TSC	Key set identifier in 5G	octet 8
 0 Spare
 */
 struct s1_mode_to_n1_mode_container_t {
-    octet_4 auth_code;      // Message authentication code	octet 3-6
-    bit_4   integrity_algo; // Type of integrity protection algorithm	octet 7
-    bit_4   ciphering_algo; // Type of ciphering algorithm
-    bit_3   nksi;           // Key set identifier in 5G	octet 8
-    bit_1   tsc;            // TSC
-    bit_4   ncc;            // NCC
-    uint8_t spare;          // octet 9
+    octet_4 auth_code      = {}; // Message authentication code	octet 3-6
+    bit_4   integrity_algo = {}; // Type of integrity protection algorithm	octet 7
+    bit_4   ciphering_algo = {}; // Type of ciphering algorithm
+    bit_3   nksi           = {}; // Key set identifier in 5G	octet 8
+    bit_1   tsc            = {}; // TSC
+    bit_4   ncc            = {}; // NCC
+    uint8_t spare          = {}; // octet 9
 };
 
 /*
@@ -100,17 +100,17 @@ Length of 5GMM capability contents	octet 2	SGC
 Spare	0
 */
 struct nmm_capability_t {
-    bool   oct4_present;
-    bit_1  s1_mode;     // S1 modeoctet 3
-    bit_1 ho_attach;   // HO attach
-    bit_1 lpp;         // LPP
-    bit_1 restrict_ec; // RestrictEC
-    bit_1 ncp_ciot;    // 5G-CP CIoT
-    bit_1 n3data;      // N3 data
-    bit_1 nhccp_ciot;  // 5G-HC-CP CIoT
-    bit_1 sgc; // SGC
-    bit_1  nsrvcc;      // 5GSRVCC	octet 4*
-    bit_1 nup_ciot;    // 5G-UP CIoT
+    bool  oct4_present = false;
+    bit_1 s1_mode      = {}; // S1 modeoctet 3
+    bit_1 ho_attach    = {}; // HO attach
+    bit_1 lpp          = {}; // LPP
+    bit_1 restrict_ec  = {}; // RestrictEC
+    bit_1 ncp_ciot     = {}; // 5G-CP CIoT
+    bit_1 n3data       = {}; // N3 data
+    bit_1 nhccp_ciot   = {}; // 5G-HC-CP CIoT
+    bit_1 sgc          = {}; // SGC
+    bit_1 nsrvcc       = {}; // 5GSRVCC	octet 4*
+    bit_1 nup_ciot     = {}; // 5G-UP CIoT
 };
 
 /*
@@ -162,12 +162,12 @@ AMF Set ID (continued)	AMF Pointer	octet 10
 */
 
 struct guti_nmid_t {
-    bit_3     type;          // octet 4
-    mcc_mnc_t mccmnc;        // octet 5-7
-    uint8_t   afm_region_id; // octet 8
-    bit_a     afm_set_id;    // octet 9
-    bit_6     amf_pointer;   // octet 10
-    octet_4   tmsi;          // octet 11-14
+    bit_3     type          = {}; // octet 4
+    mcc_mnc_t mccmnc        = {}; // octet 5-7
+    uint8_t   afm_region_id = {}; // octet 8
+    bit_a     afm_set_id    = {}; // octet 9
+    bit_6     amf_pointer   = {}; // octet 10
+    octet_4   tmsi          = {}; // octet 11-14
 };
 /*
 Figure 9.11.3.4.2: 5GS mobile identity information element for type of identity or "IMEI"
@@ -218,9 +218,9 @@ Spare	Type of identity	octet 4 SUCI NAI	octet 5 - y
 
 struct suci_nmid_t {
     struct format_000_t {
-        bit_3 type; // Type of identity	octet 4
-        bit_3                                   supi_format;                //
-        mcc_mnc_t                               mccmnc;                     //
+        bit_3                                   type;        // Type of identity	octet 4
+        bit_3                                   supi_format; //
+        mcc_mnc_t                               mccmnc;      //
         octet_4                                 routing_indicator;          //
         bit_4                                   protection_scheme_id;       //
         uint8_t                                 home_network_public_key_id; //
@@ -233,9 +233,9 @@ struct suci_nmid_t {
         octet_t suci_nai;    //
     };
 
-    bit_3                           supi_format; //
-    std::shared_ptr< format_001_t > nai;         //
-    std::shared_ptr< format_000_t > imsi;        //
+    bit_3                           supi_format = {}; //
+    std::shared_ptr< format_001_t > nai         = {}; //
+    std::shared_ptr< format_000_t > imsi        = {}; //
 };
 using suci_nmid_format_000_t = suci_nmid_t::format_000_t;
 using suci_nmid_format_001_t = suci_nmid_t::format_001_t;
@@ -254,10 +254,10 @@ identity	octet 4 AMF Set ID	octet 5 AMF Set ID (continued)	AMF Pointer	octet 6
 
 */
 struct stmsi_nmid_t {
-    bit_3   type;        //
-    bit_a   amf_set_id;  //
-    bit_6   amf_pointer; //
-    octet_4 tmsi;        //
+    bit_3   type        = {}; //
+    bit_a   amf_set_id  = {}; //
+    bit_6   amf_pointer = {}; //
+    octet_4 tmsi        = {}; //
 };
 
 /*
@@ -269,7 +269,7 @@ of identity	octet 4
 
 */
 struct noid_nmid_t {
-    bit_3 type; //
+    bit_3 type = {}; //
 };
 
 /* MAC address
@@ -278,8 +278,8 @@ mobile identity contents	octet 2  octet 3 0 spare	Type of identity	octet 4 MAC
 address	octet 5  octet 10
 */
 struct mac_nmid_t {
-    bit_3   type; //
-    octet_6 mac;  //
+    bit_3   type = {}; //
+    octet_6 mac  = {}; //
 };
 
 struct nmid_t {
@@ -304,19 +304,19 @@ MPSI	IWK N26	EMF	EMC	IMS- VoPS-N3GPP	IMS- VoPS-3GPP
 Spare
 */
 struct nnetwork_feature_support_t {
-    bit_1 ims_vops_3gpp;  //
-    bit_1 ims_vops_n3gpp; //
-    bit_2 emc;            //
-    bit_2 emf;            //
-    bit_1 iwk_n26;        //
-    bit_1 mpsi;           //
-    bit_1 emcn3;          //
-    bit_1 mcsi;           //
-    bit_1 restrict_ec;    //
-    bit_1 ncp_ciot;       //
-    bit_1 n3data;         //
-    bit_1 nhc_cp_ciot;    //
-    bit_1 nup_ciot;       //
+    bit_1 ims_vops_3gpp  = {}; //
+    bit_1 ims_vops_n3gpp = {}; //
+    bit_2 emc            = {}; //
+    bit_2 emf            = {}; //
+    bit_1 iwk_n26        = {}; //
+    bit_1 mpsi           = {}; //
+    bit_1 emcn3          = {}; //
+    bit_1 mcsi           = {}; //
+    bit_1 restrict_ec    = {}; //
+    bit_1 ncp_ciot       = {}; //
+    bit_1 n3data         = {}; //
+    bit_1 nhc_cp_ciot    = {}; //
+    bit_1 nup_ciot       = {}; //
 };
 
 /* 9.11.3.6 5GS registration result
@@ -326,8 +326,8 @@ Length of 5GS registration result contents	octet 2
 0 Spare	SMS allowed	5GS registration result value
 */
 struct nregistration_result_t {
-    bit_3 result;      //
-    bit_1 sms_allowed; //
+    bit_3 result      = {}; //
+    bit_1 sms_allowed = {}; //
 };
 
 /* 9.11.3.7 5GS registration type
@@ -348,21 +348,21 @@ TAC (continued)	octet 7
 */
 
 struct ntracking_area_id_t {
-    mcc_mnc_t mcc_mnc; //
-    octet_3   tac;     //
+    mcc_mnc_t mcc_mnc = {}; //
+    octet_3   tac     = {}; //
 };
 
 struct ntai_list_00_t {
-    bit_4                  number; // +1
-    bit_2                  type;   // 00
-    mcc_mnc_t              mccmnc; //
-    std::vector< octet_3 > tac;    //
+    bit_4                  number = {}; // +1
+    bit_2                  type   = {}; // 00
+    mcc_mnc_t              mccmnc = {}; //
+    std::vector< octet_3 > tac    = {}; //
 };
 struct ntai_list_01_t {
-    bit_4     number; // +1
-    bit_2     type;   // 01
-    mcc_mnc_t mccmnc; //
-    octet_3   tac;    //
+    bit_4     number = {}; // +1
+    bit_2     type   = {}; // 01
+    mcc_mnc_t mccmnc = {}; //
+    octet_3   tac    = {}; //
 };
 struct ntai_list_10_t {
     bit_4                              number; // +1
@@ -444,9 +444,9 @@ Length of 5GS update type	octet 2
 0 Spare	PNB-CIoT	NG-RAN-RCU	SMS requested
 */
 struct nupdate_type_t {
-    bit_1 sms_requested; //
-    bit_1 nran_rcu;      //
-    bit_2 pnb_ciot;      //
+    bit_1 sms_requested = {}; //
+    bit_1 nran_rcu      = {}; //
+    bit_2 pnb_ciot      = {}; //
 };
 
 /*
@@ -866,11 +866,11 @@ SD	octet 3*  octet 5*
 */
 struct rejected_nssai_t {
     struct nssai_t {
-        bit_4            cause; //
-        uint8_t          sst;   //
-        opt_t< uint8_t > sd;    //
+        bit_4            cause = {}; //
+        uint8_t          sst   = {}; //
+        opt_t< uint8_t > sd    = {}; //
     };
-    std::vector< nssai_t > nssai; //
+    std::vector< nssai_t > nssai = {}; //
 };
 
 /*
@@ -1455,7 +1455,7 @@ struct qos_rule_t {
 };
 
 using qos_rule_packet_filter_delete_t = qos_rule_t::packet_filter_delete_t;
-using qos_rule_packet_filter_add_t = qos_rule_t::packet_filter_add_t;
+using qos_rule_packet_filter_add_t    = qos_rule_t::packet_filter_add_t;
 using qos_rule_packet_filter_t        = qos_rule_t::packet_filter_t;
 
 struct qos_rules_t {

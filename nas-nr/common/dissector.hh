@@ -26,6 +26,3 @@ void up_link(packet*);
 void down_link(packet*);
 
 struct context;
-
-template < typename element_t >
-using dissect_func_t = int (*)(dissector, context*, element_t *);
