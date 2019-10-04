@@ -2,25 +2,37 @@
   <dictionary name="hzane">
     <words>
       <w>ambr</w>
+      <w>atsss</w>
       <w>autn</w>
       <w>backoff</w>
       <w>bstring</w>
       <w>bufview</w>
+      <w>classmark</w>
       <w>deregistration</w>
       <w>differentiator</w>
       <w>downlink</w>
       <w>eplmnc</w>
       <w>gbcd</w>
       <w>gprs</w>
+      <w>guti</w>
       <w>hstring</w>
       <w>ieid</w>
+      <w>imeisv</w>
       <w>istring</w>
+      <w>ladn</w>
       <w>maxlen</w>
+      <w>mico</w>
       <w>nksi</w>
+      <w>nmid</w>
       <w>nreq</w>
+      <w>nrmm</w>
+      <w>nssai</w>
+      <w>plmn</w>
+      <w>plmns</w>
       <w>ratc</w>
       <w>rstring</w>
       <w>tlve</w>
+      <w>tmbr</w>
       <w>tmsi</w>
       <w>unrep</w>
       <w>uplink</w>
