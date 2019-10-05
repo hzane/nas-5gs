@@ -65,6 +65,7 @@ unsigned int ws_ctz(uint64_t mask);
 uint8_t ws_ctz8(uint8_t mask);
 
 uint8_t mask_u8(uint8_t v, uint8_t mask);
+uint16_t mask_u16(uint16_t v, uint16_t mask);
 
 struct authentication_vector {
     uint8_t kasme[32] ;                // ASME key

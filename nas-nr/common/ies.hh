@@ -247,7 +247,7 @@ struct mcc_mnc_t {
     uint16_t mnc; //
 };
 
-result_t die_mcc_mnc(dissector d, context* ctx, mcc_mnc_t*ret){
+result_t die_mcc_mnc(dissector d, context* ctx, mcc_mnc_t* ret) {
     const use_context uc(&d, ctx, "mcc-mnc", 0);
     auto              a = d.uint8(true), b = d.uint8(true), c = d.uint8(true);
 
@@ -292,7 +292,7 @@ struct guti_nmid_t {
     octet_4   tmsi          = {}; // octet 11-14
 };
 
-result_t die_guti_nmid(dissector d, context* ctx, guti_nmid_t*ret){
+result_t die_guti_nmid(dissector d, context* ctx, guti_nmid_t* ret) {
     const use_context uc(&d, ctx, "guti-nr-mobile-id", 0);
 
     de_uint8(d, ctx, &ret->type, 0x07).step(d);
@@ -317,21 +317,21 @@ Identity digit 1	odd/ even indic	Type of identity	octet 4
 Identity digit p+1	Identity digit p	octet 5*
 */
 struct imeisv_nmid_t {
-    bit_3                type;    // Type of identity	octet 4
-    bit_1                odd_ind; // odd/ even indic
-    std::string          digits; // octet 5*
+    bit_3       type;    // Type of identity	octet 4
+    bit_1       odd_ind; // odd/ even indic
+    std::string digits;  // octet 5*
 };
 
 using imei_nmid_t = imeisv_nmid_t;
 
-result_t die_imeisv_nmid(dissector d, context* ctx, imeisv_nmid_t*ret){
+result_t die_imeisv_nmid(dissector d, context* ctx, imeisv_nmid_t* ret) {
     const use_context uc(&d, ctx, "imeisv-nr-mobile-id", 0);
 
     static const char bcds[] = "0123456789????\0";
     ret->type                = umask_u8(d.uint8(false), 0x07);
-    ret->odd_ind = mask_u8(d.uint8(false) , 0x08);
+    ret->odd_ind             = mask_u8(d.uint8(false), 0x08);
     ret->digits.push_back(bcds[mask_u8(d.uint8(true), 0xf0u)]);
-    while(d.length>0){
+    while (d.length > 0) {
         auto i = d.uint8(true);
         ret->digits.push_back(bcds[mask_u8(i, 0x0fu)]);
         ret->digits.push_back(bcds[mask_u8(i, 0xf0u)]);
@@ -389,14 +389,14 @@ struct suci_nmid_t {
         octet_t suci_nai;    //
     };
 
-    bit_3                           supi_format = {}; //
-    std::shared_ptr< nai_t > nai         = {}; // supi_format = 000
+    bit_3                     supi_format = {}; //
+    std::shared_ptr< nai_t >  nai         = {}; // supi_format = 000
     std::shared_ptr< imsi_t > imsi        = {}; // supi_format = 001
 };
 using suci_imsi_nmid_t = suci_nmid_t::imsi_t;
-using suci_nai_nmid_t = suci_nmid_t::nai_t;
+using suci_nai_nmid_t  = suci_nmid_t::nai_t;
 
-result_t die_suci_nai_nmid(dissector d, context* ctx, suci_nmid_t::nai_t*ret){
+result_t die_suci_nai_nmid(dissector d, context* ctx, suci_nmid_t::nai_t* ret) {
     const use_context uc(&d, ctx, "suci-nmid-nai", 0);
 
     de_uint8(d, ctx, &ret->type, 0x07);
@@ -405,7 +405,7 @@ result_t die_suci_nai_nmid(dissector d, context* ctx, suci_nmid_t::nai_t*ret){
 
     return {uc.consumed()};
 }
-result die_suci_imsi_nmid(dissector d, context, suci_nmid_t::imsi_t*ret){
+result die_suci_imsi_nmid(dissector d, context, suci_nmid_t::imsi_t* ret) {
     const use_context uc(&d, ctx, "suci-nmid-imsi", 0);
 
     de_uint8(d, ctx, &ret->type, 0x07);
@@ -415,21 +415,21 @@ result die_suci_imsi_nmid(dissector d, context, suci_nmid_t::imsi_t*ret){
     de_nibble(d, ctx, &ret->protection_scheme_id).step(d);
     de_uint8(d, ctx, &ret->home_network_public_key_id).step(d);
 
-    if (ret->protection_scheme_id == 0){ // null scheme
+    if (ret->protection_scheme_id == 0) { // null scheme
         ret->msin = std::make_shared< std::vector< bit_4 > >();
         while (d.length > 0) {
             auto a = d.uint8(true);
             ret->msin->push_back(mask_u8(a, 0x0fu));
             ret->msin->push_back(mask_u8(a, 0xf0u));
         }
-    }else{
+    } else {
         ret->scheme_output = std::move(octet_t(d.safe_ptr(), d.safe_ptr() + d.length));
         d.step(d.length);
     }
     return {uc.consumed()};
 }
 
-result_t die_suci_nmid(dissector d, context* ctx, suci_nmid_t*ret){
+result_t die_suci_nmid(dissector d, context* ctx, suci_nmid_t* ret) {
     const use_context uc(&d, ctx, "suci-nr-mobile-id", 0);
     ret->supi_format = mask_u8(d.uint8(false), 0x70u);
     if (ret->supi_format == 0) { // imsi
@@ -463,11 +463,11 @@ struct s_tmsi_nmid_t {
     octet_4 tmsi        = {}; //
 };
 
-result_t die_s_tmsi_nmi(dissector d, context* ctx, s_tmsi_nmid_t*ret){
+result_t die_s_tmsi_nmi(dissector d, context* ctx, s_tmsi_nmid_t* ret) {
     const use_context uc(&d, ctx, "s-tmsi-nr-mobile-id", 0);
 
-    ret->type = mask_u8(d.uint8(true), 0x07u);
-    ret->amf_set_id = mask_u16(d.uint16(false), 0xffc0u);
+    ret->type        = mask_u8(d.uint8(true), 0x07u);
+    ret->amf_set_id  = mask_u16(d.uint16(false), 0xffc0u);
     ret->amf_pointer = mask_u8(d.uint8(true, 1), 0x3fu);
     de_fixed(d, ctx, &ret->tmsi).step(d);
 
@@ -486,7 +486,7 @@ struct noid_nmid_t {
     bit_3 type = {}; //
 };
 
-result_t die_noid_nmid(dissector d, context* ctx, noid_nmid_t*ret){
+result_t die_noid_nmid(dissector d, context* ctx, noid_nmid_t* ret) {
     ret->type = mask_u8(d.uint8(true), 0x07u);
     return {1};
 }
@@ -501,7 +501,7 @@ struct mac_nmid_t {
     octet_6 mac  = {}; //
 };
 
-result_t die_mac_nmid(dissector d, context* ctx, mac_nmid_t*ret){
+result_t die_mac_nmid(dissector d, context* ctx, mac_nmid_t* ret) {
     ret->type = mask_u8(d.uint8(true), 0x07u);
     de_fixed(d, ctx, ret->mac).step(d);
 
@@ -519,11 +519,11 @@ struct nmid_t {
 };
 using nmobile_id_t = nmid_t;
 
-result_t die_nmid(dissector d, context* ctx, nmid_t*ret){
-    ret->type = d.uint8(false)& 0x07u;
+result_t die_nmid(dissector d, context* ctx, nmid_t* ret) {
+    ret->type = d.uint8(false) & 0x07u;
     switch (ret->type) {
     case 0: // no id
-        ret->noid = std::make_shared<noid_nmid_t>();
+        ret->noid = std::make_shared< noid_nmid_t >();
         return die_noid_nmid(d, ctx, ret->noid.get());
     case 1: // suci
         ret->suci = std::make_shared< suci_nmid_t >();
@@ -535,7 +535,7 @@ result_t die_nmid(dissector d, context* ctx, nmid_t*ret){
         ret->imei = std::make_shared< imei_nmid_t >();
         return die_imeisv_nmid(d, ctx, ret->imei.get());
     case 4: // nr-s-tmsi
-        ret->stmsi=std::make_shared< stmsi_nmid_t >();
+        ret->stmsi = std::make_shared< stmsi_nmid_t >();
         return die_s_tmsi_nmi(d, ctx, ret->stmsi.get());
     case 5: // imeisv
         ret->imei = std::make_shared< imei_nmid_t >();
@@ -559,40 +559,42 @@ Spare
 */
 // 9.11.3.5	5GS network feature support
 struct nr_network_feature_support_t {
-    bit_1 ims_vops_3gpp  = {}; //
-    bit_1 ims_vops_n3gpp = {}; //
-    bit_2 emc            = {}; //
-    bit_2 emf            = {}; //
-    bit_1 iwk_n26        = {}; //
-    bit_1 mpsi           = {}; //
-    bit_1 emcn3          = {}; //
-    bit_1 mcsi           = {}; //
-    bit_1 restrict_ec    = {}; //
-    bit_1 ncp_ciot       = {}; //
-    bit_1 n3data         = {}; //
-    bit_1 nhc_cp_ciot    = {}; //
-    bit_1 nup_ciot       = {}; //
+    bit_1   ims_vops_3gpp  = {}; //
+    bit_1   ims_vops_n3gpp = {}; //
+    bit_2   emc            = {}; //
+    bit_2   emf            = {}; //
+    bit_1   iwk_n26        = {}; //
+    bit_1   mpsi           = {}; //
+    bit_1   emcn3          = {}; //
+    bit_1   mcsi           = {}; //
+    bit_1   restrict_ec    = {}; //
+    bit_1   ncp_ciot       = {}; //
+    bit_1   n3data         = {}; //
+    bit_1   nhc_cp_ciot    = {}; //
+    bit_1   nup_ciot       = {}; //
     uint8_t spare          = {};
 };
 
-result_t die_nr_network_feature_support(dissector d, context* ctx, nr_network_feature_support_t*ret){
+result_t die_nr_network_feature_support(dissector                     d,
+                                        context*                      ctx,
+                                        nr_network_feature_support_t* ret) {
     const use_context uc(&d, ctx, "nr-network-feature-support", 1);
     auto              o3 = d.uint8(true), o4 = d.uint8(true);
 
-    ret->ims_vops_3gpp = mask_u8(o3, 0x01);
-    ret->ims_vops_n3gpp       = mask_u8(o3, 0x02);
-    ret->emc = mask_u8(o3, 0x0c);
+    ret->ims_vops_3gpp  = mask_u8(o3, 0x01);
+    ret->ims_vops_n3gpp = mask_u8(o3, 0x02);
+    ret->emc            = mask_u8(o3, 0x0c);
 
-    ret->emf                  = mask_u8(o3, 0x30u);
-    ret->iwk_n26              = mask_u8(o3, 0x40u);
-    ret->mpsi                 = mask_u8(o3, 0x80u);
+    ret->emf     = mask_u8(o3, 0x30u);
+    ret->iwk_n26 = mask_u8(o3, 0x40u);
+    ret->mpsi    = mask_u8(o3, 0x80u);
 
-    ret->emcn3 = mask_u8(o4, 0x01);
-    ret->mcsi  = mask_u8(o4, 0x02);
+    ret->emcn3       = mask_u8(o4, 0x01);
+    ret->mcsi        = mask_u8(o4, 0x02);
     ret->restrict_ec = mask_u8(o4, 0x04);
     ret->ncp_ciot    = mask_u8(o4, 0x08);
 
-    ret->n3data = mask_u8(o4, 0x10);
+    ret->n3data      = mask_u8(o4, 0x10);
     ret->nhc_cp_ciot = mask_u8(o4, 0x20);
     ret->nup_ciot    = mask_u8(o4, 0x40);
 
@@ -628,11 +630,10 @@ TAC (continued)	octet 7
 */
 struct nr_tracking_area_id_t {
     mcc_mnc_t mccmnc = {}; //
-    octet_3   tac     = {}; //
+    octet_3   tac    = {}; //
 };
 
-result_t die_nr_tracking_area_id(dissector d, context* ctx, nr_tracking_area_id_t*ret){
-
+result_t die_nr_tracking_area_id(dissector d, context* ctx, nr_tracking_area_id_t* ret) {
     die_mcc_mnc(d, ctx, ret->mccmnc).step(d);
     de_fixed(d, ctx, ret->tac).step(d);
 
@@ -643,10 +644,10 @@ struct partial_tai_list_00_t {
     bit_5                  number = {}; // +1
     bit_2                  type   = {}; // 00
     mcc_mnc_t              mccmnc = {}; //
-    std::vector< octet_3 > taces    = {}; //
+    std::vector< octet_3 > taces  = {}; //
 };
 
-result_t die_partial_tai_list_00(dissector d, context* ctx, partial_tai_list_00_t*ret){
+result_t die_partial_tai_list_00(dissector d, context* ctx, partial_tai_list_00_t* ret) {
     const use_context uc(&d, ctx, "partial-tai-id", 0);
 
     de_uint8(d, ctx, &ret->number, 0x1fu);
@@ -664,10 +665,10 @@ result_t die_partial_tai_list_00(dissector d, context* ctx, partial_tai_list_00_
 }
 
 struct partial_tai_list_01_t {
-    bit_5     number = {}; // +1
-    bit_2     type   = {}; // 01
-    mcc_mnc_t mccmnc = {}; //
-    octet_3   tac    = {}; //
+    bit_5                  number = {}; // +1
+    bit_2                  type   = {}; // 01
+    mcc_mnc_t              mccmnc = {}; //
+    octet_3                tac    = {}; //
     std::vector< octet_3 > others = {};
 };
 
@@ -690,8 +691,8 @@ result_t die_partial_tai_list_01(dissector d, context* ctx, partial_tai_list_01_
 }
 
 struct partial_tai_list_10_t {
-    bit_5                              number; // +1
-    bit_2                              type;   // 01
+    bit_5                                number; // +1
+    bit_2                                type;   // 01
     std::vector< nr_tracking_area_id_t > ids;    //
 };
 
@@ -711,7 +712,7 @@ result_t die_partial_tai_list_10(dissector d, context* ctx, partial_tai_list_10_
 }
 
 struct partial_tai_t {
-    bit_2 type;
+    bit_2                                    type;
     std::shared_ptr< partial_tai_list_00_t > l00;
     std::shared_ptr< partial_tai_list_01_t > l01;
     std::shared_ptr< partial_tai_list_10_t > l10;
@@ -729,12 +730,36 @@ struct nr_tracking_area_id_list_t {
     std::vector< partial_tai_t > partials; //
 };
 
-result_t die_nr_tracking_id_list(dissector d, context* ctx, nr_tracking_area_id_t*ret){
-    const use_context uc(&d, ctx, "nr-tracking-area-id-list", 0);
+result_t die_partial_tai(dissector d, context* ctx, partial_tai_t* ret) {
+    const use_context uc(d, ctx, "partial-tai", -1);
+
+    ret->type = mask_u8(d.uint8(false), 0x60u);
+    if (ret->type == 0) {
+        ret->l00 = std::make_shared< partial_tai_list_00_t >();
+        die_partial_tai_list_00(d, ctx, ret->l00.get()).step(d);
+    }
+    if (ret->type == 1) {
+        ret->l01 = std::make_shared< partial_tai_list_01_t >();
+        die_partial_tai_list_01(d, ctx, ret->l01.get()).step(d);
+    }
+    if (ret->type == 2) {
+        ret->l10 = std::make_shared< partial_tai_list_10_t >();
+        die_partial_tai_list_10(d, ctx, ret->l10.get()).step(d);
+    }
 
     return {uc.consumed()};
 }
 
+result_t die_nr_tracking_id_list(dissector d, context* ctx, nr_tracking_area_id_t* ret) {
+    const use_context uc(&d, ctx, "nr-tracking-area-id-list", 0);
+
+    while (d.length > 0) {
+        partial_tai_t ptai = {};
+        die_partial_tai(d, ctx, &ptai).step(d);
+        ret->partials.push_back(ptai);
+    }
+    return {uc.length};
+}
 
 /*
 9.11.3.9A	5GS update type
@@ -789,7 +814,6 @@ result_t die_additional_nr_security_infomation(
     dissector                             d,
     context*                              ctx,
     additional_nr_security_information_t* ret) {
-
     de_uint8(d, ctx, &ret->hdp, 0x01);
     de_uint8(d, ctx, &ret->rinmr, 0x02).step(d);
 
@@ -836,10 +860,9 @@ struct configuration_update_indication_t {
     bit_1 red; //
 };
 
-result_t die_configuration_update_indication(
-    dissector                             d,
-    context*                              ctx,
-    configuration_update_indication_t* ret) {
+result_t die_configuration_update_indication(dissector                          d,
+                                             context*                           ctx,
+                                             configuration_update_indication_t* ret) {
     de_uint8(d, ctx, &ret->ack, 0x01);
     de_uint8(d, ctx, &ret->red, 0x02).step(d);
 
@@ -861,9 +884,7 @@ struct deregistration_type_t {
     bit_1 switch_off;              //
 };
 
-result_t die_deregistration_type(dissector                          d,
-                                             context*                           ctx,
-                                             deregistration_type_t* ret) {
+result_t die_deregistration_type(dissector d, context* ctx, deregistration_type_t* ret) {
     de_uint8(d, ctx, &ret->access_type, 0x03);
     de_uint8(d, ctx, &ret->reregistration_required, 0x04);
     de_uint8(d, ctx, reg->switch, 0x08).step(d);
@@ -878,28 +899,30 @@ result_t die_deregistration_type(dissector                          d,
 // 10.5.3.13 in TS 24.008 g10
 struct emergency_number_list_t {
     struct number_t {
-        bit_5                service_category; //
-        std::vector< bit_4 > digits;           //
+        bit_5       service_category; //
+        std::string digits;           //
     };
 
     std::vector< number_t > numbers; //
 };
 
-result_t die_number(dissector d, context* ctx, number_t*ret){
+result_t die_number(dissector d, context* ctx, number_t* ret) {
     static char bcds[] = "0123456789????\0";
     auto        len    = d.length;
     de_uint8(d, ctx, &ret->service_category).step(d);
-    while(d.length>0){
+    while (d.length > 0) {
         auto o = d.uint8(true);
         ret->digits.push_back(bcds[mask_u8(o, 0x0f)]);
         ret->digits.push_back(bcds[mask_u8(0, 0xf0u)]);
     }
     return {len};
 }
-result_t die_emergency_number_list(dissector d, context* ctx, emergency_number_list* ret) {
+result_t die_emergency_number_list(dissector              d,
+                                   context*               ctx,
+                                   emergency_number_list* ret) {
     const use_context uc(&d, ctx, "emergency-number-list", 0);
-    while(d.length>0){
-        auto len = d.uint8(true);
+    while (d.length > 0) {
+        auto     len = d.uint8(true);
         number_t n   = {};
         die_number(d.slice(len), ctx, &n).step(d);
         ret->numbers.push_back(n);
@@ -917,24 +940,67 @@ using eps_nas_message_t = octet_t;
 
 // 9.11.3.25 EPS NAS security algorithms
 // 9.9.3.23 in TS 24.301 g11
-struct eps_nas_security_algorighms_t {
-    bit_3 integirty_algo; //
+struct eps_nas_security_algorithms_t {
+    bit_3 integrity_algo; //
     bit_1 spare_1;        //
     bit_3 ciphering_algo; //
     bit_1 spare_2;        //
 };
 
+result_t die_eps_nas_security_algorighms(dissector                      d,
+                                         context*                       ctx,
+                                         eps_nas_security_algorithms_t* ret) {
+    de_uint8(d, ctx, &ret->integrity_algo, 0x07);
+
+    de_uint8(d, ctx, reg->ciphering_algo, 0x70);
+
+    return {1};
+}
+
 // 9.11.3.26 Extended emergency number list
 // 9.9.3.37A in TS 24.301 g11
+// Extended Local Emergency Numbers List is valid in the country of the PLMN from which
+// this IE is received
 struct extened_emergency_number_list_t {
-    struct number_t {
-        std::vector< number_t > digits;               //
-        uint8_t                 sub_services_present; //
-        octet_t                 sub_service_field;    //
+    struct service_t {
+        std::string digits;            //
+        std::string sub_service_field; //
     };
 
     bit_1 eenlv; //
 };
+
+result_t die_sub_service(dissector                                    d,
+                         context*                                     ctx,
+                         extended_emergency_number_list_t::service_t* ret) {
+    static const char bcds[] = "0123456789????\0";
+    auto              nlen   = d.uint8(true);
+    for (auto i = nlen; i > 0; --i) {
+        auto o = d.uint8(true);
+        ret->digits.push_back(bcds[mask_u8(o, 0x0fu)]);
+        ret->digits.push_back(bcds[mask_u8(0, 0xf0u)]);
+    }
+
+    auto slen              = d.uint8(true);
+    ret->sub_service_field = string((const char*) d.safe_ptr(), d.safe_length(slen));
+    d.step(slen);
+
+    return {1 + nlen + 1 + slen};
+}
+
+result_t die_extended_emergency_number_list(dissector                         d,
+                                            context*                          ctx,
+                                            extended_emergency_number_list_t* ret) {
+    auto len   = d.length;
+    ret->eenlv = d.uint8(true) & 0x01u;
+
+    while (d.length > 0) {
+        servicec_t svc = {};
+        die_sub_service(d, ctx, &svc).step(d);
+        ret->services.push_back(svc);
+    }
+    return {len};
+}
 
 // 9.11.3.27 void
 
@@ -953,8 +1019,17 @@ LADN DNN value 2	octet a+1*  octet b*
 LADN DNN value n	octet g+1*  octet h*
 */
 struct ladn_indication_t {
-    std::vector< dnn_t > dnn; //
+    std::vector< octet_t > dnns; //
 };
+
+result_t die_ladn_indication(dissector d, context* ctx, ladn_indication_t* ret) {
+    auto len = d.length;
+    while (d.length > 0) {
+        auto l = d.uint8(true);
+        ret->dnns.push_back(octet_t(d.safe_ptr(), d.safe_ptr() + d.safe_length(l)));
+    }
+    return {len};
+}
 
 /*
 9.11.3.30	LADN information
@@ -968,11 +1043,12 @@ LADN n	octet g+1*  octet h*
 */
 struct ladn_information_t {
     struct ladn_t {
-        dnn_t                    dnn;  //
+        octet_t                  dnn;  //
         ntracking_area_id_list_t ntai; //
     };
-    std::vector< ladn_t > ladn; //
+    std::vector< ladn_t > ladns; //
 };
+
 /*
 Figure 9.11.3.30.1: LADN information information element
 8	7	6	5	4	3	2	1
@@ -980,6 +1056,28 @@ Length of DNN value	octet 4
 DNN value	octet 5  octet m
 5GS tracking area identity list	octet m+1  octet a
 */
+result_t die_ladn(dissector d, context* ctx, ladn_information_t::ladn_t* ret) {
+    const use_context uc(&d, ctx, "ladn", 0);
+
+    auto dl = d.uint8(true);
+    de_octet(d.slice(dl), ctx, &ret->dnn).step(d);
+
+    auto tl = d.uint8(true);
+    die_nr_tracking_id_list(d.slice(tl), ctx, &ret->ntai).step(d);
+
+    return {uc.length};
+}
+
+result_t dissect_ladn_information(dissector d, context* ctx, ladn_information_t* ret) {
+    const use_context uc(&d, ctx, "ladn-information", 0);
+
+    while (d.length > 0) {
+        ladn_t ladn = {};
+        die_ladn(d, ctx, ladn).step(d);
+        ladns.push_back(ladn);
+    }
+    return {uc.length};
+}
 
 /*
 9.11.3.31	MICO indication
@@ -991,6 +1089,14 @@ struct mico_indication_t {
     bit_1 sprti; //
 };
 
+result_t die_mico_indication(dissector d, context* ctx, mico_indication_t* ret) {
+    de_uint8(d, ctx, &ret->raai, 0x01);
+
+    de_uint8(d, ctx, reg->sprti, 0x02).step(d);
+
+    return {1};
+}
+
 /*
 9.11.3.32	NAS key set identifier
 8	7	6	5	4	3	2	1
@@ -1000,6 +1106,16 @@ struct nas_key_set_identifier_t {
     bit_3 nksi; //
     bit_1 tsc;  //
 };
+
+result_t die_nas_key_set_identifier(dissector                 d,
+                                    context*                  ctx,
+                                    nas_key_set_identifier_t* ret) {
+    de_uint8(d, ctx, &ret->nksi, 0x07);
+
+    de_uint8(d, ctx, reg->tsc, 0x08).step(d);
+
+    return {1};
+}
 
 struct nas_message_t;
 /*
@@ -1025,6 +1141,15 @@ struct nas_security_algorithm_t {
     bit_4 ciphering_algo; //
 };
 
+result_t die_nas_security_algorithm(dissector                 d,
+                                    context*                  ctx,
+                                    nas_security_algorithm_t* ret) {
+    de_uint8(d, ctx, &ret->integrity_algo);
+    de_uint8(d, ctx, &ret->ciphering_algo, 0xf0u).step(d);
+
+    return {1};
+}
+
 // 9.11.3.35 Network name
 // 10.5.3.5a in TS 24.008 g10
 struct network_name_t {
@@ -1035,6 +1160,19 @@ struct network_name_t {
     octet_t text;          //
 };
 
+result_t die_network_name(dissector d, context* ctx, network_name_t* ret) {
+    const use_context uc(&d, ctx, "network-name", 0);
+
+    de_uint8(d, ctx, &ret->unused_bits, 0x07);
+    de_uint8(d, ctx, &ret->add_ci, 0x08u);
+    de_uint8(d, ctx, &ret->code_chars, 0x70u);
+    de_uint8(d, ctx, &ret->ext, 0x80u).step(d);
+
+    ret->text = octet_t(d.safe_ptr(), d.safe_length(d.length));
+
+    return {uc.consumed()};
+}
+
 /*
 9.11.3.36	Network slicing indication
 8	7	6	5	4	3	2	1
@@ -1044,6 +1182,16 @@ struct network_slicing_indication_t {
     bit_1 nssci; //
     bit_1 dcni;  //
 };
+
+result_t die_network_slicing_indication(dissector                     d,
+                                        context*                      ctx,
+                                        network_slicing_indication_t* ret) {
+    de_uint8(d, ctx, &ret->nssci, 0x01);
+
+    de_uint8(d, ctx, reg->dcni, 0x02).step(d);
+
+    return {1};
+}
 
 /*
 9.11.3.37	NSSAI

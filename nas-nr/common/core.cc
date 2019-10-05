@@ -32,3 +32,8 @@ uint8_t mask_u8(uint8_t v, uint8_t mask){
     if (mask == 0) return v;
     return (v & mask) >> ws_ctz8(mask);
 }
+
+uint16_t mask_u16(uint16_t v, uint16_t mask){
+    if (mask == 0) return v;
+    return (v & mask) >> ws_ctz(mask);
+}
