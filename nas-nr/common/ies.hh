@@ -1242,6 +1242,42 @@ struct operator_defined_access_category_definition_t {
     opt_t< bit_5 > standardized_access_category; //
 };
 
+result_t die_operator_defined_access_category_definition(
+    dissector                                      d,
+    context*                                       ctx,
+    operator_defined_access_category_definition_t* ret) {
+    const use_context uc(&d, ctx, "operator-defined-access-category-definition", 0);
+    de_uint8(d, ctx, &ret->precedence).step(d);
+
+    de_uint8(d, ctx, &ret->psac, 0x80u);
+    de_uint8(d, ctx, &ret->number, 0x1fu).step(d);
+
+    de_l_octet(d, ctx, &ret->criteria).step(d);
+    if (d.length>0){
+        ret->standardized_access_category.present = true;
+        de_uint8(d, ctx, &ret->standardized_access_category.v, 0x1fu).step(d);
+    }
+    return {uc.length};
+}
+
+struct operator_defined_access_category_defninitions_t {
+    std::vector< operator_defined_access_category_definition_t > definitions;
+};
+
+result_t die_operator_defined_access_category_definitions(
+    dissector                                      d,
+    context*                                       ctx,
+    operator_defined_access_category_deinitions_t* ret) {
+    const use_context uc(&d, ctx, "operator-defined-access-category-definitions", 0);
+    while(d.length>0){
+        auto l = d.uint8(true);
+        operator_defined_access_category_definition_t v = {};
+        die_operator_defined_access_category_definition(d.slice(l), ctx, &v).step(d);
+        ret->definitions.push_back(v);
+    }
+    return {uc.length};
+}
+
 /*
 9.11.3.39	Payload container
 8	7	6	5	4	3	2	1
@@ -1253,7 +1289,10 @@ octet 4
 using payload_container_t = octet_t;
 
 struct payload_container_multiple_t {
-    using optional_ie_t = octet_t;
+    struct optional_ie_t {
+        uint8_t type;
+        octet_t v;
+    };
     struct entry_t {
         bit_4 type; //
         // bit_4                       optional_ie_number;
@@ -1316,6 +1355,15 @@ struct pdu_session_reactivation_result_t {
     uint8_t psi_b; //
 };
 
+result_t die_pdu_session_reactivation_result(dissector d, context* ctx, pdu_session_reactivation_result_t* ret){
+    const use_context uc(&d, ctx, "pdu-session-reactivation-result", 0);
+
+    ret->psi_a = d.uint8(true);
+    ret->psi_b = d.uint8(true);
+
+    return {2};
+}
+
 /*
 9.11.3.43	PDU session reactivation result error cause
 8	7	6	5	4	3	2	1
@@ -1333,8 +1381,19 @@ struct pdu_session_reactivation_result_error_cause_t {
         uint8_t pdu_session_id; //
         uint8_t cause;          //
     };
-    std::vector< cause_t > cause; //
+    std::vector< cause_t > causes; //
 };
+
+result_t die_pdu_session_reactivation_result_error_cause(dissector d, context* ctx, pdu_session_reactivation_result_error_cause_t *ret){
+    const use_context uc(&d, ctx, "pdu-session-reactivation-result-error-cause", 0);
+    while(d.length>0){
+        pdu_session_reactivation_result_error_cause_t::cause_t v = {};
+        de_uint8(d, ctx, &v.pdu_session_id).step(d);
+        de_uint8(d, ctx, &v->cause).step(d);
+        ret->causes.push_back(v);
+    }
+    return {uc.length};
+}
 
 /*
 9.11.3.44	PDU session status
@@ -1350,11 +1409,30 @@ struct pdu_session_status_t {
     uint8_t psi_b; //
 };
 
+result_t die_pdu_session_status(dissector d, context* ctx, pdu_session_status_t* ret) {
+    const use_context uc(&d, ctx, "pdu-session-reactivation-result", 0);
+
+    ret->psi_a = d.uint8(true);
+    ret->psi_b = d.uint8(true);
+
+    return {2};
+}
+
 // 9.11.3.45 PLMN list
 // 10.5.1.13 in TS 24.008 g10
 struct plmn_list_t {
     std::vector< mcc_mnc_t > plmns; //
 };
+
+result_t die_plmn_list(dissector d, context* ctx, plmn_list_t*ret){
+    const use_context uc(&d, ctx, "plmn-list", 0);
+    while(d.length>0){
+        mcc_mnc_t mm = {};
+        die_mcc_mnc(d, ctx, &mm).step(d);
+        ret->plmns.push_back(mm);
+    }
+    return {uc.length};
+}
 
 /*
 9.11.3.46	Rejected NSSAI
@@ -1378,8 +1456,24 @@ struct rejected_nssai_t {
         uint8_t          sst   = {}; //
         opt_t< uint8_t > sd    = {}; //
     };
-    std::vector< nssai_t > nssai = {}; //
+    std::vector< nssai_t > nssais = {}; //
 };
+
+result_t die_rejected_nssai(dissector d, context* ctx, rejected_nssai_t*ret){
+    const use_context uc(&d, ctx, "rejected-nssai", 0);
+    while(d.length> 0 ){
+        rejected_nssai_t::nssai_t n = {};
+        auto                      l = mask_u8(d.uint8(false), 0xf0u);
+        de_uint8(d, ctx, &n.cause, 0x0fu).step(d);
+        de_uint8(d, ctx, &n.sst).step(d);
+        if (l>2){
+            n.sd.present = true;
+            de_octet(d.slice(l-2), ctx, &n.sd.v).step(d);
+        }
+        ret->nssais.push_back(n);
+    }
+    return {uc.length};
+}
 
 /*
 9.11.3.47	Request type
