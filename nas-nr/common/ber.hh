@@ -172,7 +172,7 @@ result_t de_tl_fixed(dissector d, context* ctx, uint8_t ieid, opt_t< E >* ret) {
 template < typename Slice >
 result_t de_fixed(dissector d, context*, Slice ret) {
     auto l = d.octet(ret, sizeof(ret));
-    return {l};
+    return {int(l)};
 }
 
 template < typename Slice >

@@ -25,6 +25,10 @@ using octet_g = uint8_t[16];
 using octet_h = uint8_t[17];
 using octet_c                                   = uint8_t[12];
 
+struct o3_t{
+    uint8_t v[3];
+};
+
 using uint24_t = uint32_t;
 using uint48_t = uint64_t;
 

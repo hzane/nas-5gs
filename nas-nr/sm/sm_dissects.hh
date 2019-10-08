@@ -17,7 +17,7 @@ int dissect_pdu_session_establishment_reject(dissector d, context* ctx);
 int dissect_pdu_session_authentication_command(dissector d, context* ctx);
 int dissect_pdu_session_authentication_complete(dissector d, context* ctx);
 int dissect_pdu_session_modification_request(dissector d, context* ctx);
-int dissect_pdu_session_modification_reject(dissector d, context* ctx);
+int de_pdu_session_modification_reject(dissector d, context* ctx);
 int dissect_pdu_session_modification_command(dissector d, context* ctx);
 int dissect_pdu_session_modification_complete(dissector d, context* ctx);
 int dissect_pdu_session_authentication_result2(dissector d, context* ctx);

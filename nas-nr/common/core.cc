@@ -37,3 +37,15 @@ uint16_t mask_u16(uint16_t v, uint16_t mask){
     if (mask == 0) return v;
     return (v & mask) >> ws_ctz(mask);
 }
+
+std::string join(const std::vector< std::string >& strings, const char* sep){
+    if (sep == nullptr) sep = "";
+    std::ostringstream oss;
+    if(strings.empty()) return "";
+    oss<<strings.front();
+    auto i = strings.begin();
+    for(++i; i!=strings.end(); ++i){
+        oss<<sep<<*i;
+    }
+    return oss.str();
+}

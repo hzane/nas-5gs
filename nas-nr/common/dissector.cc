@@ -30,9 +30,12 @@ uint16_t dissector::uint16(bool step, int skip)  {
     const auto p = safe_ptr(skip);
     const auto len = safe_length(2, skip);
     if (step) this->step(skip + 2);
+
+    if(!p) return 0;
+
     uint16_t h = p[0];
     uint16_t l = p[1];
-    return (p && len > 0) ? ((h << 8u) + l) : 0;
+    return (len > 0) ? ((h << 8u) + l) : 0;
 }
 
 int dissector::octet(uint8_t* to, int len, bool step) {
@@ -40,6 +43,9 @@ int dissector::octet(uint8_t* to, int len, bool step) {
     const auto l = safe_length(len);
 
     if (step) this->step(len);
+
+    if (!p) return len;
+
     std::memcpy(to, p, l);
     return len;
 }

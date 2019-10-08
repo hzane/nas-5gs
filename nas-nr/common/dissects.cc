@@ -31,7 +31,7 @@ result_t de_nas_message(dissector d, context* ctx, nas_message_t* v) {
     return de_nas_protected(d, ctx, v->protect.get());
 }
 
-result_t dissect_nas_protected(dissector d, context* ctx, nas_message_protected_t* v) {
+result_t de_nas_protected(dissector d, context* ctx, nas_message_protected_t* v) {
     const use_context uc(&d, ctx, "security protected nas message", 0);
 
     /* 9.2 Extended protocol discriminator  octet 1 */
@@ -55,7 +55,7 @@ result_t dissect_nas_protected(dissector d, context* ctx, nas_message_protected_
 }
 
 /* Plain NAS 5GS Message */
-result_t dissect_nas_plain(dissector d, context* ctx, nas_message_plain_t* v) {
+result_t de_nas_plain(dissector d, context* ctx, nas_message_plain_t* v) {
     const use_context uc(&d, ctx, "plain-nas-message", 0);
 
     /* Extended protocol discriminator  octet 1 */
@@ -87,7 +87,7 @@ struct message_desc_t {
         (void) de_##X(d, ctx, (v-> X).get()); \
         break;
 
-result_t dissect_nsm_message(dissector d, context* ctx, nsm_message_t* v) {
+result_t de_nsm_message(dissector d, context* ctx, nsm_message_t* v) {
     const use_context uc(&d, ctx, "session-management-message", 0);
 
     de_nsm_header(d, ctx, &v->header);
@@ -118,7 +118,7 @@ result_t dissect_nsm_message(dissector d, context* ctx, nsm_message_t* v) {
 }
 
 extern const message_desc_t nmm_messages[];
-result_t dissect_nmm_message(dissector d, context* ctx, nmm_message_t* v) {
+result_t de_nmm_message(dissector d, context* ctx, nmm_message_t* v) {
     const use_context uc(&d, ctx, "mobile-management-message", 0);
 
     de_nmm_header(d, ctx, &v->header);

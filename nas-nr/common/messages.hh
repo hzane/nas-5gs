@@ -256,7 +256,7 @@ struct ul_nas_transport_t {
     nmm_header_t     header                     = {};
     bit_4            payload_container_type     = {}; // V 1/2
     octet_t          payload_container          = {}; // LV-E
-    uint8_t          pdu_session_id             = {}; // 12 C TV 2
+    opt_t<uint8_t>          pdu_session_id             = {}; // 12 C TV 2
     opt_t< uint8_t > old_pdu_session_id         = {}; // 59 TV 2
     opt_t< bit_4 >   request_type               = {}; // 8- TV 1
     opt_t< octet_t > s_nssai                    = {}; // 22 TLV 3+
@@ -483,14 +483,6 @@ struct configuration_update_complete_t {
     nmm_header_t header = {};
 };
 
-result_t de_configuration_update_complete(dissector                        d,
-                                          context*                         ctx,
-                                          configuration_update_complete_t* ret) {
-    const use_context uc(&d, ctx, "configuration-update-complete", 0);
-    de_nmm_header(d, ctx, &ret->header).step(d);
-
-    return {uc.consumed()};
-}
 
 /*
 Table 8.2.21.1.1: IDENTITY REQUEST message content
@@ -711,7 +703,7 @@ struct pdu_session_establishment_accept_t {
     opt_t< octet_t >                       extended_pco                = {}; // 7B TLVE
     opt_t< dnn_t >                         dnn                         = {}; // 25 TLV
     opt_t< nsm_network_feature_support_t > nsm_network_feature_support = {}; // XX TLV
-    opt_t< session_tmbr_t >                session_tmbr_t              = {}; // XX TLV
+    opt_t< session_tmbr_t >                session_tmbr              = {}; // XX TLV
     opt_t< uint16_t >                      serving_plmn_rate_control   = {}; // TBD TLV
     opt_t< atsss_container_t >             atsss_container             = {}; // XX TLVE
     opt_t< bit_4 >                         control_plane_only_ind     = {}; // XX TV 1

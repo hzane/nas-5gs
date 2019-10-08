@@ -1,18 +1,15 @@
 #pragma once
-#include <vector>
 #include <string>
+#include <vector>
 #include "ber.hh"
 #include "dissector.hh"
 #include "packet.hh"
 #include "use_context.hh"
 
-
 extern void diag(const char* format, ...);
 
-
-std::string        join(const std::vector< std::string >& strings, const char* sep = " ");
+std::string join(const std::vector< std::string >& strings, const char* sep = " ");
 // inline string paths(context* ctx) { return ctx ? join(ctx->paths, "/") : string(); }
-
 
 inline uint16_t n2uint16(const uint8_t* data) {
     const uint16_t a = data[0];
@@ -62,15 +59,15 @@ inline uint64_t n2u(const uint8_t* data) { return 0; }
 inline uint64_t n2uint8(const uint8_t* data) { return data[0]; }
 
 unsigned int ws_ctz(uint64_t mask);
-uint8_t ws_ctz8(uint8_t mask);
+uint8_t      ws_ctz8(uint8_t mask);
 
-uint8_t mask_u8(uint8_t v, uint8_t mask);
+uint8_t  mask_u8(uint8_t v, uint8_t mask);
 uint16_t mask_u16(uint16_t v, uint16_t mask);
 
 struct authentication_vector {
-    uint8_t kasme[32] ;                // ASME key
-    uint8_t rand[16] ;                 // random challenge parameter
-    uint8_t autn[16] ;                 // Authentication token parameters
-    uint8_t xresult_size ;             //
-    uint8_t              xresult[16] ; // expected authentication response parameter
-} unused;
+    uint8_t kasme[32];    // ASME key
+    uint8_t rand[16];     // random challenge parameter
+    uint8_t autn[16];     // Authentication token parameters
+    uint8_t xresult_size; //
+    uint8_t xresult[16];  // expected authentication response parameter
+};

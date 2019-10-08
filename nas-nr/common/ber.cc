@@ -22,11 +22,11 @@ result_t de_t_octet(dissector d, context*, uint8_t ieid, opt_t< octet_t >* ret) 
     return {len};
 }
 
-result_t de_tlve_uint8(dissector d, context* ctx, uint8_t ieid, uint8_t*v, bool*present){
+result_t de_tle_uint8(dissector d, context* ctx, uint8_t ieid, uint8_t*v, bool*present){
     auto ie  = d.uint8(true);
-    auto length = d.uint16(true);
     *present    = (ie == ieid || ieid == 0xffu);
     if (ie != ieid && ieid != 0xffu) return {0};
+    auto length = d.uint16(true);
 
     d.octet(v, length, true);
 
@@ -36,13 +36,37 @@ result_t de_tlve_uint8(dissector d, context* ctx, uint8_t ieid, uint8_t*v, bool*
 result_t de_tl_octet(dissector d, context*, uint8_t ieid, opt_t< octet_t >* ret) {
     auto len    = d.length;
     auto ie     = d.uint8(true);
-    auto length = d.uint8(true);
     if (ie != ieid && ieid != 0xffu) return {0};
+    auto length = d.uint8(true);
     ret->present = true;
 
     ret->v = octet_t(d.safe_ptr(), d.safe_ptr() + d.safe_length(length));
 
     return {1 + 1 + length};
+}
+
+result_t de_tle_octet(dissector d, context*, uint8_t ieid, opt_t< octet_t >* ret) {
+    auto len    = d.length;
+    auto ie     = d.uint8(true);
+    if (ie != ieid && ieid != 0xffu) return {0};
+    auto length = d.uint16(true);
+    ret->present = true;
+
+    ret->v = octet_t(d.safe_ptr(), d.safe_ptr() + d.safe_length(length));
+
+    return {1 + 1 + length};
+}
+
+result_t de_le_octet(dissector d, context*ctx, octet_t*ret) {
+    auto l = d.uint16(true);
+    de_octet(d.slice(l), ctx, ret).step(d);
+    return {2+int(l)};
+}
+
+result_t de_l_octet(dissector d, context*ctx, octet_t*ret) {
+    auto l = d.uint8(true);
+    de_octet(d.slice(l), ctx, ret).step(d);
+    return {1+int(l)};
 }
 
 /* Type Value (TV) element dissector */
@@ -69,6 +93,16 @@ result_t de_t_uint16(dissector d, context* ctx, uint8_t ieid, opt_t< uint16_t >*
     ret->v       = d.uint16();
 
     return {1 + 2};
+}
+
+result_t de_tl_uint16(dissector d, context* ctx, uint8_t ieid, opt_t< uint16_t >* ret) {
+    auto iei = d.uint8();
+    if (iei != ieid && ieid != 0xffu) return {0};
+
+    ret->present = true;
+    ret->v       = d.uint16(1);
+
+    return {1+ 1+ 2};
 }
 
 result_t de_t_uint8(dissector         d,

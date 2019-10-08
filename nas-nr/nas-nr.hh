@@ -13,4 +13,5 @@
 #define NASNRAPI
 #endif
 
-struct description;
+#include "common/dissects.hh"
+

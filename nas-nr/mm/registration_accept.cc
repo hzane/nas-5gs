@@ -19,7 +19,8 @@ result_t de_registration_accept(dissector d, context* ctx, registration_accept_t
         Registration accept message identity	Message type	9.7	M	V	1
     */
     // 5GS registration result	5GS registration result	9.11.3.6	M	LV	2
-    de_l_uint8(d, ctx, &ret->nr_registration_result).step(d);
+    d.step(1);
+    de_uint8(d, ctx, &ret->nr_registration_result).step(d);
 
     // 77	5G-GUTI	5GS mobile identity	9.11.3.4	O	TLV-E	14
     de_tle_fixed(d, ctx, 0x77, &ret->guti_nr_mid).step(d);
