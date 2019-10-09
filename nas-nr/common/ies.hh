@@ -1090,8 +1090,8 @@ struct time_zone_time_t {
     int     minute;
     int     second;
     int     gmt;
-
 };
+
 /*
 9.11.3.53A	UE parameters update transparent container
 8	7	6	5	4	3	2	1
@@ -1161,28 +1161,59 @@ struct ue_security_capability_t {
     opt_t< uint8_t > eia; //
 };
 
+result_t die_ue_security_capability(dissector d, context*ctx, ue_security_capability_t*ret){
+    const use_context uc(&d, ctx, "ue-security-capability", 4);
+    ret->nea = d.uint8(true);
+    ret->nia = d.uint8(true);
+    if (d.length>0){
+        ret->eea.present = true;
+        ret->eea.v       = d.uint8(true);
+        ret->eia.present = true;
+        ret->eia.v       = d.uint8(true);
+    }
+    return {uc.length};
+}
+
 // 9.11.3.55 UE's usage setting
 struct ue_usage_setting_t {
     bit_1 setting; //
 };
+result_t die_ue_usage_setting(dissector d, context* ctx, ue_usage_setting_t* ret) {
+    ret->setting = d.uint8(true) & 0x01u;
 
+    return {1};
+}
 // 9.11.3.56 UE status
 struct ue_status_t {
     bit_1 s1_mode_reg; //
     bit_1 n1_mode_reg; //
 };
-
+result_t die_ue_status(dissector d, context* ctx, ue_status_t* ret) {
+    ret->s1_mode_reg = d.uint8(false) & 0x01u;
+    ret->n1_mode_reg = d.uint8(true) & 0x02u;
+    return {1};
+}
 // 9.11.3.57 Uplink data status
 struct uplink_data_status_t {
     uint8_t psi_a; //
     uint8_t psi_b; //
 };
+result_t die_uplink_data_status(dissector d, context* ctx, uplink_data_status_t* ret) {
+    ret->psi_a = d.uint8(true);
+    ret->psi_b = d.uint8(true);
 
+    return {2};
+}
 // 9.11.3.58 Non-3gpp NW provided policies
 // 10.5.5.37 in TS 24.008 g10
 struct n3gpp_nw_provided_policies_t {
     bit_1 n3en_ind; //
 };
+
+result_t die_n3gpp_nw_provided_policies(dissector d, context*ctx, n3gpp_nw_provided_policies_t*ret){
+    ret->n3en_ind = d.uint8(true) & 0x1u;
+    return {1};
+}
 
 // 9.11.3.59 EPS bearer context status
 // 9.9.2.1 in TS 24.301 g11
@@ -1191,12 +1222,25 @@ struct eps_bearer_context_status_t {
     uint8_t ebi_b; //
 };
 
+result_t die_eps_bearer_context_status(dissector d, context*ctx, eps_bearer_context_status_t*ret){
+    ret->ebi_a = d.uint8(true);
+    ret->ebi_b = d.uint8(true);
+
+    return {2};
+}
+
 // 9.11.3.60 Extended DRX parameters
 // 10.5.5.32 in TS 24.008 g10
 struct extended_drx_parameters_t {
     bit_4 edrx;               //
     bit_4 paging_time_window; //
 };
+
+result_t die_extended_drx_parameters(dissector d, context*ctx, extended_drx_parameters_t*ret){
+    ret->edrx = d.uint8(false) & 0x0fu;
+    ret->paging_time_window = mask_u8(d.uint8(true), 0xf0u);
+    return {1};
+}
 
 // 9.11.3.61 Mobile station classmark 2
 // 10.5.1.6 in TS 24.008 g10
@@ -1256,6 +1300,14 @@ struct nsm_capability_t {
     bit_1 ats_ll;  //
     bit_1 mptcp;   //
 };
+result_t die_nsm_capability(dissector d, context*ctx, nsm_capability_t*ret){
+    de_uint8(d, ctx, &ret->rqos, 0x01u);
+    de_uint8(d, ctx, &ret->mh6_pdu, 0x02u);
+    de_uint8(d, ctx, &ret->ept_s1, 0x04u);
+    de_uint8(d, ctx, &ret->ats_ll, 0x08u);
+    de_uint8(d, ctx, &ret->mptcp, 0x10u).step(d);
+    return {1};
+}
 
 /*
   9.11.4.2	5GSM cause
@@ -1273,6 +1325,12 @@ using nsm_cause_t = uint8_t;
 struct always_on_pdu_session_indication_t {
     bit_1 apsi; //
 };
+result_t die_always_on_pdu_session_indication(dissector                          d,
+                                             context*                           ctx,
+                                             always_on_pdu_session_indication_t* ret) {
+    ret->apsi = d.uint8(true) & 0x01u;
+    return {1};
+}
 
 /*
   9.11.4.4	Always-on PDU session requested
@@ -1282,6 +1340,10 @@ struct always_on_pdu_session_indication_t {
 struct always_on_pdu_session_requested_t {
     bit_1 apsr; //
 };
+result_t die_always_on_pdu_session_requested(dissector d, context* ctx, always_on_pdu_session_requested_t*ret){
+    ret->apsr = d.uint8(true) & 0x01u;
+    return {1};
+}
 
 /*
   9.11.4.5	Allowed SSC mode
