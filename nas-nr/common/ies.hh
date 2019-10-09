@@ -1316,6 +1316,13 @@ struct integrity_protection_maximum_data_rate_t {
     uint8_t downlink; //
 };
 
+result_t die_integrity_protection_maximum_data_rate(dissector d, context*ctx, integrity_protection_maximum_data_rate_t*ret){
+    const use_context uc(d, ctx, "integrity-protection-maximum-data-rate", 0);
+    ret->uplink = d.uint8(true);
+    ret->downlink = d.uint8(true);
+    return {2};
+}
+
 // 9.11.4.8 Mapped EPS bearer contexts
 struct mapped_eps_bearer_contexts_t {
     struct parameter_t {
@@ -1329,11 +1336,32 @@ struct mapped_eps_bearer_contexts_t {
         bit_1                  ebit;           //
         bit_1                  spare;          //
         bit_2                  operation_code; //
-        std::vector< octet_t > parameters;     //
+        std::vector< parameter_t > parameters;     //
     };
 
     std::vector< context_t > contexts; //
 };
+
+result_t  die_mapped_eps_bearer_contexts(dissector d, context*ctx, mapped_eps_bearer_context_t*ret){
+    const use_context uc(&d, ctx, "mapped-eps-bearer-contexts", 0);
+    while(d.length>0){
+        mapped_eps_bearer_contexts_t::context_t v = {};
+        de_uint8(d, ctx, &v.id).step(d);
+        auto l = d.uint8(true);
+        de_uint8(d, ctx, &v.parameters_n, 0x0fu);
+        de_uint8(d, ctx, &v->ebit, 0x10u);
+        de_uint8(d, ctx, &v.operation_code, 0xc0u).step(d);
+
+        for (auto i = 0; i < v.parameters_n;++i) {
+            mapped_eps_bearer_contexts_t::parameter_t p = {};
+            de_uint8(d, ctx, &p.id).step(d);
+            de_l_octet(d, ctx, &p.content).step(d);
+            v.parameters.push_back(p);
+        }
+        ret->contexts.push_back(v);
+    }
+    return {uc.length};
+}
 
 /*
   9.11.4.9	Maximum number of supported packet filters
@@ -1351,6 +1379,13 @@ struct pdu_address_t {
     bit_3   type;    //
     octet_c address; //
 };
+
+result_t die_pdu_address(dissector d, context*ctx, pdu_address_t*ret){
+    const use_context uc(&d, ctx, "pdu-address", 0);
+    de_uint8(d, ctx, &ret->type, 0x07u).step(d);
+    de_fixed(d, ctx, ret->address).step(d);
+    return {uc.consumed()};
+}
 
 /*
   9.11.4.11	PDU session type
@@ -1403,6 +1438,32 @@ struct qos_flow_descriptions_t {
     std::vector< entry_t > descs; //
 };
 
+result_t die_qos_flow_description(dissector                         d,
+                                  context*                          ctx,
+                                  qos_flow_descriptions_t::entry_t* ret) {
+    const use_context uc(&d, ctx, "qos-flow-description", 0);
+    de_uint8(d, ctx, &ret->qfi, 0x3fu).step(d);
+    de_uint8(d, ctx, &ret->opcode, &0xc0u).step(d);
+    de_uint8(d, ctx, &ret->ebit, 0x40u);
+    auto n = d.uint8(true) & 0x3fu;
+    for (auto i = 0; i < n; ++i) {
+        qos_flow_descriptions_t::parameter_t v = {};
+        de_uint8(d, ctx, &v.id).step(d);
+        de_l_octet(d, ctx, &v.content);
+        ret->parameters.push_back(v);
+    }
+    return {uc.consumed()};
+}
+result_t dei_qos_flow_descriptions(dissector d, context* ctx, qos_flow_descriptions_t*ret){
+    const use_context uc(&d, ctx, "qos-flow-descriptions", 0);
+    while(d.length> 0 ){
+        qos_flow_descriptions_t::entry_t v = {};
+        die_qos_flow_description(d, ctx, &v).step(d);
+        ret->descs.push_back(v);
+    }
+    return {uc.length};
+}
+
 using qos_flow_description_parameter_t = qos_flow_descriptions_t::parameter_t;
 using qos_flow_description_t           = qos_flow_descriptions_t::entry_t;
 
@@ -1429,10 +1490,54 @@ struct qos_rule_t {
     bit_1                          dqr;                 //
     bit_3                          rule_operation_code; //
     std::vector< packet_filter_t > packet_filters;      //
-    opt_t< uint8_t >               precedence;          //
+    std::vector< bit_4 >               delete_packets;      //
+    std::vector< packet_filter_add_t > add_packets;   //
+    opt_t< uint8_t >                   precedence;          //
     opt_t< bit_6 >                 qos_flow_id;         //
     opt_t< bit_1 >                 segregation;         //
 };
+
+result_t die_qos_rule(dissector d, context* ctx, qos_rule_t*ret){
+    const use_context uc(&d, ctx, "qos-rule", 0);
+    de_nibble(d, ctx, &ret->packet_filters_n);
+    de_uint8(d, ctx, &ret->dqr, 0x10u);
+    de_uint8(d, ctx, &ret->rule_operation_code, 0xc0u).step(d);
+
+    switch (ret->rule_operation_code) {
+    case 0b000:
+        break;  // reserved
+    case 0b001: // create new QoS rule
+    case 0b011: // Modify existing QoS rule and add packet filter
+    case 0b100: // Modify existing QoS rule and replace
+        qos_rule_t::packet_filter_add_t v = {};
+        for (auto i = 0; i < ret->packet_filters_n;++i) {
+            de_uint8(d, ctx, &v.id, 0x0fu);
+            de_uint8(d, ctx, &v.direction, 0x30u).step(d);
+            de_l_octet(d, ctx, &v.content).step(d);
+        }
+        ket->add_packbts.push_back(v);
+        existi eak; //
+    case 0b011:     // Modify existing QoS rule and delete
+        break;  //
+    case 0b101: // Modify existing QoS rule and delete
+        for (auto i = 0; i < ret->packet_filters_n;++i) {
+            auto id = d.uint8(true) & 0x0fu;
+            ret->delete_packets.push_back(id);
+        }
+        break;
+    }
+    if (d.length>0){
+        ret->precedence.present = true;
+        de_uint8(d, ctx, &ret->precedence.v).step(d);
+    }
+    if (d.length> 0){
+        ret->qos_flow_id.present = true;
+        de_uint8(d, ctx, &ret->qos_flow_id, 0x3fu);
+        ret->segregation.present = true;
+        de_uint8(d, ctx, &ret->segregation.v, 0x40u).step(d);
+    }
+    return {uc.length};
+}
 
 using qos_rule_packet_filter_delete_t = qos_rule_t::packet_filter_delete_t;
 using qos_rule_packet_filter_add_t    = qos_rule_t::packet_filter_add_t;
@@ -1441,6 +1546,18 @@ using qos_rule_packet_filter_t        = qos_rule_t::packet_filter_t;
 struct qos_rules_t {
     std::vector< qos_rule_t > rules; //
 };
+
+result_t die_qos_rules(dissector d, context* ctx, qos_rules_t*ret){
+    const use_context uc(&d, ctx, "qos-rules", 0);
+    while(d.length> 0 ){
+        qos_rule_t v = {};
+        v.id      = d.uint8(true);
+        v.length       = d.uint8(true);
+        die_qos_rule(d.slice(l), ctx, &v).step(d);
+        ret->rules.push_back(v);
+    }
+    return {uc.length};
+}
 
 /*
   9.11.4.14	Session-AMBR
@@ -1458,6 +1575,16 @@ struct session_ambr_t {
     uint8_t  uplink_unit;   //
     uint16_t uplink;        //
 };
+
+result_t die_session_ambr(dissector d, context* ctx, session_ambr_t*ret){
+    const use_context uc(&d, ctx, "session-ambr", 0);
+
+    ret->downlink_unit = d.uint8(true);
+    ret->downlink      = d.uint16(true);
+    ret->uplink_unit   = d.uint8(true);
+    ret->uplink        = d.uint16(true);
+    return {6};
+}
 
 /* 9.11.4.15	SM PDU DN request container
   8	7	6	5	4	3	2	1
@@ -1486,6 +1613,13 @@ struct reattempt_indicator_t {
     bit_1 eplmnc; //
 };
 
+result_t die_reattempt_indicator(dissector d, context* ctx, reattempt_indicator_t* ret){
+    const use_context uc(&d, ctx, "reattempt-indicator", 0);
+    de_uint8(d, ctx, &ret->ratc, 0x01u);
+    de_uint8(d, ctx, &ret->eplmnc, 0x02u).step(d);
+    return {1};
+}
+
 /*
   9.11.4.18	5GSM network feature support
   8	7	6	5	4	3	2	1
@@ -1513,6 +1647,16 @@ struct session_tmbr_t {
     uint8_t  uplink_unit;   //
     uint16_t uplink;        //
 };
+
+result_t die_session_tmbr(dissector d, context* ctx, session_tmbr_t*ret){
+    const use_context uc(&d, ctx, "session-tmbr", 0);
+    ret->downlink_unit = d.uint8(true);
+    ret->downlink      = d.uint16(true);
+    ret->uplink_unit   = d.uint8(true);
+    ret->uplink        = d.uint16(true);
+
+    return {6};
+}
 
 // 9.11.4.20	Serving PLMN rate control
 // See subclause 9.9.4.28 in 3GPP TS 24.301 [13].
