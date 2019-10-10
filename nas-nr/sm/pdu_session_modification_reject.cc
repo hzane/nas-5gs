@@ -3,7 +3,9 @@
 #include "../common/use_context.hh"
 
 /*  8.3.8    PDU session modification reject */
-result_t de_pdu_session_modification_reject(dissector d, context* ctx, pdu_session_modification_reject_t*ret) {
+result_t de_pdu_session_modification_reject(dissector                          d,
+                                            context*                           ctx,
+                                            pdu_session_modification_reject_t* ret) {
     const use_context uc(&d, ctx, "pdu-session-modification-reject", 3);
 
     /* Direction: network to UE */

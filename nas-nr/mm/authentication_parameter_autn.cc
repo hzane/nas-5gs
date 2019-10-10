@@ -3,8 +3,8 @@
 
 /* 9.11.3.15	Authentication parameter AUTN
  * [9] 10.5.3.1.1 Authentication Parameter AUTN (UMTS and EPS authentication challenge) */
-int dissect_authentication_parameter_autn(dissector d, context* ctx) {
-    const use_context uc(&d, ctx, "auth-param-autn", 0);
-
-    return uc.length;
+result_t dissect_authentication_parameter_autn(dissector                       d,
+                                               context*                        ctx,
+                                               authentication_parameter_autn_t ret) {
+    return de_fixed(d, ctx, ret);
 }

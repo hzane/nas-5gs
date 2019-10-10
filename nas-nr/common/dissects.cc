@@ -11,7 +11,7 @@
 #include "nas.hh"
 #include "protocol.hh"
 
-int result_t::step(dissector&d)const{
+int result_t::step(dissector& d) const {
     d.step(consumed);
     return consumed;
 }
@@ -93,9 +93,6 @@ result_t de_nsm_message(dissector d, context* ctx, nsm_message_t* v) {
     de_nsm_header(d, ctx, &v->header);
 
     switch (v->header.message_type) {
-    case 0xc4:
-        v->pdu_session_establishment_request = std::make_shared<pdu_session_establishment_request_t>();
-        break;
         DISSECT(0xc1u, pdu_session_establishment_request);
         DISSECT(0xc2u, pdu_session_establishment_accept);
         DISSECT(0xc3u, pdu_session_establishment_reject);

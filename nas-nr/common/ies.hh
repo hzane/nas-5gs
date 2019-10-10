@@ -1530,3 +1530,6 @@ using atsss_container_t = octet_t;
   Control plane only indication IEI	0 Spare	CPOI value	octet 1
 */
 using control_plane_only_indication_t = bit_1;
+
+result_t die_nr_tracking_area_id(dissector d, context* ctx, nr_tracking_area_id_t* ret);
+result_t die_mcc_mnc(dissector d, context* ctx, mcc_mnc_t* ret);

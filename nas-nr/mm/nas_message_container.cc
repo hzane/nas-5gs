@@ -3,13 +3,11 @@
 
 
 /* 9.11.3.33    NAS message container */
-int dissect_nas_message_container(dissector d, context* ctx) {
+result_t dissect_nas_message_container(dissector            d,
+                                       context*             ctx,
+                                       nas_message_plain_t* ret) {
     /* The purpose of the NAS message container IE is to
      * encapsulate a plain 5GS NAS message. */
     /* a NAS message without NAS security header */
-
-    const use_context uc(&d, ctx, "nas-msg-container", -1);
-
-    // dissect_nas_message(d, ctx);
-    return uc.length;
+    return de_nas_plain(d, ctx, ret);
 }

@@ -2,8 +2,6 @@
 #include "../common/use_context.hh"
 
 /* 9.11.3.24    EPS NAS message container */
-int dissect_eps_nas_msg_container(dissector d, context* ctx) {
-    const use_context uc(&d, ctx, "eps-nas-message-container", 0);
-
-    return d.length;
+result_t dissect_eps_nas_msg_container(dissector d, context* ctx, eps_nas_message_t* ret) {
+    return de_octet(d, ctx, ret);
 }

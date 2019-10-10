@@ -2,8 +2,8 @@
 #include "../common/use_context.hh"
 
 /* * 9.11.3.16	Authentication parameter RAND */
-int dissect_authentication_parameter_rand(dissector d, context* ctx) {
-    const use_context uc(&d, ctx, "authentication-parameter-rand", -1);
-
-    return 16;
+result_t dissect_authentication_parameter_rand(dissector                       d,
+                                               context*                        ctx,
+                                               authentication_parameter_rand_t ret) {
+    return de_fixed(d, ctx, ret);
 }

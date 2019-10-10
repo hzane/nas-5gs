@@ -38,6 +38,9 @@ uint16_t mask_u16(uint16_t v, uint16_t mask){
     return (v & mask) >> ws_ctz(mask);
 }
 
+uint8_t umask(uint8_t v, uint8_t mask) { return mask_u8(v, mask); }
+uint16_t umask(uint16_t v, uint16_t mask) { return mask_u16(v, mask); }
+
 std::string join(const std::vector< std::string >& strings, const char* sep){
     if (sep == nullptr) sep = "";
     std::ostringstream oss;

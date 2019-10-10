@@ -1,6 +1,13 @@
 #include <cstring>
 #include "dissector.hh"
+#include "packet.hh"
 
+void dissector::uplink() {
+    if (pinfo) pinfo->dir = direction::ul;
+}
+void dissector::downlink() {
+    if (pinfo) pinfo->dir = direction::dl;
+}
 dissector dissector::slice(int len) const {
     auto ret   = *this;
     ret.length = len;
@@ -48,4 +55,10 @@ int dissector::octet(uint8_t* to, int len, bool step) {
 
     std::memcpy(to, p, l);
     return len;
+}
+
+dissector& dissector::step(int consumed) {
+    offset += consumed;
+    length -= consumed;
+    return *this;
 }

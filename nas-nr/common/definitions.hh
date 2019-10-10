@@ -1,9 +1,9 @@
 #pragma once
 #include <cstdint>
+#include <memory>
 #include <optional>
 #include <variant>
 #include <vector>
-#include <memory>
 
 struct packet;
 struct context;
@@ -23,9 +23,9 @@ using octet_d = uint8_t[13];
 using octet_e = uint8_t[14];
 using octet_g = uint8_t[16];
 using octet_h = uint8_t[17];
-using octet_c                                   = uint8_t[12];
+using octet_c = uint8_t[12];
 
-struct o3_t{
+struct o3_t {
     uint8_t v[3];
 };
 
@@ -70,8 +70,8 @@ struct result_t {
 
 // Extended protocol discriminator
 namespace epd {
-    inline const uint8_t nmm = 0x7eu;
-    inline const uint8_t nsm = 0x2eu;
+inline const uint8_t nmm = 0x7eu;
+inline const uint8_t nsm = 0x2eu;
 } // namespace epd
 
 struct nas_message_t;
@@ -143,41 +143,40 @@ struct nas_message_t {
 };
 
 struct nmm_message_t {
-    nmm_header_t                                       header;
+    nmm_header_t header;
 
-    std::shared_ptr< authentication_request_t >        authentication_request;
-    std::shared_ptr< authentication_response_t >       authentication_response;
-    std::shared_ptr< authentication_result_t >         authentication_result;
-    std::shared_ptr< authentication_failure_t >        authentication_failure;
-    std::shared_ptr< authentication_reject_t >         authentication_reject;
-    std::shared_ptr< registration_request_t >          registration_request;
-    std::shared_ptr< registration_accept_t >           registration_accept;
-    std::shared_ptr< registration_complete_t >         registration_complete;
-    std::shared_ptr< registration_reject_t >           registration_reject;
-    std::shared_ptr< ul_nas_transport_t >              ul_nas_transport;
-    std::shared_ptr< dl_nas_transport_t >              dl_nas_transport;
-    std::shared_ptr< deregistration_request_t >        deregistration_request;
-    std::shared_ptr< deregistration_accept_t >         deregistration_accept;
-    std::shared_ptr< deregistration_request_ue_orig_t >        deregistration_request_ue_orig;
-    std::shared_ptr< deregistration_accept_ue_orig_t >         deregistration_accept_ue_orig;
-    std::shared_ptr< deregistration_request_ue_term_t >        deregistration_request_ue_term;
-    std::shared_ptr< deregistration_accept_ue_term_t >         deregistration_accept_ue_term;
-    std::shared_ptr< service_request_t >               service_request;
-    std::shared_ptr< service_accept_t >                service_accept;
-    std::shared_ptr< service_reject_t >                service_reject;
-    std::shared_ptr< configuration_update_command_t >  configuration_update_command;
-    std::shared_ptr< configuration_update_complete_t > configuration_update_complete;
-    std::shared_ptr< identity_request_t >              identity_request;
-    std::shared_ptr< identity_response_t >             identity_response;
-    std::shared_ptr< notification_t >                  notification;
-    std::shared_ptr< notification_response_t >         notification_response;
-    std::shared_ptr< s1_ue_network_capability_t >      s1_ue_network_capability;
-    std::shared_ptr< security_mode_command_t >         security_mode_command;
-    std::shared_ptr< security_mode_complete_t >        security_mode_complete;
-    std::shared_ptr< security_mode_reject_t >          security_mode_reject;
-    std::shared_ptr< nmm_status_t >                    nmm_status;
+    std::shared_ptr< authentication_request_t >         authentication_request;
+    std::shared_ptr< authentication_response_t >        authentication_response;
+    std::shared_ptr< authentication_result_t >          authentication_result;
+    std::shared_ptr< authentication_failure_t >         authentication_failure;
+    std::shared_ptr< authentication_reject_t >          authentication_reject;
+    std::shared_ptr< registration_request_t >           registration_request;
+    std::shared_ptr< registration_accept_t >            registration_accept;
+    std::shared_ptr< registration_complete_t >          registration_complete;
+    std::shared_ptr< registration_reject_t >            registration_reject;
+    std::shared_ptr< ul_nas_transport_t >               ul_nas_transport;
+    std::shared_ptr< dl_nas_transport_t >               dl_nas_transport;
+    std::shared_ptr< deregistration_request_t >         deregistration_request;
+    std::shared_ptr< deregistration_accept_t >          deregistration_accept;
+    std::shared_ptr< deregistration_request_ue_orig_t > deregistration_request_ue_orig;
+    std::shared_ptr< deregistration_accept_ue_orig_t >  deregistration_accept_ue_orig;
+    std::shared_ptr< deregistration_request_ue_term_t > deregistration_request_ue_term;
+    std::shared_ptr< deregistration_accept_ue_term_t >  deregistration_accept_ue_term;
+    std::shared_ptr< service_request_t >                service_request;
+    std::shared_ptr< service_accept_t >                 service_accept;
+    std::shared_ptr< service_reject_t >                 service_reject;
+    std::shared_ptr< configuration_update_command_t >   configuration_update_command;
+    std::shared_ptr< configuration_update_complete_t >  configuration_update_complete;
+    std::shared_ptr< identity_request_t >               identity_request;
+    std::shared_ptr< identity_response_t >              identity_response;
+    std::shared_ptr< notification_t >                   notification;
+    std::shared_ptr< notification_response_t >          notification_response;
+    std::shared_ptr< s1_ue_network_capability_t >       s1_ue_network_capability;
+    std::shared_ptr< security_mode_command_t >          security_mode_command;
+    std::shared_ptr< security_mode_complete_t >         security_mode_complete;
+    std::shared_ptr< security_mode_reject_t >           security_mode_reject;
+    std::shared_ptr< nmm_status_t >                     nmm_status;
 };
-// sm message
 
 struct pdu_session_establishment_request_t;
 struct pdu_session_establishment_accept_t;
@@ -200,36 +199,35 @@ struct pdu_session_release_complete_t;
 
 struct nsm_status_t;
 
+#define MEMBER(x) std::shared_ptr< x##_t > x
+
 struct nsm_message_t {
     nsm_header_t header;
 
-    std::shared_ptr< pdu_session_establishment_request_t > pdu_session_establishment_request;
-    std::shared_ptr< pdu_session_establishment_accept_t >  pdu_session_establishment_accept;
-    std::shared_ptr< pdu_session_establishment_reject_t >  pdu_session_establishment_reject;
+    MEMBER(pdu_session_establishment_request);
+    MEMBER(pdu_session_establishment_accept);
+    MEMBER(pdu_session_establishment_reject);
 
-    std::shared_ptr< pdu_session_authentication_command_t > pdu_session_authentication_command;
-    std::shared_ptr< pdu_session_authentication_complete_t >
-                                                      pdu_session_authentication_complete;
-    std::shared_ptr< pdu_session_authentication_result_t > pdu_session_authentication_result;
+    MEMBER(pdu_session_authentication_command);
+    MEMBER(pdu_session_authentication_complete);
+    MEMBER(pdu_session_authentication_result);
 
-    std::shared_ptr< pdu_session_modification_request_t >  pdu_session_modification_request;
-    std::shared_ptr< pdu_session_modification_reject_t >   pdu_session_modification_reject;
-    std::shared_ptr< pdu_session_modification_command_t >  pdu_session_modification_command;
-    std::shared_ptr< pdu_session_modification_complete_t > pdu_session_modification_complete;
-    std::shared_ptr< pdu_session_modification_command_reject_t >
-        pdu_session_modification_command_reject;
+    MEMBER(pdu_session_modification_request);
+    MEMBER(pdu_session_modification_reject);
+    MEMBER(pdu_session_modification_command);
+    MEMBER(pdu_session_modification_complete);
+    MEMBER(pdu_session_modification_command_reject);
 
-    std::shared_ptr< pdu_session_release_request_t >  pdu_session_release_request;
-    std::shared_ptr< pdu_session_release_reject_t >   pdu_session_release_reject;
-    std::shared_ptr< pdu_session_release_command_t >  pdu_session_release_command;
-    std::shared_ptr< pdu_session_release_complete_t > pdu_session_release_complete;
-    std::shared_ptr< nsm_status_t >                   nsm_status;
+    MEMBER(pdu_session_release_request);
+    MEMBER(pdu_session_release_reject);
+    MEMBER(pdu_session_release_command);
+    MEMBER(pdu_session_release_complete);
+    MEMBER(nsm_status);
 };
 
 // ies
 using nmm_cause_t                               = uint8_t;
 using authentication_parameter_failure_t        = uint8_t[14];
-using octet_g                                   = uint8_t[16];
 using dnn_t                                     = octet_t;
 using eap_t                                     = octet_t;
 using drx_parameters                            = bit_4;
@@ -285,7 +283,6 @@ using nmobile_id_t = nmid_t;
 
 struct nnetwork_feature_support_t;
 struct nregistration_result_t;
-
 
 struct ntracking_area_id_t;
 struct ntai_list_00_t;

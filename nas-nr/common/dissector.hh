@@ -9,20 +9,14 @@ struct dissector {
     int            offset      = 0;
     int            length      = 0;
 
-    dissector& step(int consumed) {
-        offset += consumed;
-        length -= consumed;
-        return *this;
-    }
-    auto safe_ptr(int skip = 0) const -> const uint8_t*;
-    auto safe_length(int len, int skip = 0) const -> int;
-    auto slice(int len) const -> dissector;
-    auto uint8(bool step = true, int skip = 0)  -> uint8_t;
-    auto uint16(bool step = true, int skip = 0)  -> uint16_t;
-    auto octet(uint8_t* to, int len, bool step = true) -> int;
+    dissector& step(int consumed);
+    void       uplink();
+    void       downlink();
+    auto       safe_ptr(int skip = 0) const -> const uint8_t*;
+    auto       safe_length(int len, int skip = 0) const -> int;
+    auto       slice(int len) const -> dissector;
+    auto       uint8(bool step = true, int skip = 0) -> uint8_t;
+    auto       uint16(bool step = true, int skip = 0) -> uint16_t;
+    auto       octet(uint8_t* to, int len, bool step = true) -> int;
 };
-
-void up_link(packet*);
-void down_link(packet*);
-
 struct context;

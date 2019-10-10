@@ -1,5 +1,6 @@
 #include "../common/dissector.hh"
 #include "../common/use_context.hh"
+#include "../common/messages.hh"
 
 /* 9.11.3.37    NSSAI */
 int dissect_configured_nssai(dissector d, context* ctx) {
