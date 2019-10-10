@@ -2,26 +2,42 @@
   <dictionary name="hzane">
     <words>
       <w>ambr</w>
+      <w>apsi</w>
       <w>atsss</w>
       <w>autn</w>
       <w>backoff</w>
       <w>bstring</w>
       <w>bufview</w>
+      <w>ciot</w>
       <w>classmark</w>
+      <w>csfb</w>
+      <w>dcnr</w>
       <w>deregistration</w>
       <w>differentiator</w>
       <w>downlink</w>
+      <w>edrx</w>
+      <w>emcn</w>
+      <w>epco</w>
       <w>eplmnc</w>
+      <w>erwo</w>
       <w>gbcd</w>
       <w>gprs</w>
       <w>guti</w>
       <w>hstring</w>
+      <w>iausf</w>
       <w>ieid</w>
       <w>imeisv</w>
       <w>istring</w>
       <w>ladn</w>
+      <w>lcsvacap</w>
+      <w>maci</w>
       <w>maxlen</w>
+      <w>mccmnc</w>
+      <w>mcsi</w>
+      <w>mday</w>
       <w>mico</w>
+      <w>mpsi</w>
+      <w>mptcp</w>
       <w>nksi</w>
       <w>nmid</w>
       <w>nreq</w>
@@ -29,13 +45,18 @@
       <w>nssai</w>
       <w>plmn</w>
       <w>plmns</w>
+      <w>psac</w>
       <w>ratc</w>
+      <w>rqos</w>
       <w>rstring</w>
+      <w>srvcc</w>
+      <w>subclause</w>
       <w>tlve</w>
       <w>tmbr</w>
       <w>tmsi</w>
       <w>unrep</w>
       <w>uplink</w>
+      <w>vgcs</w>
       <w>vstring</w>
     </words>
   </dictionary>
