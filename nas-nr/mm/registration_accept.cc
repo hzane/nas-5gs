@@ -6,7 +6,7 @@
 /* 8.2.7    Registration accept */
 
 result_t de_registration_accept(dissector d, context* ctx, registration_accept_t* ret) {
-    const use_context uc(&d, ctx, "registration-accept", 0);
+    const use_context uc(&d, ctx, "registration-accept", 12);
 
     de_nmm_header(d, ctx, &ret->header).step(d);
 
@@ -106,5 +106,5 @@ result_t de_registration_accept(dissector d, context* ctx, registration_accept_t
     // TBD T3324 value	GPRS timer 3	9.11.2.5	O	TLV	3
     /**/
 
-    return {d.offset - uc.offset};
+    return {uc.length};
 }

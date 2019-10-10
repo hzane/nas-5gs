@@ -84,7 +84,7 @@ struct message_desc_t {
 #define DISSECT(mt, X)                              \
     case mt:                                        \
         v-> X = std::make_shared< X##_t >();     \
-        (void) de_##X(d, ctx, (v-> X).get()); \
+        (void) de_##X(d, ctx, (v-> X).get()).step(d); \
         break;
 
 result_t de_nsm_message(dissector d, context* ctx, nsm_message_t* v) {
@@ -154,7 +154,7 @@ result_t de_nmm_message(dissector d, context* ctx, nmm_message_t* v) {
     default:
         break;
     }
-    return {0};
+    return {uc.length};
 }
 
 result_t de_nsm_header(dissector d, context* ctx, nsm_header_t* ret) {

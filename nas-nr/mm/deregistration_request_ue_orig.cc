@@ -27,6 +27,7 @@ result_t de_deregistration_request_ue_orig(dissector                         d,
     de_nibble(d, ctx, &ret->nksi).step(d);
 
     // 5GS mobile identity		5GS mobile identity	9.11.3.4	M	LV-E	6-n
-    de_le_octet(d, ctx, &ret->nr_mid);
+    de_le_octet(d, ctx, &ret->nr_mid).step(d);
+
     return {uc.consumed()};
 }

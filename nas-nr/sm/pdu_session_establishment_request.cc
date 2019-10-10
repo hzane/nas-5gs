@@ -26,7 +26,7 @@ result_t de_pdu_session_establishment_request(dissector                         
     de_tv_short(d, ctx, 0x90, &ret->pdu_session_type).step(d);
 
     // A-	SSC mode	SSC mode	9.11.4.16	O	TV	1
-    de_tv_short(d, ctx, 0xA0, &ret->ssc_mode);
+    de_tv_short(d, ctx, 0xA0, &ret->ssc_mode).step(d);
 
     // 28	5GSM capability	5GSM capability	9.11.4.1	O	TLV	3-15
     de_tl_octet(d, ctx, 0x28, &ret->nsm_capabilities).step(d);
@@ -42,5 +42,5 @@ result_t de_pdu_session_establishment_request(dissector                         
 
     // 7B	Extended protocol configuration options 	9.11.4.6	O	TLV-E	4-65538
     de_tle_octet(d, ctx, 0x7b, &ret->extended_pco).step(d);
-    return {uc.consumed()};
+    return {uc.length};
 }

@@ -161,7 +161,7 @@ template < typename E >
 result_t de_tl_fixed(dissector d, context* ctx, uint8_t ieid, opt_t< E >* ret) {
     auto ie  = d.uint8(true);
     auto len = d.uint8(true);
-    if (ie != ieid || ieid != 0xffu) return {0};
+    if (ie != ieid && ieid != 0xffu) return {0};
 
     ret->present = true;
     d.octet(ret->v, d.safe_length(len > sizeof(ret->v) ? sizeof(ret->v) : len));
@@ -195,7 +195,7 @@ template < typename E >
 result_t de_tle_fixed(dissector d, context* ctx, uint8_t ieid, opt_t< E >* ret) {
     auto ie  = d.uint8(true);
     auto len = d.uint16(true);
-    if (ie != ieid || ieid != 0xffu) return {0};
+    if (ie != ieid && ieid != 0xffu) return {0};
 
     ret->present = true;
     d.octet(ret->v, d.safe_length(len > sizeof(ret->v) ? sizeof(ret->v) : len));

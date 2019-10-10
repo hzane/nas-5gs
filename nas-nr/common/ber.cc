@@ -17,7 +17,7 @@ result_t de_t_octet(dissector d, context*, uint8_t ieid, opt_t< octet_t >* ret) 
     if (ie != ieid && ieid != 0xffu) return {0};
     ret->present = true;
 
-    ret->v = std::move(octet_t(d.safe_ptr(), d.safe_ptr() + d.length));
+    ret->v = std::move(octet_t(d.safe_ptr(), d.safe_ptr() + d.length-1));
 
     return {len};
 }
@@ -30,7 +30,7 @@ result_t de_tle_uint8(dissector d, context* ctx, uint8_t ieid, uint8_t*v, bool*p
 
     d.octet(v, length, true);
 
-    return {1+1+length};
+    return {1+2+length};
 }
 
 result_t de_tl_octet(dissector d, context*, uint8_t ieid, opt_t< octet_t >* ret) {
@@ -46,15 +46,15 @@ result_t de_tl_octet(dissector d, context*, uint8_t ieid, opt_t< octet_t >* ret)
 }
 
 result_t de_tle_octet(dissector d, context*, uint8_t ieid, opt_t< octet_t >* ret) {
-    auto len    = d.length;
     auto ie     = d.uint8(true);
     if (ie != ieid && ieid != 0xffu) return {0};
+
     auto length = d.uint16(true);
     ret->present = true;
 
     ret->v = octet_t(d.safe_ptr(), d.safe_ptr() + d.safe_length(length));
 
-    return {1 + 1 + length};
+    return {1 + 2 + length};
 }
 
 result_t de_le_octet(dissector d, context*ctx, octet_t*ret) {
