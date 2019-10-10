@@ -70,7 +70,6 @@ struct s_nssai_t {
     opt_t< octet_3 > mapped_hplmn_sd  = {}; // Mapped HPLMN SD	octet 8-10*
 };
 
-
 /* 9.11.2.9
 8	7	6	5	4	3	2	1
 S1 mode to N1 mode NAS transparent container IEI	octet 1
@@ -91,7 +90,6 @@ struct s1_mode_to_n1_mode_container_t {
     uint8_t spare_9        = {}; // octet 9
     uint8_t spare_a        = {};
 };
-
 
 /*
 9.11.3.1	5GMM capability
@@ -184,13 +182,12 @@ Identity digit 1	odd/ even indic	Type of identity	octet 4
 Identity digit p+1	Identity digit p	octet 5*
 */
 struct imeisv_nmid_t {
-    bit_3       type = {};    // Type of identity	octet 4
-    bit_1       odd_ind= {}; // odd/ even indic
-    std::string digits= {};  // octet 5*
+    bit_3       type    = {}; // Type of identity	octet 4
+    bit_1       odd_ind = {}; // odd/ even indic
+    std::string digits  = {}; // octet 5*
 };
 
 using imei_nmid_t = imeisv_nmid_t;
-
 
 /*
 Figure 9.11.3.4.3: 5GS mobile identity information element for type of identity "SUCI" and
@@ -280,7 +277,6 @@ struct noid_nmid_t {
     bit_3 type = {}; //
 };
 
-
 /* MAC address
 8	7	6	5	4	3	2	1 5GS mobile identity IEI	octet 1 Length of 5GS
 mobile identity contents	octet 2  octet 3 0 spare	Type of identity	octet 4 MAC
@@ -296,7 +292,7 @@ struct nmid_t {
     std::shared_ptr< guti_nmid_t >   guti;  //
     std::shared_ptr< imeisv_nmid_t > imei;  //
     std::shared_ptr< suci_nmid_t >   suci;  //
-    std::shared_ptr< s_tmsi_nmid_t >  stmsi; //
+    std::shared_ptr< s_tmsi_nmid_t > stmsi; //
     std::shared_ptr< noid_nmid_t >   noid;  //
     std::shared_ptr< mac_nmid_t >    mac;   //
 };
@@ -329,7 +325,6 @@ struct nr_network_feature_support_t {
     bit_1   nup_ciot       = {}; //
     uint8_t spare          = {};
 };
-
 
 /* 9.11.3.6 5GS registration result
 8	7	6	5	4	3	2	1
@@ -364,24 +359,24 @@ struct nr_tracking_area_id_t {
 };
 
 struct partial_tai_list_00_t {
-    bit_5                  number = {}; // +1
-    bit_2                  type   = {}; // 00
-    mcc_mnc_t              mccmnc = {}; //
+    bit_5               number = {}; // +1
+    bit_2               type   = {}; // 00
+    mcc_mnc_t           mccmnc = {}; //
     std::vector< o3_t > taces  = {}; //
 };
 
 struct partial_tai_list_01_t {
-    bit_5                  number = {}; // +1
-    bit_2                  type   = {}; // 01
-    mcc_mnc_t              mccmnc = {}; //
-    octet_3                tac    = {}; //
+    bit_5               number = {}; // +1
+    bit_2               type   = {}; // 01
+    mcc_mnc_t           mccmnc = {}; //
+    octet_3             tac    = {}; //
     std::vector< o3_t > others = {};
 };
 
 struct partial_tai_list_10_t {
-    bit_5                                number= {}; // +1
-    bit_2                                type= {};   // 01
-    std::vector< nr_tracking_area_id_t > ids= {};    //
+    bit_5                                number = {}; // +1
+    bit_2                                type   = {}; // 01
+    std::vector< nr_tracking_area_id_t > ids    = {}; //
 };
 
 struct partial_tai_t {
@@ -412,7 +407,6 @@ struct nr_update_type_t {
     bit_2 pnb_ciot      = {}; //
 };
 
-
 /*
 9.11.3.10	ABBA
 8	7	6	5	4	3	2	1
@@ -440,7 +434,6 @@ struct additional_nr_security_information_t {
     bit_1 hdp;   //
     bit_1 rinmr; //
 };
-
 
 /*
 9.11.3.13	Allowed PDU session status
@@ -482,7 +475,6 @@ struct configuration_update_indication_t {
     bit_1 red; //
 };
 
-
 // 9.11.3.19 Daylight saving time
 // 10.5.3.12 in TS 24.008 g10
 using daylight_saving_time_t = bit_2;
@@ -497,7 +489,6 @@ struct deregistration_type_t {
     bit_1 reregistration_required; //
     bit_1 switch_off;              //
 };
-
 
 // 9.11.3.21 void
 // 9.11.9.22 void
@@ -531,7 +522,6 @@ struct eps_nas_security_algorithms_t {
     bit_1 spare_2;        //
 };
 
-
 // 9.11.3.26 Extended emergency number list
 // 9.9.3.37A in TS 24.301 g11
 // Extended Local Emergency Numbers List is valid in the country of the PLMN from which
@@ -542,8 +532,8 @@ struct extended_emergency_number_list_t {
         std::string sub_service_field; //
     };
 
-    bit_1 eenlv; //
-    std::vector<service_t> services = {};
+    bit_1                    eenlv; //
+    std::vector< service_t > services = {};
 };
 
 // 9.11.3.27 void
@@ -566,7 +556,6 @@ struct ladn_indication_t {
     std::vector< octet_t > dnns; //
 };
 
-
 /*
 9.11.3.30	LADN information
 8	7	6	5	4	3	2	1
@@ -579,12 +568,11 @@ LADN n	octet g+1*  octet h*
 */
 struct ladn_information_t {
     struct ladn_t {
-        octet_t                  dnn;  //
+        octet_t                    dnn;  //
         nr_tracking_area_id_list_t ntai; //
     };
     std::vector< ladn_t > ladns; //
 };
-
 
 /*
 9.11.3.31	MICO indication
@@ -605,7 +593,6 @@ struct nas_key_set_identifier_t {
     bit_3 nksi; //
     bit_1 tsc;  //
 };
-
 
 struct nas_message_t;
 /*
@@ -640,7 +627,6 @@ struct network_name_t {
     bit_1   ext;           //
     octet_t text;          //
 };
-
 
 /*
 9.11.3.36	Network slicing indication
@@ -701,7 +687,6 @@ struct operator_defined_access_category_definition_t {
     opt_t< bit_5 > standardized_access_category; //
 };
 
-
 struct operator_defined_access_category_definitions_t {
     std::vector< operator_defined_access_category_definition_t > definitions;
 };
@@ -723,7 +708,6 @@ struct payload_container_multiple_t {
     };
     struct entry_t {
         bit_4 type; //
-        // bit_4                       optional_ie_number;
         std::vector< optional_ie_t > optional_ies; //
         octet_t                      content;      //
     };
@@ -783,7 +767,6 @@ struct pdu_session_reactivation_result_t {
     uint8_t psi_b; //
 };
 
-
 /*
 9.11.3.43	PDU session reactivation result error cause
 8	7	6	5	4	3	2	1
@@ -823,7 +806,6 @@ struct pdu_session_status_t {
 struct plmn_list_t {
     std::vector< mcc_mnc_t > plmns; //
 };
-
 
 /*
 9.11.3.46	Rejected NSSAI
@@ -1056,12 +1038,12 @@ struct sor_transparent_container_t {
         uint16_t access_technology_id; //
     };
 
-    struct  {
+    struct {
         bit_1 sor_data_type; //
         bit_1 list_ind;      //
         bit_1 list_type;     //
         bit_1 ack;           //
-    }header;
+    } header;
 
     octet_g                                     maci;              //
     uint16_t                                    counter;           //
@@ -1070,11 +1052,9 @@ struct sor_transparent_container_t {
 };
 
 struct sor_transparent_container_1_t {
-    // uint8_t                                     header;
     bit_1   sor_data_type; //
     octet_g maci;          //
 };
-
 
 // 9.11.3.52 Time zone
 // 10.5.3.8 in TS 24.008 g10
@@ -1083,13 +1063,13 @@ using time_zone_t = uint8_t;
 // 9.11.3.53 Time zone and time
 // 10.5.3.9 in TS 24.008 g10
 struct time_zone_time_t {
-    int     year;
-    int     month;
-    int     mday;
-    int     hour;
-    int     minute;
-    int     second;
-    int     gmt;
+    int year;
+    int month;
+    int mday;
+    int hour;
+    int minute;
+    int second;
+    int gmt;
 };
 
 /*
@@ -1129,7 +1109,6 @@ struct ue_parameter_update_container_0_t {
         octet_t dataset; //
     };
 
-    // uint8_t                   header;
     bit_1                                    upu_data_type;     //
     bit_1                                    reg;               //
     octet_g                                  upu_maci;          //
@@ -1155,126 +1134,82 @@ EIA0	128- EIA1	128- EIA2	128- EIA3	EIA4	EIA5	EIA6	EIA7	octet 6*
 Spare	octet 7* -10*
 */
 struct ue_security_capability_t {
-    uint8_t          nea; //
-    uint8_t          nia; //
-    opt_t< uint8_t > eea; //
-    opt_t< uint8_t > eia; //
+    uint8_t          nea = {}; //
+    uint8_t          nia = {}; //
+    opt_t< uint8_t > eea = {}; //
+    opt_t< uint8_t > eia = {}; //
 };
-
-result_t die_ue_security_capability(dissector d, context*ctx, ue_security_capability_t*ret){
-    const use_context uc(&d, ctx, "ue-security-capability", 4);
-    ret->nea = d.uint8(true);
-    ret->nia = d.uint8(true);
-    if (d.length>0){
-        ret->eea.present = true;
-        ret->eea.v       = d.uint8(true);
-        ret->eia.present = true;
-        ret->eia.v       = d.uint8(true);
-    }
-    return {uc.length};
-}
 
 // 9.11.3.55 UE's usage setting
 struct ue_usage_setting_t {
-    bit_1 setting; //
+    bit_1 setting = {}; //
 };
-result_t die_ue_usage_setting(dissector d, context* ctx, ue_usage_setting_t* ret) {
-    ret->setting = d.uint8(true) & 0x01u;
 
-    return {1};
-}
 // 9.11.3.56 UE status
 struct ue_status_t {
-    bit_1 s1_mode_reg; //
-    bit_1 n1_mode_reg; //
+    bit_1 s1_mode_reg = {}; //
+    bit_1 n1_mode_reg = {}; //
 };
-result_t die_ue_status(dissector d, context* ctx, ue_status_t* ret) {
-    ret->s1_mode_reg = d.uint8(false) & 0x01u;
-    ret->n1_mode_reg = d.uint8(true) & 0x02u;
-    return {1};
-}
+
 // 9.11.3.57 Uplink data status
 struct uplink_data_status_t {
-    uint8_t psi_a; //
-    uint8_t psi_b; //
+    uint8_t psi_a = {}; //
+    uint8_t psi_b = {}; //
 };
-result_t die_uplink_data_status(dissector d, context* ctx, uplink_data_status_t* ret) {
-    ret->psi_a = d.uint8(true);
-    ret->psi_b = d.uint8(true);
 
-    return {2};
-}
 // 9.11.3.58 Non-3gpp NW provided policies
 // 10.5.5.37 in TS 24.008 g10
 struct n3gpp_nw_provided_policies_t {
-    bit_1 n3en_ind; //
+    bit_1 n3en_ind = {}; //
 };
-
-result_t die_n3gpp_nw_provided_policies(dissector d, context*ctx, n3gpp_nw_provided_policies_t*ret){
-    ret->n3en_ind = d.uint8(true) & 0x1u;
-    return {1};
-}
 
 // 9.11.3.59 EPS bearer context status
 // 9.9.2.1 in TS 24.301 g11
 struct eps_bearer_context_status_t {
-    uint8_t ebi_a; //
-    uint8_t ebi_b; //
+    uint8_t ebi_a = {}; //
+    uint8_t ebi_b = {}; //
 };
-
-result_t die_eps_bearer_context_status(dissector d, context*ctx, eps_bearer_context_status_t*ret){
-    ret->ebi_a = d.uint8(true);
-    ret->ebi_b = d.uint8(true);
-
-    return {2};
-}
 
 // 9.11.3.60 Extended DRX parameters
 // 10.5.5.32 in TS 24.008 g10
 struct extended_drx_parameters_t {
-    bit_4 edrx;               //
-    bit_4 paging_time_window; //
+    bit_4 edrx               = {}; //
+    bit_4 paging_time_window = {}; //
 };
-
-result_t die_extended_drx_parameters(dissector d, context*ctx, extended_drx_parameters_t*ret){
-    ret->edrx = d.uint8(false) & 0x0fu;
-    ret->paging_time_window = mask_u8(d.uint8(true), 0xf0u);
-    return {1};
-}
 
 // 9.11.3.61 Mobile station classmark 2
 // 10.5.1.6 in TS 24.008 g10
 struct mobile_station_classmark2_t {
-    bit_3 rf_power_capability; //
-    bit_1 a51;                 //
-    bit_1 es_ind;              //
-    bit_2 revision_level;      //
-    bit_1 spare;               //
-    bit_1 fc;                  //
-    bit_1 vgcs;                //
-    bit_1 vbs;                 //
-    bit_1 sm_capability;       //
-    bit_2 ss_screen_ind;       //
-    bit_1 ps_capability;       //
-    bit_1 spare_1;             //
-    bit_1 a52;                 //
-    bit_1 a53;                 //
-    bit_1 cmsp;                //
-    bit_1 solsa;               //
-    bit_1 ucs2;                //
-    bit_1 lcsvacap;            //
-    bit_1 spare_2;             //
-    bit_1 cm3;                 //
+    bit_3 rf_power_capability = {}; //
+    bit_1 a51                 = {}; //
+    bit_1 es_ind              = {}; //
+    bit_2 revision_level      = {}; //
+    bit_1 spare               = {}; //
+    bit_1 fc                  = {}; //
+    bit_1 vgcs                = {}; //
+    bit_1 vbs                 = {}; //
+    bit_1 sm_capability       = {}; //
+    bit_2 ss_screen_ind       = {}; //
+    bit_1 ps_capability       = {}; //
+    bit_1 spare_1             = {}; //
+    bit_1 a52                 = {}; //
+    bit_1 a53                 = {}; //
+    bit_1 cmsp                = {}; //
+    bit_1 solsa               = {}; //
+    bit_1 ucs2                = {}; //
+    bit_1 lcsvacap            = {}; //
+    bit_1 spare_2             = {}; //
+    bit_1 cm3                 = {}; //
 };
 
 // 9.11.3.62 Supported codec list
 // 10.5.4.32 in TS 24.008 g10
 struct supported_codec_list_t {
     struct codec_t {
-        uint8_t  id;     //
-        uint16_t bitmap; //
+        uint8_t  id     = {}; //
+        uint16_t bitmap = {}; //
     };
-    std::vector< codec_t > codecs; //
+    std::vector< codec_t > codecs = {}; //
 };
 
 // 9.11.3.63 MA PDU session information
@@ -1294,20 +1229,12 @@ using ma_pdu_session_information_t = bit_4;
   Spare	octet 4* -15*
 */
 struct nsm_capability_t {
-    bit_1 rqos;    //
-    bit_1 mh6_pdu; //
-    bit_1 ept_s1;  //
-    bit_1 ats_ll;  //
-    bit_1 mptcp;   //
+    bit_1 rqos    = {}; //
+    bit_1 mh6_pdu = {}; //
+    bit_1 ept_s1  = {}; //
+    bit_1 ats_ll  = {}; //
+    bit_1 mptcp   = {}; //
 };
-result_t die_nsm_capability(dissector d, context*ctx, nsm_capability_t*ret){
-    de_uint8(d, ctx, &ret->rqos, 0x01u);
-    de_uint8(d, ctx, &ret->mh6_pdu, 0x02u);
-    de_uint8(d, ctx, &ret->ept_s1, 0x04u);
-    de_uint8(d, ctx, &ret->ats_ll, 0x08u);
-    de_uint8(d, ctx, &ret->mptcp, 0x10u).step(d);
-    return {1};
-}
 
 /*
   9.11.4.2	5GSM cause
@@ -1323,14 +1250,8 @@ using nsm_cause_t = uint8_t;
   Always-on PDU session indication IEI	0 Spare	APSI	octet 1
 */
 struct always_on_pdu_session_indication_t {
-    bit_1 apsi; //
+    bit_1 apsi = {}; //
 };
-result_t die_always_on_pdu_session_indication(dissector                          d,
-                                             context*                           ctx,
-                                             always_on_pdu_session_indication_t* ret) {
-    ret->apsi = d.uint8(true) & 0x01u;
-    return {1};
-}
 
 /*
   9.11.4.4	Always-on PDU session requested
@@ -1338,12 +1259,8 @@ result_t die_always_on_pdu_session_indication(dissector                         
   Always-on PDU session requested IEI	0 Spare	APSR	octet 1
 */
 struct always_on_pdu_session_requested_t {
-    bit_1 apsr; //
+    bit_1 apsr = {}; //
 };
-result_t die_always_on_pdu_session_requested(dissector d, context* ctx, always_on_pdu_session_requested_t*ret){
-    ret->apsr = d.uint8(true) & 0x01u;
-    return {1};
-}
 
 /*
   9.11.4.5	Allowed SSC mode
@@ -1356,14 +1273,14 @@ using allowed_ssc_mode_t = bit_3;
 // 10.5.6.3A ts24008-16.10
 struct extended_pco_t {
     struct option_t {
-        uint8_t id;      //
-        octet_t content; //
+        uint8_t id      = {}; //
+        octet_t content = {}; //
     };
 
-    bit_3                   configuration_protocol; //
-    bit_4                   spare;                  //
-    bit_1                   ext;                    //
-    std::vector< option_t > options;                //
+    bit_3                   configuration_protocol = {}; //
+    bit_4                   spare                  = {}; //
+    bit_1                   ext                    = {}; //
+    std::vector< option_t > options                = {}; //
 };
 
 /*
@@ -1374,56 +1291,28 @@ struct extended_pco_t {
   Maximum data rate per UE for user-plane integrity protection for downlink	octet 3
 */
 struct integrity_protection_maximum_data_rate_t {
-    uint8_t uplink;   //
-    uint8_t downlink; //
+    uint8_t uplink   = {}; //
+    uint8_t downlink = {}; //
 };
-
-result_t die_integrity_protection_maximum_data_rate(dissector d, context*ctx, integrity_protection_maximum_data_rate_t*ret){
-    const use_context uc(d, ctx, "integrity-protection-maximum-data-rate", 0);
-    ret->uplink = d.uint8(true);
-    ret->downlink = d.uint8(true);
-    return {2};
-}
 
 // 9.11.4.8 Mapped EPS bearer contexts
 struct mapped_eps_bearer_contexts_t {
     struct parameter_t {
-        uint8_t id;      //
-        octet_t content; //
+        uint8_t id      = {}; //
+        octet_t content = {}; //
     };
     struct context_t {
-        uint8_t id; //
+        uint8_t id = {}; //
         // uint8_t length;
-        bit_4                  parameters_n;   //
-        bit_1                  ebit;           //
-        bit_1                  spare;          //
-        bit_2                  operation_code; //
-        std::vector< parameter_t > parameters;     //
+        bit_4                      parameters_n   = {}; //
+        bit_1                      ebit           = {}; //
+        bit_1                      spare          = {}; //
+        bit_2                      operation_code = {}; //
+        std::vector< parameter_t > parameters     = {}; //
     };
 
-    std::vector< context_t > contexts; //
+    std::vector< context_t > contexts = {}; //
 };
-
-result_t  die_mapped_eps_bearer_contexts(dissector d, context*ctx, mapped_eps_bearer_context_t*ret){
-    const use_context uc(&d, ctx, "mapped-eps-bearer-contexts", 0);
-    while(d.length>0){
-        mapped_eps_bearer_contexts_t::context_t v = {};
-        de_uint8(d, ctx, &v.id).step(d);
-        auto l = d.uint8(true);
-        de_uint8(d, ctx, &v.parameters_n, 0x0fu);
-        de_uint8(d, ctx, &v->ebit, 0x10u);
-        de_uint8(d, ctx, &v.operation_code, 0xc0u).step(d);
-
-        for (auto i = 0; i < v.parameters_n;++i) {
-            mapped_eps_bearer_contexts_t::parameter_t p = {};
-            de_uint8(d, ctx, &p.id).step(d);
-            de_l_octet(d, ctx, &p.content).step(d);
-            v.parameters.push_back(p);
-        }
-        ret->contexts.push_back(v);
-    }
-    return {uc.length};
-}
 
 /*
   9.11.4.9	Maximum number of supported packet filters
@@ -1438,16 +1327,9 @@ using supported_packet_filters_maximum_number_t = bit_b;
 using octet_c = uint8_t[12];
 // 9.11.4.10 PDU address
 struct pdu_address_t {
-    bit_3   type;    //
-    octet_c address; //
+    bit_3   type    = {}; //
+    octet_c address = {}; //
 };
-
-result_t die_pdu_address(dissector d, context*ctx, pdu_address_t*ret){
-    const use_context uc(&d, ctx, "pdu-address", 0);
-    de_uint8(d, ctx, &ret->type, 0x07u).step(d);
-    de_fixed(d, ctx, ret->address).step(d);
-    return {uc.consumed()};
-}
 
 /*
   9.11.4.11	PDU session type
@@ -1488,43 +1370,17 @@ using pdu_session_type_t = bit_3;
 */
 struct qos_flow_descriptions_t {
     struct parameter_t {
-        uint8_t id;      //
-        octet_t content; //
+        uint8_t id      = {}; //
+        octet_t content = {}; //
     };
     struct entry_t {
-        bit_6                      qfi;        //
-        bit_3                      opcode;     //
-        bit_1                      ebit;       //
-        std::vector< parameter_t > parameters; //
+        bit_6                      qfi        = {}; //
+        bit_3                      opcode     = {}; //
+        bit_1                      ebit       = {}; //
+        std::vector< parameter_t > parameters = {}; //
     };
-    std::vector< entry_t > descs; //
+    std::vector< entry_t > descs = {}; //
 };
-
-result_t die_qos_flow_description(dissector                         d,
-                                  context*                          ctx,
-                                  qos_flow_descriptions_t::entry_t* ret) {
-    const use_context uc(&d, ctx, "qos-flow-description", 0);
-    de_uint8(d, ctx, &ret->qfi, 0x3fu).step(d);
-    de_uint8(d, ctx, &ret->opcode, &0xc0u).step(d);
-    de_uint8(d, ctx, &ret->ebit, 0x40u);
-    auto n = d.uint8(true) & 0x3fu;
-    for (auto i = 0; i < n; ++i) {
-        qos_flow_descriptions_t::parameter_t v = {};
-        de_uint8(d, ctx, &v.id).step(d);
-        de_l_octet(d, ctx, &v.content);
-        ret->parameters.push_back(v);
-    }
-    return {uc.consumed()};
-}
-result_t dei_qos_flow_descriptions(dissector d, context* ctx, qos_flow_descriptions_t*ret){
-    const use_context uc(&d, ctx, "qos-flow-descriptions", 0);
-    while(d.length> 0 ){
-        qos_flow_descriptions_t::entry_t v = {};
-        die_qos_flow_description(d, ctx, &v).step(d);
-        ret->descs.push_back(v);
-    }
-    return {uc.length};
-}
 
 using qos_flow_description_parameter_t = qos_flow_descriptions_t::parameter_t;
 using qos_flow_description_t           = qos_flow_descriptions_t::entry_t;
@@ -1532,94 +1388,40 @@ using qos_flow_description_t           = qos_flow_descriptions_t::entry_t;
 // 9.11.4.13	QoS rules
 struct qos_rule_t {
     struct packet_filter_delete_t {
-        bit_4 id;    //
-        bit_4 spare; //
+        bit_4 id    = {}; //
+        bit_4 spare = {}; //
     };
     struct packet_filter_add_t {
-        bit_4 id;        //
-        bit_2 direction; //
+        bit_4   id        = {}; //
+        bit_2   direction = {}; //
+        octet_t content   = {}; //
         // uint8_t length;
-        octet_t content; //
     };
     struct packet_filter_t {
-        std::shared_ptr< packet_filter_add_t >    add;  // when rule-op is create / modify
-        std::shared_ptr< packet_filter_delete_t > drop; //
+        std::shared_ptr< packet_filter_add_t >    add  = {};
+        std::shared_ptr< packet_filter_delete_t > drop = {}; //
     };
 
-    uint8_t                        id;                  //
-    uint16_t                       length;              //
-    bit_4                          packet_filters_n;    //
-    bit_1                          dqr;                 //
-    bit_3                          rule_operation_code; //
-    std::vector< packet_filter_t > packet_filters;      //
-    std::vector< bit_4 >               delete_packets;      //
-    std::vector< packet_filter_add_t > add_packets;   //
-    opt_t< uint8_t >                   precedence;          //
-    opt_t< bit_6 >                 qos_flow_id;         //
-    opt_t< bit_1 >                 segregation;         //
+    uint8_t                            id                  = {}; //
+    uint16_t                           length              = {}; //
+    bit_4                              packet_filters_n    = {}; //
+    bit_1                              dqr                 = {}; //
+    bit_3                              rule_operation_code = {}; //
+    std::vector< packet_filter_t >     packet_filters      = {}; //
+    std::vector< bit_4 >               delete_packets      = {}; //
+    std::vector< packet_filter_add_t > add_packets         = {}; //
+    opt_t< uint8_t >                   precedence          = {}; //
+    opt_t< bit_6 >                     qos_flow_id         = {}; //
+    opt_t< bit_1 >                     segregation         = {}; //
 };
-
-result_t die_qos_rule(dissector d, context* ctx, qos_rule_t*ret){
-    const use_context uc(&d, ctx, "qos-rule", 0);
-    de_nibble(d, ctx, &ret->packet_filters_n);
-    de_uint8(d, ctx, &ret->dqr, 0x10u);
-    de_uint8(d, ctx, &ret->rule_operation_code, 0xc0u).step(d);
-
-    switch (ret->rule_operation_code) {
-    case 0b000:
-        break;  // reserved
-    case 0b001: // create new QoS rule
-    case 0b011: // Modify existing QoS rule and add packet filter
-    case 0b100: // Modify existing QoS rule and replace
-        qos_rule_t::packet_filter_add_t v = {};
-        for (auto i = 0; i < ret->packet_filters_n;++i) {
-            de_uint8(d, ctx, &v.id, 0x0fu);
-            de_uint8(d, ctx, &v.direction, 0x30u).step(d);
-            de_l_octet(d, ctx, &v.content).step(d);
-        }
-        ket->add_packbts.push_back(v);
-        existi eak; //
-    case 0b011:     // Modify existing QoS rule and delete
-        break;  //
-    case 0b101: // Modify existing QoS rule and delete
-        for (auto i = 0; i < ret->packet_filters_n;++i) {
-            auto id = d.uint8(true) & 0x0fu;
-            ret->delete_packets.push_back(id);
-        }
-        break;
-    }
-    if (d.length>0){
-        ret->precedence.present = true;
-        de_uint8(d, ctx, &ret->precedence.v).step(d);
-    }
-    if (d.length> 0){
-        ret->qos_flow_id.present = true;
-        de_uint8(d, ctx, &ret->qos_flow_id, 0x3fu);
-        ret->segregation.present = true;
-        de_uint8(d, ctx, &ret->segregation.v, 0x40u).step(d);
-    }
-    return {uc.length};
-}
 
 using qos_rule_packet_filter_delete_t = qos_rule_t::packet_filter_delete_t;
 using qos_rule_packet_filter_add_t    = qos_rule_t::packet_filter_add_t;
 using qos_rule_packet_filter_t        = qos_rule_t::packet_filter_t;
 
 struct qos_rules_t {
-    std::vector< qos_rule_t > rules; //
+    std::vector< qos_rule_t > rules = {}; //
 };
-
-result_t die_qos_rules(dissector d, context* ctx, qos_rules_t*ret){
-    const use_context uc(&d, ctx, "qos-rules", 0);
-    while(d.length> 0 ){
-        qos_rule_t v = {};
-        v.id      = d.uint8(true);
-        v.length       = d.uint8(true);
-        die_qos_rule(d.slice(l), ctx, &v).step(d);
-        ret->rules.push_back(v);
-    }
-    return {uc.length};
-}
 
 /*
   9.11.4.14	Session-AMBR
@@ -1632,21 +1434,11 @@ result_t die_qos_rules(dissector d, context* ctx, qos_rules_t*ret){
   Session-AMBR for uplink	octet 7-8
 */
 struct session_ambr_t {
-    uint8_t  downlink_unit; //
-    uint16_t downlink;      //
-    uint8_t  uplink_unit;   //
-    uint16_t uplink;        //
+    uint8_t  downlink_unit = {}; //
+    uint16_t downlink      = {}; //
+    uint8_t  uplink_unit   = {}; //
+    uint16_t uplink        = {}; //
 };
-
-result_t die_session_ambr(dissector d, context* ctx, session_ambr_t*ret){
-    const use_context uc(&d, ctx, "session-ambr", 0);
-
-    ret->downlink_unit = d.uint8(true);
-    ret->downlink      = d.uint16(true);
-    ret->uplink_unit   = d.uint8(true);
-    ret->uplink        = d.uint16(true);
-    return {6};
-}
 
 /* 9.11.4.15	SM PDU DN request container
   8	7	6	5	4	3	2	1
@@ -1671,16 +1463,9 @@ using ssc_mode_t = bit_3;
   0 Spare	EPLMNC	RATC
 */
 struct reattempt_indicator_t {
-    bit_1 ratc;   //
-    bit_1 eplmnc; //
+    bit_1 ratc   = {}; //
+    bit_1 eplmnc = {}; //
 };
-
-result_t die_reattempt_indicator(dissector d, context* ctx, reattempt_indicator_t* ret){
-    const use_context uc(&d, ctx, "reattempt-indicator", 0);
-    de_uint8(d, ctx, &ret->ratc, 0x01u);
-    de_uint8(d, ctx, &ret->eplmnc, 0x02u).step(d);
-    return {1};
-}
 
 /*
   9.11.4.18	5GSM network feature support
@@ -1704,21 +1489,11 @@ using nsm_network_feature_support_t = bit_1;
   Session-TMBR for uplink	octet 7-8
 */
 struct session_tmbr_t {
-    uint8_t  downlink_unit; //
-    uint16_t downlink;      //
-    uint8_t  uplink_unit;   //
-    uint16_t uplink;        //
+    uint8_t  downlink_unit = {}; //
+    uint16_t downlink      = {}; //
+    uint8_t  uplink_unit   = {}; //
+    uint16_t uplink        = {}; //
 };
-
-result_t die_session_tmbr(dissector d, context* ctx, session_tmbr_t*ret){
-    const use_context uc(&d, ctx, "session-tmbr", 0);
-    ret->downlink_unit = d.uint8(true);
-    ret->downlink      = d.uint16(true);
-    ret->uplink_unit   = d.uint8(true);
-    ret->uplink        = d.uint16(true);
-
-    return {6};
-}
 
 // 9.11.4.20	Serving PLMN rate control
 // See subclause 9.9.4.28 in 3GPP TS 24.301 [13].
