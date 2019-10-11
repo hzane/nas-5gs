@@ -1,7 +1,7 @@
 
 set(MM_SRCS  abba.cc
         access_type.cc
-        additional_5g_security_infomation.cc
+        additional_nr_security_infomation.cc
         allowed_pdu_session_status.cc
         authentication_failure.cc
         authentication_failure_parameter.cc

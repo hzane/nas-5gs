@@ -9,7 +9,7 @@ result_t de_pdu_session_modification_reject(dissector                          d
     const use_context uc(&d, ctx, "pdu-session-modification-reject", 3);
 
     /* Direction: network to UE */
-    down_link(d.pinfo);
+    d.downlink();
 
     /* 5GSM cause 9.11.4.2    M    V    1 */
 

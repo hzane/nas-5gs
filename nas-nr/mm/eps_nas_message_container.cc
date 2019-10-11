@@ -1,3 +1,5 @@
+#include "../common/ber.hh"
+#include "../common/definitions.hh"
 #include "../common/dissector.hh"
 #include "../common/use_context.hh"
 

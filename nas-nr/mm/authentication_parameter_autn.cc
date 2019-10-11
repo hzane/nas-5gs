@@ -1,4 +1,6 @@
+#include "../common/definitions.hh"
 #include "../common/dissector.hh"
+#include "../common/ies.hh"
 #include "../common/use_context.hh"
 
 /* 9.11.3.15	Authentication parameter AUTN

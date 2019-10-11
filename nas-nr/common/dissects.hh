@@ -161,10 +161,6 @@ result_t de_pdu_session_release_complete(dissector                       d,
 
 result_t de_nsm_status(dissector d, context* ctx, nsm_status_t* ret);
 
-//* 9.11.3.8     5GS tracking area identity
-result_t die_nr_tracking_area_id(dissector d, context* ctx, nr_tracking_area_id_t* ret);
-result_t die_mcc_mnc(dissector d, context* ctx, mcc_mnc_t* ret);
-
 /*
 Table 8.2.1.1.1: AUTHENTICATION REQUEST message content
 IEI	Information Element	Type/Reference	Presence	Format	Length

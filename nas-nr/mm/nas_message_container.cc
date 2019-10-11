@@ -1,6 +1,7 @@
+#include "../common/definitions.hh"
 #include "../common/dissector.hh"
 #include "../common/use_context.hh"
-
+#include "../nas-nr.hh"
 
 /* 9.11.3.33    NAS message container */
 result_t dissect_nas_message_container(dissector            d,

@@ -1202,6 +1202,7 @@ struct mobile_station_classmark2_t {
     bit_1 cm3                 = {}; //
 };
 
+
 // 9.11.3.62 Supported codec list
 // 10.5.4.32 in TS 24.008 g10
 struct supported_codec_list_t {

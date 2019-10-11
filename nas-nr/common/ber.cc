@@ -11,7 +11,7 @@ result_t de_octet(dissector d, context* ctx, octet_t* ret) {
     return result_t{len};
 }
 
-result_t de_t_octet(dissector d, context*, uint8_t ieid, opt_t< octet_t >* ret) {
+result_t de_t_octet(dissector d, context* ctx, uint8_t ieid, opt_t< octet_t >* ret) {
     auto len = d.length;
 
     auto ie = d.uint8(true);
