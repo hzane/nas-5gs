@@ -1,7 +1,7 @@
 #include "../common/ies.hh"
-#include "context.hh"
-#include "dissector.hh"
-#include "use_context.hh"
+#include "../common/context.hh"
+#include "../common/dissector.hh"
+#include "../common/use_context.hh"
 
 /*
 9.11.2.6	Intra N1 mode NAS transparent container

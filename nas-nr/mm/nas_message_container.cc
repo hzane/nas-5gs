@@ -4,7 +4,7 @@
 #include "../nas-nr.hh"
 
 /* 9.11.3.33    NAS message container */
-result_t dissect_nas_message_container(dissector            d,
+result_t die_nas_message_container(dissector            d,
                                        context*             ctx,
                                        nas_message_plain_t* ret) {
     /* The purpose of the NAS message container IE is to

@@ -29,8 +29,7 @@ set(MM_SRCS  abba.cc
         eps_nas_security_algorithms.cc
         extended_drx_parameters.cc
         extended_emergency_number_list.cc
-        id_req_result.cc
-        identity_request.cc
+    identity_request.cc
         identity_response.cc
         imeisv_request.cc
         ladn_indication.cc

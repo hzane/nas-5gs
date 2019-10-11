@@ -1,7 +1,7 @@
 #include "../common/ies.hh"
-#include "context.hh"
-#include "dissector.hh"
-#include "use_context.hh"
+#include "../common/context.hh"
+#include "../common/dissector.hh"
+#include "../common/use_context.hh"
 
 // 9.11.2.7	N1 mode to S1 mode NAS transparent container
 result_t die_n1_mode_to_s1_mode_container(dissector                       d,

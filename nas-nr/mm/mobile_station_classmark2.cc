@@ -5,7 +5,6 @@
 
 // 9.11.3.61	Mobile station classmark 2
 // See subclause 10.5.1.6 in 3GPP TS 24.008 [12].
-
 result_t die_mobile_station_classmark2(dissector d, context*ctx, mobile_station_classmark2_t*ret){
     const use_context uc(&d, ctx, "mobile-station-classmark2", 0);
     de_uint8(d, ctx, &ret->rf_power_capability, 0x07u);

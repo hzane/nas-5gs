@@ -6,7 +6,8 @@
 result_t de_dl_nas_transport(dissector d, context* ctx, dl_nas_transport_t* ret) {
     const use_context uc(&d, ctx, "dl-nas-transport", 0);
     // network to UE
-    down_link(d.pinfo);
+    d.downlink();
+
     de_nmm_header(d, ctx, &ret->header).step(d);
 
     /*

@@ -707,7 +707,7 @@ struct payload_container_multiple_t {
         octet_t v;
     };
     struct entry_t {
-        bit_4 type; //
+        bit_4                        type;         //
         std::vector< optional_ie_t > optional_ies; //
         octet_t                      content;      //
     };
@@ -942,40 +942,40 @@ MNC digit 3	MCC digit 3	octet 3
 MNC digit 2	MNC digit 1	octet 4
 */
 
-struct service_area_header_t{
-    bit_5                  number = {};       // +1
-    bit_2                  type = {};         //
-    bit_1                  allowed_type = {}; //
+struct service_area_header_t {
+    bit_5 number       = {}; // +1
+    bit_2 type         = {}; //
+    bit_1 allowed_type = {}; //
 };
 
-struct tac_t{
+struct tac_t {
     octet_3 v;
 };
 struct service_area_00_t {
-    service_area_header_t  header = {};
-    mcc_mnc_t              mccmnc = {};       //
-    std::vector< tac_t > tacs = {};          //
+    service_area_header_t header = {};
+    mcc_mnc_t             mccmnc = {}; //
+    std::vector< tac_t >  tacs   = {}; //
 };
 
 struct service_area_01_t {
-    service_area_header_t  header = {};
-    mcc_mnc_t mccmnc = {};       //
-    tac_t   tac = {};          //
-};                          //
+    service_area_header_t header = {};
+    mcc_mnc_t             mccmnc = {}; //
+    tac_t                 tac    = {}; //
+};                                     //
 
 struct service_area_10_t {
     struct area_t {
         mcc_mnc_t mccmnc = {}; //
-        tac_t   tac = {};    //
+        tac_t     tac    = {}; //
     };
 
-    service_area_header_t  header = {};
-    std::vector< area_t > value = {};        //
+    service_area_header_t header = {};
+    std::vector< area_t > value  = {}; //
 };
 
 struct service_area_11_t {
-    service_area_header_t  header = {};
-    mcc_mnc_t mccmnc = {};       //
+    service_area_header_t header = {};
+    mcc_mnc_t             mccmnc = {}; //
 };
 
 struct service_area_t {
@@ -988,7 +988,6 @@ struct service_area_t {
 struct service_area_list_t {
     std::vector< service_area_t > partial; //
 };
-
 
 /*
 9.11.3.50	Service type
@@ -1207,7 +1206,6 @@ struct mobile_station_classmark2_t {
     bit_1 spare_2             = {}; //
     bit_1 cm3                 = {}; //
 };
-
 
 // 9.11.3.62 Supported codec list
 // 10.5.4.32 in TS 24.008 g10

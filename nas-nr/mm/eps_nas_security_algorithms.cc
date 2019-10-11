@@ -4,7 +4,7 @@
 #include "../common/ies.hh"
 #include "../common/use_context.hh"
 
-result_t die_eps_nas_security_algorighms(dissector                      d,
+result_t die_eps_nas_security_algorithms(dissector                      d,
                                          context*                       ctx,
                                          eps_nas_security_algorithms_t* ret) {
     de_uint8(d, ctx, &ret->integrity_algo, 0x07);

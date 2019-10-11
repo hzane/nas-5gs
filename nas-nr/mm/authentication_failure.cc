@@ -8,7 +8,8 @@ result_t de_authentication_failure(dissector                 d,
                                    authentication_failure_t* ret) {
     const use_context uc(&d, ctx, "authentication-failure", 0);
     // UE to network
-    up_link(d.pinfo);
+    d.uplink();
+
     de_nmm_header(d, ctx, &ret->header).step(d);
 
     /*
