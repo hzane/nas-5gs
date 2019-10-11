@@ -941,36 +941,41 @@ MCC digit 2	MCC digit 1	octet 2
 MNC digit 3	MCC digit 3	octet 3
 MNC digit 2	MNC digit 1	octet 4
 */
-struct service_area_00_t {
-    bit_5                  number;       // +1
-    bit_2                  type;         //
-    bit_1                  allowed_type; //
-    mcc_mnc_t              mccmnc;       //
-    std::vector< octet_3 > tac;          //
+
+struct service_area_header_t{
+    bit_5                  number = {};       // +1
+    bit_2                  type = {};         //
+    bit_1                  allowed_type = {}; //
 };
+
+struct tac_t{
+    octet_3 v;
+};
+struct service_area_00_t {
+    service_area_header_t  header = {};
+    mcc_mnc_t              mccmnc = {};       //
+    std::vector< tac_t > tacs = {};          //
+};
+
 struct service_area_01_t {
-    bit_5     number;       //
-    bit_2     type;         //
-    bit_1     allowed_type; //
-    mcc_mnc_t mccmnc;       //
-    octet_3   tac;          //
+    service_area_header_t  header = {};
+    mcc_mnc_t mccmnc = {};       //
+    tac_t   tac = {};          //
 };                          //
+
 struct service_area_10_t {
     struct area_t {
-        mcc_mnc_t mccmnc; //
-        octet_3   tac;    //
+        mcc_mnc_t mccmnc = {}; //
+        tac_t   tac = {};    //
     };
 
-    bit_5                 number;       //
-    bit_2                 type;         //
-    bit_1                 allowed_type; //
-    std::vector< area_t > value;        //
+    service_area_header_t  header = {};
+    std::vector< area_t > value = {};        //
 };
+
 struct service_area_11_t {
-    bit_5     number;       // +1
-    bit_2     type;         //
-    bit_1     allowed_type; //
-    mcc_mnc_t mccmnc;       //
+    service_area_header_t  header = {};
+    mcc_mnc_t mccmnc = {};       //
 };
 
 struct service_area_t {
@@ -983,6 +988,7 @@ struct service_area_t {
 struct service_area_list_t {
     std::vector< service_area_t > partial; //
 };
+
 
 /*
 9.11.3.50	Service type
